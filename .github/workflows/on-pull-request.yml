@@ -1,0 +1,30 @@
+name: Run checks on Pull Requests
+on:
+  pull_request:
+
+jobs:
+  build_lint:
+    name: Lint & Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18.19.1"
+
+      - name: Install Yarn
+        run: npm install -g yarn
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Lint
+        run: yarn lint:check
+
+      - name: Type checks
+        run: yarn ts:check
+
+      - name: Build
+        run: yarn build
