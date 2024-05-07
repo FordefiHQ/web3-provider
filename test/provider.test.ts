@@ -3,6 +3,7 @@ import {
   ByteArray,
   Hex,
   hexToBytes,
+  InternalRpcError,
   InvalidParamsRpcError,
   isHash,
   isHex,
@@ -93,7 +94,7 @@ describe('Web3 Provider', () => {
     );
   });
 
-  describe('request() methods implemented by Fordefi', () => {
+  describe('Methods Implemented by Fordefi', () => {
     test("'eth_chainId' should return the chain id used to initialize the provider", async () => {
       const provider = createTestProvider();
       await provider.waitForEmittedEvent('connect');
@@ -201,8 +202,8 @@ describe('Web3 Provider', () => {
         from: TEST_PROVIDER_CONFIG.address,
         to: testFixtures.toAddress,
         value: testFixtures.value,
-        maxFeePerGas: 1509853304n,
-        maxPriorityFeePerGas: 910928635n,
+        maxFeePerGas: 150004177629n,
+        maxPriorityFeePerGas: 1000528647n,
         gas: 22222n,
       } satisfies Partial<TransactionRequest>;
 
@@ -242,7 +243,7 @@ describe('Web3 Provider', () => {
     });
   });
 
-  describe('fallback provider methods', () => {
+  describe('Fallback Provider Methods', () => {
     test("'eth_sendRawTransaction' sends a signed transaction returned from 'eth_signTransaction'", async () => {
       const provider = createTestProvider();
       await provider.waitForEmittedEvent('connect');
@@ -296,6 +297,39 @@ describe('Web3 Provider', () => {
         code: InvalidParamsRpcError.code,
         details: 'data types must start with 0x', // this applies specifically infura's provider
       });
+    });
+  });
+
+  describe('Fordefi API Errors', () => {
+    test('should throw an rpc error with the error payload', async () => {
+      const provider = createTestProvider();
+      await provider.waitForEmittedEvent('connect');
+
+      const transaction = {
+        from: TEST_PROVIDER_CONFIG.address,
+        to: testFixtures.toAddress,
+        value: testFixtures.value,
+        // invalid fees
+        maxPriorityFeePerGas: -1n,
+        maxFeePerGas: -2n,
+      } satisfies Partial<TransactionRequest>;
+
+      let error: RpcError | undefined = undefined;
+      try {
+        await provider.request({
+          method: 'eth_sendTransaction',
+          params: [transaction],
+        });
+        throw new Error('Expected an error due to invalid fees');
+      } catch (e) {
+        error = e as RpcError;
+      }
+
+      expect(error.code).toBe(InternalRpcError.code);
+
+      const errorDetails = JSON.parse(error.details);
+      expect(errorDetails['title']).toBe('Cannot process data due to validation error');
+      expect(errorDetails['request_id']).toBeTruthy();
     });
   });
 });
