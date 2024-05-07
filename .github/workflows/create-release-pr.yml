@@ -1,0 +1,184 @@
+name: Create Release PR
+
+on:
+  push:
+    branches:
+      - release/*
+
+permissions:
+  pull-requests: write
+
+concurrency: "${{github.workflow}}-${{github.ref}}"
+
+env:
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  NODE_VERSION: "18.19.1"
+
+jobs:
+  detect-new-version:
+    name: Detect New Version
+    runs-on: ubuntu-latest
+    outputs:
+      NEW_VERSION_TAG: ${{ steps.detect-version.outputs.NEW_VERSION_TAG }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # fetch all history for all tags and branches
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install Yarn
+        run: npm install -g yarn
+
+      - name: Detect New Version
+        id: detect-version
+        run: |
+          NEW_VERSION=$(yarn --silent version:current)
+          git diff origin/main.. -- package.json | grep "\"version\": \"${NEW_VERSION}\"" > /dev/null && HAS_VERSION_CHANGE=0 || HAS_VERSION_CHANGE=1
+          echo "HAS_VERSION_CHANGE=${HAS_VERSION_CHANGE}"
+
+          if [ $HAS_VERSION_CHANGE -eq 0 ]; then
+            echo "New version detected ${NEW_VERSION}"
+
+            echo "IS_NEW_VERSION=true" >> $GITHUB_ENV
+            echo "NEW_VERSION=${NEW_VERSION}" >> $GITHUB_ENV
+            echo "NEW_VERSION_TAG=v${NEW_VERSION}" >> $GITHUB_ENV
+          else
+            echo "No version change detected, exiting"
+            exit 1
+          fi
+
+      - name: Verify Release Changes
+        if: ${{ env.IS_NEW_VERSION == 'true' }}
+        run: |
+          echo "env.IS_NEW_VERSION=${{ env.IS_NEW_VERSION }}"
+
+          function verify_file_has_diff_with_version() {
+            FILE_NAME=$1
+            FILE_DIFF="$(git diff origin/main.. -- ${FILE_NAME})"
+            # TODO: remove these lines
+            echo "FILE_DIFF=${{env.FILE_DIFF}}"
+            echo "NEW_VERSION=${{env.NEW_VERSION}}"
+
+            if [ "$(echo "${FILE_DIFF}" | wc -l)" -eq 0 ]; then
+              echo "No diff detected in $FILE_NAME, exiting"
+              exit 1
+            fi
+
+            HAS_VERSION_IN_FILE=$([ "$(echo "${FILE_DIFF}" | grep -c "$NEW_VERSION")" -gt 0 ] && echo "true" || echo "false")
+
+            if [ "$HAS_VERSION_IN_FILE" = "true" ]; then
+              echo "Detected changes in $FILE_NAME that include the new version (as expected)"
+            else
+              echo "Detected changes in $FILE_NAME that don't contain the new version, exiting"
+              exit 1
+            fi
+          }
+
+          verify_file_has_diff_with_version CHANGELOG.md
+          verify_file_has_diff_with_version package.json
+
+  create-pr:
+    name: Create PR
+    runs-on: ubuntu-latest
+    needs: detect-new-version
+    env:
+      NEW_VERSION_TAG: ${{ needs.detect-new-version.outputs.NEW_VERSION_TAG }}
+    outputs:
+      CREATE_PR_SUCCESS: ${{ steps.create-pr-gh-cli.outputs.CREATE_PR_SUCCESS }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # fetch all history for all tags and branches
+
+      - name: Install GitHub CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gh
+
+      - name: Create Pull Request
+        id: create-pr-gh-cli
+        run: |
+          # TODO: remove this line
+          set -x
+          echo "${{ secrets.GH_PAT_TOKEN }}" | gh auth login --with-token
+          echo "env.NEW_VERSION_TAG_2=${{ env.NEW_VERSION_TAG }}"
+          gh pr create \
+            --base main \
+            --head "${{ github.ref_name }}" \
+            --title "Release ${{ env.NEW_VERSION_TAG }}" \
+            --body "
+            <\!--
+            - Bump the version in package.json.
+            - Update CHANGELOG.md.
+            -->
+            " \
+            --reviewer "gilmeir-arnac"
+
+          echo "CREATE_PR_SUCCESS=$?" >> $GITHUB_ENV
+
+  report-to-slack:
+    name: Report result to Slack
+    runs-on: ubuntu-latest
+    needs: [detect-new-version, create-pr]
+    env:
+      NEW_VERSION_TAG: ${{ needs.detect-new-version.outputs.NEW_VERSION_TAG }}
+      CREATE_PR_SUCCESS: ${{ needs.create-pr.outputs.CREATE_PR_SUCCESS }}
+    steps:
+      - name: Notify Slack on Success
+        if: ${{ env.CREATE_PR_SUCCESS == '0' }}
+        uses: slackapi/slack-github-action@v1.18.0
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        with:
+          # Slack Block Kit API: https://api.slack.com/reference/block-kit/blocks#link-element-type
+          payload: |
+            {
+              "text": "Release ${{ env.NEW_VERSION_TAG }} pull request is waiting for approval",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "Release `${{ env.NEW_VERSION_TAG }}` pull request is waiting for approval"
+                  }
+                },
+                {
+                  "type": "rich_text_section",
+                  "text": {
+                    "type": "link",
+                    "url": "${{github.repository}}/pull/${{ github.event.number }}"
+                  }
+                },
+                {
+                  "type": "rich_text_section",
+                  "text": {
+                    "type": "link",
+                    "url": "${{ job.status }}",
+                    "text": "GitHub action build result"
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "Initiator: `${{ github.actor }}`"
+                  }
+                }
+              ]
+            }
+
+      - name: Notify Slack on Failure
+        if: ${{ env.CREATE_PR_SUCCESS != '0' }}
+        uses: slackapi/slack-github-action@v1.18.0
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        with:
+          # Slack Block Kit API: https://api.slack.com/reference/block-kit/blocks#link-element-type
+          payload: |
+            {
+              "text": "Failed to create a release pull request for `${{ env.NEW_VERSION_TAG }}`"
+            }

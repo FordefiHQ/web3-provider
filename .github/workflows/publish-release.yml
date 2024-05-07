@@ -1,0 +1,91 @@
+name: Publish Release
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+concurrency: "${{github.workflow}}-${{github.ref}}"
+
+env:
+  NODE_VERSION: "18.19.1"
+
+jobs:
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+    if: startsWith(github.head_ref, 'release/')
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Ensures we fetch all history for all tags and branches
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install Yarn
+        run: npm install -g yarn
+
+      - name: Creating .npmrc
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          cat << EOF > "$HOME/.npmrc"
+            //registry.npmjs.org/:_authToken=$NPM_TOKEN
+          EOF
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Publish to NPM
+        id: publish-to-npm
+        run: yarn publish:latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get Release Version and Tag
+        run: |
+          NEW_VERSION="$(yarn --silent version:current)"
+          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+
+          NEW_VERSION_TAG="v${NEW_VERSION}"
+          echo "NEW_VERSION_TAG=$NEW_VERSION_TAG" >> $GITHUB_ENV
+
+      - name: Notify Slack
+        uses: slackapi/slack-github-action@v1.18.0
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        with:
+          # Slack Block Kit API: https://api.slack.com/reference/block-kit/blocks#link-element-type
+          payload: |
+            {
+              "text": "Release ${{ env.NEW_VERSION_TAG }} was published",
+              "blocks": [
+                {
+                  "type": "section",
+                   "fields": [
+                      {
+                        "type": "mrkdwn",
+                        "text": "Pull request: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+                      },
+                      {
+                        "type": "mrkdwn",
+                        "text": "Workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                      },
+                      {
+                        "type": "mrkdwn",
+                        "text": "Version on NPM: https://www.npmjs.com/package/@fordefi/web3-provider/v/${{ env.NEW_VERSION_TAG }}"
+                      },
+                      {
+                        "type": "mrkdwn",
+                        "text": "Tag on Github: https://github.com/arnac-io/web3-provider/releases/tag/${{ env.NEW_VERSION_TAG }}"
+                      },
+                  ]
+                }
+              ]
+            }
