@@ -10,14 +10,13 @@ import {
   recoverMessageAddress,
   recoverTypedDataAddress,
   RpcError,
-  RpcTransactionRequest,
   stringToBytes,
   stringToHex,
+  TransactionRequest,
   TypedDataDefinition,
 } from 'viem';
 import { waitFor } from '../src/utils';
-import { RequestArgs } from '../src';
-import { MethodParams } from '../src/provider/provider.types';
+import { FordefiRpcSchema, NonFordefiRpcSchema, RequestArgs } from '../src';
 import { createTestProvider, minedTransactionFixture, TEST_PROVIDER_CONFIG, testFixtures } from './provider.test.utils';
 import msgParams from './fixtures/eth-sign-typed-data-v4-message.json';
 
@@ -99,7 +98,7 @@ describe('Web3 Provider', () => {
       const provider = createTestProvider();
       await provider.waitForEmittedEvent('connect');
 
-      const response = await provider.request<'eth_chainId'>({
+      const response = await provider.request({
         method: 'eth_chainId',
       });
 
@@ -124,17 +123,17 @@ describe('Web3 Provider', () => {
       {
         method: 'eth_signTypedData',
         // test params passed in opposite order
-        params: [typedData, TEST_PROVIDER_CONFIG.address] as unknown as MethodParams<'eth_signTypedData'>,
-      } satisfies RequestArgs<'eth_signTypedData'>,
+        params: [typedData, TEST_PROVIDER_CONFIG.address],
+      } as unknown as RequestArgs<FordefiRpcSchema, 'eth_signTypedData'>,
       {
         method: 'eth_signTypedData_v3',
         params: [TEST_PROVIDER_CONFIG.address, typedData],
-      } satisfies RequestArgs<'eth_signTypedData_v3'>,
+      } satisfies RequestArgs<FordefiRpcSchema, 'eth_signTypedData_v3'>,
       {
         method: 'eth_signTypedData_v4',
         params: [TEST_PROVIDER_CONFIG.address, typedData],
-      } satisfies RequestArgs<'eth_signTypedData_v4'>,
-    ];
+      } satisfies RequestArgs<FordefiRpcSchema, 'eth_signTypedData_v4'>,
+    ] as const;
 
     test.each(typedDataTestCases)("'$method' should return signed data", async (args) => {
       const provider = createTestProvider();
@@ -183,7 +182,7 @@ describe('Web3 Provider', () => {
         from: TEST_PROVIDER_CONFIG.address,
         to: testFixtures.toAddress,
         value: testFixtures.value,
-      } satisfies Partial<RpcTransactionRequest>;
+      } satisfies Partial<TransactionRequest>;
 
       const signedTransaction = await provider.request({
         method: 'eth_signTransaction',
@@ -202,10 +201,10 @@ describe('Web3 Provider', () => {
         from: TEST_PROVIDER_CONFIG.address,
         to: testFixtures.toAddress,
         value: testFixtures.value,
-        maxFeePerGas: '0x59fe8878',
-        maxPriorityFeePerGas: '0x364baafb',
-        gas: '0x56ce',
-      } satisfies Partial<RpcTransactionRequest>;
+        maxFeePerGas: 1509853304n,
+        maxPriorityFeePerGas: 910928635n,
+        gas: 22222n,
+      } satisfies Partial<TransactionRequest>;
 
       const transactionHash = await provider.request({
         method: 'eth_sendTransaction',
@@ -224,7 +223,7 @@ describe('Web3 Provider', () => {
         from: TEST_PROVIDER_CONFIG.address,
         to: 'invalid-address' as Address,
         value: testFixtures.value,
-      } satisfies Partial<RpcTransactionRequest>;
+      } satisfies Partial<TransactionRequest>;
 
       let error: RpcError | undefined = undefined;
       try {
@@ -252,7 +251,7 @@ describe('Web3 Provider', () => {
         from: TEST_PROVIDER_CONFIG.address,
         to: testFixtures.toAddress,
         value: testFixtures.value,
-      } satisfies Partial<RpcTransactionRequest>;
+      } satisfies Partial<TransactionRequest>;
 
       const signedRawTransaction = await provider.request({
         method: 'eth_signTransaction',
@@ -271,12 +270,12 @@ describe('Web3 Provider', () => {
       const provider = createTestProvider();
       await provider.waitForEmittedEvent('connect');
 
-      const transaction = await provider.request({
+      const transaction = await provider.request<NonFordefiRpcSchema, 'eth_getTransactionByHash'>({
         method: 'eth_getTransactionByHash',
         params: [minedTransactionFixture.hash],
       });
 
-      expect(transaction!.value).toBe(minedTransactionFixture.value);
+      expect(transaction?.value).toBe(minedTransactionFixture.value);
     });
 
     test('should throw if fallback provider throws', async () => {
@@ -285,7 +284,7 @@ describe('Web3 Provider', () => {
 
       let error: RpcError | undefined;
       try {
-        await provider.request({
+        await provider.request<NonFordefiRpcSchema, 'eth_getTransactionByHash'>({
           method: 'eth_getTransactionByHash',
           params: ['invalid-param' as Hex],
         });

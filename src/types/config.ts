@@ -1,17 +1,60 @@
 import { Address } from 'viem';
 import { EvmChainId, EvmChainUniqueId } from '../openapi';
 
+/**
+ * Configuration for constructing a provider instance.
+ *
+ * Each instance manages a single address in a single chain.
+ */
 export interface FordefiProviderConfig {
-  /** Chain ID as a number or a named chain. For example for sepolia use `11155111` or `EvmChainId.NUMBER_11155111` or `EvmChainUniqueId.ethereumSepolia` */
+  /**
+   * Chain ID as a number or a named chain.
+   *
+   * For example, assuming Ethereum Sepolia chain:
+   * - Numeric value: `EvmChainId.NUMBER_11155111` or `11155111`
+   * - Named chain: `EvmChainUniqueId.ethereumSepolia` or 'evm_ethereum_sepolia'.
+   */
   chainId: EvmChainId | EvmChainUniqueId;
-  /** EVM address. For example `'0x1234567890123456789012345678901234567890'` */
+
+  /**
+   * EVM address of a Fordefi vault.
+   *
+   * For example: '0x1234567890123456789012345678901234567890'.
+   */
   address: Address;
-  /** Fordefi API user token (base64 encoded) issued via the Fordefi Web Console */
+
+  /**
+   * Fordefi API user token (base64 encoded) issued via the [Fordefi Web Console](https://app.fordefi.com/user-management).
+   *
+   * For example: 'eyJWthEAdEr.eyJwTPaYLoad.SiGNAtUrEBase64=='
+   */
   apiUserToken: string;
-  /** Private key in PEM format used to sign the body of requests sent to the Fordefi API - the content of the private key `.pem`, see {@link https://docs.fordefi.com/reference/pair-an-api-client-with-the-api-signer).} */
+
+  /**
+   * Private key in PEM format used to sign the body of requests sent to the Fordefi API.
+   * This is the content the private `.pem` file, see [Create a public/private signature key pair for the API client](https://docs.fordefi.com/reference/pair-an-api-client-with-the-api-signer).
+   *
+   * Example of a private ECDSA `.pem` file:
+   * ```
+   * -----BEGIN EC PRIVATE KEY-----
+   * PrivateKeyBase64==
+   * -----END EC PRIVATE KEY-----
+   * ```
+   */
   apiPayloadSignKey: string;
-  /** Fordefi API base url (used for development), defaults to production url. For example 'https://api.fordefi.com' */
-  apiBaseUrl?: string;
-  /** Fallback JSON-RPC HTTP node url. Methods not implemented by this provider will pass through to this node. For example 'https://rpc.sepolia.org' */
+
+  /**
+   * Fallback JSON-RPC HTTP node url.
+   * Methods not implemented by this provider will pass through and be handled by this node.
+   *
+   * For example: 'https://rpc.sepolia.org'.
+   */
   rpcUrl?: string;
+
+  /**
+   * Fordefi API base url (used for development), defaults to production API url.
+   *
+   * For example: 'https://api.fordefi.com'.
+   */
+  apiBaseUrl?: string;
 }
