@@ -5,7 +5,7 @@ import {
   ResourceNotFoundRpcError,
   UnauthorizedProviderError,
 } from 'viem';
-import { BlockchainsApi, Configuration, ErrorContext, TransactionsApi, VaultsApi } from '../openapi';
+import { BlockchainsApi, Configuration, ResponseContext, TransactionsApi, VaultsApi } from '../openapi';
 
 import { FordefiProviderConfig } from '../types';
 import { FORDEFI_API_BASE_URL_PROD } from '../constants';
@@ -36,7 +36,11 @@ export class ApiClient {
       headers: getStaticHeaders(),
       middleware: [
         {
-          onError: async (context: ErrorContext): Promise<Response | void> => {
+          post: async (context: ResponseContext): Promise<Response | void> => {
+            if (context.response?.status < 400) {
+              return;
+            }
+
             const payload = await context.response
               ?.clone()
               .json()
