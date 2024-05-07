@@ -1,7 +1,6 @@
 import { EventEmitter } from 'events';
 import {
   Address,
-  EIP1193EventMap,
   EIP1193Events,
   Hex,
   http,
@@ -14,6 +13,7 @@ import {
   ProviderDisconnectedError,
   ProviderRpcErrorCode,
   RpcErrorCode,
+  RpcSchema,
   UnsupportedProviderMethodError,
 } from 'viem';
 import { AnyCreateEvmTransactionRequest, AnyEvmTransaction, FordefiProviderConfig } from '../types';
@@ -26,8 +26,6 @@ import {
   EvmTransactionState,
   EvmVault,
   PushMode,
-  SignerType,
-  UserType,
   VaultType,
 } from '../openapi';
 import { ApiClient, middlewareAddRequestSigningHeaders } from '../api';
@@ -38,45 +36,78 @@ import {
   waitForTransactionState,
 } from '../utils/transactions';
 import { base64SignatureToHex, waitForEmittedEvent } from '../utils';
-import { extractUserIdFromJwt } from '../utils/user-info';
+import { assertUnreachable } from '../utils/types';
 import {
+  ConnectivityStatus,
+  EIP1193EventCallbackParams,
   FordefiEIP1193Provider,
-  Method,
-  MethodParams,
+  FordefiRpcSchema,
+  isFordefiMethod,
   MethodReturnType,
+  NonFordefiRpcSchema,
   RequestArgs,
-  UserInfo,
 } from './provider.types';
 
-type EventsListenersMap = Record<keyof EIP1193EventMap, Parameters<EIP1193EventMap[keyof EIP1193EventMap]>>;
-
 /**
- * Web3 provider that implements EIP-1193.
+ * Web3 provider that implements [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193).
  *
- * Auto connects after construction and emits a 'connect' event.
- * To wait until connected either pass a callback to `provider.on('connect', cb)` or use the helper `await provider.waitForEmittedEvent('connect')`.
- * Notice: register any event listeners immediately after creating a new instance, and before any asynchronous operations
- * or event loop tasks are scheduled.
+ * The provider automatically connects to Fordefi when a new instance is constructed, and emits a `connect` event once
+ * both `chainId` and `address` were verified: chain is supported and address is managed by the given API user.
+ * - To subscribe to [events](https://eips.ethereum.org/EIPS/eip-1193#events-1) pass a callback to `on('eventName', callbackFn)`.
+ * - To get instead a promise that resolves once the event is emitted use the promisified helper `waitForEmittedEvent('eventName')`.
+ *
+ * NOTICE:
+ * Make sure to subscribe to 'connect' immediately after creating a new instance, and before initiating any other
+ * async operations, to avoid a race condition where the event is emitted before the listener is attached.
+ *
+ * For example:
+ * ```ts
+ * const provider = new FordefiWeb3Provider(config)
+ *
+ * const onConnect = ({ chainId }: ProviderConnectInfo) => {
+ *   console.log(`Connected to chain ${chainId}`)
+ * }
+ *
+ * // option 1: subscribe with a callback
+ * provider.on('connect', onConnect)
+ *
+ * // option 2: act once a promise resolves
+ * const result = await provider.waitForEmittedEvent('connect')
+ * onConnect(result)
+ * // or
+ * provider
+ *   .waitForEmittedEvent('connect')
+ *   .then(onConnect)
+ * ```
+ *
+ * Emitted events:
+ * - `connect` - provider becomes connected.
+ * - `disconnect` - provider becomes disconnected.
+ * - `chainChanged` - emitted once during connection with the `chainId` you provided.
+ * - `accountsChanged` - emitted once during connection with the `address` you provided.
+ *
+ * Interfaces of each event callback are described in {@link EIP1193EventCallbackParams} and [EIP1193EventMap](https://github.com/wevm/viem/blob/viem%402.9.29/src/types/eip1193.ts#L61-L67).
+ *
  */
 export class FordefiWeb3Provider implements FordefiEIP1193Provider {
   public readonly on: EIP1193Events['on'];
   public readonly removeListener: EIP1193Events['removeListener'];
   public readonly waitForEmittedEvent: ReturnType<typeof waitForEmittedEvent>;
 
-  private readonly eventEmitter: EventEmitter<EventsListenersMap>;
+  private readonly eventEmitter: EventEmitter<EIP1193EventCallbackParams>;
   private readonly apiClient: ApiClient;
   private readonly config: FordefiProviderConfig;
   private chain: EvmChain | undefined;
   private vault: EvmVault | undefined;
-  private status: 'connected' | 'connecting' | 'disconnected';
+  private status: ConnectivityStatus;
 
   constructor(config: FordefiProviderConfig) {
     this.config = config;
     this.apiClient = new ApiClient(config);
 
-    const eventEmitter = new EventEmitter<EventsListenersMap>();
-    this.on = eventEmitter.on.bind(eventEmitter)<EventsListenersMap>;
-    this.removeListener = eventEmitter.removeListener.bind(eventEmitter)<EventsListenersMap>;
+    const eventEmitter = new EventEmitter<EIP1193EventCallbackParams>();
+    this.on = eventEmitter.on.bind(eventEmitter)<EIP1193EventCallbackParams>;
+    this.removeListener = eventEmitter.removeListener.bind(eventEmitter)<EIP1193EventCallbackParams>;
     this.eventEmitter = eventEmitter;
     this.waitForEmittedEvent = waitForEmittedEvent(eventEmitter);
 
@@ -92,46 +123,55 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
    *
    * @throws RpcError with error codes defined in {@link RpcErrorCode} and {@link ProviderRpcErrorCode}
    */
-  async request<M extends Method>(args: RequestArgs<M>): Promise<MethodReturnType<M>> {
-    let res;
+  async request<
+    S extends RpcSchema = FordefiRpcSchema | NonFordefiRpcSchema,
+    M extends S[number]['Method'] = S[number]['Method'],
+  >(args: RequestArgs<S, M>): Promise<MethodReturnType<S, M>> {
+    let result;
 
-    switch (args.method) {
-      // EIP-1474
-      case 'eth_sendTransaction':
-        res = this.ethSendTransaction(args.params);
-        break;
-      case 'eth_signTransaction':
-        res = this.ethSignTransaction(args.params);
-        break;
-      case 'eth_accounts':
-        res = this.ethAccounts();
-        break;
-      // EIP-1102
-      case 'eth_requestAccounts':
-        res = this.ethAccounts();
-        break;
-      // EIP-695
-      case 'eth_chainId':
-        res = this.ethChainId();
-        break;
-      // EIP-191
-      case 'personal_sign':
-        res = this.personalSign(args.params);
-        break;
-      // EIP-712
-      case 'eth_signTypedData':
-      case 'eth_signTypedData_v3':
-      case 'eth_signTypedData_v4':
-        res = this.ethSignTypedData(args.params);
-        break;
-      default:
-        res = this.jsonRpcHttpRequestFn(args);
+    if (isFordefiMethod(args)) {
+      switch (args.method) {
+        // EIP-1474
+        case 'eth_sendTransaction':
+          result = this.ethSendTransaction(args);
+          break;
+        case 'eth_signTransaction':
+          result = this.ethSignTransaction(args);
+          break;
+        case 'eth_accounts':
+          result = this.ethAccounts();
+          break;
+        // EIP-1102
+        case 'eth_requestAccounts':
+          result = this.ethAccounts();
+          break;
+        // EIP-695
+        case 'eth_chainId':
+          result = this.ethChainId();
+          break;
+        // EIP-191
+        case 'personal_sign':
+          result = this.personalSign(args);
+          break;
+        // EIP-712
+        case 'eth_signTypedData':
+        case 'eth_signTypedData_v3':
+        case 'eth_signTypedData_v4':
+          result = this.ethSignTypedData(args);
+          break;
+        default:
+          assertUnreachable(args);
+      }
+    } else {
+      result = this.jsonRpcHttpRequestFn(args);
     }
 
-    return res as Promise<MethodReturnType<M>>;
+    return result as Promise<MethodReturnType<S, M>>;
   }
 
-  private jsonRpcHttpRequestFn<M extends Method>(args: RequestArgs<M>) {
+  private jsonRpcHttpRequestFn<S extends RpcSchema, M extends S[number]['Method'] = S[number]['Method']>(
+    args: RequestArgs<S, M>,
+  ) {
     if (!this.config.rpcUrl) {
       throw new UnsupportedProviderMethodError(
         new Error(
@@ -188,8 +228,9 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
     return accounts;
   }
 
-  private async ethSendTransaction(params: MethodParams<'eth_sendTransaction'>) {
+  private async ethSendTransaction({ params }: RequestArgs<FordefiRpcSchema, 'eth_sendTransaction'>) {
     const [transaction] = params;
+
     const { vault, chain } = this._getFordefiChainVault();
 
     const { hash } = await this._invokeCreateTransaction(
@@ -203,7 +244,7 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
     return hash;
   }
 
-  private async ethSignTransaction(params: MethodParams<'eth_signTransaction'>) {
+  private async ethSignTransaction({ params }: RequestArgs<FordefiRpcSchema, 'eth_signTransaction'>) {
     const [transaction] = params;
     const { vault, chain } = this._getFordefiChainVault();
 
@@ -218,7 +259,7 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
     return rawTransaction;
   }
 
-  private async personalSign(params: MethodParams<'personal_sign'>) {
+  private async personalSign({ params }: RequestArgs<FordefiRpcSchema, 'personal_sign'>) {
     const [rawData, signingAddress] = params;
     const { chain, vault } = this._getFordefiChainVault();
 
@@ -238,9 +279,9 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
     );
   }
 
-  private async ethSignTypedData(
-    params: MethodParams<'eth_signTypedData' | 'eth_signTypedData_v3' | 'eth_signTypedData_v4'>,
-  ) {
+  private async ethSignTypedData({
+    params,
+  }: RequestArgs<FordefiRpcSchema, 'eth_signTypedData' | 'eth_signTypedData_v3' | 'eth_signTypedData_v4'>) {
     const { typedData, fromAddress } = parseTypedDataParams(params);
     const { chain, vault } = this._getFordefiChainVault();
 
@@ -304,9 +345,9 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
   }
 
   /**
-   * Connects the provider and emits a 'connect' event.
-   * If already connected, does nothing.
-   * If connecting, waits for the connection to be established.
+   * Connects the provider to Fordefi and emits a 'connect' event.
+   * - If already connected it does nothing.
+   * - If connecting, waits for the connection to be established.
    *
    * @returns a promise of that resolves once connected
    */
@@ -321,6 +362,7 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
 
     this.status = 'connecting';
 
+    const re = await this.request({ method: 'eth_accounts' });
     await Promise.all([this.request({ method: 'eth_accounts' }), this.request({ method: 'eth_chainId' })]).then(
       ([_address, chainId]) => {
         // verify disconnect wasn't called while waiting for the responses
@@ -346,7 +388,7 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
     this._onDisconnect();
   }
 
-  _onDisconnect() {
+  private _onDisconnect() {
     const error = new ProviderDisconnectedError(new Error('Provider got disconnected'));
     this.eventEmitter.emit('disconnect', error);
     return error;
@@ -359,18 +401,5 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
    */
   getStatus() {
     return this.status;
-  }
-
-  /**
-   * Returns the user info of the API user associated with this provider
-   *
-   * @returns API user info
-   */
-  getUserInfo(): UserInfo {
-    return {
-      id: extractUserIdFromJwt(this.config.apiUserToken),
-      userType: UserType.apiUser,
-      signerType: SignerType.apiSigner,
-    };
   }
 }

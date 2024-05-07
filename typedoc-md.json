@@ -1,0 +1,18 @@
+{
+    "entryPoints": ["src/index.ts"],
+    "name": "Fordefi Web3 Provider Docs",
+    "out": "docs/markdown",
+    "theme": "markdown",
+    "plugin": ["typedoc-plugin-markdown"],
+    "sort": ["kind", "source-order"],
+    "kindSortOrder": ["Class", "Interface", "TypeAlias", "Enum", "Variable"],
+    "excludePrivate": true,
+    "excludeProtected": true,
+    "excludeExternals": false,
+    "excludeInternal": true,
+    "includeVersion": true,
+    "disableSources": true,
+    "excludeReferences": false,
+    "hideGenerator": true,
+    "hidePageTitle": true
+}

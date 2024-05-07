@@ -75,6 +75,8 @@ export default [
     },
   },
   {
+    // The plugin applies to markdown files and code blocks within markdown files.
+    // It does not cover ```typescript code blocks, use ```ts instead.
     files: ['**/*.md'],
     plugins: {
       markdown,
@@ -82,6 +84,14 @@ export default [
     processor: 'markdown/markdown',
   },
   {
-    ignores: ['node_modules', 'src/openapi', 'dist'],
+    // Applies to ```ts code blocks within markdown files.
+    files: ['**/*.md/*.ts'],
+    rules: {
+      'no-console': 'off',
+      'import/no-unresolved': 'off',
+    },
+  },
+  {
+    ignores: ['node_modules', 'src/openapi', 'dist', 'docs'],
   },
 ];

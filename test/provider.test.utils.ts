@@ -1,10 +1,10 @@
 import { Hex, numberToHex } from 'viem';
-import { ChainUniqueId, EvmChainId, FordefiProviderConfig, FordefiWeb3Provider } from '../src';
+import { EvmChainId, EvmChainUniqueId, FordefiProviderConfig, FordefiWeb3Provider } from '../src';
 import { env } from './env';
 
 const sepoliaChainFixture = {
   chainId: 11155111 as const satisfies EvmChainId,
-  uniqueId: ChainUniqueId.evmEthereumSepolia,
+  uniqueId: EvmChainUniqueId.ethereumSepolia,
 };
 
 export const TEST_PROVIDER_CONFIG: FordefiProviderConfig = {
@@ -17,12 +17,12 @@ export const TEST_PROVIDER_CONFIG: FordefiProviderConfig = {
   rpcUrl: `https://sepolia.infura.io/v3/${env.INFURA_API_KEY}`,
 };
 
-export const GWEI = 10 ** 9;
+export const GWEI = BigInt(10 ** 9);
 
 export const testFixtures = {
   toAddress: '0x46880C6712A2933769c50309298482ac061680c4' as const satisfies Hex,
   chainIdSepoliaHex: numberToHex(sepoliaChainFixture.chainId),
-  value: numberToHex(5 * GWEI),
+  value: 5n * GWEI,
 };
 
 export const minedTransactionFixture = {

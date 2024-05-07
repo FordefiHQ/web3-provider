@@ -1,13 +1,4 @@
-import {
-  Hex,
-  hexToBigInt,
-  InternalRpcError,
-  InvalidParamsRpcError,
-  isAddress,
-  isAddressEqual,
-  isHex,
-  RpcTransactionRequest,
-} from 'viem';
+import { Hex, InternalRpcError, InvalidParamsRpcError, isAddress, isAddressEqual, TransactionRequest } from 'viem';
 import { ApiClient } from '../api';
 import {
   CreateEvmMessageRequest,
@@ -30,7 +21,7 @@ import {
   SignerType,
 } from '../openapi';
 import { AnyEvmTransaction } from '../types';
-import { MethodParams } from '../provider/provider.types';
+import { FordefiRpcSchema, RequestArgs } from '../provider/provider.types';
 import { waitFor } from './wait-for';
 
 export const buildSignTransactionRequest = (
@@ -54,28 +45,28 @@ const toFordefiEvmGas = ({
   maxFeePerGas,
   gasPrice,
   gas,
-}: Partial<RpcTransactionRequest>): CreateEvmRawTransactionRequestGas => {
-  const gasLimit = gas && hexToBigInt(gas).toString();
+}: Partial<TransactionRequest>): CreateEvmRawTransactionRequestGas => {
+  const gasLimit = gas === undefined ? undefined : gas.toString();
 
-  if (maxPriorityFeePerGas && maxFeePerGas) {
+  if (maxPriorityFeePerGas !== undefined && maxFeePerGas !== undefined) {
     return {
       type: CustomGasRequestTypeEnum.custom,
       gasLimit,
       details: {
         type: DynamicGasRequestTypeEnum.dynamic,
-        maxPriorityFeePerGas: hexToBigInt(maxPriorityFeePerGas as Hex).toString(),
-        maxFeePerGas: hexToBigInt(maxFeePerGas as Hex).toString(),
+        maxPriorityFeePerGas: maxPriorityFeePerGas.toString(),
+        maxFeePerGas: maxFeePerGas.toString(),
       },
     };
   }
 
-  if (gasPrice) {
+  if (gasPrice !== undefined) {
     return {
       type: CustomGasRequestTypeEnum.custom,
       gasLimit,
       details: {
         type: LegacyGasTypeEnum.legacy,
-        price: hexToBigInt(gasPrice as Hex).toString(),
+        price: gasPrice.toString(),
       },
     };
   }
@@ -88,7 +79,7 @@ const toFordefiEvmGas = ({
 };
 
 export const buildEvmRawTransactionRequest = (
-  transaction: Partial<RpcTransactionRequest>,
+  transaction: Partial<TransactionRequest>,
   chain: EvmChain,
   vault: EvmVault,
   pushMode: PushMode,
@@ -105,7 +96,7 @@ export const buildEvmRawTransactionRequest = (
     throw new InvalidParamsRpcError(new Error('Transaction "to" is either missing or invalid'));
   }
 
-  if (!value || !isHex(value)) {
+  if (value === undefined || typeof value !== 'bigint') {
     throw new InvalidParamsRpcError(new Error('Transaction "value" in either missing or invalid'));
   }
 
@@ -119,7 +110,7 @@ export const buildEvmRawTransactionRequest = (
       skipPrediction: true,
       pushMode,
       chain: chain.chainId,
-      value: (value && hexToBigInt(value as Hex).toString()) as string,
+      value: value.toString(),
       to,
       data: data
         ? {
@@ -167,7 +158,10 @@ export const waitForTransactionState = async <T extends AnyEvmTransaction>(
  * Some legacy implementations pass params in reverse order, this returns them consistently.
  */
 export const parseTypedDataParams = (
-  params: MethodParams<'eth_signTypedData' | 'eth_signTypedData_v3' | 'eth_signTypedData_v4'>,
+  params: RequestArgs<
+    FordefiRpcSchema,
+    'eth_signTypedData' | 'eth_signTypedData_v3' | 'eth_signTypedData_v4'
+  >['params'],
 ) => {
   const [_maybeFromAddress, _maybeTypedData] = params;
 
