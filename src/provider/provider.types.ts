@@ -1,4 +1,5 @@
 import {
+  Address,
   EIP1193EventMap,
   EIP1193Provider,
   EIP1474Methods,
@@ -9,7 +10,6 @@ import {
   TransactionRequest,
   TypedDataDefinition,
 } from 'viem';
-import { Address } from 'abitype';
 import { OmitFromArray } from '../utils/types';
 
 /** Spec of all methods implemented by Fordefi. */

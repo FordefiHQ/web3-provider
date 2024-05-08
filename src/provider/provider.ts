@@ -7,6 +7,7 @@ import {
   InternalRpcError,
   InvalidInputRpcError,
   InvalidParamsRpcError,
+  isAddressEqual,
   isHex,
   numberToHex,
   ProviderConnectInfo,
@@ -16,7 +17,7 @@ import {
   RpcSchema,
   UnsupportedProviderMethodError,
 } from 'viem';
-import { AnyCreateEvmTransactionRequest, AnyEvmTransaction, FordefiProviderConfig } from '../types';
+import { AnyCreateEvmTransactionRequest, AnyEvmTransaction, EvmVault, FordefiProviderConfig } from '../types';
 import {
   ChainType,
   CreateEvmPersonalMessageRequestTypeEnum,
@@ -24,7 +25,6 @@ import {
   EnrichedEvmChain,
   EvmChain,
   EvmTransactionState,
-  EvmVault,
   PushMode,
   VaultType,
 } from '../openapi';
@@ -263,7 +263,7 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
     const [rawData, signingAddress] = params;
     const { chain, vault } = this._getFordefiChainVault();
 
-    if (signingAddress !== vault.address) {
+    if (!isAddressEqual(signingAddress, vault.address)) {
       throw new InvalidParamsRpcError(
         new Error(`Address ${signingAddress} does not match this provider's managed address ${vault.address}.`),
       );
@@ -285,7 +285,7 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
     const { typedData, fromAddress } = parseTypedDataParams(params);
     const { chain, vault } = this._getFordefiChainVault();
 
-    if (fromAddress !== vault.address) {
+    if (!isAddressEqual(fromAddress, vault.address)) {
       throw new InvalidParamsRpcError(
         new Error(`Address ${fromAddress} does not match given provider's address ${vault.address}`),
       );
