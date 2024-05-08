@@ -1,4 +1,13 @@
-import { Hex, InternalRpcError, InvalidParamsRpcError, isAddress, isAddressEqual, TransactionRequest } from 'viem';
+import {
+  Address,
+  Hex,
+  InternalRpcError,
+  InvalidParamsRpcError,
+  isAddress,
+  isAddressEqual,
+  TransactionRequest,
+  TypedDataDefinition,
+} from 'viem';
 import { ApiClient } from '../api';
 import {
   CreateEvmMessageRequest,
@@ -13,14 +22,13 @@ import {
   EvmChain,
   EvmDataRequestHexTypeEnum,
   EvmTransactionState,
-  EvmVault,
   GasPriorityLevelRequest,
   GasPriorityRequestTypeEnum,
   LegacyGasTypeEnum,
   PushMode,
   SignerType,
 } from '../openapi';
-import { AnyEvmTransaction } from '../types';
+import { AnyEvmTransaction, EvmVault } from '../types';
 import { FordefiRpcSchema, RequestArgs } from '../provider/provider.types';
 import { waitFor } from './wait-for';
 
@@ -86,7 +94,7 @@ export const buildEvmRawTransactionRequest = (
 ): CreateEvmTransactionRequest => {
   const { value, from, to, data } = transaction;
 
-  if (from && !isAddressEqual(from, vault.address as Hex)) {
+  if (from && !isAddressEqual(from, vault.address)) {
     throw new InvalidParamsRpcError(
       new Error('Transaction "from" does not match the address managed by this provider'),
     );
@@ -162,12 +170,12 @@ export const parseTypedDataParams = (
     FordefiRpcSchema,
     'eth_signTypedData' | 'eth_signTypedData_v3' | 'eth_signTypedData_v4'
   >['params'],
-) => {
+): { typedData: string; fromAddress: Hex } => {
   const [_maybeFromAddress, _maybeTypedData] = params;
 
   const [fromAddress, _typedData] = isAddress(_maybeFromAddress)
-    ? [_maybeFromAddress, _maybeTypedData]
-    : [_maybeTypedData, _maybeFromAddress];
+    ? ([_maybeFromAddress, _maybeTypedData] satisfies typeof params)
+    : ([_maybeTypedData, _maybeFromAddress] as unknown as typeof params);
   const typedData = typeof _typedData === 'string' ? _typedData : JSON.stringify(_typedData);
 
   return { typedData, fromAddress };
