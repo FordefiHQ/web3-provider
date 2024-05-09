@@ -29,6 +29,7 @@
     "Cryptocurrency"
   ],
   "scripts": {
+    "prepare": "husky install",
     "yarn-run-all": "yarn npm-run-all --parallel --print-label",
     "clean": "rm -rf dist",
     "ts:check": "tsc --noEmit",
