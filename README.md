@@ -144,7 +144,7 @@ interface FordefiProviderConfig {
 
   /**
    * Private key in PEM format used to sign the body of requests sent to the Fordefi API.
-   * This is the content the private `.pem` file.
+   * This is the content of the private `.pem` file.
    * See: https://docs.fordefi.com/reference/pair-an-api-client-with-the-api-signer
    *
    * Example of a private ECDSA `.pem` file:
