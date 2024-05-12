@@ -92,6 +92,7 @@ jobs:
       NEW_VERSION_TAG: ${{ needs.detect-new-version.outputs.NEW_VERSION_TAG }}
     outputs:
       CREATE_PR_SUCCESS: ${{ steps.create-pr-gh-cli.outputs.CREATE_PR_SUCCESS }}
+      CREATED_PR_URL: ${{ steps.create-pr-gh-cli.outputs.CREATED_PR_URL }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -147,9 +148,13 @@ jobs:
             - [ ] Bump the version in package.json.
             - [ ] Update CHANGELOG.md.
             " \
-            --reviewer "gilmeir-arnac"
+            --reviewer "gilmeir-arnac" \
+            --assignee "${{ github.actor }}"
 
           echo "CREATE_PR_SUCCESS=$( [ $? -eq 0 ] && echo "true" || echo "false" )" >> $GITHUB_OUTPUT
+
+          CREATED_PR_URL="$(gh pr list --repo ${{ github.repository }} --head ${{ github.ref_name }} --base main --json url --jq ".[].url")"
+          echo "CREATED_PR_URL=$CREATED_PR_URL" >> $GITHUB_OUTPUT
 
   report-to-slack:
     name: Report result to Slack
@@ -158,17 +163,28 @@ jobs:
     env:
       NEW_VERSION_TAG: ${{ needs.detect-new-version.outputs.NEW_VERSION_TAG }}
       CREATE_PR_SUCCESS: ${{ needs.create-pr.outputs.CREATE_PR_SUCCESS }}
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      CREATED_PR_URL: ${{ needs.create-pr.outputs.CREATED_PR_URL }}
+      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      # channel #web3-provider-releases
+      SLACK_CHANNEL_ID: "C072BEST4AC"
     steps:
       - name: Notify Slack on Success
         if: ${{ env.CREATE_PR_SUCCESS == 'true' }}
         uses: slackapi/slack-github-action@v1.26.0
         with:
+          channel-id: ${{ env.SLACK_CHANNEL_ID }}
           # Slack Block Kit API: https://api.slack.com/reference/block-kit/blocks#link-element-type
           payload: |
             {
               "text": "Release `${{ env.NEW_VERSION_TAG }}` PR is waiting for approval",
               "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "Pull request: ${{ env.CREATED_PR_URL }}"
+                  }
+                },
                 {
                   "type": "section",
                   "text": {
@@ -190,6 +206,7 @@ jobs:
         if: ${{ env.CREATE_PR_SUCCESS != 'true' }}
         uses: slackapi/slack-github-action@v1.26.0
         with:
+          channel-id: ${{ env.SLACK_CHANNEL_ID }}
           # Slack Block Kit API: https://api.slack.com/reference/block-kit/blocks#link-element-type
           payload: |
             {
