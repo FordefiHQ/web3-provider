@@ -176,27 +176,19 @@ jobs:
           # Slack Block Kit API: https://api.slack.com/reference/block-kit/blocks#link-element-type
           payload: |
             {
-              "text": "Release `${{ env.NEW_VERSION_TAG }}` PR is waiting for approval",
               "blocks": [
                 {
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Pull request: ${{ env.CREATED_PR_URL }}"
+                    "text": "*Release `${{ env.NEW_VERSION_TAG }}` is waiting for approval*  |  <${{ env.CREATED_PR_URL }}|Review>  |  <https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|Workflow>"
                   }
                 },
                 {
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Workflow run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-                  }
-                },
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "Initiator: `${{ github.actor }}`"
+                    "text": "Initiated by `${{ github.actor }}` from branch `${{ github.ref }}`"
                   }
                 }
               ]
@@ -210,13 +202,19 @@ jobs:
           # Slack Block Kit API: https://api.slack.com/reference/block-kit/blocks#link-element-type
           payload: |
             {
-              "text": "Failed to create a release PR for `${{ env.NEW_VERSION_TAG }}`",
               "blocks": [
                 {
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Workflow run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                    "text": "*Failed to create a release for `${{ env.NEW_VERSION_TAG }}`*  |  <https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|Workflow>"
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "Initiated by `${{ github.actor }}` from branch `${{ github.ref }}`"
                   }
                 }
               ]
