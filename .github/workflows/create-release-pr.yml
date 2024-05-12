@@ -56,6 +56,7 @@ jobs:
         if: ${{ env.IS_NEW_VERSION == 'true' }}
         run: |
           echo "env.IS_NEW_VERSION=${{ env.IS_NEW_VERSION }}"
+          echo "NEW_VERSION_TAGGG=${{ env.NEW_VERSION_TAG }}"
 
           function verify_file_has_diff_with_version() {
             FILE_NAME=$1
@@ -99,6 +100,8 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y gh jq
+          echo "NEW_VERSION_TAG=${{ env.NEW_VERSION_TAG }}"
+          echo "NEW_VERSION_TAG_NEEDS=${{ needs.detect-new-version.outputs.NEW_VERSION_TAG }}"
 
       - name: Generate GH token
         run: |
@@ -142,12 +145,15 @@ jobs:
         run: |
           # TODO: remove this line
           set -x
+          echo "Authenticating with gh auth login"
+          echo "INSTALLATION_ACCESS_TOKEN --- LENGTH"
+          echo -n "$INSTALLATION_ACCESS_TOKEN" | wc -m
           echo "${{ env.INSTALLATION_ACCESS_TOKEN }}" | gh auth login --with-token
           echo "--------------env.NEW_VERSION_TAG=${{ env.NEW_VERSION_TAG }}----------------"
           gh pr create \
             --base main \
             --head "release/test-create-pr-workflow" \
-            --title "Release 0.2.1" \
+            --title "Release ${{ env.NEW_VERSION_TAG }}" \
             --body "
             <\!--
             - Bump the version in package.json.
