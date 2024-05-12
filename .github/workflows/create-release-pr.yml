@@ -188,7 +188,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Initiated by `${{ github.actor }}` from branch `${{ github.ref }}`"
+                    "text": "Initiated by `${{ github.actor }}` from branch `${{ github.ref_name }}`"
                   }
                 }
               ]
@@ -214,7 +214,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Initiated by `${{ github.actor }}` from branch `${{ github.ref }}`"
+                    "text": "Initiated by `${{ github.actor }}` from branch `${{ github.ref_name }}`"
                   }
                 }
               ]
