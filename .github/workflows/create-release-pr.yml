@@ -98,19 +98,56 @@ jobs:
       - name: Install GitHub CLI
         run: |
           sudo apt-get update
-          sudo apt-get install -y gh
+          sudo apt-get install -y gh jq
+
+      - name: Generate GH token
+        run: |
+          APP_ID="896608"
+          PRIVATE_KEY_PATH="gh_create_pr_app_private.pem"
+
+          echo ${{ secrets.CREATE_PR_APP_PRIVATE_KEY }} > $PRIVATE_KEY_PATH
+
+          # Header
+          HEADER=$(echo -n '{"alg":"RS256","typ":"JWT"}' | openssl base64 -e -A | sed s/\\+/-/g | sed s/\\//_/g | sed -E s/=+$//)
+
+          # Payload with issued at and expiration times
+          iat=$(date +%s)  # Current time in seconds since the Unix epoch
+          exp=$((iat + 120))  # JWT expiration time set to 2 minutes after the issued at time
+          PAYLOAD=$(echo -n "{\"iat\":$iat,\"exp\":$exp,\"iss\":\"$APP_ID\"}" | openssl base64 -e -A | sed s/\\+/-/g | sed s/\\//_/g | sed -E s/=+$//)
+
+          # Create the signature
+          UNSIGNED_TOKEN="$HEADER.$PAYLOAD"
+          SIGNATURE=$(echo -n "$UNSIGNED_TOKEN" | openssl dgst -sha256 -sign "$PRIVATE_KEY_PATH" | openssl base64 -e -A | sed s/\\+/-/g | sed s/\\//_/g | sed -E s/=+$//)
+
+          # Complete JWT
+          JWT="$UNSIGNED_TOKEN.$SIGNATURE"
+
+          INSTALLATION_ID="50650204"  # Replace with your actual installation ID
+
+          # Make API request
+          ACCESS_TOKEN_RESPONSE=$(curl -X POST \
+            -H "Authorization: Bearer $JWT" \
+            -H "Accept: application/vnd.github.v3+json" \
+              https://api.github.com/app/installations/$INSTALLATION_ID/access_tokens)
+
+          # Extract the token
+          INSTALLATION_ACCESS_TOKEN=$(echo "$ACCESS_TOKEN_RESPONSE" | jq -r '.token')
+
+          echo "INSTALLATION_ACCESS_TOKEN=$INSTALLATION_ACCESS_TOKEN" >> $GITHUB_ENV
 
       - name: Create Pull Request
         id: create-pr-gh-cli
+        env:
+          BRANCH_NAME: ${{ github.ref_name }}
         run: |
           # TODO: remove this line
           set -x
-          echo "${{ secrets.GH_PAT_TOKEN }}" | gh auth login --with-token
-          echo "env.NEW_VERSION_TAG_2=${{ env.NEW_VERSION_TAG }}"
+          echo "${{ env.INSTALLATION_ACCESS_TOKEN }}" | gh auth login --with-token
+          echo "--------------env.NEW_VERSION_TAG=${{ env.NEW_VERSION_TAG }}----------------"
           gh pr create \
             --base main \
-            --head "${{ github.ref_name }}" \
-            --title "Release ${{ env.NEW_VERSION_TAG }}" \
+            --head "release/test-create-pr-workflow" \
+            --title "Release 0.2.1" \
             --body "
             <\!--
             - Bump the version in package.json.
@@ -134,6 +171,9 @@ jobs:
         uses: slackapi/slack-github-action@v1.18.0
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          REPOSITORY: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.number }}
+          INITIATOR: ${{ github.actor }}
         with:
           # Slack Block Kit API: https://api.slack.com/reference/block-kit/blocks#link-element-type
           payload: |
@@ -151,7 +191,7 @@ jobs:
                   "type": "rich_text_section",
                   "text": {
                     "type": "link",
-                    "url": "${{github.repository}}/pull/${{ github.event.number }}"
+                    "url": "${{ env.REPOSITORY }}/pull/${{ env.PR_NUMBER }}"
                   }
                 },
                 {
@@ -166,7 +206,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Initiator: `${{ github.actor }}`"
+                    "text": "Initiator: `${{ env.INITIATOR }}`"
                   }
                 }
               ]
