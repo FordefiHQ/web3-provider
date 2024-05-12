@@ -96,20 +96,16 @@ jobs:
         with:
           fetch-depth: 0  # fetch all history for all tags and branches
 
-      - name: Install GitHub CLI
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y gh jq
-          echo "NEW_VERSION_TAG=${{ env.NEW_VERSION_TAG }}"
-          echo "NEW_VERSION_TAG_NEEDS=${{ needs.detect-new-version.outputs.NEW_VERSION_TAG }}"
-
       - name: Generate GH token
+        env:
+          CREATE_PR_APP_PRIVATE_KEY: ${{ secrets.CREATE_PR_APP_PRIVATE_KEY }}
         run: |
           APP_ID="896608"
           PRIVATE_KEY_PATH="gh_create_pr_app_private.pem"
 
-          echo ${{ secrets.CREATE_PR_APP_PRIVATE_KEY }} > $PRIVATE_KEY_PATH
+          echo "$CREATE_PR_APP_PRIVATE_KEY" > $PRIVATE_KEY_PATH
 
+          echo "SECRET LENGTH: ${#CREATE_PR_APP_PRIVATE_KEY}"
           # Header
           HEADER=$(echo -n '{"alg":"RS256","typ":"JWT"}' | openssl base64 -e -A | sed s/\\+/-/g | sed s/\\//_/g | sed -E s/=+$//)
 
@@ -146,14 +142,16 @@ jobs:
           # TODO: remove this line
           set -x
           echo "Authenticating with gh auth login"
-          echo "INSTALLATION_ACCESS_TOKEN --- LENGTH"
+
+          echo "INSTALLATION_ACCESS_TOKEN --- bash env --- LENGTH"
           echo -n "$INSTALLATION_ACCESS_TOKEN" | wc -m
-          echo "${{ env.INSTALLATION_ACCESS_TOKEN }}" | gh auth login --with-token
-          echo "--------------env.NEW_VERSION_TAG=${{ env.NEW_VERSION_TAG }}----------------"
+
+          echo "$INSTALLATION_ACCESS_TOKEN" | gh auth login --with-token
+          echo "--------------env.NEW_VERSION_TAG=${NEW_VERSION_TAG}----------------"
           gh pr create \
             --base main \
             --head "release/test-create-pr-workflow" \
-            --title "Release ${{ env.NEW_VERSION_TAG }}" \
+            --title "Release $NEW_VERSION_TAG" \
             --body "
             <\!--
             - Bump the version in package.json.
