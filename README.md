@@ -26,7 +26,7 @@
 ## Overview
 This provider class implements [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) powered by the [Fordefi API](https://docs.fordefi.com).
 
-It provides a [request()](https://eips.ethereum.org/EIPS/eip-1193#request) function to execute JSON RPC methods, and it emits the relevant [events](https://eips.ethereum.org/EIPS/eip-1193#events-1).
+It provides a [request()](https://eips.ethereum.org/EIPS/eip-1193#request) function to execute JSON RPC methods and emits the relevant [events](https://eips.ethereum.org/EIPS/eip-1193#events-1).
 
 
 ## Installation
@@ -66,7 +66,7 @@ const provider = new FordefiWeb3Provider(config)
 The spec requires a provider to be [connected](https://eips.ethereum.org/EIPS/eip-1193#connectivity) to submit requests.
 
 This provider automatically connects to Fordefi when a new instance is constructed,
-and emits a `connect` event once communication with the Fordefi platform was established.
+and emits a `connect` event once communication with the Fordefi platform has been established.
 
 To subscribe to the event:
 ```ts
@@ -87,15 +87,15 @@ provider
   .then(onConnect);
 ```
 
-For more details read the [Events](#events) section. 
+For more details, see [Events](#events). 
 
 ### Submit JSON RPC Requests
 The `request({ method, params })` method sends JSON RPC requests to the provider.
 It returns a promise that resolves to the result of the request.
 
-All methods related to creating and/or signing transactions will resolve once the transaction was successfully signed by an [API Signer](https://docs.fordefi.com/reference/program-overview).
+All methods related to creating and/or signing transactions will resolve once the transaction has been successfully signed by an [API Signer](https://docs.fordefi.com/reference/program-overview).
 
-An example of sending a transaction:
+This sample code shows you how to send a transaction:
 
 ```ts
 const txHash = await provider.request({
@@ -114,7 +114,8 @@ console.log(`Transaction hash: ${txHash}`);
 ## API Reference
 
 ### Configuration
-(see [FordefiProviderConfig](./src/types/config.ts) interface)
+
+For details, see the [FordefiProviderConfig](./src/types/config.ts) interface.
 
 ```ts
 interface FordefiProviderConfig {

@@ -32,7 +32,7 @@ export interface FordefiProviderConfig {
 
   /**
    * Private key in PEM format used to sign the body of requests sent to the Fordefi API.
-   * This is the content the private `.pem` file, see [Create a public/private signature key pair for the API client](https://docs.fordefi.com/reference/pair-an-api-client-with-the-api-signer).
+   * This is the content of the private `.pem` file. See [Create a public/private signature key pair for the API client](https://docs.fordefi.com/reference/pair-an-api-client-with-the-api-signer).
    *
    * Example of a private ECDSA `.pem` file:
    * ```
@@ -44,7 +44,7 @@ export interface FordefiProviderConfig {
   apiPayloadSignKey: string;
 
   /**
-   * Fallback JSON-RPC HTTP node url.
+   * Fallback JSON-RPC HTTP node URL.
    * Methods not implemented by this provider will pass through and be handled by this node.
    *
    * For example: 'https://rpc.sepolia.org'.
@@ -52,7 +52,7 @@ export interface FordefiProviderConfig {
   rpcUrl?: string;
 
   /**
-   * Fordefi API base url (used for development), defaults to production API url.
+   * Fordefi API base URL (used for development). Defaults to production API URL.
    *
    * For example: 'https://api.fordefi.com'.
    */
