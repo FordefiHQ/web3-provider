@@ -136,14 +136,12 @@ jobs:
 
       - name: Create Pull Request
         id: create-pr-gh-cli
-        env:
-          BRANCH_NAME: ${{ github.ref_name }}
         run: |
           echo "${{ steps.generate-gh-token.outputs.INSTALLATION_ACCESS_TOKEN }}" | gh auth login --with-token
 
           gh pr create \
             --base main \
-            --head "${{ env.NEW_VERSION_TAG }}" \
+            --head "${{ github.ref_name }}" \
             --title "Release ${{ env.NEW_VERSION_TAG }}" \
             --body "
             - [ ] Bump the version in package.json.
@@ -189,7 +187,7 @@ jobs:
             }
 
       - name: Notify Slack on Failure
-        if: ${{ env.CREATE_PR_SUCCESS == 'false' }}
+        if: ${{ env.CREATE_PR_SUCCESS != 'true' }}
         uses: slackapi/slack-github-action@v1.26.0
         with:
           # Slack Block Kit API: https://api.slack.com/reference/block-kit/blocks#link-element-type
