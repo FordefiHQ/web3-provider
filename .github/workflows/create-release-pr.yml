@@ -44,33 +44,34 @@ jobs:
           if [ $HAS_VERSION_CHANGE -eq 0 ]; then
             echo "New version detected ${NEW_VERSION}"
 
-            echo "IS_NEW_VERSION=true" >> $GITHUB_ENV
-            echo "NEW_VERSION=${NEW_VERSION}" >> $GITHUB_ENV
-            echo "NEW_VERSION_TAG=v${NEW_VERSION}" >> $GITHUB_ENV
+            echo "IS_NEW_VERSION=true" >> $GITHUB_OUTPUT
+            echo "NEW_VERSION=${NEW_VERSION}" >> $GITHUB_OUTPUT
+            echo "NEW_VERSION_TAG=v${NEW_VERSION}" >> $GITHUB_OUTPUT
           else
             echo "No version change detected, exiting"
             exit 1
           fi
 
       - name: Verify Release Changes
-        if: ${{ env.IS_NEW_VERSION == 'true' }}
+        if: ${{ steps.detect-version.outputs.IS_NEW_VERSION == 'true' }}
         run: |
-          echo "env.IS_NEW_VERSION=${{ env.IS_NEW_VERSION }}"
-          echo "NEW_VERSION_TAGGG=${{ env.NEW_VERSION_TAG }}"
+          # TODO: remove
+          echo "IS_NEW_VERSION=${{ steps.detect-version.outputs.IS_NEW_VERSION }}"
+          echo "NEW_VERSION=${{ steps.detect-version.outputs.NEW_VERSION }}"
+          echo "NEW_VERSION_TAG=${{ steps.detect-version.outputs.NEW_VERSION_TAG }}"
 
           function verify_file_has_diff_with_version() {
             FILE_NAME=$1
             FILE_DIFF="$(git diff origin/main.. -- ${FILE_NAME})"
-            # TODO: remove these lines
-            echo "FILE_DIFF=${{env.FILE_DIFF}}"
-            echo "NEW_VERSION=${{env.NEW_VERSION}}"
+
+            echo "Diff in $FILE_NAME:\n$FILE_DIFF"
 
             if [ "$(echo "${FILE_DIFF}" | wc -l)" -eq 0 ]; then
               echo "No diff detected in $FILE_NAME, exiting"
               exit 1
             fi
 
-            HAS_VERSION_IN_FILE=$([ "$(echo "${FILE_DIFF}" | grep -c "$NEW_VERSION")" -gt 0 ] && echo "true" || echo "false")
+            HAS_VERSION_IN_FILE=$([ "$(echo "${FILE_DIFF}" | grep -c "${{ steps.detect-version.outputs.NEW_VERSION }}")" -gt 0 ] && echo "true" || echo "false")
 
             if [ "$HAS_VERSION_IN_FILE" = "true" ]; then
               echo "Detected changes in $FILE_NAME that include the new version (as expected)"
@@ -97,72 +98,60 @@ jobs:
           fetch-depth: 0  # fetch all history for all tags and branches
 
       - name: Generate GH token
+        id: generate-gh-token
         env:
+          # The app is owned by @gilmeir-arnac, settings: https://github.com/settings/apps/create-pr-from-github-actions
           CREATE_PR_APP_PRIVATE_KEY: ${{ secrets.CREATE_PR_APP_PRIVATE_KEY }}
+          CREATE_PR_APP_ID: "896608"
+          # Installation of the app in this organization, see: https://github.com/FordefiHQ/web3-provider/settings/installations
+          CREATE_PR_APP_INSTALLATION_ID_IN_ORG: "50650204"
         run: |
-          APP_ID="896608"
-          PRIVATE_KEY_PATH="gh_create_pr_app_private.pem"
+          function buildJwt() {
+            # Build JWT Header
+            HEADER=$(echo -n '{"alg":"RS256","typ":"JWT"}' | openssl base64 -e -A | sed s/\\+/-/g | sed s/\\//_/g | sed -E s/=+$//)
 
-          echo "$CREATE_PR_APP_PRIVATE_KEY" > $PRIVATE_KEY_PATH
+            # Build JWT Payload
+            iat=$(date +%s)  # Current time in seconds since the Unix epoch
+            exp=$((iat + 120))  # JWT expiration time set to 2 minutes after the issued at time
+            PAYLOAD=$(echo -n "{\"iat\":$iat,\"exp\":$exp,\"iss\":\"${{ env.CREATE_PR_APP_ID }}\"}" | openssl base64 -e -A | sed s/\\+/-/g | sed s/\\//_/g | sed -E s/=+$//)
 
-          echo "SECRET LENGTH: ${#CREATE_PR_APP_PRIVATE_KEY}"
-          # Header
-          HEADER=$(echo -n '{"alg":"RS256","typ":"JWT"}' | openssl base64 -e -A | sed s/\\+/-/g | sed s/\\//_/g | sed -E s/=+$//)
+            # Build JWT Signature - sign header and payload with the app's private key
+            UNSIGNED_TOKEN="$HEADER.$PAYLOAD"
+            PRIVATE_KEY_PATH="gh_create_pr_app_private.pem"
+            echo "$CREATE_PR_APP_PRIVATE_KEY" > $PRIVATE_KEY_PATH
+            SIGNATURE=$(echo -n "$UNSIGNED_TOKEN" | openssl dgst -sha256 -sign "$PRIVATE_KEY_PATH" | openssl base64 -e -A | sed s/\\+/-/g | sed s/\\//_/g | sed -E s/=+$//)
 
-          # Payload with issued at and expiration times
-          iat=$(date +%s)  # Current time in seconds since the Unix epoch
-          exp=$((iat + 120))  # JWT expiration time set to 2 minutes after the issued at time
-          PAYLOAD=$(echo -n "{\"iat\":$iat,\"exp\":$exp,\"iss\":\"$APP_ID\"}" | openssl base64 -e -A | sed s/\\+/-/g | sed s/\\//_/g | sed -E s/=+$//)
+            echo "$UNSIGNED_TOKEN.$SIGNATURE"
+          }
 
-          # Create the signature
-          UNSIGNED_TOKEN="$HEADER.$PAYLOAD"
-          SIGNATURE=$(echo -n "$UNSIGNED_TOKEN" | openssl dgst -sha256 -sign "$PRIVATE_KEY_PATH" | openssl base64 -e -A | sed s/\\+/-/g | sed s/\\//_/g | sed -E s/=+$//)
-
-          # Complete JWT
-          JWT="$UNSIGNED_TOKEN.$SIGNATURE"
-
-          INSTALLATION_ID="50650204"  # Replace with your actual installation ID
-
-          # Make API request
-          ACCESS_TOKEN_RESPONSE=$(curl -X POST \
-            -H "Authorization: Bearer $JWT" \
+          # Make API request to issue a token
+          INSTALLATION_ACCESS_TOKEN_RESPONSE=$(curl -X POST \
+            -H "Authorization: Bearer $(buildJwt)" \
             -H "Accept: application/vnd.github.v3+json" \
-              https://api.github.com/app/installations/$INSTALLATION_ID/access_tokens)
+            https://api.github.com/app/installations/${{ env.CREATE_PR_APP_INSTALLATION_ID_IN_ORG }}/access_tokens)
 
           # Extract the token
-          INSTALLATION_ACCESS_TOKEN=$(echo "$ACCESS_TOKEN_RESPONSE" | jq -r '.token')
-
-          echo "INSTALLATION_ACCESS_TOKEN=$INSTALLATION_ACCESS_TOKEN" >> $GITHUB_ENV
+          INSTALLATION_ACCESS_TOKEN=$(echo "$INSTALLATION_ACCESS_TOKEN_RESPONSE" | jq -r '.token')
+          echo "INSTALLATION_ACCESS_TOKEN=$INSTALLATION_ACCESS_TOKEN" >> $GITHUB_OUTPUT
 
       - name: Create Pull Request
         id: create-pr-gh-cli
         env:
           BRANCH_NAME: ${{ github.ref_name }}
         run: |
-          # TODO: remove this line
-          set -x
-          echo "Authenticating with gh auth login"
+          echo "${{ steps.generate-gh-token.outputs.INSTALLATION_ACCESS_TOKEN }}" | gh auth login --with-token
 
-          echo "INSTALLATION_ACCESS_TOKEN --- bash env --- LENGTH"
-          echo -n "$INSTALLATION_ACCESS_TOKEN" | wc -m
-
-          echo "$INSTALLATION_ACCESS_TOKEN" | gh auth login --with-token
-          echo "--------------env.NEW_VERSION_TAG=${NEW_VERSION_TAG}----------------"
           gh pr create \
             --base main \
-            --head "release/test-create-pr-workflow" \
-            --title "Release $NEW_VERSION_TAG" \
+            --head "${{ env.NEW_VERSION_TAG }}" \
+            --title "Release ${{ env.NEW_VERSION_TAG }}" \
             --body "
-            Make sure to
             - [ ] Bump the version in package.json.
             - [ ] Update CHANGELOG.md.
             " \
             --reviewer "gilmeir-arnac"
 
-          echo "CREATE_PR_SUCCESS=$?" >> $GITHUB_ENV
-
-          echo "exported: CREATE_PR_SUCCESS=$CREATE_PR_SUCCESS"
-
+          echo "CREATE_PR_SUCCESS=$( [ $? -eq 0 ] && echo "true" || echo "false" )" >> $GITHUB_OUTPUT
 
   report-to-slack:
     name: Report result to Slack
@@ -171,66 +160,49 @@ jobs:
     env:
       NEW_VERSION_TAG: ${{ needs.detect-new-version.outputs.NEW_VERSION_TAG }}
       CREATE_PR_SUCCESS: ${{ needs.create-pr.outputs.CREATE_PR_SUCCESS }}
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
-      - name: Debug CREATE_PR_SUCCESS
-        run: |
-          echo "CREATE_PR_SUCCESS__BASH_ENV=${CREATE_PR_SUCCESS}"
-          echo "CREATE_PR_SUCCESS__WORKFLOW_ENV=${{ env.CREATE_PR_SUCCESS }}"
-
       - name: Notify Slack on Success
-        if: ${{ env.CREATE_PR_SUCCESS == '0' }}
+        if: ${{ env.CREATE_PR_SUCCESS == 'true' }}
         uses: slackapi/slack-github-action@v1.26.0
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          REPOSITORY: ${{ github.repository }}
-          PR_NUMBER: ${{ github.event.number }}
-          INITIATOR: ${{ github.actor }}
         with:
           # Slack Block Kit API: https://api.slack.com/reference/block-kit/blocks#link-element-type
           payload: |
             {
-              "text": "Release ${{ env.NEW_VERSION_TAG }} pull request is waiting for approval",
+              "text": "Release `${{ env.NEW_VERSION_TAG }}` PR is waiting for approval",
               "blocks": [
                 {
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Release `${{ env.NEW_VERSION_TAG }}` pull request is waiting for approval"
-                  }
-                },
-                {
-                  "type": "rich_text_section",
-                  "text": {
-                    "type": "link",
-                    "url": "${{ env.REPOSITORY }}/pull/${{ env.PR_NUMBER }}"
-                  }
-                },
-                {
-                  "type": "rich_text_section",
-                  "text": {
-                    "type": "link",
-                    "url": "${{ job.status }}",
-                    "text": "GitHub action build result"
+                    "text": "Workflow run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
                   }
                 },
                 {
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Initiator: `${{ env.INITIATOR }}`"
+                    "text": "Initiator: `${{ github.actor }}`"
                   }
                 }
               ]
             }
 
       - name: Notify Slack on Failure
-        if: ${{ env.CREATE_PR_SUCCESS != '0' }}
-        uses: slackapi/slack-github-action@v1.18.0
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: ${{ env.CREATE_PR_SUCCESS == 'false' }}
+        uses: slackapi/slack-github-action@v1.26.0
         with:
           # Slack Block Kit API: https://api.slack.com/reference/block-kit/blocks#link-element-type
           payload: |
             {
-              "text": "Failed to create a release pull request for `${{ env.NEW_VERSION_TAG }}`"
+              "text": "Failed to create a release PR for `${{ env.NEW_VERSION_TAG }}`",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "Workflow run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                  }
+                }
+              ]
             }
