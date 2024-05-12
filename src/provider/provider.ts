@@ -116,10 +116,10 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
   }
 
   /**
-   * Handles a JSON RPC request
+   * Handles a JSON-RPC request
    *
-   * @param args json rpc request payload
-   * @returns a promise with a response
+   * @param args JSON-RPC request payload
+   * @returns A promise with a response
    *
    * @throws RpcError with error codes defined in {@link RpcErrorCode} and {@link ProviderRpcErrorCode}
    */
@@ -346,10 +346,10 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
 
   /**
    * Connects the provider to Fordefi and emits a 'connect' event.
-   * - If already connected it does nothing.
+   * - If already connected, it does nothing.
    * - If connecting, waits for the connection to be established.
    *
-   * @returns a promise of that resolves once connected
+   * @returns A promise that resolves once connected.
    */
   async connect() {
     if (this.status === 'connected') {
@@ -395,7 +395,7 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
   }
 
   /**
-   * Returns the current status of the provider
+   * Returns the current status of the provider.
    *
    * @returns 'connected' if the provider is connected, 'connecting' if trying to connect, 'disconnected' otherwise.
    */
