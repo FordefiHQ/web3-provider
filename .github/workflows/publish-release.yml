@@ -133,7 +133,7 @@ jobs:
     # ${{ github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'release/') && needs.publish-to-npm.outputs.NPM_PUBLISH_SUCCESS == 'true'}}
     # if: ${{ needs.publish-to-npm.outputs.NPM_PUBLISH_SUCCESS == 'true'}}
     env:
-      NEW_VERSION_TAG: "0.2.1-dev.0e8f02b" # ${{ needs.publish-to-npm.outputs.NEW_VERSION_TAG }}
+      NEW_VERSION_TAG: "v0.2.1-dev.0e8f02b" # ${{ needs.publish-to-npm.outputs.NEW_VERSION_TAG }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -158,25 +158,25 @@ jobs:
           # verify token works
           gh api octocat
 
-          HEAD_COMMIT_HASH=$(git rev-parse HEAD)
-
           echo "Creating tag ${{ env.NEW_VERSION_TAG }} at commit $HEAD_COMMIT_HASH"
+
+          HEAD_COMMIT_HASH=$(git rev-parse HEAD)
+          DATA='{"ref": "refs/tags/${{ env.NEW_VERSION_TAG }}","sha": "'$HEAD_COMMIT_HASH'"}'
 
           curl -X POST \
             -H "Authorization: Bearer ${{ env.GH_TOKEN }}" \
             -H "Accept: application/vnd.github.v3+json" \
-            -d '{
-              "ref": "refs/tags/${{ env.NEW_VERSION_TAG }}",
-              "sha":"$HEAD_COMMIT_HASH"
-            }' \
+            -d "$DATA" \
             https://api.github.com/repos/${{ github.repository }}/git/refs
 
           CREATE_TAG_SUCCESS=$( [ $? -eq 0 ] && echo "true" || echo "false" )
           echo "CREATE_TAG_SUCCESS=$CREATE_TAG_SUCCESS" >> $GITHUB_ENV
 
       - name: Notify Slack on Success
-        if: ${{ env.CREATE_TAG_SUCCESS == 'true' }}
+        if: false # ${{ env.CREATE_TAG_SUCCESS == 'true' }}
         uses: slackapi/slack-github-action@v1.26.0
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         with:
           channel-id: ${{ env.SLACK_CHANNEL_ID }}
           # Slack Block Kit API: https://api.slack.com/reference/block-kit
@@ -194,8 +194,10 @@ jobs:
             }
 
       - name: Notify Slack on Failure
-        if: ${{ env.CREATE_TAG_SUCCESS != 'true' }}
+        if: false # ${{ env.CREATE_TAG_SUCCESS != 'true' }}
         uses: slackapi/slack-github-action@v1.26.0
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         with:
           channel-id: ${{ env.SLACK_CHANNEL_ID }}
           # Slack Block Kit API: https://api.slack.com/reference/block-kit
