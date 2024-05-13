@@ -1,12 +1,14 @@
 name: Publish Release
 
 on:
-  pull_request:
-    branches:
-      # TODO: change back to main
-      - gil/main-clone
-    types:
-     - closed
+  workflow_dispatch:
+
+#  pull_request:
+#    branches:
+#      # TODO: change back to main
+#      - gil/main-clone
+#    types:
+#     - closed
 
 permissions:
   contents: write
@@ -19,13 +21,16 @@ env:
   SLACK_CHANNEL_ID: "C072BEST4AC"
   PACKAGE_NAME: "@fordefi/web3-provider"
   WORKFLOW_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-  GITHUB_PR_URL: ${{ github.event.pull_request.html_url }}
+  # TODO:
+  # ${{ github.event.pull_request.html_url }}
+  GITHUB_PR_URL: "https://fordefi.com"
 
 jobs:
   publish-to-npm:
     name: Publish to NPM
     runs-on: ubuntu-latest
-    if: ${{ github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'release/') }}
+    # TODO:
+    # if: ${{ github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'release/') }}
     outputs:
       NEW_VERSION_TAG: ${{ steps.get-release-version.outputs.NEW_VERSION_TAG }}
       NPM_PUBLISH_SUCCESS: ${{ steps.publish-to-npm.outputs.NPM_PUBLISH_SUCCESS }}
@@ -53,14 +58,6 @@ jobs:
             //registry.npmjs.org/:_authToken=$NPM_TOKEN
           EOF
 
-      - name: Publish to NPM
-        id: publish-to-npm
-        run: |
-          yarn publish:latest
-          NPM_PUBLISH_SUCCESS=$([ $? -eq 0 ] && echo "true" || echo "false")
-          echo "NPM_PUBLISH_SUCCESS=$NPM_PUBLISH_SUCCESS" >> $GITHUB_ENV
-          echo "NPM_PUBLISH_SUCCESS=$NPM_PUBLISH_SUCCESS" >> $GITHUB_OUTPUT
-
       - name: Get Release Version and Tag
         id: get-release-version
         run: |
@@ -71,6 +68,16 @@ jobs:
           echo "NEW_VERSION_TAG=$NEW_VERSION_TAG" >> $GITHUB_ENV
           echo "NEW_VERSION_TAG=$NEW_VERSION_TAG" >> $GITHUB_OUTPUT
 
+      - name: Publish to NPM
+        id: publish-to-npm
+        run: |
+          echo "Publishing version $NEW_VERSION to NPM..."
+          yarn publish:latest
+
+          NPM_PUBLISH_SUCCESS=$([ $? -eq 0 ] && echo "true" || echo "false")
+          echo "NPM_PUBLISH_SUCCESS=$NPM_PUBLISH_SUCCESS" >> $GITHUB_ENV
+          echo "NPM_PUBLISH_SUCCESS=$NPM_PUBLISH_SUCCESS" >> $GITHUB_OUTPUT
+
       - name: Notify Slack on Success
         if: ${{ env.NPM_PUBLISH_SUCCESS == 'true' }}
         uses: slackapi/slack-github-action@v1.26.0
@@ -80,7 +87,7 @@ jobs:
           NPM_RELEASE_URL: "https://www.npmjs.com/package/${{ env.PACKAGE_NAME }}/v/${{ env.NEW_VERSION }}"
         with:
           channel-id: ${{ env.SLACK_CHANNEL_ID }}
-          # Slack Block Kit API: https://api.slack.com/reference/block-kit/blocks#link-element-type
+          # Slack Block Kit API: https://api.slack.com/reference/block-kit
           payload: |
             {
               "blocks": [
@@ -101,7 +108,7 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         with:
           channel-id: ${{ env.SLACK_CHANNEL_ID }}
-          # Slack Block Kit API: https://api.slack.com/reference/block-kit/blocks#link-element-type
+          # Slack Block Kit API: https://api.slack.com/reference/block-kit
           payload: |
             {
               "blocks": [
@@ -119,7 +126,9 @@ jobs:
     name: Create Tag
     needs: publish-to-npm
     runs-on: ubuntu-latest
-    if: ${{ github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'release/') && needs.publish-to-npm.outputs.NPM_PUBLISH_SUCCESS == 'true'}}
+    # TODO:
+    # ${{ github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'release/') && needs.publish-to-npm.outputs.NPM_PUBLISH_SUCCESS == 'true'}}
+    if: ${{ needs.publish-to-npm.outputs.NPM_PUBLISH_SUCCESS == 'true'}}
     env:
       NEW_VERSION_TAG: ${{ needs.publish-to-npm.outputs.NEW_VERSION_TAG }}
     steps:
@@ -142,18 +151,18 @@ jobs:
           # verify token works
           gh api octocat
 
-          MAIN_BRANCH_COMMIT_HASH=$(git rev-parse main)
+          HEAD_COMMIT_HASH=$(git rev-parse HEAD)
+
+          echo "Creating tag ${{ env.NEW_VERSION_TAG }} at commit $HEAD_COMMIT_HASH"
 
           curl -X POST \
             -H "Authorization: Bearer ${{ env.GH_TOKEN }}" \
             -H "Accept: application/vnd.github.v3+json" \
             -d '{
-              "tag": "${{ env.NEW_VERSION_TAG }}",
-              "message":"Release ${{ env.NEW_VERSION_TAG }}",
-              "object":"${MAIN_BRANCH_COMMIT_HASH}",
-              "type":"commit"
+              "ref": "refs/tags/${{ env.NEW_VERSION_TAG }}",
+              "sha":"$HEAD_COMMIT_HASH"
             }' \
-            https://api.github.com/repos/${{ github.repository }}/git/tags
+            https://api.github.com/repos/${{ github.repository }}/git/refs
 
           CREATE_TAG_SUCCESS=$( [ $? -eq 0 ] && echo "true" || echo "false" )
           echo "CREATE_TAG_SUCCESS=$CREATE_TAG_SUCCESS" >> $GITHUB_ENV
@@ -163,7 +172,7 @@ jobs:
         uses: slackapi/slack-github-action@v1.26.0
         with:
           channel-id: ${{ env.SLACK_CHANNEL_ID }}
-          # Slack Block Kit API: https://api.slack.com/reference/block-kit/blocks#link-element-type
+          # Slack Block Kit API: https://api.slack.com/reference/block-kit
           payload: |
             {
               "blocks": [
@@ -182,7 +191,7 @@ jobs:
         uses: slackapi/slack-github-action@v1.26.0
         with:
           channel-id: ${{ env.SLACK_CHANNEL_ID }}
-          # Slack Block Kit API: https://api.slack.com/reference/block-kit/blocks#link-element-type
+          # Slack Block Kit API: https://api.slack.com/reference/block-kit
           payload: |
             {
               "blocks": [
