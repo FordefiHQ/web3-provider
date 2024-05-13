@@ -17,16 +17,14 @@ env:
   SLACK_CHANNEL_ID: "C072BEST4AC"
   PACKAGE_NAME: "@fordefi/web3-provider"
   SHOULD_PUBLISH: ${{ github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'release/') }}
+  WORKFLOW_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+  GITHUB_PR_URL: ${{ github.event.pull_request.html_url }}
 
 jobs:
   publish-to-npm:
-    name: Publish
+    name: Publish to NPM
     runs-on: ubuntu-latest
     if: ${{ env.SHOULD_PUBLISH == true }}
-    env:
-      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-      WORKFLOW_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-      PR_URL: ${{ github.event.pull_request.html_url }}
     outputs:
       NEW_VERSION_TAG: ${{ steps.get-release-version.outputs.NEW_VERSION_TAG }}
       NPM_PUBLISH_SUCCESS: ${{ steps.publish-to-npm.outputs.NPM_PUBLISH_SUCCESS }}
@@ -43,7 +41,10 @@ jobs:
       - name: Install Yarn
         run: npm install -g yarn
 
-      - name: Creating .npmrc
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Create .npmrc
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
@@ -51,12 +52,8 @@ jobs:
             //registry.npmjs.org/:_authToken=$NPM_TOKEN
           EOF
 
-      - name: Install Dependencies
-        run: yarn install --frozen-lockfile
-
       - name: Publish to NPM
         id: publish-to-npm
-        continue-on-error: true
         run: |
           yarn publish:latest
           NPM_PUBLISH_SUCCESS=$([ $? -eq 0 ] && echo "true" || echo "false")
@@ -77,7 +74,8 @@ jobs:
         if: ${{ env.NPM_PUBLISH_SUCCESS == 'true' }}
         uses: slackapi/slack-github-action@v1.26.0
         env:
-          TAG_URL: "${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ env.NEW_VERSION_TAG }}"
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          GITHUB_TAG_URL: "${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ env.NEW_VERSION_TAG }}"
           NPM_RELEASE_URL: "https://www.npmjs.com/package/${{ env.PACKAGE_NAME }}/v/${{ env.NEW_VERSION }}"
         with:
           channel-id: ${{ env.SLACK_CHANNEL_ID }}
@@ -89,7 +87,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "*Release `${{ env.NEW_VERSION_TAG }}` was successfully published to NPM*   |   <${{ env.NPM_RELEASE_URL }}|NPM>   |   <${{ env.TAG_URL }}|Tag>   |   <${{ env.WORKFLOW_URL }}|Workflow>   |   <${{ env.PR_URL }}|Pull Request>"
+                    "text": "*Release `${{ env.NEW_VERSION_TAG }}` was successfully published to NPM*   |   <${{ env.NPM_RELEASE_URL }}|NPM>   |   <${{ env.GITHUB_TAG_URL }}|Tag>   |   <${{ env.WORKFLOW_URL }}|Workflow>   |   <${{ env.GITHUB_PR_URL }}|Pull Request>"
                   }
                 }
               ]
@@ -99,7 +97,7 @@ jobs:
         if: ${{ env.NPM_PUBLISH_SUCCESS != 'true' }}
         uses: slackapi/slack-github-action@v1.26.0
         env:
-          TAG_URL: "${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ env.NEW_VERSION_TAG }}"
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         with:
           channel-id: ${{ env.SLACK_CHANNEL_ID }}
           # Slack Block Kit API: https://api.slack.com/reference/block-kit/blocks#link-element-type
@@ -110,7 +108,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "*Release `${{ env.NEW_VERSION_TAG }}` failed to publish to NPM*   |   <${{ env.WORKFLOW_URL }}|Workflow>   |   <${{ env.PR_URL }}|Pull Request>"
+                    "text": "*Release `${{ env.NEW_VERSION_TAG }}` failed to publish to NPM*   |   <${{ env.WORKFLOW_URL }}|Workflow>   |   <${{ env.GITHUB_PR_URL }}|Pull Request>"
                   }
                 }
               ]
@@ -122,9 +120,6 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ env.SHOULD_PUBLISH == true && needs.publish-to-npm.outputs.NPM_PUBLISH_SUCCESS == 'true'}}
     env:
-      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-      WORKFLOW_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-      PR_URL: ${{ github.event.pull_request.html_url }}
       NEW_VERSION_TAG: ${{ needs.publish-to-npm.outputs.NEW_VERSION_TAG }}
     steps:
       - name: Generate Github API Token
@@ -133,13 +128,11 @@ jobs:
         uses: actions/create-github-app-token@v1
         env:
           # The app is owned by @gilmeir-arnac, settings: https://github.com/settings/apps/create-pr-from-github-actions
-          CREATE_PR_APP_PRIVATE_KEY: ${{ secrets.CREATE_PR_APP_PRIVATE_KEY }}
-          CREATE_PR_APP_ID: "896608"
-          # Installation of the app in this organization, see: https://github.com/FordefiHQ/web3-provider/settings/installations
-          CREATE_PR_APP_INSTALLATION_ID_IN_ORG: "50650204"
+          GITHUB_CREATE_PR_APP_ID: "896608"
+          GITHUB_CREATE_PR_APP_PRIVATE_KEY: ${{ secrets.CREATE_PR_APP_PRIVATE_KEY }}
         with:
-          app-id: ${{ env.CREATE_PR_APP_ID }}
-          private-key: ${{ env.CREATE_PR_APP_PRIVATE_KEY }}
+          app-id: ${{ env.GITHUB_CREATE_PR_APP_ID }}
+          private-key: ${{ env.GITHUB_CREATE_PR_APP_PRIVATE_KEY }}
 
       - name: Create Tag
         env:
@@ -150,7 +143,7 @@ jobs:
 
           MAIN_BRANCH_COMMIT_HASH=$(git rev-parse main)
 
-          curl -L -X POST \
+          curl -X POST \
             -H "Authorization: Bearer ${{ env.GH_TOKEN }}" \
             -H "Accept: application/vnd.github.v3+json" \
             -d '{
@@ -164,11 +157,9 @@ jobs:
           CREATE_TAG_SUCCESS=$( [ $? -eq 0 ] && echo "true" || echo "false" )
           echo "CREATE_TAG_SUCCESS=$CREATE_TAG_SUCCESS" >> $GITHUB_ENV
 
-      - name: Notify Slack on Failure
-        if: ${{ env.CREATE_TAG_SUCCESS != 'true' }}
+      - name: Notify Slack on Success
+        if: ${{ env.CREATE_TAG_SUCCESS == 'true' }}
         uses: slackapi/slack-github-action@v1.26.0
-        env:
-          TAG_URL: "${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ env.NEW_VERSION_TAG }}"
         with:
           channel-id: ${{ env.SLACK_CHANNEL_ID }}
           # Slack Block Kit API: https://api.slack.com/reference/block-kit/blocks#link-element-type
@@ -179,7 +170,26 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "*Release `${{ env.NEW_VERSION_TAG }}` failed to push a new tag*   |   <${{ env.WORKFLOW_URL }}|Workflow>"
+                    "text": "Tag `${{ env.NEW_VERSION_TAG }}` was successfully created"
+                  }
+                }
+              ]
+            }
+
+      - name: Notify Slack on Failure
+        if: ${{ env.CREATE_TAG_SUCCESS != 'true' }}
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          channel-id: ${{ env.SLACK_CHANNEL_ID }}
+          # Slack Block Kit API: https://api.slack.com/reference/block-kit/blocks#link-element-type
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "Tag `${{ env.NEW_VERSION_TAG }}` failed to be published*   |   <${{ env.WORKFLOW_URL }}|Workflow>"
                   }
                 }
               ]

@@ -102,8 +102,8 @@ jobs:
         uses: actions/create-github-app-token@v1
         env:
           # The app is owned by @gilmeir-arnac, settings: https://github.com/settings/apps/create-pr-from-github-actions
-          GITHUB_CREATE_PR_APP_PRIVATE_KEY: ${{ secrets.CREATE_PR_APP_PRIVATE_KEY }}
           GITHUB_CREATE_PR_APP_ID: "896608"
+          GITHUB_CREATE_PR_APP_PRIVATE_KEY: ${{ secrets.CREATE_PR_APP_PRIVATE_KEY }}
           # Installation of the app in this organization, see: https://github.com/FordefiHQ/web3-provider/settings/installations
           GITHUB_CREATE_PR_APP_INSTALLATION_ID_IN_ORG: "50650204"
         with:
