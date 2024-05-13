@@ -183,14 +183,8 @@ jobs:
           # Slack Block Kit API: https://api.slack.com/reference/block-kit/blocks#link-element-type
           payload: |
             {
+              "text": "*Failed to create a release for `${{ env.NEW_VERSION_TAG }}`*  |  <${{ env.WORKFLOW_URL }}|Workflow>"
               "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "*Failed to create a release for `${{ env.NEW_VERSION_TAG }}`*  |  <${{ env.WORKFLOW_URL }}|Workflow>"
-                  }
-                },
                 {
                   "type": "section",
                   "text": {
