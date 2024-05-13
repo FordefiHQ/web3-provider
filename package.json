@@ -37,7 +37,7 @@
     "build": "yarn clean && tsup-node src/index.ts --format cjs,esm --dts",
     "test": "jest",
     "publish:dev": "yarn build && yarn publish --no-git-tag-version --tag beta",
-    "publish:latest": "yarn build && yarn publish --tag beta --new-version ${npm_package_version} --access restricted",
+    "publish:latest": "yarn build && yarn publish --tag beta --new-version ${npm_package_version}",
     "version:current": "echo ${npm_package_version}",
     "version:beta": "echo ${npm_package_version}-dev.$(git rev-parse --short HEAD)",
     "typedoc:gen:html": "typedoc --options typedoc-html.json",
