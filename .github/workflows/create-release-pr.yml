@@ -113,7 +113,7 @@ jobs:
 
             # Build JWT Payload
             iat=$(date +%s)  # Current time in seconds since the Unix epoch
-            exp=$((iat + 120))  # JWT expiration time set to 2 minutes after the issued at time
+            exp=$((iat + 180))  # JWT expiration time set to 3 minutes after the issued at time
             PAYLOAD=$(echo -n "{\"iat\":$iat,\"exp\":$exp,\"iss\":\"${{ env.CREATE_PR_APP_ID }}\"}" | openssl base64 -e -A | sed s/\\+/-/g | sed s/\\//_/g | sed -E s/=+$//)
 
             # Build JWT Signature - sign header and payload with the app's private key
@@ -133,12 +133,12 @@ jobs:
 
           # Extract the token
           INSTALLATION_ACCESS_TOKEN=$(echo "$INSTALLATION_ACCESS_TOKEN_RESPONSE" | jq -r '.token')
-          echo "INSTALLATION_ACCESS_TOKEN=$INSTALLATION_ACCESS_TOKEN" >> $GITHUB_OUTPUT
+          echo "INSTALLATION_ACCESS_TOKEN=$INSTALLATION_ACCESS_TOKEN" >> $GITHUB_ENV
 
       - name: Create Pull Request
         id: create-pr-gh-cli
         run: |
-          echo "${{ steps.generate-gh-token.outputs.INSTALLATION_ACCESS_TOKEN }}" | gh auth login --with-token
+          echo "${{ env.INSTALLATION_ACCESS_TOKEN }}" | gh auth login --with-token
 
           gh pr create \
             --base main \
@@ -153,7 +153,7 @@ jobs:
 
           echo "CREATE_PR_SUCCESS=$( [ $? -eq 0 ] && echo "true" || echo "false" )" >> $GITHUB_OUTPUT
 
-          CREATED_PR_URL="$(gh pr list --repo ${{ github.repository }} --head ${{ github.ref_name }} --base main --json url --jq ".[].url")"
+          CREATED_PR_URL="$(gh pr list --repo ${{ github.repository }} --head ${{ github.ref_name }} --base main --limit 1 --json url --jq ".[].url")"
           echo "CREATED_PR_URL=$CREATED_PR_URL" >> $GITHUB_OUTPUT
 
   report-to-slack:
