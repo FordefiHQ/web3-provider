@@ -28,6 +28,7 @@ env:
 jobs:
   publish-to-npm:
     name: Publish to NPM
+    if: false
     runs-on: ubuntu-latest
     # TODO:
     # if: ${{ github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'release/') }}
@@ -72,6 +73,7 @@ jobs:
         id: publish-to-npm
         run: |
           echo "Publishing version $NEW_VERSION to NPM..."
+
           yarn publish:latest
 
           NPM_PUBLISH_SUCCESS=$([ $? -eq 0 ] && echo "true" || echo "false")
@@ -128,10 +130,14 @@ jobs:
     runs-on: ubuntu-latest
     # TODO:
     # ${{ github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'release/') && needs.publish-to-npm.outputs.NPM_PUBLISH_SUCCESS == 'true'}}
-    if: ${{ needs.publish-to-npm.outputs.NPM_PUBLISH_SUCCESS == 'true'}}
+    # if: ${{ needs.publish-to-npm.outputs.NPM_PUBLISH_SUCCESS == 'true'}}
     env:
-      NEW_VERSION_TAG: ${{ needs.publish-to-npm.outputs.NEW_VERSION_TAG }}
+      NEW_VERSION_TAG: "0.2.1-dev.0e8f02b" # ${{ needs.publish-to-npm.outputs.NEW_VERSION_TAG }}
     steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # fetch all history for all tags and branches
+
       - name: Generate Github API Token
         id: generate-gh-token
         # the token is an output `token`
