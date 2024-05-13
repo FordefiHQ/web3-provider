@@ -1,10 +1,12 @@
 name: Publish Release
 
 on:
+  workflow_dispatch:
   pull_request:
     branches:
       - main
-    types: [closed]
+    types:
+     - closed
 
 permissions:
   contents: write
