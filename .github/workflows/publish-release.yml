@@ -1,9 +1,10 @@
 name: Publish Release
 
 on:
-  push:
+  pull_request:
     branches:
       - main
+    types: [closed]
 
 permissions:
   contents: write
@@ -12,12 +13,19 @@ concurrency: "${{github.workflow}}-${{github.ref}}"
 
 env:
   NODE_VERSION: "18.19.1"
+  # channel #web3-provider-releases
+  SLACK_CHANNEL_ID: "C072BEST4AC"
+  PACKAGE_NAME: "@fordefi/web3-provider"
 
 jobs:
   publish:
     name: Publish
     runs-on: ubuntu-latest
-    if: startsWith(github.head_ref, 'release/')
+    if: github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'release/')
+    env:
+      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      WORKFLOW_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      PR_URL: ${{ github.event.pull_request.html_url }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -44,9 +52,11 @@ jobs:
 
       - name: Publish to NPM
         id: publish-to-npm
-        run: yarn publish:latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
+        run: |
+          yarn publish:latest
+          NPM_PUBLISH_SUCCESS=$([ $? -eq 0 ] && echo "true" || echo "false")
+          echo "NPM_PUBLISH_SUCCESS=$NPM_PUBLISH_SUCCESS" >> $GITHUB_ENV
 
       - name: Get Release Version and Tag
         run: |
@@ -56,36 +66,45 @@ jobs:
           NEW_VERSION_TAG="v${NEW_VERSION}"
           echo "NEW_VERSION_TAG=$NEW_VERSION_TAG" >> $GITHUB_ENV
 
-      - name: Notify Slack
-        uses: slackapi/slack-github-action@v1.18.0
+      - name: Notify Slack on Success
+        if: ${{ env.NPM_PUBLISH_SUCCESS == 'true' }}
+        uses: slackapi/slack-github-action@v1.26.0
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          TAG_URL: "${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ env.NEW_VERSION_TAG }}"
+          NPM_RELEASE_URL: "https://www.npmjs.com/package/${{ env.PACKAGE_NAME }}/v/${{ env.NEW_VERSION }}"
         with:
+          channel-id: ${{ env.SLACK_CHANNEL_ID }}
           # Slack Block Kit API: https://api.slack.com/reference/block-kit/blocks#link-element-type
           payload: |
             {
-              "text": "Release ${{ env.NEW_VERSION_TAG }} was published",
               "blocks": [
                 {
                   "type": "section",
-                   "fields": [
-                      {
-                        "type": "mrkdwn",
-                        "text": "Pull request: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
-                      },
-                      {
-                        "type": "mrkdwn",
-                        "text": "Workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-                      },
-                      {
-                        "type": "mrkdwn",
-                        "text": "Version on NPM: https://www.npmjs.com/package/@fordefi/web3-provider/v/${{ env.NEW_VERSION_TAG }}"
-                      },
-                      {
-                        "type": "mrkdwn",
-                        "text": "Tag on Github: https://github.com/arnac-io/web3-provider/releases/tag/${{ env.NEW_VERSION_TAG }}"
-                      },
-                  ]
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*Release `${{ env.NEW_VERSION_TAG }}` was successfully published to NPM*   |   <${{ env.NPM_RELEASE_URL }}|NPM>   |   <${{ env.TAG_URL }}|Tag>   |   <${{ env.WORKFLOW_URL }}|Workflow>   |   <${{ env.PR_URL }}|Pull Request>"
+                  }
+                }
+              ]
+            }
+
+      - name: Notify Slack on Failure
+        if: ${{ env.NPM_PUBLISH_SUCCESS != 'true' }}
+        uses: slackapi/slack-github-action@v1.26.0
+        env:
+          TAG_URL: "${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ env.NEW_VERSION_TAG }}"
+        with:
+          channel-id: ${{ env.SLACK_CHANNEL_ID }}
+          # Slack Block Kit API: https://api.slack.com/reference/block-kit/blocks#link-element-type
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*Release `${{ env.NEW_VERSION_TAG }}` failed to publish to NPM*   |   <${{ env.WORKFLOW_URL }}|Workflow>   |   <${{ env.PR_URL }}|Pull Request>"
+                  }
                 }
               ]
             }

@@ -167,6 +167,7 @@ jobs:
       SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
       # channel #web3-provider-releases
       SLACK_CHANNEL_ID: "C072BEST4AC"
+      WORKFLOW_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
     steps:
       - name: Notify Slack on Success
         if: ${{ env.CREATE_PR_SUCCESS == 'true' }}
@@ -181,7 +182,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "*Release `${{ env.NEW_VERSION_TAG }}` is waiting for approval*  |  <${{ env.CREATED_PR_URL }}|Review>  |  <https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|Workflow>"
+                    "text": "*Release `${{ env.NEW_VERSION_TAG }}` is waiting for approval*  |  <${{ env.CREATED_PR_URL }}|Pull Request>  |  <${{ env.WORKFLOW_URL }}|Workflow>"
                   }
                 },
                 {
@@ -207,7 +208,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "*Failed to create a release for `${{ env.NEW_VERSION_TAG }}`*  |  <https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|Workflow>"
+                    "text": "*Failed to create a release for `${{ env.NEW_VERSION_TAG }}`*  |  <${{ env.WORKFLOW_URL }}|Workflow>"
                   }
                 },
                 {
