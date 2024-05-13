@@ -1,10 +1,10 @@
 name: Publish Release
 
 on:
-  workflow_dispatch:
   pull_request:
     branches:
-      - main
+      # TODO: change back to main
+      - gil/main-clone
     types:
      - closed
 
@@ -19,15 +19,13 @@ env:
   SLACK_CHANNEL_ID: "C072BEST4AC"
   PACKAGE_NAME: "@fordefi/web3-provider"
   WORKFLOW_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-  # TODO: rollback
-  GITHUB_PR_URL: "https://fake-pr-url.com"
+  GITHUB_PR_URL: ${{ github.event.pull_request.html_url }}
 
 jobs:
   publish-to-npm:
     name: Publish to NPM
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    #if: ${{ github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'release/') }}
+    if: ${{ github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'release/') }}
     outputs:
       NEW_VERSION_TAG: ${{ steps.get-release-version.outputs.NEW_VERSION_TAG }}
       NPM_PUBLISH_SUCCESS: ${{ steps.publish-to-npm.outputs.NPM_PUBLISH_SUCCESS }}
