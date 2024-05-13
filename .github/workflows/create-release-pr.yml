@@ -1,0 +1,207 @@
+name: Create Release PR
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - release/*
+
+permissions:
+  pull-requests: write
+
+concurrency: "${{ github.workflow }}-${{ github.ref }}"
+
+env:
+  NODE_VERSION: "18.19.1"
+
+jobs:
+  detect-new-version:
+    name: Detect New Version
+    runs-on: ubuntu-latest
+    outputs:
+      NEW_VERSION_TAG: ${{ steps.detect-version.outputs.NEW_VERSION_TAG }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # fetch all history for all tags and branches
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install Yarn
+        run: npm install -g yarn
+
+      - name: Detect New Version
+        id: detect-version
+        run: |
+          NEW_VERSION=$(yarn --silent version:current)
+          git diff origin/main.. -- package.json | grep "\"version\": \"${NEW_VERSION}\"" > /dev/null && HAS_VERSION_CHANGE=0 || HAS_VERSION_CHANGE=1
+          echo "HAS_VERSION_CHANGE=${HAS_VERSION_CHANGE}"
+
+          if [ $HAS_VERSION_CHANGE -eq 0 ]; then
+            echo "New version detected ${NEW_VERSION}"
+
+            echo "IS_NEW_VERSION=true" >> $GITHUB_OUTPUT
+            echo "NEW_VERSION=${NEW_VERSION}" >> $GITHUB_OUTPUT
+            echo "NEW_VERSION_TAG=v${NEW_VERSION}" >> $GITHUB_OUTPUT
+          else
+            echo "No version change detected, exiting"
+            exit 1
+          fi
+
+      - name: Verify Release Changes
+        if: ${{ steps.detect-version.outputs.IS_NEW_VERSION == 'true' }}
+        run: |
+          echo "IS_NEW_VERSION=${{ steps.detect-version.outputs.IS_NEW_VERSION }}"
+          echo "NEW_VERSION=${{ steps.detect-version.outputs.NEW_VERSION }}"
+          echo "NEW_VERSION_TAG=${{ steps.detect-version.outputs.NEW_VERSION_TAG }}"
+
+          function verify_file_has_diff_with_version() {
+            FILE_NAME=$1
+            FILE_DIFF="$(git diff origin/main.. -- ${FILE_NAME})"
+
+            echo "Diff in $FILE_NAME:\n$FILE_DIFF"
+
+            if [ "$(echo "${FILE_DIFF}" | wc -l)" -eq 0 ]; then
+              echo "No diff detected in $FILE_NAME, exiting"
+              exit 1
+            fi
+
+            HAS_VERSION_IN_FILE=$([ "$(echo "${FILE_DIFF}" | grep -c "${{ steps.detect-version.outputs.NEW_VERSION }}")" -gt 0 ] && echo "true" || echo "false")
+
+            if [ "$HAS_VERSION_IN_FILE" = "true" ]; then
+              echo "Detected changes in $FILE_NAME that include the new version (as expected)"
+            else
+              echo "Detected changes in $FILE_NAME that don't contain the new version, exiting"
+              exit 1
+            fi
+          }
+
+          verify_file_has_diff_with_version CHANGELOG.md
+          verify_file_has_diff_with_version package.json
+
+          NUM_FILES_HAVE_DIFF="$(git --no-pager diff origin/main.. --name-only | wc -l | xargs)"
+          if [ "$NUM_FILES_HAVE_DIFF" -ne 2 ]; then
+            echo "Release PR can only edit 2 files: CHANGELOG.md and package.json, exiting"
+            exit 1
+          fi
+
+  create-pr:
+    name: Create PR
+    runs-on: ubuntu-latest
+    needs: detect-new-version
+    env:
+      NEW_VERSION_TAG: ${{ needs.detect-new-version.outputs.NEW_VERSION_TAG }}
+    outputs:
+      CREATE_PR_SUCCESS: ${{ steps.create-pr-gh-cli.outputs.CREATE_PR_SUCCESS }}
+      CREATED_PR_URL: ${{ steps.create-pr-gh-cli.outputs.CREATED_PR_URL }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # fetch all history for all tags and branches
+
+      - name: Generate Github API Token
+        id: generate-gh-token
+        uses: actions/create-github-app-token@v1
+        env:
+          # The app is owned by @gilmeir-arnac, settings: https://github.com/settings/apps/create-pr-from-github-actions
+          GITHUB_CREATE_PR_APP_ID: "896608"
+          GITHUB_CREATE_PR_APP_PRIVATE_KEY: ${{ secrets.CREATE_PR_APP_PRIVATE_KEY }}
+          # Installation of the app in this organization, see: https://github.com/FordefiHQ/web3-provider/settings/installations
+          GITHUB_CREATE_PR_APP_INSTALLATION_ID_IN_ORG: "50650204"
+        with:
+          app-id: ${{ env.GITHUB_CREATE_PR_APP_ID }}
+          private-key: ${{ env.GITHUB_CREATE_PR_APP_PRIVATE_KEY }}
+
+      - name: Create Pull Request
+        id: create-pr-gh-cli
+        env:
+          GH_TOKEN: ${{ steps.generate-gh-token.outputs.token }}
+        run: |
+          # verify token works
+          gh api octocat
+
+          # create PR
+          gh pr create \
+            --base gil/main-clone \
+            --head "${{ github.ref_name }}" \
+            --title "Release ${{ env.NEW_VERSION_TAG }}" \
+            --body "
+            - [ ] Bump the version in package.json.
+            - [ ] Update CHANGELOG.md.
+            " \
+            --reviewer "gilmeir-arnac" \
+            --assignee "${{ github.actor }}"
+
+          echo "CREATE_PR_SUCCESS=$( [ $? -eq 0 ] && echo "true" || echo "false" )" >> $GITHUB_OUTPUT
+
+          CREATED_PR_URL="$(gh pr list --repo ${{ github.repository }} --head ${{ github.ref_name }} --base main --limit 1 --json url --jq ".[].url")"
+          echo "CREATED_PR_URL=$CREATED_PR_URL" >> $GITHUB_OUTPUT
+
+  report-to-slack:
+    name: Report Result to Slack
+    if: always()
+    runs-on: ubuntu-latest
+    needs: [detect-new-version, create-pr]
+    env:
+      NEW_VERSION_TAG: ${{ needs.detect-new-version.outputs.NEW_VERSION_TAG }}
+      CREATE_PR_SUCCESS: ${{ needs.create-pr.outputs.CREATE_PR_SUCCESS }}
+      CREATED_PR_URL: ${{ needs.create-pr.outputs.CREATED_PR_URL }}
+      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      # channel #web3-provider-releases
+      SLACK_CHANNEL_ID: "C072BEST4AC"
+      WORKFLOW_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+    steps:
+      - name: Notify Slack on Success
+        if: ${{ env.CREATE_PR_SUCCESS == 'true' }}
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          channel-id: ${{ env.SLACK_CHANNEL_ID }}
+          # Slack Block Kit API: https://api.slack.com/reference/block-kit
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*Release `${{ env.NEW_VERSION_TAG }}` is waiting for approval*  |  <${{ env.CREATED_PR_URL }}|Pull Request>  |  <${{ env.WORKFLOW_URL }}|Workflow>"
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "Initiated by `${{ github.actor }}` from branch `${{ github.ref_name }}`"
+                  }
+                }
+              ]
+            }
+
+      - name: Notify Slack on Failure
+        if: ${{ env.CREATE_PR_SUCCESS != 'true' }}
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          channel-id: ${{ env.SLACK_CHANNEL_ID }}
+          # Slack Block Kit API: https://api.slack.com/reference/block-kit
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*Failed to create a release for `${{ env.NEW_VERSION_TAG }}`*  |  <${{ env.WORKFLOW_URL }}|Workflow>"
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "Initiated by `${{ github.actor }}` from branch `${{ github.ref_name }}`"
+                  }
+                }
+              ]
+            }
