@@ -83,6 +83,13 @@ jobs:
           verify_file_has_diff_with_version CHANGELOG.md
           verify_file_has_diff_with_version package.json
 
+        # TODO: uncomment
+          # NUM_FILES_HAVE_DIFF="$(git --no-pager diff origin/main.. --name-only | wc -l | xargs)"
+          # if [ "$NUM_FILES_HAVE_DIFF" -ne 2 ]; then
+          #  echo "Release PR can only edit 2 files: CHANGELOG.md and package.json, exiting"
+          #  exit 1
+          # fi
+
   create-pr:
     name: Create PR
     runs-on: ubuntu-latest
@@ -120,7 +127,7 @@ jobs:
 
           # create PR
           gh pr create \
-            --base main \
+            --base gil/main-clone \
             --head "${{ github.ref_name }}" \
             --title "Release ${{ env.NEW_VERSION_TAG }}" \
             --body "

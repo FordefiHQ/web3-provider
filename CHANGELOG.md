@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.2.1-dev.6350432 (2024-05-13)
+## 0.2.1-dev.0e8f02b (2024-05-13)
 - Changed `EvmVault` type to have stricter `address: Hex`.
 - Fixed README snippet to use a `bigint` for transaction `value`.
 - Fixed address comparisons.
