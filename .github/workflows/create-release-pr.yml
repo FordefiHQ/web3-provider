@@ -103,13 +103,13 @@ jobs:
         uses: actions/create-github-app-token@v1
         env:
           # The app is owned by @gilmeir-arnac, settings: https://github.com/settings/apps/create-pr-from-github-actions
-          CREATE_PR_APP_PRIVATE_KEY: ${{ secrets.CREATE_PR_APP_PRIVATE_KEY }}
-          CREATE_PR_APP_ID: "896608"
+          GITHUB_CREATE_PR_APP_PRIVATE_KEY: ${{ secrets.CREATE_PR_APP_PRIVATE_KEY }}
+          GITHUB_CREATE_PR_APP_ID: "896608"
           # Installation of the app in this organization, see: https://github.com/FordefiHQ/web3-provider/settings/installations
-          CREATE_PR_APP_INSTALLATION_ID_IN_ORG: "50650204"
+          GITHUB_CREATE_PR_APP_INSTALLATION_ID_IN_ORG: "50650204"
         with:
-          app-id: ${{ env.CREATE_PR_APP_ID }}
-          private-key: ${{ env.CREATE_PR_APP_PRIVATE_KEY }}
+          app-id: ${{ env.GITHUB_CREATE_PR_APP_ID }}
+          private-key: ${{ env.GITHUB_CREATE_PR_APP_PRIVATE_KEY }}
 
       - name: Create Pull Request
         id: create-pr-gh-cli
