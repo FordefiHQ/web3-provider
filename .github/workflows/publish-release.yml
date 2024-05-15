@@ -132,7 +132,7 @@ jobs:
 
       - name: Generate Github API Token
         id: generate-gh-token
-        # the token is an output `token`
+        # this action outputs `token`
         uses: actions/create-github-app-token@v1
         env:
           # The app is owned by @gilmeir-arnac, settings: https://github.com/settings/apps/create-pr-from-github-actions
