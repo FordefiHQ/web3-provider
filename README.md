@@ -113,6 +113,8 @@ console.log(`Transaction hash: ${txHash}`);
 
 ## API Reference
 
+The full API reference is available on the [Fordefi Web3 Provider docs site](https://web3provider-docs.fordefi.com).
+
 ### Configuration
 
 For details, see the [FordefiProviderConfig](./src/types/config.ts) interface.
