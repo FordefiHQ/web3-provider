@@ -13,6 +13,7 @@ concurrency: "${{ github.workflow }}-${{ github.ref }}"
 
 env:
   NODE_VERSION: "18.19.1"
+  SLACK_CHANNEL_ID: "C072BEST4AC" # channel #web3-provider-releases
 
 jobs:
   detect-new-version:
@@ -36,6 +37,8 @@ jobs:
       - name: Detect New Version
         id: detect-version
         run: |
+          set -e
+
           NEW_VERSION=$(yarn --silent version:current)
           git diff origin/main.. -- package.json | grep "\"version\": \"${NEW_VERSION}\"" > /dev/null && HAS_VERSION_CHANGE=0 || HAS_VERSION_CHANGE=1
           echo "HAS_VERSION_CHANGE=${HAS_VERSION_CHANGE}"
@@ -54,6 +57,8 @@ jobs:
       - name: Verify Release Changes
         if: ${{ steps.detect-version.outputs.IS_NEW_VERSION == 'true' }}
         run: |
+          set -e
+
           echo "IS_NEW_VERSION=${{ steps.detect-version.outputs.IS_NEW_VERSION }}"
           echo "NEW_VERSION=${{ steps.detect-version.outputs.NEW_VERSION }}"
           echo "NEW_VERSION_TAG=${{ steps.detect-version.outputs.NEW_VERSION_TAG }}"
@@ -69,19 +74,21 @@ jobs:
               exit 1
             fi
 
-            HAS_VERSION_IN_FILE=$([ "$(echo "${FILE_DIFF}" | grep -c "${{ steps.detect-version.outputs.NEW_VERSION }}")" -gt 0 ] && echo "true" || echo "false")
+            NUM_DIFF_LINES_WITH_VERSION=$(echo "${FILE_DIFF}" | grep -c "${{ steps.detect-version.outputs.NEW_VERSION }}" || true)
 
-            if [ "$HAS_VERSION_IN_FILE" = "true" ]; then
-              echo "Detected changes in $FILE_NAME that include the new version (as expected)"
-            else
-              echo "Detected changes in $FILE_NAME that don't contain the new version, exiting"
+            if [ $NUM_DIFF_LINES_WITH_VERSION -eq 0 ]; then
+              echo "$FILE_NAME does not contain the new version, exiting"
               exit 1
             fi
+
+            echo "$FILE_NAME contains the new version as expected"
           }
 
+          # verify each file has the new version in diff
           verify_file_has_diff_with_version CHANGELOG.md
           verify_file_has_diff_with_version package.json
 
+          # verify only relevant files have changes
           NUM_FILES_HAVE_DIFF="$(git --no-pager diff origin/main.. --name-only | wc -l | xargs)"
           if [ "$NUM_FILES_HAVE_DIFF" -ne 2 ]; then
             echo "Release PR can only edit 2 files: CHANGELOG.md and package.json, exiting"
@@ -94,9 +101,6 @@ jobs:
     needs: detect-new-version
     env:
       NEW_VERSION_TAG: ${{ needs.detect-new-version.outputs.NEW_VERSION_TAG }}
-    outputs:
-      CREATE_PR_SUCCESS: ${{ steps.create-pr-gh-cli.outputs.CREATE_PR_SUCCESS }}
-      CREATED_PR_URL: ${{ steps.create-pr-gh-cli.outputs.CREATED_PR_URL }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -121,6 +125,8 @@ jobs:
         env:
           GH_TOKEN: ${{ steps.generate-gh-token.outputs.token }}
         run: |
+          set -e
+
           # verify token works
           gh api octocat
 
@@ -136,28 +142,17 @@ jobs:
             --reviewer "gilmeir-arnac" \
             --assignee "${{ github.actor }}"
 
-          echo "CREATE_PR_SUCCESS=$( [ $? -eq 0 ] && echo "true" || echo "false" )" >> $GITHUB_OUTPUT
-
           CREATED_PR_URL="$(gh pr list --repo ${{ github.repository }} --head ${{ github.ref_name }} --base main --limit 1 --json url --jq ".[].url")"
           echo "CREATED_PR_URL=$CREATED_PR_URL" >> $GITHUB_OUTPUT
 
-  report-to-slack:
-    name: Report Result to Slack
-    if: always()
-    runs-on: ubuntu-latest
-    needs: [detect-new-version, create-pr]
-    env:
-      NEW_VERSION_TAG: ${{ needs.detect-new-version.outputs.NEW_VERSION_TAG }}
-      CREATE_PR_SUCCESS: ${{ needs.create-pr.outputs.CREATE_PR_SUCCESS }}
-      CREATED_PR_URL: ${{ needs.create-pr.outputs.CREATED_PR_URL }}
-      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-      # channel #web3-provider-releases
-      SLACK_CHANNEL_ID: "C072BEST4AC"
-      WORKFLOW_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-    steps:
       - name: Notify Slack on Success
-        if: ${{ env.CREATE_PR_SUCCESS == 'true' }}
+        if: success()
         uses: slackapi/slack-github-action@v1.26.0
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          NEW_VERSION_TAG: ${{ needs.detect-new-version.outputs.NEW_VERSION_TAG }}
+          CREATED_PR_URL: ${{ steps.create-pr-gh-cli.outputs.CREATED_PR_URL }}
+          WORKFLOW_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
         with:
           channel-id: ${{ env.SLACK_CHANNEL_ID }}
           # Slack Block Kit API: https://api.slack.com/reference/block-kit
@@ -182,8 +177,12 @@ jobs:
             }
 
       - name: Notify Slack on Failure
-        if: ${{ env.CREATE_PR_SUCCESS != 'true' }}
+        if: failure()
         uses: slackapi/slack-github-action@v1.26.0
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          NEW_VERSION_TAG: ${{ needs.detect-new-version.outputs.NEW_VERSION_TAG }}
+          WORKFLOW_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
         with:
           channel-id: ${{ env.SLACK_CHANNEL_ID }}
           # Slack Block Kit API: https://api.slack.com/reference/block-kit
