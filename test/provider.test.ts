@@ -17,7 +17,7 @@ import {
   TypedDataDefinition,
 } from 'viem';
 import { waitFor } from '../src/utils';
-import { FordefiRpcSchema, NonFordefiRpcSchema, RequestArgs } from '../src';
+import type { FordefiRpcSchema, NonFordefiRpcSchema, RequestArgs } from '../src/provider/provider.types';
 import { createTestProvider, minedTransactionFixture, TEST_PROVIDER_CONFIG, testFixtures } from './provider.test.utils';
 import msgParams from './fixtures/eth-sign-typed-data-v4-message.json';
 

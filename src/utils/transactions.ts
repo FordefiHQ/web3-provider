@@ -104,8 +104,9 @@ export const buildEvmRawTransactionRequest = (
     throw new InvalidParamsRpcError(new Error('Transaction "to" is either missing or invalid'));
   }
 
-  if (value === undefined || typeof value !== 'bigint') {
-    throw new InvalidParamsRpcError(new Error('Transaction "value" in either missing or invalid'));
+  const valueStr = value?.toString();
+  if (valueStr !== undefined && !valueStr.match(/^\d+$/)) {
+    throw new InvalidParamsRpcError(new Error('Transaction "value" must be a valid number'));
   }
 
   return {
@@ -118,7 +119,7 @@ export const buildEvmRawTransactionRequest = (
       skipPrediction: true,
       pushMode,
       chain: chain.chainId,
-      value: value.toString(),
+      value: valueStr ?? '0', // The spec defines it as optional, but it's required in our API
       to,
       data: data
         ? {
