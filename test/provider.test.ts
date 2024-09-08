@@ -200,7 +200,7 @@ describe('Web3 Provider', () => {
     });
 
     describe('eth_sendTransaction', () => {
-      test("'eth_sendTransaction' given numbers as bigint should return a mined transaction hash", async () => {
+      test("'eth_sendTransaction' given quantities as bigint should return a mined transaction hash", async () => {
         const provider = createTestProvider();
         await provider.waitForEmittedEvent('connect');
 
@@ -222,7 +222,7 @@ describe('Web3 Provider', () => {
         expect(isHash(transactionHash)).toBeTruthy();
       });
 
-      test("'eth_sendTransaction' given number as hex strings should return a mined transaction hash", async () => {
+      test("'eth_sendTransaction' given quantities as hex strings should return a mined transaction hash", async () => {
         const provider = createTestProvider();
         await provider.waitForEmittedEvent('connect');
 
@@ -230,6 +230,27 @@ describe('Web3 Provider', () => {
           from: TEST_PROVIDER_CONFIG.address,
           to: testFixtures.toAddress,
           value: numberToHex(testFixtures.value),
+          maxFeePerGas: numberToHex(150004177629n),
+          maxPriorityFeePerGas: numberToHex(1000528647n),
+          gas: numberToHex(22222n),
+        } satisfies Partial<FordefiWeb3TransactionRequest>;
+
+        const transactionHash = await provider.request({
+          method: 'eth_sendTransaction',
+          params: [transaction],
+        });
+
+        console.debug(`Transaction hash: '${transactionHash}'`);
+        expect(isHash(transactionHash)).toBeTruthy();
+      });
+
+      test("'eth_sendTransaction' given no 'value' should return a mined transaction hash", async () => {
+        const provider = createTestProvider();
+        await provider.waitForEmittedEvent('connect');
+
+        const transaction = {
+          from: TEST_PROVIDER_CONFIG.address,
+          to: testFixtures.toAddress,
           maxFeePerGas: numberToHex(150004177629n),
           maxPriorityFeePerGas: numberToHex(1000528647n),
           gas: numberToHex(22222n),

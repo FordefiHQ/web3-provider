@@ -1,13 +1,4 @@
-import {
-  Hex,
-  hexToBigInt,
-  InternalRpcError,
-  InvalidParamsRpcError,
-  isAddress,
-  isAddressEqual,
-  isHex,
-  TransactionRequest,
-} from 'viem';
+import { Hex, hexToBigInt, InternalRpcError, InvalidParamsRpcError, isAddress, isAddressEqual, isHex } from 'viem';
 import { ApiClient } from '../api';
 import {
   CreateEvmMessageRequest,
@@ -30,6 +21,7 @@ import {
 } from '../openapi';
 import { FordefiRpcSchema, FordefiWeb3TransactionRequest, RequestArgs } from '../provider/provider.types';
 import { AnyEvmTransaction, EvmVault } from '../types';
+import { Defined } from '../types/type-utils';
 import { waitFor } from './wait-for';
 
 /**
@@ -40,10 +32,9 @@ import { waitFor } from './wait-for';
  * - BigInt
  * - undefined - translated to '0' per Fordefi API interface
  */
-const toFordefiTransactionNumericValue = (value?: unknown): string => {
-  // The spec defines it as optional, but it's required in our API
+const toFordefiTransactionNumericValue = <T>(value: Defined<T>): string => {
   if (value === undefined) {
-    return '0';
+    throw new Error('value cannot be an undefined');
   }
 
   if (typeof value === 'string') {
@@ -93,7 +84,24 @@ const toFordefiTransactionNumericValue = (value?: unknown): string => {
   throw new Error('value must be a valid number');
 };
 
-const parseTransactionRequestNumericField = (fieldName: string, value: unknown) => {
+const parseTransactionRequestValueField = (value: unknown) => {
+  // The spec defines it as optional, but it's required in our API
+  if (value === undefined) {
+    return '0';
+  }
+
+  try {
+    return toFordefiTransactionNumericValue(value);
+  } catch (parseError: any) {
+    throw new InvalidParamsRpcError(new Error(`invalid "value": ${parseError.message}`));
+  }
+};
+
+const parseTransactionRequestGasField = (fieldName: string, value: unknown) => {
+  if (value === undefined) {
+    throw new Error(`invalid "${fieldName}": value is required`);
+  }
+
   try {
     return toFordefiTransactionNumericValue(value);
   } catch (parseError: any) {
@@ -123,7 +131,7 @@ const toFordefiEvmGas = ({
   gasPrice,
   gas,
 }: Partial<FordefiWeb3TransactionRequest>): CreateEvmRawTransactionRequestGas => {
-  const gasLimit = parseTransactionRequestNumericField('gas', gas);
+  const gasLimit = parseTransactionRequestGasField('gas', gas);
 
   if (maxPriorityFeePerGas !== undefined && maxFeePerGas !== undefined) {
     return {
@@ -131,8 +139,8 @@ const toFordefiEvmGas = ({
       gasLimit,
       details: {
         type: DynamicGasRequestTypeEnum.dynamic,
-        maxPriorityFeePerGas: parseTransactionRequestNumericField('maxPriorityFeePerGas', maxPriorityFeePerGas),
-        maxFeePerGas: parseTransactionRequestNumericField('maxFeePerGas', maxFeePerGas),
+        maxPriorityFeePerGas: parseTransactionRequestGasField('maxPriorityFeePerGas', maxPriorityFeePerGas),
+        maxFeePerGas: parseTransactionRequestGasField('maxFeePerGas', maxFeePerGas),
       },
     };
   }
@@ -143,7 +151,7 @@ const toFordefiEvmGas = ({
       gasLimit,
       details: {
         type: LegacyGasTypeEnum.legacy,
-        price: parseTransactionRequestNumericField('gasPrice', gasPrice),
+        price: parseTransactionRequestGasField('gasPrice', gasPrice),
       },
     };
   }
@@ -183,7 +191,7 @@ export const buildEvmRawTransactionRequest = (
       skipPrediction: true,
       pushMode,
       chain: chain.chainId,
-      value: parseTransactionRequestNumericField('value', value),
+      value: parseTransactionRequestValueField(value),
       to,
       data: data
         ? {
