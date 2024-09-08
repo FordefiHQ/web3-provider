@@ -21,6 +21,7 @@ import {
 } from '../openapi';
 import { FordefiRpcSchema, FordefiWeb3TransactionRequest, RequestArgs } from '../provider/provider.types';
 import { AnyEvmTransaction, EvmVault } from '../types';
+import { Defined } from '../types/type-utils';
 import { waitFor } from './wait-for';
 
 /**
@@ -29,9 +30,12 @@ import { waitFor } from './wait-for';
  * - String (decimal, hex)
  * - Number
  * - BigInt
- * - undefined - translated to '0' per Fordefi API interface
  */
-const toFordefiTransactionNumericValue = (value: unknown): string => {
+const toFordefiTransactionNumericValue = <T>(value: Defined<T>): string => {
+  if (value === undefined) {
+    throw new Error('value cannot be undefined');
+  }
+
   if (typeof value === 'string') {
     if (value.trim() === '') {
       throw new Error('value cannot be an empty string');
