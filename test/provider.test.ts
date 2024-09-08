@@ -244,13 +244,12 @@ describe('Web3 Provider', () => {
         expect(isHash(transactionHash)).toBeTruthy();
       });
 
-      test("'eth_sendTransaction' given no 'value' should return a mined transaction hash", async () => {
+      test("'eth_sendTransaction' given no 'value' or 'to' should return a mined transaction hash", async () => {
         const provider = createTestProvider();
         await provider.waitForEmittedEvent('connect');
 
         const transaction = {
           from: TEST_PROVIDER_CONFIG.address,
-          to: testFixtures.toAddress,
           maxFeePerGas: numberToHex(150004177629n),
           maxPriorityFeePerGas: numberToHex(1000528647n),
           gas: numberToHex(22222n),

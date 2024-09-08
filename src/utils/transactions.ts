@@ -172,8 +172,8 @@ export const buildEvmRawTransactionRequest = (
     );
   }
 
-  if (!to || !isAddress(to)) {
-    throw new InvalidParamsRpcError(new Error('Transaction "to" is either missing or invalid'));
+  if (to && !isAddress(to)) {
+    throw new InvalidParamsRpcError(new Error('Transaction "to" is not a valid address'));
   }
 
   return {
@@ -187,7 +187,8 @@ export const buildEvmRawTransactionRequest = (
       pushMode,
       chain: chain.chainId,
       value: parseTransactionRequestValueField(value),
-      to,
+      // @ts-expect-error TODO(gil): remove once API change is merged
+      to: to ?? undefined,
       data: data
         ? {
             type: EvmDataRequestHexTypeEnum.hex,
