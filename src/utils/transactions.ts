@@ -1,12 +1,12 @@
 import {
-  Address,
   Hex,
+  hexToBigInt,
   InternalRpcError,
   InvalidParamsRpcError,
   isAddress,
   isAddressEqual,
+  isHex,
   TransactionRequest,
-  TypedDataDefinition,
 } from 'viem';
 import { ApiClient } from '../api';
 import {
@@ -28,9 +28,78 @@ import {
   PushMode,
   SignerType,
 } from '../openapi';
-import { AnyEvmTransaction, EvmVault } from '../types';
 import { FordefiRpcSchema, RequestArgs } from '../provider/provider.types';
+import { AnyEvmTransaction, EvmVault } from '../types';
 import { waitFor } from './wait-for';
+
+/**
+ * Transforms a value to a Fordefi API valid amount, or throws if it's invalid.
+ * Any value (of any type) that can be transformed to a valid non-negative-integer number (without indirect casting) is supported:
+ * - String (decimal, hex)
+ * - Number
+ * - BigInt
+ * - undefined - translated to '0' per Fordefi API interface
+ */
+const toFordefiTransactionNumericValue = (value?: unknown): string => {
+  // The spec defines it as optional, but it's required in our API
+  if (value === undefined) {
+    return '0';
+  }
+
+  if (typeof value === 'string') {
+    if (value.trim() === '') {
+      throw new Error('value cannot be an empty string');
+    }
+
+    if (value.startsWith('-')) {
+      throw new Error('value provided as a string cannot be negative');
+    }
+
+    if (isHex(value, { strict: true })) {
+      return hexToBigInt(value).toString();
+    }
+
+    if (value.match(/^\d+$/)) {
+      return value;
+    }
+
+    throw new Error('value provided as a string must be a valid decimal or hex string');
+  }
+
+  if (typeof value === 'number') {
+    if (isNaN(value)) {
+      throw new Error('value is NaN');
+    }
+
+    if (!Number.isSafeInteger(value)) {
+      throw new Error('value of type number is not a safe integer, use a bigint instead');
+    }
+
+    if (value < 0) {
+      throw new Error('value must be a non-negative number');
+    }
+
+    return BigInt(value).toString();
+  }
+
+  if (typeof value === 'bigint') {
+    if (value < 0) {
+      throw new Error('value must be a non-negative number');
+    }
+
+    return value.toString();
+  }
+
+  throw new Error('value must be a valid number');
+};
+
+const parseTransactionRequestNumericField = (fieldName: string, value: unknown) => {
+  try {
+    return toFordefiTransactionNumericValue(value);
+  } catch (parseError: any) {
+    throw new InvalidParamsRpcError(new Error(`invalid ${fieldName}: ${parseError.message}`));
+  }
+};
 
 export const buildSignTransactionRequest = (
   vaultId: string,
@@ -54,7 +123,7 @@ const toFordefiEvmGas = ({
   gasPrice,
   gas,
 }: Partial<TransactionRequest>): CreateEvmRawTransactionRequestGas => {
-  const gasLimit = gas === undefined ? undefined : gas.toString();
+  const gasLimit = parseTransactionRequestNumericField('gas', gas);
 
   if (maxPriorityFeePerGas !== undefined && maxFeePerGas !== undefined) {
     return {
@@ -62,8 +131,8 @@ const toFordefiEvmGas = ({
       gasLimit,
       details: {
         type: DynamicGasRequestTypeEnum.dynamic,
-        maxPriorityFeePerGas: maxPriorityFeePerGas.toString(),
-        maxFeePerGas: maxFeePerGas.toString(),
+        maxPriorityFeePerGas: parseTransactionRequestNumericField('maxPriorityFeePerGas', maxPriorityFeePerGas),
+        maxFeePerGas: parseTransactionRequestNumericField('maxFeePerGas', maxFeePerGas),
       },
     };
   }
@@ -74,7 +143,7 @@ const toFordefiEvmGas = ({
       gasLimit,
       details: {
         type: LegacyGasTypeEnum.legacy,
-        price: gasPrice.toString(),
+        price: parseTransactionRequestNumericField('gasPrice', gasPrice),
       },
     };
   }
@@ -104,11 +173,6 @@ export const buildEvmRawTransactionRequest = (
     throw new InvalidParamsRpcError(new Error('Transaction "to" is either missing or invalid'));
   }
 
-  const valueStr = value?.toString();
-  if (valueStr !== undefined && !valueStr.match(/^\d+$/)) {
-    throw new InvalidParamsRpcError(new Error('Transaction "value" must be a valid number'));
-  }
-
   return {
     type: CreateEvmTransactionRequestTypeEnum.evmTransaction,
     vaultId: vault.id,
@@ -119,7 +183,7 @@ export const buildEvmRawTransactionRequest = (
       skipPrediction: true,
       pushMode,
       chain: chain.chainId,
-      value: valueStr ?? '0', // The spec defines it as optional, but it's required in our API
+      value: parseTransactionRequestNumericField('value', value),
       to,
       data: data
         ? {
