@@ -28,7 +28,7 @@ import {
   PushMode,
   SignerType,
 } from '../openapi';
-import { FordefiRpcSchema, RequestArgs } from '../provider/provider.types';
+import { FordefiRpcSchema, FordefiWeb3TransactionRequest, RequestArgs } from '../provider/provider.types';
 import { AnyEvmTransaction, EvmVault } from '../types';
 import { waitFor } from './wait-for';
 
@@ -122,7 +122,7 @@ const toFordefiEvmGas = ({
   maxFeePerGas,
   gasPrice,
   gas,
-}: Partial<TransactionRequest>): CreateEvmRawTransactionRequestGas => {
+}: Partial<FordefiWeb3TransactionRequest>): CreateEvmRawTransactionRequestGas => {
   const gasLimit = parseTransactionRequestNumericField('gas', gas);
 
   if (maxPriorityFeePerGas !== undefined && maxFeePerGas !== undefined) {
@@ -156,7 +156,7 @@ const toFordefiEvmGas = ({
 };
 
 export const buildEvmRawTransactionRequest = (
-  transaction: Partial<TransactionRequest>,
+  transaction: Partial<FordefiWeb3TransactionRequest>,
   chain: EvmChain,
   vault: EvmVault,
   pushMode: PushMode,

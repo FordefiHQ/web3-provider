@@ -7,17 +7,22 @@ import {
   InvalidParamsRpcError,
   isHash,
   isHex,
+  numberToHex,
   ProviderDisconnectedError,
   recoverMessageAddress,
   recoverTypedDataAddress,
   RpcError,
   stringToBytes,
   stringToHex,
-  TransactionRequest,
   TypedDataDefinition,
 } from 'viem';
 import { waitFor } from '../src/utils';
-import type { FordefiRpcSchema, NonFordefiRpcSchema, RequestArgs } from '../src/provider/provider.types';
+import {
+  FordefiRpcSchema,
+  FordefiWeb3TransactionRequest,
+  NonFordefiRpcSchema,
+  RequestArgs,
+} from '../src/provider/provider.types';
 import { createTestProvider, minedTransactionFixture, TEST_PROVIDER_CONFIG, testFixtures } from './provider.test.utils';
 import msgParams from './fixtures/eth-sign-typed-data-v4-message.json';
 
@@ -183,7 +188,7 @@ describe('Web3 Provider', () => {
         from: TEST_PROVIDER_CONFIG.address,
         to: testFixtures.toAddress,
         value: testFixtures.value,
-      } satisfies Partial<TransactionRequest>;
+      } satisfies Partial<FordefiWeb3TransactionRequest>;
 
       const signedTransaction = await provider.request({
         method: 'eth_signTransaction',
@@ -194,26 +199,50 @@ describe('Web3 Provider', () => {
       expect(isHex(signedTransaction)).toBeTruthy();
     });
 
-    test("'eth_sendTransaction' should return a mined transaction hash", async () => {
-      const provider = createTestProvider();
-      await provider.waitForEmittedEvent('connect');
+    describe('eth_sendTransaction', () => {
+      test("'eth_sendTransaction' given numbers as bigint should return a mined transaction hash", async () => {
+        const provider = createTestProvider();
+        await provider.waitForEmittedEvent('connect');
 
-      const transaction = {
-        from: TEST_PROVIDER_CONFIG.address,
-        to: testFixtures.toAddress,
-        value: testFixtures.value,
-        maxFeePerGas: 150004177629n,
-        maxPriorityFeePerGas: 1000528647n,
-        gas: 22222n,
-      } satisfies Partial<TransactionRequest>;
+        const transaction = {
+          from: TEST_PROVIDER_CONFIG.address,
+          to: testFixtures.toAddress,
+          value: testFixtures.value,
+          maxFeePerGas: 150004177629n,
+          maxPriorityFeePerGas: 1000528647n,
+          gas: 22222n,
+        } satisfies Partial<FordefiWeb3TransactionRequest>;
 
-      const transactionHash = await provider.request({
-        method: 'eth_sendTransaction',
-        params: [transaction],
+        const transactionHash = await provider.request({
+          method: 'eth_sendTransaction',
+          params: [transaction],
+        });
+
+        console.debug(`Transaction hash: '${transactionHash}'`);
+        expect(isHash(transactionHash)).toBeTruthy();
       });
 
-      console.debug(`Transaction hash: '${transactionHash}'`);
-      expect(isHash(transactionHash)).toBeTruthy();
+      test("'eth_sendTransaction' given number as hex strings should return a mined transaction hash", async () => {
+        const provider = createTestProvider();
+        await provider.waitForEmittedEvent('connect');
+
+        const transaction = {
+          from: TEST_PROVIDER_CONFIG.address,
+          to: testFixtures.toAddress,
+          value: numberToHex(testFixtures.value),
+          maxFeePerGas: numberToHex(150004177629n),
+          maxPriorityFeePerGas: numberToHex(1000528647n),
+          gas: numberToHex(22222n),
+        } satisfies Partial<FordefiWeb3TransactionRequest>;
+
+        const transactionHash = await provider.request({
+          method: 'eth_sendTransaction',
+          params: [transaction],
+        });
+
+        console.debug(`Transaction hash: '${transactionHash}'`);
+        expect(isHash(transactionHash)).toBeTruthy();
+      });
     });
 
     test('should throw invalid params error', async () => {
@@ -224,7 +253,7 @@ describe('Web3 Provider', () => {
         from: TEST_PROVIDER_CONFIG.address,
         to: 'invalid-address' as Address,
         value: testFixtures.value,
-      } satisfies Partial<TransactionRequest>;
+      } satisfies Partial<FordefiWeb3TransactionRequest>;
 
       let error: RpcError | undefined = undefined;
       try {
@@ -252,7 +281,7 @@ describe('Web3 Provider', () => {
         from: TEST_PROVIDER_CONFIG.address,
         to: testFixtures.toAddress,
         value: testFixtures.value,
-      } satisfies Partial<TransactionRequest>;
+      } satisfies Partial<FordefiWeb3TransactionRequest>;
 
       const signedRawTransaction = await provider.request({
         method: 'eth_signTransaction',
@@ -312,7 +341,7 @@ describe('Web3 Provider', () => {
         // invalid fees
         maxPriorityFeePerGas: -1n,
         maxFeePerGas: -2n,
-      } satisfies Partial<TransactionRequest>;
+      } satisfies Partial<FordefiWeb3TransactionRequest>;
 
       let error: RpcError | undefined = undefined;
       try {

@@ -12,6 +12,9 @@ import {
 } from 'viem';
 import { OmitFromArray } from '../utils/types';
 
+// Fordefi API supports both hex strings and decimal string (so does the spec)
+export type FordefiWeb3TransactionRequest = TransactionRequest<bigint | Hex>;
+
 /** Spec of all methods implemented by Fordefi. */
 export type FordefiRpcSchema = readonly [
   {
@@ -31,12 +34,12 @@ export type FordefiRpcSchema = readonly [
   },
   {
     Method: 'eth_sendTransaction';
-    Parameters: [transaction: TransactionRequest];
+    Parameters: [transaction: FordefiWeb3TransactionRequest];
     ReturnType: Hash;
   },
   {
     Method: 'eth_signTransaction';
-    Parameters: [request: TransactionRequest];
+    Parameters: [request: FordefiWeb3TransactionRequest];
     ReturnType: Hex;
   },
   {
