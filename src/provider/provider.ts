@@ -35,7 +35,7 @@ import {
   parseTypedDataParams,
   waitForTransactionState,
 } from '../utils/transactions';
-import { base64SignatureToHex, waitForEmittedEvent } from '../utils';
+import { base64SignatureToHex, ONE_DAY_MS, ONE_SECOND_MS, waitForEmittedEvent } from '../utils';
 import { assertUnreachable } from '../utils/types';
 import {
   ConnectivityStatus,
@@ -47,9 +47,6 @@ import {
   NonFordefiRpcSchema,
   RequestArgs,
 } from './provider.types';
-
-const ONE_SECOND_MS = 1_000;
-const ONE_DAY_MS = 24 * 60 * 60 * ONE_SECOND_MS;
 
 /**
  * Web3 provider that implements [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193).

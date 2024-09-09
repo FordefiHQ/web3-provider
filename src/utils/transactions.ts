@@ -22,6 +22,7 @@ import {
 import { FordefiRpcSchema, FordefiWeb3TransactionRequest, RequestArgs } from '../provider/provider.types';
 import { AnyEvmTransaction, EvmVault } from '../types';
 import { Defined } from '../types/type-utils';
+import { ONE_MINUTE_MS, ONE_SECOND_MS, renderTimeDuration } from './time';
 import { waitFor } from './wait-for';
 
 /**
@@ -207,13 +208,17 @@ export const waitForTransactionState = async <T extends AnyEvmTransaction>(
   { id: transactionId }: T,
   desiredState: EvmTransactionState,
   apiClient: ApiClient,
-  timeoutMs: number,
+  timeoutDurationMs: number,
   pollingIntervalMs: number,
 ): Promise<T> => {
-  const timeoutTime = new Date(new Date().getTime() + timeoutMs);
-  let attemptStartTime: Date = new Date();
+  console.debug(
+    `waiting for transaction state change to '${desiredState}' with timeout of ${renderTimeDuration(timeoutDurationMs)}`,
+  );
 
-  while ((attemptStartTime = new Date()) < timeoutTime) {
+  let attemptStartTimeMs = Date.now();
+  const timeoutTimeMs = attemptStartTimeMs + timeoutDurationMs;
+
+  while ((attemptStartTimeMs = Date.now()) < timeoutTimeMs) {
     const transaction = (await apiClient.transactions.getTransactionApiV1TransactionsIdGet({
       id: transactionId,
     })) as T;
@@ -229,16 +234,20 @@ export const waitForTransactionState = async <T extends AnyEvmTransaction>(
       return transaction as T;
     }
 
-    console.debug(`transaction state is '${transaction.state}', waiting for '${desiredState}'...`);
+    console.debug(
+      `[${new Date().toISOString()}] transaction state is '${transaction.state}', waiting for '${desiredState}'...`,
+    );
 
-    const timeSinceAttemptStart = new Date(new Date().getTime() - attemptStartTime.getTime()); // including the api call latency
-    const remainingWaitTime = pollingIntervalMs - timeSinceAttemptStart.getTime();
-    if (remainingWaitTime > 0) {
-      await waitFor(remainingWaitTime);
+    // take into account the api call latency
+    const timeSinceAttemptStartMs = Date.now() - attemptStartTimeMs;
+    const remainingWaitTimeMs = pollingIntervalMs - timeSinceAttemptStartMs;
+
+    if (remainingWaitTimeMs > 0) {
+      await waitFor(remainingWaitTimeMs);
     }
   }
 
-  throw new InternalRpcError(new Error(`Timeout waiting for transaction status to change to '${desiredState}'`));
+  throw new InternalRpcError(new Error(`Timeout while waiting for transaction status to change to '${desiredState}'`));
 };
 
 /**
