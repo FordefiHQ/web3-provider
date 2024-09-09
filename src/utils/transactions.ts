@@ -210,9 +210,10 @@ export const waitForTransactionState = async <T extends AnyEvmTransaction>(
   timeoutMs: number,
   pollingIntervalMs: number,
 ): Promise<T> => {
-  let remainingAttempts = Math.max(timeoutMs / pollingIntervalMs);
+  const timeoutTime = new Date(new Date().getTime() + timeoutMs);
+  let attemptStartTime: Date = new Date();
 
-  while (remainingAttempts > 0) {
+  while ((attemptStartTime = new Date()) < timeoutTime) {
     const transaction = (await apiClient.transactions.getTransactionApiV1TransactionsIdGet({
       id: transactionId,
     })) as T;
@@ -228,10 +229,13 @@ export const waitForTransactionState = async <T extends AnyEvmTransaction>(
       return transaction as T;
     }
 
-    remainingAttempts -= 1;
     console.debug(`transaction state is '${transaction.state}', waiting for '${desiredState}'...`);
 
-    await waitFor(pollingIntervalMs);
+    const timeSinceAttemptStart = new Date(new Date().getTime() - attemptStartTime.getTime()); // including the api call latency
+    const remainingWaitTime = pollingIntervalMs - timeSinceAttemptStart.getTime();
+    if (remainingWaitTime > 0) {
+      await waitFor(remainingWaitTime);
+    }
   }
 
   throw new InternalRpcError(new Error(`Timeout waiting for transaction status to change to '${desiredState}'`));
