@@ -48,6 +48,9 @@ import {
   RequestArgs,
 } from './provider.types';
 
+const ONE_SECOND_MS = 1_000;
+const ONE_DAY_MS = 24 * 60 * 60 * ONE_SECOND_MS;
+
 /**
  * Web3 provider that implements [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193).
  *
@@ -325,6 +328,8 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
       transaction as AnyEvmTransaction<CreateTxType>,
       EvmTransactionState.signed,
       this.apiClient,
+      ONE_DAY_MS,
+      5 * ONE_SECOND_MS,
     );
   }
 

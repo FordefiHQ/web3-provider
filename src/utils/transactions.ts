@@ -207,8 +207,10 @@ export const waitForTransactionState = async <T extends AnyEvmTransaction>(
   { id: transactionId }: T,
   desiredState: EvmTransactionState,
   apiClient: ApiClient,
+  timeoutMs: number,
+  pollingIntervalMs: number,
 ): Promise<T> => {
-  let remainingAttempts = 20;
+  let remainingAttempts = Math.max(timeoutMs / pollingIntervalMs);
 
   while (remainingAttempts > 0) {
     const transaction = (await apiClient.transactions.getTransactionApiV1TransactionsIdGet({
@@ -229,7 +231,7 @@ export const waitForTransactionState = async <T extends AnyEvmTransaction>(
     remainingAttempts -= 1;
     console.debug(`transaction state is '${transaction.state}', waiting for '${desiredState}'...`);
 
-    await waitFor(1_000);
+    await waitFor(pollingIntervalMs);
   }
 
   throw new InternalRpcError(new Error(`Timeout waiting for transaction status to change to '${desiredState}'`));
