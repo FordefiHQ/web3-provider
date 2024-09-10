@@ -18,9 +18,11 @@
  * @export
  */
 export const ChainType = {
+    aptos: 'aptos',
     cosmos: 'cosmos',
     evm: 'evm',
     solana: 'solana',
+    sui: 'sui',
     utxo: 'utxo'
 } as const;
 export type ChainType = typeof ChainType[keyof typeof ChainType];

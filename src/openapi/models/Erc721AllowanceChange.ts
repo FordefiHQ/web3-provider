@@ -31,6 +31,12 @@ import {
     PriceFromJSONTyped,
     PriceToJSON,
 } from './Price';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+} from './PricedAsset';
 
 /**
  * 
@@ -38,6 +44,12 @@ import {
  * @interface Erc721AllowanceChange
  */
 export interface Erc721AllowanceChange {
+    /**
+     * 
+     * @type {PricedAsset}
+     * @memberof Erc721AllowanceChange
+     */
+    pricedAsset: PricedAsset;
     /**
      * 
      * @type {string}
@@ -60,6 +72,7 @@ export interface Erc721AllowanceChange {
      * 
      * @type {string}
      * @memberof Erc721AllowanceChange
+     * @deprecated
      */
     tokenId: string;
     /**
@@ -91,6 +104,7 @@ export type Erc721AllowanceChangeTypeEnum = typeof Erc721AllowanceChangeTypeEnum
  */
 export function instanceOfErc721AllowanceChange(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "pricedAsset" in value;
     isInstance = isInstance && "type" in value;
     isInstance = isInstance && "owner" in value;
     isInstance = isInstance && "operator" in value;
@@ -110,6 +124,7 @@ export function Erc721AllowanceChangeFromJSONTyped(json: any, ignoreDiscriminato
     }
     return {
         
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
         'type': json['type'],
         'owner': EnrichedEvmAddressFromJSON(json['owner']),
         'operator': EnrichedEvmAddressFromJSON(json['operator']),
@@ -128,6 +143,7 @@ export function Erc721AllowanceChangeToJSON(value?: Erc721AllowanceChange | null
     }
     return {
         
+        'priced_asset': PricedAssetToJSON(value.pricedAsset),
         'type': value.type,
         'owner': EnrichedEvmAddressToJSON(value.owner),
         'operator': EnrichedEvmAddressToJSON(value.operator),

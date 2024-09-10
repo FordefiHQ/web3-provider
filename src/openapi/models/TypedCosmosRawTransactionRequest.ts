@@ -19,6 +19,12 @@ import {
     CosmosChainUniqueIdFromJSONTyped,
     CosmosChainUniqueIdToJSON,
 } from './CosmosChainUniqueId';
+import type { PushMode } from './PushMode';
+import {
+    PushModeFromJSON,
+    PushModeFromJSONTyped,
+    PushModeToJSON,
+} from './PushMode';
 import type { TypedCosmosRawTransactionRequestRequestData } from './TypedCosmosRawTransactionRequestRequestData';
 import {
     TypedCosmosRawTransactionRequestRequestDataFromJSON,
@@ -38,6 +44,12 @@ export interface TypedCosmosRawTransactionRequest {
      * @memberof TypedCosmosRawTransactionRequest
      */
     type: TypedCosmosRawTransactionRequestTypeEnum;
+    /**
+     * 
+     * @type {PushMode}
+     * @memberof TypedCosmosRawTransactionRequest
+     */
+    pushMode?: PushMode;
     /**
      * 
      * @type {CosmosChainUniqueId}
@@ -85,6 +97,7 @@ export function TypedCosmosRawTransactionRequestFromJSONTyped(json: any, ignoreD
     return {
         
         'type': json['type'],
+        'pushMode': !exists(json, 'push_mode') ? undefined : PushModeFromJSON(json['push_mode']),
         'chain': CosmosChainUniqueIdFromJSON(json['chain']),
         'requestData': TypedCosmosRawTransactionRequestRequestDataFromJSON(json['request_data']),
     };
@@ -100,6 +113,7 @@ export function TypedCosmosRawTransactionRequestToJSON(value?: TypedCosmosRawTra
     return {
         
         'type': value.type,
+        'push_mode': PushModeToJSON(value.pushMode),
         'chain': CosmosChainUniqueIdToJSON(value.chain),
         'request_data': TypedCosmosRawTransactionRequestRequestDataToJSON(value.requestData),
     };

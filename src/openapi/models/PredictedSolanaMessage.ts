@@ -19,6 +19,12 @@ import {
     ApprovalRequestFromJSONTyped,
     ApprovalRequestToJSON,
 } from './ApprovalRequest';
+import type { EnrichedSolanaAddress } from './EnrichedSolanaAddress';
+import {
+    EnrichedSolanaAddressFromJSON,
+    EnrichedSolanaAddressFromJSONTyped,
+    EnrichedSolanaAddressToJSON,
+} from './EnrichedSolanaAddress';
 import type { EnrichedSolanaChain } from './EnrichedSolanaChain';
 import {
     EnrichedSolanaChainFromJSON,
@@ -31,6 +37,12 @@ import {
     PolicyMatchFromJSONTyped,
     PolicyMatchToJSON,
 } from './PolicyMatch';
+import type { SolanaMessageType } from './SolanaMessageType';
+import {
+    SolanaMessageTypeFromJSON,
+    SolanaMessageTypeFromJSONTyped,
+    SolanaMessageTypeToJSON,
+} from './SolanaMessageType';
 import type { TransactionRisk } from './TransactionRisk';
 import {
     TransactionRiskFromJSON,
@@ -74,6 +86,24 @@ export interface PredictedSolanaMessage {
      * @memberof PredictedSolanaMessage
      */
     chain: EnrichedSolanaChain;
+    /**
+     * 
+     * @type {EnrichedSolanaAddress}
+     * @memberof PredictedSolanaMessage
+     */
+    sender: EnrichedSolanaAddress;
+    /**
+     * 
+     * @type {SolanaMessageType}
+     * @memberof PredictedSolanaMessage
+     */
+    solanaMessageType: SolanaMessageType;
+    /**
+     * 
+     * @type {string}
+     * @memberof PredictedSolanaMessage
+     */
+    messageToDisplay: string;
 }
 
 
@@ -95,6 +125,9 @@ export function instanceOfPredictedSolanaMessage(value: object): boolean {
     isInstance = isInstance && "risks" in value;
     isInstance = isInstance && "type" in value;
     isInstance = isInstance && "chain" in value;
+    isInstance = isInstance && "sender" in value;
+    isInstance = isInstance && "solanaMessageType" in value;
+    isInstance = isInstance && "messageToDisplay" in value;
 
     return isInstance;
 }
@@ -114,6 +147,9 @@ export function PredictedSolanaMessageFromJSONTyped(json: any, ignoreDiscriminat
         'risks': ((json['risks'] as Array<any>).map(TransactionRiskFromJSON)),
         'type': json['type'],
         'chain': EnrichedSolanaChainFromJSON(json['chain']),
+        'sender': EnrichedSolanaAddressFromJSON(json['sender']),
+        'solanaMessageType': SolanaMessageTypeFromJSON(json['solana_message_type']),
+        'messageToDisplay': json['message_to_display'],
     };
 }
 
@@ -131,6 +167,9 @@ export function PredictedSolanaMessageToJSON(value?: PredictedSolanaMessage | nu
         'risks': ((value.risks as Array<any>).map(TransactionRiskToJSON)),
         'type': value.type,
         'chain': EnrichedSolanaChainToJSON(value.chain),
+        'sender': EnrichedSolanaAddressToJSON(value.sender),
+        'solana_message_type': SolanaMessageTypeToJSON(value.solanaMessageType),
+        'message_to_display': value.messageToDisplay,
     };
 }
 

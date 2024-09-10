@@ -13,12 +13,33 @@
  */
 
 import {
+    AptosMessage,
+    instanceOfAptosMessage,
+    AptosMessageFromJSON,
+    AptosMessageFromJSONTyped,
+    AptosMessageToJSON,
+} from './AptosMessage';
+import {
+    AptosTransaction,
+    instanceOfAptosTransaction,
+    AptosTransactionFromJSON,
+    AptosTransactionFromJSONTyped,
+    AptosTransactionToJSON,
+} from './AptosTransaction';
+import {
     BlackBoxSignature,
     instanceOfBlackBoxSignature,
     BlackBoxSignatureFromJSON,
     BlackBoxSignatureFromJSONTyped,
     BlackBoxSignatureToJSON,
 } from './BlackBoxSignature';
+import {
+    CosmosMessage,
+    instanceOfCosmosMessage,
+    CosmosMessageFromJSON,
+    CosmosMessageFromJSONTyped,
+    CosmosMessageToJSON,
+} from './CosmosMessage';
 import {
     CosmosTransaction,
     instanceOfCosmosTransaction,
@@ -55,6 +76,27 @@ import {
     SolanaTransactionToJSON,
 } from './SolanaTransaction';
 import {
+    SuiMessage,
+    instanceOfSuiMessage,
+    SuiMessageFromJSON,
+    SuiMessageFromJSONTyped,
+    SuiMessageToJSON,
+} from './SuiMessage';
+import {
+    SuiTransaction,
+    instanceOfSuiTransaction,
+    SuiTransactionFromJSON,
+    SuiTransactionFromJSONTyped,
+    SuiTransactionToJSON,
+} from './SuiTransaction';
+import {
+    UtxoMessage,
+    instanceOfUtxoMessage,
+    UtxoMessageFromJSON,
+    UtxoMessageFromJSONTyped,
+    UtxoMessageToJSON,
+} from './UtxoMessage';
+import {
     UtxoTransaction,
     instanceOfUtxoTransaction,
     UtxoTransactionFromJSON,
@@ -67,7 +109,7 @@ import {
  * 
  * @export
  */
-export type Transaction = { type: 'black_box_signature' } & BlackBoxSignature | { type: 'cosmos_transaction' } & CosmosTransaction | { type: 'evm_message' } & EvmMessage | { type: 'evm_transaction' } & EvmTransaction | { type: 'solana_message' } & SolanaMessage | { type: 'solana_transaction' } & SolanaTransaction | { type: 'utxo_transaction' } & UtxoTransaction;
+export type Transaction = { type: 'aptos_message' } & AptosMessage | { type: 'aptos_transaction' } & AptosTransaction | { type: 'black_box_signature' } & BlackBoxSignature | { type: 'cosmos_message' } & CosmosMessage | { type: 'cosmos_transaction' } & CosmosTransaction | { type: 'evm_message' } & EvmMessage | { type: 'evm_transaction' } & EvmTransaction | { type: 'solana_message' } & SolanaMessage | { type: 'solana_transaction' } & SolanaTransaction | { type: 'sui_message' } & SuiMessage | { type: 'sui_transaction' } & SuiTransaction | { type: 'utxo_message' } & UtxoMessage | { type: 'utxo_transaction' } & UtxoTransaction;
 
 export function TransactionFromJSON(json: any): Transaction {
     return TransactionFromJSONTyped(json, false);
@@ -78,8 +120,14 @@ export function TransactionFromJSONTyped(json: any, ignoreDiscriminator: boolean
         return json;
     }
     switch (json['type']) {
+        case 'aptos_message':
+            return {...AptosMessageFromJSONTyped(json, true), type: 'aptos_message'};
+        case 'aptos_transaction':
+            return {...AptosTransactionFromJSONTyped(json, true), type: 'aptos_transaction'};
         case 'black_box_signature':
             return {...BlackBoxSignatureFromJSONTyped(json, true), type: 'black_box_signature'};
+        case 'cosmos_message':
+            return {...CosmosMessageFromJSONTyped(json, true), type: 'cosmos_message'};
         case 'cosmos_transaction':
             return {...CosmosTransactionFromJSONTyped(json, true), type: 'cosmos_transaction'};
         case 'evm_message':
@@ -90,6 +138,12 @@ export function TransactionFromJSONTyped(json: any, ignoreDiscriminator: boolean
             return {...SolanaMessageFromJSONTyped(json, true), type: 'solana_message'};
         case 'solana_transaction':
             return {...SolanaTransactionFromJSONTyped(json, true), type: 'solana_transaction'};
+        case 'sui_message':
+            return {...SuiMessageFromJSONTyped(json, true), type: 'sui_message'};
+        case 'sui_transaction':
+            return {...SuiTransactionFromJSONTyped(json, true), type: 'sui_transaction'};
+        case 'utxo_message':
+            return {...UtxoMessageFromJSONTyped(json, true), type: 'utxo_message'};
         case 'utxo_transaction':
             return {...UtxoTransactionFromJSONTyped(json, true), type: 'utxo_transaction'};
         default:
@@ -105,8 +159,14 @@ export function TransactionToJSON(value?: Transaction | null): any {
         return null;
     }
     switch (value['type']) {
+        case 'aptos_message':
+            return AptosMessageToJSON(value);
+        case 'aptos_transaction':
+            return AptosTransactionToJSON(value);
         case 'black_box_signature':
             return BlackBoxSignatureToJSON(value);
+        case 'cosmos_message':
+            return CosmosMessageToJSON(value);
         case 'cosmos_transaction':
             return CosmosTransactionToJSON(value);
         case 'evm_message':
@@ -117,6 +177,12 @@ export function TransactionToJSON(value?: Transaction | null): any {
             return SolanaMessageToJSON(value);
         case 'solana_transaction':
             return SolanaTransactionToJSON(value);
+        case 'sui_message':
+            return SuiMessageToJSON(value);
+        case 'sui_transaction':
+            return SuiTransactionToJSON(value);
+        case 'utxo_message':
+            return UtxoMessageToJSON(value);
         case 'utxo_transaction':
             return UtxoTransactionToJSON(value);
         default:

@@ -13,12 +13,18 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { BlackBoxVaultPendingVaultGroupAction } from './BlackBoxVaultPendingVaultGroupAction';
+import type { AptosVaultMetadataValue } from './AptosVaultMetadataValue';
 import {
-    BlackBoxVaultPendingVaultGroupActionFromJSON,
-    BlackBoxVaultPendingVaultGroupActionFromJSONTyped,
-    BlackBoxVaultPendingVaultGroupActionToJSON,
-} from './BlackBoxVaultPendingVaultGroupAction';
+    AptosVaultMetadataValueFromJSON,
+    AptosVaultMetadataValueFromJSONTyped,
+    AptosVaultMetadataValueToJSON,
+} from './AptosVaultMetadataValue';
+import type { AptosVaultPendingVaultGroupAction } from './AptosVaultPendingVaultGroupAction';
+import {
+    AptosVaultPendingVaultGroupActionFromJSON,
+    AptosVaultPendingVaultGroupActionFromJSONTyped,
+    AptosVaultPendingVaultGroupActionToJSON,
+} from './AptosVaultPendingVaultGroupAction';
 import type { EndUserRef } from './EndUserRef';
 import {
     EndUserRefFromJSON,
@@ -94,6 +100,12 @@ export interface UtxoVault {
     modifiedAt: Date;
     /**
      * 
+     * @type {{ [key: string]: AptosVaultMetadataValue | undefined; }}
+     * @memberof UtxoVault
+     */
+    metadata?: { [key: string]: AptosVaultMetadataValue | undefined; };
+    /**
+     * 
      * @type {string}
      * @memberof UtxoVault
      */
@@ -104,6 +116,24 @@ export interface UtxoVault {
      * @memberof UtxoVault
      */
     createdBy: UserRef;
+    /**
+     * 
+     * @type {VaultGroupRef}
+     * @memberof UtxoVault
+     */
+    vaultGroup: VaultGroupRef;
+    /**
+     * 
+     * @type {AptosVaultPendingVaultGroupAction}
+     * @memberof UtxoVault
+     */
+    pendingVaultGroupAction?: AptosVaultPendingVaultGroupAction;
+    /**
+     * 
+     * @type {VaultState}
+     * @memberof UtxoVault
+     */
+    state: VaultState;
     /**
      * 
      * @type {string}
@@ -137,24 +167,6 @@ export interface UtxoVault {
     keyHolder?: EndUserRef;
     /**
      * 
-     * @type {VaultGroupRef}
-     * @memberof UtxoVault
-     */
-    vaultGroup: VaultGroupRef;
-    /**
-     * 
-     * @type {BlackBoxVaultPendingVaultGroupAction}
-     * @memberof UtxoVault
-     */
-    pendingVaultGroupAction?: BlackBoxVaultPendingVaultGroupAction;
-    /**
-     * 
-     * @type {VaultState}
-     * @memberof UtxoVault
-     */
-    state: VaultState;
-    /**
-     * 
      * @type {string}
      * @memberof UtxoVault
      */
@@ -177,6 +189,18 @@ export interface UtxoVault {
      * @memberof UtxoVault
      */
     defaultNextAddressName: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UtxoVault
+     */
+    taprootKeyPublicCompressed?: string;
+    /**
+     * 
+     * @type {VaultDerivationInfo}
+     * @memberof UtxoVault
+     */
+    taprootKeyDerivationInfo?: VaultDerivationInfo;
 }
 
 
@@ -199,12 +223,12 @@ export function instanceOfUtxoVault(value: object): boolean {
     isInstance = isInstance && "modifiedAt" in value;
     isInstance = isInstance && "name" in value;
     isInstance = isInstance && "createdBy" in value;
+    isInstance = isInstance && "vaultGroup" in value;
+    isInstance = isInstance && "state" in value;
     isInstance = isInstance && "derivationPath" in value;
     isInstance = isInstance && "publicKeyCompressed" in value;
     isInstance = isInstance && "derivationInfo" in value;
     isInstance = isInstance && "keyset" in value;
-    isInstance = isInstance && "vaultGroup" in value;
-    isInstance = isInstance && "state" in value;
     isInstance = isInstance && "type" in value;
     isInstance = isInstance && "chain" in value;
     isInstance = isInstance && "defaultAddress" in value;
@@ -226,20 +250,23 @@ export function UtxoVaultFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
+        'metadata': !exists(json, 'metadata') ? undefined : (mapValues(json['metadata'], AptosVaultMetadataValueFromJSON)),
         'name': json['name'],
         'createdBy': UserRefFromJSON(json['created_by']),
+        'vaultGroup': VaultGroupRefFromJSON(json['vault_group']),
+        'pendingVaultGroupAction': !exists(json, 'pending_vault_group_action') ? undefined : AptosVaultPendingVaultGroupActionFromJSON(json['pending_vault_group_action']),
+        'state': VaultStateFromJSON(json['state']),
         'derivationPath': json['derivation_path'],
         'publicKeyCompressed': json['public_key_compressed'],
         'derivationInfo': VaultDerivationInfoFromJSON(json['derivation_info']),
         'keyset': KeysetRefFromJSON(json['keyset']),
         'keyHolder': !exists(json, 'key_holder') ? undefined : EndUserRefFromJSON(json['key_holder']),
-        'vaultGroup': VaultGroupRefFromJSON(json['vault_group']),
-        'pendingVaultGroupAction': !exists(json, 'pending_vault_group_action') ? undefined : BlackBoxVaultPendingVaultGroupActionFromJSON(json['pending_vault_group_action']),
-        'state': VaultStateFromJSON(json['state']),
         'type': json['type'],
         'chain': EnrichedUtxoChainFromJSON(json['chain']),
         'defaultAddress': UtxoVaultAddressFromJSON(json['default_address']),
         'defaultNextAddressName': json['default_next_address_name'],
+        'taprootKeyPublicCompressed': !exists(json, 'taproot_key_public_compressed') ? undefined : json['taproot_key_public_compressed'],
+        'taprootKeyDerivationInfo': !exists(json, 'taproot_key_derivation_info') ? undefined : VaultDerivationInfoFromJSON(json['taproot_key_derivation_info']),
     };
 }
 
@@ -255,20 +282,23 @@ export function UtxoVaultToJSON(value?: UtxoVault | null): any {
         'id': value.id,
         'created_at': (value.createdAt.toISOString()),
         'modified_at': (value.modifiedAt.toISOString()),
+        'metadata': value.metadata === undefined ? undefined : (mapValues(value.metadata, AptosVaultMetadataValueToJSON)),
         'name': value.name,
         'created_by': UserRefToJSON(value.createdBy),
+        'vault_group': VaultGroupRefToJSON(value.vaultGroup),
+        'pending_vault_group_action': AptosVaultPendingVaultGroupActionToJSON(value.pendingVaultGroupAction),
+        'state': VaultStateToJSON(value.state),
         'derivation_path': value.derivationPath,
         'public_key_compressed': value.publicKeyCompressed,
         'derivation_info': VaultDerivationInfoToJSON(value.derivationInfo),
         'keyset': KeysetRefToJSON(value.keyset),
         'key_holder': EndUserRefToJSON(value.keyHolder),
-        'vault_group': VaultGroupRefToJSON(value.vaultGroup),
-        'pending_vault_group_action': BlackBoxVaultPendingVaultGroupActionToJSON(value.pendingVaultGroupAction),
-        'state': VaultStateToJSON(value.state),
         'type': value.type,
         'chain': EnrichedUtxoChainToJSON(value.chain),
         'default_address': UtxoVaultAddressToJSON(value.defaultAddress),
         'default_next_address_name': value.defaultNextAddressName,
+        'taproot_key_public_compressed': value.taprootKeyPublicCompressed,
+        'taproot_key_derivation_info': VaultDerivationInfoToJSON(value.taprootKeyDerivationInfo),
     };
 }
 

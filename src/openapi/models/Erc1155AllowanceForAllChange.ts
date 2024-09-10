@@ -25,6 +25,12 @@ import {
     Erc1155ContractFromJSONTyped,
     Erc1155ContractToJSON,
 } from './Erc1155Contract';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+} from './PricedAsset';
 
 /**
  * 
@@ -32,6 +38,12 @@ import {
  * @interface Erc1155AllowanceForAllChange
  */
 export interface Erc1155AllowanceForAllChange {
+    /**
+     * 
+     * @type {PricedAsset}
+     * @memberof Erc1155AllowanceForAllChange
+     */
+    pricedAsset: PricedAsset;
     /**
      * 
      * @type {string}
@@ -79,6 +91,7 @@ export type Erc1155AllowanceForAllChangeTypeEnum = typeof Erc1155AllowanceForAll
  */
 export function instanceOfErc1155AllowanceForAllChange(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "pricedAsset" in value;
     isInstance = isInstance && "type" in value;
     isInstance = isInstance && "owner" in value;
     isInstance = isInstance && "operator" in value;
@@ -98,6 +111,7 @@ export function Erc1155AllowanceForAllChangeFromJSONTyped(json: any, ignoreDiscr
     }
     return {
         
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
         'type': json['type'],
         'owner': EnrichedEvmAddressFromJSON(json['owner']),
         'operator': EnrichedEvmAddressFromJSON(json['operator']),
@@ -115,6 +129,7 @@ export function Erc1155AllowanceForAllChangeToJSON(value?: Erc1155AllowanceForAl
     }
     return {
         
+        'priced_asset': PricedAssetToJSON(value.pricedAsset),
         'type': value.type,
         'owner': EnrichedEvmAddressToJSON(value.owner),
         'operator': EnrichedEvmAddressToJSON(value.operator),

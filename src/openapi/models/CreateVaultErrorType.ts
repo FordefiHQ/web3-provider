@@ -18,11 +18,10 @@
  * @export
  */
 export const CreateVaultErrorType = {
-    cosmosNotSupported: 'cosmos_not_supported',
+    vaultTypeNotSupported: 'vault_type_not_supported',
     maxVaultsReached: 'max_vaults_reached',
     mpcKeyIsMissing: 'mpc_key_is_missing',
     keysetIsMissing: 'keyset_is_missing',
-    userKeysetIsRequiredForOrganization: 'user_keyset_is_required_for_organization',
     keysetNotReady: 'keyset_not_ready'
 } as const;
 export type CreateVaultErrorType = typeof CreateVaultErrorType[keyof typeof CreateVaultErrorType];

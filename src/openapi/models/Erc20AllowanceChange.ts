@@ -31,6 +31,12 @@ import {
     PriceFromJSONTyped,
     PriceToJSON,
 } from './Price';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+} from './PricedAsset';
 
 /**
  * 
@@ -38,6 +44,12 @@ import {
  * @interface Erc20AllowanceChange
  */
 export interface Erc20AllowanceChange {
+    /**
+     * 
+     * @type {PricedAsset}
+     * @memberof Erc20AllowanceChange
+     */
+    pricedAsset: PricedAsset;
     /**
      * 
      * @type {string}
@@ -91,6 +103,7 @@ export type Erc20AllowanceChangeTypeEnum = typeof Erc20AllowanceChangeTypeEnum[k
  */
 export function instanceOfErc20AllowanceChange(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "pricedAsset" in value;
     isInstance = isInstance && "type" in value;
     isInstance = isInstance && "owner" in value;
     isInstance = isInstance && "spender" in value;
@@ -110,6 +123,7 @@ export function Erc20AllowanceChangeFromJSONTyped(json: any, ignoreDiscriminator
     }
     return {
         
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
         'type': json['type'],
         'owner': EnrichedEvmAddressFromJSON(json['owner']),
         'spender': EnrichedEvmAddressFromJSON(json['spender']),
@@ -128,6 +142,7 @@ export function Erc20AllowanceChangeToJSON(value?: Erc20AllowanceChange | null):
     }
     return {
         
+        'priced_asset': PricedAssetToJSON(value.pricedAsset),
         'type': value.type,
         'owner': EnrichedEvmAddressToJSON(value.owner),
         'spender': EnrichedEvmAddressToJSON(value.spender),

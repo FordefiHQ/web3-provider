@@ -25,6 +25,12 @@ import {
     Erc1155ContractFromJSONTyped,
     Erc1155ContractToJSON,
 } from './Erc1155Contract';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+} from './PricedAsset';
 
 /**
  * 
@@ -32,6 +38,18 @@ import {
  * @interface Erc1155BalanceChange
  */
 export interface Erc1155BalanceChange {
+    /**
+     * 
+     * @type {PricedAsset}
+     * @memberof Erc1155BalanceChange
+     */
+    pricedAsset: PricedAsset;
+    /**
+     * 
+     * @type {string}
+     * @memberof Erc1155BalanceChange
+     */
+    diff: string;
     /**
      * 
      * @type {string}
@@ -43,19 +61,20 @@ export interface Erc1155BalanceChange {
      * @type {EnrichedEvmAddress}
      * @memberof Erc1155BalanceChange
      */
+    address: EnrichedEvmAddress;
+    /**
+     * 
+     * @type {EnrichedEvmAddress}
+     * @memberof Erc1155BalanceChange
+     */
     owner: EnrichedEvmAddress;
     /**
      * 
      * @type {string}
      * @memberof Erc1155BalanceChange
+     * @deprecated
      */
     tokenId: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Erc1155BalanceChange
-     */
-    diff: string;
     /**
      * 
      * @type {Erc1155Contract}
@@ -79,10 +98,12 @@ export type Erc1155BalanceChangeTypeEnum = typeof Erc1155BalanceChangeTypeEnum[k
  */
 export function instanceOfErc1155BalanceChange(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "pricedAsset" in value;
+    isInstance = isInstance && "diff" in value;
     isInstance = isInstance && "type" in value;
+    isInstance = isInstance && "address" in value;
     isInstance = isInstance && "owner" in value;
     isInstance = isInstance && "tokenId" in value;
-    isInstance = isInstance && "diff" in value;
     isInstance = isInstance && "tokenContract" in value;
 
     return isInstance;
@@ -98,10 +119,12 @@ export function Erc1155BalanceChangeFromJSONTyped(json: any, ignoreDiscriminator
     }
     return {
         
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
+        'diff': json['diff'],
         'type': json['type'],
+        'address': EnrichedEvmAddressFromJSON(json['address']),
         'owner': EnrichedEvmAddressFromJSON(json['owner']),
         'tokenId': json['token_id'],
-        'diff': json['diff'],
         'tokenContract': Erc1155ContractFromJSON(json['token_contract']),
     };
 }
@@ -115,10 +138,12 @@ export function Erc1155BalanceChangeToJSON(value?: Erc1155BalanceChange | null):
     }
     return {
         
+        'priced_asset': PricedAssetToJSON(value.pricedAsset),
+        'diff': value.diff,
         'type': value.type,
+        'address': EnrichedEvmAddressToJSON(value.address),
         'owner': EnrichedEvmAddressToJSON(value.owner),
         'token_id': value.tokenId,
-        'diff': value.diff,
         'token_contract': Erc1155ContractToJSON(value.tokenContract),
     };
 }

@@ -13,6 +13,13 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { EnrichedSolanaAddress } from './EnrichedSolanaAddress';
+import {
+    EnrichedSolanaAddressFromJSON,
+    EnrichedSolanaAddressFromJSONTyped,
+    EnrichedSolanaAddressToJSON,
+} from './EnrichedSolanaAddress';
+
 /**
  * 
  * @export
@@ -25,6 +32,12 @@ export interface SolanaRawTransactionDetails {
      * @memberof SolanaRawTransactionDetails
      */
     type: SolanaRawTransactionDetailsTypeEnum;
+    /**
+     * 
+     * @type {Array<EnrichedSolanaAddress>}
+     * @memberof SolanaRawTransactionDetails
+     */
+    recipients: Array<EnrichedSolanaAddress>;
 }
 
 
@@ -43,6 +56,7 @@ export type SolanaRawTransactionDetailsTypeEnum = typeof SolanaRawTransactionDet
 export function instanceOfSolanaRawTransactionDetails(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "type" in value;
+    isInstance = isInstance && "recipients" in value;
 
     return isInstance;
 }
@@ -58,6 +72,7 @@ export function SolanaRawTransactionDetailsFromJSONTyped(json: any, ignoreDiscri
     return {
         
         'type': json['type'],
+        'recipients': ((json['recipients'] as Array<any>).map(EnrichedSolanaAddressFromJSON)),
     };
 }
 
@@ -71,6 +86,7 @@ export function SolanaRawTransactionDetailsToJSON(value?: SolanaRawTransactionDe
     return {
         
         'type': value.type,
+        'recipients': ((value.recipients as Array<any>).map(EnrichedSolanaAddressToJSON)),
     };
 }
 

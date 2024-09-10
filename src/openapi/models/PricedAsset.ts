@@ -13,6 +13,12 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { AssetInfo } from './AssetInfo';
+import {
+    AssetInfoFromJSON,
+    AssetInfoFromJSONTyped,
+    AssetInfoToJSON,
+} from './AssetInfo';
 import type { EnrichedAssetIdentifier } from './EnrichedAssetIdentifier';
 import {
     EnrichedAssetIdentifierFromJSON,
@@ -34,10 +40,22 @@ import {
 export interface PricedAsset {
     /**
      * 
+     * @type {string}
+     * @memberof PricedAsset
+     */
+    type: PricedAssetTypeEnum;
+    /**
+     * 
      * @type {EnrichedAssetIdentifier}
      * @memberof PricedAsset
      */
-    assetIdentifier: EnrichedAssetIdentifier;
+    assetIdentifier?: EnrichedAssetIdentifier;
+    /**
+     * 
+     * @type {AssetInfo}
+     * @memberof PricedAsset
+     */
+    assetInfo: AssetInfo;
     /**
      * 
      * @type {Price}
@@ -46,12 +64,23 @@ export interface PricedAsset {
     price?: Price;
 }
 
+
+/**
+ * @export
+ */
+export const PricedAssetTypeEnum = {
+    assetPrice: 'asset_price'
+} as const;
+export type PricedAssetTypeEnum = typeof PricedAssetTypeEnum[keyof typeof PricedAssetTypeEnum];
+
+
 /**
  * Check if a given object implements the PricedAsset interface.
  */
 export function instanceOfPricedAsset(value: object): boolean {
     let isInstance = true;
-    isInstance = isInstance && "assetIdentifier" in value;
+    isInstance = isInstance && "type" in value;
+    isInstance = isInstance && "assetInfo" in value;
 
     return isInstance;
 }
@@ -66,7 +95,9 @@ export function PricedAssetFromJSONTyped(json: any, ignoreDiscriminator: boolean
     }
     return {
         
-        'assetIdentifier': EnrichedAssetIdentifierFromJSON(json['asset_identifier']),
+        'type': json['type'],
+        'assetIdentifier': !exists(json, 'asset_identifier') ? undefined : EnrichedAssetIdentifierFromJSON(json['asset_identifier']),
+        'assetInfo': AssetInfoFromJSON(json['asset_info']),
         'price': !exists(json, 'price') ? undefined : PriceFromJSON(json['price']),
     };
 }
@@ -80,7 +111,9 @@ export function PricedAssetToJSON(value?: PricedAsset | null): any {
     }
     return {
         
+        'type': value.type,
         'asset_identifier': EnrichedAssetIdentifierToJSON(value.assetIdentifier),
+        'asset_info': AssetInfoToJSON(value.assetInfo),
         'price': PriceToJSON(value.price),
     };
 }

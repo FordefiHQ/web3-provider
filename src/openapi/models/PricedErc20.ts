@@ -36,8 +36,15 @@ export interface PricedErc20 {
      * 
      * @type {string}
      * @memberof PricedErc20
+     * @deprecated
      */
     price: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PricedErc20
+     */
+    priceFloat: string;
     /**
      * 
      * @type {FiatCurrency}
@@ -58,6 +65,7 @@ export interface PricedErc20 {
 export function instanceOfPricedErc20(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "price" in value;
+    isInstance = isInstance && "priceFloat" in value;
     isInstance = isInstance && "fiatCurrency" in value;
     isInstance = isInstance && "token" in value;
 
@@ -75,6 +83,7 @@ export function PricedErc20FromJSONTyped(json: any, ignoreDiscriminator: boolean
     return {
         
         'price': json['price'],
+        'priceFloat': json['price_float'],
         'fiatCurrency': FiatCurrencyFromJSON(json['fiat_currency']),
         'token': Erc20FromJSON(json['token']),
     };
@@ -90,6 +99,7 @@ export function PricedErc20ToJSON(value?: PricedErc20 | null): any {
     return {
         
         'price': value.price,
+        'price_float': value.priceFloat,
         'fiat_currency': FiatCurrencyToJSON(value.fiatCurrency),
         'token': Erc20ToJSON(value.token),
     };

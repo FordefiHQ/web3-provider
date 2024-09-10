@@ -25,6 +25,12 @@ import {
     Erc1155ContractFromJSONTyped,
     Erc1155ContractToJSON,
 } from './Erc1155Contract';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+} from './PricedAsset';
 
 /**
  * 
@@ -32,6 +38,18 @@ import {
  * @interface Erc1155Transfer
  */
 export interface Erc1155Transfer {
+    /**
+     * 
+     * @type {PricedAsset}
+     * @memberof Erc1155Transfer
+     */
+    pricedAsset: PricedAsset;
+    /**
+     * 
+     * @type {string}
+     * @memberof Erc1155Transfer
+     */
+    amount: string;
     /**
      * 
      * @type {string}
@@ -54,14 +72,9 @@ export interface Erc1155Transfer {
      * 
      * @type {string}
      * @memberof Erc1155Transfer
+     * @deprecated
      */
     tokenId: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Erc1155Transfer
-     */
-    amount: string;
     /**
      * 
      * @type {Erc1155Contract}
@@ -85,11 +98,12 @@ export type Erc1155TransferTypeEnum = typeof Erc1155TransferTypeEnum[keyof typeo
  */
 export function instanceOfErc1155Transfer(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "pricedAsset" in value;
+    isInstance = isInstance && "amount" in value;
     isInstance = isInstance && "type" in value;
     isInstance = isInstance && "from" in value;
     isInstance = isInstance && "to" in value;
     isInstance = isInstance && "tokenId" in value;
-    isInstance = isInstance && "amount" in value;
     isInstance = isInstance && "tokenContract" in value;
 
     return isInstance;
@@ -105,11 +119,12 @@ export function Erc1155TransferFromJSONTyped(json: any, ignoreDiscriminator: boo
     }
     return {
         
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
+        'amount': json['amount'],
         'type': json['type'],
         'from': EnrichedEvmAddressFromJSON(json['from']),
         'to': EnrichedEvmAddressFromJSON(json['to']),
         'tokenId': json['token_id'],
-        'amount': json['amount'],
         'tokenContract': Erc1155ContractFromJSON(json['token_contract']),
     };
 }
@@ -123,11 +138,12 @@ export function Erc1155TransferToJSON(value?: Erc1155Transfer | null): any {
     }
     return {
         
+        'priced_asset': PricedAssetToJSON(value.pricedAsset),
+        'amount': value.amount,
         'type': value.type,
         'from': EnrichedEvmAddressToJSON(value.from),
         'to': EnrichedEvmAddressToJSON(value.to),
         'token_id': value.tokenId,
-        'amount': value.amount,
         'token_contract': Erc1155ContractToJSON(value.tokenContract),
     };
 }

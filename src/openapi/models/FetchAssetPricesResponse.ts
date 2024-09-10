@@ -13,12 +13,12 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { PricedAsset } from './PricedAsset';
+import type { PricedAssetResponse } from './PricedAssetResponse';
 import {
-    PricedAssetFromJSON,
-    PricedAssetFromJSONTyped,
-    PricedAssetToJSON,
-} from './PricedAsset';
+    PricedAssetResponseFromJSON,
+    PricedAssetResponseFromJSONTyped,
+    PricedAssetResponseToJSON,
+} from './PricedAssetResponse';
 
 /**
  * 
@@ -28,10 +28,10 @@ import {
 export interface FetchAssetPricesResponse {
     /**
      * 
-     * @type {Array<PricedAsset>}
+     * @type {Array<PricedAssetResponse>}
      * @memberof FetchAssetPricesResponse
      */
-    pricedAssets: Array<PricedAsset>;
+    pricedAssets: Array<PricedAssetResponse>;
 }
 
 /**
@@ -54,7 +54,7 @@ export function FetchAssetPricesResponseFromJSONTyped(json: any, ignoreDiscrimin
     }
     return {
         
-        'pricedAssets': ((json['priced_assets'] as Array<any>).map(PricedAssetFromJSON)),
+        'pricedAssets': ((json['priced_assets'] as Array<any>).map(PricedAssetResponseFromJSON)),
     };
 }
 
@@ -67,7 +67,7 @@ export function FetchAssetPricesResponseToJSON(value?: FetchAssetPricesResponse 
     }
     return {
         
-        'priced_assets': ((value.pricedAssets as Array<any>).map(PricedAssetToJSON)),
+        'priced_assets': ((value.pricedAssets as Array<any>).map(PricedAssetResponseToJSON)),
     };
 }
 

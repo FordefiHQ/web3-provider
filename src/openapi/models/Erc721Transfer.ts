@@ -31,6 +31,12 @@ import {
     PriceFromJSONTyped,
     PriceToJSON,
 } from './Price';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+} from './PricedAsset';
 
 /**
  * 
@@ -38,6 +44,18 @@ import {
  * @interface Erc721Transfer
  */
 export interface Erc721Transfer {
+    /**
+     * 
+     * @type {PricedAsset}
+     * @memberof Erc721Transfer
+     */
+    pricedAsset: PricedAsset;
+    /**
+     * 
+     * @type {string}
+     * @memberof Erc721Transfer
+     */
+    amount: string;
     /**
      * 
      * @type {string}
@@ -60,6 +78,7 @@ export interface Erc721Transfer {
      * 
      * @type {string}
      * @memberof Erc721Transfer
+     * @deprecated
      */
     tokenId: string;
     /**
@@ -91,6 +110,8 @@ export type Erc721TransferTypeEnum = typeof Erc721TransferTypeEnum[keyof typeof 
  */
 export function instanceOfErc721Transfer(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "pricedAsset" in value;
+    isInstance = isInstance && "amount" in value;
     isInstance = isInstance && "type" in value;
     isInstance = isInstance && "from" in value;
     isInstance = isInstance && "to" in value;
@@ -110,6 +131,8 @@ export function Erc721TransferFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
+        'amount': json['amount'],
         'type': json['type'],
         'from': EnrichedEvmAddressFromJSON(json['from']),
         'to': EnrichedEvmAddressFromJSON(json['to']),
@@ -128,6 +151,8 @@ export function Erc721TransferToJSON(value?: Erc721Transfer | null): any {
     }
     return {
         
+        'priced_asset': PricedAssetToJSON(value.pricedAsset),
+        'amount': value.amount,
         'type': value.type,
         'from': EnrichedEvmAddressToJSON(value.from),
         'to': EnrichedEvmAddressToJSON(value.to),

@@ -31,6 +31,12 @@ import {
     PriceFromJSONTyped,
     PriceToJSON,
 } from './Price';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+} from './PricedAsset';
 
 /**
  * 
@@ -40,16 +46,28 @@ import {
 export interface CosmosTokenBalanceChange {
     /**
      * 
-     * @type {EnrichedCosmosBechAddress}
+     * @type {PricedAsset}
      * @memberof CosmosTokenBalanceChange
      */
-    owner: EnrichedCosmosBechAddress;
+    pricedAsset: PricedAsset;
     /**
      * 
      * @type {string}
      * @memberof CosmosTokenBalanceChange
      */
     diff: string;
+    /**
+     * 
+     * @type {EnrichedCosmosBechAddress}
+     * @memberof CosmosTokenBalanceChange
+     */
+    address: EnrichedCosmosBechAddress;
+    /**
+     * 
+     * @type {EnrichedCosmosBechAddress}
+     * @memberof CosmosTokenBalanceChange
+     */
+    owner: EnrichedCosmosBechAddress;
     /**
      * 
      * @type {Price}
@@ -85,8 +103,10 @@ export type CosmosTokenBalanceChangeTypeEnum = typeof CosmosTokenBalanceChangeTy
  */
 export function instanceOfCosmosTokenBalanceChange(value: object): boolean {
     let isInstance = true;
-    isInstance = isInstance && "owner" in value;
+    isInstance = isInstance && "pricedAsset" in value;
     isInstance = isInstance && "diff" in value;
+    isInstance = isInstance && "address" in value;
+    isInstance = isInstance && "owner" in value;
     isInstance = isInstance && "type" in value;
     isInstance = isInstance && "coinInfo" in value;
 
@@ -103,8 +123,10 @@ export function CosmosTokenBalanceChangeFromJSONTyped(json: any, ignoreDiscrimin
     }
     return {
         
-        'owner': EnrichedCosmosBechAddressFromJSON(json['owner']),
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
         'diff': json['diff'],
+        'address': EnrichedCosmosBechAddressFromJSON(json['address']),
+        'owner': EnrichedCosmosBechAddressFromJSON(json['owner']),
         'price': !exists(json, 'price') ? undefined : PriceFromJSON(json['price']),
         'type': json['type'],
         'coinInfo': CosmosTokenInfoFromJSON(json['coin_info']),
@@ -120,8 +142,10 @@ export function CosmosTokenBalanceChangeToJSON(value?: CosmosTokenBalanceChange 
     }
     return {
         
-        'owner': EnrichedCosmosBechAddressToJSON(value.owner),
+        'priced_asset': PricedAssetToJSON(value.pricedAsset),
         'diff': value.diff,
+        'address': EnrichedCosmosBechAddressToJSON(value.address),
+        'owner': EnrichedCosmosBechAddressToJSON(value.owner),
         'price': PriceToJSON(value.price),
         'type': value.type,
         'coin_info': CosmosTokenInfoToJSON(value.coinInfo),

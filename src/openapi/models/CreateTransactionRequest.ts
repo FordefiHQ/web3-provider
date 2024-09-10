@@ -13,12 +13,33 @@
  */
 
 import {
+    CreateAptosMessageRequest,
+    instanceOfCreateAptosMessageRequest,
+    CreateAptosMessageRequestFromJSON,
+    CreateAptosMessageRequestFromJSONTyped,
+    CreateAptosMessageRequestToJSON,
+} from './CreateAptosMessageRequest';
+import {
+    CreateAptosTransactionRequest,
+    instanceOfCreateAptosTransactionRequest,
+    CreateAptosTransactionRequestFromJSON,
+    CreateAptosTransactionRequestFromJSONTyped,
+    CreateAptosTransactionRequestToJSON,
+} from './CreateAptosTransactionRequest';
+import {
     CreateBlackBoxSignatureRequest,
     instanceOfCreateBlackBoxSignatureRequest,
     CreateBlackBoxSignatureRequestFromJSON,
     CreateBlackBoxSignatureRequestFromJSONTyped,
     CreateBlackBoxSignatureRequestToJSON,
 } from './CreateBlackBoxSignatureRequest';
+import {
+    CreateCosmosMessageRequest,
+    instanceOfCreateCosmosMessageRequest,
+    CreateCosmosMessageRequestFromJSON,
+    CreateCosmosMessageRequestFromJSONTyped,
+    CreateCosmosMessageRequestToJSON,
+} from './CreateCosmosMessageRequest';
 import {
     CreateCosmosTransactionRequest,
     instanceOfCreateCosmosTransactionRequest,
@@ -55,6 +76,27 @@ import {
     CreateSolanaTransactionRequestToJSON,
 } from './CreateSolanaTransactionRequest';
 import {
+    CreateSuiMessageRequest,
+    instanceOfCreateSuiMessageRequest,
+    CreateSuiMessageRequestFromJSON,
+    CreateSuiMessageRequestFromJSONTyped,
+    CreateSuiMessageRequestToJSON,
+} from './CreateSuiMessageRequest';
+import {
+    CreateSuiTransactionRequest,
+    instanceOfCreateSuiTransactionRequest,
+    CreateSuiTransactionRequestFromJSON,
+    CreateSuiTransactionRequestFromJSONTyped,
+    CreateSuiTransactionRequestToJSON,
+} from './CreateSuiTransactionRequest';
+import {
+    CreateUtxoMessageRequest,
+    instanceOfCreateUtxoMessageRequest,
+    CreateUtxoMessageRequestFromJSON,
+    CreateUtxoMessageRequestFromJSONTyped,
+    CreateUtxoMessageRequestToJSON,
+} from './CreateUtxoMessageRequest';
+import {
     CreateUtxoTransactionRequest,
     instanceOfCreateUtxoTransactionRequest,
     CreateUtxoTransactionRequestFromJSON,
@@ -67,7 +109,7 @@ import {
  * 
  * @export
  */
-export type CreateTransactionRequest = { type: 'black_box_signature' } & CreateBlackBoxSignatureRequest | { type: 'cosmos_transaction' } & CreateCosmosTransactionRequest | { type: 'evm_message' } & CreateEvmMessageRequest | { type: 'evm_transaction' } & CreateEvmTransactionRequest | { type: 'solana_message' } & CreateSolanaMessageRequest | { type: 'solana_transaction' } & CreateSolanaTransactionRequest | { type: 'utxo_transaction' } & CreateUtxoTransactionRequest;
+export type CreateTransactionRequest = { type: 'aptos_message' } & CreateAptosMessageRequest | { type: 'aptos_transaction' } & CreateAptosTransactionRequest | { type: 'black_box_signature' } & CreateBlackBoxSignatureRequest | { type: 'cosmos_message' } & CreateCosmosMessageRequest | { type: 'cosmos_transaction' } & CreateCosmosTransactionRequest | { type: 'evm_message' } & CreateEvmMessageRequest | { type: 'evm_transaction' } & CreateEvmTransactionRequest | { type: 'solana_message' } & CreateSolanaMessageRequest | { type: 'solana_transaction' } & CreateSolanaTransactionRequest | { type: 'sui_message' } & CreateSuiMessageRequest | { type: 'sui_transaction' } & CreateSuiTransactionRequest | { type: 'utxo_message' } & CreateUtxoMessageRequest | { type: 'utxo_transaction' } & CreateUtxoTransactionRequest;
 
 export function CreateTransactionRequestFromJSON(json: any): CreateTransactionRequest {
     return CreateTransactionRequestFromJSONTyped(json, false);
@@ -78,8 +120,14 @@ export function CreateTransactionRequestFromJSONTyped(json: any, ignoreDiscrimin
         return json;
     }
     switch (json['type']) {
+        case 'aptos_message':
+            return {...CreateAptosMessageRequestFromJSONTyped(json, true), type: 'aptos_message'};
+        case 'aptos_transaction':
+            return {...CreateAptosTransactionRequestFromJSONTyped(json, true), type: 'aptos_transaction'};
         case 'black_box_signature':
             return {...CreateBlackBoxSignatureRequestFromJSONTyped(json, true), type: 'black_box_signature'};
+        case 'cosmos_message':
+            return {...CreateCosmosMessageRequestFromJSONTyped(json, true), type: 'cosmos_message'};
         case 'cosmos_transaction':
             return {...CreateCosmosTransactionRequestFromJSONTyped(json, true), type: 'cosmos_transaction'};
         case 'evm_message':
@@ -90,6 +138,12 @@ export function CreateTransactionRequestFromJSONTyped(json: any, ignoreDiscrimin
             return {...CreateSolanaMessageRequestFromJSONTyped(json, true), type: 'solana_message'};
         case 'solana_transaction':
             return {...CreateSolanaTransactionRequestFromJSONTyped(json, true), type: 'solana_transaction'};
+        case 'sui_message':
+            return {...CreateSuiMessageRequestFromJSONTyped(json, true), type: 'sui_message'};
+        case 'sui_transaction':
+            return {...CreateSuiTransactionRequestFromJSONTyped(json, true), type: 'sui_transaction'};
+        case 'utxo_message':
+            return {...CreateUtxoMessageRequestFromJSONTyped(json, true), type: 'utxo_message'};
         case 'utxo_transaction':
             return {...CreateUtxoTransactionRequestFromJSONTyped(json, true), type: 'utxo_transaction'};
         default:
@@ -105,8 +159,14 @@ export function CreateTransactionRequestToJSON(value?: CreateTransactionRequest 
         return null;
     }
     switch (value['type']) {
+        case 'aptos_message':
+            return CreateAptosMessageRequestToJSON(value);
+        case 'aptos_transaction':
+            return CreateAptosTransactionRequestToJSON(value);
         case 'black_box_signature':
             return CreateBlackBoxSignatureRequestToJSON(value);
+        case 'cosmos_message':
+            return CreateCosmosMessageRequestToJSON(value);
         case 'cosmos_transaction':
             return CreateCosmosTransactionRequestToJSON(value);
         case 'evm_message':
@@ -117,6 +177,12 @@ export function CreateTransactionRequestToJSON(value?: CreateTransactionRequest 
             return CreateSolanaMessageRequestToJSON(value);
         case 'solana_transaction':
             return CreateSolanaTransactionRequestToJSON(value);
+        case 'sui_message':
+            return CreateSuiMessageRequestToJSON(value);
+        case 'sui_transaction':
+            return CreateSuiTransactionRequestToJSON(value);
+        case 'utxo_message':
+            return CreateUtxoMessageRequestToJSON(value);
         case 'utxo_transaction':
             return CreateUtxoTransactionRequestToJSON(value);
         default:

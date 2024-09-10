@@ -19,6 +19,12 @@ import {
     AssetFromJSONTyped,
     AssetToJSON,
 } from './Asset';
+import type { AssetInfo } from './AssetInfo';
+import {
+    AssetInfoFromJSON,
+    AssetInfoFromJSONTyped,
+    AssetInfoToJSON,
+} from './AssetInfo';
 
 /**
  * 
@@ -48,8 +54,15 @@ export interface ListAssetsResponse {
      * 
      * @type {Array<Asset>}
      * @memberof ListAssetsResponse
+     * @deprecated
      */
     assets: Array<Asset>;
+    /**
+     * 
+     * @type {Array<AssetInfo>}
+     * @memberof ListAssetsResponse
+     */
+    assetInfos: Array<AssetInfo>;
 }
 
 /**
@@ -61,6 +74,7 @@ export function instanceOfListAssetsResponse(value: object): boolean {
     isInstance = isInstance && "page" in value;
     isInstance = isInstance && "size" in value;
     isInstance = isInstance && "assets" in value;
+    isInstance = isInstance && "assetInfos" in value;
 
     return isInstance;
 }
@@ -79,6 +93,7 @@ export function ListAssetsResponseFromJSONTyped(json: any, ignoreDiscriminator: 
         'page': json['page'],
         'size': json['size'],
         'assets': ((json['assets'] as Array<any>).map(AssetFromJSON)),
+        'assetInfos': ((json['asset_infos'] as Array<any>).map(AssetInfoFromJSON)),
     };
 }
 
@@ -95,6 +110,7 @@ export function ListAssetsResponseToJSON(value?: ListAssetsResponse | null): any
         'page': value.page,
         'size': value.size,
         'assets': ((value.assets as Array<any>).map(AssetToJSON)),
+        'asset_infos': ((value.assetInfos as Array<any>).map(AssetInfoToJSON)),
     };
 }
 

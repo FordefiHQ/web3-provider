@@ -19,6 +19,12 @@ import {
     PriceFromJSONTyped,
     PriceToJSON,
 } from './Price';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+} from './PricedAsset';
 import type { UtxoBalanceChangeEffect } from './UtxoBalanceChangeEffect';
 import {
     UtxoBalanceChangeEffectFromJSON,
@@ -74,6 +80,12 @@ export interface UtxoEffects {
      * @memberof UtxoEffects
      */
     price?: Price;
+    /**
+     * 
+     * @type {PricedAsset}
+     * @memberof UtxoEffects
+     */
+    pricedAsset: PricedAsset;
 }
 
 /**
@@ -85,6 +97,7 @@ export function instanceOfUtxoEffects(value: object): boolean {
     isInstance = isInstance && "outputs" in value;
     isInstance = isInstance && "balanceChanges" in value;
     isInstance = isInstance && "totalValue" in value;
+    isInstance = isInstance && "pricedAsset" in value;
 
     return isInstance;
 }
@@ -104,6 +117,7 @@ export function UtxoEffectsFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'balanceChanges': ((json['balance_changes'] as Array<any>).map(UtxoBalanceChangeEffectFromJSON)),
         'totalValue': json['total_value'],
         'price': !exists(json, 'price') ? undefined : PriceFromJSON(json['price']),
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }
 
@@ -121,6 +135,7 @@ export function UtxoEffectsToJSON(value?: UtxoEffects | null): any {
         'balance_changes': ((value.balanceChanges as Array<any>).map(UtxoBalanceChangeEffectToJSON)),
         'total_value': value.totalValue,
         'price': PriceToJSON(value.price),
+        'priced_asset': PricedAssetToJSON(value.pricedAsset),
     };
 }
 

@@ -19,6 +19,12 @@ import {
     CreateEvmMessageRequestDetailsFromJSONTyped,
     CreateEvmMessageRequestDetailsToJSON,
 } from './CreateEvmMessageRequestDetails';
+import type { SignMode } from './SignMode';
+import {
+    SignModeFromJSON,
+    SignModeFromJSONTyped,
+    SignModeToJSON,
+} from './SignMode';
 import type { SignerType } from './SignerType';
 import {
     SignerTypeFromJSON,
@@ -50,6 +56,12 @@ export interface CreateEvmMessageRequest {
      * @memberof CreateEvmMessageRequest
      */
     signerType?: SignerType;
+    /**
+     * 
+     * @type {SignMode}
+     * @memberof CreateEvmMessageRequest
+     */
+    signMode?: SignMode;
     /**
      * 
      * @type {string}
@@ -99,6 +111,7 @@ export function CreateEvmMessageRequestFromJSONTyped(json: any, ignoreDiscrimina
         'vaultId': json['vault_id'],
         'note': !exists(json, 'note') ? undefined : json['note'],
         'signerType': !exists(json, 'signer_type') ? undefined : SignerTypeFromJSON(json['signer_type']),
+        'signMode': !exists(json, 'sign_mode') ? undefined : SignModeFromJSON(json['sign_mode']),
         'type': json['type'],
         'details': CreateEvmMessageRequestDetailsFromJSON(json['details']),
     };
@@ -116,6 +129,7 @@ export function CreateEvmMessageRequestToJSON(value?: CreateEvmMessageRequest | 
         'vault_id': value.vaultId,
         'note': value.note,
         'signer_type': SignerTypeToJSON(value.signerType),
+        'sign_mode': SignModeToJSON(value.signMode),
         'type': value.type,
         'details': CreateEvmMessageRequestDetailsToJSON(value.details),
     };

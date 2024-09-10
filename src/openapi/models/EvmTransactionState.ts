@@ -19,12 +19,15 @@
  */
 export const EvmTransactionState = {
     waitingForApproval: 'waiting_for_approval',
+    waitingForSigningTrigger: 'waiting_for_signing_trigger',
     approved: 'approved',
     signed: 'signed',
     pushedToBlockchain: 'pushed_to_blockchain',
     queued: 'queued',
     mined: 'mined',
     completed: 'completed',
+    aborting: 'aborting',
+    dropped: 'dropped',
     aborted: 'aborted',
     errorSigning: 'error_signing',
     errorPushingToBlockchain: 'error_pushing_to_blockchain',

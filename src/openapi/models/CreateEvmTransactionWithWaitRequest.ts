@@ -25,6 +25,12 @@ import {
     EvmTransactionStateFromJSONTyped,
     EvmTransactionStateToJSON,
 } from './EvmTransactionState';
+import type { SignMode } from './SignMode';
+import {
+    SignModeFromJSON,
+    SignModeFromJSONTyped,
+    SignModeToJSON,
+} from './SignMode';
 import type { SignerType } from './SignerType';
 import {
     SignerTypeFromJSON,
@@ -58,6 +64,12 @@ export interface CreateEvmTransactionWithWaitRequest {
     signerType?: SignerType;
     /**
      * 
+     * @type {SignMode}
+     * @memberof CreateEvmTransactionWithWaitRequest
+     */
+    signMode?: SignMode;
+    /**
+     * 
      * @type {string}
      * @memberof CreateEvmTransactionWithWaitRequest
      */
@@ -68,6 +80,12 @@ export interface CreateEvmTransactionWithWaitRequest {
      * @memberof CreateEvmTransactionWithWaitRequest
      */
     details: CreateEvmTransactionRequestDetails;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateEvmTransactionWithWaitRequest
+     */
+    timeout?: number;
     /**
      * 
      * @type {EvmTransactionState}
@@ -112,8 +130,10 @@ export function CreateEvmTransactionWithWaitRequestFromJSONTyped(json: any, igno
         'vaultId': json['vault_id'],
         'note': !exists(json, 'note') ? undefined : json['note'],
         'signerType': !exists(json, 'signer_type') ? undefined : SignerTypeFromJSON(json['signer_type']),
+        'signMode': !exists(json, 'sign_mode') ? undefined : SignModeFromJSON(json['sign_mode']),
         'type': json['type'],
         'details': CreateEvmTransactionRequestDetailsFromJSON(json['details']),
+        'timeout': !exists(json, 'timeout') ? undefined : json['timeout'],
         'waitForState': EvmTransactionStateFromJSON(json['wait_for_state']),
     };
 }
@@ -130,8 +150,10 @@ export function CreateEvmTransactionWithWaitRequestToJSON(value?: CreateEvmTrans
         'vault_id': value.vaultId,
         'note': value.note,
         'signer_type': SignerTypeToJSON(value.signerType),
+        'sign_mode': SignModeToJSON(value.signMode),
         'type': value.type,
         'details': CreateEvmTransactionRequestDetailsToJSON(value.details),
+        'timeout': value.timeout,
         'wait_for_state': EvmTransactionStateToJSON(value.waitForState),
     };
 }

@@ -19,6 +19,12 @@ import {
     PricedAssetFromJSONTyped,
     PricedAssetToJSON,
 } from './PricedAsset';
+import type { StateChangeReason } from './StateChangeReason';
+import {
+    StateChangeReasonFromJSON,
+    StateChangeReasonFromJSONTyped,
+    StateChangeReasonToJSON,
+} from './StateChangeReason';
 import type { UtxoTransactionState } from './UtxoTransactionState';
 import {
     UtxoTransactionStateFromJSON,
@@ -40,6 +46,19 @@ export interface UtxoTransactionStateChange {
     changedAt: Date;
     /**
      * 
+     * @type {StateChangeReason}
+     * @memberof UtxoTransactionStateChange
+     */
+    reason?: StateChangeReason;
+    /**
+     * 
+     * @type {Array<PricedAsset>}
+     * @memberof UtxoTransactionStateChange
+     * @deprecated
+     */
+    assetPrices: Array<PricedAsset>;
+    /**
+     * 
      * @type {UtxoTransactionState}
      * @memberof UtxoTransactionStateChange
      */
@@ -50,12 +69,6 @@ export interface UtxoTransactionStateChange {
      * @memberof UtxoTransactionStateChange
      */
     newState: UtxoTransactionState;
-    /**
-     * 
-     * @type {Array<PricedAsset>}
-     * @memberof UtxoTransactionStateChange
-     */
-    assetPrices: Array<PricedAsset>;
 }
 
 /**
@@ -64,8 +77,8 @@ export interface UtxoTransactionStateChange {
 export function instanceOfUtxoTransactionStateChange(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "changedAt" in value;
-    isInstance = isInstance && "newState" in value;
     isInstance = isInstance && "assetPrices" in value;
+    isInstance = isInstance && "newState" in value;
 
     return isInstance;
 }
@@ -81,9 +94,10 @@ export function UtxoTransactionStateChangeFromJSONTyped(json: any, ignoreDiscrim
     return {
         
         'changedAt': (new Date(json['changed_at'])),
+        'reason': !exists(json, 'reason') ? undefined : StateChangeReasonFromJSON(json['reason']),
+        'assetPrices': ((json['asset_prices'] as Array<any>).map(PricedAssetFromJSON)),
         'previousState': !exists(json, 'previous_state') ? undefined : UtxoTransactionStateFromJSON(json['previous_state']),
         'newState': UtxoTransactionStateFromJSON(json['new_state']),
-        'assetPrices': ((json['asset_prices'] as Array<any>).map(PricedAssetFromJSON)),
     };
 }
 
@@ -97,9 +111,10 @@ export function UtxoTransactionStateChangeToJSON(value?: UtxoTransactionStateCha
     return {
         
         'changed_at': (value.changedAt.toISOString()),
+        'reason': StateChangeReasonToJSON(value.reason),
+        'asset_prices': ((value.assetPrices as Array<any>).map(PricedAssetToJSON)),
         'previous_state': UtxoTransactionStateToJSON(value.previousState),
         'new_state': UtxoTransactionStateToJSON(value.newState),
-        'asset_prices': ((value.assetPrices as Array<any>).map(PricedAssetToJSON)),
     };
 }
 

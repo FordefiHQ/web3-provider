@@ -31,6 +31,12 @@ import {
     PricedAssetFromJSONTyped,
     PricedAssetToJSON,
 } from './PricedAsset';
+import type { StateChangeReason } from './StateChangeReason';
+import {
+    StateChangeReasonFromJSON,
+    StateChangeReasonFromJSONTyped,
+    StateChangeReasonToJSON,
+} from './StateChangeReason';
 
 /**
  * 
@@ -46,16 +52,23 @@ export interface EvmMessageStateChange {
     changedAt: Date;
     /**
      * 
-     * @type {EvmPrices}
+     * @type {StateChangeReason}
      * @memberof EvmMessageStateChange
      */
-    prices: EvmPrices;
+    reason?: StateChangeReason;
     /**
      * 
      * @type {Array<PricedAsset>}
      * @memberof EvmMessageStateChange
+     * @deprecated
      */
     assetPrices: Array<PricedAsset>;
+    /**
+     * 
+     * @type {EvmPrices}
+     * @memberof EvmMessageStateChange
+     */
+    prices: EvmPrices;
     /**
      * 
      * @type {EvmMessageState}
@@ -76,8 +89,8 @@ export interface EvmMessageStateChange {
 export function instanceOfEvmMessageStateChange(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "changedAt" in value;
-    isInstance = isInstance && "prices" in value;
     isInstance = isInstance && "assetPrices" in value;
+    isInstance = isInstance && "prices" in value;
     isInstance = isInstance && "newState" in value;
 
     return isInstance;
@@ -94,8 +107,9 @@ export function EvmMessageStateChangeFromJSONTyped(json: any, ignoreDiscriminato
     return {
         
         'changedAt': (new Date(json['changed_at'])),
-        'prices': EvmPricesFromJSON(json['prices']),
+        'reason': !exists(json, 'reason') ? undefined : StateChangeReasonFromJSON(json['reason']),
         'assetPrices': ((json['asset_prices'] as Array<any>).map(PricedAssetFromJSON)),
+        'prices': EvmPricesFromJSON(json['prices']),
         'previousState': !exists(json, 'previous_state') ? undefined : EvmMessageStateFromJSON(json['previous_state']),
         'newState': EvmMessageStateFromJSON(json['new_state']),
     };
@@ -111,8 +125,9 @@ export function EvmMessageStateChangeToJSON(value?: EvmMessageStateChange | null
     return {
         
         'changed_at': (value.changedAt.toISOString()),
-        'prices': EvmPricesToJSON(value.prices),
+        'reason': StateChangeReasonToJSON(value.reason),
         'asset_prices': ((value.assetPrices as Array<any>).map(PricedAssetToJSON)),
+        'prices': EvmPricesToJSON(value.prices),
         'previous_state': EvmMessageStateToJSON(value.previousState),
         'new_state': EvmMessageStateToJSON(value.newState),
     };

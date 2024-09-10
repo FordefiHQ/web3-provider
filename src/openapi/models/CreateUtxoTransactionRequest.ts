@@ -13,18 +13,24 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { CreateUtxoTransactionRequestDetails } from './CreateUtxoTransactionRequestDetails';
+import {
+    CreateUtxoTransactionRequestDetailsFromJSON,
+    CreateUtxoTransactionRequestDetailsFromJSONTyped,
+    CreateUtxoTransactionRequestDetailsToJSON,
+} from './CreateUtxoTransactionRequestDetails';
+import type { SignMode } from './SignMode';
+import {
+    SignModeFromJSON,
+    SignModeFromJSONTyped,
+    SignModeToJSON,
+} from './SignMode';
 import type { SignerType } from './SignerType';
 import {
     SignerTypeFromJSON,
     SignerTypeFromJSONTyped,
     SignerTypeToJSON,
 } from './SignerType';
-import type { TransactionDetailsUtxoTransferRequest } from './TransactionDetailsUtxoTransferRequest';
-import {
-    TransactionDetailsUtxoTransferRequestFromJSON,
-    TransactionDetailsUtxoTransferRequestFromJSONTyped,
-    TransactionDetailsUtxoTransferRequestToJSON,
-} from './TransactionDetailsUtxoTransferRequest';
 
 /**
  * 
@@ -52,16 +58,22 @@ export interface CreateUtxoTransactionRequest {
     signerType?: SignerType;
     /**
      * 
+     * @type {SignMode}
+     * @memberof CreateUtxoTransactionRequest
+     */
+    signMode?: SignMode;
+    /**
+     * 
      * @type {string}
      * @memberof CreateUtxoTransactionRequest
      */
     type: CreateUtxoTransactionRequestTypeEnum;
     /**
      * 
-     * @type {TransactionDetailsUtxoTransferRequest}
+     * @type {CreateUtxoTransactionRequestDetails}
      * @memberof CreateUtxoTransactionRequest
      */
-    details: TransactionDetailsUtxoTransferRequest;
+    details: CreateUtxoTransactionRequestDetails;
 }
 
 
@@ -99,8 +111,9 @@ export function CreateUtxoTransactionRequestFromJSONTyped(json: any, ignoreDiscr
         'vaultId': json['vault_id'],
         'note': !exists(json, 'note') ? undefined : json['note'],
         'signerType': !exists(json, 'signer_type') ? undefined : SignerTypeFromJSON(json['signer_type']),
+        'signMode': !exists(json, 'sign_mode') ? undefined : SignModeFromJSON(json['sign_mode']),
         'type': json['type'],
-        'details': TransactionDetailsUtxoTransferRequestFromJSON(json['details']),
+        'details': CreateUtxoTransactionRequestDetailsFromJSON(json['details']),
     };
 }
 
@@ -116,8 +129,9 @@ export function CreateUtxoTransactionRequestToJSON(value?: CreateUtxoTransaction
         'vault_id': value.vaultId,
         'note': value.note,
         'signer_type': SignerTypeToJSON(value.signerType),
+        'sign_mode': SignModeToJSON(value.signMode),
         'type': value.type,
-        'details': TransactionDetailsUtxoTransferRequestToJSON(value.details),
+        'details': CreateUtxoTransactionRequestDetailsToJSON(value.details),
     };
 }
 

@@ -13,6 +13,27 @@
  */
 
 import {
+    PredictedAptosMessage,
+    instanceOfPredictedAptosMessage,
+    PredictedAptosMessageFromJSON,
+    PredictedAptosMessageFromJSONTyped,
+    PredictedAptosMessageToJSON,
+} from './PredictedAptosMessage';
+import {
+    PredictedAptosTransaction,
+    instanceOfPredictedAptosTransaction,
+    PredictedAptosTransactionFromJSON,
+    PredictedAptosTransactionFromJSONTyped,
+    PredictedAptosTransactionToJSON,
+} from './PredictedAptosTransaction';
+import {
+    PredictedCosmosMessage,
+    instanceOfPredictedCosmosMessage,
+    PredictedCosmosMessageFromJSON,
+    PredictedCosmosMessageFromJSONTyped,
+    PredictedCosmosMessageToJSON,
+} from './PredictedCosmosMessage';
+import {
     PredictedCosmosTransaction,
     instanceOfPredictedCosmosTransaction,
     PredictedCosmosTransactionFromJSON,
@@ -48,6 +69,27 @@ import {
     PredictedSolanaTransactionToJSON,
 } from './PredictedSolanaTransaction';
 import {
+    PredictedSuiMessage,
+    instanceOfPredictedSuiMessage,
+    PredictedSuiMessageFromJSON,
+    PredictedSuiMessageFromJSONTyped,
+    PredictedSuiMessageToJSON,
+} from './PredictedSuiMessage';
+import {
+    PredictedSuiTransaction,
+    instanceOfPredictedSuiTransaction,
+    PredictedSuiTransactionFromJSON,
+    PredictedSuiTransactionFromJSONTyped,
+    PredictedSuiTransactionToJSON,
+} from './PredictedSuiTransaction';
+import {
+    PredictedUtxoMessage,
+    instanceOfPredictedUtxoMessage,
+    PredictedUtxoMessageFromJSON,
+    PredictedUtxoMessageFromJSONTyped,
+    PredictedUtxoMessageToJSON,
+} from './PredictedUtxoMessage';
+import {
     PredictedUtxoTransaction,
     instanceOfPredictedUtxoTransaction,
     PredictedUtxoTransactionFromJSON,
@@ -60,7 +102,7 @@ import {
  * 
  * @export
  */
-export type PredictTransactionResponse = { type: 'cosmos_transaction' } & PredictedCosmosTransaction | { type: 'evm_message' } & PredictedEvmMessage | { type: 'evm_transaction' } & PredictedEvmTransaction | { type: 'solana_message' } & PredictedSolanaMessage | { type: 'solana_transaction' } & PredictedSolanaTransaction | { type: 'utxo_transaction' } & PredictedUtxoTransaction;
+export type PredictTransactionResponse = { type: 'aptos_message' } & PredictedAptosMessage | { type: 'aptos_transaction' } & PredictedAptosTransaction | { type: 'cosmos_message' } & PredictedCosmosMessage | { type: 'cosmos_transaction' } & PredictedCosmosTransaction | { type: 'evm_message' } & PredictedEvmMessage | { type: 'evm_transaction' } & PredictedEvmTransaction | { type: 'solana_message' } & PredictedSolanaMessage | { type: 'solana_transaction' } & PredictedSolanaTransaction | { type: 'sui_message' } & PredictedSuiMessage | { type: 'sui_transaction' } & PredictedSuiTransaction | { type: 'utxo_message' } & PredictedUtxoMessage | { type: 'utxo_transaction' } & PredictedUtxoTransaction;
 
 export function PredictTransactionResponseFromJSON(json: any): PredictTransactionResponse {
     return PredictTransactionResponseFromJSONTyped(json, false);
@@ -71,6 +113,12 @@ export function PredictTransactionResponseFromJSONTyped(json: any, ignoreDiscrim
         return json;
     }
     switch (json['type']) {
+        case 'aptos_message':
+            return {...PredictedAptosMessageFromJSONTyped(json, true), type: 'aptos_message'};
+        case 'aptos_transaction':
+            return {...PredictedAptosTransactionFromJSONTyped(json, true), type: 'aptos_transaction'};
+        case 'cosmos_message':
+            return {...PredictedCosmosMessageFromJSONTyped(json, true), type: 'cosmos_message'};
         case 'cosmos_transaction':
             return {...PredictedCosmosTransactionFromJSONTyped(json, true), type: 'cosmos_transaction'};
         case 'evm_message':
@@ -81,6 +129,12 @@ export function PredictTransactionResponseFromJSONTyped(json: any, ignoreDiscrim
             return {...PredictedSolanaMessageFromJSONTyped(json, true), type: 'solana_message'};
         case 'solana_transaction':
             return {...PredictedSolanaTransactionFromJSONTyped(json, true), type: 'solana_transaction'};
+        case 'sui_message':
+            return {...PredictedSuiMessageFromJSONTyped(json, true), type: 'sui_message'};
+        case 'sui_transaction':
+            return {...PredictedSuiTransactionFromJSONTyped(json, true), type: 'sui_transaction'};
+        case 'utxo_message':
+            return {...PredictedUtxoMessageFromJSONTyped(json, true), type: 'utxo_message'};
         case 'utxo_transaction':
             return {...PredictedUtxoTransactionFromJSONTyped(json, true), type: 'utxo_transaction'};
         default:
@@ -96,6 +150,12 @@ export function PredictTransactionResponseToJSON(value?: PredictTransactionRespo
         return null;
     }
     switch (value['type']) {
+        case 'aptos_message':
+            return PredictedAptosMessageToJSON(value);
+        case 'aptos_transaction':
+            return PredictedAptosTransactionToJSON(value);
+        case 'cosmos_message':
+            return PredictedCosmosMessageToJSON(value);
         case 'cosmos_transaction':
             return PredictedCosmosTransactionToJSON(value);
         case 'evm_message':
@@ -106,6 +166,12 @@ export function PredictTransactionResponseToJSON(value?: PredictTransactionRespo
             return PredictedSolanaMessageToJSON(value);
         case 'solana_transaction':
             return PredictedSolanaTransactionToJSON(value);
+        case 'sui_message':
+            return PredictedSuiMessageToJSON(value);
+        case 'sui_transaction':
+            return PredictedSuiTransactionToJSON(value);
+        case 'utxo_message':
+            return PredictedUtxoMessageToJSON(value);
         case 'utxo_transaction':
             return PredictedUtxoTransactionToJSON(value);
         default:

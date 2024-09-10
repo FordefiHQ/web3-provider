@@ -61,6 +61,12 @@ export interface EnrichedEvmAddress {
      * @type {string}
      * @memberof EnrichedEvmAddress
      */
+    type: EnrichedEvmAddressTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnrichedEvmAddress
+     */
     address: string;
     /**
      * 
@@ -70,11 +76,22 @@ export interface EnrichedEvmAddress {
     contract?: EvmContractMetadata;
 }
 
+
+/**
+ * @export
+ */
+export const EnrichedEvmAddressTypeEnum = {
+    evm: 'evm'
+} as const;
+export type EnrichedEvmAddressTypeEnum = typeof EnrichedEvmAddressTypeEnum[keyof typeof EnrichedEvmAddressTypeEnum];
+
+
 /**
  * Check if a given object implements the EnrichedEvmAddress interface.
  */
 export function instanceOfEnrichedEvmAddress(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "type" in value;
     isInstance = isInstance && "address" in value;
 
     return isInstance;
@@ -93,6 +110,7 @@ export function EnrichedEvmAddressFromJSONTyped(json: any, ignoreDiscriminator: 
         'vault': !exists(json, 'vault') ? undefined : VaultRefFromJSON(json['vault']),
         'explorerUrl': !exists(json, 'explorer_url') ? undefined : json['explorer_url'],
         'contact': !exists(json, 'contact') ? undefined : ContactRefFromJSON(json['contact']),
+        'type': json['type'],
         'address': json['address'],
         'contract': !exists(json, 'contract') ? undefined : EvmContractMetadataFromJSON(json['contract']),
     };
@@ -110,6 +128,7 @@ export function EnrichedEvmAddressToJSON(value?: EnrichedEvmAddress | null): any
         'vault': VaultRefToJSON(value.vault),
         'explorer_url': value.explorerUrl,
         'contact': ContactRefToJSON(value.contact),
+        'type': value.type,
         'address': value.address,
         'contract': EvmContractMetadataToJSON(value.contract),
     };

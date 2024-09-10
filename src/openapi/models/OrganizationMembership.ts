@@ -73,7 +73,7 @@ export interface OrganizationMembership {
      * @type {Date}
      * @memberof OrganizationMembership
      */
-    organizationActivatedAt: Date;
+    organizationActivatedAt?: Date;
     /**
      * 
      * @type {number}
@@ -92,6 +92,18 @@ export interface OrganizationMembership {
      * @memberof OrganizationMembership
      */
     activeDeviceId?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof OrganizationMembership
+     */
+    isTrustedForCurrentWebDevice?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof OrganizationMembership
+     */
+    hasTrustedWebDevices?: boolean;
 }
 
 /**
@@ -104,7 +116,6 @@ export function instanceOfOrganizationMembership(value: object): boolean {
     isInstance = isInstance && "state" in value;
     isInstance = isInstance && "isNewDeviceProvisioning" in value;
     isInstance = isInstance && "isEndUsersSupportedOrganization" in value;
-    isInstance = isInstance && "organizationActivatedAt" in value;
     isInstance = isInstance && "organizationHasBackup" in value;
 
     return isInstance;
@@ -126,10 +137,12 @@ export function OrganizationMembershipFromJSONTyped(json: any, ignoreDiscriminat
         'isNewDeviceProvisioning': json['is_new_device_provisioning'],
         'role': !exists(json, 'role') ? undefined : UserRoleFromJSON(json['role']),
         'isEndUsersSupportedOrganization': json['is_end_users_supported_organization'],
-        'organizationActivatedAt': (new Date(json['organization_activated_at'])),
+        'organizationActivatedAt': !exists(json, 'organization_activated_at') ? undefined : (new Date(json['organization_activated_at'])),
         'daysLeftToBackup': !exists(json, 'days_left_to_backup') ? undefined : json['days_left_to_backup'],
         'organizationHasBackup': json['organization_has_backup'],
         'activeDeviceId': !exists(json, 'active_device_id') ? undefined : json['active_device_id'],
+        'isTrustedForCurrentWebDevice': !exists(json, 'is_trusted_for_current_web_device') ? undefined : json['is_trusted_for_current_web_device'],
+        'hasTrustedWebDevices': !exists(json, 'has_trusted_web_devices') ? undefined : json['has_trusted_web_devices'],
     };
 }
 
@@ -148,10 +161,12 @@ export function OrganizationMembershipToJSON(value?: OrganizationMembership | nu
         'is_new_device_provisioning': value.isNewDeviceProvisioning,
         'role': UserRoleToJSON(value.role),
         'is_end_users_supported_organization': value.isEndUsersSupportedOrganization,
-        'organization_activated_at': (value.organizationActivatedAt.toISOString()),
+        'organization_activated_at': value.organizationActivatedAt === undefined ? undefined : (value.organizationActivatedAt.toISOString()),
         'days_left_to_backup': value.daysLeftToBackup,
         'organization_has_backup': value.organizationHasBackup,
         'active_device_id': value.activeDeviceId,
+        'is_trusted_for_current_web_device': value.isTrustedForCurrentWebDevice,
+        'has_trusted_web_devices': value.hasTrustedWebDevices,
     };
 }
 

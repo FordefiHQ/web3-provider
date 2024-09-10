@@ -19,7 +19,8 @@
  */
 export const PushMode = {
     auto: 'auto',
-    manual: 'manual'
+    manual: 'manual',
+    deferred: 'deferred'
 } as const;
 export type PushMode = typeof PushMode[keyof typeof PushMode];
 

@@ -19,6 +19,18 @@ import {
     ApprovalRequestFromJSONTyped,
     ApprovalRequestToJSON,
 } from './ApprovalRequest';
+import type { DescribedSolanaTransactionSolanaTransactionTypeDetails } from './DescribedSolanaTransactionSolanaTransactionTypeDetails';
+import {
+    DescribedSolanaTransactionSolanaTransactionTypeDetailsFromJSON,
+    DescribedSolanaTransactionSolanaTransactionTypeDetailsFromJSONTyped,
+    DescribedSolanaTransactionSolanaTransactionTypeDetailsToJSON,
+} from './DescribedSolanaTransactionSolanaTransactionTypeDetails';
+import type { EnrichedSolanaAddress } from './EnrichedSolanaAddress';
+import {
+    EnrichedSolanaAddressFromJSON,
+    EnrichedSolanaAddressFromJSONTyped,
+    EnrichedSolanaAddressToJSON,
+} from './EnrichedSolanaAddress';
 import type { EnrichedSolanaChain } from './EnrichedSolanaChain';
 import {
     EnrichedSolanaChainFromJSON,
@@ -37,6 +49,18 @@ import {
     SimulationStatusResultFromJSONTyped,
     SimulationStatusResultToJSON,
 } from './SimulationStatusResult';
+import type { SolanaCompiledInstruction } from './SolanaCompiledInstruction';
+import {
+    SolanaCompiledInstructionFromJSON,
+    SolanaCompiledInstructionFromJSONTyped,
+    SolanaCompiledInstructionToJSON,
+} from './SolanaCompiledInstruction';
+import type { SolanaSuggestedFees } from './SolanaSuggestedFees';
+import {
+    SolanaSuggestedFeesFromJSON,
+    SolanaSuggestedFeesFromJSONTyped,
+    SolanaSuggestedFeesToJSON,
+} from './SolanaSuggestedFees';
 import type { SolanaTransactionResult } from './SolanaTransactionResult';
 import {
     SolanaTransactionResultFromJSON,
@@ -98,6 +122,30 @@ export interface PredictedSolanaTransaction {
      * @memberof PredictedSolanaTransaction
      */
     simulationStatusResult: SimulationStatusResult;
+    /**
+     * 
+     * @type {DescribedSolanaTransactionSolanaTransactionTypeDetails}
+     * @memberof PredictedSolanaTransaction
+     */
+    solanaTransactionTypeDetails: DescribedSolanaTransactionSolanaTransactionTypeDetails;
+    /**
+     * 
+     * @type {EnrichedSolanaAddress}
+     * @memberof PredictedSolanaTransaction
+     */
+    sender: EnrichedSolanaAddress;
+    /**
+     * 
+     * @type {SolanaSuggestedFees}
+     * @memberof PredictedSolanaTransaction
+     */
+    suggestedFees: SolanaSuggestedFees;
+    /**
+     * 
+     * @type {Array<SolanaCompiledInstruction>}
+     * @memberof PredictedSolanaTransaction
+     */
+    instructions: Array<SolanaCompiledInstruction>;
 }
 
 
@@ -121,6 +169,10 @@ export function instanceOfPredictedSolanaTransaction(value: object): boolean {
     isInstance = isInstance && "expectedResult" in value;
     isInstance = isInstance && "chain" in value;
     isInstance = isInstance && "simulationStatusResult" in value;
+    isInstance = isInstance && "solanaTransactionTypeDetails" in value;
+    isInstance = isInstance && "sender" in value;
+    isInstance = isInstance && "suggestedFees" in value;
+    isInstance = isInstance && "instructions" in value;
 
     return isInstance;
 }
@@ -142,6 +194,10 @@ export function PredictedSolanaTransactionFromJSONTyped(json: any, ignoreDiscrim
         'expectedResult': SolanaTransactionResultFromJSON(json['expected_result']),
         'chain': EnrichedSolanaChainFromJSON(json['chain']),
         'simulationStatusResult': SimulationStatusResultFromJSON(json['simulation_status_result']),
+        'solanaTransactionTypeDetails': DescribedSolanaTransactionSolanaTransactionTypeDetailsFromJSON(json['solana_transaction_type_details']),
+        'sender': EnrichedSolanaAddressFromJSON(json['sender']),
+        'suggestedFees': SolanaSuggestedFeesFromJSON(json['suggested_fees']),
+        'instructions': ((json['instructions'] as Array<any>).map(SolanaCompiledInstructionFromJSON)),
     };
 }
 
@@ -161,6 +217,10 @@ export function PredictedSolanaTransactionToJSON(value?: PredictedSolanaTransact
         'expected_result': SolanaTransactionResultToJSON(value.expectedResult),
         'chain': EnrichedSolanaChainToJSON(value.chain),
         'simulation_status_result': SimulationStatusResultToJSON(value.simulationStatusResult),
+        'solana_transaction_type_details': DescribedSolanaTransactionSolanaTransactionTypeDetailsToJSON(value.solanaTransactionTypeDetails),
+        'sender': EnrichedSolanaAddressToJSON(value.sender),
+        'suggested_fees': SolanaSuggestedFeesToJSON(value.suggestedFees),
+        'instructions': ((value.instructions as Array<any>).map(SolanaCompiledInstructionToJSON)),
     };
 }
 

@@ -25,6 +25,12 @@ import {
     PriceFromJSONTyped,
     PriceToJSON,
 } from './Price';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+} from './PricedAsset';
 
 /**
  * 
@@ -32,6 +38,18 @@ import {
  * @interface SolanaNativeCurrencyTransfer
  */
 export interface SolanaNativeCurrencyTransfer {
+    /**
+     * 
+     * @type {PricedAsset}
+     * @memberof SolanaNativeCurrencyTransfer
+     */
+    pricedAsset: PricedAsset;
+    /**
+     * 
+     * @type {string}
+     * @memberof SolanaNativeCurrencyTransfer
+     */
+    amount: string;
     /**
      * 
      * @type {string}
@@ -50,12 +68,6 @@ export interface SolanaNativeCurrencyTransfer {
      * @memberof SolanaNativeCurrencyTransfer
      */
     to: EnrichedSolanaAddress;
-    /**
-     * 
-     * @type {string}
-     * @memberof SolanaNativeCurrencyTransfer
-     */
-    amount: string;
     /**
      * 
      * @type {Price}
@@ -79,10 +91,11 @@ export type SolanaNativeCurrencyTransferTypeEnum = typeof SolanaNativeCurrencyTr
  */
 export function instanceOfSolanaNativeCurrencyTransfer(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "pricedAsset" in value;
+    isInstance = isInstance && "amount" in value;
     isInstance = isInstance && "type" in value;
     isInstance = isInstance && "from" in value;
     isInstance = isInstance && "to" in value;
-    isInstance = isInstance && "amount" in value;
 
     return isInstance;
 }
@@ -97,10 +110,11 @@ export function SolanaNativeCurrencyTransferFromJSONTyped(json: any, ignoreDiscr
     }
     return {
         
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
+        'amount': json['amount'],
         'type': json['type'],
         'from': EnrichedSolanaAddressFromJSON(json['from']),
         'to': EnrichedSolanaAddressFromJSON(json['to']),
-        'amount': json['amount'],
         'price': !exists(json, 'price') ? undefined : PriceFromJSON(json['price']),
     };
 }
@@ -114,10 +128,11 @@ export function SolanaNativeCurrencyTransferToJSON(value?: SolanaNativeCurrencyT
     }
     return {
         
+        'priced_asset': PricedAssetToJSON(value.pricedAsset),
+        'amount': value.amount,
         'type': value.type,
         'from': EnrichedSolanaAddressToJSON(value.from),
         'to': EnrichedSolanaAddressToJSON(value.to),
-        'amount': value.amount,
         'price': PriceToJSON(value.price),
     };
 }

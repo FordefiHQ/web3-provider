@@ -19,7 +19,8 @@
  */
 export const BitcoinVaultCreateAddressType = {
     legacy: 'legacy',
-    segwit: 'segwit'
+    segwit: 'segwit',
+    taproot: 'taproot'
 } as const;
 export type BitcoinVaultCreateAddressType = typeof BitcoinVaultCreateAddressType[keyof typeof BitcoinVaultCreateAddressType];
 

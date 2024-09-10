@@ -31,6 +31,12 @@ import {
     PricedAssetFromJSONTyped,
     PricedAssetToJSON,
 } from './PricedAsset';
+import type { StateChangeReason } from './StateChangeReason';
+import {
+    StateChangeReasonFromJSON,
+    StateChangeReasonFromJSONTyped,
+    StateChangeReasonToJSON,
+} from './StateChangeReason';
 
 /**
  * 
@@ -46,16 +52,23 @@ export interface EvmTransactionStateChange {
     changedAt: Date;
     /**
      * 
-     * @type {EvmPrices}
+     * @type {StateChangeReason}
      * @memberof EvmTransactionStateChange
      */
-    prices: EvmPrices;
+    reason?: StateChangeReason;
     /**
      * 
      * @type {Array<PricedAsset>}
      * @memberof EvmTransactionStateChange
+     * @deprecated
      */
     assetPrices: Array<PricedAsset>;
+    /**
+     * 
+     * @type {EvmPrices}
+     * @memberof EvmTransactionStateChange
+     */
+    prices: EvmPrices;
     /**
      * 
      * @type {EvmTransactionState}
@@ -76,8 +89,8 @@ export interface EvmTransactionStateChange {
 export function instanceOfEvmTransactionStateChange(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "changedAt" in value;
-    isInstance = isInstance && "prices" in value;
     isInstance = isInstance && "assetPrices" in value;
+    isInstance = isInstance && "prices" in value;
     isInstance = isInstance && "newState" in value;
 
     return isInstance;
@@ -94,8 +107,9 @@ export function EvmTransactionStateChangeFromJSONTyped(json: any, ignoreDiscrimi
     return {
         
         'changedAt': (new Date(json['changed_at'])),
-        'prices': EvmPricesFromJSON(json['prices']),
+        'reason': !exists(json, 'reason') ? undefined : StateChangeReasonFromJSON(json['reason']),
         'assetPrices': ((json['asset_prices'] as Array<any>).map(PricedAssetFromJSON)),
+        'prices': EvmPricesFromJSON(json['prices']),
         'previousState': !exists(json, 'previous_state') ? undefined : EvmTransactionStateFromJSON(json['previous_state']),
         'newState': EvmTransactionStateFromJSON(json['new_state']),
     };
@@ -111,8 +125,9 @@ export function EvmTransactionStateChangeToJSON(value?: EvmTransactionStateChang
     return {
         
         'changed_at': (value.changedAt.toISOString()),
-        'prices': EvmPricesToJSON(value.prices),
+        'reason': StateChangeReasonToJSON(value.reason),
         'asset_prices': ((value.assetPrices as Array<any>).map(PricedAssetToJSON)),
+        'prices': EvmPricesToJSON(value.prices),
         'previous_state': EvmTransactionStateToJSON(value.previousState),
         'new_state': EvmTransactionStateToJSON(value.newState),
     };

@@ -31,6 +31,12 @@ export interface IssueEndUserAuthTokenRequest {
      * @memberof IssueEndUserAuthTokenRequest
      */
     userId: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof IssueEndUserAuthTokenRequest
+     */
+    expiration?: number;
 }
 
 
@@ -66,6 +72,7 @@ export function IssueEndUserAuthTokenRequestFromJSONTyped(json: any, ignoreDiscr
         
         'userType': json['user_type'],
         'userId': json['user_id'],
+        'expiration': !exists(json, 'expiration') ? undefined : json['expiration'],
     };
 }
 
@@ -80,6 +87,7 @@ export function IssueEndUserAuthTokenRequestToJSON(value?: IssueEndUserAuthToken
         
         'user_type': value.userType,
         'user_id': value.userId,
+        'expiration': value.expiration,
     };
 }
 

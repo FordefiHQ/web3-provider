@@ -76,6 +76,12 @@ export interface RegisterTransactionSignSessionResponse {
      * @memberof RegisterTransactionSignSessionResponse
      */
     signSessions: Array<SignSession>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RegisterTransactionSignSessionResponse
+     */
+    dklsEnabled?: boolean;
 }
 
 /**
@@ -109,6 +115,7 @@ export function RegisterTransactionSignSessionResponseFromJSONTyped(json: any, i
         'timestampedSignatureV2': TimestampedSignatureFromJSON(json['timestamped_signature_v2']),
         'keyDerivationArgs': KeyDerivationArgsFromJSON(json['key_derivation_args']),
         'signSessions': ((json['sign_sessions'] as Array<any>).map(SignSessionFromJSON)),
+        'dklsEnabled': !exists(json, 'dkls_enabled') ? undefined : json['dkls_enabled'],
     };
 }
 
@@ -127,6 +134,7 @@ export function RegisterTransactionSignSessionResponseToJSON(value?: RegisterTra
         'timestamped_signature_v2': TimestampedSignatureToJSON(value.timestampedSignatureV2),
         'key_derivation_args': KeyDerivationArgsToJSON(value.keyDerivationArgs),
         'sign_sessions': ((value.signSessions as Array<any>).map(SignSessionToJSON)),
+        'dkls_enabled': value.dklsEnabled,
     };
 }
 

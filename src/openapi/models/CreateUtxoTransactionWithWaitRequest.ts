@@ -13,18 +13,24 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { CreateUtxoTransactionRequestDetails } from './CreateUtxoTransactionRequestDetails';
+import {
+    CreateUtxoTransactionRequestDetailsFromJSON,
+    CreateUtxoTransactionRequestDetailsFromJSONTyped,
+    CreateUtxoTransactionRequestDetailsToJSON,
+} from './CreateUtxoTransactionRequestDetails';
+import type { SignMode } from './SignMode';
+import {
+    SignModeFromJSON,
+    SignModeFromJSONTyped,
+    SignModeToJSON,
+} from './SignMode';
 import type { SignerType } from './SignerType';
 import {
     SignerTypeFromJSON,
     SignerTypeFromJSONTyped,
     SignerTypeToJSON,
 } from './SignerType';
-import type { TransactionDetailsUtxoTransferRequest } from './TransactionDetailsUtxoTransferRequest';
-import {
-    TransactionDetailsUtxoTransferRequestFromJSON,
-    TransactionDetailsUtxoTransferRequestFromJSONTyped,
-    TransactionDetailsUtxoTransferRequestToJSON,
-} from './TransactionDetailsUtxoTransferRequest';
 import type { UtxoTransactionState } from './UtxoTransactionState';
 import {
     UtxoTransactionStateFromJSON,
@@ -58,16 +64,28 @@ export interface CreateUtxoTransactionWithWaitRequest {
     signerType?: SignerType;
     /**
      * 
+     * @type {SignMode}
+     * @memberof CreateUtxoTransactionWithWaitRequest
+     */
+    signMode?: SignMode;
+    /**
+     * 
      * @type {string}
      * @memberof CreateUtxoTransactionWithWaitRequest
      */
     type: CreateUtxoTransactionWithWaitRequestTypeEnum;
     /**
      * 
-     * @type {TransactionDetailsUtxoTransferRequest}
+     * @type {CreateUtxoTransactionRequestDetails}
      * @memberof CreateUtxoTransactionWithWaitRequest
      */
-    details: TransactionDetailsUtxoTransferRequest;
+    details: CreateUtxoTransactionRequestDetails;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateUtxoTransactionWithWaitRequest
+     */
+    timeout?: number;
     /**
      * 
      * @type {UtxoTransactionState}
@@ -112,8 +130,10 @@ export function CreateUtxoTransactionWithWaitRequestFromJSONTyped(json: any, ign
         'vaultId': json['vault_id'],
         'note': !exists(json, 'note') ? undefined : json['note'],
         'signerType': !exists(json, 'signer_type') ? undefined : SignerTypeFromJSON(json['signer_type']),
+        'signMode': !exists(json, 'sign_mode') ? undefined : SignModeFromJSON(json['sign_mode']),
         'type': json['type'],
-        'details': TransactionDetailsUtxoTransferRequestFromJSON(json['details']),
+        'details': CreateUtxoTransactionRequestDetailsFromJSON(json['details']),
+        'timeout': !exists(json, 'timeout') ? undefined : json['timeout'],
         'waitForState': UtxoTransactionStateFromJSON(json['wait_for_state']),
     };
 }
@@ -130,8 +150,10 @@ export function CreateUtxoTransactionWithWaitRequestToJSON(value?: CreateUtxoTra
         'vault_id': value.vaultId,
         'note': value.note,
         'signer_type': SignerTypeToJSON(value.signerType),
+        'sign_mode': SignModeToJSON(value.signMode),
         'type': value.type,
-        'details': TransactionDetailsUtxoTransferRequestToJSON(value.details),
+        'details': CreateUtxoTransactionRequestDetailsToJSON(value.details),
+        'timeout': value.timeout,
         'wait_for_state': UtxoTransactionStateToJSON(value.waitForState),
     };
 }

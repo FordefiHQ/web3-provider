@@ -13,12 +13,12 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { CosmosAssetIdentifierRequestDetails } from './CosmosAssetIdentifierRequestDetails';
+import type { CosmosAssetIdentifierDetails } from './CosmosAssetIdentifierDetails';
 import {
-    CosmosAssetIdentifierRequestDetailsFromJSON,
-    CosmosAssetIdentifierRequestDetailsFromJSONTyped,
-    CosmosAssetIdentifierRequestDetailsToJSON,
-} from './CosmosAssetIdentifierRequestDetails';
+    CosmosAssetIdentifierDetailsFromJSON,
+    CosmosAssetIdentifierDetailsFromJSONTyped,
+    CosmosAssetIdentifierDetailsToJSON,
+} from './CosmosAssetIdentifierDetails';
 
 /**
  * 
@@ -34,10 +34,10 @@ export interface CosmosAssetIdentifierRequest {
     type: CosmosAssetIdentifierRequestTypeEnum;
     /**
      * 
-     * @type {CosmosAssetIdentifierRequestDetails}
+     * @type {CosmosAssetIdentifierDetails}
      * @memberof CosmosAssetIdentifierRequest
      */
-    details: CosmosAssetIdentifierRequestDetails;
+    details: CosmosAssetIdentifierDetails;
 }
 
 
@@ -72,7 +72,7 @@ export function CosmosAssetIdentifierRequestFromJSONTyped(json: any, ignoreDiscr
     return {
         
         'type': json['type'],
-        'details': CosmosAssetIdentifierRequestDetailsFromJSON(json['details']),
+        'details': CosmosAssetIdentifierDetailsFromJSON(json['details']),
     };
 }
 
@@ -86,7 +86,7 @@ export function CosmosAssetIdentifierRequestToJSON(value?: CosmosAssetIdentifier
     return {
         
         'type': value.type,
-        'details': CosmosAssetIdentifierRequestDetailsToJSON(value.details),
+        'details': CosmosAssetIdentifierDetailsToJSON(value.details),
     };
 }
 

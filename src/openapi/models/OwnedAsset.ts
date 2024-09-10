@@ -25,6 +25,12 @@ import {
     BalancesFromJSONTyped,
     BalancesToJSON,
 } from './Balances';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+} from './PricedAsset';
 
 /**
  * 
@@ -37,12 +43,17 @@ export interface OwnedAsset {
      * @type {Asset}
      * @memberof OwnedAsset
      */
-    asset: Asset;
+    asset?: Asset;
+    /**
+     * 
+     * @type {PricedAsset}
+     * @memberof OwnedAsset
+     */
+    pricedAsset: PricedAsset;
     /**
      * 
      * @type {string}
      * @memberof OwnedAsset
-     * @deprecated
      */
     balance: string;
     /**
@@ -58,7 +69,7 @@ export interface OwnedAsset {
  */
 export function instanceOfOwnedAsset(value: object): boolean {
     let isInstance = true;
-    isInstance = isInstance && "asset" in value;
+    isInstance = isInstance && "pricedAsset" in value;
     isInstance = isInstance && "balance" in value;
     isInstance = isInstance && "balances" in value;
 
@@ -75,7 +86,8 @@ export function OwnedAssetFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     }
     return {
         
-        'asset': AssetFromJSON(json['asset']),
+        'asset': !exists(json, 'asset') ? undefined : AssetFromJSON(json['asset']),
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
         'balance': json['balance'],
         'balances': BalancesFromJSON(json['balances']),
     };
@@ -91,6 +103,7 @@ export function OwnedAssetToJSON(value?: OwnedAsset | null): any {
     return {
         
         'asset': AssetToJSON(value.asset),
+        'priced_asset': PricedAssetToJSON(value.pricedAsset),
         'balance': value.balance,
         'balances': BalancesToJSON(value.balances),
     };

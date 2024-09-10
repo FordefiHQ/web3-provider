@@ -25,6 +25,12 @@ import {
     PriceFromJSONTyped,
     PriceToJSON,
 } from './Price';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+} from './PricedAsset';
 import type { SplTokenContract } from './SplTokenContract';
 import {
     SplTokenContractFromJSON,
@@ -40,6 +46,18 @@ import {
 export interface SolanaTokenBalanceChange {
     /**
      * 
+     * @type {PricedAsset}
+     * @memberof SolanaTokenBalanceChange
+     */
+    pricedAsset: PricedAsset;
+    /**
+     * 
+     * @type {string}
+     * @memberof SolanaTokenBalanceChange
+     */
+    diff: string;
+    /**
+     * 
      * @type {string}
      * @memberof SolanaTokenBalanceChange
      */
@@ -49,13 +67,13 @@ export interface SolanaTokenBalanceChange {
      * @type {EnrichedSolanaAddress}
      * @memberof SolanaTokenBalanceChange
      */
-    owner: EnrichedSolanaAddress;
+    address: EnrichedSolanaAddress;
     /**
      * 
-     * @type {string}
+     * @type {EnrichedSolanaAddress}
      * @memberof SolanaTokenBalanceChange
      */
-    diff: string;
+    owner: EnrichedSolanaAddress;
     /**
      * 
      * @type {Price}
@@ -85,9 +103,11 @@ export type SolanaTokenBalanceChangeTypeEnum = typeof SolanaTokenBalanceChangeTy
  */
 export function instanceOfSolanaTokenBalanceChange(value: object): boolean {
     let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "owner" in value;
+    isInstance = isInstance && "pricedAsset" in value;
     isInstance = isInstance && "diff" in value;
+    isInstance = isInstance && "type" in value;
+    isInstance = isInstance && "address" in value;
+    isInstance = isInstance && "owner" in value;
     isInstance = isInstance && "tokenContract" in value;
 
     return isInstance;
@@ -103,9 +123,11 @@ export function SolanaTokenBalanceChangeFromJSONTyped(json: any, ignoreDiscrimin
     }
     return {
         
-        'type': json['type'],
-        'owner': EnrichedSolanaAddressFromJSON(json['owner']),
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
         'diff': json['diff'],
+        'type': json['type'],
+        'address': EnrichedSolanaAddressFromJSON(json['address']),
+        'owner': EnrichedSolanaAddressFromJSON(json['owner']),
         'price': !exists(json, 'price') ? undefined : PriceFromJSON(json['price']),
         'tokenContract': SplTokenContractFromJSON(json['token_contract']),
     };
@@ -120,9 +142,11 @@ export function SolanaTokenBalanceChangeToJSON(value?: SolanaTokenBalanceChange 
     }
     return {
         
-        'type': value.type,
-        'owner': EnrichedSolanaAddressToJSON(value.owner),
+        'priced_asset': PricedAssetToJSON(value.pricedAsset),
         'diff': value.diff,
+        'type': value.type,
+        'address': EnrichedSolanaAddressToJSON(value.address),
+        'owner': EnrichedSolanaAddressToJSON(value.owner),
         'price': PriceToJSON(value.price),
         'token_contract': SplTokenContractToJSON(value.tokenContract),
     };

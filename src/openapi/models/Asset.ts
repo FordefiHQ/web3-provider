@@ -34,6 +34,13 @@ import {
     SolanaAssetToJSON,
 } from './SolanaAsset';
 import {
+    SuiAsset,
+    instanceOfSuiAsset,
+    SuiAssetFromJSON,
+    SuiAssetFromJSONTyped,
+    SuiAssetToJSON,
+} from './SuiAsset';
+import {
     UtxoAsset,
     instanceOfUtxoAsset,
     UtxoAssetFromJSON,
@@ -46,7 +53,7 @@ import {
  * 
  * @export
  */
-export type Asset = { type: 'cosmos_asset' } & CosmosAsset | { type: 'evm_asset' } & EvmAsset | { type: 'solana_asset' } & SolanaAsset | { type: 'utxo_asset' } & UtxoAsset;
+export type Asset = { type: 'cosmos_asset' } & CosmosAsset | { type: 'evm_asset' } & EvmAsset | { type: 'solana_asset' } & SolanaAsset | { type: 'sui_asset' } & SuiAsset | { type: 'utxo_asset' } & UtxoAsset;
 
 export function AssetFromJSON(json: any): Asset {
     return AssetFromJSONTyped(json, false);
@@ -63,6 +70,8 @@ export function AssetFromJSONTyped(json: any, ignoreDiscriminator: boolean): Ass
             return {...EvmAssetFromJSONTyped(json, true), type: 'evm_asset'};
         case 'solana_asset':
             return {...SolanaAssetFromJSONTyped(json, true), type: 'solana_asset'};
+        case 'sui_asset':
+            return {...SuiAssetFromJSONTyped(json, true), type: 'sui_asset'};
         case 'utxo_asset':
             return {...UtxoAssetFromJSONTyped(json, true), type: 'utxo_asset'};
         default:
@@ -84,6 +93,8 @@ export function AssetToJSON(value?: Asset | null): any {
             return EvmAssetToJSON(value);
         case 'solana_asset':
             return SolanaAssetToJSON(value);
+        case 'sui_asset':
+            return SuiAssetToJSON(value);
         case 'utxo_asset':
             return UtxoAssetToJSON(value);
         default:

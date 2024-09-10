@@ -49,6 +49,12 @@ export interface MpcMessage {
      * @memberof MpcMessage
      */
     isLastMessage: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof MpcMessage
+     */
+    sessionId?: string;
 }
 
 /**
@@ -80,6 +86,7 @@ export function MpcMessageFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'messageNumber': json['message_number'],
         'protocolName': json['protocol_name'],
         'isLastMessage': json['is_last_message'],
+        'sessionId': !exists(json, 'session_id') ? undefined : json['session_id'],
     };
 }
 
@@ -97,6 +104,7 @@ export function MpcMessageToJSON(value?: MpcMessage | null): any {
         'message_number': value.messageNumber,
         'protocol_name': value.protocolName,
         'is_last_message': value.isLastMessage,
+        'session_id': value.sessionId,
     };
 }
 

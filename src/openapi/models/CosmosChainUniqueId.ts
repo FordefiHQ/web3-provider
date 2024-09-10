@@ -18,6 +18,7 @@
  * @export
  */
 export const CosmosChainUniqueId = {
+    agoric3: 'cosmos_agoric-3',
     akashnet2: 'cosmos_akashnet-2',
     archway1: 'cosmos_archway-1',
     axelarDojo1: 'cosmos_axelar-dojo-1',
@@ -26,6 +27,7 @@ export const CosmosChainUniqueId = {
     dydxMainnet1: 'cosmos_dydx-mainnet-1',
     dydxTestnet4: 'cosmos_dydx-testnet-4',
     dymension11001: 'cosmos_dymension_1100-1',
+    neutron1: 'cosmos_neutron-1',
     noble1: 'cosmos_noble-1',
     osmosis1: 'cosmos_osmosis-1',
     pacific1: 'cosmos_pacific-1',

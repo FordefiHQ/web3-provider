@@ -30,7 +30,9 @@ export const Resource = {
     path: 'path',
     keyset: 'keyset',
     authToken: 'auth_token',
-    accessToken: 'access_token'
+    accessToken: 'access_token',
+    asset: 'asset',
+    assetInfo: 'asset_info'
 } as const;
 export type Resource = typeof Resource[keyof typeof Resource];
 

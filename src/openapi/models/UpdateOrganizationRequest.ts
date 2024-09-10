@@ -13,6 +13,12 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { DklsRolloutStatus } from './DklsRolloutStatus';
+import {
+    DklsRolloutStatusFromJSON,
+    DklsRolloutStatusFromJSONTyped,
+    DklsRolloutStatusToJSON,
+} from './DklsRolloutStatus';
 import type { OrganizationType } from './OrganizationType';
 import {
     OrganizationTypeFromJSON,
@@ -44,6 +50,18 @@ export interface UpdateOrganizationRequest {
      * @memberof UpdateOrganizationRequest
      */
     name?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UpdateOrganizationRequest
+     */
+    allowDeterministicSigning?: boolean;
+    /**
+     * 
+     * @type {DklsRolloutStatus}
+     * @memberof UpdateOrganizationRequest
+     */
+    dklsRolloutStatus?: DklsRolloutStatus;
 }
 
 /**
@@ -68,6 +86,8 @@ export function UpdateOrganizationRequestFromJSONTyped(json: any, ignoreDiscrimi
         'organizationType': !exists(json, 'organization_type') ? undefined : OrganizationTypeFromJSON(json['organization_type']),
         'isDeprecated': !exists(json, 'is_deprecated') ? undefined : json['is_deprecated'],
         'name': !exists(json, 'name') ? undefined : json['name'],
+        'allowDeterministicSigning': !exists(json, 'allow_deterministic_signing') ? undefined : json['allow_deterministic_signing'],
+        'dklsRolloutStatus': !exists(json, 'dkls_rollout_status') ? undefined : DklsRolloutStatusFromJSON(json['dkls_rollout_status']),
     };
 }
 
@@ -83,6 +103,8 @@ export function UpdateOrganizationRequestToJSON(value?: UpdateOrganizationReques
         'organization_type': OrganizationTypeToJSON(value.organizationType),
         'is_deprecated': value.isDeprecated,
         'name': value.name,
+        'allow_deterministic_signing': value.allowDeterministicSigning,
+        'dkls_rollout_status': DklsRolloutStatusToJSON(value.dklsRolloutStatus),
     };
 }
 

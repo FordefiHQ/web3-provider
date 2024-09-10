@@ -25,6 +25,12 @@ import {
     PriceFromJSONTyped,
     PriceToJSON,
 } from './Price';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+} from './PricedAsset';
 
 /**
  * 
@@ -32,6 +38,18 @@ import {
  * @interface EvmNativeCurrencyTransfer
  */
 export interface EvmNativeCurrencyTransfer {
+    /**
+     * 
+     * @type {PricedAsset}
+     * @memberof EvmNativeCurrencyTransfer
+     */
+    pricedAsset: PricedAsset;
+    /**
+     * 
+     * @type {string}
+     * @memberof EvmNativeCurrencyTransfer
+     */
+    amount: string;
     /**
      * 
      * @type {string}
@@ -50,12 +68,6 @@ export interface EvmNativeCurrencyTransfer {
      * @memberof EvmNativeCurrencyTransfer
      */
     to: EnrichedEvmAddress;
-    /**
-     * 
-     * @type {string}
-     * @memberof EvmNativeCurrencyTransfer
-     */
-    amount: string;
     /**
      * 
      * @type {Price}
@@ -79,10 +91,11 @@ export type EvmNativeCurrencyTransferTypeEnum = typeof EvmNativeCurrencyTransfer
  */
 export function instanceOfEvmNativeCurrencyTransfer(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "pricedAsset" in value;
+    isInstance = isInstance && "amount" in value;
     isInstance = isInstance && "type" in value;
     isInstance = isInstance && "from" in value;
     isInstance = isInstance && "to" in value;
-    isInstance = isInstance && "amount" in value;
 
     return isInstance;
 }
@@ -97,10 +110,11 @@ export function EvmNativeCurrencyTransferFromJSONTyped(json: any, ignoreDiscrimi
     }
     return {
         
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
+        'amount': json['amount'],
         'type': json['type'],
         'from': EnrichedEvmAddressFromJSON(json['from']),
         'to': EnrichedEvmAddressFromJSON(json['to']),
-        'amount': json['amount'],
         'price': !exists(json, 'price') ? undefined : PriceFromJSON(json['price']),
     };
 }
@@ -114,10 +128,11 @@ export function EvmNativeCurrencyTransferToJSON(value?: EvmNativeCurrencyTransfe
     }
     return {
         
+        'priced_asset': PricedAssetToJSON(value.pricedAsset),
+        'amount': value.amount,
         'type': value.type,
         'from': EnrichedEvmAddressToJSON(value.from),
         'to': EnrichedEvmAddressToJSON(value.to),
-        'amount': value.amount,
         'price': PriceToJSON(value.price),
     };
 }

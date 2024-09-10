@@ -31,6 +31,12 @@ import {
     PriceFromJSONTyped,
     PriceToJSON,
 } from './Price';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+} from './PricedAsset';
 
 /**
  * 
@@ -38,6 +44,18 @@ import {
  * @interface CosmosNativeTransfer
  */
 export interface CosmosNativeTransfer {
+    /**
+     * 
+     * @type {PricedAsset}
+     * @memberof CosmosNativeTransfer
+     */
+    pricedAsset: PricedAsset;
+    /**
+     * 
+     * @type {string}
+     * @memberof CosmosNativeTransfer
+     */
+    amount: string;
     /**
      * 
      * @type {EnrichedCosmosBechAddress}
@@ -50,12 +68,6 @@ export interface CosmosNativeTransfer {
      * @memberof CosmosNativeTransfer
      */
     to: EnrichedCosmosBechAddress;
-    /**
-     * 
-     * @type {string}
-     * @memberof CosmosNativeTransfer
-     */
-    amount: string;
     /**
      * 
      * @type {Price}
@@ -91,9 +103,10 @@ export type CosmosNativeTransferTypeEnum = typeof CosmosNativeTransferTypeEnum[k
  */
 export function instanceOfCosmosNativeTransfer(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "pricedAsset" in value;
+    isInstance = isInstance && "amount" in value;
     isInstance = isInstance && "from" in value;
     isInstance = isInstance && "to" in value;
-    isInstance = isInstance && "amount" in value;
     isInstance = isInstance && "type" in value;
     isInstance = isInstance && "coinInfo" in value;
 
@@ -110,9 +123,10 @@ export function CosmosNativeTransferFromJSONTyped(json: any, ignoreDiscriminator
     }
     return {
         
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
+        'amount': json['amount'],
         'from': EnrichedCosmosBechAddressFromJSON(json['from']),
         'to': EnrichedCosmosBechAddressFromJSON(json['to']),
-        'amount': json['amount'],
         'price': !exists(json, 'price') ? undefined : PriceFromJSON(json['price']),
         'type': json['type'],
         'coinInfo': CosmosNativeCoinInfoFromJSON(json['coin_info']),
@@ -128,9 +142,10 @@ export function CosmosNativeTransferToJSON(value?: CosmosNativeTransfer | null):
     }
     return {
         
+        'priced_asset': PricedAssetToJSON(value.pricedAsset),
+        'amount': value.amount,
         'from': EnrichedCosmosBechAddressToJSON(value.from),
         'to': EnrichedCosmosBechAddressToJSON(value.to),
-        'amount': value.amount,
         'price': PriceToJSON(value.price),
         'type': value.type,
         'coin_info': CosmosNativeCoinInfoToJSON(value.coinInfo),

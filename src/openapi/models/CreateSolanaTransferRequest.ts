@@ -25,6 +25,12 @@ import {
     CreateSolanaTransferRequestValueFromJSONTyped,
     CreateSolanaTransferRequestValueToJSON,
 } from './CreateSolanaTransferRequestValue';
+import type { PushMode } from './PushMode';
+import {
+    PushModeFromJSON,
+    PushModeFromJSONTyped,
+    PushModeToJSON,
+} from './PushMode';
 import type { SolanaAssetIdentifierRequest } from './SolanaAssetIdentifierRequest';
 import {
     SolanaAssetIdentifierRequestFromJSON,
@@ -50,6 +56,12 @@ export interface CreateSolanaTransferRequest {
      * @memberof CreateSolanaTransferRequest
      */
     failOnPredictionFailure?: boolean;
+    /**
+     * 
+     * @type {PushMode}
+     * @memberof CreateSolanaTransferRequest
+     */
+    pushMode?: PushMode;
     /**
      * 
      * @type {boolean}
@@ -111,6 +123,7 @@ export function CreateSolanaTransferRequestFromJSONTyped(json: any, ignoreDiscri
         
         'type': json['type'],
         'failOnPredictionFailure': !exists(json, 'fail_on_prediction_failure') ? undefined : json['fail_on_prediction_failure'],
+        'pushMode': !exists(json, 'push_mode') ? undefined : PushModeFromJSON(json['push_mode']),
         'skipPrediction': !exists(json, 'skip_prediction') ? undefined : json['skip_prediction'],
         'to': CreateSolanaTransferRequestToFromJSON(json['to']),
         'value': CreateSolanaTransferRequestValueFromJSON(json['value']),
@@ -129,6 +142,7 @@ export function CreateSolanaTransferRequestToJSON(value?: CreateSolanaTransferRe
         
         'type': value.type,
         'fail_on_prediction_failure': value.failOnPredictionFailure,
+        'push_mode': PushModeToJSON(value.pushMode),
         'skip_prediction': value.skipPrediction,
         'to': CreateSolanaTransferRequestToToJSON(value.to),
         'value': CreateSolanaTransferRequestValueToJSON(value.value),

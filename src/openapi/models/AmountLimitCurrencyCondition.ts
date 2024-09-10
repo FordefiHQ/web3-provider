@@ -18,8 +18,7 @@
  * @export
  */
 export const AmountLimitCurrencyCondition = {
-    usd: 'usd',
-    token: 'token'
+    usd: 'usd'
 } as const;
 export type AmountLimitCurrencyCondition = typeof AmountLimitCurrencyCondition[keyof typeof AmountLimitCurrencyCondition];
 

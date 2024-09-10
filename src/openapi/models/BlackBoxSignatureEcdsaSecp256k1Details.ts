@@ -28,6 +28,12 @@ import {
 export interface BlackBoxSignatureEcdsaSecp256k1Details {
     /**
      * 
+     * @type {string}
+     * @memberof BlackBoxSignatureEcdsaSecp256k1Details
+     */
+    type: BlackBoxSignatureEcdsaSecp256k1DetailsTypeEnum;
+    /**
+     * 
      * @type {EcdsaSignature}
      * @memberof BlackBoxSignatureEcdsaSecp256k1Details
      */
@@ -38,18 +44,6 @@ export interface BlackBoxSignatureEcdsaSecp256k1Details {
      * @memberof BlackBoxSignatureEcdsaSecp256k1Details
      */
     hashBinary: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BlackBoxSignatureEcdsaSecp256k1Details
-     */
-    hashInteger: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BlackBoxSignatureEcdsaSecp256k1Details
-     */
-    type: BlackBoxSignatureEcdsaSecp256k1DetailsTypeEnum;
 }
 
 
@@ -67,9 +61,8 @@ export type BlackBoxSignatureEcdsaSecp256k1DetailsTypeEnum = typeof BlackBoxSign
  */
 export function instanceOfBlackBoxSignatureEcdsaSecp256k1Details(value: object): boolean {
     let isInstance = true;
-    isInstance = isInstance && "hashBinary" in value;
-    isInstance = isInstance && "hashInteger" in value;
     isInstance = isInstance && "type" in value;
+    isInstance = isInstance && "hashBinary" in value;
 
     return isInstance;
 }
@@ -84,10 +77,9 @@ export function BlackBoxSignatureEcdsaSecp256k1DetailsFromJSONTyped(json: any, i
     }
     return {
         
+        'type': json['type'],
         'signature': !exists(json, 'signature') ? undefined : EcdsaSignatureFromJSON(json['signature']),
         'hashBinary': json['hash_binary'],
-        'hashInteger': json['hash_integer'],
-        'type': json['type'],
     };
 }
 
@@ -100,10 +92,9 @@ export function BlackBoxSignatureEcdsaSecp256k1DetailsToJSON(value?: BlackBoxSig
     }
     return {
         
+        'type': value.type,
         'signature': EcdsaSignatureToJSON(value.signature),
         'hash_binary': value.hashBinary,
-        'hash_integer': value.hashInteger,
-        'type': value.type,
     };
 }
 

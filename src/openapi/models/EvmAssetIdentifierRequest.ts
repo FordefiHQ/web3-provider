@@ -13,12 +13,12 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { EvmAssetIdentifierRequestDetails } from './EvmAssetIdentifierRequestDetails';
+import type { EvmAssetIdentifierDetails } from './EvmAssetIdentifierDetails';
 import {
-    EvmAssetIdentifierRequestDetailsFromJSON,
-    EvmAssetIdentifierRequestDetailsFromJSONTyped,
-    EvmAssetIdentifierRequestDetailsToJSON,
-} from './EvmAssetIdentifierRequestDetails';
+    EvmAssetIdentifierDetailsFromJSON,
+    EvmAssetIdentifierDetailsFromJSONTyped,
+    EvmAssetIdentifierDetailsToJSON,
+} from './EvmAssetIdentifierDetails';
 
 /**
  * 
@@ -34,10 +34,10 @@ export interface EvmAssetIdentifierRequest {
     type: EvmAssetIdentifierRequestTypeEnum;
     /**
      * 
-     * @type {EvmAssetIdentifierRequestDetails}
+     * @type {EvmAssetIdentifierDetails}
      * @memberof EvmAssetIdentifierRequest
      */
-    details: EvmAssetIdentifierRequestDetails;
+    details: EvmAssetIdentifierDetails;
 }
 
 
@@ -72,7 +72,7 @@ export function EvmAssetIdentifierRequestFromJSONTyped(json: any, ignoreDiscrimi
     return {
         
         'type': json['type'],
-        'details': EvmAssetIdentifierRequestDetailsFromJSON(json['details']),
+        'details': EvmAssetIdentifierDetailsFromJSON(json['details']),
     };
 }
 
@@ -86,7 +86,7 @@ export function EvmAssetIdentifierRequestToJSON(value?: EvmAssetIdentifierReques
     return {
         
         'type': value.type,
-        'details': EvmAssetIdentifierRequestDetailsToJSON(value.details),
+        'details': EvmAssetIdentifierDetailsToJSON(value.details),
     };
 }
 

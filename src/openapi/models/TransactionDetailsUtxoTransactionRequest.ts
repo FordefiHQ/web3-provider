@@ -13,12 +13,12 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { TransactionDetailsUtxoTransferRequest } from './TransactionDetailsUtxoTransferRequest';
+import type { CreateUtxoTransactionRequestDetails } from './CreateUtxoTransactionRequestDetails';
 import {
-    TransactionDetailsUtxoTransferRequestFromJSON,
-    TransactionDetailsUtxoTransferRequestFromJSONTyped,
-    TransactionDetailsUtxoTransferRequestToJSON,
-} from './TransactionDetailsUtxoTransferRequest';
+    CreateUtxoTransactionRequestDetailsFromJSON,
+    CreateUtxoTransactionRequestDetailsFromJSONTyped,
+    CreateUtxoTransactionRequestDetailsToJSON,
+} from './CreateUtxoTransactionRequestDetails';
 
 /**
  * 
@@ -40,10 +40,10 @@ export interface TransactionDetailsUtxoTransactionRequest {
     type: TransactionDetailsUtxoTransactionRequestTypeEnum;
     /**
      * 
-     * @type {TransactionDetailsUtxoTransferRequest}
+     * @type {CreateUtxoTransactionRequestDetails}
      * @memberof TransactionDetailsUtxoTransactionRequest
      */
-    details: TransactionDetailsUtxoTransferRequest;
+    details: CreateUtxoTransactionRequestDetails;
 }
 
 
@@ -80,7 +80,7 @@ export function TransactionDetailsUtxoTransactionRequestFromJSONTyped(json: any,
         
         'vaultId': json['vault_id'],
         'type': json['type'],
-        'details': TransactionDetailsUtxoTransferRequestFromJSON(json['details']),
+        'details': CreateUtxoTransactionRequestDetailsFromJSON(json['details']),
     };
 }
 
@@ -95,7 +95,7 @@ export function TransactionDetailsUtxoTransactionRequestToJSON(value?: Transacti
         
         'vault_id': value.vaultId,
         'type': value.type,
-        'details': TransactionDetailsUtxoTransferRequestToJSON(value.details),
+        'details': CreateUtxoTransactionRequestDetailsToJSON(value.details),
     };
 }
 

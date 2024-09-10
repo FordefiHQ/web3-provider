@@ -25,6 +25,12 @@ export interface NextApiSignerTransactionRequestV3 {
      * @memberof NextApiSignerTransactionRequestV3
      */
     protocolVersion: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NextApiSignerTransactionRequestV3
+     */
+    sessionSeed?: string;
 }
 
 /**
@@ -48,6 +54,7 @@ export function NextApiSignerTransactionRequestV3FromJSONTyped(json: any, ignore
     return {
         
         'protocolVersion': json['protocol_version'],
+        'sessionSeed': !exists(json, 'session_seed') ? undefined : json['session_seed'],
     };
 }
 
@@ -61,6 +68,7 @@ export function NextApiSignerTransactionRequestV3ToJSON(value?: NextApiSignerTra
     return {
         
         'protocol_version': value.protocolVersion,
+        'session_seed': value.sessionSeed,
     };
 }
 

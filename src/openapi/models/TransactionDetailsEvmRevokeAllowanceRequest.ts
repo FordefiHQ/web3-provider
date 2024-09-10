@@ -40,6 +40,12 @@ export interface TransactionDetailsEvmRevokeAllowanceRequest {
     failOnPredictionFailure?: boolean;
     /**
      * 
+     * @type {boolean}
+     * @memberof TransactionDetailsEvmRevokeAllowanceRequest
+     */
+    skipSimulation?: boolean;
+    /**
+     * 
      * @type {EvmChainRequest}
      * @memberof TransactionDetailsEvmRevokeAllowanceRequest
      */
@@ -93,6 +99,7 @@ export function TransactionDetailsEvmRevokeAllowanceRequestFromJSONTyped(json: a
         
         'type': json['type'],
         'failOnPredictionFailure': !exists(json, 'fail_on_prediction_failure') ? undefined : json['fail_on_prediction_failure'],
+        'skipSimulation': !exists(json, 'skip_simulation') ? undefined : json['skip_simulation'],
         'chain': EvmChainRequestFromJSON(json['chain']),
         'token': json['token'],
         'spender': json['spender'],
@@ -110,6 +117,7 @@ export function TransactionDetailsEvmRevokeAllowanceRequestToJSON(value?: Transa
         
         'type': value.type,
         'fail_on_prediction_failure': value.failOnPredictionFailure,
+        'skip_simulation': value.skipSimulation,
         'chain': EvmChainRequestToJSON(value.chain),
         'token': value.token,
         'spender': value.spender,

@@ -13,6 +13,13 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { EnrichedSolanaAddress } from './EnrichedSolanaAddress';
+import {
+    EnrichedSolanaAddressFromJSON,
+    EnrichedSolanaAddressFromJSONTyped,
+    EnrichedSolanaAddressToJSON,
+} from './EnrichedSolanaAddress';
+
 /**
  * 
  * @export
@@ -37,6 +44,18 @@ export interface SolanaCompiledInstruction {
      * @memberof SolanaCompiledInstruction
      */
     accountIndexes: Array<number>;
+    /**
+     * 
+     * @type {EnrichedSolanaAddress}
+     * @memberof SolanaCompiledInstruction
+     */
+    program: EnrichedSolanaAddress;
+    /**
+     * 
+     * @type {string}
+     * @memberof SolanaCompiledInstruction
+     */
+    base58Data?: string;
 }
 
 /**
@@ -47,6 +66,7 @@ export function instanceOfSolanaCompiledInstruction(value: object): boolean {
     isInstance = isInstance && "programIndex" in value;
     isInstance = isInstance && "data" in value;
     isInstance = isInstance && "accountIndexes" in value;
+    isInstance = isInstance && "program" in value;
 
     return isInstance;
 }
@@ -64,6 +84,8 @@ export function SolanaCompiledInstructionFromJSONTyped(json: any, ignoreDiscrimi
         'programIndex': json['program_index'],
         'data': json['data'],
         'accountIndexes': json['account_indexes'],
+        'program': EnrichedSolanaAddressFromJSON(json['program']),
+        'base58Data': !exists(json, 'base58_data') ? undefined : json['base58_data'],
     };
 }
 
@@ -79,6 +101,8 @@ export function SolanaCompiledInstructionToJSON(value?: SolanaCompiledInstructio
         'program_index': value.programIndex,
         'data': value.data,
         'account_indexes': value.accountIndexes,
+        'program': EnrichedSolanaAddressToJSON(value.program),
+        'base58_data': value.base58Data,
     };
 }
 

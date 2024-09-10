@@ -19,6 +19,12 @@ import {
     CosmosChainUniqueIdFromJSONTyped,
     CosmosChainUniqueIdToJSON,
 } from './CosmosChainUniqueId';
+import type { CosmosKeyType } from './CosmosKeyType';
+import {
+    CosmosKeyTypeFromJSON,
+    CosmosKeyTypeFromJSONTyped,
+    CosmosKeyTypeToJSON,
+} from './CosmosKeyType';
 
 /**
  * 
@@ -38,6 +44,18 @@ export interface CosmosBechAddress {
      * @memberof CosmosBechAddress
      */
     address: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CosmosBechAddress
+     */
+    hexRepr?: string;
+    /**
+     * 
+     * @type {CosmosKeyType}
+     * @memberof CosmosBechAddress
+     */
+    keyType?: CosmosKeyType;
 }
 
 /**
@@ -63,6 +81,8 @@ export function CosmosBechAddressFromJSONTyped(json: any, ignoreDiscriminator: b
         
         'chain': CosmosChainUniqueIdFromJSON(json['chain']),
         'address': json['address'],
+        'hexRepr': !exists(json, 'hex_repr') ? undefined : json['hex_repr'],
+        'keyType': !exists(json, 'key_type') ? undefined : CosmosKeyTypeFromJSON(json['key_type']),
     };
 }
 
@@ -77,6 +97,8 @@ export function CosmosBechAddressToJSON(value?: CosmosBechAddress | null): any {
         
         'chain': CosmosChainUniqueIdToJSON(value.chain),
         'address': value.address,
+        'hex_repr': value.hexRepr,
+        'key_type': CosmosKeyTypeToJSON(value.keyType),
     };
 }
 

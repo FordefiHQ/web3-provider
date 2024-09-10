@@ -31,6 +31,12 @@ import {
     PriceFromJSONTyped,
     PriceToJSON,
 } from './Price';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+} from './PricedAsset';
 
 /**
  * 
@@ -38,6 +44,12 @@ import {
  * @interface EvmBridgeEffectSourceErc20
  */
 export interface EvmBridgeEffectSourceErc20 {
+    /**
+     * 
+     * @type {PricedAsset}
+     * @memberof EvmBridgeEffectSourceErc20
+     */
+    pricedAsset: PricedAsset;
     /**
      * 
      * @type {string}
@@ -79,6 +91,7 @@ export type EvmBridgeEffectSourceErc20TypeEnum = typeof EvmBridgeEffectSourceErc
  */
 export function instanceOfEvmBridgeEffectSourceErc20(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "pricedAsset" in value;
     isInstance = isInstance && "type" in value;
     isInstance = isInstance && "sourceAddress" in value;
     isInstance = isInstance && "token" in value;
@@ -96,6 +109,7 @@ export function EvmBridgeEffectSourceErc20FromJSONTyped(json: any, ignoreDiscrim
     }
     return {
         
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
         'type': json['type'],
         'sourceAddress': EnrichedEvmAddressFromJSON(json['source_address']),
         'token': Erc20FromJSON(json['token']),
@@ -112,6 +126,7 @@ export function EvmBridgeEffectSourceErc20ToJSON(value?: EvmBridgeEffectSourceEr
     }
     return {
         
+        'priced_asset': PricedAssetToJSON(value.pricedAsset),
         'type': value.type,
         'source_address': EnrichedEvmAddressToJSON(value.sourceAddress),
         'token': Erc20ToJSON(value.token),

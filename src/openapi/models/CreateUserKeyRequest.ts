@@ -38,6 +38,12 @@ export interface CreateUserKeyRequest {
      * @memberof CreateUserKeyRequest
      */
     keyType: KeyType;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateUserKeyRequest
+     */
+    authPublicKey?: string;
 }
 
 /**
@@ -63,6 +69,7 @@ export function CreateUserKeyRequestFromJSONTyped(json: any, ignoreDiscriminator
         
         'keysetId': json['keyset_id'],
         'keyType': KeyTypeFromJSON(json['key_type']),
+        'authPublicKey': !exists(json, 'auth_public_key') ? undefined : json['auth_public_key'],
     };
 }
 
@@ -77,6 +84,7 @@ export function CreateUserKeyRequestToJSON(value?: CreateUserKeyRequest | null):
         
         'keyset_id': value.keysetId,
         'key_type': KeyTypeToJSON(value.keyType),
+        'auth_public_key': value.authPublicKey,
     };
 }
 

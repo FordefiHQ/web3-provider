@@ -18,7 +18,8 @@
  * @export
  */
 export const UtxoTransactionType = {
-    nativeTransfer: 'native_transfer'
+    nativeTransfer: 'native_transfer',
+    partiallySignedBitcoinTransaction: 'partially_signed_bitcoin_transaction'
 } as const;
 export type UtxoTransactionType = typeof UtxoTransactionType[keyof typeof UtxoTransactionType];
 

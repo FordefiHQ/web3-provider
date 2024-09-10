@@ -80,13 +80,13 @@ export interface DescribedEvmTransaction {
      * @memberof DescribedEvmTransaction
      * @deprecated
      */
-    gasLimit: string;
+    gasLimit?: string;
     /**
      * 
      * @type {EvmGasEstimation}
      * @memberof DescribedEvmTransaction
      */
-    gasEstimation: EvmGasEstimation;
+    gasEstimation?: EvmGasEstimation;
     /**
      * 
      * @type {EvmSuggestedFees}
@@ -111,6 +111,12 @@ export interface DescribedEvmTransaction {
      * @memberof DescribedEvmTransaction
      */
     chain: EnrichedEvmChain;
+    /**
+     * 
+     * @type {string}
+     * @memberof DescribedEvmTransaction
+     */
+    hexData?: string;
 }
 
 
@@ -131,8 +137,6 @@ export function instanceOfDescribedEvmTransaction(value: object): boolean {
     isInstance = isInstance && "type" in value;
     isInstance = isInstance && "evmTransactionTypeDetails" in value;
     isInstance = isInstance && "parsedData" in value;
-    isInstance = isInstance && "gasLimit" in value;
-    isInstance = isInstance && "gasEstimation" in value;
     isInstance = isInstance && "suggestedFees" in value;
     isInstance = isInstance && "from" in value;
     isInstance = isInstance && "to" in value;
@@ -154,12 +158,13 @@ export function DescribedEvmTransactionFromJSONTyped(json: any, ignoreDiscrimina
         'type': json['type'],
         'evmTransactionTypeDetails': DescribedEvmTransactionEvmTransactionTypeDetailsFromJSON(json['evm_transaction_type_details']),
         'parsedData': EvmTransactionParsedDataFromJSON(json['parsed_data']),
-        'gasLimit': json['gas_limit'],
-        'gasEstimation': EvmGasEstimationFromJSON(json['gas_estimation']),
+        'gasLimit': !exists(json, 'gas_limit') ? undefined : json['gas_limit'],
+        'gasEstimation': !exists(json, 'gas_estimation') ? undefined : EvmGasEstimationFromJSON(json['gas_estimation']),
         'suggestedFees': EvmSuggestedFeesFromJSON(json['suggested_fees']),
         'from': EnrichedEvmAddressFromJSON(json['from']),
         'to': EnrichedEvmAddressFromJSON(json['to']),
         'chain': EnrichedEvmChainFromJSON(json['chain']),
+        'hexData': !exists(json, 'hex_data') ? undefined : json['hex_data'],
     };
 }
 
@@ -181,6 +186,7 @@ export function DescribedEvmTransactionToJSON(value?: DescribedEvmTransaction | 
         'from': EnrichedEvmAddressToJSON(value.from),
         'to': EnrichedEvmAddressToJSON(value.to),
         'chain': EnrichedEvmChainToJSON(value.chain),
+        'hex_data': value.hexData,
     };
 }
 

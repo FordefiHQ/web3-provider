@@ -38,6 +38,12 @@ export interface AmountLimitCondition {
      * @memberof AmountLimitCondition
      */
     currency: AmountLimitCurrencyCondition;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AmountLimitCondition
+     */
+    isNetAmount: boolean;
 }
 
 /**
@@ -46,6 +52,7 @@ export interface AmountLimitCondition {
 export function instanceOfAmountLimitCondition(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "currency" in value;
+    isInstance = isInstance && "isNetAmount" in value;
 
     return isInstance;
 }
@@ -62,6 +69,7 @@ export function AmountLimitConditionFromJSONTyped(json: any, ignoreDiscriminator
         
         'amount': !exists(json, 'amount') ? undefined : json['amount'],
         'currency': AmountLimitCurrencyConditionFromJSON(json['currency']),
+        'isNetAmount': json['is_net_amount'],
     };
 }
 
@@ -76,6 +84,7 @@ export function AmountLimitConditionToJSON(value?: AmountLimitCondition | null):
         
         'amount': value.amount,
         'currency': AmountLimitCurrencyConditionToJSON(value.currency),
+        'is_net_amount': value.isNetAmount,
     };
 }
 

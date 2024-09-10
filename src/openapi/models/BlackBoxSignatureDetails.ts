@@ -26,13 +26,27 @@ import {
     BlackBoxSignatureEcdsaStarkDetailsFromJSONTyped,
     BlackBoxSignatureEcdsaStarkDetailsToJSON,
 } from './BlackBoxSignatureEcdsaStarkDetails';
+import {
+    BlackBoxSignatureEddsaEd25519Details,
+    instanceOfBlackBoxSignatureEddsaEd25519Details,
+    BlackBoxSignatureEddsaEd25519DetailsFromJSON,
+    BlackBoxSignatureEddsaEd25519DetailsFromJSONTyped,
+    BlackBoxSignatureEddsaEd25519DetailsToJSON,
+} from './BlackBoxSignatureEddsaEd25519Details';
+import {
+    BlackBoxSignatureSchnorrSecp256k1Details,
+    instanceOfBlackBoxSignatureSchnorrSecp256k1Details,
+    BlackBoxSignatureSchnorrSecp256k1DetailsFromJSON,
+    BlackBoxSignatureSchnorrSecp256k1DetailsFromJSONTyped,
+    BlackBoxSignatureSchnorrSecp256k1DetailsToJSON,
+} from './BlackBoxSignatureSchnorrSecp256k1Details';
 
 /**
  * @type BlackBoxSignatureDetails
  * 
  * @export
  */
-export type BlackBoxSignatureDetails = { type: 'ecdsa_secp256k1' } & BlackBoxSignatureEcdsaSecp256k1Details | { type: 'ecdsa_stark' } & BlackBoxSignatureEcdsaStarkDetails;
+export type BlackBoxSignatureDetails = { type: 'ecdsa_secp256k1' } & BlackBoxSignatureEcdsaSecp256k1Details | { type: 'ecdsa_stark' } & BlackBoxSignatureEcdsaStarkDetails | { type: 'eddsa_ed25519' } & BlackBoxSignatureEddsaEd25519Details | { type: 'schnorr_secp256k1' } & BlackBoxSignatureSchnorrSecp256k1Details;
 
 export function BlackBoxSignatureDetailsFromJSON(json: any): BlackBoxSignatureDetails {
     return BlackBoxSignatureDetailsFromJSONTyped(json, false);
@@ -47,6 +61,10 @@ export function BlackBoxSignatureDetailsFromJSONTyped(json: any, ignoreDiscrimin
             return {...BlackBoxSignatureEcdsaSecp256k1DetailsFromJSONTyped(json, true), type: 'ecdsa_secp256k1'};
         case 'ecdsa_stark':
             return {...BlackBoxSignatureEcdsaStarkDetailsFromJSONTyped(json, true), type: 'ecdsa_stark'};
+        case 'eddsa_ed25519':
+            return {...BlackBoxSignatureEddsaEd25519DetailsFromJSONTyped(json, true), type: 'eddsa_ed25519'};
+        case 'schnorr_secp256k1':
+            return {...BlackBoxSignatureSchnorrSecp256k1DetailsFromJSONTyped(json, true), type: 'schnorr_secp256k1'};
         default:
             throw new Error(`No variant of BlackBoxSignatureDetails exists with 'type=${json['type']}'`);
     }
@@ -64,6 +82,10 @@ export function BlackBoxSignatureDetailsToJSON(value?: BlackBoxSignatureDetails 
             return BlackBoxSignatureEcdsaSecp256k1DetailsToJSON(value);
         case 'ecdsa_stark':
             return BlackBoxSignatureEcdsaStarkDetailsToJSON(value);
+        case 'eddsa_ed25519':
+            return BlackBoxSignatureEddsaEd25519DetailsToJSON(value);
+        case 'schnorr_secp256k1':
+            return BlackBoxSignatureSchnorrSecp256k1DetailsToJSON(value);
         default:
             throw new Error(`No variant of BlackBoxSignatureDetails exists with 'type=${value['type']}'`);
     }

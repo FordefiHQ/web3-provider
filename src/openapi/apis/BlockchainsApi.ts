@@ -15,47 +15,178 @@
 
 import * as runtime from '../runtime';
 import type {
+  AddChainRequest,
   BaseError,
+  ChainSource,
   ChainType,
-  ChainUniqueId,
+  DefinedPreconditionErrorTestChainErrorType,
   GetRpcEndpointsResponse,
   GetSuggestedFeesResponse,
   ListBlockchainsResponse,
+  ListDappsResponse,
   PreconditionFailedError,
+  TestChainRequest,
+  UpdateChainRequest,
   ValidationError,
 } from '../models';
 import {
+    AddChainRequestFromJSON,
+    AddChainRequestToJSON,
     BaseErrorFromJSON,
     BaseErrorToJSON,
+    ChainSourceFromJSON,
+    ChainSourceToJSON,
     ChainTypeFromJSON,
     ChainTypeToJSON,
-    ChainUniqueIdFromJSON,
-    ChainUniqueIdToJSON,
+    DefinedPreconditionErrorTestChainErrorTypeFromJSON,
+    DefinedPreconditionErrorTestChainErrorTypeToJSON,
     GetRpcEndpointsResponseFromJSON,
     GetRpcEndpointsResponseToJSON,
     GetSuggestedFeesResponseFromJSON,
     GetSuggestedFeesResponseToJSON,
     ListBlockchainsResponseFromJSON,
     ListBlockchainsResponseToJSON,
+    ListDappsResponseFromJSON,
+    ListDappsResponseToJSON,
     PreconditionFailedErrorFromJSON,
     PreconditionFailedErrorToJSON,
+    TestChainRequestFromJSON,
+    TestChainRequestToJSON,
+    UpdateChainRequestFromJSON,
+    UpdateChainRequestToJSON,
     ValidationErrorFromJSON,
     ValidationErrorToJSON,
 } from '../models';
 
+export interface AddChainApiV1BlockchainsPostRequest {
+    addChainRequest: AddChainRequest;
+}
+
+export interface CustomChainRpcApiV1BlockchainsRpcEvmCustomChainRpcOrganizationIdChainIdPostRequest {
+    chainId: string;
+    organizationId: string;
+}
+
 export interface GetSuggestedFeesApiV1BlockchainsSuggestedFeesGetRequest {
-    chains?: Array<ChainUniqueId>;
+    chains?: Array<string>;
     chainTypes?: Array<ChainType>;
 }
 
 export interface ListChainsApiV1BlockchainsGetRequest {
+    page?: number;
+    size?: number;
     chainTypes?: Array<ChainType>;
+    sources?: Array<ChainSource>;
+    onlyInteractedWith?: boolean;
+    search?: string;
+}
+
+export interface ListDappsApiV1BlockchainsDappsGetRequest {
+    page?: number;
+    size?: number;
+    search?: string;
+    dappIds?: Array<string>;
+}
+
+export interface TestRpcApiV1BlockchainsTestRpcPostRequest {
+    testChainRequest: TestChainRequest;
+}
+
+export interface UpdateChainApiV1BlockchainsPutRequest {
+    updateChainRequest: UpdateChainRequest;
 }
 
 /**
  * 
  */
 export class BlockchainsApi extends runtime.BaseAPI {
+
+    /**
+     * add a new custom chain.
+     * Add Chain
+     */
+    async addChainApiV1BlockchainsPostRaw(requestParameters: AddChainApiV1BlockchainsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.addChainRequest === null || requestParameters.addChainRequest === undefined) {
+            throw new runtime.RequiredError('addChainRequest','Required parameter requestParameters.addChainRequest was null or undefined when calling addChainApiV1BlockchainsPost.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/v1/blockchains`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: AddChainRequestToJSON(requestParameters.addChainRequest),
+        }, initOverrides);
+
+        return new runtime.TextApiResponse(response) as any;
+    }
+
+    /**
+     * add a new custom chain.
+     * Add Chain
+     */
+    async addChainApiV1BlockchainsPost(requestParameters: AddChainApiV1BlockchainsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.addChainApiV1BlockchainsPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Issue a custom rpc command.
+     * Custom Chain Rpc
+     */
+    async customChainRpcApiV1BlockchainsRpcEvmCustomChainRpcOrganizationIdChainIdPostRaw(requestParameters: CustomChainRpcApiV1BlockchainsRpcEvmCustomChainRpcOrganizationIdChainIdPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.chainId === null || requestParameters.chainId === undefined) {
+            throw new runtime.RequiredError('chainId','Required parameter requestParameters.chainId was null or undefined when calling customChainRpcApiV1BlockchainsRpcEvmCustomChainRpcOrganizationIdChainIdPost.');
+        }
+
+        if (requestParameters.organizationId === null || requestParameters.organizationId === undefined) {
+            throw new runtime.RequiredError('organizationId','Required parameter requestParameters.organizationId was null or undefined when calling customChainRpcApiV1BlockchainsRpcEvmCustomChainRpcOrganizationIdChainIdPost.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/v1/blockchains/rpc/evm/custom-chain-rpc/{organization_id}/{chain_id}`.replace(`{${"chain_id"}}`, encodeURIComponent(String(requestParameters.chainId))).replace(`{${"organization_id"}}`, encodeURIComponent(String(requestParameters.organizationId))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.TextApiResponse(response) as any;
+    }
+
+    /**
+     * Issue a custom rpc command.
+     * Custom Chain Rpc
+     */
+    async customChainRpcApiV1BlockchainsRpcEvmCustomChainRpcOrganizationIdChainIdPost(requestParameters: CustomChainRpcApiV1BlockchainsRpcEvmCustomChainRpcOrganizationIdChainIdPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.customChainRpcApiV1BlockchainsRpcEvmCustomChainRpcOrganizationIdChainIdPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * Get the suggested fees in a specific network.
@@ -138,14 +269,34 @@ export class BlockchainsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get a list of all supported blockchains.
+     * Get a list of supported blockchains.
      * List Chains
      */
     async listChainsApiV1BlockchainsGetRaw(requestParameters: ListChainsApiV1BlockchainsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListBlockchainsResponse>> {
         const queryParameters: any = {};
 
+        if (requestParameters.page !== undefined) {
+            queryParameters['page'] = requestParameters.page;
+        }
+
+        if (requestParameters.size !== undefined) {
+            queryParameters['size'] = requestParameters.size;
+        }
+
         if (requestParameters.chainTypes) {
             queryParameters['chain_types'] = requestParameters.chainTypes;
+        }
+
+        if (requestParameters.sources) {
+            queryParameters['sources'] = requestParameters.sources;
+        }
+
+        if (requestParameters.onlyInteractedWith !== undefined) {
+            queryParameters['only_interacted_with'] = requestParameters.onlyInteractedWith;
+        }
+
+        if (requestParameters.search !== undefined) {
+            queryParameters['search'] = requestParameters.search;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -169,7 +320,7 @@ export class BlockchainsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get a list of all supported blockchains.
+     * Get a list of supported blockchains.
      * List Chains
      */
     async listChainsApiV1BlockchainsGet(requestParameters: ListChainsApiV1BlockchainsGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ListBlockchainsResponse> {
@@ -177,4 +328,234 @@ export class BlockchainsApi extends runtime.BaseAPI {
         return await response.value();
     }
 
+    /**
+     * Get a list of all supported dapps.
+     * List Dapps
+     */
+    async listDappsApiV1BlockchainsDappsGetRaw(requestParameters: ListDappsApiV1BlockchainsDappsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListDappsResponse>> {
+        const queryParameters: any = {};
+
+        if (requestParameters.page !== undefined) {
+            queryParameters['page'] = requestParameters.page;
+        }
+
+        if (requestParameters.size !== undefined) {
+            queryParameters['size'] = requestParameters.size;
+        }
+
+        if (requestParameters.search !== undefined) {
+            queryParameters['search'] = requestParameters.search;
+        }
+
+        if (requestParameters.dappIds) {
+            queryParameters['dapp_ids'] = requestParameters.dappIds;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/v1/blockchains/dapps`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ListDappsResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Get a list of all supported dapps.
+     * List Dapps
+     */
+    async listDappsApiV1BlockchainsDappsGet(requestParameters: ListDappsApiV1BlockchainsDappsGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ListDappsResponse> {
+        const response = await this.listDappsApiV1BlockchainsDappsGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Test the RPC connection to a custom chain.
+     * Test Rpc
+     */
+    async testRpcApiV1BlockchainsTestRpcPostRaw(requestParameters: TestRpcApiV1BlockchainsTestRpcPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.testChainRequest === null || requestParameters.testChainRequest === undefined) {
+            throw new runtime.RequiredError('testChainRequest','Required parameter requestParameters.testChainRequest was null or undefined when calling testRpcApiV1BlockchainsTestRpcPost.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/v1/blockchains/test-rpc`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: TestChainRequestToJSON(requestParameters.testChainRequest),
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Test the RPC connection to a custom chain.
+     * Test Rpc
+     */
+    async testRpcApiV1BlockchainsTestRpcPost(requestParameters: TestRpcApiV1BlockchainsTestRpcPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.testRpcApiV1BlockchainsTestRpcPostRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * update a custom chain.
+     * Update Chain
+     */
+    async updateChainApiV1BlockchainsPutRaw(requestParameters: UpdateChainApiV1BlockchainsPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.updateChainRequest === null || requestParameters.updateChainRequest === undefined) {
+            throw new runtime.RequiredError('updateChainRequest','Required parameter requestParameters.updateChainRequest was null or undefined when calling updateChainApiV1BlockchainsPut.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/v1/blockchains`,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UpdateChainRequestToJSON(requestParameters.updateChainRequest),
+        }, initOverrides);
+
+        return new runtime.TextApiResponse(response) as any;
+    }
+
+    /**
+     * update a custom chain.
+     * Update Chain
+     */
+    async updateChainApiV1BlockchainsPut(requestParameters: UpdateChainApiV1BlockchainsPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.updateChainApiV1BlockchainsPutRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
 }
+
+/**
+ * @export
+ */
+export const GetSuggestedFeesApiV1BlockchainsSuggestedFeesGetChainsEnum = {
+    aptosMainnet: 'aptos_mainnet',
+    aptosTestnet: 'aptos_testnet',
+    cosmosAgoric3: 'cosmos_agoric-3',
+    cosmosAkashnet2: 'cosmos_akashnet-2',
+    cosmosArchway1: 'cosmos_archway-1',
+    cosmosAxelarDojo1: 'cosmos_axelar-dojo-1',
+    cosmosCelestia: 'cosmos_celestia',
+    cosmosCosmoshub4: 'cosmos_cosmoshub-4',
+    cosmosDydxMainnet1: 'cosmos_dydx-mainnet-1',
+    cosmosDydxTestnet4: 'cosmos_dydx-testnet-4',
+    cosmosDymension11001: 'cosmos_dymension_1100-1',
+    cosmosNeutron1: 'cosmos_neutron-1',
+    cosmosNoble1: 'cosmos_noble-1',
+    cosmosOsmosis1: 'cosmos_osmosis-1',
+    cosmosPacific1: 'cosmos_pacific-1',
+    cosmosStride1: 'cosmos_stride-1',
+    evm1: 'evm_1',
+    evm5: 'evm_5',
+    evm10: 'evm_10',
+    evm16: 'evm_16',
+    evm56: 'evm_56',
+    evm100: 'evm_100',
+    evm137: 'evm_137',
+    evm169: 'evm_169',
+    evm250: 'evm_250',
+    evm324: 'evm_324',
+    evm1030: 'evm_1030',
+    evm1100: 'evm_1100',
+    evm1101: 'evm_1101',
+    evm1329: 'evm_1329',
+    evm1729: 'evm_1729',
+    evm2222: 'evm_2222',
+    evm4200: 'evm_4200',
+    evm5000: 'evm_5000',
+    evm7000: 'evm_7000',
+    evm7700: 'evm_7700',
+    evm8453: 'evm_8453',
+    evm17000: 'evm_17000',
+    evm80001: 'evm_80001',
+    evm42161: 'evm_42161',
+    evm43114: 'evm_43114',
+    evm59144: 'evm_59144',
+    evm81457: 'evm_81457',
+    evm421614: 'evm_421614',
+    evm534352: 'evm_534352',
+    evm660279: 'evm_660279',
+    evm810180: 'evm_810180',
+    evm11155111: 'evm_11155111',
+    evmEthereumMainnet: 'evm_ethereum_mainnet',
+    evmEthereumGoerli: 'evm_ethereum_goerli',
+    evmOptimismMainnet: 'evm_optimism_mainnet',
+    evmFlareTestnet: 'evm_flare_testnet',
+    evmBscMainnet: 'evm_bsc_mainnet',
+    evmGnosisMainnet: 'evm_gnosis_mainnet',
+    evmPolygonMainnet: 'evm_polygon_mainnet',
+    evmMantaPacificMainnet: 'evm_manta_pacific_mainnet',
+    evmFantomMainnet: 'evm_fantom_mainnet',
+    evmZksyncEraMainnet: 'evm_zksync_era_mainnet',
+    evmConfluxMainnet: 'evm_conflux_mainnet',
+    evmDymensionMainnet: 'evm_dymension_mainnet',
+    evmPolygonZkevmMainnet: 'evm_polygon_zkevm_mainnet',
+    evmSeiMainnet: 'evm_sei_mainnet',
+    evmReyaMainnet: 'evm_reya_mainnet',
+    evmKavaMainnet: 'evm_kava_mainnet',
+    evmMerlinMainnet: 'evm_merlin_mainnet',
+    evmMantleMainnet: 'evm_mantle_mainnet',
+    evmZetaMainnet: 'evm_zeta_mainnet',
+    evmCantoMainnet: 'evm_canto_mainnet',
+    evmBaseMainnet: 'evm_base_mainnet',
+    evmEthereumHolesky: 'evm_ethereum_holesky',
+    evmPolygonMumbai: 'evm_polygon_mumbai',
+    evmArbitrumMainnet: 'evm_arbitrum_mainnet',
+    evmAvalancheChain: 'evm_avalanche_chain',
+    evmLineaMainnet: 'evm_linea_mainnet',
+    evmBlastMainnet: 'evm_blast_mainnet',
+    evmArbitrumSepolia: 'evm_arbitrum_sepolia',
+    evmScrollMainnet: 'evm_scroll_mainnet',
+    evmXaiMainnet: 'evm_xai_mainnet',
+    evmZklinkNovaMainnet: 'evm_zklink_nova_mainnet',
+    evmEthereumSepolia: 'evm_ethereum_sepolia',
+    solanaMainnet: 'solana_mainnet',
+    solanaDevnet: 'solana_devnet',
+    suiMainnet: 'sui_mainnet',
+    suiTestnet: 'sui_testnet',
+    bitcoinMainnet: 'bitcoin_mainnet',
+    bitcoinTestnet: 'bitcoin_testnet'
+} as const;
+export type GetSuggestedFeesApiV1BlockchainsSuggestedFeesGetChainsEnum = typeof GetSuggestedFeesApiV1BlockchainsSuggestedFeesGetChainsEnum[keyof typeof GetSuggestedFeesApiV1BlockchainsSuggestedFeesGetChainsEnum];

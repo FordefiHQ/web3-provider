@@ -13,12 +13,18 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { BlackBoxVaultPendingVaultGroupAction } from './BlackBoxVaultPendingVaultGroupAction';
+import type { AptosVaultMetadataValue } from './AptosVaultMetadataValue';
 import {
-    BlackBoxVaultPendingVaultGroupActionFromJSON,
-    BlackBoxVaultPendingVaultGroupActionFromJSONTyped,
-    BlackBoxVaultPendingVaultGroupActionToJSON,
-} from './BlackBoxVaultPendingVaultGroupAction';
+    AptosVaultMetadataValueFromJSON,
+    AptosVaultMetadataValueFromJSONTyped,
+    AptosVaultMetadataValueToJSON,
+} from './AptosVaultMetadataValue';
+import type { AptosVaultPendingVaultGroupAction } from './AptosVaultPendingVaultGroupAction';
+import {
+    AptosVaultPendingVaultGroupActionFromJSON,
+    AptosVaultPendingVaultGroupActionFromJSONTyped,
+    AptosVaultPendingVaultGroupActionToJSON,
+} from './AptosVaultPendingVaultGroupAction';
 import type { CosmosBechAddressEnrichedChain } from './CosmosBechAddressEnrichedChain';
 import {
     CosmosBechAddressEnrichedChainFromJSON,
@@ -88,6 +94,12 @@ export interface CosmosVault {
     modifiedAt: Date;
     /**
      * 
+     * @type {{ [key: string]: AptosVaultMetadataValue | undefined; }}
+     * @memberof CosmosVault
+     */
+    metadata?: { [key: string]: AptosVaultMetadataValue | undefined; };
+    /**
+     * 
      * @type {string}
      * @memberof CosmosVault
      */
@@ -98,6 +110,24 @@ export interface CosmosVault {
      * @memberof CosmosVault
      */
     createdBy: UserRef;
+    /**
+     * 
+     * @type {VaultGroupRef}
+     * @memberof CosmosVault
+     */
+    vaultGroup: VaultGroupRef;
+    /**
+     * 
+     * @type {AptosVaultPendingVaultGroupAction}
+     * @memberof CosmosVault
+     */
+    pendingVaultGroupAction?: AptosVaultPendingVaultGroupAction;
+    /**
+     * 
+     * @type {VaultState}
+     * @memberof CosmosVault
+     */
+    state: VaultState;
     /**
      * 
      * @type {string}
@@ -131,24 +161,6 @@ export interface CosmosVault {
     keyHolder?: EndUserRef;
     /**
      * 
-     * @type {VaultGroupRef}
-     * @memberof CosmosVault
-     */
-    vaultGroup: VaultGroupRef;
-    /**
-     * 
-     * @type {BlackBoxVaultPendingVaultGroupAction}
-     * @memberof CosmosVault
-     */
-    pendingVaultGroupAction?: BlackBoxVaultPendingVaultGroupAction;
-    /**
-     * 
-     * @type {VaultState}
-     * @memberof CosmosVault
-     */
-    state: VaultState;
-    /**
-     * 
      * @type {string}
      * @memberof CosmosVault
      */
@@ -159,6 +171,12 @@ export interface CosmosVault {
      * @memberof CosmosVault
      */
     mainAddress: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CosmosVault
+     */
+    evmAddress: string;
     /**
      * 
      * @type {Array<CosmosBechAddressEnrichedChain>}
@@ -187,14 +205,15 @@ export function instanceOfCosmosVault(value: object): boolean {
     isInstance = isInstance && "modifiedAt" in value;
     isInstance = isInstance && "name" in value;
     isInstance = isInstance && "createdBy" in value;
+    isInstance = isInstance && "vaultGroup" in value;
+    isInstance = isInstance && "state" in value;
     isInstance = isInstance && "derivationPath" in value;
     isInstance = isInstance && "publicKeyCompressed" in value;
     isInstance = isInstance && "derivationInfo" in value;
     isInstance = isInstance && "keyset" in value;
-    isInstance = isInstance && "vaultGroup" in value;
-    isInstance = isInstance && "state" in value;
     isInstance = isInstance && "type" in value;
     isInstance = isInstance && "mainAddress" in value;
+    isInstance = isInstance && "evmAddress" in value;
     isInstance = isInstance && "chainsAddresses" in value;
 
     return isInstance;
@@ -213,18 +232,20 @@ export function CosmosVaultFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
+        'metadata': !exists(json, 'metadata') ? undefined : (mapValues(json['metadata'], AptosVaultMetadataValueFromJSON)),
         'name': json['name'],
         'createdBy': UserRefFromJSON(json['created_by']),
+        'vaultGroup': VaultGroupRefFromJSON(json['vault_group']),
+        'pendingVaultGroupAction': !exists(json, 'pending_vault_group_action') ? undefined : AptosVaultPendingVaultGroupActionFromJSON(json['pending_vault_group_action']),
+        'state': VaultStateFromJSON(json['state']),
         'derivationPath': json['derivation_path'],
         'publicKeyCompressed': json['public_key_compressed'],
         'derivationInfo': VaultDerivationInfoFromJSON(json['derivation_info']),
         'keyset': KeysetRefFromJSON(json['keyset']),
         'keyHolder': !exists(json, 'key_holder') ? undefined : EndUserRefFromJSON(json['key_holder']),
-        'vaultGroup': VaultGroupRefFromJSON(json['vault_group']),
-        'pendingVaultGroupAction': !exists(json, 'pending_vault_group_action') ? undefined : BlackBoxVaultPendingVaultGroupActionFromJSON(json['pending_vault_group_action']),
-        'state': VaultStateFromJSON(json['state']),
         'type': json['type'],
         'mainAddress': json['main_address'],
+        'evmAddress': json['evm_address'],
         'chainsAddresses': ((json['chains_addresses'] as Array<any>).map(CosmosBechAddressEnrichedChainFromJSON)),
     };
 }
@@ -241,18 +262,20 @@ export function CosmosVaultToJSON(value?: CosmosVault | null): any {
         'id': value.id,
         'created_at': (value.createdAt.toISOString()),
         'modified_at': (value.modifiedAt.toISOString()),
+        'metadata': value.metadata === undefined ? undefined : (mapValues(value.metadata, AptosVaultMetadataValueToJSON)),
         'name': value.name,
         'created_by': UserRefToJSON(value.createdBy),
+        'vault_group': VaultGroupRefToJSON(value.vaultGroup),
+        'pending_vault_group_action': AptosVaultPendingVaultGroupActionToJSON(value.pendingVaultGroupAction),
+        'state': VaultStateToJSON(value.state),
         'derivation_path': value.derivationPath,
         'public_key_compressed': value.publicKeyCompressed,
         'derivation_info': VaultDerivationInfoToJSON(value.derivationInfo),
         'keyset': KeysetRefToJSON(value.keyset),
         'key_holder': EndUserRefToJSON(value.keyHolder),
-        'vault_group': VaultGroupRefToJSON(value.vaultGroup),
-        'pending_vault_group_action': BlackBoxVaultPendingVaultGroupActionToJSON(value.pendingVaultGroupAction),
-        'state': VaultStateToJSON(value.state),
         'type': value.type,
         'main_address': value.mainAddress,
+        'evm_address': value.evmAddress,
         'chains_addresses': ((value.chainsAddresses as Array<any>).map(CosmosBechAddressEnrichedChainToJSON)),
     };
 }

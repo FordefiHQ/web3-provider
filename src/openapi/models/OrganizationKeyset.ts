@@ -88,6 +88,12 @@ export interface OrganizationKeyset {
     ecdsaStark?: KeysetKey;
     /**
      * 
+     * @type {KeysetKey}
+     * @memberof OrganizationKeyset
+     */
+    schnorrSecp256k1?: KeysetKey;
+    /**
+     * 
      * @type {Array<EncryptedDeviceSharesBackup>}
      * @memberof OrganizationKeyset
      */
@@ -142,6 +148,7 @@ export function OrganizationKeysetFromJSONTyped(json: any, ignoreDiscriminator: 
         'ecdsa': !exists(json, 'ecdsa') ? undefined : KeysetKeyFromJSON(json['ecdsa']),
         'eddsa': !exists(json, 'eddsa') ? undefined : KeysetKeyFromJSON(json['eddsa']),
         'ecdsaStark': !exists(json, 'ecdsa_stark') ? undefined : KeysetKeyFromJSON(json['ecdsa_stark']),
+        'schnorrSecp256k1': !exists(json, 'schnorr_secp256k1') ? undefined : KeysetKeyFromJSON(json['schnorr_secp256k1']),
         'encryptedDeviceSharesBackups': !exists(json, 'encrypted_device_shares_backups') ? undefined : ((json['encrypted_device_shares_backups'] as Array<any>).map(EncryptedDeviceSharesBackupFromJSON)),
         'scope': json['scope'],
     };
@@ -164,6 +171,7 @@ export function OrganizationKeysetToJSON(value?: OrganizationKeyset | null): any
         'ecdsa': KeysetKeyToJSON(value.ecdsa),
         'eddsa': KeysetKeyToJSON(value.eddsa),
         'ecdsa_stark': KeysetKeyToJSON(value.ecdsaStark),
+        'schnorr_secp256k1': KeysetKeyToJSON(value.schnorrSecp256k1),
         'encrypted_device_shares_backups': value.encryptedDeviceSharesBackups === undefined ? undefined : ((value.encryptedDeviceSharesBackups as Array<any>).map(EncryptedDeviceSharesBackupToJSON)),
         'scope': value.scope,
     };

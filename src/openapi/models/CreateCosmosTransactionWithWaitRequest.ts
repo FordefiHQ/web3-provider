@@ -25,6 +25,12 @@ import {
     CreateCosmosTransactionRequestDetailsFromJSONTyped,
     CreateCosmosTransactionRequestDetailsToJSON,
 } from './CreateCosmosTransactionRequestDetails';
+import type { SignMode } from './SignMode';
+import {
+    SignModeFromJSON,
+    SignModeFromJSONTyped,
+    SignModeToJSON,
+} from './SignMode';
 import type { SignerType } from './SignerType';
 import {
     SignerTypeFromJSON,
@@ -58,6 +64,12 @@ export interface CreateCosmosTransactionWithWaitRequest {
     signerType?: SignerType;
     /**
      * 
+     * @type {SignMode}
+     * @memberof CreateCosmosTransactionWithWaitRequest
+     */
+    signMode?: SignMode;
+    /**
+     * 
      * @type {string}
      * @memberof CreateCosmosTransactionWithWaitRequest
      */
@@ -68,6 +80,12 @@ export interface CreateCosmosTransactionWithWaitRequest {
      * @memberof CreateCosmosTransactionWithWaitRequest
      */
     details: CreateCosmosTransactionRequestDetails;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateCosmosTransactionWithWaitRequest
+     */
+    timeout?: number;
     /**
      * 
      * @type {CosmosTransactionState}
@@ -112,8 +130,10 @@ export function CreateCosmosTransactionWithWaitRequestFromJSONTyped(json: any, i
         'vaultId': json['vault_id'],
         'note': !exists(json, 'note') ? undefined : json['note'],
         'signerType': !exists(json, 'signer_type') ? undefined : SignerTypeFromJSON(json['signer_type']),
+        'signMode': !exists(json, 'sign_mode') ? undefined : SignModeFromJSON(json['sign_mode']),
         'type': json['type'],
         'details': CreateCosmosTransactionRequestDetailsFromJSON(json['details']),
+        'timeout': !exists(json, 'timeout') ? undefined : json['timeout'],
         'waitForState': CosmosTransactionStateFromJSON(json['wait_for_state']),
     };
 }
@@ -130,8 +150,10 @@ export function CreateCosmosTransactionWithWaitRequestToJSON(value?: CreateCosmo
         'vault_id': value.vaultId,
         'note': value.note,
         'signer_type': SignerTypeToJSON(value.signerType),
+        'sign_mode': SignModeToJSON(value.signMode),
         'type': value.type,
         'details': CreateCosmosTransactionRequestDetailsToJSON(value.details),
+        'timeout': value.timeout,
         'wait_for_state': CosmosTransactionStateToJSON(value.waitForState),
     };
 }

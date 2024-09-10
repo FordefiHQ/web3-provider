@@ -24,7 +24,8 @@ export const SignTransactionErrorType = {
     nodeRejectedTransactionInsufficientFunds: 'node_rejected_transaction_insufficient_funds',
     nodeRejectedTransactionInsufficientFundsForFee: 'node_rejected_transaction_insufficient_funds_for_fee',
     nodeRejectedTransactionGasTooLow: 'node_rejected_transaction_gas_too_low',
-    nodeRejectedTransactionInvalidNonce: 'node_rejected_transaction_invalid_nonce'
+    nodeRejectedTransactionInvalidNonce: 'node_rejected_transaction_invalid_nonce',
+    nodeRejectedTransactionUnknownBlockhash: 'node_rejected_transaction_unknown_blockhash'
 } as const;
 export type SignTransactionErrorType = typeof SignTransactionErrorType[keyof typeof SignTransactionErrorType];
 

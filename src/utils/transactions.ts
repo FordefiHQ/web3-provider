@@ -193,7 +193,7 @@ export const buildEvmRawTransactionRequest = (
       chain: chain.chainId,
       value: parseTransactionRequestValueField(value),
       // @ts-expect-error TODO(gil): remove once API change is merged
-      to: to ?? undefined,
+      to,
       data: data
         ? {
             type: EvmDataRequestHexTypeEnum.hex,

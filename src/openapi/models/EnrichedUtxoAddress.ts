@@ -64,6 +64,12 @@ export interface EnrichedUtxoAddress {
     contact?: ContactRef;
     /**
      * 
+     * @type {string}
+     * @memberof EnrichedUtxoAddress
+     */
+    type: EnrichedUtxoAddressTypeEnum;
+    /**
+     * 
      * @type {UtxoAddress}
      * @memberof EnrichedUtxoAddress
      */
@@ -76,11 +82,22 @@ export interface EnrichedUtxoAddress {
     vaultAddress?: VaultAddressRef;
 }
 
+
+/**
+ * @export
+ */
+export const EnrichedUtxoAddressTypeEnum = {
+    utxo: 'utxo'
+} as const;
+export type EnrichedUtxoAddressTypeEnum = typeof EnrichedUtxoAddressTypeEnum[keyof typeof EnrichedUtxoAddressTypeEnum];
+
+
 /**
  * Check if a given object implements the EnrichedUtxoAddress interface.
  */
 export function instanceOfEnrichedUtxoAddress(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "type" in value;
     isInstance = isInstance && "address" in value;
 
     return isInstance;
@@ -99,6 +116,7 @@ export function EnrichedUtxoAddressFromJSONTyped(json: any, ignoreDiscriminator:
         'vault': !exists(json, 'vault') ? undefined : VaultRefFromJSON(json['vault']),
         'explorerUrl': !exists(json, 'explorer_url') ? undefined : json['explorer_url'],
         'contact': !exists(json, 'contact') ? undefined : ContactRefFromJSON(json['contact']),
+        'type': json['type'],
         'address': UtxoAddressFromJSON(json['address']),
         'vaultAddress': !exists(json, 'vault_address') ? undefined : VaultAddressRefFromJSON(json['vault_address']),
     };
@@ -116,6 +134,7 @@ export function EnrichedUtxoAddressToJSON(value?: EnrichedUtxoAddress | null): a
         'vault': VaultRefToJSON(value.vault),
         'explorer_url': value.explorerUrl,
         'contact': ContactRefToJSON(value.contact),
+        'type': value.type,
         'address': UtxoAddressToJSON(value.address),
         'vault_address': VaultAddressRefToJSON(value.vaultAddress),
     };

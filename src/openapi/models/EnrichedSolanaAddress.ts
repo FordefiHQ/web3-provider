@@ -61,6 +61,12 @@ export interface EnrichedSolanaAddress {
      * @type {string}
      * @memberof EnrichedSolanaAddress
      */
+    type: EnrichedSolanaAddressTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnrichedSolanaAddress
+     */
     address: string;
     /**
      * 
@@ -70,11 +76,22 @@ export interface EnrichedSolanaAddress {
     contract?: SolanaContractMetadata;
 }
 
+
+/**
+ * @export
+ */
+export const EnrichedSolanaAddressTypeEnum = {
+    solana: 'solana'
+} as const;
+export type EnrichedSolanaAddressTypeEnum = typeof EnrichedSolanaAddressTypeEnum[keyof typeof EnrichedSolanaAddressTypeEnum];
+
+
 /**
  * Check if a given object implements the EnrichedSolanaAddress interface.
  */
 export function instanceOfEnrichedSolanaAddress(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "type" in value;
     isInstance = isInstance && "address" in value;
 
     return isInstance;
@@ -93,6 +110,7 @@ export function EnrichedSolanaAddressFromJSONTyped(json: any, ignoreDiscriminato
         'vault': !exists(json, 'vault') ? undefined : VaultRefFromJSON(json['vault']),
         'explorerUrl': !exists(json, 'explorer_url') ? undefined : json['explorer_url'],
         'contact': !exists(json, 'contact') ? undefined : ContactRefFromJSON(json['contact']),
+        'type': json['type'],
         'address': json['address'],
         'contract': !exists(json, 'contract') ? undefined : SolanaContractMetadataFromJSON(json['contract']),
     };
@@ -110,6 +128,7 @@ export function EnrichedSolanaAddressToJSON(value?: EnrichedSolanaAddress | null
         'vault': VaultRefToJSON(value.vault),
         'explorer_url': value.explorerUrl,
         'contact': ContactRefToJSON(value.contact),
+        'type': value.type,
         'address': value.address,
         'contract': SolanaContractMetadataToJSON(value.contract),
     };

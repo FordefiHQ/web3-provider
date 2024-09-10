@@ -25,6 +25,12 @@ import {
     SolanaTransactionStateFromJSONTyped,
     SolanaTransactionStateToJSON,
 } from './SolanaTransactionState';
+import type { StateChangeReason } from './StateChangeReason';
+import {
+    StateChangeReasonFromJSON,
+    StateChangeReasonFromJSONTyped,
+    StateChangeReasonToJSON,
+} from './StateChangeReason';
 
 /**
  * 
@@ -40,8 +46,15 @@ export interface SolanaTransactionStateChange {
     changedAt: Date;
     /**
      * 
+     * @type {StateChangeReason}
+     * @memberof SolanaTransactionStateChange
+     */
+    reason?: StateChangeReason;
+    /**
+     * 
      * @type {Array<PricedAsset>}
      * @memberof SolanaTransactionStateChange
+     * @deprecated
      */
     assetPrices: Array<PricedAsset>;
     /**
@@ -81,6 +94,7 @@ export function SolanaTransactionStateChangeFromJSONTyped(json: any, ignoreDiscr
     return {
         
         'changedAt': (new Date(json['changed_at'])),
+        'reason': !exists(json, 'reason') ? undefined : StateChangeReasonFromJSON(json['reason']),
         'assetPrices': ((json['asset_prices'] as Array<any>).map(PricedAssetFromJSON)),
         'previousState': !exists(json, 'previous_state') ? undefined : SolanaTransactionStateFromJSON(json['previous_state']),
         'newState': SolanaTransactionStateFromJSON(json['new_state']),
@@ -97,6 +111,7 @@ export function SolanaTransactionStateChangeToJSON(value?: SolanaTransactionStat
     return {
         
         'changed_at': (value.changedAt.toISOString()),
+        'reason': StateChangeReasonToJSON(value.reason),
         'asset_prices': ((value.assetPrices as Array<any>).map(PricedAssetToJSON)),
         'previous_state': SolanaTransactionStateToJSON(value.previousState),
         'new_state': SolanaTransactionStateToJSON(value.newState),

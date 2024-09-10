@@ -73,7 +73,13 @@ export interface EnrichedCosmosChain {
      * @type {BlockchainExplorer}
      * @memberof EnrichedCosmosChain
      */
-    blockchainExplorer: BlockchainExplorer;
+    blockchainExplorer?: BlockchainExplorer;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnrichedCosmosChain
+     */
+    logoUrl: string;
     /**
      * 
      * @type {string}
@@ -108,7 +114,7 @@ export function instanceOfEnrichedCosmosChain(value: object): boolean {
     isInstance = isInstance && "name" in value;
     isInstance = isInstance && "nativeCurrencySymbol" in value;
     isInstance = isInstance && "nativeCurrencyName" in value;
-    isInstance = isInstance && "blockchainExplorer" in value;
+    isInstance = isInstance && "logoUrl" in value;
     isInstance = isInstance && "baseDenom" in value;
     isInstance = isInstance && "bech32Prefix" in value;
 
@@ -130,7 +136,8 @@ export function EnrichedCosmosChainFromJSONTyped(json: any, ignoreDiscriminator:
         'name': json['name'],
         'nativeCurrencySymbol': json['native_currency_symbol'],
         'nativeCurrencyName': json['native_currency_name'],
-        'blockchainExplorer': BlockchainExplorerFromJSON(json['blockchain_explorer']),
+        'blockchainExplorer': !exists(json, 'blockchain_explorer') ? undefined : BlockchainExplorerFromJSON(json['blockchain_explorer']),
+        'logoUrl': json['logo_url'],
         'baseDenom': json['base_denom'],
         'bech32Prefix': CosmosBech32PrefixFromJSON(json['bech32_prefix']),
     };
@@ -151,6 +158,7 @@ export function EnrichedCosmosChainToJSON(value?: EnrichedCosmosChain | null): a
         'native_currency_symbol': value.nativeCurrencySymbol,
         'native_currency_name': value.nativeCurrencyName,
         'blockchain_explorer': BlockchainExplorerToJSON(value.blockchainExplorer),
+        'logo_url': value.logoUrl,
         'base_denom': value.baseDenom,
         'bech32_prefix': CosmosBech32PrefixToJSON(value.bech32Prefix),
     };

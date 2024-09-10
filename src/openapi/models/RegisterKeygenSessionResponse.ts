@@ -13,6 +13,13 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { MpcMessage } from './MpcMessage';
+import {
+    MpcMessageFromJSON,
+    MpcMessageFromJSONTyped,
+    MpcMessageToJSON,
+} from './MpcMessage';
+
 /**
  * 
  * @export
@@ -25,6 +32,12 @@ export interface RegisterKeygenSessionResponse {
      * @memberof RegisterKeygenSessionResponse
      */
     sessionId: string;
+    /**
+     * 
+     * @type {MpcMessage}
+     * @memberof RegisterKeygenSessionResponse
+     */
+    secondMpcProtocolMessage?: MpcMessage;
 }
 
 /**
@@ -48,6 +61,7 @@ export function RegisterKeygenSessionResponseFromJSONTyped(json: any, ignoreDisc
     return {
         
         'sessionId': json['session_id'],
+        'secondMpcProtocolMessage': !exists(json, 'second_mpc_protocol_message') ? undefined : MpcMessageFromJSON(json['second_mpc_protocol_message']),
     };
 }
 
@@ -61,6 +75,7 @@ export function RegisterKeygenSessionResponseToJSON(value?: RegisterKeygenSessio
     return {
         
         'session_id': value.sessionId,
+        'second_mpc_protocol_message': MpcMessageToJSON(value.secondMpcProtocolMessage),
     };
 }
 

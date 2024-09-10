@@ -13,6 +13,13 @@
  */
 
 import {
+    AptosVault,
+    instanceOfAptosVault,
+    AptosVaultFromJSON,
+    AptosVaultFromJSONTyped,
+    AptosVaultToJSON,
+} from './AptosVault';
+import {
     BlackBoxVault,
     instanceOfBlackBoxVault,
     BlackBoxVaultFromJSON,
@@ -34,12 +41,26 @@ import {
     EvmVaultToJSON,
 } from './EvmVault';
 import {
+    ExchangeVault,
+    instanceOfExchangeVault,
+    ExchangeVaultFromJSON,
+    ExchangeVaultFromJSONTyped,
+    ExchangeVaultToJSON,
+} from './ExchangeVault';
+import {
     SolanaVault,
     instanceOfSolanaVault,
     SolanaVaultFromJSON,
     SolanaVaultFromJSONTyped,
     SolanaVaultToJSON,
 } from './SolanaVault';
+import {
+    SuiVault,
+    instanceOfSuiVault,
+    SuiVaultFromJSON,
+    SuiVaultFromJSONTyped,
+    SuiVaultToJSON,
+} from './SuiVault';
 import {
     UtxoVault,
     instanceOfUtxoVault,
@@ -53,7 +74,7 @@ import {
  * 
  * @export
  */
-export type GetVaultResponse = { type: 'black_box' } & BlackBoxVault | { type: 'cosmos' } & CosmosVault | { type: 'evm' } & EvmVault | { type: 'solana' } & SolanaVault | { type: 'utxo' } & UtxoVault;
+export type GetVaultResponse = { type: 'aptos' } & AptosVault | { type: 'black_box' } & BlackBoxVault | { type: 'cosmos' } & CosmosVault | { type: 'evm' } & EvmVault | { type: 'exchange' } & ExchangeVault | { type: 'solana' } & SolanaVault | { type: 'sui' } & SuiVault | { type: 'utxo' } & UtxoVault;
 
 export function GetVaultResponseFromJSON(json: any): GetVaultResponse {
     return GetVaultResponseFromJSONTyped(json, false);
@@ -64,14 +85,20 @@ export function GetVaultResponseFromJSONTyped(json: any, ignoreDiscriminator: bo
         return json;
     }
     switch (json['type']) {
+        case 'aptos':
+            return {...AptosVaultFromJSONTyped(json, true), type: 'aptos'};
         case 'black_box':
             return {...BlackBoxVaultFromJSONTyped(json, true), type: 'black_box'};
         case 'cosmos':
             return {...CosmosVaultFromJSONTyped(json, true), type: 'cosmos'};
         case 'evm':
             return {...EvmVaultFromJSONTyped(json, true), type: 'evm'};
+        case 'exchange':
+            return {...ExchangeVaultFromJSONTyped(json, true), type: 'exchange'};
         case 'solana':
             return {...SolanaVaultFromJSONTyped(json, true), type: 'solana'};
+        case 'sui':
+            return {...SuiVaultFromJSONTyped(json, true), type: 'sui'};
         case 'utxo':
             return {...UtxoVaultFromJSONTyped(json, true), type: 'utxo'};
         default:
@@ -87,14 +114,20 @@ export function GetVaultResponseToJSON(value?: GetVaultResponse | null): any {
         return null;
     }
     switch (value['type']) {
+        case 'aptos':
+            return AptosVaultToJSON(value);
         case 'black_box':
             return BlackBoxVaultToJSON(value);
         case 'cosmos':
             return CosmosVaultToJSON(value);
         case 'evm':
             return EvmVaultToJSON(value);
+        case 'exchange':
+            return ExchangeVaultToJSON(value);
         case 'solana':
             return SolanaVaultToJSON(value);
+        case 'sui':
+            return SuiVaultToJSON(value);
         case 'utxo':
             return UtxoVaultToJSON(value);
         default:

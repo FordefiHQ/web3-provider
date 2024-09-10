@@ -31,6 +31,12 @@ import {
     PriceFromJSONTyped,
     PriceToJSON,
 } from './Price';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+} from './PricedAsset';
 
 /**
  * 
@@ -38,6 +44,18 @@ import {
  * @interface Erc721OwnershipChange
  */
 export interface Erc721OwnershipChange {
+    /**
+     * 
+     * @type {PricedAsset}
+     * @memberof Erc721OwnershipChange
+     */
+    pricedAsset: PricedAsset;
+    /**
+     * 
+     * @type {string}
+     * @memberof Erc721OwnershipChange
+     */
+    diff: string;
     /**
      * 
      * @type {string}
@@ -49,11 +67,18 @@ export interface Erc721OwnershipChange {
      * @type {EnrichedEvmAddress}
      * @memberof Erc721OwnershipChange
      */
+    address: EnrichedEvmAddress;
+    /**
+     * 
+     * @type {EnrichedEvmAddress}
+     * @memberof Erc721OwnershipChange
+     */
     owner: EnrichedEvmAddress;
     /**
      * 
      * @type {string}
      * @memberof Erc721OwnershipChange
+     * @deprecated
      */
     tokenId: string;
     /**
@@ -91,7 +116,10 @@ export type Erc721OwnershipChangeTypeEnum = typeof Erc721OwnershipChangeTypeEnum
  */
 export function instanceOfErc721OwnershipChange(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "pricedAsset" in value;
+    isInstance = isInstance && "diff" in value;
     isInstance = isInstance && "type" in value;
+    isInstance = isInstance && "address" in value;
     isInstance = isInstance && "owner" in value;
     isInstance = isInstance && "tokenId" in value;
     isInstance = isInstance && "owned" in value;
@@ -110,7 +138,10 @@ export function Erc721OwnershipChangeFromJSONTyped(json: any, ignoreDiscriminato
     }
     return {
         
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
+        'diff': json['diff'],
         'type': json['type'],
+        'address': EnrichedEvmAddressFromJSON(json['address']),
         'owner': EnrichedEvmAddressFromJSON(json['owner']),
         'tokenId': json['token_id'],
         'owned': json['owned'],
@@ -128,7 +159,10 @@ export function Erc721OwnershipChangeToJSON(value?: Erc721OwnershipChange | null
     }
     return {
         
+        'priced_asset': PricedAssetToJSON(value.pricedAsset),
+        'diff': value.diff,
         'type': value.type,
+        'address': EnrichedEvmAddressToJSON(value.address),
         'owner': EnrichedEvmAddressToJSON(value.owner),
         'token_id': value.tokenId,
         'owned': value.owned,

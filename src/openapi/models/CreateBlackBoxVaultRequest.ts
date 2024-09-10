@@ -29,8 +29,15 @@ export interface CreateBlackBoxVaultRequest {
      * 
      * @type {string}
      * @memberof CreateBlackBoxVaultRequest
+     * @deprecated
      */
     keysetId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateBlackBoxVaultRequest
+     */
+    endUserId?: string;
     /**
      * 
      * @type {string}
@@ -64,8 +71,10 @@ export type CreateBlackBoxVaultRequestTypeEnum = typeof CreateBlackBoxVaultReque
  * @export
  */
 export const CreateBlackBoxVaultRequestKeyTypeEnum = {
-    stark: 'ecdsa_stark',
-    secp256k1: 'ecdsa_secp256k1'
+    ecdsaStark: 'ecdsa_stark',
+    ecdsaSecp256k1: 'ecdsa_secp256k1',
+    eddsaEd25519: 'eddsa_ed25519',
+    schnorrSecp256k1: 'schnorr_secp256k1'
 } as const;
 export type CreateBlackBoxVaultRequestKeyTypeEnum = typeof CreateBlackBoxVaultRequestKeyTypeEnum[keyof typeof CreateBlackBoxVaultRequestKeyTypeEnum];
 
@@ -94,6 +103,7 @@ export function CreateBlackBoxVaultRequestFromJSONTyped(json: any, ignoreDiscrim
         
         'name': json['name'],
         'keysetId': !exists(json, 'keyset_id') ? undefined : json['keyset_id'],
+        'endUserId': !exists(json, 'end_user_id') ? undefined : json['end_user_id'],
         'vaultGroupId': !exists(json, 'vault_group_id') ? undefined : json['vault_group_id'],
         'type': json['type'],
         'keyType': json['key_type'],
@@ -111,6 +121,7 @@ export function CreateBlackBoxVaultRequestToJSON(value?: CreateBlackBoxVaultRequ
         
         'name': value.name,
         'keyset_id': value.keysetId,
+        'end_user_id': value.endUserId,
         'vault_group_id': value.vaultGroupId,
         'type': value.type,
         'key_type': value.keyType,
