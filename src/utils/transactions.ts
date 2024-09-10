@@ -97,11 +97,7 @@ const parseTransactionRequestValueField = (value: unknown) => {
   }
 };
 
-const parseTransactionRequestGasField = (fieldName: string, value: unknown) => {
-  if (value === undefined) {
-    throw new Error(`invalid "${fieldName}": value is required`);
-  }
-
+const parseTransactionRequestGasField = <T>(fieldName: string, value: Defined<T>) => {
   try {
     return toFordefiTransactionNumericValue(value);
   } catch (parseError: any) {
@@ -131,7 +127,7 @@ const toFordefiEvmGas = ({
   gasPrice,
   gas,
 }: Partial<FordefiWeb3TransactionRequest>): CreateEvmRawTransactionRequestGas => {
-  const gasLimit = parseTransactionRequestGasField('gas', gas);
+  const gasLimit = gas !== undefined && gas !== null ? parseTransactionRequestGasField('gas', gas) : undefined;
 
   if (maxPriorityFeePerGas !== undefined && maxFeePerGas !== undefined) {
     return {
@@ -204,13 +200,21 @@ export const buildEvmRawTransactionRequest = (
   };
 };
 
-export const waitForTransactionState = async <T extends AnyEvmTransaction>(
-  { id: transactionId }: T,
-  desiredState: EvmTransactionState,
-  apiClient: ApiClient,
-  timeoutDurationMs: number,
-  pollingIntervalMs: number,
-): Promise<T> => {
+interface WaitForTransactionStateParams<T extends AnyEvmTransaction> {
+  transaction: T;
+  desiredState: EvmTransactionState;
+  apiClient: ApiClient;
+  timeoutDurationMs: number;
+  pollingIntervalMs: number;
+}
+
+export const waitForTransactionState = async <T extends AnyEvmTransaction>({
+  transaction: { id: transactionId },
+  desiredState,
+  apiClient,
+  timeoutDurationMs,
+  pollingIntervalMs,
+}: WaitForTransactionStateParams<T>): Promise<T> => {
   console.debug(
     `waiting for transaction state change to '${desiredState}' with timeout of ${renderTimeDuration(timeoutDurationMs)}`,
   );

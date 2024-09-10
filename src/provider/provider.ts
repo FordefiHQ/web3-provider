@@ -321,13 +321,13 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
       middlewareAddRequestSigningHeaders(this.config.apiPayloadSignKey),
     );
 
-    return waitForTransactionState(
-      transaction as AnyEvmTransaction<CreateTxType>,
-      EvmTransactionState.signed,
-      this.apiClient,
-      ONE_DAY_MS,
-      5 * ONE_SECOND_MS,
-    );
+    return waitForTransactionState({
+      transaction: transaction as AnyEvmTransaction<CreateTxType>,
+      desiredState: EvmTransactionState.signed,
+      apiClient: this.apiClient,
+      timeoutDurationMs: ONE_DAY_MS,
+      pollingIntervalMs: 5 * ONE_SECOND_MS,
+    });
   }
 
   private _getFordefiChainVault() {
