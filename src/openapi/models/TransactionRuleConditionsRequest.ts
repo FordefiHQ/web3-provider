@@ -25,12 +25,24 @@ import {
     AssetIdentifierRequestFromJSONTyped,
     AssetIdentifierRequestToJSON,
 } from './AssetIdentifierRequest';
+import type { CosmosRuleConditions } from './CosmosRuleConditions';
+import {
+    CosmosRuleConditionsFromJSON,
+    CosmosRuleConditionsFromJSONTyped,
+    CosmosRuleConditionsToJSON,
+} from './CosmosRuleConditions';
 import type { InitiatorsConditionRequest } from './InitiatorsConditionRequest';
 import {
     InitiatorsConditionRequestFromJSON,
     InitiatorsConditionRequestFromJSONTyped,
     InitiatorsConditionRequestToJSON,
 } from './InitiatorsConditionRequest';
+import type { PeriodicAmountCondition } from './PeriodicAmountCondition';
+import {
+    PeriodicAmountConditionFromJSON,
+    PeriodicAmountConditionFromJSONTyped,
+    PeriodicAmountConditionToJSON,
+} from './PeriodicAmountCondition';
 import type { RecipientsConditionRequest } from './RecipientsConditionRequest';
 import {
     RecipientsConditionRequestFromJSON,
@@ -82,6 +94,12 @@ export interface TransactionRuleConditionsRequest {
     recipients?: RecipientsConditionRequest;
     /**
      * 
+     * @type {Array<string>}
+     * @memberof TransactionRuleConditionsRequest
+     */
+    abiMethods?: Array<string>;
+    /**
+     * 
      * @type {Array<AssetIdentifierRequest>}
      * @memberof TransactionRuleConditionsRequest
      */
@@ -92,6 +110,18 @@ export interface TransactionRuleConditionsRequest {
      * @memberof TransactionRuleConditionsRequest
      */
     amountLimit?: AmountLimitCondition;
+    /**
+     * 
+     * @type {CosmosRuleConditions}
+     * @memberof TransactionRuleConditionsRequest
+     */
+    cosmosConditions?: CosmosRuleConditions;
+    /**
+     * 
+     * @type {PeriodicAmountCondition}
+     * @memberof TransactionRuleConditionsRequest
+     */
+    periodicAmount?: PeriodicAmountCondition;
 }
 
 /**
@@ -118,8 +148,11 @@ export function TransactionRuleConditionsRequestFromJSONTyped(json: any, ignoreD
         'originVaultGroupIds': !exists(json, 'origin_vault_group_ids') ? undefined : json['origin_vault_group_ids'],
         'transactionTypes': !exists(json, 'transaction_types') ? undefined : ((json['transaction_types'] as Array<any>).map(TransactionTypeConditionFromJSON)),
         'recipients': !exists(json, 'recipients') ? undefined : RecipientsConditionRequestFromJSON(json['recipients']),
+        'abiMethods': !exists(json, 'abi_methods') ? undefined : json['abi_methods'],
         'assets': !exists(json, 'assets') ? undefined : ((json['assets'] as Array<any>).map(AssetIdentifierRequestFromJSON)),
         'amountLimit': !exists(json, 'amount_limit') ? undefined : AmountLimitConditionFromJSON(json['amount_limit']),
+        'cosmosConditions': !exists(json, 'cosmos_conditions') ? undefined : CosmosRuleConditionsFromJSON(json['cosmos_conditions']),
+        'periodicAmount': !exists(json, 'periodic_amount') ? undefined : PeriodicAmountConditionFromJSON(json['periodic_amount']),
     };
 }
 
@@ -137,8 +170,11 @@ export function TransactionRuleConditionsRequestToJSON(value?: TransactionRuleCo
         'origin_vault_group_ids': value.originVaultGroupIds,
         'transaction_types': value.transactionTypes === undefined ? undefined : ((value.transactionTypes as Array<any>).map(TransactionTypeConditionToJSON)),
         'recipients': RecipientsConditionRequestToJSON(value.recipients),
+        'abi_methods': value.abiMethods,
         'assets': value.assets === undefined ? undefined : ((value.assets as Array<any>).map(AssetIdentifierRequestToJSON)),
         'amount_limit': AmountLimitConditionToJSON(value.amountLimit),
+        'cosmos_conditions': CosmosRuleConditionsToJSON(value.cosmosConditions),
+        'periodic_amount': PeriodicAmountConditionToJSON(value.periodicAmount),
     };
 }
 

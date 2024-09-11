@@ -36,8 +36,15 @@ export interface CreateUtxoVaultRequest {
      * 
      * @type {string}
      * @memberof CreateUtxoVaultRequest
+     * @deprecated
      */
     keysetId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateUtxoVaultRequest
+     */
+    endUserId?: string;
     /**
      * 
      * @type {string}
@@ -92,6 +99,7 @@ export function CreateUtxoVaultRequestFromJSONTyped(json: any, ignoreDiscriminat
         
         'name': json['name'],
         'keysetId': !exists(json, 'keyset_id') ? undefined : json['keyset_id'],
+        'endUserId': !exists(json, 'end_user_id') ? undefined : json['end_user_id'],
         'vaultGroupId': !exists(json, 'vault_group_id') ? undefined : json['vault_group_id'],
         'type': json['type'],
         'chain': UtxoChainUniqueIdFromJSON(json['chain']),
@@ -109,6 +117,7 @@ export function CreateUtxoVaultRequestToJSON(value?: CreateUtxoVaultRequest | nu
         
         'name': value.name,
         'keyset_id': value.keysetId,
+        'end_user_id': value.endUserId,
         'vault_group_id': value.vaultGroupId,
         'type': value.type,
         'chain': UtxoChainUniqueIdToJSON(value.chain),

@@ -19,6 +19,12 @@ import {
     DescribedEvmMessageTypedDataFromJSONTyped,
     DescribedEvmMessageTypedDataToJSON,
 } from './DescribedEvmMessageTypedData';
+import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
+import {
+    EnrichedEvmAddressFromJSON,
+    EnrichedEvmAddressFromJSONTyped,
+    EnrichedEvmAddressToJSON,
+} from './EnrichedEvmAddress';
 import type { EnrichedEvmChain } from './EnrichedEvmChain';
 import {
     EnrichedEvmChainFromJSON,
@@ -176,6 +182,12 @@ export interface EvmMessage {
      * @memberof EvmMessage
      */
     chain: EnrichedEvmChain;
+    /**
+     * 
+     * @type {EnrichedEvmAddress}
+     * @memberof EvmMessage
+     */
+    sender: EnrichedEvmAddress;
 }
 
 
@@ -205,6 +217,7 @@ export function instanceOfEvmMessage(value: object): boolean {
     isInstance = isInstance && "rawData" in value;
     isInstance = isInstance && "vault" in value;
     isInstance = isInstance && "chain" in value;
+    isInstance = isInstance && "sender" in value;
 
     return isInstance;
 }
@@ -235,6 +248,7 @@ export function EvmMessageFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'typedData': !exists(json, 'typed_data') ? undefined : DescribedEvmMessageTypedDataFromJSON(json['typed_data']),
         'vault': VaultRefFromJSON(json['vault']),
         'chain': EnrichedEvmChainFromJSON(json['chain']),
+        'sender': EnrichedEvmAddressFromJSON(json['sender']),
     };
 }
 
@@ -263,6 +277,7 @@ export function EvmMessageToJSON(value?: EvmMessage | null): any {
         'typed_data': DescribedEvmMessageTypedDataToJSON(value.typedData),
         'vault': VaultRefToJSON(value.vault),
         'chain': EnrichedEvmChainToJSON(value.chain),
+        'sender': EnrichedEvmAddressToJSON(value.sender),
     };
 }
 

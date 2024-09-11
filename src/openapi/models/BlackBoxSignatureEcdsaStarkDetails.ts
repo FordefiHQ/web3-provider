@@ -28,6 +28,12 @@ import {
 export interface BlackBoxSignatureEcdsaStarkDetails {
     /**
      * 
+     * @type {string}
+     * @memberof BlackBoxSignatureEcdsaStarkDetails
+     */
+    type: BlackBoxSignatureEcdsaStarkDetailsTypeEnum;
+    /**
+     * 
      * @type {EcdsaSignature}
      * @memberof BlackBoxSignatureEcdsaStarkDetails
      */
@@ -42,14 +48,9 @@ export interface BlackBoxSignatureEcdsaStarkDetails {
      * 
      * @type {string}
      * @memberof BlackBoxSignatureEcdsaStarkDetails
+     * @deprecated
      */
     hashInteger: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BlackBoxSignatureEcdsaStarkDetails
-     */
-    type: BlackBoxSignatureEcdsaStarkDetailsTypeEnum;
 }
 
 
@@ -67,9 +68,9 @@ export type BlackBoxSignatureEcdsaStarkDetailsTypeEnum = typeof BlackBoxSignatur
  */
 export function instanceOfBlackBoxSignatureEcdsaStarkDetails(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "type" in value;
     isInstance = isInstance && "hashBinary" in value;
     isInstance = isInstance && "hashInteger" in value;
-    isInstance = isInstance && "type" in value;
 
     return isInstance;
 }
@@ -84,10 +85,10 @@ export function BlackBoxSignatureEcdsaStarkDetailsFromJSONTyped(json: any, ignor
     }
     return {
         
+        'type': json['type'],
         'signature': !exists(json, 'signature') ? undefined : EcdsaSignatureFromJSON(json['signature']),
         'hashBinary': json['hash_binary'],
         'hashInteger': json['hash_integer'],
-        'type': json['type'],
     };
 }
 
@@ -100,10 +101,10 @@ export function BlackBoxSignatureEcdsaStarkDetailsToJSON(value?: BlackBoxSignatu
     }
     return {
         
+        'type': value.type,
         'signature': EcdsaSignatureToJSON(value.signature),
         'hash_binary': value.hashBinary,
         'hash_integer': value.hashInteger,
-        'type': value.type,
     };
 }
 

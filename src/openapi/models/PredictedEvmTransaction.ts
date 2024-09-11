@@ -19,12 +19,42 @@ import {
     ApprovalRequestFromJSONTyped,
     ApprovalRequestToJSON,
 } from './ApprovalRequest';
+import type { DescribedEvmTransactionEvmTransactionTypeDetails } from './DescribedEvmTransactionEvmTransactionTypeDetails';
+import {
+    DescribedEvmTransactionEvmTransactionTypeDetailsFromJSON,
+    DescribedEvmTransactionEvmTransactionTypeDetailsFromJSONTyped,
+    DescribedEvmTransactionEvmTransactionTypeDetailsToJSON,
+} from './DescribedEvmTransactionEvmTransactionTypeDetails';
+import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
+import {
+    EnrichedEvmAddressFromJSON,
+    EnrichedEvmAddressFromJSONTyped,
+    EnrichedEvmAddressToJSON,
+} from './EnrichedEvmAddress';
 import type { EnrichedEvmChain } from './EnrichedEvmChain';
 import {
     EnrichedEvmChainFromJSON,
     EnrichedEvmChainFromJSONTyped,
     EnrichedEvmChainToJSON,
 } from './EnrichedEvmChain';
+import type { EvmGasEstimation } from './EvmGasEstimation';
+import {
+    EvmGasEstimationFromJSON,
+    EvmGasEstimationFromJSONTyped,
+    EvmGasEstimationToJSON,
+} from './EvmGasEstimation';
+import type { EvmSuggestedFees } from './EvmSuggestedFees';
+import {
+    EvmSuggestedFeesFromJSON,
+    EvmSuggestedFeesFromJSONTyped,
+    EvmSuggestedFeesToJSON,
+} from './EvmSuggestedFees';
+import type { EvmTransactionParsedData } from './EvmTransactionParsedData';
+import {
+    EvmTransactionParsedDataFromJSON,
+    EvmTransactionParsedDataFromJSONTyped,
+    EvmTransactionParsedDataToJSON,
+} from './EvmTransactionParsedData';
 import type { EvmTransactionResult } from './EvmTransactionResult';
 import {
     EvmTransactionResultFromJSON,
@@ -98,6 +128,48 @@ export interface PredictedEvmTransaction {
      * @memberof PredictedEvmTransaction
      */
     simulationStatusResult: SimulationStatusResult;
+    /**
+     * 
+     * @type {DescribedEvmTransactionEvmTransactionTypeDetails}
+     * @memberof PredictedEvmTransaction
+     */
+    evmTransactionTypeDetails: DescribedEvmTransactionEvmTransactionTypeDetails;
+    /**
+     * 
+     * @type {EvmTransactionParsedData}
+     * @memberof PredictedEvmTransaction
+     */
+    parsedData: EvmTransactionParsedData;
+    /**
+     * 
+     * @type {EvmGasEstimation}
+     * @memberof PredictedEvmTransaction
+     */
+    gasEstimation?: EvmGasEstimation;
+    /**
+     * 
+     * @type {EvmSuggestedFees}
+     * @memberof PredictedEvmTransaction
+     */
+    suggestedFees: EvmSuggestedFees;
+    /**
+     * 
+     * @type {EnrichedEvmAddress}
+     * @memberof PredictedEvmTransaction
+     */
+    sender: EnrichedEvmAddress;
+    /**
+     * 
+     * @type {EnrichedEvmAddress}
+     * @memberof PredictedEvmTransaction
+     */
+    to: EnrichedEvmAddress;
+    /**
+     * 
+     * @type {string}
+     * @memberof PredictedEvmTransaction
+     */
+    hexData?: string;
 }
 
 
@@ -121,6 +193,11 @@ export function instanceOfPredictedEvmTransaction(value: object): boolean {
     isInstance = isInstance && "expectedResult" in value;
     isInstance = isInstance && "chain" in value;
     isInstance = isInstance && "simulationStatusResult" in value;
+    isInstance = isInstance && "evmTransactionTypeDetails" in value;
+    isInstance = isInstance && "parsedData" in value;
+    isInstance = isInstance && "suggestedFees" in value;
+    isInstance = isInstance && "sender" in value;
+    isInstance = isInstance && "to" in value;
 
     return isInstance;
 }
@@ -142,6 +219,13 @@ export function PredictedEvmTransactionFromJSONTyped(json: any, ignoreDiscrimina
         'expectedResult': EvmTransactionResultFromJSON(json['expected_result']),
         'chain': EnrichedEvmChainFromJSON(json['chain']),
         'simulationStatusResult': SimulationStatusResultFromJSON(json['simulation_status_result']),
+        'evmTransactionTypeDetails': DescribedEvmTransactionEvmTransactionTypeDetailsFromJSON(json['evm_transaction_type_details']),
+        'parsedData': EvmTransactionParsedDataFromJSON(json['parsed_data']),
+        'gasEstimation': !exists(json, 'gas_estimation') ? undefined : EvmGasEstimationFromJSON(json['gas_estimation']),
+        'suggestedFees': EvmSuggestedFeesFromJSON(json['suggested_fees']),
+        'sender': EnrichedEvmAddressFromJSON(json['sender']),
+        'to': EnrichedEvmAddressFromJSON(json['to']),
+        'hexData': !exists(json, 'hex_data') ? undefined : json['hex_data'],
     };
 }
 
@@ -161,6 +245,13 @@ export function PredictedEvmTransactionToJSON(value?: PredictedEvmTransaction | 
         'expected_result': EvmTransactionResultToJSON(value.expectedResult),
         'chain': EnrichedEvmChainToJSON(value.chain),
         'simulation_status_result': SimulationStatusResultToJSON(value.simulationStatusResult),
+        'evm_transaction_type_details': DescribedEvmTransactionEvmTransactionTypeDetailsToJSON(value.evmTransactionTypeDetails),
+        'parsed_data': EvmTransactionParsedDataToJSON(value.parsedData),
+        'gas_estimation': EvmGasEstimationToJSON(value.gasEstimation),
+        'suggested_fees': EvmSuggestedFeesToJSON(value.suggestedFees),
+        'sender': EnrichedEvmAddressToJSON(value.sender),
+        'to': EnrichedEvmAddressToJSON(value.to),
+        'hex_data': value.hexData,
     };
 }
 

@@ -16,13 +16,6 @@
 import * as runtime from '../runtime';
 import type {
   BaseError,
-  BulkCreateTransactionRequest,
-  BulkCreateTransactionResponse,
-  BulkDescribeTransactionRequest,
-  BulkDescribeTransactionResponse,
-  BulkPredictTransactionRequest,
-  BulkPredictTransactionResponse,
-  ChainUniqueId,
   CreateTransactionRequest,
   CreateTransactionResponse,
   CreateTransactionWithWaitRequest,
@@ -57,6 +50,7 @@ import type {
   TransactionState,
   TransactionSubType,
   TransactionType,
+  TriggerAutoProtectionRequest,
   UpdateTransactionForSigningResponse,
   UpdateTransactionSpamStateRequest,
   ValidationError,
@@ -64,20 +58,6 @@ import type {
 import {
     BaseErrorFromJSON,
     BaseErrorToJSON,
-    BulkCreateTransactionRequestFromJSON,
-    BulkCreateTransactionRequestToJSON,
-    BulkCreateTransactionResponseFromJSON,
-    BulkCreateTransactionResponseToJSON,
-    BulkDescribeTransactionRequestFromJSON,
-    BulkDescribeTransactionRequestToJSON,
-    BulkDescribeTransactionResponseFromJSON,
-    BulkDescribeTransactionResponseToJSON,
-    BulkPredictTransactionRequestFromJSON,
-    BulkPredictTransactionRequestToJSON,
-    BulkPredictTransactionResponseFromJSON,
-    BulkPredictTransactionResponseToJSON,
-    ChainUniqueIdFromJSON,
-    ChainUniqueIdToJSON,
     CreateTransactionRequestFromJSON,
     CreateTransactionRequestToJSON,
     CreateTransactionResponseFromJSON,
@@ -146,6 +126,8 @@ import {
     TransactionSubTypeToJSON,
     TransactionTypeFromJSON,
     TransactionTypeToJSON,
+    TriggerAutoProtectionRequestFromJSON,
+    TriggerAutoProtectionRequestToJSON,
     UpdateTransactionForSigningResponseFromJSON,
     UpdateTransactionForSigningResponseToJSON,
     UpdateTransactionSpamStateRequestFromJSON,
@@ -162,27 +144,11 @@ export interface ApproveTransactionApiV1TransactionsIdApprovePostRequest {
     id: string;
 }
 
-export interface BulkAbortTransactionsApiV1TransactionsBulkBatchIdAbortPostRequest {
-    batchId: string;
-}
-
-export interface BulkApproveTransactionsApiV1TransactionsBulkBatchIdApprovePostRequest {
-    batchId: string;
-}
-
-export interface BulkCreateTransactionsApiV1TransactionsBulkPostRequest {
-    bulkCreateTransactionRequest: BulkCreateTransactionRequest;
+export interface CreateTransactionAndWaitApiV1TransactionsCreateAndWaitPostRequest {
+    createTransactionWithWaitRequest: CreateTransactionWithWaitRequest;
     xSignature?: string;
     xTimestamp?: number;
     xIdempotenceId?: string;
-}
-
-export interface BulkDescribeTransactionsApiV1TransactionsBulkDescribePostRequest {
-    bulkDescribeTransactionRequest: BulkDescribeTransactionRequest;
-}
-
-export interface BulkPredictTransactionsApiV1TransactionsBulkPredictPostRequest {
-    bulkPredictTransactionRequest: BulkPredictTransactionRequest;
 }
 
 export interface CreateTransactionApiV1TransactionsPostRequest {
@@ -192,15 +158,24 @@ export interface CreateTransactionApiV1TransactionsPostRequest {
     xIdempotenceId?: string;
 }
 
-export interface CreateTransactionWithWaitApiV1TransactionsCreateWithWaitPostRequest {
-    createTransactionWithWaitRequest: CreateTransactionWithWaitRequest;
-    xSignature?: string;
-    xTimestamp?: number;
-    xIdempotenceId?: string;
-}
-
 export interface DescribeTransactionApiV1TransactionsDescribePostRequest {
     describeTransactionRequest: DescribeTransactionRequest;
+}
+
+export interface ExportTransactionsApiV1TransactionsExportGetRequest {
+    limit?: number;
+    createdBefore?: Date;
+    createdAfter?: Date;
+    modifiedAfter?: Date;
+    vaultIds?: Array<string>;
+    chains?: Array<string>;
+    initiatorIds?: Array<string>;
+    types?: Array<TransactionType>;
+    subTypes?: Array<TransactionSubType>;
+    signerTypes?: Array<SignerType>;
+    transactionIds?: Array<string>;
+    endUserIds?: Array<string>;
+    direction?: TransactionDirection;
 }
 
 export interface GetTransactionApiV1TransactionsIdGetRequest {
@@ -214,17 +189,18 @@ export interface ListTransactionsApiV1TransactionsGetRequest {
     createdAfter?: Date;
     modifiedAfter?: Date;
     vaultIds?: Array<string>;
-    chains?: Array<ChainUniqueId>;
+    chains?: Array<string>;
     initiatorIds?: Array<string>;
-    states?: Array<TransactionState>;
     types?: Array<TransactionType>;
     subTypes?: Array<TransactionSubType>;
     signerTypes?: Array<SignerType>;
     transactionIds?: Array<string>;
     endUserIds?: Array<string>;
-    isHidden?: boolean;
     direction?: TransactionDirection;
+    states?: Array<TransactionState>;
+    isHidden?: boolean;
     includeFullResponse?: boolean;
+    batchIds?: Array<string>;
     sortBy?: Array<TransactionSortableFields>;
 }
 
@@ -256,6 +232,14 @@ export interface ReleaseTransactionApiV1TransactionsIdReleasePostRequest {
 export interface SubmitTransactionSignatureApiV1TransactionsIdSubmitSignaturePostRequest {
     id: string;
     body: object;
+}
+
+export interface TriggerAutoRevokeProtectionApiV1TransactionsTriggerAutoRevokeProtectionPostRequest {
+    triggerAutoProtectionRequest: TriggerAutoProtectionRequest;
+}
+
+export interface TriggerTransactionSigningApiV1TransactionsIdTriggerSigningPostRequest {
+    id: string;
 }
 
 export interface UpdateTransactionForSigningApiV1TransactionsIdUpdateForSigningPostRequest {
@@ -352,90 +336,12 @@ export class TransactionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Abort a batch of transactions.
-     * Bulk Abort Transactions
+     * Create a new transaction and wait until transaction reaches given state.
+     * Create Transaction And Wait
      */
-    async bulkAbortTransactionsApiV1TransactionsBulkBatchIdAbortPostRaw(requestParameters: BulkAbortTransactionsApiV1TransactionsBulkBatchIdAbortPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.batchId === null || requestParameters.batchId === undefined) {
-            throw new runtime.RequiredError('batchId','Required parameter requestParameters.batchId was null or undefined when calling bulkAbortTransactionsApiV1TransactionsBulkBatchIdAbortPost.');
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/v1/transactions/bulk/{batch_id}/abort`.replace(`{${"batch_id"}}`, encodeURIComponent(String(requestParameters.batchId))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.VoidApiResponse(response);
-    }
-
-    /**
-     * Abort a batch of transactions.
-     * Bulk Abort Transactions
-     */
-    async bulkAbortTransactionsApiV1TransactionsBulkBatchIdAbortPost(requestParameters: BulkAbortTransactionsApiV1TransactionsBulkBatchIdAbortPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.bulkAbortTransactionsApiV1TransactionsBulkBatchIdAbortPostRaw(requestParameters, initOverrides);
-    }
-
-    /**
-     * Approve a batch of transactions.
-     * Bulk Approve Transactions
-     */
-    async bulkApproveTransactionsApiV1TransactionsBulkBatchIdApprovePostRaw(requestParameters: BulkApproveTransactionsApiV1TransactionsBulkBatchIdApprovePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.batchId === null || requestParameters.batchId === undefined) {
-            throw new runtime.RequiredError('batchId','Required parameter requestParameters.batchId was null or undefined when calling bulkApproveTransactionsApiV1TransactionsBulkBatchIdApprovePost.');
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/v1/transactions/bulk/{batch_id}/approve`.replace(`{${"batch_id"}}`, encodeURIComponent(String(requestParameters.batchId))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.VoidApiResponse(response);
-    }
-
-    /**
-     * Approve a batch of transactions.
-     * Bulk Approve Transactions
-     */
-    async bulkApproveTransactionsApiV1TransactionsBulkBatchIdApprovePost(requestParameters: BulkApproveTransactionsApiV1TransactionsBulkBatchIdApprovePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.bulkApproveTransactionsApiV1TransactionsBulkBatchIdApprovePostRaw(requestParameters, initOverrides);
-    }
-
-    /**
-     * Create a batch of transactions.
-     * Bulk Create Transactions
-     */
-    async bulkCreateTransactionsApiV1TransactionsBulkPostRaw(requestParameters: BulkCreateTransactionsApiV1TransactionsBulkPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BulkCreateTransactionResponse>> {
-        if (requestParameters.bulkCreateTransactionRequest === null || requestParameters.bulkCreateTransactionRequest === undefined) {
-            throw new runtime.RequiredError('bulkCreateTransactionRequest','Required parameter requestParameters.bulkCreateTransactionRequest was null or undefined when calling bulkCreateTransactionsApiV1TransactionsBulkPost.');
+    async createTransactionAndWaitApiV1TransactionsCreateAndWaitPostRaw(requestParameters: CreateTransactionAndWaitApiV1TransactionsCreateAndWaitPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateTransactionWithWaitResponse>> {
+        if (requestParameters.createTransactionWithWaitRequest === null || requestParameters.createTransactionWithWaitRequest === undefined) {
+            throw new runtime.RequiredError('createTransactionWithWaitRequest','Required parameter requestParameters.createTransactionWithWaitRequest was null or undefined when calling createTransactionAndWaitApiV1TransactionsCreateAndWaitPost.');
         }
 
         const queryParameters: any = {};
@@ -465,108 +371,22 @@ export class TransactionsApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/v1/transactions/bulk`,
+            path: `/api/v1/transactions/create-and-wait`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: BulkCreateTransactionRequestToJSON(requestParameters.bulkCreateTransactionRequest),
+            body: CreateTransactionWithWaitRequestToJSON(requestParameters.createTransactionWithWaitRequest),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => BulkCreateTransactionResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => CreateTransactionWithWaitResponseFromJSON(jsonValue));
     }
 
     /**
-     * Create a batch of transactions.
-     * Bulk Create Transactions
+     * Create a new transaction and wait until transaction reaches given state.
+     * Create Transaction And Wait
      */
-    async bulkCreateTransactionsApiV1TransactionsBulkPost(requestParameters: BulkCreateTransactionsApiV1TransactionsBulkPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BulkCreateTransactionResponse> {
-        const response = await this.bulkCreateTransactionsApiV1TransactionsBulkPostRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Get the current blockchain fee price and estimate the total transaction fee for the batch of transactions.
-     * Bulk Describe Transactions
-     */
-    async bulkDescribeTransactionsApiV1TransactionsBulkDescribePostRaw(requestParameters: BulkDescribeTransactionsApiV1TransactionsBulkDescribePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BulkDescribeTransactionResponse>> {
-        if (requestParameters.bulkDescribeTransactionRequest === null || requestParameters.bulkDescribeTransactionRequest === undefined) {
-            throw new runtime.RequiredError('bulkDescribeTransactionRequest','Required parameter requestParameters.bulkDescribeTransactionRequest was null or undefined when calling bulkDescribeTransactionsApiV1TransactionsBulkDescribePost.');
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/v1/transactions/bulk/describe`,
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-            body: BulkDescribeTransactionRequestToJSON(requestParameters.bulkDescribeTransactionRequest),
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => BulkDescribeTransactionResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Get the current blockchain fee price and estimate the total transaction fee for the batch of transactions.
-     * Bulk Describe Transactions
-     */
-    async bulkDescribeTransactionsApiV1TransactionsBulkDescribePost(requestParameters: BulkDescribeTransactionsApiV1TransactionsBulkDescribePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BulkDescribeTransactionResponse> {
-        const response = await this.bulkDescribeTransactionsApiV1TransactionsBulkDescribePostRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Simulate the batch of transactions and show the exact token\'s balance change, in addition to the fee estimation.
-     * Bulk Predict Transactions
-     */
-    async bulkPredictTransactionsApiV1TransactionsBulkPredictPostRaw(requestParameters: BulkPredictTransactionsApiV1TransactionsBulkPredictPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BulkPredictTransactionResponse>> {
-        if (requestParameters.bulkPredictTransactionRequest === null || requestParameters.bulkPredictTransactionRequest === undefined) {
-            throw new runtime.RequiredError('bulkPredictTransactionRequest','Required parameter requestParameters.bulkPredictTransactionRequest was null or undefined when calling bulkPredictTransactionsApiV1TransactionsBulkPredictPost.');
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/v1/transactions/bulk/predict`,
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-            body: BulkPredictTransactionRequestToJSON(requestParameters.bulkPredictTransactionRequest),
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => BulkPredictTransactionResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Simulate the batch of transactions and show the exact token\'s balance change, in addition to the fee estimation.
-     * Bulk Predict Transactions
-     */
-    async bulkPredictTransactionsApiV1TransactionsBulkPredictPost(requestParameters: BulkPredictTransactionsApiV1TransactionsBulkPredictPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BulkPredictTransactionResponse> {
-        const response = await this.bulkPredictTransactionsApiV1TransactionsBulkPredictPostRaw(requestParameters, initOverrides);
+    async createTransactionAndWaitApiV1TransactionsCreateAndWaitPost(requestParameters: CreateTransactionAndWaitApiV1TransactionsCreateAndWaitPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateTransactionWithWaitResponse> {
+        const response = await this.createTransactionAndWaitApiV1TransactionsCreateAndWaitPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -626,61 +446,6 @@ export class TransactionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a new transaction and wait until transaction reaches given state.
-     * Create Transaction With Wait
-     */
-    async createTransactionWithWaitApiV1TransactionsCreateWithWaitPostRaw(requestParameters: CreateTransactionWithWaitApiV1TransactionsCreateWithWaitPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateTransactionWithWaitResponse>> {
-        if (requestParameters.createTransactionWithWaitRequest === null || requestParameters.createTransactionWithWaitRequest === undefined) {
-            throw new runtime.RequiredError('createTransactionWithWaitRequest','Required parameter requestParameters.createTransactionWithWaitRequest was null or undefined when calling createTransactionWithWaitApiV1TransactionsCreateWithWaitPost.');
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (requestParameters.xSignature !== undefined && requestParameters.xSignature !== null) {
-            headerParameters['x-signature'] = String(requestParameters.xSignature);
-        }
-
-        if (requestParameters.xTimestamp !== undefined && requestParameters.xTimestamp !== null) {
-            headerParameters['x-timestamp'] = String(requestParameters.xTimestamp);
-        }
-
-        if (requestParameters.xIdempotenceId !== undefined && requestParameters.xIdempotenceId !== null) {
-            headerParameters['x-idempotence-id'] = String(requestParameters.xIdempotenceId);
-        }
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/v1/transactions/create-with-wait`,
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-            body: CreateTransactionWithWaitRequestToJSON(requestParameters.createTransactionWithWaitRequest),
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => CreateTransactionWithWaitResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Create a new transaction and wait until transaction reaches given state.
-     * Create Transaction With Wait
-     */
-    async createTransactionWithWaitApiV1TransactionsCreateWithWaitPost(requestParameters: CreateTransactionWithWaitApiV1TransactionsCreateWithWaitPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateTransactionWithWaitResponse> {
-        const response = await this.createTransactionWithWaitApiV1TransactionsCreateWithWaitPostRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
      * Get the current blockchain fee price and estimate the total transaction fee.
      * Describe Transaction
      */
@@ -727,8 +492,60 @@ export class TransactionsApi extends runtime.BaseAPI {
      * Get a CSV-format list of transactions.
      * Export Transactions
      */
-    async exportTransactionsApiV1TransactionsExportGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
+    async exportTransactionsApiV1TransactionsExportGetRaw(requestParameters: ExportTransactionsApiV1TransactionsExportGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
         const queryParameters: any = {};
+
+        if (requestParameters.limit !== undefined) {
+            queryParameters['limit'] = requestParameters.limit;
+        }
+
+        if (requestParameters.createdBefore !== undefined) {
+            queryParameters['created_before'] = (requestParameters.createdBefore as any).toISOString();
+        }
+
+        if (requestParameters.createdAfter !== undefined) {
+            queryParameters['created_after'] = (requestParameters.createdAfter as any).toISOString();
+        }
+
+        if (requestParameters.modifiedAfter !== undefined) {
+            queryParameters['modified_after'] = (requestParameters.modifiedAfter as any).toISOString();
+        }
+
+        if (requestParameters.vaultIds) {
+            queryParameters['vault_ids'] = requestParameters.vaultIds;
+        }
+
+        if (requestParameters.chains) {
+            queryParameters['chains'] = requestParameters.chains;
+        }
+
+        if (requestParameters.initiatorIds) {
+            queryParameters['initiator_ids'] = requestParameters.initiatorIds;
+        }
+
+        if (requestParameters.types) {
+            queryParameters['types'] = requestParameters.types;
+        }
+
+        if (requestParameters.subTypes) {
+            queryParameters['sub_types'] = requestParameters.subTypes;
+        }
+
+        if (requestParameters.signerTypes) {
+            queryParameters['signer_types'] = requestParameters.signerTypes;
+        }
+
+        if (requestParameters.transactionIds) {
+            queryParameters['transaction_ids'] = requestParameters.transactionIds;
+        }
+
+        if (requestParameters.endUserIds) {
+            queryParameters['end_user_ids'] = requestParameters.endUserIds;
+        }
+
+        if (requestParameters.direction !== undefined) {
+            queryParameters['direction'] = requestParameters.direction;
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -747,19 +564,15 @@ export class TransactionsApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        if (this.isJsonMime(response.headers.get('content-type'))) {
-            return new runtime.JSONApiResponse<string>(response);
-        } else {
-            return new runtime.TextApiResponse(response) as any;
-        }
+        return new runtime.TextApiResponse(response) as any;
     }
 
     /**
      * Get a CSV-format list of transactions.
      * Export Transactions
      */
-    async exportTransactionsApiV1TransactionsExportGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
-        const response = await this.exportTransactionsApiV1TransactionsExportGetRaw(initOverrides);
+    async exportTransactionsApiV1TransactionsExportGet(requestParameters: ExportTransactionsApiV1TransactionsExportGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
+        const response = await this.exportTransactionsApiV1TransactionsExportGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -914,10 +727,6 @@ export class TransactionsApi extends runtime.BaseAPI {
             queryParameters['initiator_ids'] = requestParameters.initiatorIds;
         }
 
-        if (requestParameters.states) {
-            queryParameters['states'] = requestParameters.states;
-        }
-
         if (requestParameters.types) {
             queryParameters['types'] = requestParameters.types;
         }
@@ -938,16 +747,24 @@ export class TransactionsApi extends runtime.BaseAPI {
             queryParameters['end_user_ids'] = requestParameters.endUserIds;
         }
 
-        if (requestParameters.isHidden !== undefined) {
-            queryParameters['is_hidden'] = requestParameters.isHidden;
-        }
-
         if (requestParameters.direction !== undefined) {
             queryParameters['direction'] = requestParameters.direction;
         }
 
+        if (requestParameters.states) {
+            queryParameters['states'] = requestParameters.states;
+        }
+
+        if (requestParameters.isHidden !== undefined) {
+            queryParameters['is_hidden'] = requestParameters.isHidden;
+        }
+
         if (requestParameters.includeFullResponse !== undefined) {
             queryParameters['include_full_response'] = requestParameters.includeFullResponse;
+        }
+
+        if (requestParameters.batchIds) {
+            queryParameters['batch_ids'] = requestParameters.batchIds;
         }
 
         if (requestParameters.sortBy) {
@@ -1253,11 +1070,7 @@ export class TransactionsApi extends runtime.BaseAPI {
             body: requestParameters.body as any,
         }, initOverrides);
 
-        if (this.isJsonMime(response.headers.get('content-type'))) {
-            return new runtime.JSONApiResponse<any>(response);
-        } else {
-            return new runtime.TextApiResponse(response) as any;
-        }
+        return new runtime.TextApiResponse(response) as any;
     }
 
     /**
@@ -1267,6 +1080,87 @@ export class TransactionsApi extends runtime.BaseAPI {
     async submitTransactionSignatureApiV1TransactionsIdSubmitSignaturePost(requestParameters: SubmitTransactionSignatureApiV1TransactionsIdSubmitSignaturePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
         const response = await this.submitTransactionSignatureApiV1TransactionsIdSubmitSignaturePostRaw(requestParameters, initOverrides);
         return await response.value();
+    }
+
+    /**
+     * Trigger transaction auto revoke protection.
+     * Trigger Auto Revoke Protection
+     */
+    async triggerAutoRevokeProtectionApiV1TransactionsTriggerAutoRevokeProtectionPostRaw(requestParameters: TriggerAutoRevokeProtectionApiV1TransactionsTriggerAutoRevokeProtectionPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.triggerAutoProtectionRequest === null || requestParameters.triggerAutoProtectionRequest === undefined) {
+            throw new runtime.RequiredError('triggerAutoProtectionRequest','Required parameter requestParameters.triggerAutoProtectionRequest was null or undefined when calling triggerAutoRevokeProtectionApiV1TransactionsTriggerAutoRevokeProtectionPost.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/v1/transactions/trigger-auto-revoke-protection`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: TriggerAutoProtectionRequestToJSON(requestParameters.triggerAutoProtectionRequest),
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Trigger transaction auto revoke protection.
+     * Trigger Auto Revoke Protection
+     */
+    async triggerAutoRevokeProtectionApiV1TransactionsTriggerAutoRevokeProtectionPost(requestParameters: TriggerAutoRevokeProtectionApiV1TransactionsTriggerAutoRevokeProtectionPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.triggerAutoRevokeProtectionApiV1TransactionsTriggerAutoRevokeProtectionPostRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Trigger transaction signing.
+     * Trigger Transaction Signing
+     */
+    async triggerTransactionSigningApiV1TransactionsIdTriggerSigningPostRaw(requestParameters: TriggerTransactionSigningApiV1TransactionsIdTriggerSigningPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling triggerTransactionSigningApiV1TransactionsIdTriggerSigningPost.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/v1/transactions/{id}/trigger-signing`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Trigger transaction signing.
+     * Trigger Transaction Signing
+     */
+    async triggerTransactionSigningApiV1TransactionsIdTriggerSigningPost(requestParameters: TriggerTransactionSigningApiV1TransactionsIdTriggerSigningPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.triggerTransactionSigningApiV1TransactionsIdTriggerSigningPostRaw(requestParameters, initOverrides);
     }
 
     /**
@@ -1363,3 +1257,188 @@ export class TransactionsApi extends runtime.BaseAPI {
     }
 
 }
+
+/**
+ * @export
+ */
+export const ExportTransactionsApiV1TransactionsExportGetChainsEnum = {
+    aptosMainnet: 'aptos_mainnet',
+    aptosTestnet: 'aptos_testnet',
+    cosmosAgoric3: 'cosmos_agoric-3',
+    cosmosAkashnet2: 'cosmos_akashnet-2',
+    cosmosArchway1: 'cosmos_archway-1',
+    cosmosAxelarDojo1: 'cosmos_axelar-dojo-1',
+    cosmosCelestia: 'cosmos_celestia',
+    cosmosCosmoshub4: 'cosmos_cosmoshub-4',
+    cosmosDydxMainnet1: 'cosmos_dydx-mainnet-1',
+    cosmosDydxTestnet4: 'cosmos_dydx-testnet-4',
+    cosmosDymension11001: 'cosmos_dymension_1100-1',
+    cosmosNeutron1: 'cosmos_neutron-1',
+    cosmosNoble1: 'cosmos_noble-1',
+    cosmosOsmosis1: 'cosmos_osmosis-1',
+    cosmosPacific1: 'cosmos_pacific-1',
+    cosmosStride1: 'cosmos_stride-1',
+    evm1: 'evm_1',
+    evm5: 'evm_5',
+    evm10: 'evm_10',
+    evm16: 'evm_16',
+    evm56: 'evm_56',
+    evm100: 'evm_100',
+    evm137: 'evm_137',
+    evm169: 'evm_169',
+    evm250: 'evm_250',
+    evm324: 'evm_324',
+    evm1030: 'evm_1030',
+    evm1100: 'evm_1100',
+    evm1101: 'evm_1101',
+    evm1329: 'evm_1329',
+    evm1729: 'evm_1729',
+    evm2222: 'evm_2222',
+    evm4200: 'evm_4200',
+    evm5000: 'evm_5000',
+    evm7000: 'evm_7000',
+    evm7700: 'evm_7700',
+    evm8453: 'evm_8453',
+    evm17000: 'evm_17000',
+    evm80001: 'evm_80001',
+    evm42161: 'evm_42161',
+    evm43114: 'evm_43114',
+    evm59144: 'evm_59144',
+    evm81457: 'evm_81457',
+    evm421614: 'evm_421614',
+    evm534352: 'evm_534352',
+    evm660279: 'evm_660279',
+    evm810180: 'evm_810180',
+    evm11155111: 'evm_11155111',
+    evmEthereumMainnet: 'evm_ethereum_mainnet',
+    evmEthereumGoerli: 'evm_ethereum_goerli',
+    evmOptimismMainnet: 'evm_optimism_mainnet',
+    evmFlareTestnet: 'evm_flare_testnet',
+    evmBscMainnet: 'evm_bsc_mainnet',
+    evmGnosisMainnet: 'evm_gnosis_mainnet',
+    evmPolygonMainnet: 'evm_polygon_mainnet',
+    evmMantaPacificMainnet: 'evm_manta_pacific_mainnet',
+    evmFantomMainnet: 'evm_fantom_mainnet',
+    evmZksyncEraMainnet: 'evm_zksync_era_mainnet',
+    evmConfluxMainnet: 'evm_conflux_mainnet',
+    evmDymensionMainnet: 'evm_dymension_mainnet',
+    evmPolygonZkevmMainnet: 'evm_polygon_zkevm_mainnet',
+    evmSeiMainnet: 'evm_sei_mainnet',
+    evmReyaMainnet: 'evm_reya_mainnet',
+    evmKavaMainnet: 'evm_kava_mainnet',
+    evmMerlinMainnet: 'evm_merlin_mainnet',
+    evmMantleMainnet: 'evm_mantle_mainnet',
+    evmZetaMainnet: 'evm_zeta_mainnet',
+    evmCantoMainnet: 'evm_canto_mainnet',
+    evmBaseMainnet: 'evm_base_mainnet',
+    evmEthereumHolesky: 'evm_ethereum_holesky',
+    evmPolygonMumbai: 'evm_polygon_mumbai',
+    evmArbitrumMainnet: 'evm_arbitrum_mainnet',
+    evmAvalancheChain: 'evm_avalanche_chain',
+    evmLineaMainnet: 'evm_linea_mainnet',
+    evmBlastMainnet: 'evm_blast_mainnet',
+    evmArbitrumSepolia: 'evm_arbitrum_sepolia',
+    evmScrollMainnet: 'evm_scroll_mainnet',
+    evmXaiMainnet: 'evm_xai_mainnet',
+    evmZklinkNovaMainnet: 'evm_zklink_nova_mainnet',
+    evmEthereumSepolia: 'evm_ethereum_sepolia',
+    solanaMainnet: 'solana_mainnet',
+    solanaDevnet: 'solana_devnet',
+    suiMainnet: 'sui_mainnet',
+    suiTestnet: 'sui_testnet',
+    bitcoinMainnet: 'bitcoin_mainnet',
+    bitcoinTestnet: 'bitcoin_testnet'
+} as const;
+export type ExportTransactionsApiV1TransactionsExportGetChainsEnum = typeof ExportTransactionsApiV1TransactionsExportGetChainsEnum[keyof typeof ExportTransactionsApiV1TransactionsExportGetChainsEnum];
+/**
+ * @export
+ */
+export const ListTransactionsApiV1TransactionsGetChainsEnum = {
+    aptosMainnet: 'aptos_mainnet',
+    aptosTestnet: 'aptos_testnet',
+    cosmosAgoric3: 'cosmos_agoric-3',
+    cosmosAkashnet2: 'cosmos_akashnet-2',
+    cosmosArchway1: 'cosmos_archway-1',
+    cosmosAxelarDojo1: 'cosmos_axelar-dojo-1',
+    cosmosCelestia: 'cosmos_celestia',
+    cosmosCosmoshub4: 'cosmos_cosmoshub-4',
+    cosmosDydxMainnet1: 'cosmos_dydx-mainnet-1',
+    cosmosDydxTestnet4: 'cosmos_dydx-testnet-4',
+    cosmosDymension11001: 'cosmos_dymension_1100-1',
+    cosmosNeutron1: 'cosmos_neutron-1',
+    cosmosNoble1: 'cosmos_noble-1',
+    cosmosOsmosis1: 'cosmos_osmosis-1',
+    cosmosPacific1: 'cosmos_pacific-1',
+    cosmosStride1: 'cosmos_stride-1',
+    evm1: 'evm_1',
+    evm5: 'evm_5',
+    evm10: 'evm_10',
+    evm16: 'evm_16',
+    evm56: 'evm_56',
+    evm100: 'evm_100',
+    evm137: 'evm_137',
+    evm169: 'evm_169',
+    evm250: 'evm_250',
+    evm324: 'evm_324',
+    evm1030: 'evm_1030',
+    evm1100: 'evm_1100',
+    evm1101: 'evm_1101',
+    evm1329: 'evm_1329',
+    evm1729: 'evm_1729',
+    evm2222: 'evm_2222',
+    evm4200: 'evm_4200',
+    evm5000: 'evm_5000',
+    evm7000: 'evm_7000',
+    evm7700: 'evm_7700',
+    evm8453: 'evm_8453',
+    evm17000: 'evm_17000',
+    evm80001: 'evm_80001',
+    evm42161: 'evm_42161',
+    evm43114: 'evm_43114',
+    evm59144: 'evm_59144',
+    evm81457: 'evm_81457',
+    evm421614: 'evm_421614',
+    evm534352: 'evm_534352',
+    evm660279: 'evm_660279',
+    evm810180: 'evm_810180',
+    evm11155111: 'evm_11155111',
+    evmEthereumMainnet: 'evm_ethereum_mainnet',
+    evmEthereumGoerli: 'evm_ethereum_goerli',
+    evmOptimismMainnet: 'evm_optimism_mainnet',
+    evmFlareTestnet: 'evm_flare_testnet',
+    evmBscMainnet: 'evm_bsc_mainnet',
+    evmGnosisMainnet: 'evm_gnosis_mainnet',
+    evmPolygonMainnet: 'evm_polygon_mainnet',
+    evmMantaPacificMainnet: 'evm_manta_pacific_mainnet',
+    evmFantomMainnet: 'evm_fantom_mainnet',
+    evmZksyncEraMainnet: 'evm_zksync_era_mainnet',
+    evmConfluxMainnet: 'evm_conflux_mainnet',
+    evmDymensionMainnet: 'evm_dymension_mainnet',
+    evmPolygonZkevmMainnet: 'evm_polygon_zkevm_mainnet',
+    evmSeiMainnet: 'evm_sei_mainnet',
+    evmReyaMainnet: 'evm_reya_mainnet',
+    evmKavaMainnet: 'evm_kava_mainnet',
+    evmMerlinMainnet: 'evm_merlin_mainnet',
+    evmMantleMainnet: 'evm_mantle_mainnet',
+    evmZetaMainnet: 'evm_zeta_mainnet',
+    evmCantoMainnet: 'evm_canto_mainnet',
+    evmBaseMainnet: 'evm_base_mainnet',
+    evmEthereumHolesky: 'evm_ethereum_holesky',
+    evmPolygonMumbai: 'evm_polygon_mumbai',
+    evmArbitrumMainnet: 'evm_arbitrum_mainnet',
+    evmAvalancheChain: 'evm_avalanche_chain',
+    evmLineaMainnet: 'evm_linea_mainnet',
+    evmBlastMainnet: 'evm_blast_mainnet',
+    evmArbitrumSepolia: 'evm_arbitrum_sepolia',
+    evmScrollMainnet: 'evm_scroll_mainnet',
+    evmXaiMainnet: 'evm_xai_mainnet',
+    evmZklinkNovaMainnet: 'evm_zklink_nova_mainnet',
+    evmEthereumSepolia: 'evm_ethereum_sepolia',
+    solanaMainnet: 'solana_mainnet',
+    solanaDevnet: 'solana_devnet',
+    suiMainnet: 'sui_mainnet',
+    suiTestnet: 'sui_testnet',
+    bitcoinMainnet: 'bitcoin_mainnet',
+    bitcoinTestnet: 'bitcoin_testnet'
+} as const;
+export type ListTransactionsApiV1TransactionsGetChainsEnum = typeof ListTransactionsApiV1TransactionsGetChainsEnum[keyof typeof ListTransactionsApiV1TransactionsGetChainsEnum];

@@ -19,6 +19,18 @@ import {
     BlackBoxSignatureStateFromJSONTyped,
     BlackBoxSignatureStateToJSON,
 } from './BlackBoxSignatureState';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+} from './PricedAsset';
+import type { StateChangeReason } from './StateChangeReason';
+import {
+    StateChangeReasonFromJSON,
+    StateChangeReasonFromJSONTyped,
+    StateChangeReasonToJSON,
+} from './StateChangeReason';
 
 /**
  * 
@@ -32,6 +44,19 @@ export interface BlackBoxSignatureStateChange {
      * @memberof BlackBoxSignatureStateChange
      */
     changedAt: Date;
+    /**
+     * 
+     * @type {StateChangeReason}
+     * @memberof BlackBoxSignatureStateChange
+     */
+    reason?: StateChangeReason;
+    /**
+     * 
+     * @type {Array<PricedAsset>}
+     * @memberof BlackBoxSignatureStateChange
+     * @deprecated
+     */
+    assetPrices: Array<PricedAsset>;
     /**
      * 
      * @type {BlackBoxSignatureState}
@@ -52,6 +77,7 @@ export interface BlackBoxSignatureStateChange {
 export function instanceOfBlackBoxSignatureStateChange(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "changedAt" in value;
+    isInstance = isInstance && "assetPrices" in value;
     isInstance = isInstance && "newState" in value;
 
     return isInstance;
@@ -68,6 +94,8 @@ export function BlackBoxSignatureStateChangeFromJSONTyped(json: any, ignoreDiscr
     return {
         
         'changedAt': (new Date(json['changed_at'])),
+        'reason': !exists(json, 'reason') ? undefined : StateChangeReasonFromJSON(json['reason']),
+        'assetPrices': ((json['asset_prices'] as Array<any>).map(PricedAssetFromJSON)),
         'previousState': !exists(json, 'previous_state') ? undefined : BlackBoxSignatureStateFromJSON(json['previous_state']),
         'newState': BlackBoxSignatureStateFromJSON(json['new_state']),
     };
@@ -83,6 +111,8 @@ export function BlackBoxSignatureStateChangeToJSON(value?: BlackBoxSignatureStat
     return {
         
         'changed_at': (value.changedAt.toISOString()),
+        'reason': StateChangeReasonToJSON(value.reason),
+        'asset_prices': ((value.assetPrices as Array<any>).map(PricedAssetToJSON)),
         'previous_state': BlackBoxSignatureStateToJSON(value.previousState),
         'new_state': BlackBoxSignatureStateToJSON(value.newState),
     };

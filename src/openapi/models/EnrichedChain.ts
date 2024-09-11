@@ -13,6 +13,13 @@
  */
 
 import {
+    EnrichedAptosChain,
+    instanceOfEnrichedAptosChain,
+    EnrichedAptosChainFromJSON,
+    EnrichedAptosChainFromJSONTyped,
+    EnrichedAptosChainToJSON,
+} from './EnrichedAptosChain';
+import {
     EnrichedCosmosChain,
     instanceOfEnrichedCosmosChain,
     EnrichedCosmosChainFromJSON,
@@ -34,6 +41,13 @@ import {
     EnrichedSolanaChainToJSON,
 } from './EnrichedSolanaChain';
 import {
+    EnrichedSuiChain,
+    instanceOfEnrichedSuiChain,
+    EnrichedSuiChainFromJSON,
+    EnrichedSuiChainFromJSONTyped,
+    EnrichedSuiChainToJSON,
+} from './EnrichedSuiChain';
+import {
     EnrichedUtxoChain,
     instanceOfEnrichedUtxoChain,
     EnrichedUtxoChainFromJSON,
@@ -46,7 +60,7 @@ import {
  * 
  * @export
  */
-export type EnrichedChain = { chainType: 'cosmos' } & EnrichedCosmosChain | { chainType: 'evm' } & EnrichedEvmChain | { chainType: 'solana' } & EnrichedSolanaChain | { chainType: 'utxo' } & EnrichedUtxoChain;
+export type EnrichedChain = { chainType: 'aptos' } & EnrichedAptosChain | { chainType: 'cosmos' } & EnrichedCosmosChain | { chainType: 'evm' } & EnrichedEvmChain | { chainType: 'solana' } & EnrichedSolanaChain | { chainType: 'sui' } & EnrichedSuiChain | { chainType: 'utxo' } & EnrichedUtxoChain;
 
 export function EnrichedChainFromJSON(json: any): EnrichedChain {
     return EnrichedChainFromJSONTyped(json, false);
@@ -57,12 +71,16 @@ export function EnrichedChainFromJSONTyped(json: any, ignoreDiscriminator: boole
         return json;
     }
     switch (json['chain_type']) {
+        case 'aptos':
+            return {...EnrichedAptosChainFromJSONTyped(json, true), chainType: 'aptos'};
         case 'cosmos':
             return {...EnrichedCosmosChainFromJSONTyped(json, true), chainType: 'cosmos'};
         case 'evm':
             return {...EnrichedEvmChainFromJSONTyped(json, true), chainType: 'evm'};
         case 'solana':
             return {...EnrichedSolanaChainFromJSONTyped(json, true), chainType: 'solana'};
+        case 'sui':
+            return {...EnrichedSuiChainFromJSONTyped(json, true), chainType: 'sui'};
         case 'utxo':
             return {...EnrichedUtxoChainFromJSONTyped(json, true), chainType: 'utxo'};
         default:
@@ -78,12 +96,16 @@ export function EnrichedChainToJSON(value?: EnrichedChain | null): any {
         return null;
     }
     switch (value['chainType']) {
+        case 'aptos':
+            return EnrichedAptosChainToJSON(value);
         case 'cosmos':
             return EnrichedCosmosChainToJSON(value);
         case 'evm':
             return EnrichedEvmChainToJSON(value);
         case 'solana':
             return EnrichedSolanaChainToJSON(value);
+        case 'sui':
+            return EnrichedSuiChainToJSON(value);
         case 'utxo':
             return EnrichedUtxoChainToJSON(value);
         default:

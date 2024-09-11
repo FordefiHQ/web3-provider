@@ -19,12 +19,12 @@ import {
     CreateSolanaTransactionRequestDetailsFromJSONTyped,
     CreateSolanaTransactionRequestDetailsToJSON,
 } from './CreateSolanaTransactionRequestDetails';
-import type { PushMode } from './PushMode';
+import type { SignMode } from './SignMode';
 import {
-    PushModeFromJSON,
-    PushModeFromJSONTyped,
-    PushModeToJSON,
-} from './PushMode';
+    SignModeFromJSON,
+    SignModeFromJSONTyped,
+    SignModeToJSON,
+} from './SignMode';
 import type { SignerType } from './SignerType';
 import {
     SignerTypeFromJSON,
@@ -58,16 +58,16 @@ export interface CreateSolanaTransactionRequest {
     signerType?: SignerType;
     /**
      * 
+     * @type {SignMode}
+     * @memberof CreateSolanaTransactionRequest
+     */
+    signMode?: SignMode;
+    /**
+     * 
      * @type {string}
      * @memberof CreateSolanaTransactionRequest
      */
     type: CreateSolanaTransactionRequestTypeEnum;
-    /**
-     * 
-     * @type {PushMode}
-     * @memberof CreateSolanaTransactionRequest
-     */
-    pushMode?: PushMode;
     /**
      * 
      * @type {CreateSolanaTransactionRequestDetails}
@@ -111,8 +111,8 @@ export function CreateSolanaTransactionRequestFromJSONTyped(json: any, ignoreDis
         'vaultId': json['vault_id'],
         'note': !exists(json, 'note') ? undefined : json['note'],
         'signerType': !exists(json, 'signer_type') ? undefined : SignerTypeFromJSON(json['signer_type']),
+        'signMode': !exists(json, 'sign_mode') ? undefined : SignModeFromJSON(json['sign_mode']),
         'type': json['type'],
-        'pushMode': !exists(json, 'push_mode') ? undefined : PushModeFromJSON(json['push_mode']),
         'details': CreateSolanaTransactionRequestDetailsFromJSON(json['details']),
     };
 }
@@ -129,8 +129,8 @@ export function CreateSolanaTransactionRequestToJSON(value?: CreateSolanaTransac
         'vault_id': value.vaultId,
         'note': value.note,
         'signer_type': SignerTypeToJSON(value.signerType),
+        'sign_mode': SignModeToJSON(value.signMode),
         'type': value.type,
-        'push_mode': PushModeToJSON(value.pushMode),
         'details': CreateSolanaTransactionRequestDetailsToJSON(value.details),
     };
 }

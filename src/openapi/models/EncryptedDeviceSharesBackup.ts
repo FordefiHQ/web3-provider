@@ -49,6 +49,18 @@ export interface EncryptedDeviceSharesBackup {
      * @memberof EncryptedDeviceSharesBackup
      */
     ecdsaStark?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EncryptedDeviceSharesBackup
+     */
+    schnorrSecp256k1?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EncryptedDeviceSharesBackup
+     */
+    authKey?: string;
 }
 
 /**
@@ -76,6 +88,8 @@ export function EncryptedDeviceSharesBackupFromJSONTyped(json: any, ignoreDiscri
         'ecdsa': !exists(json, 'ecdsa') ? undefined : json['ecdsa'],
         'eddsa': !exists(json, 'eddsa') ? undefined : json['eddsa'],
         'ecdsaStark': !exists(json, 'ecdsa_stark') ? undefined : json['ecdsa_stark'],
+        'schnorrSecp256k1': !exists(json, 'schnorr_secp256k1') ? undefined : json['schnorr_secp256k1'],
+        'authKey': !exists(json, 'auth_key') ? undefined : json['auth_key'],
     };
 }
 
@@ -93,6 +107,8 @@ export function EncryptedDeviceSharesBackupToJSON(value?: EncryptedDeviceSharesB
         'ecdsa': value.ecdsa,
         'eddsa': value.eddsa,
         'ecdsa_stark': value.ecdsaStark,
+        'schnorr_secp256k1': value.schnorrSecp256k1,
+        'auth_key': value.authKey,
     };
 }
 

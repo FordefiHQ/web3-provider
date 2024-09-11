@@ -31,12 +31,24 @@ import {
     PolicyMatchFromJSONTyped,
     PolicyMatchToJSON,
 } from './PolicyMatch';
+import type { PredictedUtxoTransactionUtxoTransactionTypeDetails } from './PredictedUtxoTransactionUtxoTransactionTypeDetails';
+import {
+    PredictedUtxoTransactionUtxoTransactionTypeDetailsFromJSON,
+    PredictedUtxoTransactionUtxoTransactionTypeDetailsFromJSONTyped,
+    PredictedUtxoTransactionUtxoTransactionTypeDetailsToJSON,
+} from './PredictedUtxoTransactionUtxoTransactionTypeDetails';
 import type { TransactionRisk } from './TransactionRisk';
 import {
     TransactionRiskFromJSON,
     TransactionRiskFromJSONTyped,
     TransactionRiskToJSON,
 } from './TransactionRisk';
+import type { UtxoSuggestedFees } from './UtxoSuggestedFees';
+import {
+    UtxoSuggestedFeesFromJSON,
+    UtxoSuggestedFeesFromJSONTyped,
+    UtxoSuggestedFeesToJSON,
+} from './UtxoSuggestedFees';
 import type { UtxoTransactionResult } from './UtxoTransactionResult';
 import {
     UtxoTransactionResultFromJSON,
@@ -86,6 +98,18 @@ export interface PredictedUtxoTransaction {
      * @memberof PredictedUtxoTransaction
      */
     expectedResult: UtxoTransactionResult;
+    /**
+     * 
+     * @type {PredictedUtxoTransactionUtxoTransactionTypeDetails}
+     * @memberof PredictedUtxoTransaction
+     */
+    utxoTransactionTypeDetails: PredictedUtxoTransactionUtxoTransactionTypeDetails;
+    /**
+     * 
+     * @type {UtxoSuggestedFees}
+     * @memberof PredictedUtxoTransaction
+     */
+    suggestedFees: UtxoSuggestedFees;
 }
 
 
@@ -108,6 +132,8 @@ export function instanceOfPredictedUtxoTransaction(value: object): boolean {
     isInstance = isInstance && "type" in value;
     isInstance = isInstance && "chain" in value;
     isInstance = isInstance && "expectedResult" in value;
+    isInstance = isInstance && "utxoTransactionTypeDetails" in value;
+    isInstance = isInstance && "suggestedFees" in value;
 
     return isInstance;
 }
@@ -128,6 +154,8 @@ export function PredictedUtxoTransactionFromJSONTyped(json: any, ignoreDiscrimin
         'type': json['type'],
         'chain': EnrichedUtxoChainFromJSON(json['chain']),
         'expectedResult': UtxoTransactionResultFromJSON(json['expected_result']),
+        'utxoTransactionTypeDetails': PredictedUtxoTransactionUtxoTransactionTypeDetailsFromJSON(json['utxo_transaction_type_details']),
+        'suggestedFees': UtxoSuggestedFeesFromJSON(json['suggested_fees']),
     };
 }
 
@@ -146,6 +174,8 @@ export function PredictedUtxoTransactionToJSON(value?: PredictedUtxoTransaction 
         'type': value.type,
         'chain': EnrichedUtxoChainToJSON(value.chain),
         'expected_result': UtxoTransactionResultToJSON(value.expectedResult),
+        'utxo_transaction_type_details': PredictedUtxoTransactionUtxoTransactionTypeDetailsToJSON(value.utxoTransactionTypeDetails),
+        'suggested_fees': UtxoSuggestedFeesToJSON(value.suggestedFees),
     };
 }
 

@@ -25,6 +25,12 @@ import {
     CreateBlackBoxSignatureRequestDetailsFromJSONTyped,
     CreateBlackBoxSignatureRequestDetailsToJSON,
 } from './CreateBlackBoxSignatureRequestDetails';
+import type { SignMode } from './SignMode';
+import {
+    SignModeFromJSON,
+    SignModeFromJSONTyped,
+    SignModeToJSON,
+} from './SignMode';
 import type { SignerType } from './SignerType';
 import {
     SignerTypeFromJSON,
@@ -58,6 +64,12 @@ export interface CreateBlackBoxSignatureWithWaitRequest {
     signerType?: SignerType;
     /**
      * 
+     * @type {SignMode}
+     * @memberof CreateBlackBoxSignatureWithWaitRequest
+     */
+    signMode?: SignMode;
+    /**
+     * 
      * @type {string}
      * @memberof CreateBlackBoxSignatureWithWaitRequest
      */
@@ -68,6 +80,12 @@ export interface CreateBlackBoxSignatureWithWaitRequest {
      * @memberof CreateBlackBoxSignatureWithWaitRequest
      */
     details: CreateBlackBoxSignatureRequestDetails;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateBlackBoxSignatureWithWaitRequest
+     */
+    timeout?: number;
     /**
      * 
      * @type {BlackBoxSignatureState}
@@ -112,8 +130,10 @@ export function CreateBlackBoxSignatureWithWaitRequestFromJSONTyped(json: any, i
         'vaultId': json['vault_id'],
         'note': !exists(json, 'note') ? undefined : json['note'],
         'signerType': !exists(json, 'signer_type') ? undefined : SignerTypeFromJSON(json['signer_type']),
+        'signMode': !exists(json, 'sign_mode') ? undefined : SignModeFromJSON(json['sign_mode']),
         'type': json['type'],
         'details': CreateBlackBoxSignatureRequestDetailsFromJSON(json['details']),
+        'timeout': !exists(json, 'timeout') ? undefined : json['timeout'],
         'waitForState': BlackBoxSignatureStateFromJSON(json['wait_for_state']),
     };
 }
@@ -130,8 +150,10 @@ export function CreateBlackBoxSignatureWithWaitRequestToJSON(value?: CreateBlack
         'vault_id': value.vaultId,
         'note': value.note,
         'signer_type': SignerTypeToJSON(value.signerType),
+        'sign_mode': SignModeToJSON(value.signMode),
         'type': value.type,
         'details': CreateBlackBoxSignatureRequestDetailsToJSON(value.details),
+        'timeout': value.timeout,
         'wait_for_state': BlackBoxSignatureStateToJSON(value.waitForState),
     };
 }

@@ -30,8 +30,15 @@ export interface Price {
      * 
      * @type {string}
      * @memberof Price
+     * @deprecated
      */
     price: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Price
+     */
+    priceFloat: string;
     /**
      * 
      * @type {FiatCurrency}
@@ -46,6 +53,7 @@ export interface Price {
 export function instanceOfPrice(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "price" in value;
+    isInstance = isInstance && "priceFloat" in value;
     isInstance = isInstance && "fiatCurrency" in value;
 
     return isInstance;
@@ -62,6 +70,7 @@ export function PriceFromJSONTyped(json: any, ignoreDiscriminator: boolean): Pri
     return {
         
         'price': json['price'],
+        'priceFloat': json['price_float'],
         'fiatCurrency': FiatCurrencyFromJSON(json['fiat_currency']),
     };
 }
@@ -76,6 +85,7 @@ export function PriceToJSON(value?: Price | null): any {
     return {
         
         'price': value.price,
+        'price_float': value.priceFloat,
         'fiat_currency': FiatCurrencyToJSON(value.fiatCurrency),
     };
 }

@@ -43,21 +43,21 @@ export interface RuleActionRequireApproval {
      * @type {Array<ApprovalGroup>}
      * @memberof RuleActionRequireApproval
      */
-    approvalGroups?: Array<ApprovalGroup>;
+    approvalGroups: Array<ApprovalGroup>;
     /**
      * 
      * @type {number}
      * @memberof RuleActionRequireApproval
      * @deprecated
      */
-    threshold: number;
+    threshold?: number;
     /**
      * 
      * @type {Array<UserRef>}
      * @memberof RuleActionRequireApproval
      * @deprecated
      */
-    approvers: Array<UserRef>;
+    approvers?: Array<UserRef>;
 }
 
 
@@ -76,8 +76,7 @@ export type RuleActionRequireApprovalTypeEnum = typeof RuleActionRequireApproval
 export function instanceOfRuleActionRequireApproval(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "threshold" in value;
-    isInstance = isInstance && "approvers" in value;
+    isInstance = isInstance && "approvalGroups" in value;
 
     return isInstance;
 }
@@ -93,9 +92,9 @@ export function RuleActionRequireApprovalFromJSONTyped(json: any, ignoreDiscrimi
     return {
         
         'type': json['type'],
-        'approvalGroups': !exists(json, 'approval_groups') ? undefined : ((json['approval_groups'] as Array<any>).map(ApprovalGroupFromJSON)),
-        'threshold': json['threshold'],
-        'approvers': ((json['approvers'] as Array<any>).map(UserRefFromJSON)),
+        'approvalGroups': ((json['approval_groups'] as Array<any>).map(ApprovalGroupFromJSON)),
+        'threshold': !exists(json, 'threshold') ? undefined : json['threshold'],
+        'approvers': !exists(json, 'approvers') ? undefined : ((json['approvers'] as Array<any>).map(UserRefFromJSON)),
     };
 }
 
@@ -109,9 +108,9 @@ export function RuleActionRequireApprovalToJSON(value?: RuleActionRequireApprova
     return {
         
         'type': value.type,
-        'approval_groups': value.approvalGroups === undefined ? undefined : ((value.approvalGroups as Array<any>).map(ApprovalGroupToJSON)),
+        'approval_groups': ((value.approvalGroups as Array<any>).map(ApprovalGroupToJSON)),
         'threshold': value.threshold,
-        'approvers': ((value.approvers as Array<any>).map(UserRefToJSON)),
+        'approvers': value.approvers === undefined ? undefined : ((value.approvers as Array<any>).map(UserRefToJSON)),
     };
 }
 

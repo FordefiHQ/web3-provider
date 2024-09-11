@@ -138,6 +138,7 @@ export interface BlackBoxSignature {
      * 
      * @type {string}
      * @memberof BlackBoxSignature
+     * @deprecated
      */
     payload: string;
     /**

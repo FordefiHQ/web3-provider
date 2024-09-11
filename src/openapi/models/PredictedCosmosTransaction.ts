@@ -19,12 +19,30 @@ import {
     ApprovalRequestFromJSONTyped,
     ApprovalRequestToJSON,
 } from './ApprovalRequest';
+import type { CosmosSuggestedFees } from './CosmosSuggestedFees';
+import {
+    CosmosSuggestedFeesFromJSON,
+    CosmosSuggestedFeesFromJSONTyped,
+    CosmosSuggestedFeesToJSON,
+} from './CosmosSuggestedFees';
 import type { CosmosTransactionResult } from './CosmosTransactionResult';
 import {
     CosmosTransactionResultFromJSON,
     CosmosTransactionResultFromJSONTyped,
     CosmosTransactionResultToJSON,
 } from './CosmosTransactionResult';
+import type { CosmosTransactionTypeDetails } from './CosmosTransactionTypeDetails';
+import {
+    CosmosTransactionTypeDetailsFromJSON,
+    CosmosTransactionTypeDetailsFromJSONTyped,
+    CosmosTransactionTypeDetailsToJSON,
+} from './CosmosTransactionTypeDetails';
+import type { EnrichedCosmosBechAddress } from './EnrichedCosmosBechAddress';
+import {
+    EnrichedCosmosBechAddressFromJSON,
+    EnrichedCosmosBechAddressFromJSONTyped,
+    EnrichedCosmosBechAddressToJSON,
+} from './EnrichedCosmosBechAddress';
 import type { EnrichedCosmosChain } from './EnrichedCosmosChain';
 import {
     EnrichedCosmosChainFromJSON,
@@ -86,6 +104,30 @@ export interface PredictedCosmosTransaction {
      * @memberof PredictedCosmosTransaction
      */
     chain: EnrichedCosmosChain;
+    /**
+     * 
+     * @type {CosmosTransactionTypeDetails}
+     * @memberof PredictedCosmosTransaction
+     */
+    cosmosTransactionTypeDetails: CosmosTransactionTypeDetails;
+    /**
+     * 
+     * @type {string}
+     * @memberof PredictedCosmosTransaction
+     */
+    memo?: string;
+    /**
+     * 
+     * @type {EnrichedCosmosBechAddress}
+     * @memberof PredictedCosmosTransaction
+     */
+    sender: EnrichedCosmosBechAddress;
+    /**
+     * 
+     * @type {CosmosSuggestedFees}
+     * @memberof PredictedCosmosTransaction
+     */
+    suggestedFees: CosmosSuggestedFees;
 }
 
 
@@ -108,6 +150,9 @@ export function instanceOfPredictedCosmosTransaction(value: object): boolean {
     isInstance = isInstance && "type" in value;
     isInstance = isInstance && "expectedResult" in value;
     isInstance = isInstance && "chain" in value;
+    isInstance = isInstance && "cosmosTransactionTypeDetails" in value;
+    isInstance = isInstance && "sender" in value;
+    isInstance = isInstance && "suggestedFees" in value;
 
     return isInstance;
 }
@@ -128,6 +173,10 @@ export function PredictedCosmosTransactionFromJSONTyped(json: any, ignoreDiscrim
         'type': json['type'],
         'expectedResult': CosmosTransactionResultFromJSON(json['expected_result']),
         'chain': EnrichedCosmosChainFromJSON(json['chain']),
+        'cosmosTransactionTypeDetails': CosmosTransactionTypeDetailsFromJSON(json['cosmos_transaction_type_details']),
+        'memo': !exists(json, 'memo') ? undefined : json['memo'],
+        'sender': EnrichedCosmosBechAddressFromJSON(json['sender']),
+        'suggestedFees': CosmosSuggestedFeesFromJSON(json['suggested_fees']),
     };
 }
 
@@ -146,6 +195,10 @@ export function PredictedCosmosTransactionToJSON(value?: PredictedCosmosTransact
         'type': value.type,
         'expected_result': CosmosTransactionResultToJSON(value.expectedResult),
         'chain': EnrichedCosmosChainToJSON(value.chain),
+        'cosmos_transaction_type_details': CosmosTransactionTypeDetailsToJSON(value.cosmosTransactionTypeDetails),
+        'memo': value.memo,
+        'sender': EnrichedCosmosBechAddressToJSON(value.sender),
+        'suggested_fees': CosmosSuggestedFeesToJSON(value.suggestedFees),
     };
 }
 

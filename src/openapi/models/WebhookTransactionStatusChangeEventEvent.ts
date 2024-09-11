@@ -13,12 +13,33 @@
  */
 
 import {
+    WebhookAptosMessageStatusChangeEvent,
+    instanceOfWebhookAptosMessageStatusChangeEvent,
+    WebhookAptosMessageStatusChangeEventFromJSON,
+    WebhookAptosMessageStatusChangeEventFromJSONTyped,
+    WebhookAptosMessageStatusChangeEventToJSON,
+} from './WebhookAptosMessageStatusChangeEvent';
+import {
+    WebhookAptosTransactionStatusChangeEvent,
+    instanceOfWebhookAptosTransactionStatusChangeEvent,
+    WebhookAptosTransactionStatusChangeEventFromJSON,
+    WebhookAptosTransactionStatusChangeEventFromJSONTyped,
+    WebhookAptosTransactionStatusChangeEventToJSON,
+} from './WebhookAptosTransactionStatusChangeEvent';
+import {
     WebhookBlackBoxSignatureStatusChangeEvent,
     instanceOfWebhookBlackBoxSignatureStatusChangeEvent,
     WebhookBlackBoxSignatureStatusChangeEventFromJSON,
     WebhookBlackBoxSignatureStatusChangeEventFromJSONTyped,
     WebhookBlackBoxSignatureStatusChangeEventToJSON,
 } from './WebhookBlackBoxSignatureStatusChangeEvent';
+import {
+    WebhookCosmosMessageStatusChangeEvent,
+    instanceOfWebhookCosmosMessageStatusChangeEvent,
+    WebhookCosmosMessageStatusChangeEventFromJSON,
+    WebhookCosmosMessageStatusChangeEventFromJSONTyped,
+    WebhookCosmosMessageStatusChangeEventToJSON,
+} from './WebhookCosmosMessageStatusChangeEvent';
 import {
     WebhookCosmosTransactionStatusChangeEvent,
     instanceOfWebhookCosmosTransactionStatusChangeEvent,
@@ -55,6 +76,27 @@ import {
     WebhookSolanaTransactionStatusChangeEventToJSON,
 } from './WebhookSolanaTransactionStatusChangeEvent';
 import {
+    WebhookSuiMessageStatusChangeEvent,
+    instanceOfWebhookSuiMessageStatusChangeEvent,
+    WebhookSuiMessageStatusChangeEventFromJSON,
+    WebhookSuiMessageStatusChangeEventFromJSONTyped,
+    WebhookSuiMessageStatusChangeEventToJSON,
+} from './WebhookSuiMessageStatusChangeEvent';
+import {
+    WebhookSuiTransactionStatusChangeEvent,
+    instanceOfWebhookSuiTransactionStatusChangeEvent,
+    WebhookSuiTransactionStatusChangeEventFromJSON,
+    WebhookSuiTransactionStatusChangeEventFromJSONTyped,
+    WebhookSuiTransactionStatusChangeEventToJSON,
+} from './WebhookSuiTransactionStatusChangeEvent';
+import {
+    WebhookUtxoMessageStatusChangeEvent,
+    instanceOfWebhookUtxoMessageStatusChangeEvent,
+    WebhookUtxoMessageStatusChangeEventFromJSON,
+    WebhookUtxoMessageStatusChangeEventFromJSONTyped,
+    WebhookUtxoMessageStatusChangeEventToJSON,
+} from './WebhookUtxoMessageStatusChangeEvent';
+import {
     WebhookUtxoTransactionStatusChangeEvent,
     instanceOfWebhookUtxoTransactionStatusChangeEvent,
     WebhookUtxoTransactionStatusChangeEventFromJSON,
@@ -67,7 +109,7 @@ import {
  * 
  * @export
  */
-export type WebhookTransactionStatusChangeEventEvent = { type: 'black_box_signature' } & WebhookBlackBoxSignatureStatusChangeEvent | { type: 'cosmos_transaction' } & WebhookCosmosTransactionStatusChangeEvent | { type: 'evm_message' } & WebhookEvmMessageStatusChangeEvent | { type: 'evm_transaction' } & WebhookEvmTransactionStatusChangeEvent | { type: 'solana_message' } & WebhookSolanaMessageStatusChangeEvent | { type: 'solana_transaction' } & WebhookSolanaTransactionStatusChangeEvent | { type: 'utxo_transaction' } & WebhookUtxoTransactionStatusChangeEvent;
+export type WebhookTransactionStatusChangeEventEvent = { type: 'aptos_message' } & WebhookAptosMessageStatusChangeEvent | { type: 'aptos_transaction' } & WebhookAptosTransactionStatusChangeEvent | { type: 'black_box_signature' } & WebhookBlackBoxSignatureStatusChangeEvent | { type: 'cosmos_message' } & WebhookCosmosMessageStatusChangeEvent | { type: 'cosmos_transaction' } & WebhookCosmosTransactionStatusChangeEvent | { type: 'evm_message' } & WebhookEvmMessageStatusChangeEvent | { type: 'evm_transaction' } & WebhookEvmTransactionStatusChangeEvent | { type: 'solana_message' } & WebhookSolanaMessageStatusChangeEvent | { type: 'solana_transaction' } & WebhookSolanaTransactionStatusChangeEvent | { type: 'sui_message' } & WebhookSuiMessageStatusChangeEvent | { type: 'sui_transaction' } & WebhookSuiTransactionStatusChangeEvent | { type: 'utxo_message' } & WebhookUtxoMessageStatusChangeEvent | { type: 'utxo_transaction' } & WebhookUtxoTransactionStatusChangeEvent;
 
 export function WebhookTransactionStatusChangeEventEventFromJSON(json: any): WebhookTransactionStatusChangeEventEvent {
     return WebhookTransactionStatusChangeEventEventFromJSONTyped(json, false);
@@ -78,8 +120,14 @@ export function WebhookTransactionStatusChangeEventEventFromJSONTyped(json: any,
         return json;
     }
     switch (json['type']) {
+        case 'aptos_message':
+            return {...WebhookAptosMessageStatusChangeEventFromJSONTyped(json, true), type: 'aptos_message'};
+        case 'aptos_transaction':
+            return {...WebhookAptosTransactionStatusChangeEventFromJSONTyped(json, true), type: 'aptos_transaction'};
         case 'black_box_signature':
             return {...WebhookBlackBoxSignatureStatusChangeEventFromJSONTyped(json, true), type: 'black_box_signature'};
+        case 'cosmos_message':
+            return {...WebhookCosmosMessageStatusChangeEventFromJSONTyped(json, true), type: 'cosmos_message'};
         case 'cosmos_transaction':
             return {...WebhookCosmosTransactionStatusChangeEventFromJSONTyped(json, true), type: 'cosmos_transaction'};
         case 'evm_message':
@@ -90,6 +138,12 @@ export function WebhookTransactionStatusChangeEventEventFromJSONTyped(json: any,
             return {...WebhookSolanaMessageStatusChangeEventFromJSONTyped(json, true), type: 'solana_message'};
         case 'solana_transaction':
             return {...WebhookSolanaTransactionStatusChangeEventFromJSONTyped(json, true), type: 'solana_transaction'};
+        case 'sui_message':
+            return {...WebhookSuiMessageStatusChangeEventFromJSONTyped(json, true), type: 'sui_message'};
+        case 'sui_transaction':
+            return {...WebhookSuiTransactionStatusChangeEventFromJSONTyped(json, true), type: 'sui_transaction'};
+        case 'utxo_message':
+            return {...WebhookUtxoMessageStatusChangeEventFromJSONTyped(json, true), type: 'utxo_message'};
         case 'utxo_transaction':
             return {...WebhookUtxoTransactionStatusChangeEventFromJSONTyped(json, true), type: 'utxo_transaction'};
         default:
@@ -105,8 +159,14 @@ export function WebhookTransactionStatusChangeEventEventToJSON(value?: WebhookTr
         return null;
     }
     switch (value['type']) {
+        case 'aptos_message':
+            return WebhookAptosMessageStatusChangeEventToJSON(value);
+        case 'aptos_transaction':
+            return WebhookAptosTransactionStatusChangeEventToJSON(value);
         case 'black_box_signature':
             return WebhookBlackBoxSignatureStatusChangeEventToJSON(value);
+        case 'cosmos_message':
+            return WebhookCosmosMessageStatusChangeEventToJSON(value);
         case 'cosmos_transaction':
             return WebhookCosmosTransactionStatusChangeEventToJSON(value);
         case 'evm_message':
@@ -117,6 +177,12 @@ export function WebhookTransactionStatusChangeEventEventToJSON(value?: WebhookTr
             return WebhookSolanaMessageStatusChangeEventToJSON(value);
         case 'solana_transaction':
             return WebhookSolanaTransactionStatusChangeEventToJSON(value);
+        case 'sui_message':
+            return WebhookSuiMessageStatusChangeEventToJSON(value);
+        case 'sui_transaction':
+            return WebhookSuiTransactionStatusChangeEventToJSON(value);
+        case 'utxo_message':
+            return WebhookUtxoMessageStatusChangeEventToJSON(value);
         case 'utxo_transaction':
             return WebhookUtxoTransactionStatusChangeEventToJSON(value);
         default:

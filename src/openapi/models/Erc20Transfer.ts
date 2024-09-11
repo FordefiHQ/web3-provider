@@ -31,6 +31,12 @@ import {
     PriceFromJSONTyped,
     PriceToJSON,
 } from './Price';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+} from './PricedAsset';
 
 /**
  * 
@@ -38,6 +44,18 @@ import {
  * @interface Erc20Transfer
  */
 export interface Erc20Transfer {
+    /**
+     * 
+     * @type {PricedAsset}
+     * @memberof Erc20Transfer
+     */
+    pricedAsset: PricedAsset;
+    /**
+     * 
+     * @type {string}
+     * @memberof Erc20Transfer
+     */
+    amount: string;
     /**
      * 
      * @type {string}
@@ -56,12 +74,6 @@ export interface Erc20Transfer {
      * @memberof Erc20Transfer
      */
     to: EnrichedEvmAddress;
-    /**
-     * 
-     * @type {string}
-     * @memberof Erc20Transfer
-     */
-    amount: string;
     /**
      * 
      * @type {Erc20Contract}
@@ -91,10 +103,11 @@ export type Erc20TransferTypeEnum = typeof Erc20TransferTypeEnum[keyof typeof Er
  */
 export function instanceOfErc20Transfer(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "pricedAsset" in value;
+    isInstance = isInstance && "amount" in value;
     isInstance = isInstance && "type" in value;
     isInstance = isInstance && "from" in value;
     isInstance = isInstance && "to" in value;
-    isInstance = isInstance && "amount" in value;
     isInstance = isInstance && "tokenContract" in value;
 
     return isInstance;
@@ -110,10 +123,11 @@ export function Erc20TransferFromJSONTyped(json: any, ignoreDiscriminator: boole
     }
     return {
         
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
+        'amount': json['amount'],
         'type': json['type'],
         'from': EnrichedEvmAddressFromJSON(json['from']),
         'to': EnrichedEvmAddressFromJSON(json['to']),
-        'amount': json['amount'],
         'tokenContract': Erc20ContractFromJSON(json['token_contract']),
         'price': !exists(json, 'price') ? undefined : PriceFromJSON(json['price']),
     };
@@ -128,10 +142,11 @@ export function Erc20TransferToJSON(value?: Erc20Transfer | null): any {
     }
     return {
         
+        'priced_asset': PricedAssetToJSON(value.pricedAsset),
+        'amount': value.amount,
         'type': value.type,
         'from': EnrichedEvmAddressToJSON(value.from),
         'to': EnrichedEvmAddressToJSON(value.to),
-        'amount': value.amount,
         'token_contract': Erc20ContractToJSON(value.tokenContract),
         'price': PriceToJSON(value.price),
     };

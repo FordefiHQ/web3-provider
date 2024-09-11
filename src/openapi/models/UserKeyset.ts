@@ -94,6 +94,12 @@ export interface UserKeyset {
     ecdsaStark?: KeysetKey;
     /**
      * 
+     * @type {KeysetKey}
+     * @memberof UserKeyset
+     */
+    schnorrSecp256k1?: KeysetKey;
+    /**
+     * 
      * @type {Array<EncryptedDeviceSharesBackup>}
      * @memberof UserKeyset
      */
@@ -116,6 +122,18 @@ export interface UserKeyset {
      * @memberof UserKeyset
      */
     lastBackupAt: Date;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserKeyset
+     */
+    exportAllowed: boolean;
+    /**
+     * 
+     * @type {Date}
+     * @memberof UserKeyset
+     */
+    lastExportAt: Date;
 }
 
 
@@ -140,6 +158,8 @@ export function instanceOfUserKeyset(value: object): boolean {
     isInstance = isInstance && "scope" in value;
     isInstance = isInstance && "user" in value;
     isInstance = isInstance && "lastBackupAt" in value;
+    isInstance = isInstance && "exportAllowed" in value;
+    isInstance = isInstance && "lastExportAt" in value;
 
     return isInstance;
 }
@@ -162,10 +182,13 @@ export function UserKeysetFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'ecdsa': !exists(json, 'ecdsa') ? undefined : KeysetKeyFromJSON(json['ecdsa']),
         'eddsa': !exists(json, 'eddsa') ? undefined : KeysetKeyFromJSON(json['eddsa']),
         'ecdsaStark': !exists(json, 'ecdsa_stark') ? undefined : KeysetKeyFromJSON(json['ecdsa_stark']),
+        'schnorrSecp256k1': !exists(json, 'schnorr_secp256k1') ? undefined : KeysetKeyFromJSON(json['schnorr_secp256k1']),
         'encryptedDeviceSharesBackups': !exists(json, 'encrypted_device_shares_backups') ? undefined : ((json['encrypted_device_shares_backups'] as Array<any>).map(EncryptedDeviceSharesBackupFromJSON)),
         'scope': json['scope'],
         'user': EndUserRefFromJSON(json['user']),
         'lastBackupAt': (new Date(json['last_backup_at'])),
+        'exportAllowed': json['export_allowed'],
+        'lastExportAt': (new Date(json['last_export_at'])),
     };
 }
 
@@ -186,10 +209,13 @@ export function UserKeysetToJSON(value?: UserKeyset | null): any {
         'ecdsa': KeysetKeyToJSON(value.ecdsa),
         'eddsa': KeysetKeyToJSON(value.eddsa),
         'ecdsa_stark': KeysetKeyToJSON(value.ecdsaStark),
+        'schnorr_secp256k1': KeysetKeyToJSON(value.schnorrSecp256k1),
         'encrypted_device_shares_backups': value.encryptedDeviceSharesBackups === undefined ? undefined : ((value.encryptedDeviceSharesBackups as Array<any>).map(EncryptedDeviceSharesBackupToJSON)),
         'scope': value.scope,
         'user': EndUserRefToJSON(value.user),
         'last_backup_at': (value.lastBackupAt.toISOString()),
+        'export_allowed': value.exportAllowed,
+        'last_export_at': (value.lastExportAt.toISOString()),
     };
 }
 

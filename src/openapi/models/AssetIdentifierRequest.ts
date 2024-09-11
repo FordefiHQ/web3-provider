@@ -13,6 +13,13 @@
  */
 
 import {
+    AptosAssetIdentifierRequest,
+    instanceOfAptosAssetIdentifierRequest,
+    AptosAssetIdentifierRequestFromJSON,
+    AptosAssetIdentifierRequestFromJSONTyped,
+    AptosAssetIdentifierRequestToJSON,
+} from './AptosAssetIdentifierRequest';
+import {
     CosmosAssetIdentifierRequest,
     instanceOfCosmosAssetIdentifierRequest,
     CosmosAssetIdentifierRequestFromJSON,
@@ -34,6 +41,13 @@ import {
     SolanaAssetIdentifierRequestToJSON,
 } from './SolanaAssetIdentifierRequest';
 import {
+    SuiAssetIdentifierRequest,
+    instanceOfSuiAssetIdentifierRequest,
+    SuiAssetIdentifierRequestFromJSON,
+    SuiAssetIdentifierRequestFromJSONTyped,
+    SuiAssetIdentifierRequestToJSON,
+} from './SuiAssetIdentifierRequest';
+import {
     UtxoAssetIdentifierRequest,
     instanceOfUtxoAssetIdentifierRequest,
     UtxoAssetIdentifierRequestFromJSON,
@@ -46,7 +60,7 @@ import {
  * 
  * @export
  */
-export type AssetIdentifierRequest = { type: 'cosmos' } & CosmosAssetIdentifierRequest | { type: 'evm' } & EvmAssetIdentifierRequest | { type: 'solana' } & SolanaAssetIdentifierRequest | { type: 'utxo' } & UtxoAssetIdentifierRequest;
+export type AssetIdentifierRequest = { type: 'aptos' } & AptosAssetIdentifierRequest | { type: 'cosmos' } & CosmosAssetIdentifierRequest | { type: 'evm' } & EvmAssetIdentifierRequest | { type: 'solana' } & SolanaAssetIdentifierRequest | { type: 'sui' } & SuiAssetIdentifierRequest | { type: 'utxo' } & UtxoAssetIdentifierRequest;
 
 export function AssetIdentifierRequestFromJSON(json: any): AssetIdentifierRequest {
     return AssetIdentifierRequestFromJSONTyped(json, false);
@@ -57,12 +71,16 @@ export function AssetIdentifierRequestFromJSONTyped(json: any, ignoreDiscriminat
         return json;
     }
     switch (json['type']) {
+        case 'aptos':
+            return {...AptosAssetIdentifierRequestFromJSONTyped(json, true), type: 'aptos'};
         case 'cosmos':
             return {...CosmosAssetIdentifierRequestFromJSONTyped(json, true), type: 'cosmos'};
         case 'evm':
             return {...EvmAssetIdentifierRequestFromJSONTyped(json, true), type: 'evm'};
         case 'solana':
             return {...SolanaAssetIdentifierRequestFromJSONTyped(json, true), type: 'solana'};
+        case 'sui':
+            return {...SuiAssetIdentifierRequestFromJSONTyped(json, true), type: 'sui'};
         case 'utxo':
             return {...UtxoAssetIdentifierRequestFromJSONTyped(json, true), type: 'utxo'};
         default:
@@ -78,12 +96,16 @@ export function AssetIdentifierRequestToJSON(value?: AssetIdentifierRequest | nu
         return null;
     }
     switch (value['type']) {
+        case 'aptos':
+            return AptosAssetIdentifierRequestToJSON(value);
         case 'cosmos':
             return CosmosAssetIdentifierRequestToJSON(value);
         case 'evm':
             return EvmAssetIdentifierRequestToJSON(value);
         case 'solana':
             return SolanaAssetIdentifierRequestToJSON(value);
+        case 'sui':
+            return SuiAssetIdentifierRequestToJSON(value);
         case 'utxo':
             return UtxoAssetIdentifierRequestToJSON(value);
         default:

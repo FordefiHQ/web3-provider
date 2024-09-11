@@ -13,6 +13,13 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { MpcMessage } from './MpcMessage';
+import {
+    MpcMessageFromJSON,
+    MpcMessageFromJSONTyped,
+    MpcMessageToJSON,
+} from './MpcMessage';
+
 /**
  * 
  * @export
@@ -25,6 +32,18 @@ export interface InitiateSignSessionRequest {
      * @memberof InitiateSignSessionRequest
      */
     signature?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InitiateSignSessionRequest
+     */
+    mpcSetupId?: string;
+    /**
+     * 
+     * @type {MpcMessage}
+     * @memberof InitiateSignSessionRequest
+     */
+    firstMpcProtocolMessage?: MpcMessage;
 }
 
 /**
@@ -47,6 +66,8 @@ export function InitiateSignSessionRequestFromJSONTyped(json: any, ignoreDiscrim
     return {
         
         'signature': !exists(json, 'signature') ? undefined : json['signature'],
+        'mpcSetupId': !exists(json, 'mpc_setup_id') ? undefined : json['mpc_setup_id'],
+        'firstMpcProtocolMessage': !exists(json, 'first_mpc_protocol_message') ? undefined : MpcMessageFromJSON(json['first_mpc_protocol_message']),
     };
 }
 
@@ -60,6 +81,8 @@ export function InitiateSignSessionRequestToJSON(value?: InitiateSignSessionRequ
     return {
         
         'signature': value.signature,
+        'mpc_setup_id': value.mpcSetupId,
+        'first_mpc_protocol_message': MpcMessageToJSON(value.firstMpcProtocolMessage),
     };
 }
 

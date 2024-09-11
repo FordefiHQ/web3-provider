@@ -19,6 +19,12 @@ import {
     CosmosChainUniqueIdFromJSONTyped,
     CosmosChainUniqueIdToJSON,
 } from './CosmosChainUniqueId';
+import type { CosmosKeyType } from './CosmosKeyType';
+import {
+    CosmosKeyTypeFromJSON,
+    CosmosKeyTypeFromJSONTyped,
+    CosmosKeyTypeToJSON,
+} from './CosmosKeyType';
 import type { EnrichedCosmosChain } from './EnrichedCosmosChain';
 import {
     EnrichedCosmosChainFromJSON,
@@ -34,16 +40,28 @@ import {
 export interface CosmosBechAddressEnrichedChain {
     /**
      * 
+     * @type {CosmosChainUniqueId}
+     * @memberof CosmosBechAddressEnrichedChain
+     */
+    chain: CosmosChainUniqueId;
+    /**
+     * 
      * @type {string}
      * @memberof CosmosBechAddressEnrichedChain
      */
     address: string;
     /**
      * 
-     * @type {CosmosChainUniqueId}
+     * @type {string}
      * @memberof CosmosBechAddressEnrichedChain
      */
-    chain?: CosmosChainUniqueId;
+    hexRepr?: string;
+    /**
+     * 
+     * @type {CosmosKeyType}
+     * @memberof CosmosBechAddressEnrichedChain
+     */
+    keyType?: CosmosKeyType;
     /**
      * 
      * @type {EnrichedCosmosChain}
@@ -57,6 +75,7 @@ export interface CosmosBechAddressEnrichedChain {
  */
 export function instanceOfCosmosBechAddressEnrichedChain(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "chain" in value;
     isInstance = isInstance && "address" in value;
     isInstance = isInstance && "enrichedChain" in value;
 
@@ -73,8 +92,10 @@ export function CosmosBechAddressEnrichedChainFromJSONTyped(json: any, ignoreDis
     }
     return {
         
+        'chain': CosmosChainUniqueIdFromJSON(json['chain']),
         'address': json['address'],
-        'chain': !exists(json, 'chain') ? undefined : CosmosChainUniqueIdFromJSON(json['chain']),
+        'hexRepr': !exists(json, 'hex_repr') ? undefined : json['hex_repr'],
+        'keyType': !exists(json, 'key_type') ? undefined : CosmosKeyTypeFromJSON(json['key_type']),
         'enrichedChain': EnrichedCosmosChainFromJSON(json['enriched_chain']),
     };
 }
@@ -88,8 +109,10 @@ export function CosmosBechAddressEnrichedChainToJSON(value?: CosmosBechAddressEn
     }
     return {
         
-        'address': value.address,
         'chain': CosmosChainUniqueIdToJSON(value.chain),
+        'address': value.address,
+        'hex_repr': value.hexRepr,
+        'key_type': CosmosKeyTypeToJSON(value.keyType),
         'enriched_chain': EnrichedCosmosChainToJSON(value.enrichedChain),
     };
 }

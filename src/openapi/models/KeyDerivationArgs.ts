@@ -56,6 +56,12 @@ export interface KeyDerivationArgs {
      * @memberof KeyDerivationArgs
      */
     keysetId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KeyDerivationArgs
+     */
+    adjustScalar?: string;
 }
 
 /**
@@ -87,6 +93,7 @@ export function KeyDerivationArgsFromJSONTyped(json: any, ignoreDiscriminator: b
         'accountId': json['account_id'],
         'addressIndex': json['address_index'],
         'keysetId': json['keyset_id'],
+        'adjustScalar': !exists(json, 'adjust_scalar') ? undefined : json['adjust_scalar'],
     };
 }
 
@@ -104,6 +111,7 @@ export function KeyDerivationArgsToJSON(value?: KeyDerivationArgs | null): any {
         'account_id': value.accountId,
         'address_index': value.addressIndex,
         'keyset_id': value.keysetId,
+        'adjust_scalar': value.adjustScalar,
     };
 }
 

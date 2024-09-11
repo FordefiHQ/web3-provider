@@ -31,6 +31,12 @@ import {
     EnrichedSolanaChainFromJSONTyped,
     EnrichedSolanaChainToJSON,
 } from './EnrichedSolanaChain';
+import type { SolanaCompiledInstruction } from './SolanaCompiledInstruction';
+import {
+    SolanaCompiledInstructionFromJSON,
+    SolanaCompiledInstructionFromJSONTyped,
+    SolanaCompiledInstructionToJSON,
+} from './SolanaCompiledInstruction';
 import type { SolanaFee } from './SolanaFee';
 import {
     SolanaFeeFromJSON,
@@ -93,6 +99,12 @@ export interface DescribedSolanaTransaction {
      * @memberof DescribedSolanaTransaction
      */
     suggestedFees: SolanaSuggestedFees;
+    /**
+     * 
+     * @type {Array<SolanaCompiledInstruction>}
+     * @memberof DescribedSolanaTransaction
+     */
+    instructions: Array<SolanaCompiledInstruction>;
 }
 
 
@@ -117,6 +129,7 @@ export function instanceOfDescribedSolanaTransaction(value: object): boolean {
     isInstance = isInstance && "fee" in value;
     isInstance = isInstance && "enrichedFee" in value;
     isInstance = isInstance && "suggestedFees" in value;
+    isInstance = isInstance && "instructions" in value;
 
     return isInstance;
 }
@@ -138,6 +151,7 @@ export function DescribedSolanaTransactionFromJSONTyped(json: any, ignoreDiscrim
         'fee': json['fee'],
         'enrichedFee': SolanaFeeFromJSON(json['enriched_fee']),
         'suggestedFees': SolanaSuggestedFeesFromJSON(json['suggested_fees']),
+        'instructions': ((json['instructions'] as Array<any>).map(SolanaCompiledInstructionFromJSON)),
     };
 }
 
@@ -157,6 +171,7 @@ export function DescribedSolanaTransactionToJSON(value?: DescribedSolanaTransact
         'fee': value.fee,
         'enriched_fee': SolanaFeeToJSON(value.enrichedFee),
         'suggested_fees': SolanaSuggestedFeesToJSON(value.suggestedFees),
+        'instructions': ((value.instructions as Array<any>).map(SolanaCompiledInstructionToJSON)),
     };
 }
 

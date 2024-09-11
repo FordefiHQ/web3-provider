@@ -20,7 +20,11 @@
 export const EncryptedDeviceSharesUploadErrorType = {
     desiredKeyTypesAreMissingForKeyset: 'desired_key_types_are_missing_for_keyset',
     backupKeysMismatchDesiredKeyTypes: 'backup_keys_mismatch_desired_key_types',
-    keysAreNotGenerated: 'keys_are_not_generated'
+    keysAreNotGenerated: 'keys_are_not_generated',
+    sharePublicKeyMismatch: 'share_public_key_mismatch',
+    authKeyIsMissingFromBackup: 'auth_key_is_missing_from_backup',
+    authKeyIsNotSet: 'auth_key_is_not_set',
+    authPublicKeyMismatch: 'auth_public_key_mismatch'
 } as const;
 export type EncryptedDeviceSharesUploadErrorType = typeof EncryptedDeviceSharesUploadErrorType[keyof typeof EncryptedDeviceSharesUploadErrorType];
 

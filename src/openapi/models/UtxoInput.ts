@@ -38,6 +38,12 @@ export interface UtxoInput {
      * @memberof UtxoInput
      */
     value: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UtxoInput
+     */
+    shouldSign?: boolean;
 }
 
 /**
@@ -63,6 +69,7 @@ export function UtxoInputFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         
         'address': EnrichedUtxoAddressFromJSON(json['address']),
         'value': json['value'],
+        'shouldSign': !exists(json, 'should_sign') ? undefined : json['should_sign'],
     };
 }
 
@@ -77,6 +84,7 @@ export function UtxoInputToJSON(value?: UtxoInput | null): any {
         
         'address': EnrichedUtxoAddressToJSON(value.address),
         'value': value.value,
+        'should_sign': value.shouldSign,
     };
 }
 

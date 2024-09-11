@@ -19,12 +19,12 @@ import {
     SolanaChainUniqueIdFromJSONTyped,
     SolanaChainUniqueIdToJSON,
 } from './SolanaChainUniqueId';
-import type { SolanaCompiledInstruction } from './SolanaCompiledInstruction';
+import type { SolanaCompiledInstructionRequest } from './SolanaCompiledInstructionRequest';
 import {
-    SolanaCompiledInstructionFromJSON,
-    SolanaCompiledInstructionFromJSONTyped,
-    SolanaCompiledInstructionToJSON,
-} from './SolanaCompiledInstruction';
+    SolanaCompiledInstructionRequestFromJSON,
+    SolanaCompiledInstructionRequestFromJSONTyped,
+    SolanaCompiledInstructionRequestToJSON,
+} from './SolanaCompiledInstructionRequest';
 import type { SolanaMessageAddressTableLookupRequest } from './SolanaMessageAddressTableLookupRequest';
 import {
     SolanaMessageAddressTableLookupRequestFromJSON,
@@ -64,10 +64,10 @@ export interface TransactionDetailsSolanaRawTransactionRequest {
     version: SolanaMessageVersion;
     /**
      * 
-     * @type {Array<SolanaCompiledInstruction>}
+     * @type {Array<SolanaCompiledInstructionRequest>}
      * @memberof TransactionDetailsSolanaRawTransactionRequest
      */
-    instructions: Array<SolanaCompiledInstruction>;
+    instructions: Array<SolanaCompiledInstructionRequest>;
     /**
      * 
      * @type {Array<SolanaTransactionAccountRequest>}
@@ -154,7 +154,7 @@ export function TransactionDetailsSolanaRawTransactionRequestFromJSONTyped(json:
     return {
         
         'version': SolanaMessageVersionFromJSON(json['version']),
-        'instructions': ((json['instructions'] as Array<any>).map(SolanaCompiledInstructionFromJSON)),
+        'instructions': ((json['instructions'] as Array<any>).map(SolanaCompiledInstructionRequestFromJSON)),
         'accounts': ((json['accounts'] as Array<any>).map(SolanaTransactionAccountRequestFromJSON)),
         'addressTableLookups': ((json['address_table_lookups'] as Array<any>).map(SolanaMessageAddressTableLookupRequestFromJSON)),
         'signatures': !exists(json, 'signatures') ? undefined : ((json['signatures'] as Array<any>).map(SolanaTransactionSignaturesRequestFromJSON)),
@@ -176,7 +176,7 @@ export function TransactionDetailsSolanaRawTransactionRequestToJSON(value?: Tran
     return {
         
         'version': SolanaMessageVersionToJSON(value.version),
-        'instructions': ((value.instructions as Array<any>).map(SolanaCompiledInstructionToJSON)),
+        'instructions': ((value.instructions as Array<any>).map(SolanaCompiledInstructionRequestToJSON)),
         'accounts': ((value.accounts as Array<any>).map(SolanaTransactionAccountRequestToJSON)),
         'address_table_lookups': ((value.addressTableLookups as Array<any>).map(SolanaMessageAddressTableLookupRequestToJSON)),
         'signatures': value.signatures === undefined ? undefined : ((value.signatures as Array<any>).map(SolanaTransactionSignaturesRequestToJSON)),

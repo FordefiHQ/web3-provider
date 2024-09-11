@@ -19,6 +19,12 @@ import {
     CosmosAssetIdentifierRequestFromJSONTyped,
     CosmosAssetIdentifierRequestToJSON,
 } from './CosmosAssetIdentifierRequest';
+import type { PushMode } from './PushMode';
+import {
+    PushModeFromJSON,
+    PushModeFromJSONTyped,
+    PushModeToJSON,
+} from './PushMode';
 import type { TypedCosmosTransferRequestTo } from './TypedCosmosTransferRequestTo';
 import {
     TypedCosmosTransferRequestToFromJSON,
@@ -44,6 +50,12 @@ export interface TypedCosmosTransferRequest {
      * @memberof TypedCosmosTransferRequest
      */
     type: TypedCosmosTransferRequestTypeEnum;
+    /**
+     * 
+     * @type {PushMode}
+     * @memberof TypedCosmosTransferRequest
+     */
+    pushMode?: PushMode;
     /**
      * 
      * @type {TypedCosmosTransferRequestTo}
@@ -104,6 +116,7 @@ export function TypedCosmosTransferRequestFromJSONTyped(json: any, ignoreDiscrim
     return {
         
         'type': json['type'],
+        'pushMode': !exists(json, 'push_mode') ? undefined : PushModeFromJSON(json['push_mode']),
         'to': TypedCosmosTransferRequestToFromJSON(json['to']),
         'assetIdentifier': CosmosAssetIdentifierRequestFromJSON(json['asset_identifier']),
         'value': TypedCosmosTransferRequestValueFromJSON(json['value']),
@@ -121,6 +134,7 @@ export function TypedCosmosTransferRequestToJSON(value?: TypedCosmosTransferRequ
     return {
         
         'type': value.type,
+        'push_mode': PushModeToJSON(value.pushMode),
         'to': TypedCosmosTransferRequestToToJSON(value.to),
         'asset_identifier': CosmosAssetIdentifierRequestToJSON(value.assetIdentifier),
         'value': TypedCosmosTransferRequestValueToJSON(value.value),

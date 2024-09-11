@@ -25,9 +25,8 @@ export const CreateTransactionErrorType = {
     vaultNotFound: 'vault_not_found',
     missingSignedRawRequest: 'missing_signed_raw_request',
     redundantSignedRawRequest: 'redundant_signed_raw_request',
-    transferToSelf: 'transfer_to_self',
     transactionToNonContract: 'transaction_to_non_contract',
-    insecureStarkKeyDerivation: 'insecure_stark_key_derivation',
+    insecureKeyDerivation: 'insecure_key_derivation',
     invalidSignedRawRequest: 'invalid_signed_raw_request',
     invalidSignerType: 'invalid_signer_type',
     invalidEvmMessage: 'invalid_evm_message',
@@ -41,7 +40,17 @@ export const CreateTransactionErrorType = {
     insufficientApprovers: 'insufficient_approvers',
     fundingBlockedByPolicy: 'funding_blocked_by_policy',
     funderNotAllowedForTransactionType: 'funder_not_allowed_for_transaction_type',
-    originVaultUsedAsFunder: 'origin_vault_used_as_funder'
+    originVaultUsedAsFunder: 'origin_vault_used_as_funder',
+    mixedSecureAndNonSecureTransactions: 'mixed_secure_and_non_secure_transactions',
+    invalidPushMode: 'invalid_push_mode',
+    chainDoesNotSupportSecureNode: 'chain_does_not_support_secure_node',
+    invalidSolanaSecretKey: 'invalid_solana_secret_key',
+    insufficientGasCoins: 'insufficient_gas_coins',
+    invalidAptosSerializedEntryPoint: 'invalid_aptos_serialized_entry_point',
+    invalidAptosSerializedType: 'invalid_aptos_serialized_type',
+    invalidAptosRotateKey: 'invalid_aptos_rotate_key',
+    suiPackageAddressNotFound: 'sui_package_address_not_found',
+    transactionAlreadyMined: 'transaction_already_mined'
 } as const;
 export type CreateTransactionErrorType = typeof CreateTransactionErrorType[keyof typeof CreateTransactionErrorType];
 

@@ -30,7 +30,8 @@ export const ActionType = {
     vaultGroupChange: 'vault_group_change',
     adminQuorumChange: 'admin_quorum_change',
     userChange: 'user_change',
-    addDevice: 'add_device'
+    addDevice: 'add_device',
+    importKeys: 'import_keys'
 } as const;
 export type ActionType = typeof ActionType[keyof typeof ActionType];
 

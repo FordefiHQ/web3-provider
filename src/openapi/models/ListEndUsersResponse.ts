@@ -31,7 +31,7 @@ export interface ListEndUsersResponse {
      * @type {number}
      * @memberof ListEndUsersResponse
      */
-    total: number;
+    total?: number;
     /**
      * 
      * @type {number}
@@ -57,7 +57,6 @@ export interface ListEndUsersResponse {
  */
 export function instanceOfListEndUsersResponse(value: object): boolean {
     let isInstance = true;
-    isInstance = isInstance && "total" in value;
     isInstance = isInstance && "page" in value;
     isInstance = isInstance && "size" in value;
     isInstance = isInstance && "endUsers" in value;
@@ -75,7 +74,7 @@ export function ListEndUsersResponseFromJSONTyped(json: any, ignoreDiscriminator
     }
     return {
         
-        'total': json['total'],
+        'total': !exists(json, 'total') ? undefined : json['total'],
         'page': json['page'],
         'size': json['size'],
         'endUsers': ((json['end_users'] as Array<any>).map(EndUserFromJSON)),

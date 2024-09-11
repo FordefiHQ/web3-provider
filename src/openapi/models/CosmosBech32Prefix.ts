@@ -18,6 +18,7 @@
  * @export
  */
 export const CosmosBech32Prefix = {
+    agoric: 'agoric',
     akash: 'akash',
     archway: 'archway',
     axelar: 'axelar',
@@ -26,6 +27,7 @@ export const CosmosBech32Prefix = {
     dydx: 'dydx',
     dym: 'dym',
     inj: 'inj',
+    neutron: 'neutron',
     noble: 'noble',
     osmo: 'osmo',
     sei: 'sei',

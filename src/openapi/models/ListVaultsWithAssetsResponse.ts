@@ -50,12 +50,6 @@ export interface ListVaultsWithAssetsResponse {
      * @memberof ListVaultsWithAssetsResponse
      */
     vaults: Array<VaultWithAssets>;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ListVaultsWithAssetsResponse
-     */
-    isChainsFilterDisabled: boolean;
 }
 
 /**
@@ -67,7 +61,6 @@ export function instanceOfListVaultsWithAssetsResponse(value: object): boolean {
     isInstance = isInstance && "page" in value;
     isInstance = isInstance && "size" in value;
     isInstance = isInstance && "vaults" in value;
-    isInstance = isInstance && "isChainsFilterDisabled" in value;
 
     return isInstance;
 }
@@ -86,7 +79,6 @@ export function ListVaultsWithAssetsResponseFromJSONTyped(json: any, ignoreDiscr
         'page': json['page'],
         'size': json['size'],
         'vaults': ((json['vaults'] as Array<any>).map(VaultWithAssetsFromJSON)),
-        'isChainsFilterDisabled': json['is_chains_filter_disabled'],
     };
 }
 
@@ -103,7 +95,6 @@ export function ListVaultsWithAssetsResponseToJSON(value?: ListVaultsWithAssetsR
         'page': value.page,
         'size': value.size,
         'vaults': ((value.vaults as Array<any>).map(VaultWithAssetsToJSON)),
-        'is_chains_filter_disabled': value.isChainsFilterDisabled,
     };
 }
 

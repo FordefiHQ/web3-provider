@@ -20,6 +20,13 @@ import {
     CreateSolanaRawTransactionRequestToJSON,
 } from './CreateSolanaRawTransactionRequest';
 import {
+    CreateSolanaSerializedTransactionMessageRequest,
+    instanceOfCreateSolanaSerializedTransactionMessageRequest,
+    CreateSolanaSerializedTransactionMessageRequestFromJSON,
+    CreateSolanaSerializedTransactionMessageRequestFromJSONTyped,
+    CreateSolanaSerializedTransactionMessageRequestToJSON,
+} from './CreateSolanaSerializedTransactionMessageRequest';
+import {
     CreateSolanaTransferRequest,
     instanceOfCreateSolanaTransferRequest,
     CreateSolanaTransferRequestFromJSON,
@@ -32,7 +39,7 @@ import {
  * 
  * @export
  */
-export type CreateSolanaTransactionRequestDetails = { type: 'solana_raw_transaction' } & CreateSolanaRawTransactionRequest | { type: 'solana_transfer' } & CreateSolanaTransferRequest;
+export type CreateSolanaTransactionRequestDetails = { type: 'solana_raw_transaction' } & CreateSolanaRawTransactionRequest | { type: 'solana_serialized_transaction_message' } & CreateSolanaSerializedTransactionMessageRequest | { type: 'solana_transfer' } & CreateSolanaTransferRequest;
 
 export function CreateSolanaTransactionRequestDetailsFromJSON(json: any): CreateSolanaTransactionRequestDetails {
     return CreateSolanaTransactionRequestDetailsFromJSONTyped(json, false);
@@ -45,6 +52,8 @@ export function CreateSolanaTransactionRequestDetailsFromJSONTyped(json: any, ig
     switch (json['type']) {
         case 'solana_raw_transaction':
             return {...CreateSolanaRawTransactionRequestFromJSONTyped(json, true), type: 'solana_raw_transaction'};
+        case 'solana_serialized_transaction_message':
+            return {...CreateSolanaSerializedTransactionMessageRequestFromJSONTyped(json, true), type: 'solana_serialized_transaction_message'};
         case 'solana_transfer':
             return {...CreateSolanaTransferRequestFromJSONTyped(json, true), type: 'solana_transfer'};
         default:
@@ -62,6 +71,8 @@ export function CreateSolanaTransactionRequestDetailsToJSON(value?: CreateSolana
     switch (value['type']) {
         case 'solana_raw_transaction':
             return CreateSolanaRawTransactionRequestToJSON(value);
+        case 'solana_serialized_transaction_message':
+            return CreateSolanaSerializedTransactionMessageRequestToJSON(value);
         case 'solana_transfer':
             return CreateSolanaTransferRequestToJSON(value);
         default:

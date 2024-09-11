@@ -13,13 +13,6 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { EvmChainUniqueId } from './EvmChainUniqueId';
-import {
-    EvmChainUniqueIdFromJSON,
-    EvmChainUniqueIdFromJSONTyped,
-    EvmChainUniqueIdToJSON,
-} from './EvmChainUniqueId';
-
 /**
  * 
  * @export
@@ -28,10 +21,10 @@ import {
 export interface EvmAddressRequest {
     /**
      * 
-     * @type {EvmChainUniqueId}
+     * @type {string}
      * @memberof EvmAddressRequest
      */
-    chain: EvmChainUniqueId;
+    chain: string;
     /**
      * 
      * @type {string}
@@ -39,6 +32,79 @@ export interface EvmAddressRequest {
      */
     hexRepr: string;
 }
+
+
+/**
+ * @export
+ */
+export const EvmAddressRequestChainEnum = {
+    _1: 'evm_1',
+    _5: 'evm_5',
+    _10: 'evm_10',
+    _16: 'evm_16',
+    _56: 'evm_56',
+    _100: 'evm_100',
+    _137: 'evm_137',
+    _169: 'evm_169',
+    _250: 'evm_250',
+    _324: 'evm_324',
+    _1030: 'evm_1030',
+    _1100: 'evm_1100',
+    _1101: 'evm_1101',
+    _1329: 'evm_1329',
+    _1729: 'evm_1729',
+    _2222: 'evm_2222',
+    _4200: 'evm_4200',
+    _5000: 'evm_5000',
+    _7000: 'evm_7000',
+    _7700: 'evm_7700',
+    _8453: 'evm_8453',
+    _17000: 'evm_17000',
+    _80001: 'evm_80001',
+    _42161: 'evm_42161',
+    _43114: 'evm_43114',
+    _59144: 'evm_59144',
+    _81457: 'evm_81457',
+    _421614: 'evm_421614',
+    _534352: 'evm_534352',
+    _660279: 'evm_660279',
+    _810180: 'evm_810180',
+    _11155111: 'evm_11155111',
+    ethereumMainnet: 'evm_ethereum_mainnet',
+    ethereumGoerli: 'evm_ethereum_goerli',
+    optimismMainnet: 'evm_optimism_mainnet',
+    flareTestnet: 'evm_flare_testnet',
+    bscMainnet: 'evm_bsc_mainnet',
+    gnosisMainnet: 'evm_gnosis_mainnet',
+    polygonMainnet: 'evm_polygon_mainnet',
+    mantaPacificMainnet: 'evm_manta_pacific_mainnet',
+    fantomMainnet: 'evm_fantom_mainnet',
+    zksyncEraMainnet: 'evm_zksync_era_mainnet',
+    confluxMainnet: 'evm_conflux_mainnet',
+    dymensionMainnet: 'evm_dymension_mainnet',
+    polygonZkevmMainnet: 'evm_polygon_zkevm_mainnet',
+    seiMainnet: 'evm_sei_mainnet',
+    reyaMainnet: 'evm_reya_mainnet',
+    kavaMainnet: 'evm_kava_mainnet',
+    merlinMainnet: 'evm_merlin_mainnet',
+    mantleMainnet: 'evm_mantle_mainnet',
+    zetaMainnet: 'evm_zeta_mainnet',
+    cantoMainnet: 'evm_canto_mainnet',
+    baseMainnet: 'evm_base_mainnet',
+    ethereumHolesky: 'evm_ethereum_holesky',
+    polygonMumbai: 'evm_polygon_mumbai',
+    arbitrumMainnet: 'evm_arbitrum_mainnet',
+    avalancheChain: 'evm_avalanche_chain',
+    lineaMainnet: 'evm_linea_mainnet',
+    blastMainnet: 'evm_blast_mainnet',
+    arbitrumSepolia: 'evm_arbitrum_sepolia',
+    scrollMainnet: 'evm_scroll_mainnet',
+    xaiMainnet: 'evm_xai_mainnet',
+    zklinkNovaMainnet: 'evm_zklink_nova_mainnet',
+    ethereumSepolia: 'evm_ethereum_sepolia'
+} as const;
+export type EvmAddressRequestChainEnum = typeof EvmAddressRequestChainEnum[keyof typeof EvmAddressRequestChainEnum];
+
 
 /**
  * Check if a given object implements the EvmAddressRequest interface.
@@ -61,7 +127,7 @@ export function EvmAddressRequestFromJSONTyped(json: any, ignoreDiscriminator: b
     }
     return {
         
-        'chain': EvmChainUniqueIdFromJSON(json['chain']),
+        'chain': json['chain'],
         'hexRepr': json['hex_repr'],
     };
 }
@@ -75,7 +141,7 @@ export function EvmAddressRequestToJSON(value?: EvmAddressRequest | null): any {
     }
     return {
         
-        'chain': EvmChainUniqueIdToJSON(value.chain),
+        'chain': value.chain,
         'hex_repr': value.hexRepr,
     };
 }

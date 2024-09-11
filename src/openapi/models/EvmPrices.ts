@@ -42,8 +42,9 @@ export interface EvmPrices {
      * 
      * @type {Array<PricedErc20>}
      * @memberof EvmPrices
+     * @deprecated
      */
-    tokenPrices: Array<PricedErc20>;
+    tokenPrices?: Array<PricedErc20>;
 }
 
 /**
@@ -51,7 +52,6 @@ export interface EvmPrices {
  */
 export function instanceOfEvmPrices(value: object): boolean {
     let isInstance = true;
-    isInstance = isInstance && "tokenPrices" in value;
 
     return isInstance;
 }
@@ -67,7 +67,7 @@ export function EvmPricesFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     return {
         
         'nativeCurrencyPrice': !exists(json, 'native_currency_price') ? undefined : PriceFromJSON(json['native_currency_price']),
-        'tokenPrices': ((json['token_prices'] as Array<any>).map(PricedErc20FromJSON)),
+        'tokenPrices': !exists(json, 'token_prices') ? undefined : ((json['token_prices'] as Array<any>).map(PricedErc20FromJSON)),
     };
 }
 
@@ -81,7 +81,7 @@ export function EvmPricesToJSON(value?: EvmPrices | null): any {
     return {
         
         'native_currency_price': PriceToJSON(value.nativeCurrencyPrice),
-        'token_prices': ((value.tokenPrices as Array<any>).map(PricedErc20ToJSON)),
+        'token_prices': value.tokenPrices === undefined ? undefined : ((value.tokenPrices as Array<any>).map(PricedErc20ToJSON)),
     };
 }
 

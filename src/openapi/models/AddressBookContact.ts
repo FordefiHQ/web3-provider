@@ -13,6 +13,13 @@
  */
 
 import {
+    AptosAddressBookContact,
+    instanceOfAptosAddressBookContact,
+    AptosAddressBookContactFromJSON,
+    AptosAddressBookContactFromJSONTyped,
+    AptosAddressBookContactToJSON,
+} from './AptosAddressBookContact';
+import {
     CosmosAddressBookContact,
     instanceOfCosmosAddressBookContact,
     CosmosAddressBookContactFromJSON,
@@ -34,6 +41,13 @@ import {
     SolanaAddressBookContactToJSON,
 } from './SolanaAddressBookContact';
 import {
+    SuiAddressBookContact,
+    instanceOfSuiAddressBookContact,
+    SuiAddressBookContactFromJSON,
+    SuiAddressBookContactFromJSONTyped,
+    SuiAddressBookContactToJSON,
+} from './SuiAddressBookContact';
+import {
     UtxoAddressBookContact,
     instanceOfUtxoAddressBookContact,
     UtxoAddressBookContactFromJSON,
@@ -46,7 +60,7 @@ import {
  * 
  * @export
  */
-export type AddressBookContact = { chainType: 'cosmos' } & CosmosAddressBookContact | { chainType: 'evm' } & EVMAddressBookContact | { chainType: 'solana' } & SolanaAddressBookContact | { chainType: 'utxo' } & UtxoAddressBookContact;
+export type AddressBookContact = { chainType: 'aptos' } & AptosAddressBookContact | { chainType: 'cosmos' } & CosmosAddressBookContact | { chainType: 'evm' } & EVMAddressBookContact | { chainType: 'solana' } & SolanaAddressBookContact | { chainType: 'sui' } & SuiAddressBookContact | { chainType: 'utxo' } & UtxoAddressBookContact;
 
 export function AddressBookContactFromJSON(json: any): AddressBookContact {
     return AddressBookContactFromJSONTyped(json, false);
@@ -57,12 +71,16 @@ export function AddressBookContactFromJSONTyped(json: any, ignoreDiscriminator: 
         return json;
     }
     switch (json['chain_type']) {
+        case 'aptos':
+            return {...AptosAddressBookContactFromJSONTyped(json, true), chainType: 'aptos'};
         case 'cosmos':
             return {...CosmosAddressBookContactFromJSONTyped(json, true), chainType: 'cosmos'};
         case 'evm':
             return {...EVMAddressBookContactFromJSONTyped(json, true), chainType: 'evm'};
         case 'solana':
             return {...SolanaAddressBookContactFromJSONTyped(json, true), chainType: 'solana'};
+        case 'sui':
+            return {...SuiAddressBookContactFromJSONTyped(json, true), chainType: 'sui'};
         case 'utxo':
             return {...UtxoAddressBookContactFromJSONTyped(json, true), chainType: 'utxo'};
         default:
@@ -78,12 +96,16 @@ export function AddressBookContactToJSON(value?: AddressBookContact | null): any
         return null;
     }
     switch (value['chainType']) {
+        case 'aptos':
+            return AptosAddressBookContactToJSON(value);
         case 'cosmos':
             return CosmosAddressBookContactToJSON(value);
         case 'evm':
             return EVMAddressBookContactToJSON(value);
         case 'solana':
             return SolanaAddressBookContactToJSON(value);
+        case 'sui':
+            return SuiAddressBookContactToJSON(value);
         case 'utxo':
             return UtxoAddressBookContactToJSON(value);
         default:

@@ -13,12 +13,25 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { KeyType } from './KeyType';
+import {
+    KeyTypeFromJSON,
+    KeyTypeFromJSONTyped,
+    KeyTypeToJSON,
+} from './KeyType';
+
 /**
  * 
  * @export
  * @interface GetEncryptedSharesResponse
  */
 export interface GetEncryptedSharesResponse {
+    /**
+     * 
+     * @type {Array<KeyType>}
+     * @memberof GetEncryptedSharesResponse
+     */
+    desiredKeyTypes?: Array<KeyType>;
     /**
      * 
      * @type {string}
@@ -37,6 +50,12 @@ export interface GetEncryptedSharesResponse {
      * @memberof GetEncryptedSharesResponse
      */
     encryptedShareEcdsaStark: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetEncryptedSharesResponse
+     */
+    encryptedShareSchnorrSecp256k1: string;
 }
 
 /**
@@ -47,6 +66,7 @@ export function instanceOfGetEncryptedSharesResponse(value: object): boolean {
     isInstance = isInstance && "encryptedShareEcdsa" in value;
     isInstance = isInstance && "encryptedShareEddsa" in value;
     isInstance = isInstance && "encryptedShareEcdsaStark" in value;
+    isInstance = isInstance && "encryptedShareSchnorrSecp256k1" in value;
 
     return isInstance;
 }
@@ -61,9 +81,11 @@ export function GetEncryptedSharesResponseFromJSONTyped(json: any, ignoreDiscrim
     }
     return {
         
+        'desiredKeyTypes': !exists(json, 'desired_key_types') ? undefined : ((json['desired_key_types'] as Array<any>).map(KeyTypeFromJSON)),
         'encryptedShareEcdsa': json['encrypted_share_ecdsa'],
         'encryptedShareEddsa': json['encrypted_share_eddsa'],
         'encryptedShareEcdsaStark': json['encrypted_share_ecdsa_stark'],
+        'encryptedShareSchnorrSecp256k1': json['encrypted_share_schnorr_secp256k1'],
     };
 }
 
@@ -76,9 +98,11 @@ export function GetEncryptedSharesResponseToJSON(value?: GetEncryptedSharesRespo
     }
     return {
         
+        'desired_key_types': value.desiredKeyTypes === undefined ? undefined : ((value.desiredKeyTypes as Array<any>).map(KeyTypeToJSON)),
         'encrypted_share_ecdsa': value.encryptedShareEcdsa,
         'encrypted_share_eddsa': value.encryptedShareEddsa,
         'encrypted_share_ecdsa_stark': value.encryptedShareEcdsaStark,
+        'encrypted_share_schnorr_secp256k1': value.encryptedShareSchnorrSecp256k1,
     };
 }
 

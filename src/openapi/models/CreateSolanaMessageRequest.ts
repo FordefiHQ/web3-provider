@@ -13,6 +13,12 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { SignMode } from './SignMode';
+import {
+    SignModeFromJSON,
+    SignModeFromJSONTyped,
+    SignModeToJSON,
+} from './SignMode';
 import type { SignerType } from './SignerType';
 import {
     SignerTypeFromJSON,
@@ -50,6 +56,12 @@ export interface CreateSolanaMessageRequest {
      * @memberof CreateSolanaMessageRequest
      */
     signerType?: SignerType;
+    /**
+     * 
+     * @type {SignMode}
+     * @memberof CreateSolanaMessageRequest
+     */
+    signMode?: SignMode;
     /**
      * 
      * @type {string}
@@ -99,6 +111,7 @@ export function CreateSolanaMessageRequestFromJSONTyped(json: any, ignoreDiscrim
         'vaultId': json['vault_id'],
         'note': !exists(json, 'note') ? undefined : json['note'],
         'signerType': !exists(json, 'signer_type') ? undefined : SignerTypeFromJSON(json['signer_type']),
+        'signMode': !exists(json, 'sign_mode') ? undefined : SignModeFromJSON(json['sign_mode']),
         'type': json['type'],
         'details': SolanaPersonalMessageRequestFromJSON(json['details']),
     };
@@ -116,6 +129,7 @@ export function CreateSolanaMessageRequestToJSON(value?: CreateSolanaMessageRequ
         'vault_id': value.vaultId,
         'note': value.note,
         'signer_type': SignerTypeToJSON(value.signerType),
+        'sign_mode': SignModeToJSON(value.signMode),
         'type': value.type,
         'details': SolanaPersonalMessageRequestToJSON(value.details),
     };

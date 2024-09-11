@@ -19,6 +19,7 @@
  */
 export const EvmMessageState = {
     waitingForApproval: 'waiting_for_approval',
+    waitingForSigningTrigger: 'waiting_for_signing_trigger',
     approved: 'approved',
     signed: 'signed',
     completed: 'completed',

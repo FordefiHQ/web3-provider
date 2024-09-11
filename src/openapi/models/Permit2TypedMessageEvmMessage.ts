@@ -25,6 +25,18 @@ import {
     EvmMessageDomainDataFromJSONTyped,
     EvmMessageDomainDataToJSON,
 } from './EvmMessageDomainData';
+import type { Price } from './Price';
+import {
+    PriceFromJSON,
+    PriceFromJSONTyped,
+    PriceToJSON,
+} from './Price';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+} from './PricedAsset';
 
 /**
  * 
@@ -80,6 +92,18 @@ export interface Permit2TypedMessageEvmMessage {
      * @memberof Permit2TypedMessageEvmMessage
      */
     nonce: number;
+    /**
+     * 
+     * @type {Price}
+     * @memberof Permit2TypedMessageEvmMessage
+     */
+    price?: Price;
+    /**
+     * 
+     * @type {PricedAsset}
+     * @memberof Permit2TypedMessageEvmMessage
+     */
+    pricedAsset: PricedAsset;
 }
 
 
@@ -105,6 +129,7 @@ export function instanceOfPermit2TypedMessageEvmMessage(value: object): boolean 
     isInstance = isInstance && "value" in value;
     isInstance = isInstance && "expiration" in value;
     isInstance = isInstance && "nonce" in value;
+    isInstance = isInstance && "pricedAsset" in value;
 
     return isInstance;
 }
@@ -127,6 +152,8 @@ export function Permit2TypedMessageEvmMessageFromJSONTyped(json: any, ignoreDisc
         'value': json['value'],
         'expiration': (new Date(json['expiration'])),
         'nonce': json['nonce'],
+        'price': !exists(json, 'price') ? undefined : PriceFromJSON(json['price']),
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }
 
@@ -147,6 +174,8 @@ export function Permit2TypedMessageEvmMessageToJSON(value?: Permit2TypedMessageE
         'value': value.value,
         'expiration': (value.expiration.toISOString()),
         'nonce': value.nonce,
+        'price': PriceToJSON(value.price),
+        'priced_asset': PricedAssetToJSON(value.pricedAsset),
     };
 }
 

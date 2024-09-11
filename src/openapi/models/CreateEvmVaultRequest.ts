@@ -29,8 +29,15 @@ export interface CreateEvmVaultRequest {
      * 
      * @type {string}
      * @memberof CreateEvmVaultRequest
+     * @deprecated
      */
     keysetId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateEvmVaultRequest
+     */
+    endUserId?: string;
     /**
      * 
      * @type {string}
@@ -78,6 +85,7 @@ export function CreateEvmVaultRequestFromJSONTyped(json: any, ignoreDiscriminato
         
         'name': json['name'],
         'keysetId': !exists(json, 'keyset_id') ? undefined : json['keyset_id'],
+        'endUserId': !exists(json, 'end_user_id') ? undefined : json['end_user_id'],
         'vaultGroupId': !exists(json, 'vault_group_id') ? undefined : json['vault_group_id'],
         'type': json['type'],
     };
@@ -94,6 +102,7 @@ export function CreateEvmVaultRequestToJSON(value?: CreateEvmVaultRequest | null
         
         'name': value.name,
         'keyset_id': value.keysetId,
+        'end_user_id': value.endUserId,
         'vault_group_id': value.vaultGroupId,
         'type': value.type,
     };

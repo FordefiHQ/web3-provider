@@ -29,8 +29,15 @@ export interface CreateSolanaVaultRequest {
      * 
      * @type {string}
      * @memberof CreateSolanaVaultRequest
+     * @deprecated
      */
     keysetId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateSolanaVaultRequest
+     */
+    endUserId?: string;
     /**
      * 
      * @type {string}
@@ -78,6 +85,7 @@ export function CreateSolanaVaultRequestFromJSONTyped(json: any, ignoreDiscrimin
         
         'name': json['name'],
         'keysetId': !exists(json, 'keyset_id') ? undefined : json['keyset_id'],
+        'endUserId': !exists(json, 'end_user_id') ? undefined : json['end_user_id'],
         'vaultGroupId': !exists(json, 'vault_group_id') ? undefined : json['vault_group_id'],
         'type': json['type'],
     };
@@ -94,6 +102,7 @@ export function CreateSolanaVaultRequestToJSON(value?: CreateSolanaVaultRequest 
         
         'name': value.name,
         'keyset_id': value.keysetId,
+        'end_user_id': value.endUserId,
         'vault_group_id': value.vaultGroupId,
         'type': value.type,
     };

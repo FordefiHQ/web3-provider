@@ -13,6 +13,13 @@
  */
 
 import {
+    CreateAptosVaultRequest,
+    instanceOfCreateAptosVaultRequest,
+    CreateAptosVaultRequestFromJSON,
+    CreateAptosVaultRequestFromJSONTyped,
+    CreateAptosVaultRequestToJSON,
+} from './CreateAptosVaultRequest';
+import {
     CreateBlackBoxVaultRequest,
     instanceOfCreateBlackBoxVaultRequest,
     CreateBlackBoxVaultRequestFromJSON,
@@ -41,6 +48,13 @@ import {
     CreateSolanaVaultRequestToJSON,
 } from './CreateSolanaVaultRequest';
 import {
+    CreateSuiVaultRequest,
+    instanceOfCreateSuiVaultRequest,
+    CreateSuiVaultRequestFromJSON,
+    CreateSuiVaultRequestFromJSONTyped,
+    CreateSuiVaultRequestToJSON,
+} from './CreateSuiVaultRequest';
+import {
     CreateUtxoVaultRequest,
     instanceOfCreateUtxoVaultRequest,
     CreateUtxoVaultRequestFromJSON,
@@ -53,7 +67,7 @@ import {
  * 
  * @export
  */
-export type CreateVaultRequest = { type: 'black_box' } & CreateBlackBoxVaultRequest | { type: 'cosmos' } & CreateCosmosVaultRequest | { type: 'evm' } & CreateEvmVaultRequest | { type: 'solana' } & CreateSolanaVaultRequest | { type: 'utxo' } & CreateUtxoVaultRequest;
+export type CreateVaultRequest = { type: 'aptos' } & CreateAptosVaultRequest | { type: 'black_box' } & CreateBlackBoxVaultRequest | { type: 'cosmos' } & CreateCosmosVaultRequest | { type: 'evm' } & CreateEvmVaultRequest | { type: 'solana' } & CreateSolanaVaultRequest | { type: 'sui' } & CreateSuiVaultRequest | { type: 'utxo' } & CreateUtxoVaultRequest;
 
 export function CreateVaultRequestFromJSON(json: any): CreateVaultRequest {
     return CreateVaultRequestFromJSONTyped(json, false);
@@ -64,6 +78,8 @@ export function CreateVaultRequestFromJSONTyped(json: any, ignoreDiscriminator: 
         return json;
     }
     switch (json['type']) {
+        case 'aptos':
+            return {...CreateAptosVaultRequestFromJSONTyped(json, true), type: 'aptos'};
         case 'black_box':
             return {...CreateBlackBoxVaultRequestFromJSONTyped(json, true), type: 'black_box'};
         case 'cosmos':
@@ -72,6 +88,8 @@ export function CreateVaultRequestFromJSONTyped(json: any, ignoreDiscriminator: 
             return {...CreateEvmVaultRequestFromJSONTyped(json, true), type: 'evm'};
         case 'solana':
             return {...CreateSolanaVaultRequestFromJSONTyped(json, true), type: 'solana'};
+        case 'sui':
+            return {...CreateSuiVaultRequestFromJSONTyped(json, true), type: 'sui'};
         case 'utxo':
             return {...CreateUtxoVaultRequestFromJSONTyped(json, true), type: 'utxo'};
         default:
@@ -87,6 +105,8 @@ export function CreateVaultRequestToJSON(value?: CreateVaultRequest | null): any
         return null;
     }
     switch (value['type']) {
+        case 'aptos':
+            return CreateAptosVaultRequestToJSON(value);
         case 'black_box':
             return CreateBlackBoxVaultRequestToJSON(value);
         case 'cosmos':
@@ -95,6 +115,8 @@ export function CreateVaultRequestToJSON(value?: CreateVaultRequest | null): any
             return CreateEvmVaultRequestToJSON(value);
         case 'solana':
             return CreateSolanaVaultRequestToJSON(value);
+        case 'sui':
+            return CreateSuiVaultRequestToJSON(value);
         case 'utxo':
             return CreateUtxoVaultRequestToJSON(value);
         default:

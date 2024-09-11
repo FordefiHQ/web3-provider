@@ -19,6 +19,7 @@
  */
 export const CosmosTransactionState = {
     waitingForApproval: 'waiting_for_approval',
+    waitingForSigningTrigger: 'waiting_for_signing_trigger',
     approved: 'approved',
     signed: 'signed',
     pushedToBlockchain: 'pushed_to_blockchain',
@@ -28,7 +29,8 @@ export const CosmosTransactionState = {
     errorPushingToBlockchain: 'error_pushing_to_blockchain',
     minedReverted: 'mined_reverted',
     completedReverted: 'completed_reverted',
-    stuck: 'stuck'
+    stuck: 'stuck',
+    errorSigning: 'error_signing'
 } as const;
 export type CosmosTransactionState = typeof CosmosTransactionState[keyof typeof CosmosTransactionState];
 

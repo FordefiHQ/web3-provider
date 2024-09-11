@@ -13,18 +13,24 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { AptosVaultMetadataValue } from './AptosVaultMetadataValue';
+import {
+    AptosVaultMetadataValueFromJSON,
+    AptosVaultMetadataValueFromJSONTyped,
+    AptosVaultMetadataValueToJSON,
+} from './AptosVaultMetadataValue';
+import type { AptosVaultPendingVaultGroupAction } from './AptosVaultPendingVaultGroupAction';
+import {
+    AptosVaultPendingVaultGroupActionFromJSON,
+    AptosVaultPendingVaultGroupActionFromJSONTyped,
+    AptosVaultPendingVaultGroupActionToJSON,
+} from './AptosVaultPendingVaultGroupAction';
 import type { BlackBoxVaultDetails } from './BlackBoxVaultDetails';
 import {
     BlackBoxVaultDetailsFromJSON,
     BlackBoxVaultDetailsFromJSONTyped,
     BlackBoxVaultDetailsToJSON,
 } from './BlackBoxVaultDetails';
-import type { BlackBoxVaultPendingVaultGroupAction } from './BlackBoxVaultPendingVaultGroupAction';
-import {
-    BlackBoxVaultPendingVaultGroupActionFromJSON,
-    BlackBoxVaultPendingVaultGroupActionFromJSONTyped,
-    BlackBoxVaultPendingVaultGroupActionToJSON,
-} from './BlackBoxVaultPendingVaultGroupAction';
 import type { EndUserRef } from './EndUserRef';
 import {
     EndUserRefFromJSON,
@@ -88,6 +94,12 @@ export interface BlackBoxVault {
     modifiedAt: Date;
     /**
      * 
+     * @type {{ [key: string]: AptosVaultMetadataValue | undefined; }}
+     * @memberof BlackBoxVault
+     */
+    metadata?: { [key: string]: AptosVaultMetadataValue | undefined; };
+    /**
+     * 
      * @type {string}
      * @memberof BlackBoxVault
      */
@@ -98,6 +110,24 @@ export interface BlackBoxVault {
      * @memberof BlackBoxVault
      */
     createdBy: UserRef;
+    /**
+     * 
+     * @type {VaultGroupRef}
+     * @memberof BlackBoxVault
+     */
+    vaultGroup: VaultGroupRef;
+    /**
+     * 
+     * @type {AptosVaultPendingVaultGroupAction}
+     * @memberof BlackBoxVault
+     */
+    pendingVaultGroupAction?: AptosVaultPendingVaultGroupAction;
+    /**
+     * 
+     * @type {VaultState}
+     * @memberof BlackBoxVault
+     */
+    state: VaultState;
     /**
      * 
      * @type {string}
@@ -129,24 +159,6 @@ export interface BlackBoxVault {
      * @memberof BlackBoxVault
      */
     keyHolder?: EndUserRef;
-    /**
-     * 
-     * @type {VaultGroupRef}
-     * @memberof BlackBoxVault
-     */
-    vaultGroup: VaultGroupRef;
-    /**
-     * 
-     * @type {BlackBoxVaultPendingVaultGroupAction}
-     * @memberof BlackBoxVault
-     */
-    pendingVaultGroupAction?: BlackBoxVaultPendingVaultGroupAction;
-    /**
-     * 
-     * @type {VaultState}
-     * @memberof BlackBoxVault
-     */
-    state: VaultState;
     /**
      * 
      * @type {string}
@@ -181,12 +193,12 @@ export function instanceOfBlackBoxVault(value: object): boolean {
     isInstance = isInstance && "modifiedAt" in value;
     isInstance = isInstance && "name" in value;
     isInstance = isInstance && "createdBy" in value;
+    isInstance = isInstance && "vaultGroup" in value;
+    isInstance = isInstance && "state" in value;
     isInstance = isInstance && "derivationPath" in value;
     isInstance = isInstance && "publicKeyCompressed" in value;
     isInstance = isInstance && "derivationInfo" in value;
     isInstance = isInstance && "keyset" in value;
-    isInstance = isInstance && "vaultGroup" in value;
-    isInstance = isInstance && "state" in value;
     isInstance = isInstance && "type" in value;
     isInstance = isInstance && "details" in value;
 
@@ -206,16 +218,17 @@ export function BlackBoxVaultFromJSONTyped(json: any, ignoreDiscriminator: boole
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
+        'metadata': !exists(json, 'metadata') ? undefined : (mapValues(json['metadata'], AptosVaultMetadataValueFromJSON)),
         'name': json['name'],
         'createdBy': UserRefFromJSON(json['created_by']),
+        'vaultGroup': VaultGroupRefFromJSON(json['vault_group']),
+        'pendingVaultGroupAction': !exists(json, 'pending_vault_group_action') ? undefined : AptosVaultPendingVaultGroupActionFromJSON(json['pending_vault_group_action']),
+        'state': VaultStateFromJSON(json['state']),
         'derivationPath': json['derivation_path'],
         'publicKeyCompressed': json['public_key_compressed'],
         'derivationInfo': VaultDerivationInfoFromJSON(json['derivation_info']),
         'keyset': KeysetRefFromJSON(json['keyset']),
         'keyHolder': !exists(json, 'key_holder') ? undefined : EndUserRefFromJSON(json['key_holder']),
-        'vaultGroup': VaultGroupRefFromJSON(json['vault_group']),
-        'pendingVaultGroupAction': !exists(json, 'pending_vault_group_action') ? undefined : BlackBoxVaultPendingVaultGroupActionFromJSON(json['pending_vault_group_action']),
-        'state': VaultStateFromJSON(json['state']),
         'type': json['type'],
         'details': BlackBoxVaultDetailsFromJSON(json['details']),
     };
@@ -233,16 +246,17 @@ export function BlackBoxVaultToJSON(value?: BlackBoxVault | null): any {
         'id': value.id,
         'created_at': (value.createdAt.toISOString()),
         'modified_at': (value.modifiedAt.toISOString()),
+        'metadata': value.metadata === undefined ? undefined : (mapValues(value.metadata, AptosVaultMetadataValueToJSON)),
         'name': value.name,
         'created_by': UserRefToJSON(value.createdBy),
+        'vault_group': VaultGroupRefToJSON(value.vaultGroup),
+        'pending_vault_group_action': AptosVaultPendingVaultGroupActionToJSON(value.pendingVaultGroupAction),
+        'state': VaultStateToJSON(value.state),
         'derivation_path': value.derivationPath,
         'public_key_compressed': value.publicKeyCompressed,
         'derivation_info': VaultDerivationInfoToJSON(value.derivationInfo),
         'keyset': KeysetRefToJSON(value.keyset),
         'key_holder': EndUserRefToJSON(value.keyHolder),
-        'vault_group': VaultGroupRefToJSON(value.vaultGroup),
-        'pending_vault_group_action': BlackBoxVaultPendingVaultGroupActionToJSON(value.pendingVaultGroupAction),
-        'state': VaultStateToJSON(value.state),
         'type': value.type,
         'details': BlackBoxVaultDetailsToJSON(value.details),
     };

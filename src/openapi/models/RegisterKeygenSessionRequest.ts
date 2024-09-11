@@ -19,6 +19,12 @@ import {
     KeyTypeFromJSONTyped,
     KeyTypeToJSON,
 } from './KeyType';
+import type { MpcMessage } from './MpcMessage';
+import {
+    MpcMessageFromJSON,
+    MpcMessageFromJSONTyped,
+    MpcMessageToJSON,
+} from './MpcMessage';
 
 /**
  * 
@@ -37,13 +43,25 @@ export interface RegisterKeygenSessionRequest {
      * @type {string}
      * @memberof RegisterKeygenSessionRequest
      */
-    protocolVersion?: string;
+    protocolVersion: string;
     /**
      * 
      * @type {string}
      * @memberof RegisterKeygenSessionRequest
      */
     keysetId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RegisterKeygenSessionRequest
+     */
+    sessionSeed?: string;
+    /**
+     * 
+     * @type {MpcMessage}
+     * @memberof RegisterKeygenSessionRequest
+     */
+    firstMpcProtocolMessage?: MpcMessage;
 }
 
 /**
@@ -52,6 +70,7 @@ export interface RegisterKeygenSessionRequest {
 export function instanceOfRegisterKeygenSessionRequest(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "keyType" in value;
+    isInstance = isInstance && "protocolVersion" in value;
 
     return isInstance;
 }
@@ -67,8 +86,10 @@ export function RegisterKeygenSessionRequestFromJSONTyped(json: any, ignoreDiscr
     return {
         
         'keyType': KeyTypeFromJSON(json['key_type']),
-        'protocolVersion': !exists(json, 'protocol_version') ? undefined : json['protocol_version'],
+        'protocolVersion': json['protocol_version'],
         'keysetId': !exists(json, 'keyset_id') ? undefined : json['keyset_id'],
+        'sessionSeed': !exists(json, 'session_seed') ? undefined : json['session_seed'],
+        'firstMpcProtocolMessage': !exists(json, 'first_mpc_protocol_message') ? undefined : MpcMessageFromJSON(json['first_mpc_protocol_message']),
     };
 }
 
@@ -84,6 +105,8 @@ export function RegisterKeygenSessionRequestToJSON(value?: RegisterKeygenSession
         'key_type': KeyTypeToJSON(value.keyType),
         'protocol_version': value.protocolVersion,
         'keyset_id': value.keysetId,
+        'session_seed': value.sessionSeed,
+        'first_mpc_protocol_message': MpcMessageToJSON(value.firstMpcProtocolMessage),
     };
 }
 

@@ -13,6 +13,27 @@
  */
 
 import {
+    TransactionDetailsAptosMessageRequest,
+    instanceOfTransactionDetailsAptosMessageRequest,
+    TransactionDetailsAptosMessageRequestFromJSON,
+    TransactionDetailsAptosMessageRequestFromJSONTyped,
+    TransactionDetailsAptosMessageRequestToJSON,
+} from './TransactionDetailsAptosMessageRequest';
+import {
+    TransactionDetailsAptosTransactionRequest,
+    instanceOfTransactionDetailsAptosTransactionRequest,
+    TransactionDetailsAptosTransactionRequestFromJSON,
+    TransactionDetailsAptosTransactionRequestFromJSONTyped,
+    TransactionDetailsAptosTransactionRequestToJSON,
+} from './TransactionDetailsAptosTransactionRequest';
+import {
+    TransactionDetailsCosmosMessageRequest,
+    instanceOfTransactionDetailsCosmosMessageRequest,
+    TransactionDetailsCosmosMessageRequestFromJSON,
+    TransactionDetailsCosmosMessageRequestFromJSONTyped,
+    TransactionDetailsCosmosMessageRequestToJSON,
+} from './TransactionDetailsCosmosMessageRequest';
+import {
     TransactionDetailsCosmosTransactionRequest,
     instanceOfTransactionDetailsCosmosTransactionRequest,
     TransactionDetailsCosmosTransactionRequestFromJSON,
@@ -48,6 +69,27 @@ import {
     TransactionDetailsSolanaTransactionRequestToJSON,
 } from './TransactionDetailsSolanaTransactionRequest';
 import {
+    TransactionDetailsSuiMessageRequest,
+    instanceOfTransactionDetailsSuiMessageRequest,
+    TransactionDetailsSuiMessageRequestFromJSON,
+    TransactionDetailsSuiMessageRequestFromJSONTyped,
+    TransactionDetailsSuiMessageRequestToJSON,
+} from './TransactionDetailsSuiMessageRequest';
+import {
+    TransactionDetailsSuiTransactionRequest,
+    instanceOfTransactionDetailsSuiTransactionRequest,
+    TransactionDetailsSuiTransactionRequestFromJSON,
+    TransactionDetailsSuiTransactionRequestFromJSONTyped,
+    TransactionDetailsSuiTransactionRequestToJSON,
+} from './TransactionDetailsSuiTransactionRequest';
+import {
+    TransactionDetailsUtxoMessageRequest,
+    instanceOfTransactionDetailsUtxoMessageRequest,
+    TransactionDetailsUtxoMessageRequestFromJSON,
+    TransactionDetailsUtxoMessageRequestFromJSONTyped,
+    TransactionDetailsUtxoMessageRequestToJSON,
+} from './TransactionDetailsUtxoMessageRequest';
+import {
     TransactionDetailsUtxoTransactionRequest,
     instanceOfTransactionDetailsUtxoTransactionRequest,
     TransactionDetailsUtxoTransactionRequestFromJSON,
@@ -60,7 +102,7 @@ import {
  * 
  * @export
  */
-export type PredictTransactionRequest = { type: 'cosmos_transaction' } & TransactionDetailsCosmosTransactionRequest | { type: 'evm_message' } & TransactionDetailsEvmMessageRequest | { type: 'evm_transaction' } & TransactionDetailsEvmTransactionRequest | { type: 'solana_message' } & TransactionDetailsSolanaMessageRequest | { type: 'solana_transaction' } & TransactionDetailsSolanaTransactionRequest | { type: 'utxo_transaction' } & TransactionDetailsUtxoTransactionRequest;
+export type PredictTransactionRequest = { type: 'aptos_message' } & TransactionDetailsAptosMessageRequest | { type: 'aptos_transaction' } & TransactionDetailsAptosTransactionRequest | { type: 'cosmos_message' } & TransactionDetailsCosmosMessageRequest | { type: 'cosmos_transaction' } & TransactionDetailsCosmosTransactionRequest | { type: 'evm_message' } & TransactionDetailsEvmMessageRequest | { type: 'evm_transaction' } & TransactionDetailsEvmTransactionRequest | { type: 'solana_message' } & TransactionDetailsSolanaMessageRequest | { type: 'solana_transaction' } & TransactionDetailsSolanaTransactionRequest | { type: 'sui_message' } & TransactionDetailsSuiMessageRequest | { type: 'sui_transaction' } & TransactionDetailsSuiTransactionRequest | { type: 'utxo_message' } & TransactionDetailsUtxoMessageRequest | { type: 'utxo_transaction' } & TransactionDetailsUtxoTransactionRequest;
 
 export function PredictTransactionRequestFromJSON(json: any): PredictTransactionRequest {
     return PredictTransactionRequestFromJSONTyped(json, false);
@@ -71,6 +113,12 @@ export function PredictTransactionRequestFromJSONTyped(json: any, ignoreDiscrimi
         return json;
     }
     switch (json['type']) {
+        case 'aptos_message':
+            return {...TransactionDetailsAptosMessageRequestFromJSONTyped(json, true), type: 'aptos_message'};
+        case 'aptos_transaction':
+            return {...TransactionDetailsAptosTransactionRequestFromJSONTyped(json, true), type: 'aptos_transaction'};
+        case 'cosmos_message':
+            return {...TransactionDetailsCosmosMessageRequestFromJSONTyped(json, true), type: 'cosmos_message'};
         case 'cosmos_transaction':
             return {...TransactionDetailsCosmosTransactionRequestFromJSONTyped(json, true), type: 'cosmos_transaction'};
         case 'evm_message':
@@ -81,6 +129,12 @@ export function PredictTransactionRequestFromJSONTyped(json: any, ignoreDiscrimi
             return {...TransactionDetailsSolanaMessageRequestFromJSONTyped(json, true), type: 'solana_message'};
         case 'solana_transaction':
             return {...TransactionDetailsSolanaTransactionRequestFromJSONTyped(json, true), type: 'solana_transaction'};
+        case 'sui_message':
+            return {...TransactionDetailsSuiMessageRequestFromJSONTyped(json, true), type: 'sui_message'};
+        case 'sui_transaction':
+            return {...TransactionDetailsSuiTransactionRequestFromJSONTyped(json, true), type: 'sui_transaction'};
+        case 'utxo_message':
+            return {...TransactionDetailsUtxoMessageRequestFromJSONTyped(json, true), type: 'utxo_message'};
         case 'utxo_transaction':
             return {...TransactionDetailsUtxoTransactionRequestFromJSONTyped(json, true), type: 'utxo_transaction'};
         default:
@@ -96,6 +150,12 @@ export function PredictTransactionRequestToJSON(value?: PredictTransactionReques
         return null;
     }
     switch (value['type']) {
+        case 'aptos_message':
+            return TransactionDetailsAptosMessageRequestToJSON(value);
+        case 'aptos_transaction':
+            return TransactionDetailsAptosTransactionRequestToJSON(value);
+        case 'cosmos_message':
+            return TransactionDetailsCosmosMessageRequestToJSON(value);
         case 'cosmos_transaction':
             return TransactionDetailsCosmosTransactionRequestToJSON(value);
         case 'evm_message':
@@ -106,6 +166,12 @@ export function PredictTransactionRequestToJSON(value?: PredictTransactionReques
             return TransactionDetailsSolanaMessageRequestToJSON(value);
         case 'solana_transaction':
             return TransactionDetailsSolanaTransactionRequestToJSON(value);
+        case 'sui_message':
+            return TransactionDetailsSuiMessageRequestToJSON(value);
+        case 'sui_transaction':
+            return TransactionDetailsSuiTransactionRequestToJSON(value);
+        case 'utxo_message':
+            return TransactionDetailsUtxoMessageRequestToJSON(value);
         case 'utxo_transaction':
             return TransactionDetailsUtxoTransactionRequestToJSON(value);
         default:

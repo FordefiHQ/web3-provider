@@ -13,6 +13,13 @@
  */
 
 import {
+    CreateAptosContactRequest,
+    instanceOfCreateAptosContactRequest,
+    CreateAptosContactRequestFromJSON,
+    CreateAptosContactRequestFromJSONTyped,
+    CreateAptosContactRequestToJSON,
+} from './CreateAptosContactRequest';
+import {
     CreateCosmosContactRequest,
     instanceOfCreateCosmosContactRequest,
     CreateCosmosContactRequestFromJSON,
@@ -34,6 +41,13 @@ import {
     CreateSolanaContactRequestToJSON,
 } from './CreateSolanaContactRequest';
 import {
+    CreateSuiContactRequest,
+    instanceOfCreateSuiContactRequest,
+    CreateSuiContactRequestFromJSON,
+    CreateSuiContactRequestFromJSONTyped,
+    CreateSuiContactRequestToJSON,
+} from './CreateSuiContactRequest';
+import {
     CreateUtxoContactRequest,
     instanceOfCreateUtxoContactRequest,
     CreateUtxoContactRequestFromJSON,
@@ -46,7 +60,7 @@ import {
  * 
  * @export
  */
-export type CreateContactRequest = { type: 'cosmos' } & CreateCosmosContactRequest | { type: 'evm' } & CreateEVMContactRequest | { type: 'solana' } & CreateSolanaContactRequest | { type: 'utxo' } & CreateUtxoContactRequest;
+export type CreateContactRequest = { type: 'aptos' } & CreateAptosContactRequest | { type: 'cosmos' } & CreateCosmosContactRequest | { type: 'evm' } & CreateEVMContactRequest | { type: 'solana' } & CreateSolanaContactRequest | { type: 'sui' } & CreateSuiContactRequest | { type: 'utxo' } & CreateUtxoContactRequest;
 
 export function CreateContactRequestFromJSON(json: any): CreateContactRequest {
     return CreateContactRequestFromJSONTyped(json, false);
@@ -57,12 +71,16 @@ export function CreateContactRequestFromJSONTyped(json: any, ignoreDiscriminator
         return json;
     }
     switch (json['type']) {
+        case 'aptos':
+            return {...CreateAptosContactRequestFromJSONTyped(json, true), type: 'aptos'};
         case 'cosmos':
             return {...CreateCosmosContactRequestFromJSONTyped(json, true), type: 'cosmos'};
         case 'evm':
             return {...CreateEVMContactRequestFromJSONTyped(json, true), type: 'evm'};
         case 'solana':
             return {...CreateSolanaContactRequestFromJSONTyped(json, true), type: 'solana'};
+        case 'sui':
+            return {...CreateSuiContactRequestFromJSONTyped(json, true), type: 'sui'};
         case 'utxo':
             return {...CreateUtxoContactRequestFromJSONTyped(json, true), type: 'utxo'};
         default:
@@ -78,12 +96,16 @@ export function CreateContactRequestToJSON(value?: CreateContactRequest | null):
         return null;
     }
     switch (value['type']) {
+        case 'aptos':
+            return CreateAptosContactRequestToJSON(value);
         case 'cosmos':
             return CreateCosmosContactRequestToJSON(value);
         case 'evm':
             return CreateEVMContactRequestToJSON(value);
         case 'solana':
             return CreateSolanaContactRequestToJSON(value);
+        case 'sui':
+            return CreateSuiContactRequestToJSON(value);
         case 'utxo':
             return CreateUtxoContactRequestToJSON(value);
         default:

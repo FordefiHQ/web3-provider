@@ -19,6 +19,12 @@ import {
     CreateBlackBoxSignatureRequestDetailsFromJSONTyped,
     CreateBlackBoxSignatureRequestDetailsToJSON,
 } from './CreateBlackBoxSignatureRequestDetails';
+import type { SignMode } from './SignMode';
+import {
+    SignModeFromJSON,
+    SignModeFromJSONTyped,
+    SignModeToJSON,
+} from './SignMode';
 import type { SignerType } from './SignerType';
 import {
     SignerTypeFromJSON,
@@ -50,6 +56,12 @@ export interface CreateBlackBoxSignatureRequest {
      * @memberof CreateBlackBoxSignatureRequest
      */
     signerType?: SignerType;
+    /**
+     * 
+     * @type {SignMode}
+     * @memberof CreateBlackBoxSignatureRequest
+     */
+    signMode?: SignMode;
     /**
      * 
      * @type {string}
@@ -99,6 +111,7 @@ export function CreateBlackBoxSignatureRequestFromJSONTyped(json: any, ignoreDis
         'vaultId': json['vault_id'],
         'note': !exists(json, 'note') ? undefined : json['note'],
         'signerType': !exists(json, 'signer_type') ? undefined : SignerTypeFromJSON(json['signer_type']),
+        'signMode': !exists(json, 'sign_mode') ? undefined : SignModeFromJSON(json['sign_mode']),
         'type': json['type'],
         'details': CreateBlackBoxSignatureRequestDetailsFromJSON(json['details']),
     };
@@ -116,6 +129,7 @@ export function CreateBlackBoxSignatureRequestToJSON(value?: CreateBlackBoxSigna
         'vault_id': value.vaultId,
         'note': value.note,
         'signer_type': SignerTypeToJSON(value.signerType),
+        'sign_mode': SignModeToJSON(value.signMode),
         'type': value.type,
         'details': CreateBlackBoxSignatureRequestDetailsToJSON(value.details),
     };

@@ -19,12 +19,30 @@ import {
     ApprovalRequestFromJSONTyped,
     ApprovalRequestToJSON,
 } from './ApprovalRequest';
+import type { DescribedEvmMessageTypedData } from './DescribedEvmMessageTypedData';
+import {
+    DescribedEvmMessageTypedDataFromJSON,
+    DescribedEvmMessageTypedDataFromJSONTyped,
+    DescribedEvmMessageTypedDataToJSON,
+} from './DescribedEvmMessageTypedData';
+import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
+import {
+    EnrichedEvmAddressFromJSON,
+    EnrichedEvmAddressFromJSONTyped,
+    EnrichedEvmAddressToJSON,
+} from './EnrichedEvmAddress';
 import type { EnrichedEvmChain } from './EnrichedEvmChain';
 import {
     EnrichedEvmChainFromJSON,
     EnrichedEvmChainFromJSONTyped,
     EnrichedEvmChainToJSON,
 } from './EnrichedEvmChain';
+import type { EvmMessageType } from './EvmMessageType';
+import {
+    EvmMessageTypeFromJSON,
+    EvmMessageTypeFromJSONTyped,
+    EvmMessageTypeToJSON,
+} from './EvmMessageType';
 import type { PolicyMatch } from './PolicyMatch';
 import {
     PolicyMatchFromJSON,
@@ -74,6 +92,30 @@ export interface PredictedEvmMessage {
      * @memberof PredictedEvmMessage
      */
     chain: EnrichedEvmChain;
+    /**
+     * 
+     * @type {EnrichedEvmAddress}
+     * @memberof PredictedEvmMessage
+     */
+    sender: EnrichedEvmAddress;
+    /**
+     * 
+     * @type {EvmMessageType}
+     * @memberof PredictedEvmMessage
+     */
+    evmMessageType: EvmMessageType;
+    /**
+     * 
+     * @type {DescribedEvmMessageTypedData}
+     * @memberof PredictedEvmMessage
+     */
+    typedData?: DescribedEvmMessageTypedData;
+    /**
+     * 
+     * @type {string}
+     * @memberof PredictedEvmMessage
+     */
+    messageToDisplay: string;
 }
 
 
@@ -95,6 +137,9 @@ export function instanceOfPredictedEvmMessage(value: object): boolean {
     isInstance = isInstance && "risks" in value;
     isInstance = isInstance && "type" in value;
     isInstance = isInstance && "chain" in value;
+    isInstance = isInstance && "sender" in value;
+    isInstance = isInstance && "evmMessageType" in value;
+    isInstance = isInstance && "messageToDisplay" in value;
 
     return isInstance;
 }
@@ -114,6 +159,10 @@ export function PredictedEvmMessageFromJSONTyped(json: any, ignoreDiscriminator:
         'risks': ((json['risks'] as Array<any>).map(TransactionRiskFromJSON)),
         'type': json['type'],
         'chain': EnrichedEvmChainFromJSON(json['chain']),
+        'sender': EnrichedEvmAddressFromJSON(json['sender']),
+        'evmMessageType': EvmMessageTypeFromJSON(json['evm_message_type']),
+        'typedData': !exists(json, 'typed_data') ? undefined : DescribedEvmMessageTypedDataFromJSON(json['typed_data']),
+        'messageToDisplay': json['message_to_display'],
     };
 }
 
@@ -131,6 +180,10 @@ export function PredictedEvmMessageToJSON(value?: PredictedEvmMessage | null): a
         'risks': ((value.risks as Array<any>).map(TransactionRiskToJSON)),
         'type': value.type,
         'chain': EnrichedEvmChainToJSON(value.chain),
+        'sender': EnrichedEvmAddressToJSON(value.sender),
+        'evm_message_type': EvmMessageTypeToJSON(value.evmMessageType),
+        'typed_data': DescribedEvmMessageTypedDataToJSON(value.typedData),
+        'message_to_display': value.messageToDisplay,
     };
 }
 

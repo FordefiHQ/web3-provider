@@ -21,9 +21,11 @@ export const TransactionState = {
     pending: 'pending',
     finalized: 'finalized',
     approved: 'approved',
+    waitingForSigningTrigger: 'waiting_for_signing_trigger',
     stuck: 'stuck',
     completed: 'completed',
-    completedReverted: 'completed_reverted'
+    completedReverted: 'completed_reverted',
+    error: 'error'
 } as const;
 export type TransactionState = typeof TransactionState[keyof typeof TransactionState];
 

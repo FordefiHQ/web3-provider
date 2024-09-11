@@ -202,6 +202,12 @@ export interface EvmTransaction {
     data: string;
     /**
      * 
+     * @type {string}
+     * @memberof EvmTransaction
+     */
+    hexData?: string;
+    /**
+     * 
      * @type {EvmTransactionParsedData}
      * @memberof EvmTransaction
      */
@@ -391,6 +397,7 @@ export function EvmTransactionFromJSONTyped(json: any, ignoreDiscriminator: bool
         'to': EnrichedEvmAddressFromJSON(json['to']),
         'value': json['value'],
         'data': json['data'],
+        'hexData': !exists(json, 'hex_data') ? undefined : json['hex_data'],
         'parsedData': EvmTransactionParsedDataFromJSON(json['parsed_data']),
         'hash': !exists(json, 'hash') ? undefined : json['hash'],
         'nonce': !exists(json, 'nonce') ? undefined : json['nonce'],
@@ -439,6 +446,7 @@ export function EvmTransactionToJSON(value?: EvmTransaction | null): any {
         'to': EnrichedEvmAddressToJSON(value.to),
         'value': value.value,
         'data': value.data,
+        'hex_data': value.hexData,
         'parsed_data': EvmTransactionParsedDataToJSON(value.parsedData),
         'hash': value.hash,
         'nonce': value.nonce,

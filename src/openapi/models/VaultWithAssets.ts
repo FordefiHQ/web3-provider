@@ -13,6 +13,12 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { ChainWithAssets } from './ChainWithAssets';
+import {
+    ChainWithAssetsFromJSON,
+    ChainWithAssetsFromJSONTyped,
+    ChainWithAssetsToJSON,
+} from './ChainWithAssets';
 import type { EnrichedChain } from './EnrichedChain';
 import {
     EnrichedChainFromJSON,
@@ -72,8 +78,21 @@ export interface VaultWithAssets {
      * 
      * @type {Array<EnrichedChain>}
      * @memberof VaultWithAssets
+     * @deprecated
      */
     chains: Array<EnrichedChain>;
+    /**
+     * 
+     * @type {Array<ChainWithAssets>}
+     * @memberof VaultWithAssets
+     */
+    chainsWithAssets: Array<ChainWithAssets>;
+    /**
+     * 
+     * @type {number}
+     * @memberof VaultWithAssets
+     */
+    ownedAssetsCount: number;
 }
 
 /**
@@ -86,6 +105,8 @@ export function instanceOfVaultWithAssets(value: object): boolean {
     isInstance = isInstance && "hasMoreAssets" in value;
     isInstance = isInstance && "ownedAssets" in value;
     isInstance = isInstance && "chains" in value;
+    isInstance = isInstance && "chainsWithAssets" in value;
+    isInstance = isInstance && "ownedAssetsCount" in value;
 
     return isInstance;
 }
@@ -105,6 +126,8 @@ export function VaultWithAssetsFromJSONTyped(json: any, ignoreDiscriminator: boo
         'hasMoreAssets': json['has_more_assets'],
         'ownedAssets': ((json['owned_assets'] as Array<any>).map(OwnedAssetFromJSON)),
         'chains': ((json['chains'] as Array<any>).map(EnrichedChainFromJSON)),
+        'chainsWithAssets': ((json['chains_with_assets'] as Array<any>).map(ChainWithAssetsFromJSON)),
+        'ownedAssetsCount': json['owned_assets_count'],
     };
 }
 
@@ -122,6 +145,8 @@ export function VaultWithAssetsToJSON(value?: VaultWithAssets | null): any {
         'has_more_assets': value.hasMoreAssets,
         'owned_assets': ((value.ownedAssets as Array<any>).map(OwnedAssetToJSON)),
         'chains': ((value.chains as Array<any>).map(EnrichedChainToJSON)),
+        'chains_with_assets': ((value.chainsWithAssets as Array<any>).map(ChainWithAssetsToJSON)),
+        'owned_assets_count': value.ownedAssetsCount,
     };
 }
 

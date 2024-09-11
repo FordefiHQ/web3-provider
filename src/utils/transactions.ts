@@ -4,6 +4,7 @@ import {
   CreateEvmMessageRequest,
   CreateEvmMessageRequestDetails,
   CreateEvmMessageRequestTypeEnum,
+  CreateEvmRawTransactionRequest,
   CreateEvmRawTransactionRequestGas,
   CreateEvmRawTransactionRequestTypeEnum,
   CreateEvmTransactionRequest,
@@ -20,8 +21,9 @@ import {
   SignerType,
 } from '../openapi';
 import { FordefiRpcSchema, FordefiWeb3TransactionRequest, RequestArgs } from '../provider/provider.types';
-import { AnyEvmTransaction, EvmVault } from '../types';
+import { AnyEvmTx, CreateEvmRawTxRequest, EvmVault } from '../types';
 import { Defined } from '../types/type-utils';
+import { renderTimeDuration } from './time';
 import { waitFor } from './wait-for';
 
 /**
@@ -96,11 +98,7 @@ const parseTransactionRequestValueField = (value: unknown) => {
   }
 };
 
-const parseTransactionRequestGasField = (fieldName: string, value: unknown) => {
-  if (value === undefined) {
-    throw new Error(`invalid "${fieldName}": value is required`);
-  }
-
+const parseTransactionRequestGasField = <T>(fieldName: string, value: Defined<T>) => {
   try {
     return toFordefiTransactionNumericValue(value);
   } catch (parseError: any) {
@@ -130,7 +128,7 @@ const toFordefiEvmGas = ({
   gasPrice,
   gas,
 }: Partial<FordefiWeb3TransactionRequest>): CreateEvmRawTransactionRequestGas => {
-  const gasLimit = parseTransactionRequestGasField('gas', gas);
+  const gasLimit = gas !== undefined && gas !== null ? parseTransactionRequestGasField('gas', gas) : undefined;
 
   if (maxPriorityFeePerGas !== undefined && maxFeePerGas !== undefined) {
     return {
@@ -167,7 +165,7 @@ export const buildEvmRawTransactionRequest = (
   chain: EvmChain,
   vault: EvmVault,
   pushMode: PushMode,
-): CreateEvmTransactionRequest => {
+): CreateEvmRawTxRequest => {
   const { value, from, to, data } = transaction;
 
   if (from && !isAddressEqual(from, vault.address)) {
@@ -191,7 +189,6 @@ export const buildEvmRawTransactionRequest = (
       pushMode,
       chain: chain.chainId,
       value: parseTransactionRequestValueField(value),
-      // @ts-expect-error TODO(gil): remove once API change is merged
       to: to ?? undefined,
       data: data
         ? {
@@ -203,14 +200,29 @@ export const buildEvmRawTransactionRequest = (
   };
 };
 
-export const waitForTransactionState = async <T extends AnyEvmTransaction>(
-  { id: transactionId }: T,
-  desiredState: EvmTransactionState,
-  apiClient: ApiClient,
-): Promise<T> => {
-  let remainingAttempts = 20;
+interface WaitForTransactionStateParams<T extends AnyEvmTx> {
+  transaction: T;
+  desiredState: EvmTransactionState;
+  apiClient: ApiClient;
+  timeoutDurationMs: number;
+  pollingIntervalMs: number;
+}
 
-  while (remainingAttempts > 0) {
+export const waitForTransactionState = async <T extends AnyEvmTx>({
+  transaction: { id: transactionId },
+  desiredState,
+  apiClient,
+  timeoutDurationMs,
+  pollingIntervalMs,
+}: WaitForTransactionStateParams<T>): Promise<T> => {
+  console.debug(
+    `waiting for transaction state change to '${desiredState}' with timeout of ${renderTimeDuration(timeoutDurationMs)}`,
+  );
+
+  let attemptStartTimeMs = Date.now();
+  const timeoutTimeMs = attemptStartTimeMs + timeoutDurationMs;
+
+  while ((attemptStartTimeMs = Date.now()) < timeoutTimeMs) {
     const transaction = (await apiClient.transactions.getTransactionApiV1TransactionsIdGet({
       id: transactionId,
     })) as T;
@@ -226,13 +238,20 @@ export const waitForTransactionState = async <T extends AnyEvmTransaction>(
       return transaction as T;
     }
 
-    remainingAttempts -= 1;
-    console.debug(`transaction state is '${transaction.state}', waiting for '${desiredState}'...`);
+    console.debug(
+      `[${new Date().toISOString()}] transaction state is '${transaction.state}', waiting for '${desiredState}'...`,
+    );
 
-    await waitFor(1_000);
+    // take into account the api call latency
+    const timeSinceAttemptStartMs = Date.now() - attemptStartTimeMs;
+    const remainingWaitTimeMs = pollingIntervalMs - timeSinceAttemptStartMs;
+
+    if (remainingWaitTimeMs > 0) {
+      await waitFor(remainingWaitTimeMs);
+    }
   }
 
-  throw new InternalRpcError(new Error(`Timeout waiting for transaction status to change to '${desiredState}'`));
+  throw new InternalRpcError(new Error(`Timeout while waiting for transaction status to change to '${desiredState}'`));
 };
 
 /**

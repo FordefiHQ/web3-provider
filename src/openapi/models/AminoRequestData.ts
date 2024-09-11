@@ -55,7 +55,7 @@ export interface AminoRequestData {
      * @type {StdFeeRequest}
      * @memberof AminoRequestData
      */
-    stdFee: StdFeeRequest;
+    stdFee?: StdFeeRequest;
     /**
      * 
      * @type {number}
@@ -81,7 +81,6 @@ export function instanceOfAminoRequestData(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "format" in value;
     isInstance = isInstance && "messages" in value;
-    isInstance = isInstance && "stdFee" in value;
 
     return isInstance;
 }
@@ -99,7 +98,7 @@ export function AminoRequestDataFromJSONTyped(json: any, ignoreDiscriminator: bo
         'format': json['format'],
         'messages': ((json['messages'] as Array<any>).map(AminoMessageFromJSON)),
         'memo': !exists(json, 'memo') ? undefined : json['memo'],
-        'stdFee': StdFeeRequestFromJSON(json['std_fee']),
+        'stdFee': !exists(json, 'std_fee') ? undefined : StdFeeRequestFromJSON(json['std_fee']),
         'timeoutHeight': !exists(json, 'timeout_height') ? undefined : json['timeout_height'],
     };
 }

@@ -19,12 +19,6 @@ import {
     EnrichedEvmAddressFromJSONTyped,
     EnrichedEvmAddressToJSON,
 } from './EnrichedEvmAddress';
-import type { EvmChainId } from './EvmChainId';
-import {
-    EvmChainIdFromJSON,
-    EvmChainIdFromJSONTyped,
-    EvmChainIdToJSON,
-} from './EvmChainId';
 
 /**
  * 
@@ -45,11 +39,11 @@ export interface EvmMessageDomainData {
      */
     version?: string;
     /**
-     * 
-     * @type {EvmChainId}
+     * The EVM chain ID can be either one of those supported by the default chains above or a custom chain ID if one was added to your organization. <ul><li>1=`ethereum_mainnet`<li>5=`ethereum_goerli`<li>10=`optimism_mainnet`<li>16=`flare_testnet`<li>56=`bsc_mainnet`<li>100=`gnosis_mainnet`<li>137=`polygon_mainnet`<li>169=`manta_pacific_mainnet`<li>250=`fantom_mainnet`<li>324=`zksync_era_mainnet`<li>1030=`conflux_mainnet`<li>1100=`dymension_mainnet`<li>1101=`polygon_zkevm_mainnet`<li>1329=`sei_mainnet`<li>1729=`reya_mainnet`<li>2222=`kava_mainnet`<li>4200=`merlin_mainnet`<li>5000=`mantle_mainnet`<li>7000=`zeta_mainnet`<li>7700=`canto_mainnet`<li>8453=`base_mainnet`<li>17000=`ethereum_holesky`<li>80001=`polygon_mumbai`<li>42161=`arbitrum_mainnet`<li>43114=`avalanche_chain`<li>59144=`linea_mainnet`<li>81457=`blast_mainnet`<li>421614=`arbitrum_sepolia`<li>534352=`scroll_mainnet`<li>660279=`xai_mainnet`<li>810180=`zklink_nova_mainnet`<li>11155111=`ethereum_sepolia`</ul>
+     * @type {number}
      * @memberof EvmMessageDomainData
      */
-    chainId?: EvmChainId;
+    chainId?: EvmMessageDomainDataChainIdEnum;
     /**
      * 
      * @type {EnrichedEvmAddress}
@@ -63,6 +57,47 @@ export interface EvmMessageDomainData {
      */
     salt?: string;
 }
+
+
+/**
+ * @export
+ */
+export const EvmMessageDomainDataChainIdEnum = {
+    NUMBER_1: 1,
+    NUMBER_5: 5,
+    NUMBER_10: 10,
+    NUMBER_16: 16,
+    NUMBER_56: 56,
+    NUMBER_100: 100,
+    NUMBER_137: 137,
+    NUMBER_169: 169,
+    NUMBER_250: 250,
+    NUMBER_324: 324,
+    NUMBER_1030: 1030,
+    NUMBER_1100: 1100,
+    NUMBER_1101: 1101,
+    NUMBER_1329: 1329,
+    NUMBER_1729: 1729,
+    NUMBER_2222: 2222,
+    NUMBER_4200: 4200,
+    NUMBER_5000: 5000,
+    NUMBER_7000: 7000,
+    NUMBER_7700: 7700,
+    NUMBER_8453: 8453,
+    NUMBER_17000: 17000,
+    NUMBER_80001: 80001,
+    NUMBER_42161: 42161,
+    NUMBER_43114: 43114,
+    NUMBER_59144: 59144,
+    NUMBER_81457: 81457,
+    NUMBER_421614: 421614,
+    NUMBER_534352: 534352,
+    NUMBER_660279: 660279,
+    NUMBER_810180: 810180,
+    NUMBER_11155111: 11155111
+} as const;
+export type EvmMessageDomainDataChainIdEnum = typeof EvmMessageDomainDataChainIdEnum[keyof typeof EvmMessageDomainDataChainIdEnum];
+
 
 /**
  * Check if a given object implements the EvmMessageDomainData interface.
@@ -85,7 +120,7 @@ export function EvmMessageDomainDataFromJSONTyped(json: any, ignoreDiscriminator
         
         'name': !exists(json, 'name') ? undefined : json['name'],
         'version': !exists(json, 'version') ? undefined : json['version'],
-        'chainId': !exists(json, 'chain_id') ? undefined : EvmChainIdFromJSON(json['chain_id']),
+        'chainId': !exists(json, 'chain_id') ? undefined : json['chain_id'],
         'verifyingContract': !exists(json, 'verifying_contract') ? undefined : EnrichedEvmAddressFromJSON(json['verifying_contract']),
         'salt': !exists(json, 'salt') ? undefined : json['salt'],
     };
@@ -102,7 +137,7 @@ export function EvmMessageDomainDataToJSON(value?: EvmMessageDomainData | null):
         
         'name': value.name,
         'version': value.version,
-        'chain_id': EvmChainIdToJSON(value.chainId),
+        'chain_id': value.chainId,
         'verifying_contract': EnrichedEvmAddressToJSON(value.verifyingContract),
         'salt': value.salt,
     };

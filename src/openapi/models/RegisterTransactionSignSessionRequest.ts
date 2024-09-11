@@ -36,7 +36,13 @@ export interface RegisterTransactionSignSessionRequest {
      * @type {string}
      * @memberof RegisterTransactionSignSessionRequest
      */
-    protocolVersion?: string;
+    protocolVersion: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RegisterTransactionSignSessionRequest
+     */
+    sessionSeed?: string;
 }
 
 /**
@@ -44,6 +50,7 @@ export interface RegisterTransactionSignSessionRequest {
  */
 export function instanceOfRegisterTransactionSignSessionRequest(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "protocolVersion" in value;
 
     return isInstance;
 }
@@ -60,7 +67,8 @@ export function RegisterTransactionSignSessionRequestFromJSONTyped(json: any, ig
         
         'signature': !exists(json, 'signature') ? undefined : json['signature'],
         'unsignedMessage': !exists(json, 'unsigned_message') ? undefined : json['unsigned_message'],
-        'protocolVersion': !exists(json, 'protocol_version') ? undefined : json['protocol_version'],
+        'protocolVersion': json['protocol_version'],
+        'sessionSeed': !exists(json, 'session_seed') ? undefined : json['session_seed'],
     };
 }
 
@@ -76,6 +84,7 @@ export function RegisterTransactionSignSessionRequestToJSON(value?: RegisterTran
         'signature': value.signature,
         'unsigned_message': value.unsignedMessage,
         'protocol_version': value.protocolVersion,
+        'session_seed': value.sessionSeed,
     };
 }
 

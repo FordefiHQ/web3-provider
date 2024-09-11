@@ -40,13 +40,20 @@ import {
     PersonRefFromJSONTyped,
     PersonRefToJSON,
 } from './PersonRef';
+import {
+    SystemUserRef,
+    instanceOfSystemUserRef,
+    SystemUserRefFromJSON,
+    SystemUserRefFromJSONTyped,
+    SystemUserRefToJSON,
+} from './SystemUserRef';
 
 /**
  * @type UserRef
  * 
  * @export
  */
-export type UserRef = { userType: 'api_signer' } & ApiSignerRef | { userType: 'api_user' } & ApiUserRef | { userType: 'end_user' } & EndUserRef | { userType: 'person' } & PersonRef;
+export type UserRef = { userType: 'api_signer' } & ApiSignerRef | { userType: 'api_user' } & ApiUserRef | { userType: 'end_user' } & EndUserRef | { userType: 'person' } & PersonRef | { userType: 'system' } & SystemUserRef;
 
 export function UserRefFromJSON(json: any): UserRef {
     return UserRefFromJSONTyped(json, false);
@@ -65,6 +72,8 @@ export function UserRefFromJSONTyped(json: any, ignoreDiscriminator: boolean): U
             return {...EndUserRefFromJSONTyped(json, true), userType: 'end_user'};
         case 'person':
             return {...PersonRefFromJSONTyped(json, true), userType: 'person'};
+        case 'system':
+            return {...SystemUserRefFromJSONTyped(json, true), userType: 'system'};
         default:
             throw new Error(`No variant of UserRef exists with 'userType=${json['userType']}'`);
     }
@@ -86,6 +95,8 @@ export function UserRefToJSON(value?: UserRef | null): any {
             return EndUserRefToJSON(value);
         case 'person':
             return PersonRefToJSON(value);
+        case 'system':
+            return SystemUserRefToJSON(value);
         default:
             throw new Error(`No variant of UserRef exists with 'userType=${value['userType']}'`);
     }

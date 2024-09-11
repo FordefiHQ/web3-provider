@@ -13,12 +13,30 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { AptosMessageState } from './AptosMessageState';
+import {
+    AptosMessageStateFromJSON,
+    AptosMessageStateFromJSONTyped,
+    AptosMessageStateToJSON,
+} from './AptosMessageState';
+import type { AptosTransactionState } from './AptosTransactionState';
+import {
+    AptosTransactionStateFromJSON,
+    AptosTransactionStateFromJSONTyped,
+    AptosTransactionStateToJSON,
+} from './AptosTransactionState';
 import type { BlackBoxSignatureState } from './BlackBoxSignatureState';
 import {
     BlackBoxSignatureStateFromJSON,
     BlackBoxSignatureStateFromJSONTyped,
     BlackBoxSignatureStateToJSON,
 } from './BlackBoxSignatureState';
+import type { CosmosMessageState } from './CosmosMessageState';
+import {
+    CosmosMessageStateFromJSON,
+    CosmosMessageStateFromJSONTyped,
+    CosmosMessageStateToJSON,
+} from './CosmosMessageState';
 import type { CosmosTransactionState } from './CosmosTransactionState';
 import {
     CosmosTransactionStateFromJSON,
@@ -49,6 +67,24 @@ import {
     SolanaTransactionStateFromJSONTyped,
     SolanaTransactionStateToJSON,
 } from './SolanaTransactionState';
+import type { SuiMessageState } from './SuiMessageState';
+import {
+    SuiMessageStateFromJSON,
+    SuiMessageStateFromJSONTyped,
+    SuiMessageStateToJSON,
+} from './SuiMessageState';
+import type { SuiTransactionState } from './SuiTransactionState';
+import {
+    SuiTransactionStateFromJSON,
+    SuiTransactionStateFromJSONTyped,
+    SuiTransactionStateToJSON,
+} from './SuiTransactionState';
+import type { UtxoMessageState } from './UtxoMessageState';
+import {
+    UtxoMessageStateFromJSON,
+    UtxoMessageStateFromJSONTyped,
+    UtxoMessageStateToJSON,
+} from './UtxoMessageState';
 import type { UtxoTransactionState } from './UtxoTransactionState';
 import {
     UtxoTransactionStateFromJSON,

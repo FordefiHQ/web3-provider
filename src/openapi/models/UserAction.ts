@@ -69,6 +69,13 @@ import {
     CreateBackupActionToJSON,
 } from './CreateBackupAction';
 import {
+    ImportKeysAction,
+    instanceOfImportKeysAction,
+    ImportKeysActionFromJSON,
+    ImportKeysActionFromJSONTyped,
+    ImportKeysActionToJSON,
+} from './ImportKeysAction';
+import {
     TransactionAction,
     instanceOfTransactionAction,
     TransactionActionFromJSON,
@@ -109,7 +116,7 @@ import {
  * 
  * @export
  */
-export type UserAction = { type: 'add_api_signer' } & AddApiSignerAction | { type: 'add_device' } & AddDeviceAction | { type: 'add_person_membership' } & AddPersonMembershipAction | { type: 'addressbook_contact_change' } & ContactChangeAction | { type: 'addressbook_group_change' } & AddressGroupChangeAction | { type: 'admin_quorum_change' } & AdminQuorumChangeAction | { type: 'backup_email_change' } & BackupEmailChangeAction | { type: 'create_backup' } & CreateBackupAction | { type: 'transaction' } & TransactionAction | { type: 'transactions_policy' } & TransactionsPolicyAction | { type: 'user_change' } & UserChangeAction | { type: 'user_group_change' } & UserGroupChangeAction | { type: 'vault_group_change' } & VaultGroupChangeAction;
+export type UserAction = { type: 'add_api_signer' } & AddApiSignerAction | { type: 'add_device' } & AddDeviceAction | { type: 'add_person_membership' } & AddPersonMembershipAction | { type: 'addressbook_contact_change' } & ContactChangeAction | { type: 'addressbook_group_change' } & AddressGroupChangeAction | { type: 'admin_quorum_change' } & AdminQuorumChangeAction | { type: 'backup_email_change' } & BackupEmailChangeAction | { type: 'create_backup' } & CreateBackupAction | { type: 'import_keys' } & ImportKeysAction | { type: 'transaction' } & TransactionAction | { type: 'transactions_policy' } & TransactionsPolicyAction | { type: 'user_change' } & UserChangeAction | { type: 'user_group_change' } & UserGroupChangeAction | { type: 'vault_group_change' } & VaultGroupChangeAction;
 
 export function UserActionFromJSON(json: any): UserAction {
     return UserActionFromJSONTyped(json, false);
@@ -136,6 +143,8 @@ export function UserActionFromJSONTyped(json: any, ignoreDiscriminator: boolean)
             return {...BackupEmailChangeActionFromJSONTyped(json, true), type: 'backup_email_change'};
         case 'create_backup':
             return {...CreateBackupActionFromJSONTyped(json, true), type: 'create_backup'};
+        case 'import_keys':
+            return {...ImportKeysActionFromJSONTyped(json, true), type: 'import_keys'};
         case 'transaction':
             return {...TransactionActionFromJSONTyped(json, true), type: 'transaction'};
         case 'transactions_policy':
@@ -175,6 +184,8 @@ export function UserActionToJSON(value?: UserAction | null): any {
             return BackupEmailChangeActionToJSON(value);
         case 'create_backup':
             return CreateBackupActionToJSON(value);
+        case 'import_keys':
+            return ImportKeysActionToJSON(value);
         case 'transaction':
             return TransactionActionToJSON(value);
         case 'transactions_policy':

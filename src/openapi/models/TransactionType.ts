@@ -18,12 +18,18 @@
  * @export
  */
 export const TransactionType = {
+    aptosMessage: 'aptos_message',
+    aptosTransaction: 'aptos_transaction',
     blackBoxSignature: 'black_box_signature',
+    cosmosMessage: 'cosmos_message',
     cosmosTransaction: 'cosmos_transaction',
     evmMessage: 'evm_message',
     evmTransaction: 'evm_transaction',
     solanaMessage: 'solana_message',
     solanaTransaction: 'solana_transaction',
+    suiMessage: 'sui_message',
+    suiTransaction: 'sui_transaction',
+    utxoMessage: 'utxo_message',
     utxoTransaction: 'utxo_transaction'
 } as const;
 export type TransactionType = typeof TransactionType[keyof typeof TransactionType];

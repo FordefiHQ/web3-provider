@@ -67,7 +67,13 @@ export interface EnrichedSolanaChain {
      * @type {BlockchainExplorer}
      * @memberof EnrichedSolanaChain
      */
-    blockchainExplorer: BlockchainExplorer;
+    blockchainExplorer?: BlockchainExplorer;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnrichedSolanaChain
+     */
+    logoUrl: string;
 }
 
 
@@ -90,7 +96,7 @@ export function instanceOfEnrichedSolanaChain(value: object): boolean {
     isInstance = isInstance && "name" in value;
     isInstance = isInstance && "nativeCurrencySymbol" in value;
     isInstance = isInstance && "nativeCurrencyName" in value;
-    isInstance = isInstance && "blockchainExplorer" in value;
+    isInstance = isInstance && "logoUrl" in value;
 
     return isInstance;
 }
@@ -110,7 +116,8 @@ export function EnrichedSolanaChainFromJSONTyped(json: any, ignoreDiscriminator:
         'name': json['name'],
         'nativeCurrencySymbol': json['native_currency_symbol'],
         'nativeCurrencyName': json['native_currency_name'],
-        'blockchainExplorer': BlockchainExplorerFromJSON(json['blockchain_explorer']),
+        'blockchainExplorer': !exists(json, 'blockchain_explorer') ? undefined : BlockchainExplorerFromJSON(json['blockchain_explorer']),
+        'logoUrl': json['logo_url'],
     };
 }
 
@@ -129,6 +136,7 @@ export function EnrichedSolanaChainToJSON(value?: EnrichedSolanaChain | null): a
         'native_currency_symbol': value.nativeCurrencySymbol,
         'native_currency_name': value.nativeCurrencyName,
         'blockchain_explorer': BlockchainExplorerToJSON(value.blockchainExplorer),
+        'logo_url': value.logoUrl,
     };
 }
 

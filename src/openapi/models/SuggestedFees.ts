@@ -13,6 +13,13 @@
  */
 
 import {
+    AptosSuggestedFees,
+    instanceOfAptosSuggestedFees,
+    AptosSuggestedFeesFromJSON,
+    AptosSuggestedFeesFromJSONTyped,
+    AptosSuggestedFeesToJSON,
+} from './AptosSuggestedFees';
+import {
     CosmosSuggestedFees,
     instanceOfCosmosSuggestedFees,
     CosmosSuggestedFeesFromJSON,
@@ -34,6 +41,13 @@ import {
     SolanaSuggestedFeesToJSON,
 } from './SolanaSuggestedFees';
 import {
+    SuiSuggestedFees,
+    instanceOfSuiSuggestedFees,
+    SuiSuggestedFeesFromJSON,
+    SuiSuggestedFeesFromJSONTyped,
+    SuiSuggestedFeesToJSON,
+} from './SuiSuggestedFees';
+import {
     UtxoSuggestedFees,
     instanceOfUtxoSuggestedFees,
     UtxoSuggestedFeesFromJSON,
@@ -46,7 +60,7 @@ import {
  * 
  * @export
  */
-export type SuggestedFees = { type: 'cosmos' } & CosmosSuggestedFees | { type: 'evm' } & EvmSuggestedFees | { type: 'solana' } & SolanaSuggestedFees | { type: 'utxo' } & UtxoSuggestedFees;
+export type SuggestedFees = { type: 'aptos' } & AptosSuggestedFees | { type: 'cosmos' } & CosmosSuggestedFees | { type: 'evm' } & EvmSuggestedFees | { type: 'solana' } & SolanaSuggestedFees | { type: 'sui' } & SuiSuggestedFees | { type: 'utxo' } & UtxoSuggestedFees;
 
 export function SuggestedFeesFromJSON(json: any): SuggestedFees {
     return SuggestedFeesFromJSONTyped(json, false);
@@ -57,12 +71,16 @@ export function SuggestedFeesFromJSONTyped(json: any, ignoreDiscriminator: boole
         return json;
     }
     switch (json['type']) {
+        case 'aptos':
+            return {...AptosSuggestedFeesFromJSONTyped(json, true), type: 'aptos'};
         case 'cosmos':
             return {...CosmosSuggestedFeesFromJSONTyped(json, true), type: 'cosmos'};
         case 'evm':
             return {...EvmSuggestedFeesFromJSONTyped(json, true), type: 'evm'};
         case 'solana':
             return {...SolanaSuggestedFeesFromJSONTyped(json, true), type: 'solana'};
+        case 'sui':
+            return {...SuiSuggestedFeesFromJSONTyped(json, true), type: 'sui'};
         case 'utxo':
             return {...UtxoSuggestedFeesFromJSONTyped(json, true), type: 'utxo'};
         default:
@@ -78,12 +96,16 @@ export function SuggestedFeesToJSON(value?: SuggestedFees | null): any {
         return null;
     }
     switch (value['type']) {
+        case 'aptos':
+            return AptosSuggestedFeesToJSON(value);
         case 'cosmos':
             return CosmosSuggestedFeesToJSON(value);
         case 'evm':
             return EvmSuggestedFeesToJSON(value);
         case 'solana':
             return SolanaSuggestedFeesToJSON(value);
+        case 'sui':
+            return SuiSuggestedFeesToJSON(value);
         case 'utxo':
             return UtxoSuggestedFeesToJSON(value);
         default:

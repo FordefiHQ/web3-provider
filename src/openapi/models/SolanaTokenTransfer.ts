@@ -25,6 +25,12 @@ import {
     PriceFromJSONTyped,
     PriceToJSON,
 } from './Price';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+} from './PricedAsset';
 import type { SplTokenContract } from './SplTokenContract';
 import {
     SplTokenContractFromJSON,
@@ -38,6 +44,18 @@ import {
  * @interface SolanaTokenTransfer
  */
 export interface SolanaTokenTransfer {
+    /**
+     * 
+     * @type {PricedAsset}
+     * @memberof SolanaTokenTransfer
+     */
+    pricedAsset: PricedAsset;
+    /**
+     * 
+     * @type {string}
+     * @memberof SolanaTokenTransfer
+     */
+    amount: string;
     /**
      * 
      * @type {string}
@@ -56,12 +74,6 @@ export interface SolanaTokenTransfer {
      * @memberof SolanaTokenTransfer
      */
     to: EnrichedSolanaAddress;
-    /**
-     * 
-     * @type {string}
-     * @memberof SolanaTokenTransfer
-     */
-    amount: string;
     /**
      * 
      * @type {Price}
@@ -91,10 +103,11 @@ export type SolanaTokenTransferTypeEnum = typeof SolanaTokenTransferTypeEnum[key
  */
 export function instanceOfSolanaTokenTransfer(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "pricedAsset" in value;
+    isInstance = isInstance && "amount" in value;
     isInstance = isInstance && "type" in value;
     isInstance = isInstance && "from" in value;
     isInstance = isInstance && "to" in value;
-    isInstance = isInstance && "amount" in value;
     isInstance = isInstance && "tokenContract" in value;
 
     return isInstance;
@@ -110,10 +123,11 @@ export function SolanaTokenTransferFromJSONTyped(json: any, ignoreDiscriminator:
     }
     return {
         
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
+        'amount': json['amount'],
         'type': json['type'],
         'from': EnrichedSolanaAddressFromJSON(json['from']),
         'to': EnrichedSolanaAddressFromJSON(json['to']),
-        'amount': json['amount'],
         'price': !exists(json, 'price') ? undefined : PriceFromJSON(json['price']),
         'tokenContract': SplTokenContractFromJSON(json['token_contract']),
     };
@@ -128,10 +142,11 @@ export function SolanaTokenTransferToJSON(value?: SolanaTokenTransfer | null): a
     }
     return {
         
+        'priced_asset': PricedAssetToJSON(value.pricedAsset),
+        'amount': value.amount,
         'type': value.type,
         'from': EnrichedSolanaAddressToJSON(value.from),
         'to': EnrichedSolanaAddressToJSON(value.to),
-        'amount': value.amount,
         'price': PriceToJSON(value.price),
         'token_contract': SplTokenContractToJSON(value.tokenContract),
     };

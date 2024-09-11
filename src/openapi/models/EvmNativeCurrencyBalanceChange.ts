@@ -25,6 +25,12 @@ import {
     PriceFromJSONTyped,
     PriceToJSON,
 } from './Price';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+} from './PricedAsset';
 
 /**
  * 
@@ -32,6 +38,18 @@ import {
  * @interface EvmNativeCurrencyBalanceChange
  */
 export interface EvmNativeCurrencyBalanceChange {
+    /**
+     * 
+     * @type {PricedAsset}
+     * @memberof EvmNativeCurrencyBalanceChange
+     */
+    pricedAsset: PricedAsset;
+    /**
+     * 
+     * @type {string}
+     * @memberof EvmNativeCurrencyBalanceChange
+     */
+    diff: string;
     /**
      * 
      * @type {string}
@@ -44,12 +62,6 @@ export interface EvmNativeCurrencyBalanceChange {
      * @memberof EvmNativeCurrencyBalanceChange
      */
     address: EnrichedEvmAddress;
-    /**
-     * 
-     * @type {string}
-     * @memberof EvmNativeCurrencyBalanceChange
-     */
-    diff: string;
     /**
      * 
      * @type {Price}
@@ -73,9 +85,10 @@ export type EvmNativeCurrencyBalanceChangeTypeEnum = typeof EvmNativeCurrencyBal
  */
 export function instanceOfEvmNativeCurrencyBalanceChange(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "pricedAsset" in value;
+    isInstance = isInstance && "diff" in value;
     isInstance = isInstance && "type" in value;
     isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "diff" in value;
 
     return isInstance;
 }
@@ -90,9 +103,10 @@ export function EvmNativeCurrencyBalanceChangeFromJSONTyped(json: any, ignoreDis
     }
     return {
         
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
+        'diff': json['diff'],
         'type': json['type'],
         'address': EnrichedEvmAddressFromJSON(json['address']),
-        'diff': json['diff'],
         'price': !exists(json, 'price') ? undefined : PriceFromJSON(json['price']),
     };
 }
@@ -106,9 +120,10 @@ export function EvmNativeCurrencyBalanceChangeToJSON(value?: EvmNativeCurrencyBa
     }
     return {
         
+        'priced_asset': PricedAssetToJSON(value.pricedAsset),
+        'diff': value.diff,
         'type': value.type,
         'address': EnrichedEvmAddressToJSON(value.address),
-        'diff': value.diff,
         'price': PriceToJSON(value.price),
     };
 }

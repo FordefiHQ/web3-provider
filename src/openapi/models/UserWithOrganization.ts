@@ -13,6 +13,12 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { OrganizationSettings } from './OrganizationSettings';
+import {
+    OrganizationSettingsFromJSON,
+    OrganizationSettingsFromJSONTyped,
+    OrganizationSettingsToJSON,
+} from './OrganizationSettings';
 import type { User } from './User';
 import {
     UserFromJSON,
@@ -44,6 +50,12 @@ export interface UserWithOrganization {
      * @memberof UserWithOrganization
      */
     organizationName: string;
+    /**
+     * 
+     * @type {OrganizationSettings}
+     * @memberof UserWithOrganization
+     */
+    organizationSettings: OrganizationSettings;
 }
 
 /**
@@ -54,6 +66,7 @@ export function instanceOfUserWithOrganization(value: object): boolean {
     isInstance = isInstance && "user" in value;
     isInstance = isInstance && "organizationId" in value;
     isInstance = isInstance && "organizationName" in value;
+    isInstance = isInstance && "organizationSettings" in value;
 
     return isInstance;
 }
@@ -71,6 +84,7 @@ export function UserWithOrganizationFromJSONTyped(json: any, ignoreDiscriminator
         'user': UserFromJSON(json['user']),
         'organizationId': json['organization_id'],
         'organizationName': json['organization_name'],
+        'organizationSettings': OrganizationSettingsFromJSON(json['organization_settings']),
     };
 }
 
@@ -86,6 +100,7 @@ export function UserWithOrganizationToJSON(value?: UserWithOrganization | null):
         'user': UserToJSON(value.user),
         'organization_id': value.organizationId,
         'organization_name': value.organizationName,
+        'organization_settings': OrganizationSettingsToJSON(value.organizationSettings),
     };
 }
 

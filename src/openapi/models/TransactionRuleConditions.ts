@@ -19,12 +19,24 @@ import {
     AmountLimitConditionFromJSONTyped,
     AmountLimitConditionToJSON,
 } from './AmountLimitCondition';
+import type { CosmosRuleConditions } from './CosmosRuleConditions';
+import {
+    CosmosRuleConditionsFromJSON,
+    CosmosRuleConditionsFromJSONTyped,
+    CosmosRuleConditionsToJSON,
+} from './CosmosRuleConditions';
 import type { InitiatorsCondition } from './InitiatorsCondition';
 import {
     InitiatorsConditionFromJSON,
     InitiatorsConditionFromJSONTyped,
     InitiatorsConditionToJSON,
 } from './InitiatorsCondition';
+import type { PeriodicAmountCondition } from './PeriodicAmountCondition';
+import {
+    PeriodicAmountConditionFromJSON,
+    PeriodicAmountConditionFromJSONTyped,
+    PeriodicAmountConditionToJSON,
+} from './PeriodicAmountCondition';
 import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
@@ -43,12 +55,6 @@ import {
     TransactionTypeConditionFromJSONTyped,
     TransactionTypeConditionToJSON,
 } from './TransactionTypeCondition';
-import type { UserRef } from './UserRef';
-import {
-    UserRefFromJSON,
-    UserRefFromJSONTyped,
-    UserRefToJSON,
-} from './UserRef';
 import type { VaultGroupRef } from './VaultGroupRef';
 import {
     VaultGroupRefFromJSON,
@@ -76,13 +82,6 @@ export interface TransactionRuleConditions {
     transactionTypes?: Array<TransactionTypeCondition>;
     /**
      * 
-     * @type {Array<UserRef>}
-     * @memberof TransactionRuleConditions
-     * @deprecated
-     */
-    initiators?: Array<UserRef>;
-    /**
-     * 
      * @type {InitiatorsCondition}
      * @memberof TransactionRuleConditions
      */
@@ -107,6 +106,12 @@ export interface TransactionRuleConditions {
     recipients: RecipientsCondition;
     /**
      * 
+     * @type {Array<string>}
+     * @memberof TransactionRuleConditions
+     */
+    abiMethods: Array<string>;
+    /**
+     * 
      * @type {Array<PricedAsset>}
      * @memberof TransactionRuleConditions
      */
@@ -117,6 +122,18 @@ export interface TransactionRuleConditions {
      * @memberof TransactionRuleConditions
      */
     amountLimit?: AmountLimitCondition;
+    /**
+     * 
+     * @type {PeriodicAmountCondition}
+     * @memberof TransactionRuleConditions
+     */
+    periodicAmount?: PeriodicAmountCondition;
+    /**
+     * 
+     * @type {CosmosRuleConditions}
+     * @memberof TransactionRuleConditions
+     */
+    cosmosConditions?: CosmosRuleConditions;
 }
 
 /**
@@ -126,6 +143,7 @@ export function instanceOfTransactionRuleConditions(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "transactionInitiators" in value;
     isInstance = isInstance && "recipients" in value;
+    isInstance = isInstance && "abiMethods" in value;
 
     return isInstance;
 }
@@ -141,13 +159,15 @@ export function TransactionRuleConditionsFromJSONTyped(json: any, ignoreDiscrimi
     return {
         
         'transactionTypes': !exists(json, 'transaction_types') ? undefined : ((json['transaction_types'] as Array<any>).map(TransactionTypeConditionFromJSON)),
-        'initiators': !exists(json, 'initiators') ? undefined : ((json['initiators'] as Array<any>).map(UserRefFromJSON)),
         'transactionInitiators': InitiatorsConditionFromJSON(json['transaction_initiators']),
         'originVaults': !exists(json, 'origin_vaults') ? undefined : ((json['origin_vaults'] as Array<any>).map(VaultRefFromJSON)),
         'originVaultGroups': !exists(json, 'origin_vault_groups') ? undefined : ((json['origin_vault_groups'] as Array<any>).map(VaultGroupRefFromJSON)),
         'recipients': RecipientsConditionFromJSON(json['recipients']),
+        'abiMethods': json['abi_methods'],
         'transactionAssets': !exists(json, 'transaction_assets') ? undefined : ((json['transaction_assets'] as Array<any>).map(PricedAssetFromJSON)),
         'amountLimit': !exists(json, 'amount_limit') ? undefined : AmountLimitConditionFromJSON(json['amount_limit']),
+        'periodicAmount': !exists(json, 'periodic_amount') ? undefined : PeriodicAmountConditionFromJSON(json['periodic_amount']),
+        'cosmosConditions': !exists(json, 'cosmos_conditions') ? undefined : CosmosRuleConditionsFromJSON(json['cosmos_conditions']),
     };
 }
 
@@ -161,13 +181,15 @@ export function TransactionRuleConditionsToJSON(value?: TransactionRuleCondition
     return {
         
         'transaction_types': value.transactionTypes === undefined ? undefined : ((value.transactionTypes as Array<any>).map(TransactionTypeConditionToJSON)),
-        'initiators': value.initiators === undefined ? undefined : ((value.initiators as Array<any>).map(UserRefToJSON)),
         'transaction_initiators': InitiatorsConditionToJSON(value.transactionInitiators),
         'origin_vaults': value.originVaults === undefined ? undefined : ((value.originVaults as Array<any>).map(VaultRefToJSON)),
         'origin_vault_groups': value.originVaultGroups === undefined ? undefined : ((value.originVaultGroups as Array<any>).map(VaultGroupRefToJSON)),
         'recipients': RecipientsConditionToJSON(value.recipients),
+        'abi_methods': value.abiMethods,
         'transaction_assets': value.transactionAssets === undefined ? undefined : ((value.transactionAssets as Array<any>).map(PricedAssetToJSON)),
         'amount_limit': AmountLimitConditionToJSON(value.amountLimit),
+        'periodic_amount': PeriodicAmountConditionToJSON(value.periodicAmount),
+        'cosmos_conditions': CosmosRuleConditionsToJSON(value.cosmosConditions),
     };
 }
 

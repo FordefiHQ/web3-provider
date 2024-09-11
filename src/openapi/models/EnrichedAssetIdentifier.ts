@@ -34,6 +34,13 @@ import {
     EnrichedSolanaAssetIdentifierToJSON,
 } from './EnrichedSolanaAssetIdentifier';
 import {
+    EnrichedSuiAssetIdentifier,
+    instanceOfEnrichedSuiAssetIdentifier,
+    EnrichedSuiAssetIdentifierFromJSON,
+    EnrichedSuiAssetIdentifierFromJSONTyped,
+    EnrichedSuiAssetIdentifierToJSON,
+} from './EnrichedSuiAssetIdentifier';
+import {
     EnrichedUtxoAssetIdentifier,
     instanceOfEnrichedUtxoAssetIdentifier,
     EnrichedUtxoAssetIdentifierFromJSON,
@@ -46,7 +53,7 @@ import {
  * 
  * @export
  */
-export type EnrichedAssetIdentifier = { type: 'cosmos' } & EnrichedCosmosAssetIdentifier | { type: 'evm' } & EnrichedEvmAssetIdentifier | { type: 'solana' } & EnrichedSolanaAssetIdentifier | { type: 'utxo' } & EnrichedUtxoAssetIdentifier;
+export type EnrichedAssetIdentifier = { type: 'cosmos' } & EnrichedCosmosAssetIdentifier | { type: 'evm' } & EnrichedEvmAssetIdentifier | { type: 'solana' } & EnrichedSolanaAssetIdentifier | { type: 'sui' } & EnrichedSuiAssetIdentifier | { type: 'utxo' } & EnrichedUtxoAssetIdentifier;
 
 export function EnrichedAssetIdentifierFromJSON(json: any): EnrichedAssetIdentifier {
     return EnrichedAssetIdentifierFromJSONTyped(json, false);
@@ -63,6 +70,8 @@ export function EnrichedAssetIdentifierFromJSONTyped(json: any, ignoreDiscrimina
             return {...EnrichedEvmAssetIdentifierFromJSONTyped(json, true), type: 'evm'};
         case 'solana':
             return {...EnrichedSolanaAssetIdentifierFromJSONTyped(json, true), type: 'solana'};
+        case 'sui':
+            return {...EnrichedSuiAssetIdentifierFromJSONTyped(json, true), type: 'sui'};
         case 'utxo':
             return {...EnrichedUtxoAssetIdentifierFromJSONTyped(json, true), type: 'utxo'};
         default:
@@ -84,6 +93,8 @@ export function EnrichedAssetIdentifierToJSON(value?: EnrichedAssetIdentifier | 
             return EnrichedEvmAssetIdentifierToJSON(value);
         case 'solana':
             return EnrichedSolanaAssetIdentifierToJSON(value);
+        case 'sui':
+            return EnrichedSuiAssetIdentifierToJSON(value);
         case 'utxo':
             return EnrichedUtxoAssetIdentifierToJSON(value);
         default:

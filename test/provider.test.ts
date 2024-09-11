@@ -244,15 +244,13 @@ describe('Web3 Provider', () => {
         expect(isHash(transactionHash)).toBeTruthy();
       });
 
-      test("'eth_sendTransaction' given no 'value' or 'to' should return a mined transaction hash", async () => {
+      test("'eth_sendTransaction' given no 'value' or 'gas' values should return a mined transaction hash", async () => {
         const provider = createTestProvider();
         await provider.waitForEmittedEvent('connect');
 
         const transaction = {
           from: TEST_PROVIDER_CONFIG.address,
-          maxFeePerGas: numberToHex(150004177629n),
-          maxPriorityFeePerGas: numberToHex(1000528647n),
-          gas: numberToHex(22222n),
+          to: testFixtures.toAddress,
         } satisfies Partial<FordefiWeb3TransactionRequest>;
 
         const transactionHash = await provider.request({
@@ -264,6 +262,8 @@ describe('Web3 Provider', () => {
         expect(isHash(transactionHash)).toBeTruthy();
       });
     });
+
+    // TODO: add test for contract creation omitting the "to" field in create transaction request
 
     test('should throw invalid params error', async () => {
       const provider = createTestProvider();

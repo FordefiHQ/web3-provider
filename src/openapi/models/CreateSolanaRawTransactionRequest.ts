@@ -13,18 +13,24 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { PushMode } from './PushMode';
+import {
+    PushModeFromJSON,
+    PushModeFromJSONTyped,
+    PushModeToJSON,
+} from './PushMode';
 import type { SolanaChainUniqueId } from './SolanaChainUniqueId';
 import {
     SolanaChainUniqueIdFromJSON,
     SolanaChainUniqueIdFromJSONTyped,
     SolanaChainUniqueIdToJSON,
 } from './SolanaChainUniqueId';
-import type { SolanaCompiledInstruction } from './SolanaCompiledInstruction';
+import type { SolanaCompiledInstructionRequest } from './SolanaCompiledInstructionRequest';
 import {
-    SolanaCompiledInstructionFromJSON,
-    SolanaCompiledInstructionFromJSONTyped,
-    SolanaCompiledInstructionToJSON,
-} from './SolanaCompiledInstruction';
+    SolanaCompiledInstructionRequestFromJSON,
+    SolanaCompiledInstructionRequestFromJSONTyped,
+    SolanaCompiledInstructionRequestToJSON,
+} from './SolanaCompiledInstructionRequest';
 import type { SolanaMessageAddressTableLookupRequest } from './SolanaMessageAddressTableLookupRequest';
 import {
     SolanaMessageAddressTableLookupRequestFromJSON,
@@ -64,10 +70,10 @@ export interface CreateSolanaRawTransactionRequest {
     version: SolanaMessageVersion;
     /**
      * 
-     * @type {Array<SolanaCompiledInstruction>}
+     * @type {Array<SolanaCompiledInstructionRequest>}
      * @memberof CreateSolanaRawTransactionRequest
      */
-    instructions: Array<SolanaCompiledInstruction>;
+    instructions: Array<SolanaCompiledInstructionRequest>;
     /**
      * 
      * @type {Array<SolanaTransactionAccountRequest>}
@@ -104,6 +110,12 @@ export interface CreateSolanaRawTransactionRequest {
      * @memberof CreateSolanaRawTransactionRequest
      */
     failOnPredictionFailure?: boolean;
+    /**
+     * 
+     * @type {PushMode}
+     * @memberof CreateSolanaRawTransactionRequest
+     */
+    pushMode?: PushMode;
     /**
      * 
      * @type {boolean}
@@ -154,13 +166,14 @@ export function CreateSolanaRawTransactionRequestFromJSONTyped(json: any, ignore
     return {
         
         'version': SolanaMessageVersionFromJSON(json['version']),
-        'instructions': ((json['instructions'] as Array<any>).map(SolanaCompiledInstructionFromJSON)),
+        'instructions': ((json['instructions'] as Array<any>).map(SolanaCompiledInstructionRequestFromJSON)),
         'accounts': ((json['accounts'] as Array<any>).map(SolanaTransactionAccountRequestFromJSON)),
         'addressTableLookups': ((json['address_table_lookups'] as Array<any>).map(SolanaMessageAddressTableLookupRequestFromJSON)),
         'signatures': !exists(json, 'signatures') ? undefined : ((json['signatures'] as Array<any>).map(SolanaTransactionSignaturesRequestFromJSON)),
         'recentBlockhash': !exists(json, 'recent_blockhash') ? undefined : json['recent_blockhash'],
         'type': json['type'],
         'failOnPredictionFailure': !exists(json, 'fail_on_prediction_failure') ? undefined : json['fail_on_prediction_failure'],
+        'pushMode': !exists(json, 'push_mode') ? undefined : PushModeFromJSON(json['push_mode']),
         'skipPrediction': !exists(json, 'skip_prediction') ? undefined : json['skip_prediction'],
         'chain': SolanaChainUniqueIdFromJSON(json['chain']),
     };
@@ -176,13 +189,14 @@ export function CreateSolanaRawTransactionRequestToJSON(value?: CreateSolanaRawT
     return {
         
         'version': SolanaMessageVersionToJSON(value.version),
-        'instructions': ((value.instructions as Array<any>).map(SolanaCompiledInstructionToJSON)),
+        'instructions': ((value.instructions as Array<any>).map(SolanaCompiledInstructionRequestToJSON)),
         'accounts': ((value.accounts as Array<any>).map(SolanaTransactionAccountRequestToJSON)),
         'address_table_lookups': ((value.addressTableLookups as Array<any>).map(SolanaMessageAddressTableLookupRequestToJSON)),
         'signatures': value.signatures === undefined ? undefined : ((value.signatures as Array<any>).map(SolanaTransactionSignaturesRequestToJSON)),
         'recent_blockhash': value.recentBlockhash,
         'type': value.type,
         'fail_on_prediction_failure': value.failOnPredictionFailure,
+        'push_mode': PushModeToJSON(value.pushMode),
         'skip_prediction': value.skipPrediction,
         'chain': SolanaChainUniqueIdToJSON(value.chain),
     };

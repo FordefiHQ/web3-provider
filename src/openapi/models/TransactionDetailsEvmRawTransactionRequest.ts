@@ -46,6 +46,12 @@ export interface TransactionDetailsEvmRawTransactionRequest {
     failOnPredictionFailure?: boolean;
     /**
      * 
+     * @type {boolean}
+     * @memberof TransactionDetailsEvmRawTransactionRequest
+     */
+    skipSimulation?: boolean;
+    /**
+     * 
      * @type {EvmChainRequest}
      * @memberof TransactionDetailsEvmRawTransactionRequest
      */
@@ -55,7 +61,7 @@ export interface TransactionDetailsEvmRawTransactionRequest {
      * @type {string}
      * @memberof TransactionDetailsEvmRawTransactionRequest
      */
-    to: string;
+    to?: string;
     /**
      * 
      * @type {string}
@@ -87,7 +93,6 @@ export function instanceOfTransactionDetailsEvmRawTransactionRequest(value: obje
     let isInstance = true;
     isInstance = isInstance && "type" in value;
     isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "to" in value;
     isInstance = isInstance && "value" in value;
 
     return isInstance;
@@ -105,8 +110,9 @@ export function TransactionDetailsEvmRawTransactionRequestFromJSONTyped(json: an
         
         'type': json['type'],
         'failOnPredictionFailure': !exists(json, 'fail_on_prediction_failure') ? undefined : json['fail_on_prediction_failure'],
+        'skipSimulation': !exists(json, 'skip_simulation') ? undefined : json['skip_simulation'],
         'chain': EvmChainRequestFromJSON(json['chain']),
-        'to': json['to'],
+        'to': !exists(json, 'to') ? undefined : json['to'],
         'value': json['value'],
         'data': !exists(json, 'data') ? undefined : EvmDataRequestFromJSON(json['data']),
     };
@@ -123,6 +129,7 @@ export function TransactionDetailsEvmRawTransactionRequestToJSON(value?: Transac
         
         'type': value.type,
         'fail_on_prediction_failure': value.failOnPredictionFailure,
+        'skip_simulation': value.skipSimulation,
         'chain': EvmChainRequestToJSON(value.chain),
         'to': value.to,
         'value': value.value,

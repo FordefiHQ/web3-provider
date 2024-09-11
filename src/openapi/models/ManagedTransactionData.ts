@@ -43,12 +43,12 @@ import {
     PushModeFromJSONTyped,
     PushModeToJSON,
 } from './PushMode';
-import type { SignedRawData } from './SignedRawData';
+import type { SignMode } from './SignMode';
 import {
-    SignedRawDataFromJSON,
-    SignedRawDataFromJSONTyped,
-    SignedRawDataToJSON,
-} from './SignedRawData';
+    SignModeFromJSON,
+    SignModeFromJSONTyped,
+    SignModeToJSON,
+} from './SignMode';
 import type { SignerType } from './SignerType';
 import {
     SignerTypeFromJSON,
@@ -112,12 +112,6 @@ export interface ManagedTransactionData {
     policyMatch?: PolicyMatch;
     /**
      * 
-     * @type {SignedRawData}
-     * @memberof ManagedTransactionData
-     */
-    signedCreateRequest?: SignedRawData;
-    /**
-     * 
      * @type {SignerType}
      * @memberof ManagedTransactionData
      */
@@ -170,6 +164,18 @@ export interface ManagedTransactionData {
      * @memberof ManagedTransactionData
      */
     pushMode?: PushMode;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ManagedTransactionData
+     */
+    lastPushedAt?: Date;
+    /**
+     * 
+     * @type {SignMode}
+     * @memberof ManagedTransactionData
+     */
+    signMode?: SignMode;
 }
 
 /**
@@ -201,7 +207,6 @@ export function ManagedTransactionDataFromJSONTyped(json: any, ignoreDiscriminat
         'deviceSigningRequest': !exists(json, 'device_signing_request') ? undefined : ActionSigningRequestFromJSON(json['device_signing_request']),
         'approvalRequest': !exists(json, 'approval_request') ? undefined : ApprovalRequestFromJSON(json['approval_request']),
         'policyMatch': !exists(json, 'policy_match') ? undefined : PolicyMatchFromJSON(json['policy_match']),
-        'signedCreateRequest': !exists(json, 'signed_create_request') ? undefined : SignedRawDataFromJSON(json['signed_create_request']),
         'signerType': SignerTypeFromJSON(json['signer_type']),
         'risks': ((json['risks'] as Array<any>).map(TransactionRiskFromJSON)),
         'errorPushingToBlockchainMessage': !exists(json, 'error_pushing_to_blockchain_message') ? undefined : json['error_pushing_to_blockchain_message'],
@@ -211,6 +216,8 @@ export function ManagedTransactionDataFromJSONTyped(json: any, ignoreDiscriminat
         'hasCurrentUserVaultPermissions': json['has_current_user_vault_permissions'],
         'batchData': !exists(json, 'batch_data') ? undefined : BatchDataFromJSON(json['batch_data']),
         'pushMode': !exists(json, 'push_mode') ? undefined : PushModeFromJSON(json['push_mode']),
+        'lastPushedAt': !exists(json, 'last_pushed_at') ? undefined : (new Date(json['last_pushed_at'])),
+        'signMode': !exists(json, 'sign_mode') ? undefined : SignModeFromJSON(json['sign_mode']),
     };
 }
 
@@ -228,7 +235,6 @@ export function ManagedTransactionDataToJSON(value?: ManagedTransactionData | nu
         'device_signing_request': ActionSigningRequestToJSON(value.deviceSigningRequest),
         'approval_request': ApprovalRequestToJSON(value.approvalRequest),
         'policy_match': PolicyMatchToJSON(value.policyMatch),
-        'signed_create_request': SignedRawDataToJSON(value.signedCreateRequest),
         'signer_type': SignerTypeToJSON(value.signerType),
         'risks': ((value.risks as Array<any>).map(TransactionRiskToJSON)),
         'error_pushing_to_blockchain_message': value.errorPushingToBlockchainMessage,
@@ -238,6 +244,8 @@ export function ManagedTransactionDataToJSON(value?: ManagedTransactionData | nu
         'has_current_user_vault_permissions': value.hasCurrentUserVaultPermissions,
         'batch_data': BatchDataToJSON(value.batchData),
         'push_mode': PushModeToJSON(value.pushMode),
+        'last_pushed_at': value.lastPushedAt === undefined ? undefined : (value.lastPushedAt.toISOString()),
+        'sign_mode': SignModeToJSON(value.signMode),
     };
 }
 

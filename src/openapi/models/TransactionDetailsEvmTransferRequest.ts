@@ -58,6 +58,12 @@ export interface TransactionDetailsEvmTransferRequest {
     failOnPredictionFailure?: boolean;
     /**
      * 
+     * @type {boolean}
+     * @memberof TransactionDetailsEvmTransferRequest
+     */
+    skipSimulation?: boolean;
+    /**
+     * 
      * @type {EvmChainRequest}
      * @memberof TransactionDetailsEvmTransferRequest
      */
@@ -123,6 +129,7 @@ export function TransactionDetailsEvmTransferRequestFromJSONTyped(json: any, ign
         
         'type': json['type'],
         'failOnPredictionFailure': !exists(json, 'fail_on_prediction_failure') ? undefined : json['fail_on_prediction_failure'],
+        'skipSimulation': !exists(json, 'skip_simulation') ? undefined : json['skip_simulation'],
         'chain': !exists(json, 'chain') ? undefined : EvmChainRequestFromJSON(json['chain']),
         'to': CreateEvmTransferRequestToFromJSON(json['to']),
         'token': !exists(json, 'token') ? undefined : json['token'],
@@ -142,6 +149,7 @@ export function TransactionDetailsEvmTransferRequestToJSON(value?: TransactionDe
         
         'type': value.type,
         'fail_on_prediction_failure': value.failOnPredictionFailure,
+        'skip_simulation': value.skipSimulation,
         'chain': EvmChainRequestToJSON(value.chain),
         'to': CreateEvmTransferRequestToToJSON(value.to),
         'token': value.token,

@@ -97,7 +97,7 @@ export interface CreateEvmRawTransactionRequest {
      * @type {string}
      * @memberof CreateEvmRawTransactionRequest
      */
-    to: string;
+    to?: string;
     /**
      * 
      * @type {string}
@@ -130,7 +130,6 @@ export function instanceOfCreateEvmRawTransactionRequest(value: object): boolean
     isInstance = isInstance && "type" in value;
     isInstance = isInstance && "gas" in value;
     isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "to" in value;
     isInstance = isInstance && "value" in value;
 
     return isInstance;
@@ -154,7 +153,7 @@ export function CreateEvmRawTransactionRequestFromJSONTyped(json: any, ignoreDis
         'pushMode': !exists(json, 'push_mode') ? undefined : PushModeFromJSON(json['push_mode']),
         'funder': !exists(json, 'funder') ? undefined : json['funder'],
         'chain': EvmChainRequestFromJSON(json['chain']),
-        'to': json['to'],
+        'to': !exists(json, 'to') ? undefined : json['to'],
         'value': json['value'],
         'data': !exists(json, 'data') ? undefined : EvmDataRequestFromJSON(json['data']),
     };

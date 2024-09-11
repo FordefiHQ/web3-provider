@@ -25,6 +25,12 @@ import {
     ManagedTransactionDataFromJSONTyped,
     ManagedTransactionDataToJSON,
 } from './ManagedTransactionData';
+import type { PredictedUtxoTransactionUtxoTransactionTypeDetails } from './PredictedUtxoTransactionUtxoTransactionTypeDetails';
+import {
+    PredictedUtxoTransactionUtxoTransactionTypeDetailsFromJSON,
+    PredictedUtxoTransactionUtxoTransactionTypeDetailsFromJSONTyped,
+    PredictedUtxoTransactionUtxoTransactionTypeDetailsToJSON,
+} from './PredictedUtxoTransactionUtxoTransactionTypeDetails';
 import type { Signature } from './Signature';
 import {
     SignatureFromJSON,
@@ -49,12 +55,6 @@ import {
     UtxoBlockDataFromJSONTyped,
     UtxoBlockDataToJSON,
 } from './UtxoBlockData';
-import type { UtxoNativeTransferDetails } from './UtxoNativeTransferDetails';
-import {
-    UtxoNativeTransferDetailsFromJSON,
-    UtxoNativeTransferDetailsFromJSONTyped,
-    UtxoNativeTransferDetailsToJSON,
-} from './UtxoNativeTransferDetails';
 import type { UtxoTransactionResult } from './UtxoTransactionResult';
 import {
     UtxoTransactionResultFromJSON,
@@ -136,10 +136,10 @@ export interface UtxoTransaction {
     type: UtxoTransactionTypeEnum;
     /**
      * 
-     * @type {UtxoNativeTransferDetails}
+     * @type {PredictedUtxoTransactionUtxoTransactionTypeDetails}
      * @memberof UtxoTransaction
      */
-    utxoTransactionTypeDetails: UtxoNativeTransferDetails;
+    utxoTransactionTypeDetails: PredictedUtxoTransactionUtxoTransactionTypeDetails;
     /**
      * 
      * @type {EnrichedUtxoChain}
@@ -238,7 +238,7 @@ export function UtxoTransactionFromJSONTyped(json: any, ignoreDiscriminator: boo
         'spamState': !exists(json, 'spam_state') ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
         'type': json['type'],
-        'utxoTransactionTypeDetails': UtxoNativeTransferDetailsFromJSON(json['utxo_transaction_type_details']),
+        'utxoTransactionTypeDetails': PredictedUtxoTransactionUtxoTransactionTypeDetailsFromJSON(json['utxo_transaction_type_details']),
         'chain': EnrichedUtxoChainFromJSON(json['chain']),
         'hash': !exists(json, 'hash') ? undefined : json['hash'],
         'explorerUrl': !exists(json, 'explorer_url') ? undefined : json['explorer_url'],
@@ -268,7 +268,7 @@ export function UtxoTransactionToJSON(value?: UtxoTransaction | null): any {
         'spam_state': TransactionSpamStateToJSON(value.spamState),
         'direction': TransactionDirectionToJSON(value.direction),
         'type': value.type,
-        'utxo_transaction_type_details': UtxoNativeTransferDetailsToJSON(value.utxoTransactionTypeDetails),
+        'utxo_transaction_type_details': PredictedUtxoTransactionUtxoTransactionTypeDetailsToJSON(value.utxoTransactionTypeDetails),
         'chain': EnrichedUtxoChainToJSON(value.chain),
         'hash': value.hash,
         'explorer_url': value.explorerUrl,

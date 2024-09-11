@@ -20,7 +20,8 @@
 export const KeyType = {
     ecdsaSecp256k1: 'ecdsa_secp256k1',
     eddsaEd25519: 'eddsa_ed25519',
-    ecdsaStark: 'ecdsa_stark'
+    ecdsaStark: 'ecdsa_stark',
+    schnorrSecp256k1: 'schnorr_secp256k1'
 } as const;
 export type KeyType = typeof KeyType[keyof typeof KeyType];
 

@@ -25,6 +25,12 @@ import {
     EvmMessageStateFromJSONTyped,
     EvmMessageStateToJSON,
 } from './EvmMessageState';
+import type { SignMode } from './SignMode';
+import {
+    SignModeFromJSON,
+    SignModeFromJSONTyped,
+    SignModeToJSON,
+} from './SignMode';
 import type { SignerType } from './SignerType';
 import {
     SignerTypeFromJSON,
@@ -58,6 +64,12 @@ export interface CreateEvmMessageWithWaitRequest {
     signerType?: SignerType;
     /**
      * 
+     * @type {SignMode}
+     * @memberof CreateEvmMessageWithWaitRequest
+     */
+    signMode?: SignMode;
+    /**
+     * 
      * @type {string}
      * @memberof CreateEvmMessageWithWaitRequest
      */
@@ -68,6 +80,12 @@ export interface CreateEvmMessageWithWaitRequest {
      * @memberof CreateEvmMessageWithWaitRequest
      */
     details: CreateEvmMessageRequestDetails;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateEvmMessageWithWaitRequest
+     */
+    timeout?: number;
     /**
      * 
      * @type {EvmMessageState}
@@ -112,8 +130,10 @@ export function CreateEvmMessageWithWaitRequestFromJSONTyped(json: any, ignoreDi
         'vaultId': json['vault_id'],
         'note': !exists(json, 'note') ? undefined : json['note'],
         'signerType': !exists(json, 'signer_type') ? undefined : SignerTypeFromJSON(json['signer_type']),
+        'signMode': !exists(json, 'sign_mode') ? undefined : SignModeFromJSON(json['sign_mode']),
         'type': json['type'],
         'details': CreateEvmMessageRequestDetailsFromJSON(json['details']),
+        'timeout': !exists(json, 'timeout') ? undefined : json['timeout'],
         'waitForState': EvmMessageStateFromJSON(json['wait_for_state']),
     };
 }
@@ -130,8 +150,10 @@ export function CreateEvmMessageWithWaitRequestToJSON(value?: CreateEvmMessageWi
         'vault_id': value.vaultId,
         'note': value.note,
         'signer_type': SignerTypeToJSON(value.signerType),
+        'sign_mode': SignModeToJSON(value.signMode),
         'type': value.type,
         'details': CreateEvmMessageRequestDetailsToJSON(value.details),
+        'timeout': value.timeout,
         'wait_for_state': EvmMessageStateToJSON(value.waitForState),
     };
 }

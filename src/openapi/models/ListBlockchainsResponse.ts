@@ -28,6 +28,24 @@ import {
 export interface ListBlockchainsResponse {
     /**
      * 
+     * @type {number}
+     * @memberof ListBlockchainsResponse
+     */
+    total: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ListBlockchainsResponse
+     */
+    page: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ListBlockchainsResponse
+     */
+    size: number;
+    /**
+     * 
      * @type {Array<EnrichedChain>}
      * @memberof ListBlockchainsResponse
      */
@@ -39,6 +57,9 @@ export interface ListBlockchainsResponse {
  */
 export function instanceOfListBlockchainsResponse(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "total" in value;
+    isInstance = isInstance && "page" in value;
+    isInstance = isInstance && "size" in value;
     isInstance = isInstance && "chains" in value;
 
     return isInstance;
@@ -54,6 +75,9 @@ export function ListBlockchainsResponseFromJSONTyped(json: any, ignoreDiscrimina
     }
     return {
         
+        'total': json['total'],
+        'page': json['page'],
+        'size': json['size'],
         'chains': ((json['chains'] as Array<any>).map(EnrichedChainFromJSON)),
     };
 }
@@ -67,6 +91,9 @@ export function ListBlockchainsResponseToJSON(value?: ListBlockchainsResponse | 
     }
     return {
         
+        'total': value.total,
+        'page': value.page,
+        'size': value.size,
         'chains': ((value.chains as Array<any>).map(EnrichedChainToJSON)),
     };
 }

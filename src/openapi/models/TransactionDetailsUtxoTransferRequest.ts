@@ -13,6 +13,12 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { PushMode } from './PushMode';
+import {
+    PushModeFromJSON,
+    PushModeFromJSONTyped,
+    PushModeToJSON,
+} from './PushMode';
 import type { TransactionDetailsUtxoTransferRequestFeePerByte } from './TransactionDetailsUtxoTransferRequestFeePerByte';
 import {
     TransactionDetailsUtxoTransferRequestFeePerByteFromJSON,
@@ -50,6 +56,12 @@ export interface TransactionDetailsUtxoTransferRequest {
      * @memberof TransactionDetailsUtxoTransferRequest
      */
     feePerByte: TransactionDetailsUtxoTransferRequestFeePerByte;
+    /**
+     * 
+     * @type {PushMode}
+     * @memberof TransactionDetailsUtxoTransferRequest
+     */
+    pushMode?: PushMode;
 }
 
 
@@ -87,6 +99,7 @@ export function TransactionDetailsUtxoTransferRequestFromJSONTyped(json: any, ig
         'type': json['type'],
         'outputs': ((json['outputs'] as Array<any>).map(UtxoOutputRequestFromJSON)),
         'feePerByte': TransactionDetailsUtxoTransferRequestFeePerByteFromJSON(json['fee_per_byte']),
+        'pushMode': !exists(json, 'push_mode') ? undefined : PushModeFromJSON(json['push_mode']),
     };
 }
 
@@ -102,6 +115,7 @@ export function TransactionDetailsUtxoTransferRequestToJSON(value?: TransactionD
         'type': value.type,
         'outputs': ((value.outputs as Array<any>).map(UtxoOutputRequestToJSON)),
         'fee_per_byte': TransactionDetailsUtxoTransferRequestFeePerByteToJSON(value.feePerByte),
+        'push_mode': PushModeToJSON(value.pushMode),
     };
 }
 

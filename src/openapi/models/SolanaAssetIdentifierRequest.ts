@@ -13,12 +13,12 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { SolanaAssetIdentifierRequestDetails } from './SolanaAssetIdentifierRequestDetails';
+import type { SolanaAssetIdentifierDetails } from './SolanaAssetIdentifierDetails';
 import {
-    SolanaAssetIdentifierRequestDetailsFromJSON,
-    SolanaAssetIdentifierRequestDetailsFromJSONTyped,
-    SolanaAssetIdentifierRequestDetailsToJSON,
-} from './SolanaAssetIdentifierRequestDetails';
+    SolanaAssetIdentifierDetailsFromJSON,
+    SolanaAssetIdentifierDetailsFromJSONTyped,
+    SolanaAssetIdentifierDetailsToJSON,
+} from './SolanaAssetIdentifierDetails';
 
 /**
  * 
@@ -34,10 +34,10 @@ export interface SolanaAssetIdentifierRequest {
     type: SolanaAssetIdentifierRequestTypeEnum;
     /**
      * 
-     * @type {SolanaAssetIdentifierRequestDetails}
+     * @type {SolanaAssetIdentifierDetails}
      * @memberof SolanaAssetIdentifierRequest
      */
-    details: SolanaAssetIdentifierRequestDetails;
+    details: SolanaAssetIdentifierDetails;
 }
 
 
@@ -72,7 +72,7 @@ export function SolanaAssetIdentifierRequestFromJSONTyped(json: any, ignoreDiscr
     return {
         
         'type': json['type'],
-        'details': SolanaAssetIdentifierRequestDetailsFromJSON(json['details']),
+        'details': SolanaAssetIdentifierDetailsFromJSON(json['details']),
     };
 }
 
@@ -86,7 +86,7 @@ export function SolanaAssetIdentifierRequestToJSON(value?: SolanaAssetIdentifier
     return {
         
         'type': value.type,
-        'details': SolanaAssetIdentifierRequestDetailsToJSON(value.details),
+        'details': SolanaAssetIdentifierDetailsToJSON(value.details),
     };
 }
 

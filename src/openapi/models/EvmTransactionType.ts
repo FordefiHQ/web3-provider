@@ -22,7 +22,8 @@ export const EvmTransactionType = {
     tokenTransfer: 'token_transfer',
     allowance: 'allowance',
     contractCall: 'contract_call',
-    crossChainBridge: 'cross_chain_bridge'
+    crossChainBridge: 'cross_chain_bridge',
+    contractCreation: 'contract_creation'
 } as const;
 export type EvmTransactionType = typeof EvmTransactionType[keyof typeof EvmTransactionType];
 

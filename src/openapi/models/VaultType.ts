@@ -18,11 +18,14 @@
  * @export
  */
 export const VaultType = {
-    evm: 'evm',
-    solana: 'solana',
+    aptos: 'aptos',
     blackBox: 'black_box',
     cosmos: 'cosmos',
-    utxo: 'utxo'
+    evm: 'evm',
+    solana: 'solana',
+    sui: 'sui',
+    utxo: 'utxo',
+    exchange: 'exchange'
 } as const;
 export type VaultType = typeof VaultType[keyof typeof VaultType];
 

@@ -13,6 +13,12 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { EnrichedSolanaAddress } from './EnrichedSolanaAddress';
+import {
+    EnrichedSolanaAddressFromJSON,
+    EnrichedSolanaAddressFromJSONTyped,
+    EnrichedSolanaAddressToJSON,
+} from './EnrichedSolanaAddress';
 import type { EnrichedSolanaChain } from './EnrichedSolanaChain';
 import {
     EnrichedSolanaChainFromJSON,
@@ -158,6 +164,12 @@ export interface SolanaMessage {
      * @memberof SolanaMessage
      */
     chain: EnrichedSolanaChain;
+    /**
+     * 
+     * @type {EnrichedSolanaAddress}
+     * @memberof SolanaMessage
+     */
+    sender: EnrichedSolanaAddress;
 }
 
 
@@ -187,6 +199,7 @@ export function instanceOfSolanaMessage(value: object): boolean {
     isInstance = isInstance && "stringData" in value;
     isInstance = isInstance && "rawData" in value;
     isInstance = isInstance && "chain" in value;
+    isInstance = isInstance && "sender" in value;
 
     return isInstance;
 }
@@ -216,6 +229,7 @@ export function SolanaMessageFromJSONTyped(json: any, ignoreDiscriminator: boole
         'stringData': json['string_data'],
         'rawData': json['raw_data'],
         'chain': EnrichedSolanaChainFromJSON(json['chain']),
+        'sender': EnrichedSolanaAddressFromJSON(json['sender']),
     };
 }
 
@@ -243,6 +257,7 @@ export function SolanaMessageToJSON(value?: SolanaMessage | null): any {
         'string_data': value.stringData,
         'raw_data': value.rawData,
         'chain': EnrichedSolanaChainToJSON(value.chain),
+        'sender': EnrichedSolanaAddressToJSON(value.sender),
     };
 }
 
