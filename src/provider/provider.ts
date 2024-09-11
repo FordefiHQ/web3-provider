@@ -330,7 +330,7 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
     }
 
     return waitForTransactionState({
-      transaction: transaction satisfies AnyEvmTx & { type: T['type'] },
+      transaction,
       desiredState: EvmTransactionState.signed,
       apiClient: this.apiClient,
       timeoutDurationMs: ONE_DAY_MS,
