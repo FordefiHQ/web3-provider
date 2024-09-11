@@ -209,7 +209,7 @@ interface WaitForTransactionStateParams<T extends AnyEvmTx> {
 }
 
 export const waitForTransactionState = async <T extends AnyEvmTx>({
-  transaction,
+  transaction: { id: transactionId },
   desiredState,
   apiClient,
   timeoutDurationMs,
@@ -221,7 +221,6 @@ export const waitForTransactionState = async <T extends AnyEvmTx>({
 
   let attemptStartTimeMs = Date.now();
   const timeoutTimeMs = attemptStartTimeMs + timeoutDurationMs;
-  const { id: transactionId } = transaction;
 
   while ((attemptStartTimeMs = Date.now()) < timeoutTimeMs) {
     const transaction = (await apiClient.transactions.getTransactionApiV1TransactionsIdGet({
