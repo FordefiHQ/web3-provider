@@ -4,6 +4,7 @@ import {
   CreateEvmMessageRequest,
   CreateEvmMessageRequestDetails,
   CreateEvmMessageRequestTypeEnum,
+  CreateEvmRawTransactionRequest,
   CreateEvmRawTransactionRequestGas,
   CreateEvmRawTransactionRequestTypeEnum,
   CreateEvmTransactionRequest,
@@ -20,9 +21,9 @@ import {
   SignerType,
 } from '../openapi';
 import { FordefiRpcSchema, FordefiWeb3TransactionRequest, RequestArgs } from '../provider/provider.types';
-import { AnyEvmTransaction, EvmVault } from '../types';
+import { AnyEvmTx, CreateEvmRawTxRequest, EvmVault } from '../types';
 import { Defined } from '../types/type-utils';
-import { ONE_MINUTE_MS, ONE_SECOND_MS, renderTimeDuration } from './time';
+import { renderTimeDuration } from './time';
 import { waitFor } from './wait-for';
 
 /**
@@ -164,7 +165,7 @@ export const buildEvmRawTransactionRequest = (
   chain: EvmChain,
   vault: EvmVault,
   pushMode: PushMode,
-): CreateEvmTransactionRequest => {
+): CreateEvmRawTxRequest => {
   const { value, from, to, data } = transaction;
 
   if (from && !isAddressEqual(from, vault.address)) {
@@ -188,8 +189,7 @@ export const buildEvmRawTransactionRequest = (
       pushMode,
       chain: chain.chainId,
       value: parseTransactionRequestValueField(value),
-      // @ts-expect-error TODO(gil): remove once API change is merged
-      to,
+      to: to ?? undefined,
       data: data
         ? {
             type: EvmDataRequestHexTypeEnum.hex,
@@ -200,7 +200,7 @@ export const buildEvmRawTransactionRequest = (
   };
 };
 
-interface WaitForTransactionStateParams<T extends AnyEvmTransaction> {
+interface WaitForTransactionStateParams<T extends AnyEvmTx> {
   transaction: T;
   desiredState: EvmTransactionState;
   apiClient: ApiClient;
@@ -208,8 +208,8 @@ interface WaitForTransactionStateParams<T extends AnyEvmTransaction> {
   pollingIntervalMs: number;
 }
 
-export const waitForTransactionState = async <T extends AnyEvmTransaction>({
-  transaction: { id: transactionId },
+export const waitForTransactionState = async <T extends AnyEvmTx>({
+  transaction,
   desiredState,
   apiClient,
   timeoutDurationMs,
@@ -221,6 +221,7 @@ export const waitForTransactionState = async <T extends AnyEvmTransaction>({
 
   let attemptStartTimeMs = Date.now();
   const timeoutTimeMs = attemptStartTimeMs + timeoutDurationMs;
+  const { id: transactionId } = transaction;
 
   while ((attemptStartTimeMs = Date.now()) < timeoutTimeMs) {
     const transaction = (await apiClient.transactions.getTransactionApiV1TransactionsIdGet({

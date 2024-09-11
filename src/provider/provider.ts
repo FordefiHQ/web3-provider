@@ -17,13 +17,15 @@ import {
   RpcSchema,
   UnsupportedProviderMethodError,
 } from 'viem';
-import { AnyCreateEvmTransactionRequest, AnyEvmTransaction, EvmVault, FordefiProviderConfig } from '../types';
+import { AnyCreateEvmRequest, AnyEvmTx, EvmVault, FordefiProviderConfig } from '../types';
 import {
   ChainType,
   CreateEvmPersonalMessageRequestTypeEnum,
   CreateEvmTypedMessageRequestTypeEnum,
   EnrichedEvmChain,
   EvmChain,
+  EvmMessage,
+  EvmTransaction,
   EvmTransactionState,
   PushMode,
   VaultType,
@@ -301,9 +303,7 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
     );
   }
 
-  private async _createEvmMessageTransaction<CreateTx extends AnyCreateEvmTransactionRequest>(
-    createTransactionRequest: CreateTx,
-  ): Promise<Hex> {
+  private async _createEvmMessageTransaction<T extends AnyCreateEvmRequest>(createTransactionRequest: T): Promise<Hex> {
     const { signatures } = await this._invokeCreateTransaction(createTransactionRequest);
 
     if (signatures.length === 0) {
@@ -313,16 +313,24 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
     return base64SignatureToHex(signatures[0].data);
   }
 
-  private async _invokeCreateTransaction<CreateTxType extends AnyCreateEvmTransactionRequest['type']>(
-    createTransactionRequest: AnyCreateEvmTransactionRequest & { type: CreateTxType },
-  ): Promise<AnyEvmTransaction<CreateTxType>> {
+  private async _invokeCreateTransaction<T extends AnyCreateEvmRequest>(
+    createTransactionRequest: T,
+  ): Promise<AnyEvmTx & { type: T['type'] }> {
     const transaction = await this.apiClient.transactions.createTransactionApiV1TransactionsPost(
       { createTransactionRequest },
       middlewareAddRequestSigningHeaders(this.config.apiPayloadSignKey),
     );
 
+    if (transaction.type !== createTransactionRequest.type) {
+      throw new InternalRpcError(
+        new Error(
+          `Created transaction has unexpected type ${transaction.type} while transaction type in the request was ${createTransactionRequest.type}`,
+        ),
+      );
+    }
+
     return waitForTransactionState({
-      transaction: transaction as AnyEvmTransaction<CreateTxType>,
+      transaction: transaction satisfies AnyEvmTx & { type: T['type'] },
       desiredState: EvmTransactionState.signed,
       apiClient: this.apiClient,
       timeoutDurationMs: ONE_DAY_MS,
