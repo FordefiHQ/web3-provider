@@ -160,12 +160,21 @@ const toFordefiEvmGas = ({
   };
 };
 
-export const buildEvmRawTransactionRequest = (
-  transaction: Partial<FordefiWeb3TransactionRequest>,
-  chain: EvmChain,
-  vault: EvmVault,
-  pushMode: PushMode,
-): CreateEvmRawTxRequest => {
+interface BuildEvmRawTransactionRequestParams {
+  transaction: Partial<FordefiWeb3TransactionRequest>;
+  chain: EvmChain;
+  vault: EvmVault;
+  pushMode: PushMode;
+  runSimulation?: boolean;
+}
+
+export const buildEvmRawTransactionRequest = ({
+  transaction,
+  chain,
+  vault,
+  pushMode,
+  runSimulation = false,
+}: BuildEvmRawTransactionRequestParams): CreateEvmRawTxRequest => {
   const { value, from, to, data } = transaction;
 
   if (from && !isAddressEqual(from, vault.address)) {
@@ -185,7 +194,7 @@ export const buildEvmRawTransactionRequest = (
     details: {
       type: CreateEvmRawTransactionRequestTypeEnum.evmRawTransaction,
       gas: toFordefiEvmGas(transaction),
-      skipPrediction: true,
+      skipPrediction: !runSimulation,
       pushMode,
       chain: chain.chainId,
       value: parseTransactionRequestValueField(value),
