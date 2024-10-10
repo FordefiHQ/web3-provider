@@ -165,7 +165,7 @@ interface BuildEvmRawTransactionRequestParams {
   chain: EvmChain;
   vault: EvmVault;
   pushMode: PushMode;
-  runSimulation?: boolean;
+  skipPrediction?: boolean;
 }
 
 export const buildEvmRawTransactionRequest = ({
@@ -173,7 +173,7 @@ export const buildEvmRawTransactionRequest = ({
   chain,
   vault,
   pushMode,
-  runSimulation = false,
+  skipPrediction = true,
 }: BuildEvmRawTransactionRequestParams): CreateEvmRawTxRequest => {
   const { value, from, to, data } = transaction;
 
@@ -194,7 +194,7 @@ export const buildEvmRawTransactionRequest = ({
     details: {
       type: CreateEvmRawTransactionRequestTypeEnum.evmRawTransaction,
       gas: toFordefiEvmGas(transaction),
-      skipPrediction: !runSimulation,
+      skipPrediction,
       pushMode,
       chain: chain.chainId,
       value: parseTransactionRequestValueField(value),

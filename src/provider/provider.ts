@@ -241,7 +241,7 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
         chain,
         vault,
         pushMode: PushMode.auto,
-        runSimulation: this.config.runSimulation,
+        skipPrediction: this.config.skipPrediction,
       }),
     );
 
@@ -262,7 +262,7 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
         chain,
         vault,
         pushMode: PushMode.manual,
-        runSimulation: this.config.runSimulation,
+        skipPrediction: this.config.skipPrediction,
       }),
     );
 
