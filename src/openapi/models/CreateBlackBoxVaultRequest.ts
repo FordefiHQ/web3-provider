@@ -13,6 +13,13 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { ImportVaultOptions } from './ImportVaultOptions';
+import {
+    ImportVaultOptionsFromJSON,
+    ImportVaultOptionsFromJSONTyped,
+    ImportVaultOptionsToJSON,
+} from './ImportVaultOptions';
+
 /**
  * 
  * @export
@@ -44,6 +51,12 @@ export interface CreateBlackBoxVaultRequest {
      * @memberof CreateBlackBoxVaultRequest
      */
     vaultGroupId?: string;
+    /**
+     * 
+     * @type {ImportVaultOptions}
+     * @memberof CreateBlackBoxVaultRequest
+     */
+    importVault?: ImportVaultOptions;
     /**
      * 
      * @type {string}
@@ -105,6 +118,7 @@ export function CreateBlackBoxVaultRequestFromJSONTyped(json: any, ignoreDiscrim
         'keysetId': !exists(json, 'keyset_id') ? undefined : json['keyset_id'],
         'endUserId': !exists(json, 'end_user_id') ? undefined : json['end_user_id'],
         'vaultGroupId': !exists(json, 'vault_group_id') ? undefined : json['vault_group_id'],
+        'importVault': !exists(json, 'import_vault') ? undefined : ImportVaultOptionsFromJSON(json['import_vault']),
         'type': json['type'],
         'keyType': json['key_type'],
     };
@@ -123,6 +137,7 @@ export function CreateBlackBoxVaultRequestToJSON(value?: CreateBlackBoxVaultRequ
         'keyset_id': value.keysetId,
         'end_user_id': value.endUserId,
         'vault_group_id': value.vaultGroupId,
+        'import_vault': ImportVaultOptionsToJSON(value.importVault),
         'type': value.type,
         'key_type': value.keyType,
     };

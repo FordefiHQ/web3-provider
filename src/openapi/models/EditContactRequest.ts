@@ -48,6 +48,13 @@ import {
     EditSuiContactRequestToJSON,
 } from './EditSuiContactRequest';
 import {
+    EditTonContactRequest,
+    instanceOfEditTonContactRequest,
+    EditTonContactRequestFromJSON,
+    EditTonContactRequestFromJSONTyped,
+    EditTonContactRequestToJSON,
+} from './EditTonContactRequest';
+import {
     EditUtxoContactRequest,
     instanceOfEditUtxoContactRequest,
     EditUtxoContactRequestFromJSON,
@@ -60,7 +67,7 @@ import {
  * 
  * @export
  */
-export type EditContactRequest = { type: 'aptos' } & EditAptosContactRequest | { type: 'cosmos' } & EditCosmosContactRequest | { type: 'evm' } & EditEvmContactRequest | { type: 'solana' } & EditSolanaContactRequest | { type: 'sui' } & EditSuiContactRequest | { type: 'utxo' } & EditUtxoContactRequest;
+export type EditContactRequest = { type: 'aptos' } & EditAptosContactRequest | { type: 'cosmos' } & EditCosmosContactRequest | { type: 'evm' } & EditEvmContactRequest | { type: 'solana' } & EditSolanaContactRequest | { type: 'sui' } & EditSuiContactRequest | { type: 'ton' } & EditTonContactRequest | { type: 'utxo' } & EditUtxoContactRequest;
 
 export function EditContactRequestFromJSON(json: any): EditContactRequest {
     return EditContactRequestFromJSONTyped(json, false);
@@ -81,6 +88,8 @@ export function EditContactRequestFromJSONTyped(json: any, ignoreDiscriminator: 
             return {...EditSolanaContactRequestFromJSONTyped(json, true), type: 'solana'};
         case 'sui':
             return {...EditSuiContactRequestFromJSONTyped(json, true), type: 'sui'};
+        case 'ton':
+            return {...EditTonContactRequestFromJSONTyped(json, true), type: 'ton'};
         case 'utxo':
             return {...EditUtxoContactRequestFromJSONTyped(json, true), type: 'utxo'};
         default:
@@ -106,6 +115,8 @@ export function EditContactRequestToJSON(value?: EditContactRequest | null): any
             return EditSolanaContactRequestToJSON(value);
         case 'sui':
             return EditSuiContactRequestToJSON(value);
+        case 'ton':
+            return EditTonContactRequestToJSON(value);
         case 'utxo':
             return EditUtxoContactRequestToJSON(value);
         default:

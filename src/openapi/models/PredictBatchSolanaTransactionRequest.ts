@@ -13,12 +13,12 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { DescribeBatchSolanaTransactionRequestDetails } from './DescribeBatchSolanaTransactionRequestDetails';
+import type { PredictBatchSolanaTransactionRequestDetails } from './PredictBatchSolanaTransactionRequestDetails';
 import {
-    DescribeBatchSolanaTransactionRequestDetailsFromJSON,
-    DescribeBatchSolanaTransactionRequestDetailsFromJSONTyped,
-    DescribeBatchSolanaTransactionRequestDetailsToJSON,
-} from './DescribeBatchSolanaTransactionRequestDetails';
+    PredictBatchSolanaTransactionRequestDetailsFromJSON,
+    PredictBatchSolanaTransactionRequestDetailsFromJSONTyped,
+    PredictBatchSolanaTransactionRequestDetailsToJSON,
+} from './PredictBatchSolanaTransactionRequestDetails';
 
 /**
  * 
@@ -40,10 +40,10 @@ export interface PredictBatchSolanaTransactionRequest {
     type: PredictBatchSolanaTransactionRequestTypeEnum;
     /**
      * 
-     * @type {DescribeBatchSolanaTransactionRequestDetails}
+     * @type {PredictBatchSolanaTransactionRequestDetails}
      * @memberof PredictBatchSolanaTransactionRequest
      */
-    details: DescribeBatchSolanaTransactionRequestDetails;
+    details: PredictBatchSolanaTransactionRequestDetails;
 }
 
 
@@ -80,7 +80,7 @@ export function PredictBatchSolanaTransactionRequestFromJSONTyped(json: any, ign
         
         'vaultId': json['vault_id'],
         'type': json['type'],
-        'details': DescribeBatchSolanaTransactionRequestDetailsFromJSON(json['details']),
+        'details': PredictBatchSolanaTransactionRequestDetailsFromJSON(json['details']),
     };
 }
 
@@ -95,7 +95,7 @@ export function PredictBatchSolanaTransactionRequestToJSON(value?: PredictBatchS
         
         'vault_id': value.vaultId,
         'type': value.type,
-        'details': DescribeBatchSolanaTransactionRequestDetailsToJSON(value.details),
+        'details': PredictBatchSolanaTransactionRequestDetailsToJSON(value.details),
     };
 }
 

@@ -67,6 +67,18 @@ import {
     SolanaTransactionStateFromJSONTyped,
     SolanaTransactionStateToJSON,
 } from './SolanaTransactionState';
+import type { StarknetMessageState } from './StarknetMessageState';
+import {
+    StarknetMessageStateFromJSON,
+    StarknetMessageStateFromJSONTyped,
+    StarknetMessageStateToJSON,
+} from './StarknetMessageState';
+import type { StarknetTransactionState } from './StarknetTransactionState';
+import {
+    StarknetTransactionStateFromJSON,
+    StarknetTransactionStateFromJSONTyped,
+    StarknetTransactionStateToJSON,
+} from './StarknetTransactionState';
 import type { SuiMessageState } from './SuiMessageState';
 import {
     SuiMessageStateFromJSON,
@@ -79,6 +91,18 @@ import {
     SuiTransactionStateFromJSONTyped,
     SuiTransactionStateToJSON,
 } from './SuiTransactionState';
+import type { TonMessageState } from './TonMessageState';
+import {
+    TonMessageStateFromJSON,
+    TonMessageStateFromJSONTyped,
+    TonMessageStateToJSON,
+} from './TonMessageState';
+import type { TonTransactionState } from './TonTransactionState';
+import {
+    TonTransactionStateFromJSON,
+    TonTransactionStateFromJSONTyped,
+    TonTransactionStateToJSON,
+} from './TonTransactionState';
 import type { UtxoMessageState } from './UtxoMessageState';
 import {
     UtxoMessageStateFromJSON,

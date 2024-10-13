@@ -13,12 +13,6 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { DescribedSuiTransactionSuiTransactionTypeDetails } from './DescribedSuiTransactionSuiTransactionTypeDetails';
-import {
-    DescribedSuiTransactionSuiTransactionTypeDetailsFromJSON,
-    DescribedSuiTransactionSuiTransactionTypeDetailsFromJSONTyped,
-    DescribedSuiTransactionSuiTransactionTypeDetailsToJSON,
-} from './DescribedSuiTransactionSuiTransactionTypeDetails';
 import type { EnrichedSuiAddress } from './EnrichedSuiAddress';
 import {
     EnrichedSuiAddressFromJSON,
@@ -37,6 +31,12 @@ import {
     ManagedTransactionDataFromJSONTyped,
     ManagedTransactionDataToJSON,
 } from './ManagedTransactionData';
+import type { PredictedSuiTransactionSuiTransactionTypeDetails } from './PredictedSuiTransactionSuiTransactionTypeDetails';
+import {
+    PredictedSuiTransactionSuiTransactionTypeDetailsFromJSON,
+    PredictedSuiTransactionSuiTransactionTypeDetailsFromJSONTyped,
+    PredictedSuiTransactionSuiTransactionTypeDetailsToJSON,
+} from './PredictedSuiTransactionSuiTransactionTypeDetails';
 import type { Signature } from './Signature';
 import {
     SignatureFromJSON,
@@ -172,10 +172,10 @@ export interface SuiTransaction {
     type: SuiTransactionTypeEnum;
     /**
      * 
-     * @type {DescribedSuiTransactionSuiTransactionTypeDetails}
+     * @type {PredictedSuiTransactionSuiTransactionTypeDetails}
      * @memberof SuiTransaction
      */
-    suiTransactionTypeDetails: DescribedSuiTransactionSuiTransactionTypeDetails;
+    suiTransactionTypeDetails: PredictedSuiTransactionSuiTransactionTypeDetails;
     /**
      * 
      * @type {EnrichedSuiChain}
@@ -340,7 +340,7 @@ export function SuiTransactionFromJSONTyped(json: any, ignoreDiscriminator: bool
         'spamState': !exists(json, 'spam_state') ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
         'type': json['type'],
-        'suiTransactionTypeDetails': DescribedSuiTransactionSuiTransactionTypeDetailsFromJSON(json['sui_transaction_type_details']),
+        'suiTransactionTypeDetails': PredictedSuiTransactionSuiTransactionTypeDetailsFromJSON(json['sui_transaction_type_details']),
         'chain': EnrichedSuiChainFromJSON(json['chain']),
         'state': SuiTransactionStateFromJSON(json['state']),
         'stateChanges': ((json['state_changes'] as Array<any>).map(SuiTransactionStateChangeFromJSON)),
@@ -380,7 +380,7 @@ export function SuiTransactionToJSON(value?: SuiTransaction | null): any {
         'spam_state': TransactionSpamStateToJSON(value.spamState),
         'direction': TransactionDirectionToJSON(value.direction),
         'type': value.type,
-        'sui_transaction_type_details': DescribedSuiTransactionSuiTransactionTypeDetailsToJSON(value.suiTransactionTypeDetails),
+        'sui_transaction_type_details': PredictedSuiTransactionSuiTransactionTypeDetailsToJSON(value.suiTransactionTypeDetails),
         'chain': EnrichedSuiChainToJSON(value.chain),
         'state': SuiTransactionStateToJSON(value.state),
         'state_changes': ((value.stateChanges as Array<any>).map(SuiTransactionStateChangeToJSON)),

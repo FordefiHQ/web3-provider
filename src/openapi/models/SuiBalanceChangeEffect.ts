@@ -12,27 +12,76 @@
  * Do not edit the class manually.
  */
 
+import { exists, mapValues } from '../runtime';
+import type { EnrichedSuiAddress } from './EnrichedSuiAddress';
 import {
-    SuiCoinBalanceChange,
-    instanceOfSuiCoinBalanceChange,
-    SuiCoinBalanceChangeFromJSON,
-    SuiCoinBalanceChangeFromJSONTyped,
-    SuiCoinBalanceChangeToJSON,
-} from './SuiCoinBalanceChange';
+    EnrichedSuiAddressFromJSON,
+    EnrichedSuiAddressFromJSONTyped,
+    EnrichedSuiAddressToJSON,
+} from './EnrichedSuiAddress';
+import type { PricedAsset } from './PricedAsset';
 import {
-    SuiNativeCurrencyBalanceChange,
-    instanceOfSuiNativeCurrencyBalanceChange,
-    SuiNativeCurrencyBalanceChangeFromJSON,
-    SuiNativeCurrencyBalanceChangeFromJSONTyped,
-    SuiNativeCurrencyBalanceChangeToJSON,
-} from './SuiNativeCurrencyBalanceChange';
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+} from './PricedAsset';
+import type { SuiBalanceChangeEffectType } from './SuiBalanceChangeEffectType';
+import {
+    SuiBalanceChangeEffectTypeFromJSON,
+    SuiBalanceChangeEffectTypeFromJSONTyped,
+    SuiBalanceChangeEffectTypeToJSON,
+} from './SuiBalanceChangeEffectType';
 
 /**
- * @type SuiBalanceChangeEffect
  * 
  * @export
+ * @interface SuiBalanceChangeEffect
  */
-export type SuiBalanceChangeEffect = { type: 'coin' } & SuiCoinBalanceChange | { type: 'native' } & SuiNativeCurrencyBalanceChange;
+export interface SuiBalanceChangeEffect {
+    /**
+     * 
+     * @type {PricedAsset}
+     * @memberof SuiBalanceChangeEffect
+     */
+    pricedAsset: PricedAsset;
+    /**
+     * 
+     * @type {string}
+     * @memberof SuiBalanceChangeEffect
+     */
+    diff: string;
+    /**
+     * 
+     * @type {SuiBalanceChangeEffectType}
+     * @memberof SuiBalanceChangeEffect
+     */
+    type: SuiBalanceChangeEffectType;
+    /**
+     * 
+     * @type {EnrichedSuiAddress}
+     * @memberof SuiBalanceChangeEffect
+     */
+    owner?: EnrichedSuiAddress;
+    /**
+     * 
+     * @type {EnrichedSuiAddress}
+     * @memberof SuiBalanceChangeEffect
+     */
+    address: EnrichedSuiAddress;
+}
+
+/**
+ * Check if a given object implements the SuiBalanceChangeEffect interface.
+ */
+export function instanceOfSuiBalanceChangeEffect(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "pricedAsset" in value;
+    isInstance = isInstance && "diff" in value;
+    isInstance = isInstance && "type" in value;
+    isInstance = isInstance && "address" in value;
+
+    return isInstance;
+}
 
 export function SuiBalanceChangeEffectFromJSON(json: any): SuiBalanceChangeEffect {
     return SuiBalanceChangeEffectFromJSONTyped(json, false);
@@ -42,14 +91,14 @@ export function SuiBalanceChangeEffectFromJSONTyped(json: any, ignoreDiscriminat
     if ((json === undefined) || (json === null)) {
         return json;
     }
-    switch (json['type']) {
-        case 'coin':
-            return {...SuiCoinBalanceChangeFromJSONTyped(json, true), type: 'coin'};
-        case 'native':
-            return {...SuiNativeCurrencyBalanceChangeFromJSONTyped(json, true), type: 'native'};
-        default:
-            throw new Error(`No variant of SuiBalanceChangeEffect exists with 'type=${json['type']}'`);
-    }
+    return {
+        
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
+        'diff': json['diff'],
+        'type': SuiBalanceChangeEffectTypeFromJSON(json['type']),
+        'owner': !exists(json, 'owner') ? undefined : EnrichedSuiAddressFromJSON(json['owner']),
+        'address': EnrichedSuiAddressFromJSON(json['address']),
+    };
 }
 
 export function SuiBalanceChangeEffectToJSON(value?: SuiBalanceChangeEffect | null): any {
@@ -59,14 +108,13 @@ export function SuiBalanceChangeEffectToJSON(value?: SuiBalanceChangeEffect | nu
     if (value === null) {
         return null;
     }
-    switch (value['type']) {
-        case 'coin':
-            return SuiCoinBalanceChangeToJSON(value);
-        case 'native':
-            return SuiNativeCurrencyBalanceChangeToJSON(value);
-        default:
-            throw new Error(`No variant of SuiBalanceChangeEffect exists with 'type=${value['type']}'`);
-    }
-
+    return {
+        
+        'priced_asset': PricedAssetToJSON(value.pricedAsset),
+        'diff': value.diff,
+        'type': SuiBalanceChangeEffectTypeToJSON(value.type),
+        'owner': EnrichedSuiAddressToJSON(value.owner),
+        'address': EnrichedSuiAddressToJSON(value.address),
+    };
 }
 

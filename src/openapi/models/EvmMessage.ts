@@ -13,12 +13,6 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { DescribedEvmMessageTypedData } from './DescribedEvmMessageTypedData';
-import {
-    DescribedEvmMessageTypedDataFromJSON,
-    DescribedEvmMessageTypedDataFromJSONTyped,
-    DescribedEvmMessageTypedDataToJSON,
-} from './DescribedEvmMessageTypedData';
 import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
 import {
     EnrichedEvmAddressFromJSON,
@@ -49,6 +43,12 @@ import {
     EvmMessageTypeFromJSONTyped,
     EvmMessageTypeToJSON,
 } from './EvmMessageType';
+import type { EvmMessageTypedData } from './EvmMessageTypedData';
+import {
+    EvmMessageTypedDataFromJSON,
+    EvmMessageTypedDataFromJSONTyped,
+    EvmMessageTypedDataToJSON,
+} from './EvmMessageTypedData';
 import type { ManagedTransactionData } from './ManagedTransactionData';
 import {
     ManagedTransactionDataFromJSON,
@@ -166,10 +166,10 @@ export interface EvmMessage {
     rawData: string;
     /**
      * 
-     * @type {DescribedEvmMessageTypedData}
+     * @type {EvmMessageTypedData}
      * @memberof EvmMessage
      */
-    typedData?: DescribedEvmMessageTypedData;
+    typedData?: EvmMessageTypedData;
     /**
      * 
      * @type {VaultRef}
@@ -245,7 +245,7 @@ export function EvmMessageFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'state': EvmMessageStateFromJSON(json['state']),
         'stateChanges': ((json['state_changes'] as Array<any>).map(EvmMessageStateChangeFromJSON)),
         'rawData': json['raw_data'],
-        'typedData': !exists(json, 'typed_data') ? undefined : DescribedEvmMessageTypedDataFromJSON(json['typed_data']),
+        'typedData': !exists(json, 'typed_data') ? undefined : EvmMessageTypedDataFromJSON(json['typed_data']),
         'vault': VaultRefFromJSON(json['vault']),
         'chain': EnrichedEvmChainFromJSON(json['chain']),
         'sender': EnrichedEvmAddressFromJSON(json['sender']),
@@ -274,7 +274,7 @@ export function EvmMessageToJSON(value?: EvmMessage | null): any {
         'state': EvmMessageStateToJSON(value.state),
         'state_changes': ((value.stateChanges as Array<any>).map(EvmMessageStateChangeToJSON)),
         'raw_data': value.rawData,
-        'typed_data': DescribedEvmMessageTypedDataToJSON(value.typedData),
+        'typed_data': EvmMessageTypedDataToJSON(value.typedData),
         'vault': VaultRefToJSON(value.vault),
         'chain': EnrichedEvmChainToJSON(value.chain),
         'sender': EnrichedEvmAddressToJSON(value.sender),

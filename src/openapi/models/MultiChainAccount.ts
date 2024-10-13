@@ -48,6 +48,13 @@ import {
     SuiAccountReprToJSON,
 } from './SuiAccountRepr';
 import {
+    TonAccountRepr,
+    instanceOfTonAccountRepr,
+    TonAccountReprFromJSON,
+    TonAccountReprFromJSONTyped,
+    TonAccountReprToJSON,
+} from './TonAccountRepr';
+import {
     UtxoAccountRepr,
     instanceOfUtxoAccountRepr,
     UtxoAccountReprFromJSON,
@@ -60,7 +67,7 @@ import {
  * 
  * @export
  */
-export type MultiChainAccount = { chainType: 'aptos' } & AptosAccountRepr | { chainType: 'cosmos' } & CosmosAccountRepr | { chainType: 'evm' } & EvmAccountRepr | { chainType: 'solana' } & SolanaAccountRepr | { chainType: 'sui' } & SuiAccountRepr | { chainType: 'utxo' } & UtxoAccountRepr;
+export type MultiChainAccount = { chainType: 'aptos' } & AptosAccountRepr | { chainType: 'cosmos' } & CosmosAccountRepr | { chainType: 'evm' } & EvmAccountRepr | { chainType: 'solana' } & SolanaAccountRepr | { chainType: 'sui' } & SuiAccountRepr | { chainType: 'ton' } & TonAccountRepr | { chainType: 'utxo' } & UtxoAccountRepr;
 
 export function MultiChainAccountFromJSON(json: any): MultiChainAccount {
     return MultiChainAccountFromJSONTyped(json, false);
@@ -81,6 +88,8 @@ export function MultiChainAccountFromJSONTyped(json: any, ignoreDiscriminator: b
             return {...SolanaAccountReprFromJSONTyped(json, true), chainType: 'solana'};
         case 'sui':
             return {...SuiAccountReprFromJSONTyped(json, true), chainType: 'sui'};
+        case 'ton':
+            return {...TonAccountReprFromJSONTyped(json, true), chainType: 'ton'};
         case 'utxo':
             return {...UtxoAccountReprFromJSONTyped(json, true), chainType: 'utxo'};
         default:
@@ -106,6 +115,8 @@ export function MultiChainAccountToJSON(value?: MultiChainAccount | null): any {
             return SolanaAccountReprToJSON(value);
         case 'sui':
             return SuiAccountReprToJSON(value);
+        case 'ton':
+            return TonAccountReprToJSON(value);
         case 'utxo':
             return UtxoAccountReprToJSON(value);
         default:

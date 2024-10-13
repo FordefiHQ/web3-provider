@@ -13,6 +13,12 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+} from './PricedAsset';
 import type { VaultRef } from './VaultRef';
 import {
     VaultRefFromJSON,
@@ -44,6 +50,12 @@ export interface UtxoBalanceChangeEffect {
      * @memberof UtxoBalanceChangeEffect
      */
     diff: string;
+    /**
+     * 
+     * @type {PricedAsset}
+     * @memberof UtxoBalanceChangeEffect
+     */
+    pricedAsset: PricedAsset;
 }
 
 
@@ -64,6 +76,7 @@ export function instanceOfUtxoBalanceChangeEffect(value: object): boolean {
     isInstance = isInstance && "type" in value;
     isInstance = isInstance && "vault" in value;
     isInstance = isInstance && "diff" in value;
+    isInstance = isInstance && "pricedAsset" in value;
 
     return isInstance;
 }
@@ -81,6 +94,7 @@ export function UtxoBalanceChangeEffectFromJSONTyped(json: any, ignoreDiscrimina
         'type': json['type'],
         'vault': VaultRefFromJSON(json['vault']),
         'diff': json['diff'],
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }
 
@@ -96,6 +110,7 @@ export function UtxoBalanceChangeEffectToJSON(value?: UtxoBalanceChangeEffect | 
         'type': value.type,
         'vault': VaultRefToJSON(value.vault),
         'diff': value.diff,
+        'priced_asset': PricedAssetToJSON(value.pricedAsset),
     };
 }
 

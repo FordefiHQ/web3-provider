@@ -36,20 +36,29 @@ export interface KeyDerivationArgs {
      * 
      * @type {number}
      * @memberof KeyDerivationArgs
+     * @deprecated
      */
     coinType: number;
     /**
      * 
      * @type {number}
      * @memberof KeyDerivationArgs
+     * @deprecated
      */
     accountId: number;
     /**
      * 
      * @type {number}
      * @memberof KeyDerivationArgs
+     * @deprecated
      */
     addressIndex: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof KeyDerivationArgs
+     */
+    derivationPath: string;
     /**
      * 
      * @type {string}
@@ -73,6 +82,7 @@ export function instanceOfKeyDerivationArgs(value: object): boolean {
     isInstance = isInstance && "coinType" in value;
     isInstance = isInstance && "accountId" in value;
     isInstance = isInstance && "addressIndex" in value;
+    isInstance = isInstance && "derivationPath" in value;
     isInstance = isInstance && "keysetId" in value;
 
     return isInstance;
@@ -92,6 +102,7 @@ export function KeyDerivationArgsFromJSONTyped(json: any, ignoreDiscriminator: b
         'coinType': json['coin_type'],
         'accountId': json['account_id'],
         'addressIndex': json['address_index'],
+        'derivationPath': json['derivation_path'],
         'keysetId': json['keyset_id'],
         'adjustScalar': !exists(json, 'adjust_scalar') ? undefined : json['adjust_scalar'],
     };
@@ -110,6 +121,7 @@ export function KeyDerivationArgsToJSON(value?: KeyDerivationArgs | null): any {
         'coin_type': value.coinType,
         'account_id': value.accountId,
         'address_index': value.addressIndex,
+        'derivation_path': value.derivationPath,
         'keyset_id': value.keysetId,
         'adjust_scalar': value.adjustScalar,
     };

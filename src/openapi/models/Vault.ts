@@ -62,6 +62,13 @@ import {
     SuiVaultToJSON,
 } from './SuiVault';
 import {
+    TonVault,
+    instanceOfTonVault,
+    TonVaultFromJSON,
+    TonVaultFromJSONTyped,
+    TonVaultToJSON,
+} from './TonVault';
+import {
     UtxoVault,
     instanceOfUtxoVault,
     UtxoVaultFromJSON,
@@ -74,7 +81,7 @@ import {
  * 
  * @export
  */
-export type Vault = { type: 'aptos' } & AptosVault | { type: 'black_box' } & BlackBoxVault | { type: 'cosmos' } & CosmosVault | { type: 'evm' } & EvmVault | { type: 'exchange' } & ExchangeVault | { type: 'solana' } & SolanaVault | { type: 'sui' } & SuiVault | { type: 'utxo' } & UtxoVault;
+export type Vault = { type: 'aptos' } & AptosVault | { type: 'black_box' } & BlackBoxVault | { type: 'cosmos' } & CosmosVault | { type: 'evm' } & EvmVault | { type: 'exchange' } & ExchangeVault | { type: 'solana' } & SolanaVault | { type: 'sui' } & SuiVault | { type: 'ton' } & TonVault | { type: 'utxo' } & UtxoVault;
 
 export function VaultFromJSON(json: any): Vault {
     return VaultFromJSONTyped(json, false);
@@ -99,6 +106,8 @@ export function VaultFromJSONTyped(json: any, ignoreDiscriminator: boolean): Vau
             return {...SolanaVaultFromJSONTyped(json, true), type: 'solana'};
         case 'sui':
             return {...SuiVaultFromJSONTyped(json, true), type: 'sui'};
+        case 'ton':
+            return {...TonVaultFromJSONTyped(json, true), type: 'ton'};
         case 'utxo':
             return {...UtxoVaultFromJSONTyped(json, true), type: 'utxo'};
         default:
@@ -128,6 +137,8 @@ export function VaultToJSON(value?: Vault | null): any {
             return SolanaVaultToJSON(value);
         case 'sui':
             return SuiVaultToJSON(value);
+        case 'ton':
+            return TonVaultToJSON(value);
         case 'utxo':
             return UtxoVaultToJSON(value);
         default:

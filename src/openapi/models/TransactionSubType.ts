@@ -23,6 +23,7 @@ export const TransactionSubType = {
     crossChainBridge: 'cross_chain_bridge',
     transaction: 'transaction',
     contractCall: 'contract_call',
+    contractDeployment: 'contract_deployment',
     messageSignature: 'message_signature',
     allowanceSignature: 'allowance_signature'
 } as const;

@@ -18,8 +18,7 @@
  * @export
  */
 export const TonChainUniqueId = {
-    mainnet: 'ton_mainnet',
-    testnet: 'ton_testnet'
+    tonMainnet: 'ton_mainnet'
 } as const;
 export type TonChainUniqueId = typeof TonChainUniqueId[keyof typeof TonChainUniqueId];
 

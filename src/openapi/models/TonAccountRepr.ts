@@ -30,7 +30,7 @@ export interface TonAccountRepr {
      * @type {string}
      * @memberof TonAccountRepr
      */
-    base64UrlRepr: string;
+    address: string;
 }
 
 
@@ -49,7 +49,7 @@ export type TonAccountReprChainTypeEnum = typeof TonAccountReprChainTypeEnum[key
 export function instanceOfTonAccountRepr(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "chainType" in value;
-    isInstance = isInstance && "base64UrlRepr" in value;
+    isInstance = isInstance && "address" in value;
 
     return isInstance;
 }
@@ -65,7 +65,7 @@ export function TonAccountReprFromJSONTyped(json: any, ignoreDiscriminator: bool
     return {
         
         'chainType': json['chain_type'],
-        'base64UrlRepr': json['base64_url_repr'],
+        'address': json['address'],
     };
 }
 
@@ -79,7 +79,7 @@ export function TonAccountReprToJSON(value?: TonAccountRepr | null): any {
     return {
         
         'chain_type': value.chainType,
-        'base64_url_repr': value.base64UrlRepr,
+        'address': value.address,
     };
 }
 

@@ -19,12 +19,6 @@ import {
     ApprovalRequestFromJSONTyped,
     ApprovalRequestToJSON,
 } from './ApprovalRequest';
-import type { DescribedSolanaTransactionSolanaTransactionTypeDetails } from './DescribedSolanaTransactionSolanaTransactionTypeDetails';
-import {
-    DescribedSolanaTransactionSolanaTransactionTypeDetailsFromJSON,
-    DescribedSolanaTransactionSolanaTransactionTypeDetailsFromJSONTyped,
-    DescribedSolanaTransactionSolanaTransactionTypeDetailsToJSON,
-} from './DescribedSolanaTransactionSolanaTransactionTypeDetails';
 import type { EnrichedSolanaAddress } from './EnrichedSolanaAddress';
 import {
     EnrichedSolanaAddressFromJSON,
@@ -43,6 +37,12 @@ import {
     PolicyMatchFromJSONTyped,
     PolicyMatchToJSON,
 } from './PolicyMatch';
+import type { PredictedSolanaTransactionSolanaTransactionTypeDetails } from './PredictedSolanaTransactionSolanaTransactionTypeDetails';
+import {
+    PredictedSolanaTransactionSolanaTransactionTypeDetailsFromJSON,
+    PredictedSolanaTransactionSolanaTransactionTypeDetailsFromJSONTyped,
+    PredictedSolanaTransactionSolanaTransactionTypeDetailsToJSON,
+} from './PredictedSolanaTransactionSolanaTransactionTypeDetails';
 import type { SimulationStatusResult } from './SimulationStatusResult';
 import {
     SimulationStatusResultFromJSON,
@@ -124,10 +124,10 @@ export interface PredictedSolanaTransaction {
     simulationStatusResult: SimulationStatusResult;
     /**
      * 
-     * @type {DescribedSolanaTransactionSolanaTransactionTypeDetails}
+     * @type {PredictedSolanaTransactionSolanaTransactionTypeDetails}
      * @memberof PredictedSolanaTransaction
      */
-    solanaTransactionTypeDetails: DescribedSolanaTransactionSolanaTransactionTypeDetails;
+    solanaTransactionTypeDetails: PredictedSolanaTransactionSolanaTransactionTypeDetails;
     /**
      * 
      * @type {EnrichedSolanaAddress}
@@ -194,7 +194,7 @@ export function PredictedSolanaTransactionFromJSONTyped(json: any, ignoreDiscrim
         'expectedResult': SolanaTransactionResultFromJSON(json['expected_result']),
         'chain': EnrichedSolanaChainFromJSON(json['chain']),
         'simulationStatusResult': SimulationStatusResultFromJSON(json['simulation_status_result']),
-        'solanaTransactionTypeDetails': DescribedSolanaTransactionSolanaTransactionTypeDetailsFromJSON(json['solana_transaction_type_details']),
+        'solanaTransactionTypeDetails': PredictedSolanaTransactionSolanaTransactionTypeDetailsFromJSON(json['solana_transaction_type_details']),
         'sender': EnrichedSolanaAddressFromJSON(json['sender']),
         'suggestedFees': SolanaSuggestedFeesFromJSON(json['suggested_fees']),
         'instructions': ((json['instructions'] as Array<any>).map(SolanaCompiledInstructionFromJSON)),
@@ -217,7 +217,7 @@ export function PredictedSolanaTransactionToJSON(value?: PredictedSolanaTransact
         'expected_result': SolanaTransactionResultToJSON(value.expectedResult),
         'chain': EnrichedSolanaChainToJSON(value.chain),
         'simulation_status_result': SimulationStatusResultToJSON(value.simulationStatusResult),
-        'solana_transaction_type_details': DescribedSolanaTransactionSolanaTransactionTypeDetailsToJSON(value.solanaTransactionTypeDetails),
+        'solana_transaction_type_details': PredictedSolanaTransactionSolanaTransactionTypeDetailsToJSON(value.solanaTransactionTypeDetails),
         'sender': EnrichedSolanaAddressToJSON(value.sender),
         'suggested_fees': SolanaSuggestedFeesToJSON(value.suggestedFees),
         'instructions': ((value.instructions as Array<any>).map(SolanaCompiledInstructionToJSON)),

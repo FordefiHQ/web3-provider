@@ -23,6 +23,7 @@ export const ChainType = {
     evm: 'evm',
     solana: 'solana',
     sui: 'sui',
+    ton: 'ton',
     utxo: 'utxo'
 } as const;
 export type ChainType = typeof ChainType[keyof typeof ChainType];

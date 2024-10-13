@@ -50,7 +50,12 @@ export const CreateTransactionErrorType = {
     invalidAptosSerializedType: 'invalid_aptos_serialized_type',
     invalidAptosRotateKey: 'invalid_aptos_rotate_key',
     suiPackageAddressNotFound: 'sui_package_address_not_found',
-    transactionAlreadyMined: 'transaction_already_mined'
+    transactionAlreadyMined: 'transaction_already_mined',
+    invalidUtxoMessageAddressType: 'invalid_utxo_message_address_type',
+    invalidStarknetVaultState: 'invalid_starknet_vault_state',
+    missingSecretKeyOrRecentBlockhash: 'missing_secret_key_or_recent_blockhash',
+    missingSecretKeyOrSignature: 'missing_secret_key_or_signature',
+    revokeAllowanceGasLimitTooHigh: 'revoke_allowance_gas_limit_too_high'
 } as const;
 export type CreateTransactionErrorType = typeof CreateTransactionErrorType[keyof typeof CreateTransactionErrorType];
 

@@ -13,12 +13,6 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { DescribedSolanaTransactionSolanaTransactionTypeDetails } from './DescribedSolanaTransactionSolanaTransactionTypeDetails';
-import {
-    DescribedSolanaTransactionSolanaTransactionTypeDetailsFromJSON,
-    DescribedSolanaTransactionSolanaTransactionTypeDetailsFromJSONTyped,
-    DescribedSolanaTransactionSolanaTransactionTypeDetailsToJSON,
-} from './DescribedSolanaTransactionSolanaTransactionTypeDetails';
 import type { EnrichedSolanaAddress } from './EnrichedSolanaAddress';
 import {
     EnrichedSolanaAddressFromJSON,
@@ -37,6 +31,12 @@ import {
     ManagedTransactionDataFromJSONTyped,
     ManagedTransactionDataToJSON,
 } from './ManagedTransactionData';
+import type { PredictedSolanaTransactionSolanaTransactionTypeDetails } from './PredictedSolanaTransactionSolanaTransactionTypeDetails';
+import {
+    PredictedSolanaTransactionSolanaTransactionTypeDetailsFromJSON,
+    PredictedSolanaTransactionSolanaTransactionTypeDetailsFromJSONTyped,
+    PredictedSolanaTransactionSolanaTransactionTypeDetailsToJSON,
+} from './PredictedSolanaTransactionSolanaTransactionTypeDetails';
 import type { Signature } from './Signature';
 import {
     SignatureFromJSON,
@@ -172,10 +172,10 @@ export interface SolanaTransaction {
     type: SolanaTransactionTypeEnum;
     /**
      * 
-     * @type {DescribedSolanaTransactionSolanaTransactionTypeDetails}
+     * @type {PredictedSolanaTransactionSolanaTransactionTypeDetails}
      * @memberof SolanaTransaction
      */
-    solanaTransactionTypeDetails: DescribedSolanaTransactionSolanaTransactionTypeDetails;
+    solanaTransactionTypeDetails: PredictedSolanaTransactionSolanaTransactionTypeDetails;
     /**
      * 
      * @type {EnrichedSolanaChain}
@@ -328,7 +328,7 @@ export function SolanaTransactionFromJSONTyped(json: any, ignoreDiscriminator: b
         'spamState': !exists(json, 'spam_state') ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
         'type': json['type'],
-        'solanaTransactionTypeDetails': DescribedSolanaTransactionSolanaTransactionTypeDetailsFromJSON(json['solana_transaction_type_details']),
+        'solanaTransactionTypeDetails': PredictedSolanaTransactionSolanaTransactionTypeDetailsFromJSON(json['solana_transaction_type_details']),
         'chain': EnrichedSolanaChainFromJSON(json['chain']),
         'state': SolanaTransactionStateFromJSON(json['state']),
         'stateChanges': ((json['state_changes'] as Array<any>).map(SolanaTransactionStateChangeFromJSON)),
@@ -366,7 +366,7 @@ export function SolanaTransactionToJSON(value?: SolanaTransaction | null): any {
         'spam_state': TransactionSpamStateToJSON(value.spamState),
         'direction': TransactionDirectionToJSON(value.direction),
         'type': value.type,
-        'solana_transaction_type_details': DescribedSolanaTransactionSolanaTransactionTypeDetailsToJSON(value.solanaTransactionTypeDetails),
+        'solana_transaction_type_details': PredictedSolanaTransactionSolanaTransactionTypeDetailsToJSON(value.solanaTransactionTypeDetails),
         'chain': EnrichedSolanaChainToJSON(value.chain),
         'state': SolanaTransactionStateToJSON(value.state),
         'state_changes': ((value.stateChanges as Array<any>).map(SolanaTransactionStateChangeToJSON)),

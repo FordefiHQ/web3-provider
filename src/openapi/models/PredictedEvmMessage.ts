@@ -19,12 +19,6 @@ import {
     ApprovalRequestFromJSONTyped,
     ApprovalRequestToJSON,
 } from './ApprovalRequest';
-import type { DescribedEvmMessageTypedData } from './DescribedEvmMessageTypedData';
-import {
-    DescribedEvmMessageTypedDataFromJSON,
-    DescribedEvmMessageTypedDataFromJSONTyped,
-    DescribedEvmMessageTypedDataToJSON,
-} from './DescribedEvmMessageTypedData';
 import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
 import {
     EnrichedEvmAddressFromJSON,
@@ -43,6 +37,12 @@ import {
     EvmMessageTypeFromJSONTyped,
     EvmMessageTypeToJSON,
 } from './EvmMessageType';
+import type { EvmMessageTypedData } from './EvmMessageTypedData';
+import {
+    EvmMessageTypedDataFromJSON,
+    EvmMessageTypedDataFromJSONTyped,
+    EvmMessageTypedDataToJSON,
+} from './EvmMessageTypedData';
 import type { PolicyMatch } from './PolicyMatch';
 import {
     PolicyMatchFromJSON,
@@ -106,10 +106,10 @@ export interface PredictedEvmMessage {
     evmMessageType: EvmMessageType;
     /**
      * 
-     * @type {DescribedEvmMessageTypedData}
+     * @type {EvmMessageTypedData}
      * @memberof PredictedEvmMessage
      */
-    typedData?: DescribedEvmMessageTypedData;
+    typedData?: EvmMessageTypedData;
     /**
      * 
      * @type {string}
@@ -161,7 +161,7 @@ export function PredictedEvmMessageFromJSONTyped(json: any, ignoreDiscriminator:
         'chain': EnrichedEvmChainFromJSON(json['chain']),
         'sender': EnrichedEvmAddressFromJSON(json['sender']),
         'evmMessageType': EvmMessageTypeFromJSON(json['evm_message_type']),
-        'typedData': !exists(json, 'typed_data') ? undefined : DescribedEvmMessageTypedDataFromJSON(json['typed_data']),
+        'typedData': !exists(json, 'typed_data') ? undefined : EvmMessageTypedDataFromJSON(json['typed_data']),
         'messageToDisplay': json['message_to_display'],
     };
 }
@@ -182,7 +182,7 @@ export function PredictedEvmMessageToJSON(value?: PredictedEvmMessage | null): a
         'chain': EnrichedEvmChainToJSON(value.chain),
         'sender': EnrichedEvmAddressToJSON(value.sender),
         'evm_message_type': EvmMessageTypeToJSON(value.evmMessageType),
-        'typed_data': DescribedEvmMessageTypedDataToJSON(value.typedData),
+        'typed_data': EvmMessageTypedDataToJSON(value.typedData),
         'message_to_display': value.messageToDisplay,
     };
 }

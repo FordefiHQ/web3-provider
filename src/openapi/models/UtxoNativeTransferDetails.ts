@@ -19,6 +19,12 @@ import {
     TransferDirectionFromJSONTyped,
     TransferDirectionToJSON,
 } from './TransferDirection';
+import type { VaultRef } from './VaultRef';
+import {
+    VaultRefFromJSON,
+    VaultRefFromJSONTyped,
+    VaultRefToJSON,
+} from './VaultRef';
 
 /**
  * 
@@ -44,6 +50,12 @@ export interface UtxoNativeTransferDetails {
      * @memberof UtxoNativeTransferDetails
      */
     isInternal?: boolean;
+    /**
+     * 
+     * @type {VaultRef}
+     * @memberof UtxoNativeTransferDetails
+     */
+    vault?: VaultRef;
 }
 
 
@@ -80,6 +92,7 @@ export function UtxoNativeTransferDetailsFromJSONTyped(json: any, ignoreDiscrimi
         'type': json['type'],
         'direction': TransferDirectionFromJSON(json['direction']),
         'isInternal': !exists(json, 'is_internal') ? undefined : json['is_internal'],
+        'vault': !exists(json, 'vault') ? undefined : VaultRefFromJSON(json['vault']),
     };
 }
 
@@ -95,6 +108,7 @@ export function UtxoNativeTransferDetailsToJSON(value?: UtxoNativeTransferDetail
         'type': value.type,
         'direction': TransferDirectionToJSON(value.direction),
         'is_internal': value.isInternal,
+        'vault': VaultRefToJSON(value.vault),
     };
 }
 

@@ -83,6 +83,20 @@ import {
     TransactionDetailsSuiTransactionRequestToJSON,
 } from './TransactionDetailsSuiTransactionRequest';
 import {
+    TransactionDetailsTonMessageRequest,
+    instanceOfTransactionDetailsTonMessageRequest,
+    TransactionDetailsTonMessageRequestFromJSON,
+    TransactionDetailsTonMessageRequestFromJSONTyped,
+    TransactionDetailsTonMessageRequestToJSON,
+} from './TransactionDetailsTonMessageRequest';
+import {
+    TransactionDetailsTonTransactionRequest,
+    instanceOfTransactionDetailsTonTransactionRequest,
+    TransactionDetailsTonTransactionRequestFromJSON,
+    TransactionDetailsTonTransactionRequestFromJSONTyped,
+    TransactionDetailsTonTransactionRequestToJSON,
+} from './TransactionDetailsTonTransactionRequest';
+import {
     TransactionDetailsUtxoMessageRequest,
     instanceOfTransactionDetailsUtxoMessageRequest,
     TransactionDetailsUtxoMessageRequestFromJSON,
@@ -102,7 +116,7 @@ import {
  * 
  * @export
  */
-export type PredictTransactionRequest = { type: 'aptos_message' } & TransactionDetailsAptosMessageRequest | { type: 'aptos_transaction' } & TransactionDetailsAptosTransactionRequest | { type: 'cosmos_message' } & TransactionDetailsCosmosMessageRequest | { type: 'cosmos_transaction' } & TransactionDetailsCosmosTransactionRequest | { type: 'evm_message' } & TransactionDetailsEvmMessageRequest | { type: 'evm_transaction' } & TransactionDetailsEvmTransactionRequest | { type: 'solana_message' } & TransactionDetailsSolanaMessageRequest | { type: 'solana_transaction' } & TransactionDetailsSolanaTransactionRequest | { type: 'sui_message' } & TransactionDetailsSuiMessageRequest | { type: 'sui_transaction' } & TransactionDetailsSuiTransactionRequest | { type: 'utxo_message' } & TransactionDetailsUtxoMessageRequest | { type: 'utxo_transaction' } & TransactionDetailsUtxoTransactionRequest;
+export type PredictTransactionRequest = { type: 'aptos_message' } & TransactionDetailsAptosMessageRequest | { type: 'aptos_transaction' } & TransactionDetailsAptosTransactionRequest | { type: 'cosmos_message' } & TransactionDetailsCosmosMessageRequest | { type: 'cosmos_transaction' } & TransactionDetailsCosmosTransactionRequest | { type: 'evm_message' } & TransactionDetailsEvmMessageRequest | { type: 'evm_transaction' } & TransactionDetailsEvmTransactionRequest | { type: 'solana_message' } & TransactionDetailsSolanaMessageRequest | { type: 'solana_transaction' } & TransactionDetailsSolanaTransactionRequest | { type: 'sui_message' } & TransactionDetailsSuiMessageRequest | { type: 'sui_transaction' } & TransactionDetailsSuiTransactionRequest | { type: 'ton_message' } & TransactionDetailsTonMessageRequest | { type: 'ton_transaction' } & TransactionDetailsTonTransactionRequest | { type: 'utxo_message' } & TransactionDetailsUtxoMessageRequest | { type: 'utxo_transaction' } & TransactionDetailsUtxoTransactionRequest;
 
 export function PredictTransactionRequestFromJSON(json: any): PredictTransactionRequest {
     return PredictTransactionRequestFromJSONTyped(json, false);
@@ -133,6 +147,10 @@ export function PredictTransactionRequestFromJSONTyped(json: any, ignoreDiscrimi
             return {...TransactionDetailsSuiMessageRequestFromJSONTyped(json, true), type: 'sui_message'};
         case 'sui_transaction':
             return {...TransactionDetailsSuiTransactionRequestFromJSONTyped(json, true), type: 'sui_transaction'};
+        case 'ton_message':
+            return {...TransactionDetailsTonMessageRequestFromJSONTyped(json, true), type: 'ton_message'};
+        case 'ton_transaction':
+            return {...TransactionDetailsTonTransactionRequestFromJSONTyped(json, true), type: 'ton_transaction'};
         case 'utxo_message':
             return {...TransactionDetailsUtxoMessageRequestFromJSONTyped(json, true), type: 'utxo_message'};
         case 'utxo_transaction':
@@ -170,6 +188,10 @@ export function PredictTransactionRequestToJSON(value?: PredictTransactionReques
             return TransactionDetailsSuiMessageRequestToJSON(value);
         case 'sui_transaction':
             return TransactionDetailsSuiTransactionRequestToJSON(value);
+        case 'ton_message':
+            return TransactionDetailsTonMessageRequestToJSON(value);
+        case 'ton_transaction':
+            return TransactionDetailsTonTransactionRequestToJSON(value);
         case 'utxo_message':
             return TransactionDetailsUtxoMessageRequestToJSON(value);
         case 'utxo_transaction':

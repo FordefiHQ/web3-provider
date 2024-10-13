@@ -90,6 +90,20 @@ import {
     CreateSuiTransactionWithWaitRequestToJSON,
 } from './CreateSuiTransactionWithWaitRequest';
 import {
+    CreateTonMessageWithWaitRequest,
+    instanceOfCreateTonMessageWithWaitRequest,
+    CreateTonMessageWithWaitRequestFromJSON,
+    CreateTonMessageWithWaitRequestFromJSONTyped,
+    CreateTonMessageWithWaitRequestToJSON,
+} from './CreateTonMessageWithWaitRequest';
+import {
+    CreateTonTransactionWithWaitRequest,
+    instanceOfCreateTonTransactionWithWaitRequest,
+    CreateTonTransactionWithWaitRequestFromJSON,
+    CreateTonTransactionWithWaitRequestFromJSONTyped,
+    CreateTonTransactionWithWaitRequestToJSON,
+} from './CreateTonTransactionWithWaitRequest';
+import {
     CreateUtxoMessageWithWaitRequest,
     instanceOfCreateUtxoMessageWithWaitRequest,
     CreateUtxoMessageWithWaitRequestFromJSON,
@@ -109,7 +123,7 @@ import {
  * 
  * @export
  */
-export type CreateTransactionWithWaitRequest = { type: 'aptos_message' } & CreateAptosMessageWithWaitRequest | { type: 'aptos_transaction' } & CreateAptosTransactionWithWaitRequest | { type: 'black_box_signature' } & CreateBlackBoxSignatureWithWaitRequest | { type: 'cosmos_message' } & CreateCosmosMessageWithWaitRequest | { type: 'cosmos_transaction' } & CreateCosmosTransactionWithWaitRequest | { type: 'evm_message' } & CreateEvmMessageWithWaitRequest | { type: 'evm_transaction' } & CreateEvmTransactionWithWaitRequest | { type: 'solana_message' } & CreateSolanaMessageWithWaitRequest | { type: 'solana_transaction' } & CreateSolanaTransactionWithWaitRequest | { type: 'sui_message' } & CreateSuiMessageWithWaitRequest | { type: 'sui_transaction' } & CreateSuiTransactionWithWaitRequest | { type: 'utxo_message' } & CreateUtxoMessageWithWaitRequest | { type: 'utxo_transaction' } & CreateUtxoTransactionWithWaitRequest;
+export type CreateTransactionWithWaitRequest = { type: 'aptos_message' } & CreateAptosMessageWithWaitRequest | { type: 'aptos_transaction' } & CreateAptosTransactionWithWaitRequest | { type: 'black_box_signature' } & CreateBlackBoxSignatureWithWaitRequest | { type: 'cosmos_message' } & CreateCosmosMessageWithWaitRequest | { type: 'cosmos_transaction' } & CreateCosmosTransactionWithWaitRequest | { type: 'evm_message' } & CreateEvmMessageWithWaitRequest | { type: 'evm_transaction' } & CreateEvmTransactionWithWaitRequest | { type: 'solana_message' } & CreateSolanaMessageWithWaitRequest | { type: 'solana_transaction' } & CreateSolanaTransactionWithWaitRequest | { type: 'sui_message' } & CreateSuiMessageWithWaitRequest | { type: 'sui_transaction' } & CreateSuiTransactionWithWaitRequest | { type: 'ton_message' } & CreateTonMessageWithWaitRequest | { type: 'ton_transaction' } & CreateTonTransactionWithWaitRequest | { type: 'utxo_message' } & CreateUtxoMessageWithWaitRequest | { type: 'utxo_transaction' } & CreateUtxoTransactionWithWaitRequest;
 
 export function CreateTransactionWithWaitRequestFromJSON(json: any): CreateTransactionWithWaitRequest {
     return CreateTransactionWithWaitRequestFromJSONTyped(json, false);
@@ -142,6 +156,10 @@ export function CreateTransactionWithWaitRequestFromJSONTyped(json: any, ignoreD
             return {...CreateSuiMessageWithWaitRequestFromJSONTyped(json, true), type: 'sui_message'};
         case 'sui_transaction':
             return {...CreateSuiTransactionWithWaitRequestFromJSONTyped(json, true), type: 'sui_transaction'};
+        case 'ton_message':
+            return {...CreateTonMessageWithWaitRequestFromJSONTyped(json, true), type: 'ton_message'};
+        case 'ton_transaction':
+            return {...CreateTonTransactionWithWaitRequestFromJSONTyped(json, true), type: 'ton_transaction'};
         case 'utxo_message':
             return {...CreateUtxoMessageWithWaitRequestFromJSONTyped(json, true), type: 'utxo_message'};
         case 'utxo_transaction':
@@ -181,6 +199,10 @@ export function CreateTransactionWithWaitRequestToJSON(value?: CreateTransaction
             return CreateSuiMessageWithWaitRequestToJSON(value);
         case 'sui_transaction':
             return CreateSuiTransactionWithWaitRequestToJSON(value);
+        case 'ton_message':
+            return CreateTonMessageWithWaitRequestToJSON(value);
+        case 'ton_transaction':
+            return CreateTonTransactionWithWaitRequestToJSON(value);
         case 'utxo_message':
             return CreateUtxoMessageWithWaitRequestToJSON(value);
         case 'utxo_transaction':

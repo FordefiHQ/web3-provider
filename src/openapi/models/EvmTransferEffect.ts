@@ -12,41 +12,109 @@
  * Do not edit the class manually.
  */
 
+import { exists, mapValues } from '../runtime';
+import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
 import {
-    Erc1155Transfer,
-    instanceOfErc1155Transfer,
-    Erc1155TransferFromJSON,
-    Erc1155TransferFromJSONTyped,
-    Erc1155TransferToJSON,
-} from './Erc1155Transfer';
+    EnrichedEvmAddressFromJSON,
+    EnrichedEvmAddressFromJSONTyped,
+    EnrichedEvmAddressToJSON,
+} from './EnrichedEvmAddress';
+import type { EvmTransferEffectTokenContract } from './EvmTransferEffectTokenContract';
 import {
-    Erc20Transfer,
-    instanceOfErc20Transfer,
-    Erc20TransferFromJSON,
-    Erc20TransferFromJSONTyped,
-    Erc20TransferToJSON,
-} from './Erc20Transfer';
+    EvmTransferEffectTokenContractFromJSON,
+    EvmTransferEffectTokenContractFromJSONTyped,
+    EvmTransferEffectTokenContractToJSON,
+} from './EvmTransferEffectTokenContract';
+import type { EvmTransferEffectType } from './EvmTransferEffectType';
 import {
-    Erc721Transfer,
-    instanceOfErc721Transfer,
-    Erc721TransferFromJSON,
-    Erc721TransferFromJSONTyped,
-    Erc721TransferToJSON,
-} from './Erc721Transfer';
+    EvmTransferEffectTypeFromJSON,
+    EvmTransferEffectTypeFromJSONTyped,
+    EvmTransferEffectTypeToJSON,
+} from './EvmTransferEffectType';
+import type { Price } from './Price';
 import {
-    EvmNativeCurrencyTransfer,
-    instanceOfEvmNativeCurrencyTransfer,
-    EvmNativeCurrencyTransferFromJSON,
-    EvmNativeCurrencyTransferFromJSONTyped,
-    EvmNativeCurrencyTransferToJSON,
-} from './EvmNativeCurrencyTransfer';
+    PriceFromJSON,
+    PriceFromJSONTyped,
+    PriceToJSON,
+} from './Price';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+} from './PricedAsset';
 
 /**
- * @type EvmTransferEffect
  * 
  * @export
+ * @interface EvmTransferEffect
  */
-export type EvmTransferEffect = { type: 'erc1155' } & Erc1155Transfer | { type: 'erc20' } & Erc20Transfer | { type: 'erc721' } & Erc721Transfer | { type: 'native' } & EvmNativeCurrencyTransfer;
+export interface EvmTransferEffect {
+    /**
+     * 
+     * @type {PricedAsset}
+     * @memberof EvmTransferEffect
+     */
+    pricedAsset: PricedAsset;
+    /**
+     * 
+     * @type {string}
+     * @memberof EvmTransferEffect
+     */
+    amount: string;
+    /**
+     * 
+     * @type {EvmTransferEffectType}
+     * @memberof EvmTransferEffect
+     */
+    type: EvmTransferEffectType;
+    /**
+     * 
+     * @type {EnrichedEvmAddress}
+     * @memberof EvmTransferEffect
+     */
+    from: EnrichedEvmAddress;
+    /**
+     * 
+     * @type {EnrichedEvmAddress}
+     * @memberof EvmTransferEffect
+     */
+    to: EnrichedEvmAddress;
+    /**
+     * 
+     * @type {Price}
+     * @memberof EvmTransferEffect
+     */
+    price?: Price;
+    /**
+     * 
+     * @type {EvmTransferEffectTokenContract}
+     * @memberof EvmTransferEffect
+     * @deprecated
+     */
+    tokenContract?: EvmTransferEffectTokenContract;
+    /**
+     * 
+     * @type {string}
+     * @memberof EvmTransferEffect
+     * @deprecated
+     */
+    tokenId?: string;
+}
+
+/**
+ * Check if a given object implements the EvmTransferEffect interface.
+ */
+export function instanceOfEvmTransferEffect(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "pricedAsset" in value;
+    isInstance = isInstance && "amount" in value;
+    isInstance = isInstance && "type" in value;
+    isInstance = isInstance && "from" in value;
+    isInstance = isInstance && "to" in value;
+
+    return isInstance;
+}
 
 export function EvmTransferEffectFromJSON(json: any): EvmTransferEffect {
     return EvmTransferEffectFromJSONTyped(json, false);
@@ -56,18 +124,17 @@ export function EvmTransferEffectFromJSONTyped(json: any, ignoreDiscriminator: b
     if ((json === undefined) || (json === null)) {
         return json;
     }
-    switch (json['type']) {
-        case 'erc1155':
-            return {...Erc1155TransferFromJSONTyped(json, true), type: 'erc1155'};
-        case 'erc20':
-            return {...Erc20TransferFromJSONTyped(json, true), type: 'erc20'};
-        case 'erc721':
-            return {...Erc721TransferFromJSONTyped(json, true), type: 'erc721'};
-        case 'native':
-            return {...EvmNativeCurrencyTransferFromJSONTyped(json, true), type: 'native'};
-        default:
-            throw new Error(`No variant of EvmTransferEffect exists with 'type=${json['type']}'`);
-    }
+    return {
+        
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
+        'amount': json['amount'],
+        'type': EvmTransferEffectTypeFromJSON(json['type']),
+        'from': EnrichedEvmAddressFromJSON(json['from']),
+        'to': EnrichedEvmAddressFromJSON(json['to']),
+        'price': !exists(json, 'price') ? undefined : PriceFromJSON(json['price']),
+        'tokenContract': !exists(json, 'token_contract') ? undefined : EvmTransferEffectTokenContractFromJSON(json['token_contract']),
+        'tokenId': !exists(json, 'token_id') ? undefined : json['token_id'],
+    };
 }
 
 export function EvmTransferEffectToJSON(value?: EvmTransferEffect | null): any {
@@ -77,18 +144,16 @@ export function EvmTransferEffectToJSON(value?: EvmTransferEffect | null): any {
     if (value === null) {
         return null;
     }
-    switch (value['type']) {
-        case 'erc1155':
-            return Erc1155TransferToJSON(value);
-        case 'erc20':
-            return Erc20TransferToJSON(value);
-        case 'erc721':
-            return Erc721TransferToJSON(value);
-        case 'native':
-            return EvmNativeCurrencyTransferToJSON(value);
-        default:
-            throw new Error(`No variant of EvmTransferEffect exists with 'type=${value['type']}'`);
-    }
-
+    return {
+        
+        'priced_asset': PricedAssetToJSON(value.pricedAsset),
+        'amount': value.amount,
+        'type': EvmTransferEffectTypeToJSON(value.type),
+        'from': EnrichedEvmAddressToJSON(value.from),
+        'to': EnrichedEvmAddressToJSON(value.to),
+        'price': PriceToJSON(value.price),
+        'token_contract': EvmTransferEffectTokenContractToJSON(value.tokenContract),
+        'token_id': value.tokenId,
+    };
 }
 

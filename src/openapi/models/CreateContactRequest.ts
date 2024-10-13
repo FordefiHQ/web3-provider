@@ -41,12 +41,26 @@ import {
     CreateSolanaContactRequestToJSON,
 } from './CreateSolanaContactRequest';
 import {
+    CreateStarknetContactRequest,
+    instanceOfCreateStarknetContactRequest,
+    CreateStarknetContactRequestFromJSON,
+    CreateStarknetContactRequestFromJSONTyped,
+    CreateStarknetContactRequestToJSON,
+} from './CreateStarknetContactRequest';
+import {
     CreateSuiContactRequest,
     instanceOfCreateSuiContactRequest,
     CreateSuiContactRequestFromJSON,
     CreateSuiContactRequestFromJSONTyped,
     CreateSuiContactRequestToJSON,
 } from './CreateSuiContactRequest';
+import {
+    CreateTonContactRequest,
+    instanceOfCreateTonContactRequest,
+    CreateTonContactRequestFromJSON,
+    CreateTonContactRequestFromJSONTyped,
+    CreateTonContactRequestToJSON,
+} from './CreateTonContactRequest';
 import {
     CreateUtxoContactRequest,
     instanceOfCreateUtxoContactRequest,
@@ -60,7 +74,7 @@ import {
  * 
  * @export
  */
-export type CreateContactRequest = { type: 'aptos' } & CreateAptosContactRequest | { type: 'cosmos' } & CreateCosmosContactRequest | { type: 'evm' } & CreateEVMContactRequest | { type: 'solana' } & CreateSolanaContactRequest | { type: 'sui' } & CreateSuiContactRequest | { type: 'utxo' } & CreateUtxoContactRequest;
+export type CreateContactRequest = { type: 'aptos' } & CreateAptosContactRequest | { type: 'cosmos' } & CreateCosmosContactRequest | { type: 'evm' } & CreateEVMContactRequest | { type: 'solana' } & CreateSolanaContactRequest | { type: 'starknet' } & CreateStarknetContactRequest | { type: 'sui' } & CreateSuiContactRequest | { type: 'ton' } & CreateTonContactRequest | { type: 'utxo' } & CreateUtxoContactRequest;
 
 export function CreateContactRequestFromJSON(json: any): CreateContactRequest {
     return CreateContactRequestFromJSONTyped(json, false);
@@ -79,8 +93,12 @@ export function CreateContactRequestFromJSONTyped(json: any, ignoreDiscriminator
             return {...CreateEVMContactRequestFromJSONTyped(json, true), type: 'evm'};
         case 'solana':
             return {...CreateSolanaContactRequestFromJSONTyped(json, true), type: 'solana'};
+        case 'starknet':
+            return {...CreateStarknetContactRequestFromJSONTyped(json, true), type: 'starknet'};
         case 'sui':
             return {...CreateSuiContactRequestFromJSONTyped(json, true), type: 'sui'};
+        case 'ton':
+            return {...CreateTonContactRequestFromJSONTyped(json, true), type: 'ton'};
         case 'utxo':
             return {...CreateUtxoContactRequestFromJSONTyped(json, true), type: 'utxo'};
         default:
@@ -104,8 +122,12 @@ export function CreateContactRequestToJSON(value?: CreateContactRequest | null):
             return CreateEVMContactRequestToJSON(value);
         case 'solana':
             return CreateSolanaContactRequestToJSON(value);
+        case 'starknet':
+            return CreateStarknetContactRequestToJSON(value);
         case 'sui':
             return CreateSuiContactRequestToJSON(value);
+        case 'ton':
+            return CreateTonContactRequestToJSON(value);
         case 'utxo':
             return CreateUtxoContactRequestToJSON(value);
         default:

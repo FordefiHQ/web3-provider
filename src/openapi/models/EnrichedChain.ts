@@ -48,6 +48,13 @@ import {
     EnrichedSuiChainToJSON,
 } from './EnrichedSuiChain';
 import {
+    EnrichedTonChain,
+    instanceOfEnrichedTonChain,
+    EnrichedTonChainFromJSON,
+    EnrichedTonChainFromJSONTyped,
+    EnrichedTonChainToJSON,
+} from './EnrichedTonChain';
+import {
     EnrichedUtxoChain,
     instanceOfEnrichedUtxoChain,
     EnrichedUtxoChainFromJSON,
@@ -60,7 +67,7 @@ import {
  * 
  * @export
  */
-export type EnrichedChain = { chainType: 'aptos' } & EnrichedAptosChain | { chainType: 'cosmos' } & EnrichedCosmosChain | { chainType: 'evm' } & EnrichedEvmChain | { chainType: 'solana' } & EnrichedSolanaChain | { chainType: 'sui' } & EnrichedSuiChain | { chainType: 'utxo' } & EnrichedUtxoChain;
+export type EnrichedChain = { chainType: 'aptos' } & EnrichedAptosChain | { chainType: 'cosmos' } & EnrichedCosmosChain | { chainType: 'evm' } & EnrichedEvmChain | { chainType: 'solana' } & EnrichedSolanaChain | { chainType: 'sui' } & EnrichedSuiChain | { chainType: 'ton' } & EnrichedTonChain | { chainType: 'utxo' } & EnrichedUtxoChain;
 
 export function EnrichedChainFromJSON(json: any): EnrichedChain {
     return EnrichedChainFromJSONTyped(json, false);
@@ -81,6 +88,8 @@ export function EnrichedChainFromJSONTyped(json: any, ignoreDiscriminator: boole
             return {...EnrichedSolanaChainFromJSONTyped(json, true), chainType: 'solana'};
         case 'sui':
             return {...EnrichedSuiChainFromJSONTyped(json, true), chainType: 'sui'};
+        case 'ton':
+            return {...EnrichedTonChainFromJSONTyped(json, true), chainType: 'ton'};
         case 'utxo':
             return {...EnrichedUtxoChainFromJSONTyped(json, true), chainType: 'utxo'};
         default:
@@ -106,6 +115,8 @@ export function EnrichedChainToJSON(value?: EnrichedChain | null): any {
             return EnrichedSolanaChainToJSON(value);
         case 'sui':
             return EnrichedSuiChainToJSON(value);
+        case 'ton':
+            return EnrichedTonChainToJSON(value);
         case 'utxo':
             return EnrichedUtxoChainToJSON(value);
         default:

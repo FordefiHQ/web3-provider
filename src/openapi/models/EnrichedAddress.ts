@@ -48,6 +48,13 @@ import {
     EnrichedSuiAddressToJSON,
 } from './EnrichedSuiAddress';
 import {
+    EnrichedTonAddress,
+    instanceOfEnrichedTonAddress,
+    EnrichedTonAddressFromJSON,
+    EnrichedTonAddressFromJSONTyped,
+    EnrichedTonAddressToJSON,
+} from './EnrichedTonAddress';
+import {
     EnrichedUtxoAddress,
     instanceOfEnrichedUtxoAddress,
     EnrichedUtxoAddressFromJSON,
@@ -60,7 +67,7 @@ import {
  * 
  * @export
  */
-export type EnrichedAddress = { type: 'aptos' } & EnrichedAptosAddress | { type: 'cosmos' } & EnrichedCosmosBechAddress | { type: 'evm' } & EnrichedEvmAddress | { type: 'solana' } & EnrichedSolanaAddress | { type: 'sui' } & EnrichedSuiAddress | { type: 'utxo' } & EnrichedUtxoAddress;
+export type EnrichedAddress = { type: 'aptos' } & EnrichedAptosAddress | { type: 'cosmos' } & EnrichedCosmosBechAddress | { type: 'evm' } & EnrichedEvmAddress | { type: 'solana' } & EnrichedSolanaAddress | { type: 'sui' } & EnrichedSuiAddress | { type: 'ton' } & EnrichedTonAddress | { type: 'utxo' } & EnrichedUtxoAddress;
 
 export function EnrichedAddressFromJSON(json: any): EnrichedAddress {
     return EnrichedAddressFromJSONTyped(json, false);
@@ -81,6 +88,8 @@ export function EnrichedAddressFromJSONTyped(json: any, ignoreDiscriminator: boo
             return {...EnrichedSolanaAddressFromJSONTyped(json, true), type: 'solana'};
         case 'sui':
             return {...EnrichedSuiAddressFromJSONTyped(json, true), type: 'sui'};
+        case 'ton':
+            return {...EnrichedTonAddressFromJSONTyped(json, true), type: 'ton'};
         case 'utxo':
             return {...EnrichedUtxoAddressFromJSONTyped(json, true), type: 'utxo'};
         default:
@@ -106,6 +115,8 @@ export function EnrichedAddressToJSON(value?: EnrichedAddress | null): any {
             return EnrichedSolanaAddressToJSON(value);
         case 'sui':
             return EnrichedSuiAddressToJSON(value);
+        case 'ton':
+            return EnrichedTonAddressToJSON(value);
         case 'utxo':
             return EnrichedUtxoAddressToJSON(value);
         default:

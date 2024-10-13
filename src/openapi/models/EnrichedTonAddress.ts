@@ -61,7 +61,25 @@ export interface EnrichedTonAddress {
      * @type {string}
      * @memberof EnrichedTonAddress
      */
-    address: string;
+    rawAccount: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnrichedTonAddress
+     */
+    base64UrlBounceableAccount: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnrichedTonAddress
+     */
+    base64UrlNonBounceableAccount: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnrichedTonAddress
+     */
+    originalAccount: string;
 }
 
 
@@ -80,7 +98,10 @@ export type EnrichedTonAddressTypeEnum = typeof EnrichedTonAddressTypeEnum[keyof
 export function instanceOfEnrichedTonAddress(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "address" in value;
+    isInstance = isInstance && "rawAccount" in value;
+    isInstance = isInstance && "base64UrlBounceableAccount" in value;
+    isInstance = isInstance && "base64UrlNonBounceableAccount" in value;
+    isInstance = isInstance && "originalAccount" in value;
 
     return isInstance;
 }
@@ -99,7 +120,10 @@ export function EnrichedTonAddressFromJSONTyped(json: any, ignoreDiscriminator: 
         'explorerUrl': !exists(json, 'explorer_url') ? undefined : json['explorer_url'],
         'contact': !exists(json, 'contact') ? undefined : ContactRefFromJSON(json['contact']),
         'type': json['type'],
-        'address': json['address'],
+        'rawAccount': json['raw_account'],
+        'base64UrlBounceableAccount': json['base64_url_bounceable_account'],
+        'base64UrlNonBounceableAccount': json['base64_url_non_bounceable_account'],
+        'originalAccount': json['original_account'],
     };
 }
 
@@ -116,7 +140,10 @@ export function EnrichedTonAddressToJSON(value?: EnrichedTonAddress | null): any
         'explorer_url': value.explorerUrl,
         'contact': ContactRefToJSON(value.contact),
         'type': value.type,
-        'address': value.address,
+        'raw_account': value.rawAccount,
+        'base64_url_bounceable_account': value.base64UrlBounceableAccount,
+        'base64_url_non_bounceable_account': value.base64UrlNonBounceableAccount,
+        'original_account': value.originalAccount,
     };
 }
 

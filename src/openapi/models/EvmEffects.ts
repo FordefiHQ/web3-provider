@@ -31,6 +31,12 @@ import {
     EvmBridgeEffectFromJSONTyped,
     EvmBridgeEffectToJSON,
 } from './EvmBridgeEffect';
+import type { EvmContractDeploymentEffect } from './EvmContractDeploymentEffect';
+import {
+    EvmContractDeploymentEffectFromJSON,
+    EvmContractDeploymentEffectFromJSONTyped,
+    EvmContractDeploymentEffectToJSON,
+} from './EvmContractDeploymentEffect';
 import type { EvmTransferEffect } from './EvmTransferEffect';
 import {
     EvmTransferEffectFromJSON,
@@ -68,6 +74,12 @@ export interface EvmEffects {
      * @memberof EvmEffects
      */
     bridge: Array<EvmBridgeEffect>;
+    /**
+     * 
+     * @type {Array<EvmContractDeploymentEffect>}
+     * @memberof EvmEffects
+     */
+    contractDeployments: Array<EvmContractDeploymentEffect>;
 }
 
 /**
@@ -79,6 +91,7 @@ export function instanceOfEvmEffects(value: object): boolean {
     isInstance = isInstance && "transfers" in value;
     isInstance = isInstance && "allowances" in value;
     isInstance = isInstance && "bridge" in value;
+    isInstance = isInstance && "contractDeployments" in value;
 
     return isInstance;
 }
@@ -97,6 +110,7 @@ export function EvmEffectsFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'transfers': ((json['transfers'] as Array<any>).map(EvmTransferEffectFromJSON)),
         'allowances': ((json['allowances'] as Array<any>).map(AllowanceEffectFromJSON)),
         'bridge': ((json['bridge'] as Array<any>).map(EvmBridgeEffectFromJSON)),
+        'contractDeployments': ((json['contract_deployments'] as Array<any>).map(EvmContractDeploymentEffectFromJSON)),
     };
 }
 
@@ -113,6 +127,7 @@ export function EvmEffectsToJSON(value?: EvmEffects | null): any {
         'transfers': ((value.transfers as Array<any>).map(EvmTransferEffectToJSON)),
         'allowances': ((value.allowances as Array<any>).map(AllowanceEffectToJSON)),
         'bridge': ((value.bridge as Array<any>).map(EvmBridgeEffectToJSON)),
+        'contract_deployments': ((value.contractDeployments as Array<any>).map(EvmContractDeploymentEffectToJSON)),
     };
 }
 

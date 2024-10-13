@@ -26,8 +26,6 @@ import type {
   DefinedPreconditionErrorPredictTransactionErrorType,
   DefinedPreconditionErrorReleaseTransactionErrorType,
   DefinedPreconditionErrorSignTransactionErrorType,
-  DescribeTransactionRequest,
-  DescribeTransactionResponse,
   GetNextApiSignerTransactionResponse,
   GetNextApiSignerTransactionResponseV2,
   GetTransactionResponse,
@@ -78,10 +76,6 @@ import {
     DefinedPreconditionErrorReleaseTransactionErrorTypeToJSON,
     DefinedPreconditionErrorSignTransactionErrorTypeFromJSON,
     DefinedPreconditionErrorSignTransactionErrorTypeToJSON,
-    DescribeTransactionRequestFromJSON,
-    DescribeTransactionRequestToJSON,
-    DescribeTransactionResponseFromJSON,
-    DescribeTransactionResponseToJSON,
     GetNextApiSignerTransactionResponseFromJSON,
     GetNextApiSignerTransactionResponseToJSON,
     GetNextApiSignerTransactionResponseV2FromJSON,
@@ -156,10 +150,6 @@ export interface CreateTransactionApiV1TransactionsPostRequest {
     xSignature?: string;
     xTimestamp?: number;
     xIdempotenceId?: string;
-}
-
-export interface DescribeTransactionApiV1TransactionsDescribePostRequest {
-    describeTransactionRequest: DescribeTransactionRequest;
 }
 
 export interface ExportTransactionsApiV1TransactionsExportGetRequest {
@@ -442,49 +432,6 @@ export class TransactionsApi extends runtime.BaseAPI {
      */
     async createTransactionApiV1TransactionsPost(requestParameters: CreateTransactionApiV1TransactionsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateTransactionResponse> {
         const response = await this.createTransactionApiV1TransactionsPostRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Get the current blockchain fee price and estimate the total transaction fee.
-     * Describe Transaction
-     */
-    async describeTransactionApiV1TransactionsDescribePostRaw(requestParameters: DescribeTransactionApiV1TransactionsDescribePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DescribeTransactionResponse>> {
-        if (requestParameters.describeTransactionRequest === null || requestParameters.describeTransactionRequest === undefined) {
-            throw new runtime.RequiredError('describeTransactionRequest','Required parameter requestParameters.describeTransactionRequest was null or undefined when calling describeTransactionApiV1TransactionsDescribePost.');
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/v1/transactions/describe`,
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-            body: DescribeTransactionRequestToJSON(requestParameters.describeTransactionRequest),
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => DescribeTransactionResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Get the current blockchain fee price and estimate the total transaction fee.
-     * Describe Transaction
-     */
-    async describeTransactionApiV1TransactionsDescribePost(requestParameters: DescribeTransactionApiV1TransactionsDescribePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DescribeTransactionResponse> {
-        const response = await this.describeTransactionApiV1TransactionsDescribePostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -801,7 +748,7 @@ export class TransactionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Simulate the transaction and show the exact token\'s balance change, in addition to the fee estimation.
+     * Simulate the transaction and changes in token balances, in addition to the fee estimation.
      * Predict Transaction
      */
     async predictTransactionApiV1TransactionsPredictPostRaw(requestParameters: PredictTransactionApiV1TransactionsPredictPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PredictTransactionResponse>> {
@@ -835,7 +782,7 @@ export class TransactionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Simulate the transaction and show the exact token\'s balance change, in addition to the fee estimation.
+     * Simulate the transaction and changes in token balances, in addition to the fee estimation.
      * Predict Transaction
      */
     async predictTransactionApiV1TransactionsPredictPost(requestParameters: PredictTransactionApiV1TransactionsPredictPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PredictTransactionResponse> {
@@ -1346,6 +1293,7 @@ export const ExportTransactionsApiV1TransactionsExportGetChainsEnum = {
     solanaDevnet: 'solana_devnet',
     suiMainnet: 'sui_mainnet',
     suiTestnet: 'sui_testnet',
+    tonMainnet: 'ton_mainnet',
     bitcoinMainnet: 'bitcoin_mainnet',
     bitcoinTestnet: 'bitcoin_testnet'
 } as const;
@@ -1438,6 +1386,7 @@ export const ListTransactionsApiV1TransactionsGetChainsEnum = {
     solanaDevnet: 'solana_devnet',
     suiMainnet: 'sui_mainnet',
     suiTestnet: 'sui_testnet',
+    tonMainnet: 'ton_mainnet',
     bitcoinMainnet: 'bitcoin_mainnet',
     bitcoinTestnet: 'bitcoin_testnet'
 } as const;

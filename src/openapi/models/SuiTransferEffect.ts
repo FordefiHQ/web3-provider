@@ -12,27 +12,77 @@
  * Do not edit the class manually.
  */
 
+import { exists, mapValues } from '../runtime';
+import type { EnrichedSuiAddress } from './EnrichedSuiAddress';
 import {
-    SuiCoinTransfer,
-    instanceOfSuiCoinTransfer,
-    SuiCoinTransferFromJSON,
-    SuiCoinTransferFromJSONTyped,
-    SuiCoinTransferToJSON,
-} from './SuiCoinTransfer';
+    EnrichedSuiAddressFromJSON,
+    EnrichedSuiAddressFromJSONTyped,
+    EnrichedSuiAddressToJSON,
+} from './EnrichedSuiAddress';
+import type { PricedAsset } from './PricedAsset';
 import {
-    SuiNativeCurrencyTransfer,
-    instanceOfSuiNativeCurrencyTransfer,
-    SuiNativeCurrencyTransferFromJSON,
-    SuiNativeCurrencyTransferFromJSONTyped,
-    SuiNativeCurrencyTransferToJSON,
-} from './SuiNativeCurrencyTransfer';
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+} from './PricedAsset';
+import type { SuiTransferEffectType } from './SuiTransferEffectType';
+import {
+    SuiTransferEffectTypeFromJSON,
+    SuiTransferEffectTypeFromJSONTyped,
+    SuiTransferEffectTypeToJSON,
+} from './SuiTransferEffectType';
 
 /**
- * @type SuiTransferEffect
  * 
  * @export
+ * @interface SuiTransferEffect
  */
-export type SuiTransferEffect = { type: 'coin' } & SuiCoinTransfer | { type: 'native' } & SuiNativeCurrencyTransfer;
+export interface SuiTransferEffect {
+    /**
+     * 
+     * @type {PricedAsset}
+     * @memberof SuiTransferEffect
+     */
+    pricedAsset: PricedAsset;
+    /**
+     * 
+     * @type {string}
+     * @memberof SuiTransferEffect
+     */
+    amount: string;
+    /**
+     * 
+     * @type {SuiTransferEffectType}
+     * @memberof SuiTransferEffect
+     */
+    type: SuiTransferEffectType;
+    /**
+     * 
+     * @type {EnrichedSuiAddress}
+     * @memberof SuiTransferEffect
+     */
+    from: EnrichedSuiAddress;
+    /**
+     * 
+     * @type {EnrichedSuiAddress}
+     * @memberof SuiTransferEffect
+     */
+    to: EnrichedSuiAddress;
+}
+
+/**
+ * Check if a given object implements the SuiTransferEffect interface.
+ */
+export function instanceOfSuiTransferEffect(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "pricedAsset" in value;
+    isInstance = isInstance && "amount" in value;
+    isInstance = isInstance && "type" in value;
+    isInstance = isInstance && "from" in value;
+    isInstance = isInstance && "to" in value;
+
+    return isInstance;
+}
 
 export function SuiTransferEffectFromJSON(json: any): SuiTransferEffect {
     return SuiTransferEffectFromJSONTyped(json, false);
@@ -42,14 +92,14 @@ export function SuiTransferEffectFromJSONTyped(json: any, ignoreDiscriminator: b
     if ((json === undefined) || (json === null)) {
         return json;
     }
-    switch (json['type']) {
-        case 'coin':
-            return {...SuiCoinTransferFromJSONTyped(json, true), type: 'coin'};
-        case 'native':
-            return {...SuiNativeCurrencyTransferFromJSONTyped(json, true), type: 'native'};
-        default:
-            throw new Error(`No variant of SuiTransferEffect exists with 'type=${json['type']}'`);
-    }
+    return {
+        
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
+        'amount': json['amount'],
+        'type': SuiTransferEffectTypeFromJSON(json['type']),
+        'from': EnrichedSuiAddressFromJSON(json['from']),
+        'to': EnrichedSuiAddressFromJSON(json['to']),
+    };
 }
 
 export function SuiTransferEffectToJSON(value?: SuiTransferEffect | null): any {
@@ -59,14 +109,13 @@ export function SuiTransferEffectToJSON(value?: SuiTransferEffect | null): any {
     if (value === null) {
         return null;
     }
-    switch (value['type']) {
-        case 'coin':
-            return SuiCoinTransferToJSON(value);
-        case 'native':
-            return SuiNativeCurrencyTransferToJSON(value);
-        default:
-            throw new Error(`No variant of SuiTransferEffect exists with 'type=${value['type']}'`);
-    }
-
+    return {
+        
+        'priced_asset': PricedAssetToJSON(value.pricedAsset),
+        'amount': value.amount,
+        'type': SuiTransferEffectTypeToJSON(value.type),
+        'from': EnrichedSuiAddressToJSON(value.from),
+        'to': EnrichedSuiAddressToJSON(value.to),
+    };
 }
 

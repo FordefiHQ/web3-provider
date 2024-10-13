@@ -48,6 +48,13 @@ import {
     SuiAssetIdentifierToJSON,
 } from './SuiAssetIdentifier';
 import {
+    TonAssetIdentifier,
+    instanceOfTonAssetIdentifier,
+    TonAssetIdentifierFromJSON,
+    TonAssetIdentifierFromJSONTyped,
+    TonAssetIdentifierToJSON,
+} from './TonAssetIdentifier';
+import {
     UtxoAssetIdentifier,
     instanceOfUtxoAssetIdentifier,
     UtxoAssetIdentifierFromJSON,
@@ -60,7 +67,7 @@ import {
  * 
  * @export
  */
-export type AssetIdentifier = { type: 'aptos' } & AptosAssetIdentifier | { type: 'cosmos' } & CosmosAssetIdentifier | { type: 'evm' } & EvmAssetIdentifier | { type: 'solana' } & SolanaAssetIdentifier | { type: 'sui' } & SuiAssetIdentifier | { type: 'utxo' } & UtxoAssetIdentifier;
+export type AssetIdentifier = { type: 'aptos' } & AptosAssetIdentifier | { type: 'cosmos' } & CosmosAssetIdentifier | { type: 'evm' } & EvmAssetIdentifier | { type: 'solana' } & SolanaAssetIdentifier | { type: 'sui' } & SuiAssetIdentifier | { type: 'ton' } & TonAssetIdentifier | { type: 'utxo' } & UtxoAssetIdentifier;
 
 export function AssetIdentifierFromJSON(json: any): AssetIdentifier {
     return AssetIdentifierFromJSONTyped(json, false);
@@ -81,6 +88,8 @@ export function AssetIdentifierFromJSONTyped(json: any, ignoreDiscriminator: boo
             return {...SolanaAssetIdentifierFromJSONTyped(json, true), type: 'solana'};
         case 'sui':
             return {...SuiAssetIdentifierFromJSONTyped(json, true), type: 'sui'};
+        case 'ton':
+            return {...TonAssetIdentifierFromJSONTyped(json, true), type: 'ton'};
         case 'utxo':
             return {...UtxoAssetIdentifierFromJSONTyped(json, true), type: 'utxo'};
         default:
@@ -106,6 +115,8 @@ export function AssetIdentifierToJSON(value?: AssetIdentifier | null): any {
             return SolanaAssetIdentifierToJSON(value);
         case 'sui':
             return SuiAssetIdentifierToJSON(value);
+        case 'ton':
+            return TonAssetIdentifierToJSON(value);
         case 'utxo':
             return UtxoAssetIdentifierToJSON(value);
         default:

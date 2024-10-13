@@ -43,7 +43,7 @@ export interface EvmBridgeEffect {
      * @type {EvmBridgeEffectSource}
      * @memberof EvmBridgeEffect
      */
-    source: EvmBridgeEffectSource;
+    source?: EvmBridgeEffectSource;
     /**
      * 
      * @type {EvmBridgeEffectDestination}
@@ -64,7 +64,6 @@ export interface EvmBridgeEffect {
 export function instanceOfEvmBridgeEffect(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "bridgeName" in value;
-    isInstance = isInstance && "source" in value;
     isInstance = isInstance && "destination" in value;
     isInstance = isInstance && "amount" in value;
 
@@ -82,7 +81,7 @@ export function EvmBridgeEffectFromJSONTyped(json: any, ignoreDiscriminator: boo
     return {
         
         'bridgeName': json['bridge_name'],
-        'source': EvmBridgeEffectSourceFromJSON(json['source']),
+        'source': !exists(json, 'source') ? undefined : EvmBridgeEffectSourceFromJSON(json['source']),
         'destination': EvmBridgeEffectDestinationFromJSON(json['destination']),
         'amount': json['amount'],
     };
