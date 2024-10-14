@@ -57,4 +57,8 @@ export interface FordefiProviderConfig {
    * For example: 'https://api.fordefi.com'.
    */
   apiBaseUrl?: string;
+  /**
+   * Whether to skip running a simulation before creating a new transaction, it blocks transaction creation if it fails. Defaults to true.
+   */
+  skipPrediction?: boolean;
 }

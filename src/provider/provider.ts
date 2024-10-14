@@ -236,7 +236,13 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
     const { vault, chain } = this._getFordefiChainVault();
 
     const { hash } = await this._invokeCreateTransaction(
-      buildEvmRawTransactionRequest(transaction, chain, vault, PushMode.auto),
+      buildEvmRawTransactionRequest({
+        transaction,
+        chain,
+        vault,
+        pushMode: PushMode.auto,
+        skipPrediction: this.config.skipPrediction,
+      }),
     );
 
     if (!hash || !isHex(hash)) {
@@ -251,7 +257,13 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
     const { vault, chain } = this._getFordefiChainVault();
 
     const { rawTransaction } = await this._invokeCreateTransaction(
-      buildEvmRawTransactionRequest(transaction, chain, vault, PushMode.manual),
+      buildEvmRawTransactionRequest({
+        transaction,
+        chain,
+        vault,
+        pushMode: PushMode.manual,
+        skipPrediction: this.config.skipPrediction,
+      }),
     );
 
     if (!rawTransaction) {
