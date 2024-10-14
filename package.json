@@ -1,6 +1,6 @@
 {
   "name": "@fordefi/web3-provider",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Web3 Provider and signer compatible with EIP-1193",
   "author": "Gil Meir <gil@fordefi.com>",
   "homepage": "https://github.com/FordefiHQ/web3-provider",
@@ -36,8 +36,8 @@
     "lint:fix": "yarn lint:check --fix",
     "build": "yarn clean && tsup-node src/index.ts --format cjs,esm --dts",
     "test": "jest",
-    "publish:dev": "yarn build && yarn publish --no-git-tag-version --tag beta",
-    "publish:latest": "yarn build && yarn publish --tag latest",
+    "publish:dev": "yarn build && yarn typedoc:gen:html && yarn publish --no-git-tag-version --tag beta",
+    "publish:latest": "yarn build && yarn typedoc:gen:html && yarn publish --tag latest",
     "version:beta": "echo \"${npm_package_version}-dev.$(git rev-parse --short HEAD)\"",
     "typedoc:gen:html": "typedoc --options typedoc-html.json",
     "typedoc:gen:md": "typedoc --options typedoc-md.json",
