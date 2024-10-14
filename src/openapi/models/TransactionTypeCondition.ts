@@ -22,7 +22,8 @@ export const TransactionTypeCondition = {
     allowance: 'allowance',
     contractCall: 'contract_call',
     messageSignature: 'message_signature',
-    blackBoxSignature: 'black_box_signature'
+    blackBoxSignature: 'black_box_signature',
+    contractDeployment: 'contract_deployment'
 } as const;
 export type TransactionTypeCondition = typeof TransactionTypeCondition[keyof typeof TransactionTypeCondition];
 

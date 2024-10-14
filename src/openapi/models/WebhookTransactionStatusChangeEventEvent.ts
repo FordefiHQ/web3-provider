@@ -90,6 +90,20 @@ import {
     WebhookSuiTransactionStatusChangeEventToJSON,
 } from './WebhookSuiTransactionStatusChangeEvent';
 import {
+    WebhookTonMessageStatusChangeEvent,
+    instanceOfWebhookTonMessageStatusChangeEvent,
+    WebhookTonMessageStatusChangeEventFromJSON,
+    WebhookTonMessageStatusChangeEventFromJSONTyped,
+    WebhookTonMessageStatusChangeEventToJSON,
+} from './WebhookTonMessageStatusChangeEvent';
+import {
+    WebhookTonTransactionStatusChangeEvent,
+    instanceOfWebhookTonTransactionStatusChangeEvent,
+    WebhookTonTransactionStatusChangeEventFromJSON,
+    WebhookTonTransactionStatusChangeEventFromJSONTyped,
+    WebhookTonTransactionStatusChangeEventToJSON,
+} from './WebhookTonTransactionStatusChangeEvent';
+import {
     WebhookUtxoMessageStatusChangeEvent,
     instanceOfWebhookUtxoMessageStatusChangeEvent,
     WebhookUtxoMessageStatusChangeEventFromJSON,
@@ -109,7 +123,7 @@ import {
  * 
  * @export
  */
-export type WebhookTransactionStatusChangeEventEvent = { type: 'aptos_message' } & WebhookAptosMessageStatusChangeEvent | { type: 'aptos_transaction' } & WebhookAptosTransactionStatusChangeEvent | { type: 'black_box_signature' } & WebhookBlackBoxSignatureStatusChangeEvent | { type: 'cosmos_message' } & WebhookCosmosMessageStatusChangeEvent | { type: 'cosmos_transaction' } & WebhookCosmosTransactionStatusChangeEvent | { type: 'evm_message' } & WebhookEvmMessageStatusChangeEvent | { type: 'evm_transaction' } & WebhookEvmTransactionStatusChangeEvent | { type: 'solana_message' } & WebhookSolanaMessageStatusChangeEvent | { type: 'solana_transaction' } & WebhookSolanaTransactionStatusChangeEvent | { type: 'sui_message' } & WebhookSuiMessageStatusChangeEvent | { type: 'sui_transaction' } & WebhookSuiTransactionStatusChangeEvent | { type: 'utxo_message' } & WebhookUtxoMessageStatusChangeEvent | { type: 'utxo_transaction' } & WebhookUtxoTransactionStatusChangeEvent;
+export type WebhookTransactionStatusChangeEventEvent = { type: 'aptos_message' } & WebhookAptosMessageStatusChangeEvent | { type: 'aptos_transaction' } & WebhookAptosTransactionStatusChangeEvent | { type: 'black_box_signature' } & WebhookBlackBoxSignatureStatusChangeEvent | { type: 'cosmos_message' } & WebhookCosmosMessageStatusChangeEvent | { type: 'cosmos_transaction' } & WebhookCosmosTransactionStatusChangeEvent | { type: 'evm_message' } & WebhookEvmMessageStatusChangeEvent | { type: 'evm_transaction' } & WebhookEvmTransactionStatusChangeEvent | { type: 'solana_message' } & WebhookSolanaMessageStatusChangeEvent | { type: 'solana_transaction' } & WebhookSolanaTransactionStatusChangeEvent | { type: 'sui_message' } & WebhookSuiMessageStatusChangeEvent | { type: 'sui_transaction' } & WebhookSuiTransactionStatusChangeEvent | { type: 'ton_message' } & WebhookTonMessageStatusChangeEvent | { type: 'ton_transaction' } & WebhookTonTransactionStatusChangeEvent | { type: 'utxo_message' } & WebhookUtxoMessageStatusChangeEvent | { type: 'utxo_transaction' } & WebhookUtxoTransactionStatusChangeEvent;
 
 export function WebhookTransactionStatusChangeEventEventFromJSON(json: any): WebhookTransactionStatusChangeEventEvent {
     return WebhookTransactionStatusChangeEventEventFromJSONTyped(json, false);
@@ -142,6 +156,10 @@ export function WebhookTransactionStatusChangeEventEventFromJSONTyped(json: any,
             return {...WebhookSuiMessageStatusChangeEventFromJSONTyped(json, true), type: 'sui_message'};
         case 'sui_transaction':
             return {...WebhookSuiTransactionStatusChangeEventFromJSONTyped(json, true), type: 'sui_transaction'};
+        case 'ton_message':
+            return {...WebhookTonMessageStatusChangeEventFromJSONTyped(json, true), type: 'ton_message'};
+        case 'ton_transaction':
+            return {...WebhookTonTransactionStatusChangeEventFromJSONTyped(json, true), type: 'ton_transaction'};
         case 'utxo_message':
             return {...WebhookUtxoMessageStatusChangeEventFromJSONTyped(json, true), type: 'utxo_message'};
         case 'utxo_transaction':
@@ -181,6 +199,10 @@ export function WebhookTransactionStatusChangeEventEventToJSON(value?: WebhookTr
             return WebhookSuiMessageStatusChangeEventToJSON(value);
         case 'sui_transaction':
             return WebhookSuiTransactionStatusChangeEventToJSON(value);
+        case 'ton_message':
+            return WebhookTonMessageStatusChangeEventToJSON(value);
+        case 'ton_transaction':
+            return WebhookTonTransactionStatusChangeEventToJSON(value);
         case 'utxo_message':
             return WebhookUtxoMessageStatusChangeEventToJSON(value);
         case 'utxo_transaction':

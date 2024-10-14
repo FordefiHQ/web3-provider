@@ -12,27 +12,103 @@
  * Do not edit the class manually.
  */
 
+import { exists, mapValues } from '../runtime';
+import type { CosmosBalanceChangeEffectCoinInfo } from './CosmosBalanceChangeEffectCoinInfo';
 import {
-    CosmosNativeTransfer,
-    instanceOfCosmosNativeTransfer,
-    CosmosNativeTransferFromJSON,
-    CosmosNativeTransferFromJSONTyped,
-    CosmosNativeTransferToJSON,
-} from './CosmosNativeTransfer';
+    CosmosBalanceChangeEffectCoinInfoFromJSON,
+    CosmosBalanceChangeEffectCoinInfoFromJSONTyped,
+    CosmosBalanceChangeEffectCoinInfoToJSON,
+} from './CosmosBalanceChangeEffectCoinInfo';
+import type { CosmosTransferEffectType } from './CosmosTransferEffectType';
 import {
-    CosmosTokenTransfer,
-    instanceOfCosmosTokenTransfer,
-    CosmosTokenTransferFromJSON,
-    CosmosTokenTransferFromJSONTyped,
-    CosmosTokenTransferToJSON,
-} from './CosmosTokenTransfer';
+    CosmosTransferEffectTypeFromJSON,
+    CosmosTransferEffectTypeFromJSONTyped,
+    CosmosTransferEffectTypeToJSON,
+} from './CosmosTransferEffectType';
+import type { EnrichedCosmosBechAddress } from './EnrichedCosmosBechAddress';
+import {
+    EnrichedCosmosBechAddressFromJSON,
+    EnrichedCosmosBechAddressFromJSONTyped,
+    EnrichedCosmosBechAddressToJSON,
+} from './EnrichedCosmosBechAddress';
+import type { Price } from './Price';
+import {
+    PriceFromJSON,
+    PriceFromJSONTyped,
+    PriceToJSON,
+} from './Price';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+} from './PricedAsset';
 
 /**
- * @type CosmosTransferEffect
  * 
  * @export
+ * @interface CosmosTransferEffect
  */
-export type CosmosTransferEffect = { type: 'native' } & CosmosNativeTransfer | { type: 'token' } & CosmosTokenTransfer;
+export interface CosmosTransferEffect {
+    /**
+     * 
+     * @type {PricedAsset}
+     * @memberof CosmosTransferEffect
+     */
+    pricedAsset: PricedAsset;
+    /**
+     * 
+     * @type {string}
+     * @memberof CosmosTransferEffect
+     */
+    amount: string;
+    /**
+     * 
+     * @type {CosmosTransferEffectType}
+     * @memberof CosmosTransferEffect
+     */
+    type: CosmosTransferEffectType;
+    /**
+     * 
+     * @type {CosmosBalanceChangeEffectCoinInfo}
+     * @memberof CosmosTransferEffect
+     * @deprecated
+     */
+    coinInfo: CosmosBalanceChangeEffectCoinInfo;
+    /**
+     * 
+     * @type {EnrichedCosmosBechAddress}
+     * @memberof CosmosTransferEffect
+     */
+    from: EnrichedCosmosBechAddress;
+    /**
+     * 
+     * @type {EnrichedCosmosBechAddress}
+     * @memberof CosmosTransferEffect
+     */
+    to: EnrichedCosmosBechAddress;
+    /**
+     * 
+     * @type {Price}
+     * @memberof CosmosTransferEffect
+     */
+    price?: Price;
+}
+
+/**
+ * Check if a given object implements the CosmosTransferEffect interface.
+ */
+export function instanceOfCosmosTransferEffect(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "pricedAsset" in value;
+    isInstance = isInstance && "amount" in value;
+    isInstance = isInstance && "type" in value;
+    isInstance = isInstance && "coinInfo" in value;
+    isInstance = isInstance && "from" in value;
+    isInstance = isInstance && "to" in value;
+
+    return isInstance;
+}
 
 export function CosmosTransferEffectFromJSON(json: any): CosmosTransferEffect {
     return CosmosTransferEffectFromJSONTyped(json, false);
@@ -42,14 +118,16 @@ export function CosmosTransferEffectFromJSONTyped(json: any, ignoreDiscriminator
     if ((json === undefined) || (json === null)) {
         return json;
     }
-    switch (json['type']) {
-        case 'native':
-            return {...CosmosNativeTransferFromJSONTyped(json, true), type: 'native'};
-        case 'token':
-            return {...CosmosTokenTransferFromJSONTyped(json, true), type: 'token'};
-        default:
-            throw new Error(`No variant of CosmosTransferEffect exists with 'type=${json['type']}'`);
-    }
+    return {
+        
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
+        'amount': json['amount'],
+        'type': CosmosTransferEffectTypeFromJSON(json['type']),
+        'coinInfo': CosmosBalanceChangeEffectCoinInfoFromJSON(json['coin_info']),
+        'from': EnrichedCosmosBechAddressFromJSON(json['from']),
+        'to': EnrichedCosmosBechAddressFromJSON(json['to']),
+        'price': !exists(json, 'price') ? undefined : PriceFromJSON(json['price']),
+    };
 }
 
 export function CosmosTransferEffectToJSON(value?: CosmosTransferEffect | null): any {
@@ -59,14 +137,15 @@ export function CosmosTransferEffectToJSON(value?: CosmosTransferEffect | null):
     if (value === null) {
         return null;
     }
-    switch (value['type']) {
-        case 'native':
-            return CosmosNativeTransferToJSON(value);
-        case 'token':
-            return CosmosTokenTransferToJSON(value);
-        default:
-            throw new Error(`No variant of CosmosTransferEffect exists with 'type=${value['type']}'`);
-    }
-
+    return {
+        
+        'priced_asset': PricedAssetToJSON(value.pricedAsset),
+        'amount': value.amount,
+        'type': CosmosTransferEffectTypeToJSON(value.type),
+        'coin_info': CosmosBalanceChangeEffectCoinInfoToJSON(value.coinInfo),
+        'from': EnrichedCosmosBechAddressToJSON(value.from),
+        'to': EnrichedCosmosBechAddressToJSON(value.to),
+        'price': PriceToJSON(value.price),
+    };
 }
 

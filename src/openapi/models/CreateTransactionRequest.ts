@@ -90,6 +90,20 @@ import {
     CreateSuiTransactionRequestToJSON,
 } from './CreateSuiTransactionRequest';
 import {
+    CreateTonMessageRequest,
+    instanceOfCreateTonMessageRequest,
+    CreateTonMessageRequestFromJSON,
+    CreateTonMessageRequestFromJSONTyped,
+    CreateTonMessageRequestToJSON,
+} from './CreateTonMessageRequest';
+import {
+    CreateTonTransactionRequest,
+    instanceOfCreateTonTransactionRequest,
+    CreateTonTransactionRequestFromJSON,
+    CreateTonTransactionRequestFromJSONTyped,
+    CreateTonTransactionRequestToJSON,
+} from './CreateTonTransactionRequest';
+import {
     CreateUtxoMessageRequest,
     instanceOfCreateUtxoMessageRequest,
     CreateUtxoMessageRequestFromJSON,
@@ -109,7 +123,7 @@ import {
  * 
  * @export
  */
-export type CreateTransactionRequest = { type: 'aptos_message' } & CreateAptosMessageRequest | { type: 'aptos_transaction' } & CreateAptosTransactionRequest | { type: 'black_box_signature' } & CreateBlackBoxSignatureRequest | { type: 'cosmos_message' } & CreateCosmosMessageRequest | { type: 'cosmos_transaction' } & CreateCosmosTransactionRequest | { type: 'evm_message' } & CreateEvmMessageRequest | { type: 'evm_transaction' } & CreateEvmTransactionRequest | { type: 'solana_message' } & CreateSolanaMessageRequest | { type: 'solana_transaction' } & CreateSolanaTransactionRequest | { type: 'sui_message' } & CreateSuiMessageRequest | { type: 'sui_transaction' } & CreateSuiTransactionRequest | { type: 'utxo_message' } & CreateUtxoMessageRequest | { type: 'utxo_transaction' } & CreateUtxoTransactionRequest;
+export type CreateTransactionRequest = { type: 'aptos_message' } & CreateAptosMessageRequest | { type: 'aptos_transaction' } & CreateAptosTransactionRequest | { type: 'black_box_signature' } & CreateBlackBoxSignatureRequest | { type: 'cosmos_message' } & CreateCosmosMessageRequest | { type: 'cosmos_transaction' } & CreateCosmosTransactionRequest | { type: 'evm_message' } & CreateEvmMessageRequest | { type: 'evm_transaction' } & CreateEvmTransactionRequest | { type: 'solana_message' } & CreateSolanaMessageRequest | { type: 'solana_transaction' } & CreateSolanaTransactionRequest | { type: 'sui_message' } & CreateSuiMessageRequest | { type: 'sui_transaction' } & CreateSuiTransactionRequest | { type: 'ton_message' } & CreateTonMessageRequest | { type: 'ton_transaction' } & CreateTonTransactionRequest | { type: 'utxo_message' } & CreateUtxoMessageRequest | { type: 'utxo_transaction' } & CreateUtxoTransactionRequest;
 
 export function CreateTransactionRequestFromJSON(json: any): CreateTransactionRequest {
     return CreateTransactionRequestFromJSONTyped(json, false);
@@ -142,6 +156,10 @@ export function CreateTransactionRequestFromJSONTyped(json: any, ignoreDiscrimin
             return {...CreateSuiMessageRequestFromJSONTyped(json, true), type: 'sui_message'};
         case 'sui_transaction':
             return {...CreateSuiTransactionRequestFromJSONTyped(json, true), type: 'sui_transaction'};
+        case 'ton_message':
+            return {...CreateTonMessageRequestFromJSONTyped(json, true), type: 'ton_message'};
+        case 'ton_transaction':
+            return {...CreateTonTransactionRequestFromJSONTyped(json, true), type: 'ton_transaction'};
         case 'utxo_message':
             return {...CreateUtxoMessageRequestFromJSONTyped(json, true), type: 'utxo_message'};
         case 'utxo_transaction':
@@ -181,6 +199,10 @@ export function CreateTransactionRequestToJSON(value?: CreateTransactionRequest 
             return CreateSuiMessageRequestToJSON(value);
         case 'sui_transaction':
             return CreateSuiTransactionRequestToJSON(value);
+        case 'ton_message':
+            return CreateTonMessageRequestToJSON(value);
+        case 'ton_transaction':
+            return CreateTonTransactionRequestToJSON(value);
         case 'utxo_message':
             return CreateUtxoMessageRequestToJSON(value);
         case 'utxo_transaction':

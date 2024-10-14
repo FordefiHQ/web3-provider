@@ -48,6 +48,13 @@ import {
     SuiAddressBookContactToJSON,
 } from './SuiAddressBookContact';
 import {
+    TonAddressBookContact,
+    instanceOfTonAddressBookContact,
+    TonAddressBookContactFromJSON,
+    TonAddressBookContactFromJSONTyped,
+    TonAddressBookContactToJSON,
+} from './TonAddressBookContact';
+import {
     UtxoAddressBookContact,
     instanceOfUtxoAddressBookContact,
     UtxoAddressBookContactFromJSON,
@@ -60,7 +67,7 @@ import {
  * 
  * @export
  */
-export type AddressBookContact = { chainType: 'aptos' } & AptosAddressBookContact | { chainType: 'cosmos' } & CosmosAddressBookContact | { chainType: 'evm' } & EVMAddressBookContact | { chainType: 'solana' } & SolanaAddressBookContact | { chainType: 'sui' } & SuiAddressBookContact | { chainType: 'utxo' } & UtxoAddressBookContact;
+export type AddressBookContact = { chainType: 'aptos' } & AptosAddressBookContact | { chainType: 'cosmos' } & CosmosAddressBookContact | { chainType: 'evm' } & EVMAddressBookContact | { chainType: 'solana' } & SolanaAddressBookContact | { chainType: 'sui' } & SuiAddressBookContact | { chainType: 'ton' } & TonAddressBookContact | { chainType: 'utxo' } & UtxoAddressBookContact;
 
 export function AddressBookContactFromJSON(json: any): AddressBookContact {
     return AddressBookContactFromJSONTyped(json, false);
@@ -81,6 +88,8 @@ export function AddressBookContactFromJSONTyped(json: any, ignoreDiscriminator: 
             return {...SolanaAddressBookContactFromJSONTyped(json, true), chainType: 'solana'};
         case 'sui':
             return {...SuiAddressBookContactFromJSONTyped(json, true), chainType: 'sui'};
+        case 'ton':
+            return {...TonAddressBookContactFromJSONTyped(json, true), chainType: 'ton'};
         case 'utxo':
             return {...UtxoAddressBookContactFromJSONTyped(json, true), chainType: 'utxo'};
         default:
@@ -106,6 +115,8 @@ export function AddressBookContactToJSON(value?: AddressBookContact | null): any
             return SolanaAddressBookContactToJSON(value);
         case 'sui':
             return SuiAddressBookContactToJSON(value);
+        case 'ton':
+            return TonAddressBookContactToJSON(value);
         case 'utxo':
             return UtxoAddressBookContactToJSON(value);
         default:

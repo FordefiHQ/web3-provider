@@ -19,12 +19,6 @@ import {
     ApprovalRequestFromJSONTyped,
     ApprovalRequestToJSON,
 } from './ApprovalRequest';
-import type { DescribedEvmTransactionEvmTransactionTypeDetails } from './DescribedEvmTransactionEvmTransactionTypeDetails';
-import {
-    DescribedEvmTransactionEvmTransactionTypeDetailsFromJSON,
-    DescribedEvmTransactionEvmTransactionTypeDetailsFromJSONTyped,
-    DescribedEvmTransactionEvmTransactionTypeDetailsToJSON,
-} from './DescribedEvmTransactionEvmTransactionTypeDetails';
 import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
 import {
     EnrichedEvmAddressFromJSON,
@@ -49,6 +43,12 @@ import {
     EvmSuggestedFeesFromJSONTyped,
     EvmSuggestedFeesToJSON,
 } from './EvmSuggestedFees';
+import type { EvmTransactionEvmTransactionTypeDetails } from './EvmTransactionEvmTransactionTypeDetails';
+import {
+    EvmTransactionEvmTransactionTypeDetailsFromJSON,
+    EvmTransactionEvmTransactionTypeDetailsFromJSONTyped,
+    EvmTransactionEvmTransactionTypeDetailsToJSON,
+} from './EvmTransactionEvmTransactionTypeDetails';
 import type { EvmTransactionParsedData } from './EvmTransactionParsedData';
 import {
     EvmTransactionParsedDataFromJSON,
@@ -130,10 +130,10 @@ export interface PredictedEvmTransaction {
     simulationStatusResult: SimulationStatusResult;
     /**
      * 
-     * @type {DescribedEvmTransactionEvmTransactionTypeDetails}
+     * @type {EvmTransactionEvmTransactionTypeDetails}
      * @memberof PredictedEvmTransaction
      */
-    evmTransactionTypeDetails: DescribedEvmTransactionEvmTransactionTypeDetails;
+    evmTransactionTypeDetails: EvmTransactionEvmTransactionTypeDetails;
     /**
      * 
      * @type {EvmTransactionParsedData}
@@ -219,7 +219,7 @@ export function PredictedEvmTransactionFromJSONTyped(json: any, ignoreDiscrimina
         'expectedResult': EvmTransactionResultFromJSON(json['expected_result']),
         'chain': EnrichedEvmChainFromJSON(json['chain']),
         'simulationStatusResult': SimulationStatusResultFromJSON(json['simulation_status_result']),
-        'evmTransactionTypeDetails': DescribedEvmTransactionEvmTransactionTypeDetailsFromJSON(json['evm_transaction_type_details']),
+        'evmTransactionTypeDetails': EvmTransactionEvmTransactionTypeDetailsFromJSON(json['evm_transaction_type_details']),
         'parsedData': EvmTransactionParsedDataFromJSON(json['parsed_data']),
         'gasEstimation': !exists(json, 'gas_estimation') ? undefined : EvmGasEstimationFromJSON(json['gas_estimation']),
         'suggestedFees': EvmSuggestedFeesFromJSON(json['suggested_fees']),
@@ -245,7 +245,7 @@ export function PredictedEvmTransactionToJSON(value?: PredictedEvmTransaction | 
         'expected_result': EvmTransactionResultToJSON(value.expectedResult),
         'chain': EnrichedEvmChainToJSON(value.chain),
         'simulation_status_result': SimulationStatusResultToJSON(value.simulationStatusResult),
-        'evm_transaction_type_details': DescribedEvmTransactionEvmTransactionTypeDetailsToJSON(value.evmTransactionTypeDetails),
+        'evm_transaction_type_details': EvmTransactionEvmTransactionTypeDetailsToJSON(value.evmTransactionTypeDetails),
         'parsed_data': EvmTransactionParsedDataToJSON(value.parsedData),
         'gas_estimation': EvmGasEstimationToJSON(value.gasEstimation),
         'suggested_fees': EvmSuggestedFeesToJSON(value.suggestedFees),

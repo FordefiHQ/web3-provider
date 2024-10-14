@@ -19,12 +19,6 @@ import {
     ApprovalRequestFromJSONTyped,
     ApprovalRequestToJSON,
 } from './ApprovalRequest';
-import type { DescribedSuiTransactionSuiTransactionTypeDetails } from './DescribedSuiTransactionSuiTransactionTypeDetails';
-import {
-    DescribedSuiTransactionSuiTransactionTypeDetailsFromJSON,
-    DescribedSuiTransactionSuiTransactionTypeDetailsFromJSONTyped,
-    DescribedSuiTransactionSuiTransactionTypeDetailsToJSON,
-} from './DescribedSuiTransactionSuiTransactionTypeDetails';
 import type { EnrichedSuiAddress } from './EnrichedSuiAddress';
 import {
     EnrichedSuiAddressFromJSON,
@@ -43,6 +37,12 @@ import {
     PolicyMatchFromJSONTyped,
     PolicyMatchToJSON,
 } from './PolicyMatch';
+import type { PredictedSuiTransactionSuiTransactionTypeDetails } from './PredictedSuiTransactionSuiTransactionTypeDetails';
+import {
+    PredictedSuiTransactionSuiTransactionTypeDetailsFromJSON,
+    PredictedSuiTransactionSuiTransactionTypeDetailsFromJSONTyped,
+    PredictedSuiTransactionSuiTransactionTypeDetailsToJSON,
+} from './PredictedSuiTransactionSuiTransactionTypeDetails';
 import type { SimulationStatusResult } from './SimulationStatusResult';
 import {
     SimulationStatusResultFromJSON,
@@ -118,10 +118,10 @@ export interface PredictedSuiTransaction {
     simulationStatusResult: SimulationStatusResult;
     /**
      * 
-     * @type {DescribedSuiTransactionSuiTransactionTypeDetails}
+     * @type {PredictedSuiTransactionSuiTransactionTypeDetails}
      * @memberof PredictedSuiTransaction
      */
-    suiTransactionTypeDetails: DescribedSuiTransactionSuiTransactionTypeDetails;
+    suiTransactionTypeDetails: PredictedSuiTransactionSuiTransactionTypeDetails;
     /**
      * 
      * @type {EnrichedSuiAddress}
@@ -181,7 +181,7 @@ export function PredictedSuiTransactionFromJSONTyped(json: any, ignoreDiscrimina
         'expectedResult': SuiTransactionResultFromJSON(json['expected_result']),
         'chain': EnrichedSuiChainFromJSON(json['chain']),
         'simulationStatusResult': SimulationStatusResultFromJSON(json['simulation_status_result']),
-        'suiTransactionTypeDetails': DescribedSuiTransactionSuiTransactionTypeDetailsFromJSON(json['sui_transaction_type_details']),
+        'suiTransactionTypeDetails': PredictedSuiTransactionSuiTransactionTypeDetailsFromJSON(json['sui_transaction_type_details']),
         'sender': EnrichedSuiAddressFromJSON(json['sender']),
         'suggestedFees': SuiSuggestedFeesFromJSON(json['suggested_fees']),
     };
@@ -203,7 +203,7 @@ export function PredictedSuiTransactionToJSON(value?: PredictedSuiTransaction | 
         'expected_result': SuiTransactionResultToJSON(value.expectedResult),
         'chain': EnrichedSuiChainToJSON(value.chain),
         'simulation_status_result': SimulationStatusResultToJSON(value.simulationStatusResult),
-        'sui_transaction_type_details': DescribedSuiTransactionSuiTransactionTypeDetailsToJSON(value.suiTransactionTypeDetails),
+        'sui_transaction_type_details': PredictedSuiTransactionSuiTransactionTypeDetailsToJSON(value.suiTransactionTypeDetails),
         'sender': EnrichedSuiAddressToJSON(value.sender),
         'suggested_fees': SuiSuggestedFeesToJSON(value.suggestedFees),
     };

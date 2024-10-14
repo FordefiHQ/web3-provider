@@ -29,6 +29,8 @@ export const TransactionType = {
     solanaTransaction: 'solana_transaction',
     suiMessage: 'sui_message',
     suiTransaction: 'sui_transaction',
+    tonMessage: 'ton_message',
+    tonTransaction: 'ton_transaction',
     utxoMessage: 'utxo_message',
     utxoTransaction: 'utxo_transaction'
 } as const;

@@ -13,6 +13,13 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { AlertProviderType } from './AlertProviderType';
+import {
+    AlertProviderTypeFromJSON,
+    AlertProviderTypeFromJSONTyped,
+    AlertProviderTypeToJSON,
+} from './AlertProviderType';
+
 /**
  * 
  * @export
@@ -33,6 +40,12 @@ export interface ConfigAutoRevokeProtectionSettingsRequest {
     shouldSendToApiSigner: boolean;
     /**
      * 
+     * @type {Array<AlertProviderType>}
+     * @memberof ConfigAutoRevokeProtectionSettingsRequest
+     */
+    alertProviders: Array<AlertProviderType>;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof ConfigAutoRevokeProtectionSettingsRequest
      */
@@ -46,6 +59,7 @@ export function instanceOfConfigAutoRevokeProtectionSettingsRequest(value: objec
     let isInstance = true;
     isInstance = isInstance && "isActive" in value;
     isInstance = isInstance && "shouldSendToApiSigner" in value;
+    isInstance = isInstance && "alertProviders" in value;
     isInstance = isInstance && "signersIds" in value;
 
     return isInstance;
@@ -63,6 +77,7 @@ export function ConfigAutoRevokeProtectionSettingsRequestFromJSONTyped(json: any
         
         'isActive': json['is_active'],
         'shouldSendToApiSigner': json['should_send_to_api_signer'],
+        'alertProviders': ((json['alert_providers'] as Array<any>).map(AlertProviderTypeFromJSON)),
         'signersIds': json['signers_ids'],
     };
 }
@@ -78,6 +93,7 @@ export function ConfigAutoRevokeProtectionSettingsRequestToJSON(value?: ConfigAu
         
         'is_active': value.isActive,
         'should_send_to_api_signer': value.shouldSendToApiSigner,
+        'alert_providers': ((value.alertProviders as Array<any>).map(AlertProviderTypeToJSON)),
         'signers_ids': value.signersIds,
     };
 }

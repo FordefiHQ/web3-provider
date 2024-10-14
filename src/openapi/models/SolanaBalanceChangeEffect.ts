@@ -12,27 +12,100 @@
  * Do not edit the class manually.
  */
 
+import { exists, mapValues } from '../runtime';
+import type { EnrichedSolanaAddress } from './EnrichedSolanaAddress';
 import {
-    SolanaNativeCurrencyBalanceChange,
-    instanceOfSolanaNativeCurrencyBalanceChange,
-    SolanaNativeCurrencyBalanceChangeFromJSON,
-    SolanaNativeCurrencyBalanceChangeFromJSONTyped,
-    SolanaNativeCurrencyBalanceChangeToJSON,
-} from './SolanaNativeCurrencyBalanceChange';
+    EnrichedSolanaAddressFromJSON,
+    EnrichedSolanaAddressFromJSONTyped,
+    EnrichedSolanaAddressToJSON,
+} from './EnrichedSolanaAddress';
+import type { Price } from './Price';
 import {
-    SolanaTokenBalanceChange,
-    instanceOfSolanaTokenBalanceChange,
-    SolanaTokenBalanceChangeFromJSON,
-    SolanaTokenBalanceChangeFromJSONTyped,
-    SolanaTokenBalanceChangeToJSON,
-} from './SolanaTokenBalanceChange';
+    PriceFromJSON,
+    PriceFromJSONTyped,
+    PriceToJSON,
+} from './Price';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+} from './PricedAsset';
+import type { SolanaBalanceChangeEffectType } from './SolanaBalanceChangeEffectType';
+import {
+    SolanaBalanceChangeEffectTypeFromJSON,
+    SolanaBalanceChangeEffectTypeFromJSONTyped,
+    SolanaBalanceChangeEffectTypeToJSON,
+} from './SolanaBalanceChangeEffectType';
+import type { SplTokenContract } from './SplTokenContract';
+import {
+    SplTokenContractFromJSON,
+    SplTokenContractFromJSONTyped,
+    SplTokenContractToJSON,
+} from './SplTokenContract';
 
 /**
- * @type SolanaBalanceChangeEffect
  * 
  * @export
+ * @interface SolanaBalanceChangeEffect
  */
-export type SolanaBalanceChangeEffect = { type: 'native' } & SolanaNativeCurrencyBalanceChange | { type: 'spl_token' } & SolanaTokenBalanceChange;
+export interface SolanaBalanceChangeEffect {
+    /**
+     * 
+     * @type {PricedAsset}
+     * @memberof SolanaBalanceChangeEffect
+     */
+    pricedAsset: PricedAsset;
+    /**
+     * 
+     * @type {string}
+     * @memberof SolanaBalanceChangeEffect
+     */
+    diff: string;
+    /**
+     * 
+     * @type {SolanaBalanceChangeEffectType}
+     * @memberof SolanaBalanceChangeEffect
+     */
+    type: SolanaBalanceChangeEffectType;
+    /**
+     * 
+     * @type {EnrichedSolanaAddress}
+     * @memberof SolanaBalanceChangeEffect
+     */
+    address: EnrichedSolanaAddress;
+    /**
+     * 
+     * @type {EnrichedSolanaAddress}
+     * @memberof SolanaBalanceChangeEffect
+     */
+    owner?: EnrichedSolanaAddress;
+    /**
+     * 
+     * @type {Price}
+     * @memberof SolanaBalanceChangeEffect
+     */
+    price?: Price;
+    /**
+     * 
+     * @type {SplTokenContract}
+     * @memberof SolanaBalanceChangeEffect
+     */
+    tokenContract?: SplTokenContract;
+}
+
+/**
+ * Check if a given object implements the SolanaBalanceChangeEffect interface.
+ */
+export function instanceOfSolanaBalanceChangeEffect(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "pricedAsset" in value;
+    isInstance = isInstance && "diff" in value;
+    isInstance = isInstance && "type" in value;
+    isInstance = isInstance && "address" in value;
+
+    return isInstance;
+}
 
 export function SolanaBalanceChangeEffectFromJSON(json: any): SolanaBalanceChangeEffect {
     return SolanaBalanceChangeEffectFromJSONTyped(json, false);
@@ -42,14 +115,16 @@ export function SolanaBalanceChangeEffectFromJSONTyped(json: any, ignoreDiscrimi
     if ((json === undefined) || (json === null)) {
         return json;
     }
-    switch (json['type']) {
-        case 'native':
-            return {...SolanaNativeCurrencyBalanceChangeFromJSONTyped(json, true), type: 'native'};
-        case 'spl_token':
-            return {...SolanaTokenBalanceChangeFromJSONTyped(json, true), type: 'spl_token'};
-        default:
-            throw new Error(`No variant of SolanaBalanceChangeEffect exists with 'type=${json['type']}'`);
-    }
+    return {
+        
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
+        'diff': json['diff'],
+        'type': SolanaBalanceChangeEffectTypeFromJSON(json['type']),
+        'address': EnrichedSolanaAddressFromJSON(json['address']),
+        'owner': !exists(json, 'owner') ? undefined : EnrichedSolanaAddressFromJSON(json['owner']),
+        'price': !exists(json, 'price') ? undefined : PriceFromJSON(json['price']),
+        'tokenContract': !exists(json, 'token_contract') ? undefined : SplTokenContractFromJSON(json['token_contract']),
+    };
 }
 
 export function SolanaBalanceChangeEffectToJSON(value?: SolanaBalanceChangeEffect | null): any {
@@ -59,14 +134,15 @@ export function SolanaBalanceChangeEffectToJSON(value?: SolanaBalanceChangeEffec
     if (value === null) {
         return null;
     }
-    switch (value['type']) {
-        case 'native':
-            return SolanaNativeCurrencyBalanceChangeToJSON(value);
-        case 'spl_token':
-            return SolanaTokenBalanceChangeToJSON(value);
-        default:
-            throw new Error(`No variant of SolanaBalanceChangeEffect exists with 'type=${value['type']}'`);
-    }
-
+    return {
+        
+        'priced_asset': PricedAssetToJSON(value.pricedAsset),
+        'diff': value.diff,
+        'type': SolanaBalanceChangeEffectTypeToJSON(value.type),
+        'address': EnrichedSolanaAddressToJSON(value.address),
+        'owner': EnrichedSolanaAddressToJSON(value.owner),
+        'price': PriceToJSON(value.price),
+        'token_contract': SplTokenContractToJSON(value.tokenContract),
+    };
 }
 

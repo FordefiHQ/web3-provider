@@ -24,7 +24,11 @@ export const PredictTransactionErrorType = {
     revertedTransaction: 'reverted_transaction',
     transactionToNonContract: 'transaction_to_non_contract',
     vaultTypeMismatch: 'vault_type_mismatch',
-    dustNotAllowed: 'dust_not_allowed'
+    dustNotAllowed: 'dust_not_allowed',
+    insecureKeyDerivation: 'insecure_key_derivation',
+    missingSecretKeyOrRecentBlockhash: 'missing_secret_key_or_recent_blockhash',
+    missingSecretKeyOrSignature: 'missing_secret_key_or_signature',
+    revokeAllowanceGasLimitTooHigh: 'revoke_allowance_gas_limit_too_high'
 } as const;
 export type PredictTransactionErrorType = typeof PredictTransactionErrorType[keyof typeof PredictTransactionErrorType];
 

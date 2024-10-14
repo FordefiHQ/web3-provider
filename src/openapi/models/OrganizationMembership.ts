@@ -13,6 +13,12 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { ImportKeysStatus } from './ImportKeysStatus';
+import {
+    ImportKeysStatusFromJSON,
+    ImportKeysStatusFromJSONTyped,
+    ImportKeysStatusToJSON,
+} from './ImportKeysStatus';
 import type { UserRole } from './UserRole';
 import {
     UserRoleFromJSON,
@@ -104,6 +110,18 @@ export interface OrganizationMembership {
      * @memberof OrganizationMembership
      */
     hasTrustedWebDevices?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof OrganizationMembership
+     */
+    isImportOrganization?: boolean;
+    /**
+     * 
+     * @type {ImportKeysStatus}
+     * @memberof OrganizationMembership
+     */
+    importKeysStatus?: ImportKeysStatus;
 }
 
 /**
@@ -143,6 +161,8 @@ export function OrganizationMembershipFromJSONTyped(json: any, ignoreDiscriminat
         'activeDeviceId': !exists(json, 'active_device_id') ? undefined : json['active_device_id'],
         'isTrustedForCurrentWebDevice': !exists(json, 'is_trusted_for_current_web_device') ? undefined : json['is_trusted_for_current_web_device'],
         'hasTrustedWebDevices': !exists(json, 'has_trusted_web_devices') ? undefined : json['has_trusted_web_devices'],
+        'isImportOrganization': !exists(json, 'is_import_organization') ? undefined : json['is_import_organization'],
+        'importKeysStatus': !exists(json, 'import_keys_status') ? undefined : ImportKeysStatusFromJSON(json['import_keys_status']),
     };
 }
 
@@ -167,6 +187,8 @@ export function OrganizationMembershipToJSON(value?: OrganizationMembership | nu
         'active_device_id': value.activeDeviceId,
         'is_trusted_for_current_web_device': value.isTrustedForCurrentWebDevice,
         'has_trusted_web_devices': value.hasTrustedWebDevices,
+        'is_import_organization': value.isImportOrganization,
+        'import_keys_status': ImportKeysStatusToJSON(value.importKeysStatus),
     };
 }
 

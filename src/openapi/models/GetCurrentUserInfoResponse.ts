@@ -19,12 +19,6 @@ import {
     OrganizationMembershipFromJSONTyped,
     OrganizationMembershipToJSON,
 } from './OrganizationMembership';
-import type { OrganizationSettings } from './OrganizationSettings';
-import {
-    OrganizationSettingsFromJSON,
-    OrganizationSettingsFromJSONTyped,
-    OrganizationSettingsToJSON,
-} from './OrganizationSettings';
 import type { User } from './User';
 import {
     UserFromJSON,
@@ -58,12 +52,6 @@ export interface GetCurrentUserInfoResponse {
     organizationName: string;
     /**
      * 
-     * @type {OrganizationSettings}
-     * @memberof GetCurrentUserInfoResponse
-     */
-    organizationSettings: OrganizationSettings;
-    /**
-     * 
      * @type {boolean}
      * @memberof GetCurrentUserInfoResponse
      */
@@ -84,7 +72,6 @@ export function instanceOfGetCurrentUserInfoResponse(value: object): boolean {
     isInstance = isInstance && "user" in value;
     isInstance = isInstance && "organizationId" in value;
     isInstance = isInstance && "organizationName" in value;
-    isInstance = isInstance && "organizationSettings" in value;
     isInstance = isInstance && "impersonationIsActive" in value;
     isInstance = isInstance && "memberships" in value;
 
@@ -104,7 +91,6 @@ export function GetCurrentUserInfoResponseFromJSONTyped(json: any, ignoreDiscrim
         'user': UserFromJSON(json['user']),
         'organizationId': json['organization_id'],
         'organizationName': json['organization_name'],
-        'organizationSettings': OrganizationSettingsFromJSON(json['organization_settings']),
         'impersonationIsActive': json['impersonation_is_active'],
         'memberships': ((json['memberships'] as Array<any>).map(OrganizationMembershipFromJSON)),
     };
@@ -122,7 +108,6 @@ export function GetCurrentUserInfoResponseToJSON(value?: GetCurrentUserInfoRespo
         'user': UserToJSON(value.user),
         'organization_id': value.organizationId,
         'organization_name': value.organizationName,
-        'organization_settings': OrganizationSettingsToJSON(value.organizationSettings),
         'impersonation_is_active': value.impersonationIsActive,
         'memberships': ((value.memberships as Array<any>).map(OrganizationMembershipToJSON)),
     };

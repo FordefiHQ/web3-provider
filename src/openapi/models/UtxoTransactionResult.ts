@@ -37,7 +37,7 @@ export interface UtxoTransactionResult {
      * @type {UtxoFees}
      * @memberof UtxoTransactionResult
      */
-    fees: UtxoFees;
+    fees?: UtxoFees;
     /**
      * 
      * @type {UtxoEffects}
@@ -51,7 +51,6 @@ export interface UtxoTransactionResult {
  */
 export function instanceOfUtxoTransactionResult(value: object): boolean {
     let isInstance = true;
-    isInstance = isInstance && "fees" in value;
     isInstance = isInstance && "effects" in value;
 
     return isInstance;
@@ -67,7 +66,7 @@ export function UtxoTransactionResultFromJSONTyped(json: any, ignoreDiscriminato
     }
     return {
         
-        'fees': UtxoFeesFromJSON(json['fees']),
+        'fees': !exists(json, 'fees') ? undefined : UtxoFeesFromJSON(json['fees']),
         'effects': UtxoEffectsFromJSON(json['effects']),
     };
 }

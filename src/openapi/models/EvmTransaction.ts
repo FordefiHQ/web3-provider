@@ -13,12 +13,6 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { DescribedEvmTransactionEvmTransactionTypeDetails } from './DescribedEvmTransactionEvmTransactionTypeDetails';
-import {
-    DescribedEvmTransactionEvmTransactionTypeDetailsFromJSON,
-    DescribedEvmTransactionEvmTransactionTypeDetailsFromJSONTyped,
-    DescribedEvmTransactionEvmTransactionTypeDetailsToJSON,
-} from './DescribedEvmTransactionEvmTransactionTypeDetails';
 import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
 import {
     EnrichedEvmAddressFromJSON,
@@ -37,6 +31,12 @@ import {
     EvmBlockDataFromJSONTyped,
     EvmBlockDataToJSON,
 } from './EvmBlockData';
+import type { EvmTransactionEvmTransactionTypeDetails } from './EvmTransactionEvmTransactionTypeDetails';
+import {
+    EvmTransactionEvmTransactionTypeDetailsFromJSON,
+    EvmTransactionEvmTransactionTypeDetailsFromJSONTyped,
+    EvmTransactionEvmTransactionTypeDetailsToJSON,
+} from './EvmTransactionEvmTransactionTypeDetails';
 import type { EvmTransactionGasSubmitted } from './EvmTransactionGasSubmitted';
 import {
     EvmTransactionGasSubmittedFromJSON,
@@ -166,10 +166,10 @@ export interface EvmTransaction {
     type: EvmTransactionTypeEnum;
     /**
      * 
-     * @type {DescribedEvmTransactionEvmTransactionTypeDetails}
+     * @type {EvmTransactionEvmTransactionTypeDetails}
      * @memberof EvmTransaction
      */
-    evmTransactionTypeDetails: DescribedEvmTransactionEvmTransactionTypeDetails;
+    evmTransactionTypeDetails: EvmTransactionEvmTransactionTypeDetails;
     /**
      * 
      * @type {EnrichedEvmChain}
@@ -391,7 +391,7 @@ export function EvmTransactionFromJSONTyped(json: any, ignoreDiscriminator: bool
         'spamState': !exists(json, 'spam_state') ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
         'type': json['type'],
-        'evmTransactionTypeDetails': DescribedEvmTransactionEvmTransactionTypeDetailsFromJSON(json['evm_transaction_type_details']),
+        'evmTransactionTypeDetails': EvmTransactionEvmTransactionTypeDetailsFromJSON(json['evm_transaction_type_details']),
         'chain': EnrichedEvmChainFromJSON(json['chain']),
         'from': EnrichedEvmAddressFromJSON(json['from']),
         'to': EnrichedEvmAddressFromJSON(json['to']),
@@ -440,7 +440,7 @@ export function EvmTransactionToJSON(value?: EvmTransaction | null): any {
         'spam_state': TransactionSpamStateToJSON(value.spamState),
         'direction': TransactionDirectionToJSON(value.direction),
         'type': value.type,
-        'evm_transaction_type_details': DescribedEvmTransactionEvmTransactionTypeDetailsToJSON(value.evmTransactionTypeDetails),
+        'evm_transaction_type_details': EvmTransactionEvmTransactionTypeDetailsToJSON(value.evmTransactionTypeDetails),
         'chain': EnrichedEvmChainToJSON(value.chain),
         'from': EnrichedEvmAddressToJSON(value.from),
         'to': EnrichedEvmAddressToJSON(value.to),

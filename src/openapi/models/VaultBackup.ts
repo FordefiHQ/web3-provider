@@ -46,10 +46,10 @@ export interface VaultBackup {
     name: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof VaultBackup
      */
-    accountId: number;
+    derivationPath: string;
     /**
      * 
      * @type {string}
@@ -72,7 +72,7 @@ export function instanceOfVaultBackup(value: object): boolean {
     isInstance = isInstance && "vaultId" in value;
     isInstance = isInstance && "address" in value;
     isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "accountId" in value;
+    isInstance = isInstance && "derivationPath" in value;
     isInstance = isInstance && "vaultType" in value;
     isInstance = isInstance && "vaultAddresses" in value;
 
@@ -92,7 +92,7 @@ export function VaultBackupFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'vaultId': json['vault_id'],
         'address': json['address'],
         'name': json['name'],
-        'accountId': json['account_id'],
+        'derivationPath': json['derivation_path'],
         'vaultType': json['vault_type'],
         'vaultAddresses': ((json['vault_addresses'] as Array<any>).map(VaultAddressBackupFromJSON)),
     };
@@ -110,7 +110,7 @@ export function VaultBackupToJSON(value?: VaultBackup | null): any {
         'vault_id': value.vaultId,
         'address': value.address,
         'name': value.name,
-        'account_id': value.accountId,
+        'derivation_path': value.derivationPath,
         'vault_type': value.vaultType,
         'vault_addresses': ((value.vaultAddresses as Array<any>).map(VaultAddressBackupToJSON)),
     };

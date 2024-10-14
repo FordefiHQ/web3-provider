@@ -90,6 +90,20 @@ import {
     SuiTransactionToJSON,
 } from './SuiTransaction';
 import {
+    TonMessage,
+    instanceOfTonMessage,
+    TonMessageFromJSON,
+    TonMessageFromJSONTyped,
+    TonMessageToJSON,
+} from './TonMessage';
+import {
+    TonTransaction,
+    instanceOfTonTransaction,
+    TonTransactionFromJSON,
+    TonTransactionFromJSONTyped,
+    TonTransactionToJSON,
+} from './TonTransaction';
+import {
     UtxoMessage,
     instanceOfUtxoMessage,
     UtxoMessageFromJSON,
@@ -109,7 +123,7 @@ import {
  * 
  * @export
  */
-export type Transaction = { type: 'aptos_message' } & AptosMessage | { type: 'aptos_transaction' } & AptosTransaction | { type: 'black_box_signature' } & BlackBoxSignature | { type: 'cosmos_message' } & CosmosMessage | { type: 'cosmos_transaction' } & CosmosTransaction | { type: 'evm_message' } & EvmMessage | { type: 'evm_transaction' } & EvmTransaction | { type: 'solana_message' } & SolanaMessage | { type: 'solana_transaction' } & SolanaTransaction | { type: 'sui_message' } & SuiMessage | { type: 'sui_transaction' } & SuiTransaction | { type: 'utxo_message' } & UtxoMessage | { type: 'utxo_transaction' } & UtxoTransaction;
+export type Transaction = { type: 'aptos_message' } & AptosMessage | { type: 'aptos_transaction' } & AptosTransaction | { type: 'black_box_signature' } & BlackBoxSignature | { type: 'cosmos_message' } & CosmosMessage | { type: 'cosmos_transaction' } & CosmosTransaction | { type: 'evm_message' } & EvmMessage | { type: 'evm_transaction' } & EvmTransaction | { type: 'solana_message' } & SolanaMessage | { type: 'solana_transaction' } & SolanaTransaction | { type: 'sui_message' } & SuiMessage | { type: 'sui_transaction' } & SuiTransaction | { type: 'ton_message' } & TonMessage | { type: 'ton_transaction' } & TonTransaction | { type: 'utxo_message' } & UtxoMessage | { type: 'utxo_transaction' } & UtxoTransaction;
 
 export function TransactionFromJSON(json: any): Transaction {
     return TransactionFromJSONTyped(json, false);
@@ -142,6 +156,10 @@ export function TransactionFromJSONTyped(json: any, ignoreDiscriminator: boolean
             return {...SuiMessageFromJSONTyped(json, true), type: 'sui_message'};
         case 'sui_transaction':
             return {...SuiTransactionFromJSONTyped(json, true), type: 'sui_transaction'};
+        case 'ton_message':
+            return {...TonMessageFromJSONTyped(json, true), type: 'ton_message'};
+        case 'ton_transaction':
+            return {...TonTransactionFromJSONTyped(json, true), type: 'ton_transaction'};
         case 'utxo_message':
             return {...UtxoMessageFromJSONTyped(json, true), type: 'utxo_message'};
         case 'utxo_transaction':
@@ -181,6 +199,10 @@ export function TransactionToJSON(value?: Transaction | null): any {
             return SuiMessageToJSON(value);
         case 'sui_transaction':
             return SuiTransactionToJSON(value);
+        case 'ton_message':
+            return TonMessageToJSON(value);
+        case 'ton_transaction':
+            return TonTransactionToJSON(value);
         case 'utxo_message':
             return UtxoMessageToJSON(value);
         case 'utxo_transaction':

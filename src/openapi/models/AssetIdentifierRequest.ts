@@ -48,6 +48,13 @@ import {
     SuiAssetIdentifierRequestToJSON,
 } from './SuiAssetIdentifierRequest';
 import {
+    TonAssetIdentifierRequest,
+    instanceOfTonAssetIdentifierRequest,
+    TonAssetIdentifierRequestFromJSON,
+    TonAssetIdentifierRequestFromJSONTyped,
+    TonAssetIdentifierRequestToJSON,
+} from './TonAssetIdentifierRequest';
+import {
     UtxoAssetIdentifierRequest,
     instanceOfUtxoAssetIdentifierRequest,
     UtxoAssetIdentifierRequestFromJSON,
@@ -60,7 +67,7 @@ import {
  * 
  * @export
  */
-export type AssetIdentifierRequest = { type: 'aptos' } & AptosAssetIdentifierRequest | { type: 'cosmos' } & CosmosAssetIdentifierRequest | { type: 'evm' } & EvmAssetIdentifierRequest | { type: 'solana' } & SolanaAssetIdentifierRequest | { type: 'sui' } & SuiAssetIdentifierRequest | { type: 'utxo' } & UtxoAssetIdentifierRequest;
+export type AssetIdentifierRequest = { type: 'aptos' } & AptosAssetIdentifierRequest | { type: 'cosmos' } & CosmosAssetIdentifierRequest | { type: 'evm' } & EvmAssetIdentifierRequest | { type: 'solana' } & SolanaAssetIdentifierRequest | { type: 'sui' } & SuiAssetIdentifierRequest | { type: 'ton' } & TonAssetIdentifierRequest | { type: 'utxo' } & UtxoAssetIdentifierRequest;
 
 export function AssetIdentifierRequestFromJSON(json: any): AssetIdentifierRequest {
     return AssetIdentifierRequestFromJSONTyped(json, false);
@@ -81,6 +88,8 @@ export function AssetIdentifierRequestFromJSONTyped(json: any, ignoreDiscriminat
             return {...SolanaAssetIdentifierRequestFromJSONTyped(json, true), type: 'solana'};
         case 'sui':
             return {...SuiAssetIdentifierRequestFromJSONTyped(json, true), type: 'sui'};
+        case 'ton':
+            return {...TonAssetIdentifierRequestFromJSONTyped(json, true), type: 'ton'};
         case 'utxo':
             return {...UtxoAssetIdentifierRequestFromJSONTyped(json, true), type: 'utxo'};
         default:
@@ -106,6 +115,8 @@ export function AssetIdentifierRequestToJSON(value?: AssetIdentifierRequest | nu
             return SolanaAssetIdentifierRequestToJSON(value);
         case 'sui':
             return SuiAssetIdentifierRequestToJSON(value);
+        case 'ton':
+            return TonAssetIdentifierRequestToJSON(value);
         case 'utxo':
             return UtxoAssetIdentifierRequestToJSON(value);
         default:

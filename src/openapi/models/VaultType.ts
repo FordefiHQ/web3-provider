@@ -24,6 +24,7 @@ export const VaultType = {
     evm: 'evm',
     solana: 'solana',
     sui: 'sui',
+    ton: 'ton',
     utxo: 'utxo',
     exchange: 'exchange'
 } as const;

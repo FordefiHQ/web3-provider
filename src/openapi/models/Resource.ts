@@ -32,7 +32,8 @@ export const Resource = {
     authToken: 'auth_token',
     accessToken: 'access_token',
     asset: 'asset',
-    assetInfo: 'asset_info'
+    assetInfo: 'asset_info',
+    vaultDerivationPath: 'vault_derivation_path'
 } as const;
 export type Resource = typeof Resource[keyof typeof Resource];
 

@@ -83,6 +83,20 @@ import {
     PredictedSuiTransactionToJSON,
 } from './PredictedSuiTransaction';
 import {
+    PredictedTonMessage,
+    instanceOfPredictedTonMessage,
+    PredictedTonMessageFromJSON,
+    PredictedTonMessageFromJSONTyped,
+    PredictedTonMessageToJSON,
+} from './PredictedTonMessage';
+import {
+    PredictedTonTransaction,
+    instanceOfPredictedTonTransaction,
+    PredictedTonTransactionFromJSON,
+    PredictedTonTransactionFromJSONTyped,
+    PredictedTonTransactionToJSON,
+} from './PredictedTonTransaction';
+import {
     PredictedUtxoMessage,
     instanceOfPredictedUtxoMessage,
     PredictedUtxoMessageFromJSON,
@@ -102,7 +116,7 @@ import {
  * 
  * @export
  */
-export type PredictTransactionResponse = { type: 'aptos_message' } & PredictedAptosMessage | { type: 'aptos_transaction' } & PredictedAptosTransaction | { type: 'cosmos_message' } & PredictedCosmosMessage | { type: 'cosmos_transaction' } & PredictedCosmosTransaction | { type: 'evm_message' } & PredictedEvmMessage | { type: 'evm_transaction' } & PredictedEvmTransaction | { type: 'solana_message' } & PredictedSolanaMessage | { type: 'solana_transaction' } & PredictedSolanaTransaction | { type: 'sui_message' } & PredictedSuiMessage | { type: 'sui_transaction' } & PredictedSuiTransaction | { type: 'utxo_message' } & PredictedUtxoMessage | { type: 'utxo_transaction' } & PredictedUtxoTransaction;
+export type PredictTransactionResponse = { type: 'aptos_message' } & PredictedAptosMessage | { type: 'aptos_transaction' } & PredictedAptosTransaction | { type: 'cosmos_message' } & PredictedCosmosMessage | { type: 'cosmos_transaction' } & PredictedCosmosTransaction | { type: 'evm_message' } & PredictedEvmMessage | { type: 'evm_transaction' } & PredictedEvmTransaction | { type: 'solana_message' } & PredictedSolanaMessage | { type: 'solana_transaction' } & PredictedSolanaTransaction | { type: 'sui_message' } & PredictedSuiMessage | { type: 'sui_transaction' } & PredictedSuiTransaction | { type: 'ton_message' } & PredictedTonMessage | { type: 'ton_transaction' } & PredictedTonTransaction | { type: 'utxo_message' } & PredictedUtxoMessage | { type: 'utxo_transaction' } & PredictedUtxoTransaction;
 
 export function PredictTransactionResponseFromJSON(json: any): PredictTransactionResponse {
     return PredictTransactionResponseFromJSONTyped(json, false);
@@ -133,6 +147,10 @@ export function PredictTransactionResponseFromJSONTyped(json: any, ignoreDiscrim
             return {...PredictedSuiMessageFromJSONTyped(json, true), type: 'sui_message'};
         case 'sui_transaction':
             return {...PredictedSuiTransactionFromJSONTyped(json, true), type: 'sui_transaction'};
+        case 'ton_message':
+            return {...PredictedTonMessageFromJSONTyped(json, true), type: 'ton_message'};
+        case 'ton_transaction':
+            return {...PredictedTonTransactionFromJSONTyped(json, true), type: 'ton_transaction'};
         case 'utxo_message':
             return {...PredictedUtxoMessageFromJSONTyped(json, true), type: 'utxo_message'};
         case 'utxo_transaction':
@@ -170,6 +188,10 @@ export function PredictTransactionResponseToJSON(value?: PredictTransactionRespo
             return PredictedSuiMessageToJSON(value);
         case 'sui_transaction':
             return PredictedSuiTransactionToJSON(value);
+        case 'ton_message':
+            return PredictedTonMessageToJSON(value);
+        case 'ton_transaction':
+            return PredictedTonTransactionToJSON(value);
         case 'utxo_message':
             return PredictedUtxoMessageToJSON(value);
         case 'utxo_transaction':

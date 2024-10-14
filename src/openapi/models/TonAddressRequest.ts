@@ -37,7 +37,7 @@ export interface TonAddressRequest {
      * @type {string}
      * @memberof TonAddressRequest
      */
-    base64UrlRepr: string;
+    address: string;
 }
 
 /**
@@ -46,7 +46,7 @@ export interface TonAddressRequest {
 export function instanceOfTonAddressRequest(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "base64UrlRepr" in value;
+    isInstance = isInstance && "address" in value;
 
     return isInstance;
 }
@@ -62,7 +62,7 @@ export function TonAddressRequestFromJSONTyped(json: any, ignoreDiscriminator: b
     return {
         
         'chain': TonChainUniqueIdFromJSON(json['chain']),
-        'base64UrlRepr': json['base64_url_repr'],
+        'address': json['address'],
     };
 }
 
@@ -76,7 +76,7 @@ export function TonAddressRequestToJSON(value?: TonAddressRequest | null): any {
     return {
         
         'chain': TonChainUniqueIdToJSON(value.chain),
-        'base64_url_repr': value.base64UrlRepr,
+        'address': value.address,
     };
 }
 

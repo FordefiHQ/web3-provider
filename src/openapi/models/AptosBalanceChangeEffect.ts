@@ -12,27 +12,76 @@
  * Do not edit the class manually.
  */
 
+import { exists, mapValues } from '../runtime';
+import type { AptosBalanceChangeEffectType } from './AptosBalanceChangeEffectType';
 import {
-    AptosCoinBalanceChange,
-    instanceOfAptosCoinBalanceChange,
-    AptosCoinBalanceChangeFromJSON,
-    AptosCoinBalanceChangeFromJSONTyped,
-    AptosCoinBalanceChangeToJSON,
-} from './AptosCoinBalanceChange';
+    AptosBalanceChangeEffectTypeFromJSON,
+    AptosBalanceChangeEffectTypeFromJSONTyped,
+    AptosBalanceChangeEffectTypeToJSON,
+} from './AptosBalanceChangeEffectType';
+import type { EnrichedAptosAddress } from './EnrichedAptosAddress';
 import {
-    AptosNativeCurrencyBalanceChange,
-    instanceOfAptosNativeCurrencyBalanceChange,
-    AptosNativeCurrencyBalanceChangeFromJSON,
-    AptosNativeCurrencyBalanceChangeFromJSONTyped,
-    AptosNativeCurrencyBalanceChangeToJSON,
-} from './AptosNativeCurrencyBalanceChange';
+    EnrichedAptosAddressFromJSON,
+    EnrichedAptosAddressFromJSONTyped,
+    EnrichedAptosAddressToJSON,
+} from './EnrichedAptosAddress';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+} from './PricedAsset';
 
 /**
- * @type AptosBalanceChangeEffect
  * 
  * @export
+ * @interface AptosBalanceChangeEffect
  */
-export type AptosBalanceChangeEffect = { type: 'coin' } & AptosCoinBalanceChange | { type: 'native' } & AptosNativeCurrencyBalanceChange;
+export interface AptosBalanceChangeEffect {
+    /**
+     * 
+     * @type {PricedAsset}
+     * @memberof AptosBalanceChangeEffect
+     */
+    pricedAsset: PricedAsset;
+    /**
+     * 
+     * @type {string}
+     * @memberof AptosBalanceChangeEffect
+     */
+    diff: string;
+    /**
+     * 
+     * @type {AptosBalanceChangeEffectType}
+     * @memberof AptosBalanceChangeEffect
+     */
+    type: AptosBalanceChangeEffectType;
+    /**
+     * 
+     * @type {EnrichedAptosAddress}
+     * @memberof AptosBalanceChangeEffect
+     */
+    address: EnrichedAptosAddress;
+    /**
+     * 
+     * @type {EnrichedAptosAddress}
+     * @memberof AptosBalanceChangeEffect
+     */
+    owner?: EnrichedAptosAddress;
+}
+
+/**
+ * Check if a given object implements the AptosBalanceChangeEffect interface.
+ */
+export function instanceOfAptosBalanceChangeEffect(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "pricedAsset" in value;
+    isInstance = isInstance && "diff" in value;
+    isInstance = isInstance && "type" in value;
+    isInstance = isInstance && "address" in value;
+
+    return isInstance;
+}
 
 export function AptosBalanceChangeEffectFromJSON(json: any): AptosBalanceChangeEffect {
     return AptosBalanceChangeEffectFromJSONTyped(json, false);
@@ -42,14 +91,14 @@ export function AptosBalanceChangeEffectFromJSONTyped(json: any, ignoreDiscrimin
     if ((json === undefined) || (json === null)) {
         return json;
     }
-    switch (json['type']) {
-        case 'coin':
-            return {...AptosCoinBalanceChangeFromJSONTyped(json, true), type: 'coin'};
-        case 'native':
-            return {...AptosNativeCurrencyBalanceChangeFromJSONTyped(json, true), type: 'native'};
-        default:
-            throw new Error(`No variant of AptosBalanceChangeEffect exists with 'type=${json['type']}'`);
-    }
+    return {
+        
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
+        'diff': json['diff'],
+        'type': AptosBalanceChangeEffectTypeFromJSON(json['type']),
+        'address': EnrichedAptosAddressFromJSON(json['address']),
+        'owner': !exists(json, 'owner') ? undefined : EnrichedAptosAddressFromJSON(json['owner']),
+    };
 }
 
 export function AptosBalanceChangeEffectToJSON(value?: AptosBalanceChangeEffect | null): any {
@@ -59,14 +108,13 @@ export function AptosBalanceChangeEffectToJSON(value?: AptosBalanceChangeEffect 
     if (value === null) {
         return null;
     }
-    switch (value['type']) {
-        case 'coin':
-            return AptosCoinBalanceChangeToJSON(value);
-        case 'native':
-            return AptosNativeCurrencyBalanceChangeToJSON(value);
-        default:
-            throw new Error(`No variant of AptosBalanceChangeEffect exists with 'type=${value['type']}'`);
-    }
-
+    return {
+        
+        'priced_asset': PricedAssetToJSON(value.pricedAsset),
+        'diff': value.diff,
+        'type': AptosBalanceChangeEffectTypeToJSON(value.type),
+        'address': EnrichedAptosAddressToJSON(value.address),
+        'owner': EnrichedAptosAddressToJSON(value.owner),
+    };
 }
 

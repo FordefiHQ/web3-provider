@@ -12,41 +12,116 @@
  * Do not edit the class manually.
  */
 
+import { exists, mapValues } from '../runtime';
+import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
 import {
-    Erc1155BalanceChange,
-    instanceOfErc1155BalanceChange,
-    Erc1155BalanceChangeFromJSON,
-    Erc1155BalanceChangeFromJSONTyped,
-    Erc1155BalanceChangeToJSON,
-} from './Erc1155BalanceChange';
+    EnrichedEvmAddressFromJSON,
+    EnrichedEvmAddressFromJSONTyped,
+    EnrichedEvmAddressToJSON,
+} from './EnrichedEvmAddress';
+import type { EvmBalanceChangeEffectTokenContract } from './EvmBalanceChangeEffectTokenContract';
 import {
-    Erc20BalanceChange,
-    instanceOfErc20BalanceChange,
-    Erc20BalanceChangeFromJSON,
-    Erc20BalanceChangeFromJSONTyped,
-    Erc20BalanceChangeToJSON,
-} from './Erc20BalanceChange';
+    EvmBalanceChangeEffectTokenContractFromJSON,
+    EvmBalanceChangeEffectTokenContractFromJSONTyped,
+    EvmBalanceChangeEffectTokenContractToJSON,
+} from './EvmBalanceChangeEffectTokenContract';
+import type { EvmBalanceChangeEffectType } from './EvmBalanceChangeEffectType';
 import {
-    Erc721OwnershipChange,
-    instanceOfErc721OwnershipChange,
-    Erc721OwnershipChangeFromJSON,
-    Erc721OwnershipChangeFromJSONTyped,
-    Erc721OwnershipChangeToJSON,
-} from './Erc721OwnershipChange';
+    EvmBalanceChangeEffectTypeFromJSON,
+    EvmBalanceChangeEffectTypeFromJSONTyped,
+    EvmBalanceChangeEffectTypeToJSON,
+} from './EvmBalanceChangeEffectType';
+import type { Price } from './Price';
 import {
-    EvmNativeCurrencyBalanceChange,
-    instanceOfEvmNativeCurrencyBalanceChange,
-    EvmNativeCurrencyBalanceChangeFromJSON,
-    EvmNativeCurrencyBalanceChangeFromJSONTyped,
-    EvmNativeCurrencyBalanceChangeToJSON,
-} from './EvmNativeCurrencyBalanceChange';
+    PriceFromJSON,
+    PriceFromJSONTyped,
+    PriceToJSON,
+} from './Price';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+} from './PricedAsset';
 
 /**
- * @type EvmBalanceChangeEffect
  * 
  * @export
+ * @interface EvmBalanceChangeEffect
  */
-export type EvmBalanceChangeEffect = { type: 'erc1155' } & Erc1155BalanceChange | { type: 'erc20' } & Erc20BalanceChange | { type: 'erc721' } & Erc721OwnershipChange | { type: 'native' } & EvmNativeCurrencyBalanceChange;
+export interface EvmBalanceChangeEffect {
+    /**
+     * 
+     * @type {PricedAsset}
+     * @memberof EvmBalanceChangeEffect
+     */
+    pricedAsset: PricedAsset;
+    /**
+     * 
+     * @type {string}
+     * @memberof EvmBalanceChangeEffect
+     */
+    diff: string;
+    /**
+     * 
+     * @type {EvmBalanceChangeEffectType}
+     * @memberof EvmBalanceChangeEffect
+     */
+    type: EvmBalanceChangeEffectType;
+    /**
+     * 
+     * @type {EnrichedEvmAddress}
+     * @memberof EvmBalanceChangeEffect
+     */
+    address: EnrichedEvmAddress;
+    /**
+     * 
+     * @type {EnrichedEvmAddress}
+     * @memberof EvmBalanceChangeEffect
+     */
+    owner: EnrichedEvmAddress;
+    /**
+     * 
+     * @type {Price}
+     * @memberof EvmBalanceChangeEffect
+     */
+    price?: Price;
+    /**
+     * 
+     * @type {EvmBalanceChangeEffectTokenContract}
+     * @memberof EvmBalanceChangeEffect
+     * @deprecated
+     */
+    tokenContract?: EvmBalanceChangeEffectTokenContract;
+    /**
+     * 
+     * @type {string}
+     * @memberof EvmBalanceChangeEffect
+     * @deprecated
+     */
+    tokenId?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EvmBalanceChangeEffect
+     * @deprecated
+     */
+    owned?: boolean;
+}
+
+/**
+ * Check if a given object implements the EvmBalanceChangeEffect interface.
+ */
+export function instanceOfEvmBalanceChangeEffect(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "pricedAsset" in value;
+    isInstance = isInstance && "diff" in value;
+    isInstance = isInstance && "type" in value;
+    isInstance = isInstance && "address" in value;
+    isInstance = isInstance && "owner" in value;
+
+    return isInstance;
+}
 
 export function EvmBalanceChangeEffectFromJSON(json: any): EvmBalanceChangeEffect {
     return EvmBalanceChangeEffectFromJSONTyped(json, false);
@@ -56,18 +131,18 @@ export function EvmBalanceChangeEffectFromJSONTyped(json: any, ignoreDiscriminat
     if ((json === undefined) || (json === null)) {
         return json;
     }
-    switch (json['type']) {
-        case 'erc1155':
-            return {...Erc1155BalanceChangeFromJSONTyped(json, true), type: 'erc1155'};
-        case 'erc20':
-            return {...Erc20BalanceChangeFromJSONTyped(json, true), type: 'erc20'};
-        case 'erc721':
-            return {...Erc721OwnershipChangeFromJSONTyped(json, true), type: 'erc721'};
-        case 'native':
-            return {...EvmNativeCurrencyBalanceChangeFromJSONTyped(json, true), type: 'native'};
-        default:
-            throw new Error(`No variant of EvmBalanceChangeEffect exists with 'type=${json['type']}'`);
-    }
+    return {
+        
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
+        'diff': json['diff'],
+        'type': EvmBalanceChangeEffectTypeFromJSON(json['type']),
+        'address': EnrichedEvmAddressFromJSON(json['address']),
+        'owner': EnrichedEvmAddressFromJSON(json['owner']),
+        'price': !exists(json, 'price') ? undefined : PriceFromJSON(json['price']),
+        'tokenContract': !exists(json, 'token_contract') ? undefined : EvmBalanceChangeEffectTokenContractFromJSON(json['token_contract']),
+        'tokenId': !exists(json, 'token_id') ? undefined : json['token_id'],
+        'owned': !exists(json, 'owned') ? undefined : json['owned'],
+    };
 }
 
 export function EvmBalanceChangeEffectToJSON(value?: EvmBalanceChangeEffect | null): any {
@@ -77,18 +152,17 @@ export function EvmBalanceChangeEffectToJSON(value?: EvmBalanceChangeEffect | nu
     if (value === null) {
         return null;
     }
-    switch (value['type']) {
-        case 'erc1155':
-            return Erc1155BalanceChangeToJSON(value);
-        case 'erc20':
-            return Erc20BalanceChangeToJSON(value);
-        case 'erc721':
-            return Erc721OwnershipChangeToJSON(value);
-        case 'native':
-            return EvmNativeCurrencyBalanceChangeToJSON(value);
-        default:
-            throw new Error(`No variant of EvmBalanceChangeEffect exists with 'type=${value['type']}'`);
-    }
-
+    return {
+        
+        'priced_asset': PricedAssetToJSON(value.pricedAsset),
+        'diff': value.diff,
+        'type': EvmBalanceChangeEffectTypeToJSON(value.type),
+        'address': EnrichedEvmAddressToJSON(value.address),
+        'owner': EnrichedEvmAddressToJSON(value.owner),
+        'price': PriceToJSON(value.price),
+        'token_contract': EvmBalanceChangeEffectTokenContractToJSON(value.tokenContract),
+        'token_id': value.tokenId,
+        'owned': value.owned,
+    };
 }
 

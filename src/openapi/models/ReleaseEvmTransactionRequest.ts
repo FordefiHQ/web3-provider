@@ -56,6 +56,12 @@ export interface ReleaseEvmTransactionRequest {
      * @memberof ReleaseEvmTransactionRequest
      */
     failOnPredictionFailure?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReleaseEvmTransactionRequest
+     */
+    note?: string;
 }
 
 
@@ -93,6 +99,7 @@ export function ReleaseEvmTransactionRequestFromJSONTyped(json: any, ignoreDiscr
         'releaseType': ReleaseTypeFromJSON(json['release_type']),
         'signerType': !exists(json, 'signer_type') ? undefined : SignerTypeFromJSON(json['signer_type']),
         'failOnPredictionFailure': !exists(json, 'fail_on_prediction_failure') ? undefined : json['fail_on_prediction_failure'],
+        'note': !exists(json, 'note') ? undefined : json['note'],
     };
 }
 
@@ -109,6 +116,7 @@ export function ReleaseEvmTransactionRequestToJSON(value?: ReleaseEvmTransaction
         'release_type': ReleaseTypeToJSON(value.releaseType),
         'signer_type': SignerTypeToJSON(value.signerType),
         'fail_on_prediction_failure': value.failOnPredictionFailure,
+        'note': value.note,
     };
 }
 

@@ -1177,6 +1177,7 @@ export const GetVaultAssetsApiV1VaultsIdAssetsGetChainsEnum = {
     solanaDevnet: 'solana_devnet',
     suiMainnet: 'sui_mainnet',
     suiTestnet: 'sui_testnet',
+    tonMainnet: 'ton_mainnet',
     bitcoinMainnet: 'bitcoin_mainnet',
     bitcoinTestnet: 'bitcoin_testnet'
 } as const;
@@ -1269,6 +1270,7 @@ export const ListVaultsWithAssetsApiV1VaultsBalancesGetChainsEnum = {
     solanaDevnet: 'solana_devnet',
     suiMainnet: 'sui_mainnet',
     suiTestnet: 'sui_testnet',
+    tonMainnet: 'ton_mainnet',
     bitcoinMainnet: 'bitcoin_mainnet',
     bitcoinTestnet: 'bitcoin_testnet'
 } as const;

@@ -164,7 +164,25 @@ export interface TonVault {
      * @type {string}
      * @memberof TonVault
      */
-    address: string;
+    rawAccount: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TonVault
+     */
+    base64UrlBounceableAccount: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TonVault
+     */
+    base64UrlNonBounceableAccount: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TonVault
+     */
+    stateInit: string;
 }
 
 
@@ -194,7 +212,10 @@ export function instanceOfTonVault(value: object): boolean {
     isInstance = isInstance && "derivationInfo" in value;
     isInstance = isInstance && "keyset" in value;
     isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "address" in value;
+    isInstance = isInstance && "rawAccount" in value;
+    isInstance = isInstance && "base64UrlBounceableAccount" in value;
+    isInstance = isInstance && "base64UrlNonBounceableAccount" in value;
+    isInstance = isInstance && "stateInit" in value;
 
     return isInstance;
 }
@@ -224,7 +245,10 @@ export function TonVaultFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'keyset': KeysetRefFromJSON(json['keyset']),
         'keyHolder': !exists(json, 'key_holder') ? undefined : EndUserRefFromJSON(json['key_holder']),
         'type': json['type'],
-        'address': json['address'],
+        'rawAccount': json['raw_account'],
+        'base64UrlBounceableAccount': json['base64_url_bounceable_account'],
+        'base64UrlNonBounceableAccount': json['base64_url_non_bounceable_account'],
+        'stateInit': json['state_init'],
     };
 }
 
@@ -252,7 +276,10 @@ export function TonVaultToJSON(value?: TonVault | null): any {
         'keyset': KeysetRefToJSON(value.keyset),
         'key_holder': EndUserRefToJSON(value.keyHolder),
         'type': value.type,
-        'address': value.address,
+        'raw_account': value.rawAccount,
+        'base64_url_bounceable_account': value.base64UrlBounceableAccount,
+        'base64_url_non_bounceable_account': value.base64UrlNonBounceableAccount,
+        'state_init': value.stateInit,
     };
 }
 

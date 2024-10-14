@@ -12,27 +12,77 @@
  * Do not edit the class manually.
  */
 
+import { exists, mapValues } from '../runtime';
+import type { AptosTransferEffectType } from './AptosTransferEffectType';
 import {
-    AptosCoinTransfer,
-    instanceOfAptosCoinTransfer,
-    AptosCoinTransferFromJSON,
-    AptosCoinTransferFromJSONTyped,
-    AptosCoinTransferToJSON,
-} from './AptosCoinTransfer';
+    AptosTransferEffectTypeFromJSON,
+    AptosTransferEffectTypeFromJSONTyped,
+    AptosTransferEffectTypeToJSON,
+} from './AptosTransferEffectType';
+import type { EnrichedAptosAddress } from './EnrichedAptosAddress';
 import {
-    AptosNativeCurrencyTransfer,
-    instanceOfAptosNativeCurrencyTransfer,
-    AptosNativeCurrencyTransferFromJSON,
-    AptosNativeCurrencyTransferFromJSONTyped,
-    AptosNativeCurrencyTransferToJSON,
-} from './AptosNativeCurrencyTransfer';
+    EnrichedAptosAddressFromJSON,
+    EnrichedAptosAddressFromJSONTyped,
+    EnrichedAptosAddressToJSON,
+} from './EnrichedAptosAddress';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+} from './PricedAsset';
 
 /**
- * @type AptosTransferEffect
  * 
  * @export
+ * @interface AptosTransferEffect
  */
-export type AptosTransferEffect = { type: 'coin' } & AptosCoinTransfer | { type: 'native' } & AptosNativeCurrencyTransfer;
+export interface AptosTransferEffect {
+    /**
+     * 
+     * @type {PricedAsset}
+     * @memberof AptosTransferEffect
+     */
+    pricedAsset: PricedAsset;
+    /**
+     * 
+     * @type {string}
+     * @memberof AptosTransferEffect
+     */
+    amount: string;
+    /**
+     * 
+     * @type {AptosTransferEffectType}
+     * @memberof AptosTransferEffect
+     */
+    type: AptosTransferEffectType;
+    /**
+     * 
+     * @type {EnrichedAptosAddress}
+     * @memberof AptosTransferEffect
+     */
+    from: EnrichedAptosAddress;
+    /**
+     * 
+     * @type {EnrichedAptosAddress}
+     * @memberof AptosTransferEffect
+     */
+    to: EnrichedAptosAddress;
+}
+
+/**
+ * Check if a given object implements the AptosTransferEffect interface.
+ */
+export function instanceOfAptosTransferEffect(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "pricedAsset" in value;
+    isInstance = isInstance && "amount" in value;
+    isInstance = isInstance && "type" in value;
+    isInstance = isInstance && "from" in value;
+    isInstance = isInstance && "to" in value;
+
+    return isInstance;
+}
 
 export function AptosTransferEffectFromJSON(json: any): AptosTransferEffect {
     return AptosTransferEffectFromJSONTyped(json, false);
@@ -42,14 +92,14 @@ export function AptosTransferEffectFromJSONTyped(json: any, ignoreDiscriminator:
     if ((json === undefined) || (json === null)) {
         return json;
     }
-    switch (json['type']) {
-        case 'coin':
-            return {...AptosCoinTransferFromJSONTyped(json, true), type: 'coin'};
-        case 'native':
-            return {...AptosNativeCurrencyTransferFromJSONTyped(json, true), type: 'native'};
-        default:
-            throw new Error(`No variant of AptosTransferEffect exists with 'type=${json['type']}'`);
-    }
+    return {
+        
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
+        'amount': json['amount'],
+        'type': AptosTransferEffectTypeFromJSON(json['type']),
+        'from': EnrichedAptosAddressFromJSON(json['from']),
+        'to': EnrichedAptosAddressFromJSON(json['to']),
+    };
 }
 
 export function AptosTransferEffectToJSON(value?: AptosTransferEffect | null): any {
@@ -59,14 +109,13 @@ export function AptosTransferEffectToJSON(value?: AptosTransferEffect | null): a
     if (value === null) {
         return null;
     }
-    switch (value['type']) {
-        case 'coin':
-            return AptosCoinTransferToJSON(value);
-        case 'native':
-            return AptosNativeCurrencyTransferToJSON(value);
-        default:
-            throw new Error(`No variant of AptosTransferEffect exists with 'type=${value['type']}'`);
-    }
-
+    return {
+        
+        'priced_asset': PricedAssetToJSON(value.pricedAsset),
+        'amount': value.amount,
+        'type': AptosTransferEffectTypeToJSON(value.type),
+        'from': EnrichedAptosAddressToJSON(value.from),
+        'to': EnrichedAptosAddressToJSON(value.to),
+    };
 }
 

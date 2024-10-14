@@ -48,6 +48,13 @@ import {
     SuiSuggestedFeesToJSON,
 } from './SuiSuggestedFees';
 import {
+    TonSuggestedFees,
+    instanceOfTonSuggestedFees,
+    TonSuggestedFeesFromJSON,
+    TonSuggestedFeesFromJSONTyped,
+    TonSuggestedFeesToJSON,
+} from './TonSuggestedFees';
+import {
     UtxoSuggestedFees,
     instanceOfUtxoSuggestedFees,
     UtxoSuggestedFeesFromJSON,
@@ -60,7 +67,7 @@ import {
  * 
  * @export
  */
-export type SuggestedFees = { type: 'aptos' } & AptosSuggestedFees | { type: 'cosmos' } & CosmosSuggestedFees | { type: 'evm' } & EvmSuggestedFees | { type: 'solana' } & SolanaSuggestedFees | { type: 'sui' } & SuiSuggestedFees | { type: 'utxo' } & UtxoSuggestedFees;
+export type SuggestedFees = { type: 'aptos' } & AptosSuggestedFees | { type: 'cosmos' } & CosmosSuggestedFees | { type: 'evm' } & EvmSuggestedFees | { type: 'solana' } & SolanaSuggestedFees | { type: 'sui' } & SuiSuggestedFees | { type: 'ton' } & TonSuggestedFees | { type: 'utxo' } & UtxoSuggestedFees;
 
 export function SuggestedFeesFromJSON(json: any): SuggestedFees {
     return SuggestedFeesFromJSONTyped(json, false);
@@ -81,6 +88,8 @@ export function SuggestedFeesFromJSONTyped(json: any, ignoreDiscriminator: boole
             return {...SolanaSuggestedFeesFromJSONTyped(json, true), type: 'solana'};
         case 'sui':
             return {...SuiSuggestedFeesFromJSONTyped(json, true), type: 'sui'};
+        case 'ton':
+            return {...TonSuggestedFeesFromJSONTyped(json, true), type: 'ton'};
         case 'utxo':
             return {...UtxoSuggestedFeesFromJSONTyped(json, true), type: 'utxo'};
         default:
@@ -106,6 +115,8 @@ export function SuggestedFeesToJSON(value?: SuggestedFees | null): any {
             return SolanaSuggestedFeesToJSON(value);
         case 'sui':
             return SuiSuggestedFeesToJSON(value);
+        case 'ton':
+            return TonSuggestedFeesToJSON(value);
         case 'utxo':
             return UtxoSuggestedFeesToJSON(value);
         default:

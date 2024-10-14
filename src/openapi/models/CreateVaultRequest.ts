@@ -55,6 +55,13 @@ import {
     CreateSuiVaultRequestToJSON,
 } from './CreateSuiVaultRequest';
 import {
+    CreateTonVaultRequest,
+    instanceOfCreateTonVaultRequest,
+    CreateTonVaultRequestFromJSON,
+    CreateTonVaultRequestFromJSONTyped,
+    CreateTonVaultRequestToJSON,
+} from './CreateTonVaultRequest';
+import {
     CreateUtxoVaultRequest,
     instanceOfCreateUtxoVaultRequest,
     CreateUtxoVaultRequestFromJSON,
@@ -67,7 +74,7 @@ import {
  * 
  * @export
  */
-export type CreateVaultRequest = { type: 'aptos' } & CreateAptosVaultRequest | { type: 'black_box' } & CreateBlackBoxVaultRequest | { type: 'cosmos' } & CreateCosmosVaultRequest | { type: 'evm' } & CreateEvmVaultRequest | { type: 'solana' } & CreateSolanaVaultRequest | { type: 'sui' } & CreateSuiVaultRequest | { type: 'utxo' } & CreateUtxoVaultRequest;
+export type CreateVaultRequest = { type: 'aptos' } & CreateAptosVaultRequest | { type: 'black_box' } & CreateBlackBoxVaultRequest | { type: 'cosmos' } & CreateCosmosVaultRequest | { type: 'evm' } & CreateEvmVaultRequest | { type: 'solana' } & CreateSolanaVaultRequest | { type: 'sui' } & CreateSuiVaultRequest | { type: 'ton' } & CreateTonVaultRequest | { type: 'utxo' } & CreateUtxoVaultRequest;
 
 export function CreateVaultRequestFromJSON(json: any): CreateVaultRequest {
     return CreateVaultRequestFromJSONTyped(json, false);
@@ -90,6 +97,8 @@ export function CreateVaultRequestFromJSONTyped(json: any, ignoreDiscriminator: 
             return {...CreateSolanaVaultRequestFromJSONTyped(json, true), type: 'solana'};
         case 'sui':
             return {...CreateSuiVaultRequestFromJSONTyped(json, true), type: 'sui'};
+        case 'ton':
+            return {...CreateTonVaultRequestFromJSONTyped(json, true), type: 'ton'};
         case 'utxo':
             return {...CreateUtxoVaultRequestFromJSONTyped(json, true), type: 'utxo'};
         default:
@@ -117,6 +126,8 @@ export function CreateVaultRequestToJSON(value?: CreateVaultRequest | null): any
             return CreateSolanaVaultRequestToJSON(value);
         case 'sui':
             return CreateSuiVaultRequestToJSON(value);
+        case 'ton':
+            return CreateTonVaultRequestToJSON(value);
         case 'utxo':
             return CreateUtxoVaultRequestToJSON(value);
         default:

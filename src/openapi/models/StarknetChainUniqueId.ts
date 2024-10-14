@@ -18,8 +18,7 @@
  * @export
  */
 export const StarknetChainUniqueId = {
-    mainnet: 'starknet_mainnet',
-    testnet: 'starknet_testnet'
+    starknetMainnet: 'starknet_mainnet'
 } as const;
 export type StarknetChainUniqueId = typeof StarknetChainUniqueId[keyof typeof StarknetChainUniqueId];
 
