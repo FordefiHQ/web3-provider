@@ -169,6 +169,16 @@ interface FordefiProviderConfig {
    * For example: 'https://api.fordefi.com'.
    */
   apiBaseUrl?: string;
+
+  /**
+   * Total duration in ms of polling for transaction lifecycle status changed after a transaction was submitted. By default, it would stop after 24 hours.
+   */
+  timeoutDurationMs?: number;
+
+  /**
+   * Duration in ms between checks for transaction lifecycle status updates after a transaction was submitted. The minimum value is 500, and by default it's 5000.
+   */
+  pollingIntervalMs?: number;
 }
 ```
 
