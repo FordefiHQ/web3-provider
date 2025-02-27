@@ -10,6 +10,7 @@ import {
   TransactionRequest,
   TypedDataDefinition,
 } from 'viem';
+import { FordefiProviderConfig } from '../types';
 import { OmitFromArray } from '../utils/types';
 
 // Fordefi API supports both hex strings and decimal string (so does the spec)
@@ -158,3 +159,6 @@ export type EIP1193EventCallbackParams = {
 
 /** Current state of the provider - consistent with the emitted 'connect' and 'disconnect' events. */
 export type ConnectivityStatus = 'connected' | 'connecting' | 'disconnected';
+
+export type FordefiProviderConfigWithDefaults = Omit<FordefiProviderConfig, 'pollingIntervalMs' | 'timeoutDurationMs'> &
+  Required<Pick<FordefiProviderConfig, 'pollingIntervalMs' | 'timeoutDurationMs'>>;

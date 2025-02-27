@@ -61,4 +61,14 @@ export interface FordefiProviderConfig {
    * Whether to skip running a simulation before creating a new transaction, it blocks transaction creation if it fails. Defaults to true.
    */
   skipPrediction?: boolean;
+
+  /**
+   * Total duration in ms of polling for transaction lifecycle status changed after a transaction was submitted. By default, it would stop after 24 hours.
+   */
+  timeoutDurationMs?: number;
+
+  /**
+   * Duration in ms between checks for transaction lifecycle status updates after a transaction was submitted. The minimum value is 500, and by default it's 5000.
+   */
+  pollingIntervalMs?: number;
 }

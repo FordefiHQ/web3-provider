@@ -3,6 +3,9 @@ export const ONE_MINUTE_MS = 60 * ONE_SECOND_MS;
 export const ONE_HOUR_MS = 60 * ONE_MINUTE_MS;
 export const ONE_DAY_MS = 24 * ONE_HOUR_MS;
 
+export const DEFAULT_POLLING_INTERVAL = 5 * ONE_SECOND_MS;
+export const DEFAULT_TIMEOUT_DURATION = ONE_DAY_MS;
+
 const getRenderTimeDurationParts = (durationMs: number): [number, string] => {
   if (durationMs < ONE_MINUTE_MS) {
     return [durationMs / ONE_SECOND_MS, 's'];

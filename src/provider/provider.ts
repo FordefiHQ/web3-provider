@@ -37,7 +37,13 @@ import {
   parseTypedDataParams,
   waitForTransactionState,
 } from '../utils/transactions';
-import { base64SignatureToHex, ONE_DAY_MS, ONE_SECOND_MS, waitForEmittedEvent } from '../utils';
+import {
+  base64SignatureToHex,
+  DEFAULT_POLLING_INTERVAL,
+  DEFAULT_TIMEOUT_DURATION,
+  ONE_DAY_MS,
+  waitForEmittedEvent,
+} from '../utils';
 import { assertUnreachable } from '../utils/types';
 import {
   ConnectivityStatus,
@@ -48,6 +54,7 @@ import {
   MethodReturnType,
   NonFordefiRpcSchema,
   RequestArgs,
+  FordefiProviderConfigWithDefaults,
 } from './provider.types';
 
 /**
@@ -98,14 +105,15 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
 
   private readonly eventEmitter: EventEmitter<EIP1193EventCallbackParams>;
   private readonly apiClient: ApiClient;
-  private readonly config: FordefiProviderConfig;
+  private readonly config: FordefiProviderConfigWithDefaults;
   private chain: EvmChain | undefined;
   private vault: EvmVault | undefined;
   private status: ConnectivityStatus;
 
   constructor(config: FordefiProviderConfig) {
-    this.config = config;
-    this.apiClient = new ApiClient(config);
+    const configWithDefaults = this.validateConfig(config);
+    this.config = configWithDefaults;
+    this.apiClient = new ApiClient(configWithDefaults);
 
     const eventEmitter = new EventEmitter<EIP1193EventCallbackParams>();
     this.on = eventEmitter.on.bind(eventEmitter)<EIP1193EventCallbackParams>;
@@ -115,6 +123,20 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
 
     this.status = 'disconnected';
     this.connect().catch();
+  }
+
+  private validateConfig(config: FordefiProviderConfig) {
+    const { pollingIntervalMs, timeoutDurationMs } = config;
+
+    if (pollingIntervalMs && pollingIntervalMs < 500) {
+      throw new Error('FordefiProviderConfig.pollingIntervalMs must be at least 500.');
+    }
+
+    return {
+      ...config,
+      pollingIntervalMs: pollingIntervalMs ?? DEFAULT_POLLING_INTERVAL,
+      timeoutDurationMs: timeoutDurationMs ?? DEFAULT_TIMEOUT_DURATION,
+    };
   }
 
   /**
@@ -341,12 +363,14 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
       );
     }
 
+    const { timeoutDurationMs, pollingIntervalMs } = this.config;
+
     return waitForTransactionState({
       transaction,
       desiredState: EvmTransactionState.signed,
       apiClient: this.apiClient,
-      timeoutDurationMs: ONE_DAY_MS,
-      pollingIntervalMs: 5 * ONE_SECOND_MS,
+      timeoutDurationMs,
+      pollingIntervalMs,
     });
   }
 

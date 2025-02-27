@@ -6,8 +6,8 @@ import {
   UnauthorizedProviderError,
 } from 'viem';
 import { BlockchainsApi, Configuration, ResponseContext, TransactionsApi, VaultsApi } from '../openapi';
+import { FordefiProviderConfigWithDefaults } from '../provider/provider.types';
 
-import { FordefiProviderConfig } from '../types';
 import { FORDEFI_API_BASE_URL_PROD } from '../constants';
 import { HttpStatus } from '../utils';
 import { getStaticHeaders } from './headers';
@@ -27,7 +27,7 @@ export class ApiClient {
   blockchains: BlockchainsApi;
   transactions: TransactionsApi;
 
-  constructor(providerConfig: FordefiProviderConfig) {
+  constructor(providerConfig: FordefiProviderConfigWithDefaults) {
     const { apiBaseUrl, apiUserToken } = providerConfig;
 
     const config = new Configuration({
