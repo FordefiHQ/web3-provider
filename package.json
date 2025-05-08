@@ -1,6 +1,6 @@
 {
   "name": "@fordefi/web3-provider",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Web3 Provider and signer compatible with EIP-1193",
   "author": "Gil Meir <gil@fordefi.com>",
   "homepage": "https://github.com/FordefiHQ/web3-provider",
