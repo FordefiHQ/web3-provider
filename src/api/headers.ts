@@ -1,3 +1,4 @@
+import { CURRENT_FORDEFI_API_VERSION } from '../constants';
 import { HTTPRequestInit, RequestOpts } from '../openapi';
 import { signApiRequestBody, SignedPayloadParams } from './request-body-sign';
 
@@ -26,5 +27,5 @@ export const signatureToHeaders = ({ timestamp, signature }: SignedPayloadParams
 });
 
 export const getStaticHeaders = () => ({
-  [Headers.UserAgent]: 'Fordefi Web3 Provider',
+  [Headers.UserAgent]: `Fordefi Web3 Provider/${CURRENT_FORDEFI_API_VERSION}`,
 });
