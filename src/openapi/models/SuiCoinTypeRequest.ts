@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { SuiChainUniqueId } from './SuiChainUniqueId';
 import {
     SuiChainUniqueIdFromJSON,
     SuiChainUniqueIdFromJSONTyped,
     SuiChainUniqueIdToJSON,
+    SuiChainUniqueIdToJSONTyped,
 } from './SuiChainUniqueId';
 
 /**
@@ -40,15 +41,15 @@ export interface SuiCoinTypeRequest {
     coinTypeStr: string;
 }
 
+
+
 /**
  * Check if a given object implements the SuiCoinTypeRequest interface.
  */
-export function instanceOfSuiCoinTypeRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "coinTypeStr" in value;
-
-    return isInstance;
+export function instanceOfSuiCoinTypeRequest(value: object): value is SuiCoinTypeRequest {
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('coinTypeStr' in value) || value['coinTypeStr'] === undefined) return false;
+    return true;
 }
 
 export function SuiCoinTypeRequestFromJSON(json: any): SuiCoinTypeRequest {
@@ -56,7 +57,7 @@ export function SuiCoinTypeRequestFromJSON(json: any): SuiCoinTypeRequest {
 }
 
 export function SuiCoinTypeRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiCoinTypeRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -66,17 +67,19 @@ export function SuiCoinTypeRequestFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-export function SuiCoinTypeRequestToJSON(value?: SuiCoinTypeRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiCoinTypeRequestToJSON(json: any): SuiCoinTypeRequest {
+    return SuiCoinTypeRequestToJSONTyped(json, false);
+}
+
+export function SuiCoinTypeRequestToJSONTyped(value?: SuiCoinTypeRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain': SuiChainUniqueIdToJSON(value.chain),
-        'coin_type_str': value.coinTypeStr,
+        'chain': SuiChainUniqueIdToJSON(value['chain']),
+        'coin_type_str': value['coinTypeStr'],
     };
 }
 

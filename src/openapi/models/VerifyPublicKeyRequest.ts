@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -30,11 +30,9 @@ export interface VerifyPublicKeyRequest {
 /**
  * Check if a given object implements the VerifyPublicKeyRequest interface.
  */
-export function instanceOfVerifyPublicKeyRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "signature" in value;
-
-    return isInstance;
+export function instanceOfVerifyPublicKeyRequest(value: object): value is VerifyPublicKeyRequest {
+    if (!('signature' in value) || value['signature'] === undefined) return false;
+    return true;
 }
 
 export function VerifyPublicKeyRequestFromJSON(json: any): VerifyPublicKeyRequest {
@@ -42,7 +40,7 @@ export function VerifyPublicKeyRequestFromJSON(json: any): VerifyPublicKeyReques
 }
 
 export function VerifyPublicKeyRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): VerifyPublicKeyRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -51,16 +49,18 @@ export function VerifyPublicKeyRequestFromJSONTyped(json: any, ignoreDiscriminat
     };
 }
 
-export function VerifyPublicKeyRequestToJSON(value?: VerifyPublicKeyRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function VerifyPublicKeyRequestToJSON(json: any): VerifyPublicKeyRequest {
+    return VerifyPublicKeyRequestToJSONTyped(json, false);
+}
+
+export function VerifyPublicKeyRequestToJSONTyped(value?: VerifyPublicKeyRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'signature': value.signature,
+        'signature': value['signature'],
     };
 }
 

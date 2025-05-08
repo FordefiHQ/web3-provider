@@ -12,19 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { ApprovalGroup } from './ApprovalGroup';
 import {
     ApprovalGroupFromJSON,
     ApprovalGroupFromJSONTyped,
     ApprovalGroupToJSON,
+    ApprovalGroupToJSONTyped,
 } from './ApprovalGroup';
-import type { UserRef } from './UserRef';
-import {
-    UserRefFromJSON,
-    UserRefFromJSONTyped,
-    UserRefToJSON,
-} from './UserRef';
 
 /**
  * 
@@ -44,20 +39,6 @@ export interface RuleActionRequireApproval {
      * @memberof RuleActionRequireApproval
      */
     approvalGroups: Array<ApprovalGroup>;
-    /**
-     * 
-     * @type {number}
-     * @memberof RuleActionRequireApproval
-     * @deprecated
-     */
-    threshold?: number;
-    /**
-     * 
-     * @type {Array<UserRef>}
-     * @memberof RuleActionRequireApproval
-     * @deprecated
-     */
-    approvers?: Array<UserRef>;
 }
 
 
@@ -73,12 +54,10 @@ export type RuleActionRequireApprovalTypeEnum = typeof RuleActionRequireApproval
 /**
  * Check if a given object implements the RuleActionRequireApproval interface.
  */
-export function instanceOfRuleActionRequireApproval(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "approvalGroups" in value;
-
-    return isInstance;
+export function instanceOfRuleActionRequireApproval(value: object): value is RuleActionRequireApproval {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('approvalGroups' in value) || value['approvalGroups'] === undefined) return false;
+    return true;
 }
 
 export function RuleActionRequireApprovalFromJSON(json: any): RuleActionRequireApproval {
@@ -86,31 +65,29 @@ export function RuleActionRequireApprovalFromJSON(json: any): RuleActionRequireA
 }
 
 export function RuleActionRequireApprovalFromJSONTyped(json: any, ignoreDiscriminator: boolean): RuleActionRequireApproval {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
         'approvalGroups': ((json['approval_groups'] as Array<any>).map(ApprovalGroupFromJSON)),
-        'threshold': !exists(json, 'threshold') ? undefined : json['threshold'],
-        'approvers': !exists(json, 'approvers') ? undefined : ((json['approvers'] as Array<any>).map(UserRefFromJSON)),
     };
 }
 
-export function RuleActionRequireApprovalToJSON(value?: RuleActionRequireApproval | null): any {
-    if (value === undefined) {
-        return undefined;
+export function RuleActionRequireApprovalToJSON(json: any): RuleActionRequireApproval {
+    return RuleActionRequireApprovalToJSONTyped(json, false);
+}
+
+export function RuleActionRequireApprovalToJSONTyped(value?: RuleActionRequireApproval | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'approval_groups': ((value.approvalGroups as Array<any>).map(ApprovalGroupToJSON)),
-        'threshold': value.threshold,
-        'approvers': value.approvers === undefined ? undefined : ((value.approvers as Array<any>).map(UserRefToJSON)),
+        'type': value['type'],
+        'approval_groups': ((value['approvalGroups'] as Array<any>).map(ApprovalGroupToJSON)),
     };
 }
 

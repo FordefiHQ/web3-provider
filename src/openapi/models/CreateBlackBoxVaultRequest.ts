@@ -12,13 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { ImportVaultOptions } from './ImportVaultOptions';
+import { mapValues } from '../runtime';
+import type { ImportVaultDefaultOptions } from './ImportVaultDefaultOptions';
 import {
-    ImportVaultOptionsFromJSON,
-    ImportVaultOptionsFromJSONTyped,
-    ImportVaultOptionsToJSON,
-} from './ImportVaultOptions';
+    ImportVaultDefaultOptionsFromJSON,
+    ImportVaultDefaultOptionsFromJSONTyped,
+    ImportVaultDefaultOptionsToJSON,
+    ImportVaultDefaultOptionsToJSONTyped,
+} from './ImportVaultDefaultOptions';
 
 /**
  * 
@@ -53,10 +54,10 @@ export interface CreateBlackBoxVaultRequest {
     vaultGroupId?: string;
     /**
      * 
-     * @type {ImportVaultOptions}
+     * @type {ImportVaultDefaultOptions}
      * @memberof CreateBlackBoxVaultRequest
      */
-    importVault?: ImportVaultOptions;
+    importVault?: ImportVaultDefaultOptions;
     /**
      * 
      * @type {string}
@@ -95,13 +96,11 @@ export type CreateBlackBoxVaultRequestKeyTypeEnum = typeof CreateBlackBoxVaultRe
 /**
  * Check if a given object implements the CreateBlackBoxVaultRequest interface.
  */
-export function instanceOfCreateBlackBoxVaultRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "keyType" in value;
-
-    return isInstance;
+export function instanceOfCreateBlackBoxVaultRequest(value: object): value is CreateBlackBoxVaultRequest {
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('keyType' in value) || value['keyType'] === undefined) return false;
+    return true;
 }
 
 export function CreateBlackBoxVaultRequestFromJSON(json: any): CreateBlackBoxVaultRequest {
@@ -109,37 +108,39 @@ export function CreateBlackBoxVaultRequestFromJSON(json: any): CreateBlackBoxVau
 }
 
 export function CreateBlackBoxVaultRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateBlackBoxVaultRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'name': json['name'],
-        'keysetId': !exists(json, 'keyset_id') ? undefined : json['keyset_id'],
-        'endUserId': !exists(json, 'end_user_id') ? undefined : json['end_user_id'],
-        'vaultGroupId': !exists(json, 'vault_group_id') ? undefined : json['vault_group_id'],
-        'importVault': !exists(json, 'import_vault') ? undefined : ImportVaultOptionsFromJSON(json['import_vault']),
+        'keysetId': json['keyset_id'] == null ? undefined : json['keyset_id'],
+        'endUserId': json['end_user_id'] == null ? undefined : json['end_user_id'],
+        'vaultGroupId': json['vault_group_id'] == null ? undefined : json['vault_group_id'],
+        'importVault': json['import_vault'] == null ? undefined : ImportVaultDefaultOptionsFromJSON(json['import_vault']),
         'type': json['type'],
         'keyType': json['key_type'],
     };
 }
 
-export function CreateBlackBoxVaultRequestToJSON(value?: CreateBlackBoxVaultRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateBlackBoxVaultRequestToJSON(json: any): CreateBlackBoxVaultRequest {
+    return CreateBlackBoxVaultRequestToJSONTyped(json, false);
+}
+
+export function CreateBlackBoxVaultRequestToJSONTyped(value?: CreateBlackBoxVaultRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'keyset_id': value.keysetId,
-        'end_user_id': value.endUserId,
-        'vault_group_id': value.vaultGroupId,
-        'import_vault': ImportVaultOptionsToJSON(value.importVault),
-        'type': value.type,
-        'key_type': value.keyType,
+        'name': value['name'],
+        'keyset_id': value['keysetId'],
+        'end_user_id': value['endUserId'],
+        'vault_group_id': value['vaultGroupId'],
+        'import_vault': ImportVaultDefaultOptionsToJSON(value['importVault']),
+        'type': value['type'],
+        'key_type': value['keyType'],
     };
 }
 

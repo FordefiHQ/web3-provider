@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AddAssetToVaultErrorType } from './AddAssetToVaultErrorType';
 import {
     AddAssetToVaultErrorTypeFromJSON,
     AddAssetToVaultErrorTypeFromJSONTyped,
     AddAssetToVaultErrorTypeToJSON,
+    AddAssetToVaultErrorTypeToJSONTyped,
 } from './AddAssetToVaultErrorType';
 
 /**
@@ -58,15 +59,15 @@ export interface DefinedPreconditionErrorAddAssetToVaultErrorType {
     errorType?: AddAssetToVaultErrorType;
 }
 
+
+
 /**
  * Check if a given object implements the DefinedPreconditionErrorAddAssetToVaultErrorType interface.
  */
-export function instanceOfDefinedPreconditionErrorAddAssetToVaultErrorType(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "title" in value;
-    isInstance = isInstance && "detail" in value;
-
-    return isInstance;
+export function instanceOfDefinedPreconditionErrorAddAssetToVaultErrorType(value: object): value is DefinedPreconditionErrorAddAssetToVaultErrorType {
+    if (!('title' in value) || value['title'] === undefined) return false;
+    if (!('detail' in value) || value['detail'] === undefined) return false;
+    return true;
 }
 
 export function DefinedPreconditionErrorAddAssetToVaultErrorTypeFromJSON(json: any): DefinedPreconditionErrorAddAssetToVaultErrorType {
@@ -74,33 +75,35 @@ export function DefinedPreconditionErrorAddAssetToVaultErrorTypeFromJSON(json: a
 }
 
 export function DefinedPreconditionErrorAddAssetToVaultErrorTypeFromJSONTyped(json: any, ignoreDiscriminator: boolean): DefinedPreconditionErrorAddAssetToVaultErrorType {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'title': json['title'],
         'detail': json['detail'],
-        'requestId': !exists(json, 'request_id') ? undefined : json['request_id'],
-        'systemErrorCode': !exists(json, 'system_error_code') ? undefined : json['system_error_code'],
-        'errorType': !exists(json, 'error_type') ? undefined : AddAssetToVaultErrorTypeFromJSON(json['error_type']),
+        'requestId': json['request_id'] == null ? undefined : json['request_id'],
+        'systemErrorCode': json['system_error_code'] == null ? undefined : json['system_error_code'],
+        'errorType': json['error_type'] == null ? undefined : AddAssetToVaultErrorTypeFromJSON(json['error_type']),
     };
 }
 
-export function DefinedPreconditionErrorAddAssetToVaultErrorTypeToJSON(value?: DefinedPreconditionErrorAddAssetToVaultErrorType | null): any {
-    if (value === undefined) {
-        return undefined;
+export function DefinedPreconditionErrorAddAssetToVaultErrorTypeToJSON(json: any): DefinedPreconditionErrorAddAssetToVaultErrorType {
+    return DefinedPreconditionErrorAddAssetToVaultErrorTypeToJSONTyped(json, false);
+}
+
+export function DefinedPreconditionErrorAddAssetToVaultErrorTypeToJSONTyped(value?: DefinedPreconditionErrorAddAssetToVaultErrorType | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'title': value.title,
-        'detail': value.detail,
-        'request_id': value.requestId,
-        'system_error_code': value.systemErrorCode,
-        'error_type': AddAssetToVaultErrorTypeToJSON(value.errorType),
+        'title': value['title'],
+        'detail': value['detail'],
+        'request_id': value['requestId'],
+        'system_error_code': value['systemErrorCode'],
+        'error_type': AddAssetToVaultErrorTypeToJSON(value['errorType']),
     };
 }
 

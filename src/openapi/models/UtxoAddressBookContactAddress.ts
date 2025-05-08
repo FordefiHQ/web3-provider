@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedUtxoChain } from './EnrichedUtxoChain';
 import {
     EnrichedUtxoChainFromJSON,
     EnrichedUtxoChainFromJSONTyped,
     EnrichedUtxoChainToJSON,
+    EnrichedUtxoChainToJSONTyped,
 } from './EnrichedUtxoChain';
 
 /**
@@ -59,13 +60,11 @@ export type UtxoAddressBookContactAddressChainTypeEnum = typeof UtxoAddressBookC
 /**
  * Check if a given object implements the UtxoAddressBookContactAddress interface.
  */
-export function instanceOfUtxoAddressBookContactAddress(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chainType" in value;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfUtxoAddressBookContactAddress(value: object): value is UtxoAddressBookContactAddress {
+    if (!('chainType' in value) || value['chainType'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function UtxoAddressBookContactAddressFromJSON(json: any): UtxoAddressBookContactAddress {
@@ -73,7 +72,7 @@ export function UtxoAddressBookContactAddressFromJSON(json: any): UtxoAddressBoo
 }
 
 export function UtxoAddressBookContactAddressFromJSONTyped(json: any, ignoreDiscriminator: boolean): UtxoAddressBookContactAddress {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -84,18 +83,20 @@ export function UtxoAddressBookContactAddressFromJSONTyped(json: any, ignoreDisc
     };
 }
 
-export function UtxoAddressBookContactAddressToJSON(value?: UtxoAddressBookContactAddress | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UtxoAddressBookContactAddressToJSON(json: any): UtxoAddressBookContactAddress {
+    return UtxoAddressBookContactAddressToJSONTyped(json, false);
+}
+
+export function UtxoAddressBookContactAddressToJSONTyped(value?: UtxoAddressBookContactAddress | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain_type': value.chainType,
-        'address': value.address,
-        'chain': EnrichedUtxoChainToJSON(value.chain),
+        'chain_type': value['chainType'],
+        'address': value['address'],
+        'chain': EnrichedUtxoChainToJSON(value['chain']),
     };
 }
 

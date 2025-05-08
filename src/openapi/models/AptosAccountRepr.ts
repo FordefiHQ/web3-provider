@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type AptosAccountReprChainTypeEnum = typeof AptosAccountReprChainTypeEnum
 /**
  * Check if a given object implements the AptosAccountRepr interface.
  */
-export function instanceOfAptosAccountRepr(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chainType" in value;
-    isInstance = isInstance && "hexRepr" in value;
-
-    return isInstance;
+export function instanceOfAptosAccountRepr(value: object): value is AptosAccountRepr {
+    if (!('chainType' in value) || value['chainType'] === undefined) return false;
+    if (!('hexRepr' in value) || value['hexRepr'] === undefined) return false;
+    return true;
 }
 
 export function AptosAccountReprFromJSON(json: any): AptosAccountRepr {
@@ -59,7 +57,7 @@ export function AptosAccountReprFromJSON(json: any): AptosAccountRepr {
 }
 
 export function AptosAccountReprFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosAccountRepr {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function AptosAccountReprFromJSONTyped(json: any, ignoreDiscriminator: bo
     };
 }
 
-export function AptosAccountReprToJSON(value?: AptosAccountRepr | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AptosAccountReprToJSON(json: any): AptosAccountRepr {
+    return AptosAccountReprToJSONTyped(json, false);
+}
+
+export function AptosAccountReprToJSONTyped(value?: AptosAccountRepr | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain_type': value.chainType,
-        'hex_repr': value.hexRepr,
+        'chain_type': value['chainType'],
+        'hex_repr': value['hexRepr'],
     };
 }
 

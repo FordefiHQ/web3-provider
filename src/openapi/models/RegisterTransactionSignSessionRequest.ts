@@ -12,25 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
  * @interface RegisterTransactionSignSessionRequest
  */
 export interface RegisterTransactionSignSessionRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof RegisterTransactionSignSessionRequest
-     */
-    signature?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RegisterTransactionSignSessionRequest
-     */
-    unsignedMessage?: string;
     /**
      * 
      * @type {string}
@@ -48,11 +36,9 @@ export interface RegisterTransactionSignSessionRequest {
 /**
  * Check if a given object implements the RegisterTransactionSignSessionRequest interface.
  */
-export function instanceOfRegisterTransactionSignSessionRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "protocolVersion" in value;
-
-    return isInstance;
+export function instanceOfRegisterTransactionSignSessionRequest(value: object): value is RegisterTransactionSignSessionRequest {
+    if (!('protocolVersion' in value) || value['protocolVersion'] === undefined) return false;
+    return true;
 }
 
 export function RegisterTransactionSignSessionRequestFromJSON(json: any): RegisterTransactionSignSessionRequest {
@@ -60,31 +46,29 @@ export function RegisterTransactionSignSessionRequestFromJSON(json: any): Regist
 }
 
 export function RegisterTransactionSignSessionRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): RegisterTransactionSignSessionRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'signature': !exists(json, 'signature') ? undefined : json['signature'],
-        'unsignedMessage': !exists(json, 'unsigned_message') ? undefined : json['unsigned_message'],
         'protocolVersion': json['protocol_version'],
-        'sessionSeed': !exists(json, 'session_seed') ? undefined : json['session_seed'],
+        'sessionSeed': json['session_seed'] == null ? undefined : json['session_seed'],
     };
 }
 
-export function RegisterTransactionSignSessionRequestToJSON(value?: RegisterTransactionSignSessionRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function RegisterTransactionSignSessionRequestToJSON(json: any): RegisterTransactionSignSessionRequest {
+    return RegisterTransactionSignSessionRequestToJSONTyped(json, false);
+}
+
+export function RegisterTransactionSignSessionRequestToJSONTyped(value?: RegisterTransactionSignSessionRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'signature': value.signature,
-        'unsigned_message': value.unsignedMessage,
-        'protocol_version': value.protocolVersion,
-        'session_seed': value.sessionSeed,
+        'protocol_version': value['protocolVersion'],
+        'session_seed': value['sessionSeed'],
     };
 }
 

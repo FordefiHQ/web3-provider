@@ -12,106 +12,141 @@
  * Do not edit the class manually.
  */
 
+import type { AptosMessage } from './AptosMessage';
 import {
-    AptosMessage,
     instanceOfAptosMessage,
     AptosMessageFromJSON,
     AptosMessageFromJSONTyped,
     AptosMessageToJSON,
 } from './AptosMessage';
+import type { AptosTransaction } from './AptosTransaction';
 import {
-    AptosTransaction,
     instanceOfAptosTransaction,
     AptosTransactionFromJSON,
     AptosTransactionFromJSONTyped,
     AptosTransactionToJSON,
 } from './AptosTransaction';
+import type { BlackBoxSignature } from './BlackBoxSignature';
 import {
-    BlackBoxSignature,
     instanceOfBlackBoxSignature,
     BlackBoxSignatureFromJSON,
     BlackBoxSignatureFromJSONTyped,
     BlackBoxSignatureToJSON,
 } from './BlackBoxSignature';
+import type { CosmosMessage } from './CosmosMessage';
 import {
-    CosmosMessage,
     instanceOfCosmosMessage,
     CosmosMessageFromJSON,
     CosmosMessageFromJSONTyped,
     CosmosMessageToJSON,
 } from './CosmosMessage';
+import type { CosmosTransaction } from './CosmosTransaction';
 import {
-    CosmosTransaction,
     instanceOfCosmosTransaction,
     CosmosTransactionFromJSON,
     CosmosTransactionFromJSONTyped,
     CosmosTransactionToJSON,
 } from './CosmosTransaction';
+import type { EvmMessage } from './EvmMessage';
 import {
-    EvmMessage,
     instanceOfEvmMessage,
     EvmMessageFromJSON,
     EvmMessageFromJSONTyped,
     EvmMessageToJSON,
 } from './EvmMessage';
+import type { EvmTransaction } from './EvmTransaction';
 import {
-    EvmTransaction,
     instanceOfEvmTransaction,
     EvmTransactionFromJSON,
     EvmTransactionFromJSONTyped,
     EvmTransactionToJSON,
 } from './EvmTransaction';
+import type { ExchangeTransaction } from './ExchangeTransaction';
 import {
-    SolanaMessage,
+    instanceOfExchangeTransaction,
+    ExchangeTransactionFromJSON,
+    ExchangeTransactionFromJSONTyped,
+    ExchangeTransactionToJSON,
+} from './ExchangeTransaction';
+import type { SolanaMessage } from './SolanaMessage';
+import {
     instanceOfSolanaMessage,
     SolanaMessageFromJSON,
     SolanaMessageFromJSONTyped,
     SolanaMessageToJSON,
 } from './SolanaMessage';
+import type { SolanaTransaction } from './SolanaTransaction';
 import {
-    SolanaTransaction,
     instanceOfSolanaTransaction,
     SolanaTransactionFromJSON,
     SolanaTransactionFromJSONTyped,
     SolanaTransactionToJSON,
 } from './SolanaTransaction';
+import type { StacksTransaction } from './StacksTransaction';
 import {
-    SuiMessage,
+    instanceOfStacksTransaction,
+    StacksTransactionFromJSON,
+    StacksTransactionFromJSONTyped,
+    StacksTransactionToJSON,
+} from './StacksTransaction';
+import type { StarknetMessage } from './StarknetMessage';
+import {
+    instanceOfStarknetMessage,
+    StarknetMessageFromJSON,
+    StarknetMessageFromJSONTyped,
+    StarknetMessageToJSON,
+} from './StarknetMessage';
+import type { StarknetTransaction } from './StarknetTransaction';
+import {
+    instanceOfStarknetTransaction,
+    StarknetTransactionFromJSON,
+    StarknetTransactionFromJSONTyped,
+    StarknetTransactionToJSON,
+} from './StarknetTransaction';
+import type { SuiMessage } from './SuiMessage';
+import {
     instanceOfSuiMessage,
     SuiMessageFromJSON,
     SuiMessageFromJSONTyped,
     SuiMessageToJSON,
 } from './SuiMessage';
+import type { SuiTransaction } from './SuiTransaction';
 import {
-    SuiTransaction,
     instanceOfSuiTransaction,
     SuiTransactionFromJSON,
     SuiTransactionFromJSONTyped,
     SuiTransactionToJSON,
 } from './SuiTransaction';
+import type { TonMessage } from './TonMessage';
 import {
-    TonMessage,
     instanceOfTonMessage,
     TonMessageFromJSON,
     TonMessageFromJSONTyped,
     TonMessageToJSON,
 } from './TonMessage';
+import type { TonTransaction } from './TonTransaction';
 import {
-    TonTransaction,
     instanceOfTonTransaction,
     TonTransactionFromJSON,
     TonTransactionFromJSONTyped,
     TonTransactionToJSON,
 } from './TonTransaction';
+import type { TronTransaction } from './TronTransaction';
 import {
-    UtxoMessage,
+    instanceOfTronTransaction,
+    TronTransactionFromJSON,
+    TronTransactionFromJSONTyped,
+    TronTransactionToJSON,
+} from './TronTransaction';
+import type { UtxoMessage } from './UtxoMessage';
+import {
     instanceOfUtxoMessage,
     UtxoMessageFromJSON,
     UtxoMessageFromJSONTyped,
     UtxoMessageToJSON,
 } from './UtxoMessage';
+import type { UtxoTransaction } from './UtxoTransaction';
 import {
-    UtxoTransaction,
     instanceOfUtxoTransaction,
     UtxoTransactionFromJSON,
     UtxoTransactionFromJSONTyped,
@@ -123,90 +158,111 @@ import {
  * 
  * @export
  */
-export type ReleaseTransactionResponse = { type: 'aptos_message' } & AptosMessage | { type: 'aptos_transaction' } & AptosTransaction | { type: 'black_box_signature' } & BlackBoxSignature | { type: 'cosmos_message' } & CosmosMessage | { type: 'cosmos_transaction' } & CosmosTransaction | { type: 'evm_message' } & EvmMessage | { type: 'evm_transaction' } & EvmTransaction | { type: 'solana_message' } & SolanaMessage | { type: 'solana_transaction' } & SolanaTransaction | { type: 'sui_message' } & SuiMessage | { type: 'sui_transaction' } & SuiTransaction | { type: 'ton_message' } & TonMessage | { type: 'ton_transaction' } & TonTransaction | { type: 'utxo_message' } & UtxoMessage | { type: 'utxo_transaction' } & UtxoTransaction;
+export type ReleaseTransactionResponse = { type: 'aptos_message' } & AptosMessage | { type: 'aptos_transaction' } & AptosTransaction | { type: 'black_box_signature' } & BlackBoxSignature | { type: 'cosmos_message' } & CosmosMessage | { type: 'cosmos_transaction' } & CosmosTransaction | { type: 'evm_message' } & EvmMessage | { type: 'evm_transaction' } & EvmTransaction | { type: 'exchange_transaction' } & ExchangeTransaction | { type: 'solana_message' } & SolanaMessage | { type: 'solana_transaction' } & SolanaTransaction | { type: 'stacks_transaction' } & StacksTransaction | { type: 'starknet_message' } & StarknetMessage | { type: 'starknet_transaction' } & StarknetTransaction | { type: 'sui_message' } & SuiMessage | { type: 'sui_transaction' } & SuiTransaction | { type: 'ton_message' } & TonMessage | { type: 'ton_transaction' } & TonTransaction | { type: 'tron_transaction' } & TronTransaction | { type: 'utxo_message' } & UtxoMessage | { type: 'utxo_transaction' } & UtxoTransaction;
 
 export function ReleaseTransactionResponseFromJSON(json: any): ReleaseTransactionResponse {
     return ReleaseTransactionResponseFromJSONTyped(json, false);
 }
 
 export function ReleaseTransactionResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): ReleaseTransactionResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'aptos_message':
-            return {...AptosMessageFromJSONTyped(json, true), type: 'aptos_message'};
+            return Object.assign({}, AptosMessageFromJSONTyped(json, true), { type: 'aptos_message' } as const);
         case 'aptos_transaction':
-            return {...AptosTransactionFromJSONTyped(json, true), type: 'aptos_transaction'};
+            return Object.assign({}, AptosTransactionFromJSONTyped(json, true), { type: 'aptos_transaction' } as const);
         case 'black_box_signature':
-            return {...BlackBoxSignatureFromJSONTyped(json, true), type: 'black_box_signature'};
+            return Object.assign({}, BlackBoxSignatureFromJSONTyped(json, true), { type: 'black_box_signature' } as const);
         case 'cosmos_message':
-            return {...CosmosMessageFromJSONTyped(json, true), type: 'cosmos_message'};
+            return Object.assign({}, CosmosMessageFromJSONTyped(json, true), { type: 'cosmos_message' } as const);
         case 'cosmos_transaction':
-            return {...CosmosTransactionFromJSONTyped(json, true), type: 'cosmos_transaction'};
+            return Object.assign({}, CosmosTransactionFromJSONTyped(json, true), { type: 'cosmos_transaction' } as const);
         case 'evm_message':
-            return {...EvmMessageFromJSONTyped(json, true), type: 'evm_message'};
+            return Object.assign({}, EvmMessageFromJSONTyped(json, true), { type: 'evm_message' } as const);
         case 'evm_transaction':
-            return {...EvmTransactionFromJSONTyped(json, true), type: 'evm_transaction'};
+            return Object.assign({}, EvmTransactionFromJSONTyped(json, true), { type: 'evm_transaction' } as const);
+        case 'exchange_transaction':
+            return Object.assign({}, ExchangeTransactionFromJSONTyped(json, true), { type: 'exchange_transaction' } as const);
         case 'solana_message':
-            return {...SolanaMessageFromJSONTyped(json, true), type: 'solana_message'};
+            return Object.assign({}, SolanaMessageFromJSONTyped(json, true), { type: 'solana_message' } as const);
         case 'solana_transaction':
-            return {...SolanaTransactionFromJSONTyped(json, true), type: 'solana_transaction'};
+            return Object.assign({}, SolanaTransactionFromJSONTyped(json, true), { type: 'solana_transaction' } as const);
+        case 'stacks_transaction':
+            return Object.assign({}, StacksTransactionFromJSONTyped(json, true), { type: 'stacks_transaction' } as const);
+        case 'starknet_message':
+            return Object.assign({}, StarknetMessageFromJSONTyped(json, true), { type: 'starknet_message' } as const);
+        case 'starknet_transaction':
+            return Object.assign({}, StarknetTransactionFromJSONTyped(json, true), { type: 'starknet_transaction' } as const);
         case 'sui_message':
-            return {...SuiMessageFromJSONTyped(json, true), type: 'sui_message'};
+            return Object.assign({}, SuiMessageFromJSONTyped(json, true), { type: 'sui_message' } as const);
         case 'sui_transaction':
-            return {...SuiTransactionFromJSONTyped(json, true), type: 'sui_transaction'};
+            return Object.assign({}, SuiTransactionFromJSONTyped(json, true), { type: 'sui_transaction' } as const);
         case 'ton_message':
-            return {...TonMessageFromJSONTyped(json, true), type: 'ton_message'};
+            return Object.assign({}, TonMessageFromJSONTyped(json, true), { type: 'ton_message' } as const);
         case 'ton_transaction':
-            return {...TonTransactionFromJSONTyped(json, true), type: 'ton_transaction'};
+            return Object.assign({}, TonTransactionFromJSONTyped(json, true), { type: 'ton_transaction' } as const);
+        case 'tron_transaction':
+            return Object.assign({}, TronTransactionFromJSONTyped(json, true), { type: 'tron_transaction' } as const);
         case 'utxo_message':
-            return {...UtxoMessageFromJSONTyped(json, true), type: 'utxo_message'};
+            return Object.assign({}, UtxoMessageFromJSONTyped(json, true), { type: 'utxo_message' } as const);
         case 'utxo_transaction':
-            return {...UtxoTransactionFromJSONTyped(json, true), type: 'utxo_transaction'};
+            return Object.assign({}, UtxoTransactionFromJSONTyped(json, true), { type: 'utxo_transaction' } as const);
         default:
             throw new Error(`No variant of ReleaseTransactionResponse exists with 'type=${json['type']}'`);
     }
 }
 
-export function ReleaseTransactionResponseToJSON(value?: ReleaseTransactionResponse | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function ReleaseTransactionResponseToJSON(json: any): any {
+    return ReleaseTransactionResponseToJSONTyped(json, false);
+}
+
+export function ReleaseTransactionResponseToJSONTyped(value?: ReleaseTransactionResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'aptos_message':
-            return AptosMessageToJSON(value);
+            return Object.assign({}, AptosMessageToJSON(value), { type: 'aptos_message' } as const);
         case 'aptos_transaction':
-            return AptosTransactionToJSON(value);
+            return Object.assign({}, AptosTransactionToJSON(value), { type: 'aptos_transaction' } as const);
         case 'black_box_signature':
-            return BlackBoxSignatureToJSON(value);
+            return Object.assign({}, BlackBoxSignatureToJSON(value), { type: 'black_box_signature' } as const);
         case 'cosmos_message':
-            return CosmosMessageToJSON(value);
+            return Object.assign({}, CosmosMessageToJSON(value), { type: 'cosmos_message' } as const);
         case 'cosmos_transaction':
-            return CosmosTransactionToJSON(value);
+            return Object.assign({}, CosmosTransactionToJSON(value), { type: 'cosmos_transaction' } as const);
         case 'evm_message':
-            return EvmMessageToJSON(value);
+            return Object.assign({}, EvmMessageToJSON(value), { type: 'evm_message' } as const);
         case 'evm_transaction':
-            return EvmTransactionToJSON(value);
+            return Object.assign({}, EvmTransactionToJSON(value), { type: 'evm_transaction' } as const);
+        case 'exchange_transaction':
+            return Object.assign({}, ExchangeTransactionToJSON(value), { type: 'exchange_transaction' } as const);
         case 'solana_message':
-            return SolanaMessageToJSON(value);
+            return Object.assign({}, SolanaMessageToJSON(value), { type: 'solana_message' } as const);
         case 'solana_transaction':
-            return SolanaTransactionToJSON(value);
+            return Object.assign({}, SolanaTransactionToJSON(value), { type: 'solana_transaction' } as const);
+        case 'stacks_transaction':
+            return Object.assign({}, StacksTransactionToJSON(value), { type: 'stacks_transaction' } as const);
+        case 'starknet_message':
+            return Object.assign({}, StarknetMessageToJSON(value), { type: 'starknet_message' } as const);
+        case 'starknet_transaction':
+            return Object.assign({}, StarknetTransactionToJSON(value), { type: 'starknet_transaction' } as const);
         case 'sui_message':
-            return SuiMessageToJSON(value);
+            return Object.assign({}, SuiMessageToJSON(value), { type: 'sui_message' } as const);
         case 'sui_transaction':
-            return SuiTransactionToJSON(value);
+            return Object.assign({}, SuiTransactionToJSON(value), { type: 'sui_transaction' } as const);
         case 'ton_message':
-            return TonMessageToJSON(value);
+            return Object.assign({}, TonMessageToJSON(value), { type: 'ton_message' } as const);
         case 'ton_transaction':
-            return TonTransactionToJSON(value);
+            return Object.assign({}, TonTransactionToJSON(value), { type: 'ton_transaction' } as const);
+        case 'tron_transaction':
+            return Object.assign({}, TronTransactionToJSON(value), { type: 'tron_transaction' } as const);
         case 'utxo_message':
-            return UtxoMessageToJSON(value);
+            return Object.assign({}, UtxoMessageToJSON(value), { type: 'utxo_message' } as const);
         case 'utxo_transaction':
-            return UtxoTransactionToJSON(value);
+            return Object.assign({}, UtxoTransactionToJSON(value), { type: 'utxo_transaction' } as const);
         default:
             throw new Error(`No variant of ReleaseTransactionResponse exists with 'type=${value['type']}'`);
     }

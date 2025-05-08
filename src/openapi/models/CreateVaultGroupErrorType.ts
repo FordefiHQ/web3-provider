@@ -25,6 +25,17 @@ export const CreateVaultGroupErrorType = {
 export type CreateVaultGroupErrorType = typeof CreateVaultGroupErrorType[keyof typeof CreateVaultGroupErrorType];
 
 
+export function instanceOfCreateVaultGroupErrorType(value: any): boolean {
+    for (const key in CreateVaultGroupErrorType) {
+        if (Object.prototype.hasOwnProperty.call(CreateVaultGroupErrorType, key)) {
+            if (CreateVaultGroupErrorType[key as keyof typeof CreateVaultGroupErrorType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function CreateVaultGroupErrorTypeFromJSON(json: any): CreateVaultGroupErrorType {
     return CreateVaultGroupErrorTypeFromJSONTyped(json, false);
 }
@@ -35,5 +46,9 @@ export function CreateVaultGroupErrorTypeFromJSONTyped(json: any, ignoreDiscrimi
 
 export function CreateVaultGroupErrorTypeToJSON(value?: CreateVaultGroupErrorType | null): any {
     return value as any;
+}
+
+export function CreateVaultGroupErrorTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): CreateVaultGroupErrorType {
+    return value as CreateVaultGroupErrorType;
 }
 

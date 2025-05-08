@@ -25,6 +25,17 @@ export const TonNetwork = {
 export type TonNetwork = typeof TonNetwork[keyof typeof TonNetwork];
 
 
+export function instanceOfTonNetwork(value: any): boolean {
+    for (const key in TonNetwork) {
+        if (Object.prototype.hasOwnProperty.call(TonNetwork, key)) {
+            if (TonNetwork[key as keyof typeof TonNetwork] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function TonNetworkFromJSON(json: any): TonNetwork {
     return TonNetworkFromJSONTyped(json, false);
 }
@@ -35,5 +46,9 @@ export function TonNetworkFromJSONTyped(json: any, ignoreDiscriminator: boolean)
 
 export function TonNetworkToJSON(value?: TonNetwork | null): any {
     return value as any;
+}
+
+export function TonNetworkToJSONTyped(value: any, ignoreDiscriminator: boolean): TonNetwork {
+    return value as TonNetwork;
 }
 

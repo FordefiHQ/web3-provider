@@ -12,13 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { UtxoChainUniqueId } from './UtxoChainUniqueId';
 import {
     UtxoChainUniqueIdFromJSON,
     UtxoChainUniqueIdFromJSONTyped,
     UtxoChainUniqueIdToJSON,
+    UtxoChainUniqueIdToJSONTyped,
 } from './UtxoChainUniqueId';
+import type { UtxoAssetIdentifierRequest } from './UtxoAssetIdentifierRequest';
+import {
+    UtxoAssetIdentifierRequestFromJSON,
+    UtxoAssetIdentifierRequestFromJSONTyped,
+    UtxoAssetIdentifierRequestToJSON,
+    UtxoAssetIdentifierRequestToJSONTyped,
+} from './UtxoAssetIdentifierRequest';
 
 /**
  * 
@@ -50,6 +58,12 @@ export interface CreateUtxoContactRequest {
      * @memberof CreateUtxoContactRequest
      */
     chain: UtxoChainUniqueId;
+    /**
+     * 
+     * @type {Array<UtxoAssetIdentifierRequest>}
+     * @memberof CreateUtxoContactRequest
+     */
+    assetsIdentifiers?: Array<UtxoAssetIdentifierRequest>;
 }
 
 
@@ -65,14 +79,12 @@ export type CreateUtxoContactRequestTypeEnum = typeof CreateUtxoContactRequestTy
 /**
  * Check if a given object implements the CreateUtxoContactRequest interface.
  */
-export function instanceOfCreateUtxoContactRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfCreateUtxoContactRequest(value: object): value is CreateUtxoContactRequest {
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function CreateUtxoContactRequestFromJSON(json: any): CreateUtxoContactRequest {
@@ -80,7 +92,7 @@ export function CreateUtxoContactRequestFromJSON(json: any): CreateUtxoContactRe
 }
 
 export function CreateUtxoContactRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateUtxoContactRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -89,22 +101,26 @@ export function CreateUtxoContactRequestFromJSONTyped(json: any, ignoreDiscrimin
         'type': json['type'],
         'address': json['address'],
         'chain': UtxoChainUniqueIdFromJSON(json['chain']),
+        'assetsIdentifiers': json['assets_identifiers'] == null ? undefined : ((json['assets_identifiers'] as Array<any>).map(UtxoAssetIdentifierRequestFromJSON)),
     };
 }
 
-export function CreateUtxoContactRequestToJSON(value?: CreateUtxoContactRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateUtxoContactRequestToJSON(json: any): CreateUtxoContactRequest {
+    return CreateUtxoContactRequestToJSONTyped(json, false);
+}
+
+export function CreateUtxoContactRequestToJSONTyped(value?: CreateUtxoContactRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'type': value.type,
-        'address': value.address,
-        'chain': UtxoChainUniqueIdToJSON(value.chain),
+        'name': value['name'],
+        'type': value['type'],
+        'address': value['address'],
+        'chain': UtxoChainUniqueIdToJSON(value['chain']),
+        'assets_identifiers': value['assetsIdentifiers'] == null ? undefined : ((value['assetsIdentifiers'] as Array<any>).map(UtxoAssetIdentifierRequestToJSON)),
     };
 }
 

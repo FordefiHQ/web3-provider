@@ -12,30 +12,34 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { RuleAction } from './RuleAction';
-import {
-    RuleActionFromJSON,
-    RuleActionFromJSONTyped,
-    RuleActionToJSON,
-} from './RuleAction';
-import type { TransactionRuleConditions } from './TransactionRuleConditions';
-import {
-    TransactionRuleConditionsFromJSON,
-    TransactionRuleConditionsFromJSONTyped,
-    TransactionRuleConditionsToJSON,
-} from './TransactionRuleConditions';
+import { mapValues } from '../runtime';
 import type { TransactionRuleDiff } from './TransactionRuleDiff';
 import {
     TransactionRuleDiffFromJSON,
     TransactionRuleDiffFromJSONTyped,
     TransactionRuleDiffToJSON,
+    TransactionRuleDiffToJSONTyped,
 } from './TransactionRuleDiff';
+import type { TransactionRuleConditions } from './TransactionRuleConditions';
+import {
+    TransactionRuleConditionsFromJSON,
+    TransactionRuleConditionsFromJSONTyped,
+    TransactionRuleConditionsToJSON,
+    TransactionRuleConditionsToJSONTyped,
+} from './TransactionRuleConditions';
+import type { RuleAction } from './RuleAction';
+import {
+    RuleActionFromJSON,
+    RuleActionFromJSONTyped,
+    RuleActionToJSON,
+    RuleActionToJSONTyped,
+} from './RuleAction';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
     UserRefFromJSONTyped,
     UserRefToJSON,
+    UserRefToJSONTyped,
 } from './UserRef';
 
 /**
@@ -76,18 +80,18 @@ export interface ProposedTransactionRule {
     diff: TransactionRuleDiff;
 }
 
+
+
 /**
  * Check if a given object implements the ProposedTransactionRule interface.
  */
-export function instanceOfProposedTransactionRule(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "ruleConditions" in value;
-    isInstance = isInstance && "ruleAction" in value;
-    isInstance = isInstance && "modifiedBy" in value;
-    isInstance = isInstance && "diff" in value;
-
-    return isInstance;
+export function instanceOfProposedTransactionRule(value: object): value is ProposedTransactionRule {
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('ruleConditions' in value) || value['ruleConditions'] === undefined) return false;
+    if (!('ruleAction' in value) || value['ruleAction'] === undefined) return false;
+    if (!('modifiedBy' in value) || value['modifiedBy'] === undefined) return false;
+    if (!('diff' in value) || value['diff'] === undefined) return false;
+    return true;
 }
 
 export function ProposedTransactionRuleFromJSON(json: any): ProposedTransactionRule {
@@ -95,7 +99,7 @@ export function ProposedTransactionRuleFromJSON(json: any): ProposedTransactionR
 }
 
 export function ProposedTransactionRuleFromJSONTyped(json: any, ignoreDiscriminator: boolean): ProposedTransactionRule {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -108,20 +112,22 @@ export function ProposedTransactionRuleFromJSONTyped(json: any, ignoreDiscrimina
     };
 }
 
-export function ProposedTransactionRuleToJSON(value?: ProposedTransactionRule | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ProposedTransactionRuleToJSON(json: any): ProposedTransactionRule {
+    return ProposedTransactionRuleToJSONTyped(json, false);
+}
+
+export function ProposedTransactionRuleToJSONTyped(value?: ProposedTransactionRule | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'rule_conditions': TransactionRuleConditionsToJSON(value.ruleConditions),
-        'rule_action': RuleActionToJSON(value.ruleAction),
-        'modified_by': UserRefToJSON(value.modifiedBy),
-        'diff': TransactionRuleDiffToJSON(value.diff),
+        'name': value['name'],
+        'rule_conditions': TransactionRuleConditionsToJSON(value['ruleConditions']),
+        'rule_action': RuleActionToJSON(value['ruleAction']),
+        'modified_by': UserRefToJSON(value['modifiedBy']),
+        'diff': TransactionRuleDiffToJSON(value['diff']),
     };
 }
 

@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -24,10 +24,8 @@ export interface AptosVaultMetadataValue {
 /**
  * Check if a given object implements the AptosVaultMetadataValue interface.
  */
-export function instanceOfAptosVaultMetadataValue(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfAptosVaultMetadataValue(value: object): value is AptosVaultMetadataValue {
+    return true;
 }
 
 export function AptosVaultMetadataValueFromJSON(json: any): AptosVaultMetadataValue {
@@ -38,7 +36,11 @@ export function AptosVaultMetadataValueFromJSONTyped(json: any, ignoreDiscrimina
     return json;
 }
 
-export function AptosVaultMetadataValueToJSON(value?: AptosVaultMetadataValue | null): any {
+export function AptosVaultMetadataValueToJSON(json: any): AptosVaultMetadataValue {
+    return AptosVaultMetadataValueToJSONTyped(json, false);
+}
+
+export function AptosVaultMetadataValueToJSONTyped(value?: AptosVaultMetadataValue | null, ignoreDiscriminator: boolean = false): any {
     return value;
 }
 

@@ -12,57 +12,78 @@
  * Do not edit the class manually.
  */
 
+import type { CreateAptosVaultRequest } from './CreateAptosVaultRequest';
 import {
-    CreateAptosVaultRequest,
     instanceOfCreateAptosVaultRequest,
     CreateAptosVaultRequestFromJSON,
     CreateAptosVaultRequestFromJSONTyped,
     CreateAptosVaultRequestToJSON,
 } from './CreateAptosVaultRequest';
+import type { CreateBlackBoxVaultRequest } from './CreateBlackBoxVaultRequest';
 import {
-    CreateBlackBoxVaultRequest,
     instanceOfCreateBlackBoxVaultRequest,
     CreateBlackBoxVaultRequestFromJSON,
     CreateBlackBoxVaultRequestFromJSONTyped,
     CreateBlackBoxVaultRequestToJSON,
 } from './CreateBlackBoxVaultRequest';
+import type { CreateCosmosVaultRequest } from './CreateCosmosVaultRequest';
 import {
-    CreateCosmosVaultRequest,
     instanceOfCreateCosmosVaultRequest,
     CreateCosmosVaultRequestFromJSON,
     CreateCosmosVaultRequestFromJSONTyped,
     CreateCosmosVaultRequestToJSON,
 } from './CreateCosmosVaultRequest';
+import type { CreateEvmVaultRequest } from './CreateEvmVaultRequest';
 import {
-    CreateEvmVaultRequest,
     instanceOfCreateEvmVaultRequest,
     CreateEvmVaultRequestFromJSON,
     CreateEvmVaultRequestFromJSONTyped,
     CreateEvmVaultRequestToJSON,
 } from './CreateEvmVaultRequest';
+import type { CreateSolanaVaultRequest } from './CreateSolanaVaultRequest';
 import {
-    CreateSolanaVaultRequest,
     instanceOfCreateSolanaVaultRequest,
     CreateSolanaVaultRequestFromJSON,
     CreateSolanaVaultRequestFromJSONTyped,
     CreateSolanaVaultRequestToJSON,
 } from './CreateSolanaVaultRequest';
+import type { CreateStacksVaultRequest } from './CreateStacksVaultRequest';
 import {
-    CreateSuiVaultRequest,
+    instanceOfCreateStacksVaultRequest,
+    CreateStacksVaultRequestFromJSON,
+    CreateStacksVaultRequestFromJSONTyped,
+    CreateStacksVaultRequestToJSON,
+} from './CreateStacksVaultRequest';
+import type { CreateStarknetVaultRequest } from './CreateStarknetVaultRequest';
+import {
+    instanceOfCreateStarknetVaultRequest,
+    CreateStarknetVaultRequestFromJSON,
+    CreateStarknetVaultRequestFromJSONTyped,
+    CreateStarknetVaultRequestToJSON,
+} from './CreateStarknetVaultRequest';
+import type { CreateSuiVaultRequest } from './CreateSuiVaultRequest';
+import {
     instanceOfCreateSuiVaultRequest,
     CreateSuiVaultRequestFromJSON,
     CreateSuiVaultRequestFromJSONTyped,
     CreateSuiVaultRequestToJSON,
 } from './CreateSuiVaultRequest';
+import type { CreateTonVaultRequest } from './CreateTonVaultRequest';
 import {
-    CreateTonVaultRequest,
     instanceOfCreateTonVaultRequest,
     CreateTonVaultRequestFromJSON,
     CreateTonVaultRequestFromJSONTyped,
     CreateTonVaultRequestToJSON,
 } from './CreateTonVaultRequest';
+import type { CreateTronVaultRequest } from './CreateTronVaultRequest';
 import {
-    CreateUtxoVaultRequest,
+    instanceOfCreateTronVaultRequest,
+    CreateTronVaultRequestFromJSON,
+    CreateTronVaultRequestFromJSONTyped,
+    CreateTronVaultRequestToJSON,
+} from './CreateTronVaultRequest';
+import type { CreateUtxoVaultRequest } from './CreateUtxoVaultRequest';
+import {
     instanceOfCreateUtxoVaultRequest,
     CreateUtxoVaultRequestFromJSON,
     CreateUtxoVaultRequestFromJSONTyped,
@@ -74,62 +95,75 @@ import {
  * 
  * @export
  */
-export type CreateVaultRequest = { type: 'aptos' } & CreateAptosVaultRequest | { type: 'black_box' } & CreateBlackBoxVaultRequest | { type: 'cosmos' } & CreateCosmosVaultRequest | { type: 'evm' } & CreateEvmVaultRequest | { type: 'solana' } & CreateSolanaVaultRequest | { type: 'sui' } & CreateSuiVaultRequest | { type: 'ton' } & CreateTonVaultRequest | { type: 'utxo' } & CreateUtxoVaultRequest;
+export type CreateVaultRequest = { type: 'aptos' } & CreateAptosVaultRequest | { type: 'black_box' } & CreateBlackBoxVaultRequest | { type: 'cosmos' } & CreateCosmosVaultRequest | { type: 'evm' } & CreateEvmVaultRequest | { type: 'solana' } & CreateSolanaVaultRequest | { type: 'stacks' } & CreateStacksVaultRequest | { type: 'starknet' } & CreateStarknetVaultRequest | { type: 'sui' } & CreateSuiVaultRequest | { type: 'ton' } & CreateTonVaultRequest | { type: 'tron' } & CreateTronVaultRequest | { type: 'utxo' } & CreateUtxoVaultRequest;
 
 export function CreateVaultRequestFromJSON(json: any): CreateVaultRequest {
     return CreateVaultRequestFromJSONTyped(json, false);
 }
 
 export function CreateVaultRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateVaultRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'aptos':
-            return {...CreateAptosVaultRequestFromJSONTyped(json, true), type: 'aptos'};
+            return Object.assign({}, CreateAptosVaultRequestFromJSONTyped(json, true), { type: 'aptos' } as const);
         case 'black_box':
-            return {...CreateBlackBoxVaultRequestFromJSONTyped(json, true), type: 'black_box'};
+            return Object.assign({}, CreateBlackBoxVaultRequestFromJSONTyped(json, true), { type: 'black_box' } as const);
         case 'cosmos':
-            return {...CreateCosmosVaultRequestFromJSONTyped(json, true), type: 'cosmos'};
+            return Object.assign({}, CreateCosmosVaultRequestFromJSONTyped(json, true), { type: 'cosmos' } as const);
         case 'evm':
-            return {...CreateEvmVaultRequestFromJSONTyped(json, true), type: 'evm'};
+            return Object.assign({}, CreateEvmVaultRequestFromJSONTyped(json, true), { type: 'evm' } as const);
         case 'solana':
-            return {...CreateSolanaVaultRequestFromJSONTyped(json, true), type: 'solana'};
+            return Object.assign({}, CreateSolanaVaultRequestFromJSONTyped(json, true), { type: 'solana' } as const);
+        case 'stacks':
+            return Object.assign({}, CreateStacksVaultRequestFromJSONTyped(json, true), { type: 'stacks' } as const);
+        case 'starknet':
+            return Object.assign({}, CreateStarknetVaultRequestFromJSONTyped(json, true), { type: 'starknet' } as const);
         case 'sui':
-            return {...CreateSuiVaultRequestFromJSONTyped(json, true), type: 'sui'};
+            return Object.assign({}, CreateSuiVaultRequestFromJSONTyped(json, true), { type: 'sui' } as const);
         case 'ton':
-            return {...CreateTonVaultRequestFromJSONTyped(json, true), type: 'ton'};
+            return Object.assign({}, CreateTonVaultRequestFromJSONTyped(json, true), { type: 'ton' } as const);
+        case 'tron':
+            return Object.assign({}, CreateTronVaultRequestFromJSONTyped(json, true), { type: 'tron' } as const);
         case 'utxo':
-            return {...CreateUtxoVaultRequestFromJSONTyped(json, true), type: 'utxo'};
+            return Object.assign({}, CreateUtxoVaultRequestFromJSONTyped(json, true), { type: 'utxo' } as const);
         default:
             throw new Error(`No variant of CreateVaultRequest exists with 'type=${json['type']}'`);
     }
 }
 
-export function CreateVaultRequestToJSON(value?: CreateVaultRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function CreateVaultRequestToJSON(json: any): any {
+    return CreateVaultRequestToJSONTyped(json, false);
+}
+
+export function CreateVaultRequestToJSONTyped(value?: CreateVaultRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'aptos':
-            return CreateAptosVaultRequestToJSON(value);
+            return Object.assign({}, CreateAptosVaultRequestToJSON(value), { type: 'aptos' } as const);
         case 'black_box':
-            return CreateBlackBoxVaultRequestToJSON(value);
+            return Object.assign({}, CreateBlackBoxVaultRequestToJSON(value), { type: 'black_box' } as const);
         case 'cosmos':
-            return CreateCosmosVaultRequestToJSON(value);
+            return Object.assign({}, CreateCosmosVaultRequestToJSON(value), { type: 'cosmos' } as const);
         case 'evm':
-            return CreateEvmVaultRequestToJSON(value);
+            return Object.assign({}, CreateEvmVaultRequestToJSON(value), { type: 'evm' } as const);
         case 'solana':
-            return CreateSolanaVaultRequestToJSON(value);
+            return Object.assign({}, CreateSolanaVaultRequestToJSON(value), { type: 'solana' } as const);
+        case 'stacks':
+            return Object.assign({}, CreateStacksVaultRequestToJSON(value), { type: 'stacks' } as const);
+        case 'starknet':
+            return Object.assign({}, CreateStarknetVaultRequestToJSON(value), { type: 'starknet' } as const);
         case 'sui':
-            return CreateSuiVaultRequestToJSON(value);
+            return Object.assign({}, CreateSuiVaultRequestToJSON(value), { type: 'sui' } as const);
         case 'ton':
-            return CreateTonVaultRequestToJSON(value);
+            return Object.assign({}, CreateTonVaultRequestToJSON(value), { type: 'ton' } as const);
+        case 'tron':
+            return Object.assign({}, CreateTronVaultRequestToJSON(value), { type: 'tron' } as const);
         case 'utxo':
-            return CreateUtxoVaultRequestToJSON(value);
+            return Object.assign({}, CreateUtxoVaultRequestToJSON(value), { type: 'utxo' } as const);
         default:
             throw new Error(`No variant of CreateVaultRequest exists with 'type=${value['type']}'`);
     }

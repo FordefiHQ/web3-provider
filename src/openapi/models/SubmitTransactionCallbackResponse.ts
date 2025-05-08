@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -40,11 +40,9 @@ export type SubmitTransactionCallbackResponseTypeEnum = typeof SubmitTransaction
 /**
  * Check if a given object implements the SubmitTransactionCallbackResponse interface.
  */
-export function instanceOfSubmitTransactionCallbackResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfSubmitTransactionCallbackResponse(value: object): value is SubmitTransactionCallbackResponse {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function SubmitTransactionCallbackResponseFromJSON(json: any): SubmitTransactionCallbackResponse {
@@ -52,7 +50,7 @@ export function SubmitTransactionCallbackResponseFromJSON(json: any): SubmitTran
 }
 
 export function SubmitTransactionCallbackResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): SubmitTransactionCallbackResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -61,16 +59,18 @@ export function SubmitTransactionCallbackResponseFromJSONTyped(json: any, ignore
     };
 }
 
-export function SubmitTransactionCallbackResponseToJSON(value?: SubmitTransactionCallbackResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SubmitTransactionCallbackResponseToJSON(json: any): SubmitTransactionCallbackResponse {
+    return SubmitTransactionCallbackResponseToJSONTyped(json, false);
+}
+
+export function SubmitTransactionCallbackResponseToJSONTyped(value?: SubmitTransactionCallbackResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
+        'type': value['type'],
     };
 }
 

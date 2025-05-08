@@ -12,22 +12,22 @@
  * Do not edit the class manually.
  */
 
+import type { ApiSignerExt } from './ApiSignerExt';
 import {
-    ApiSignerExt,
     instanceOfApiSignerExt,
     ApiSignerExtFromJSON,
     ApiSignerExtFromJSONTyped,
     ApiSignerExtToJSON,
 } from './ApiSignerExt';
+import type { ApiUserExt } from './ApiUserExt';
 import {
-    ApiUserExt,
     instanceOfApiUserExt,
     ApiUserExtFromJSON,
     ApiUserExtFromJSONTyped,
     ApiUserExtToJSON,
 } from './ApiUserExt';
+import type { PersonExt } from './PersonExt';
 import {
-    PersonExt,
     instanceOfPersonExt,
     PersonExtFromJSON,
     PersonExtFromJSONTyped,
@@ -46,35 +46,36 @@ export function UserExtFromJSON(json: any): UserExt {
 }
 
 export function UserExtFromJSONTyped(json: any, ignoreDiscriminator: boolean): UserExt {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['user_type']) {
         case 'api_signer':
-            return {...ApiSignerExtFromJSONTyped(json, true), userType: 'api_signer'};
+            return Object.assign({}, ApiSignerExtFromJSONTyped(json, true), { userType: 'api_signer' } as const);
         case 'api_user':
-            return {...ApiUserExtFromJSONTyped(json, true), userType: 'api_user'};
+            return Object.assign({}, ApiUserExtFromJSONTyped(json, true), { userType: 'api_user' } as const);
         case 'person':
-            return {...PersonExtFromJSONTyped(json, true), userType: 'person'};
+            return Object.assign({}, PersonExtFromJSONTyped(json, true), { userType: 'person' } as const);
         default:
             throw new Error(`No variant of UserExt exists with 'userType=${json['userType']}'`);
     }
 }
 
-export function UserExtToJSON(value?: UserExt | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function UserExtToJSON(json: any): any {
+    return UserExtToJSONTyped(json, false);
+}
+
+export function UserExtToJSONTyped(value?: UserExt | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['userType']) {
         case 'api_signer':
-            return ApiSignerExtToJSON(value);
+            return Object.assign({}, ApiSignerExtToJSON(value), { userType: 'api_signer' } as const);
         case 'api_user':
-            return ApiUserExtToJSON(value);
+            return Object.assign({}, ApiUserExtToJSON(value), { userType: 'api_user' } as const);
         case 'person':
-            return PersonExtToJSON(value);
+            return Object.assign({}, PersonExtToJSON(value), { userType: 'person' } as const);
         default:
             throw new Error(`No variant of UserExt exists with 'userType=${value['userType']}'`);
     }

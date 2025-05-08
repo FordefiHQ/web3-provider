@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -36,12 +36,10 @@ export interface TimestampedSignature {
 /**
  * Check if a given object implements the TimestampedSignature interface.
  */
-export function instanceOfTimestampedSignature(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "signature" in value;
-    isInstance = isInstance && "timestamp" in value;
-
-    return isInstance;
+export function instanceOfTimestampedSignature(value: object): value is TimestampedSignature {
+    if (!('signature' in value) || value['signature'] === undefined) return false;
+    if (!('timestamp' in value) || value['timestamp'] === undefined) return false;
+    return true;
 }
 
 export function TimestampedSignatureFromJSON(json: any): TimestampedSignature {
@@ -49,7 +47,7 @@ export function TimestampedSignatureFromJSON(json: any): TimestampedSignature {
 }
 
 export function TimestampedSignatureFromJSONTyped(json: any, ignoreDiscriminator: boolean): TimestampedSignature {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -59,17 +57,19 @@ export function TimestampedSignatureFromJSONTyped(json: any, ignoreDiscriminator
     };
 }
 
-export function TimestampedSignatureToJSON(value?: TimestampedSignature | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TimestampedSignatureToJSON(json: any): TimestampedSignature {
+    return TimestampedSignatureToJSONTyped(json, false);
+}
+
+export function TimestampedSignatureToJSONTyped(value?: TimestampedSignature | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'signature': value.signature,
-        'timestamp': value.timestamp,
+        'signature': value['signature'],
+        'timestamp': value['timestamp'],
     };
 }
 

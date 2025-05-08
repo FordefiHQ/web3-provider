@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { VaultGroupPermissionsRequest } from './VaultGroupPermissionsRequest';
 import {
     VaultGroupPermissionsRequestFromJSON,
     VaultGroupPermissionsRequestFromJSONTyped,
     VaultGroupPermissionsRequestToJSON,
+    VaultGroupPermissionsRequestToJSONTyped,
 } from './VaultGroupPermissionsRequest';
 
 /**
@@ -49,12 +50,10 @@ export interface CreateVaultGroupRequest {
 /**
  * Check if a given object implements the CreateVaultGroupRequest interface.
  */
-export function instanceOfCreateVaultGroupRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "permissions" in value;
-
-    return isInstance;
+export function instanceOfCreateVaultGroupRequest(value: object): value is CreateVaultGroupRequest {
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('permissions' in value) || value['permissions'] === undefined) return false;
+    return true;
 }
 
 export function CreateVaultGroupRequestFromJSON(json: any): CreateVaultGroupRequest {
@@ -62,29 +61,31 @@ export function CreateVaultGroupRequestFromJSON(json: any): CreateVaultGroupRequ
 }
 
 export function CreateVaultGroupRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateVaultGroupRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'name': json['name'],
-        'vaultIds': !exists(json, 'vault_ids') ? undefined : json['vault_ids'],
+        'vaultIds': json['vault_ids'] == null ? undefined : json['vault_ids'],
         'permissions': VaultGroupPermissionsRequestFromJSON(json['permissions']),
     };
 }
 
-export function CreateVaultGroupRequestToJSON(value?: CreateVaultGroupRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateVaultGroupRequestToJSON(json: any): CreateVaultGroupRequest {
+    return CreateVaultGroupRequestToJSONTyped(json, false);
+}
+
+export function CreateVaultGroupRequestToJSONTyped(value?: CreateVaultGroupRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'vault_ids': value.vaultIds,
-        'permissions': VaultGroupPermissionsRequestToJSON(value.permissions),
+        'name': value['name'],
+        'vault_ids': value['vaultIds'],
+        'permissions': VaultGroupPermissionsRequestToJSON(value['permissions']),
     };
 }
 

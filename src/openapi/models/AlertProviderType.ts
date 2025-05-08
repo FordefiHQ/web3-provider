@@ -23,6 +23,17 @@ export const AlertProviderType = {
 export type AlertProviderType = typeof AlertProviderType[keyof typeof AlertProviderType];
 
 
+export function instanceOfAlertProviderType(value: any): boolean {
+    for (const key in AlertProviderType) {
+        if (Object.prototype.hasOwnProperty.call(AlertProviderType, key)) {
+            if (AlertProviderType[key as keyof typeof AlertProviderType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function AlertProviderTypeFromJSON(json: any): AlertProviderType {
     return AlertProviderTypeFromJSONTyped(json, false);
 }
@@ -33,5 +44,9 @@ export function AlertProviderTypeFromJSONTyped(json: any, ignoreDiscriminator: b
 
 export function AlertProviderTypeToJSON(value?: AlertProviderType | null): any {
     return value as any;
+}
+
+export function AlertProviderTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): AlertProviderType {
+    return value as AlertProviderType;
 }
 

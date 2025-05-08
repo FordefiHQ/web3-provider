@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { UtxoAddress } from './UtxoAddress';
-import {
-    UtxoAddressFromJSON,
-    UtxoAddressFromJSONTyped,
-    UtxoAddressToJSON,
-} from './UtxoAddress';
+import { mapValues } from '../runtime';
 import type { UtxoMessageType } from './UtxoMessageType';
 import {
     UtxoMessageTypeFromJSON,
     UtxoMessageTypeFromJSONTyped,
     UtxoMessageTypeToJSON,
+    UtxoMessageTypeToJSONTyped,
 } from './UtxoMessageType';
+import type { UtxoAddress } from './UtxoAddress';
+import {
+    UtxoAddressFromJSON,
+    UtxoAddressFromJSONTyped,
+    UtxoAddressToJSON,
+    UtxoAddressToJSONTyped,
+} from './UtxoAddress';
 
 /**
  * 
@@ -52,16 +54,16 @@ export interface UtxoMessageDetails {
     rawData: string;
 }
 
+
+
 /**
  * Check if a given object implements the UtxoMessageDetails interface.
  */
-export function instanceOfUtxoMessageDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "sender" in value;
-    isInstance = isInstance && "rawData" in value;
-
-    return isInstance;
+export function instanceOfUtxoMessageDetails(value: object): value is UtxoMessageDetails {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    if (!('rawData' in value) || value['rawData'] === undefined) return false;
+    return true;
 }
 
 export function UtxoMessageDetailsFromJSON(json: any): UtxoMessageDetails {
@@ -69,7 +71,7 @@ export function UtxoMessageDetailsFromJSON(json: any): UtxoMessageDetails {
 }
 
 export function UtxoMessageDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): UtxoMessageDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -80,18 +82,20 @@ export function UtxoMessageDetailsFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-export function UtxoMessageDetailsToJSON(value?: UtxoMessageDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UtxoMessageDetailsToJSON(json: any): UtxoMessageDetails {
+    return UtxoMessageDetailsToJSONTyped(json, false);
+}
+
+export function UtxoMessageDetailsToJSONTyped(value?: UtxoMessageDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': UtxoMessageTypeToJSON(value.type),
-        'sender': UtxoAddressToJSON(value.sender),
-        'raw_data': value.rawData,
+        'type': UtxoMessageTypeToJSON(value['type']),
+        'sender': UtxoAddressToJSON(value['sender']),
+        'raw_data': value['rawData'],
     };
 }
 

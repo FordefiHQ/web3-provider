@@ -12,19 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { AdminQuorumProposal } from './AdminQuorumProposal';
+import { mapValues } from '../runtime';
+import type { AdminQuorum } from './AdminQuorum';
 import {
-    AdminQuorumProposalFromJSON,
-    AdminQuorumProposalFromJSONTyped,
-    AdminQuorumProposalToJSON,
-} from './AdminQuorumProposal';
+    AdminQuorumFromJSON,
+    AdminQuorumFromJSONTyped,
+    AdminQuorumToJSON,
+    AdminQuorumToJSONTyped,
+} from './AdminQuorum';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
     UserRefFromJSONTyped,
     UserRefToJSON,
+    UserRefToJSONTyped,
 } from './UserRef';
+import type { AdminQuorumProposal } from './AdminQuorumProposal';
+import {
+    AdminQuorumProposalFromJSON,
+    AdminQuorumProposalFromJSONTyped,
+    AdminQuorumProposalToJSON,
+    AdminQuorumProposalToJSONTyped,
+} from './AdminQuorumProposal';
 
 /**
  * 
@@ -34,22 +43,10 @@ import {
 export interface GetAdminQuorumResponse {
     /**
      * 
-     * @type {number}
+     * @type {AdminQuorum}
      * @memberof GetAdminQuorumResponse
      */
-    currentQuorumSize: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetAdminQuorumResponse
-     */
-    maxAllowedQuorumSize: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof GetAdminQuorumResponse
-     */
-    minAllowedQuorumSize: number;
+    quorum: AdminQuorum;
     /**
      * 
      * @type {UserRef}
@@ -73,13 +70,9 @@ export interface GetAdminQuorumResponse {
 /**
  * Check if a given object implements the GetAdminQuorumResponse interface.
  */
-export function instanceOfGetAdminQuorumResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "currentQuorumSize" in value;
-    isInstance = isInstance && "maxAllowedQuorumSize" in value;
-    isInstance = isInstance && "minAllowedQuorumSize" in value;
-
-    return isInstance;
+export function instanceOfGetAdminQuorumResponse(value: object): value is GetAdminQuorumResponse {
+    if (!('quorum' in value) || value['quorum'] === undefined) return false;
+    return true;
 }
 
 export function GetAdminQuorumResponseFromJSON(json: any): GetAdminQuorumResponse {
@@ -87,35 +80,33 @@ export function GetAdminQuorumResponseFromJSON(json: any): GetAdminQuorumRespons
 }
 
 export function GetAdminQuorumResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetAdminQuorumResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'currentQuorumSize': json['current_quorum_size'],
-        'maxAllowedQuorumSize': json['max_allowed_quorum_size'],
-        'minAllowedQuorumSize': json['min_allowed_quorum_size'],
-        'modifiedBy': !exists(json, 'modified_by') ? undefined : UserRefFromJSON(json['modified_by']),
-        'modifiedAt': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
-        'proposedChange': !exists(json, 'proposed_change') ? undefined : AdminQuorumProposalFromJSON(json['proposed_change']),
+        'quorum': AdminQuorumFromJSON(json['quorum']),
+        'modifiedBy': json['modified_by'] == null ? undefined : UserRefFromJSON(json['modified_by']),
+        'modifiedAt': json['modified_at'] == null ? undefined : (new Date(json['modified_at'])),
+        'proposedChange': json['proposed_change'] == null ? undefined : AdminQuorumProposalFromJSON(json['proposed_change']),
     };
 }
 
-export function GetAdminQuorumResponseToJSON(value?: GetAdminQuorumResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function GetAdminQuorumResponseToJSON(json: any): GetAdminQuorumResponse {
+    return GetAdminQuorumResponseToJSONTyped(json, false);
+}
+
+export function GetAdminQuorumResponseToJSONTyped(value?: GetAdminQuorumResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'current_quorum_size': value.currentQuorumSize,
-        'max_allowed_quorum_size': value.maxAllowedQuorumSize,
-        'min_allowed_quorum_size': value.minAllowedQuorumSize,
-        'modified_by': UserRefToJSON(value.modifiedBy),
-        'modified_at': value.modifiedAt === undefined ? undefined : (value.modifiedAt.toISOString()),
-        'proposed_change': AdminQuorumProposalToJSON(value.proposedChange),
+        'quorum': AdminQuorumToJSON(value['quorum']),
+        'modified_by': UserRefToJSON(value['modifiedBy']),
+        'modified_at': value['modifiedAt'] == null ? undefined : ((value['modifiedAt']).toISOString()),
+        'proposed_change': AdminQuorumProposalToJSON(value['proposedChange']),
     };
 }
 

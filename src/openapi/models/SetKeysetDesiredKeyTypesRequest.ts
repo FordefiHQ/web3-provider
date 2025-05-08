@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { KeyType } from './KeyType';
 import {
     KeyTypeFromJSON,
     KeyTypeFromJSONTyped,
     KeyTypeToJSON,
+    KeyTypeToJSONTyped,
 } from './KeyType';
 
 /**
@@ -37,11 +38,9 @@ export interface SetKeysetDesiredKeyTypesRequest {
 /**
  * Check if a given object implements the SetKeysetDesiredKeyTypesRequest interface.
  */
-export function instanceOfSetKeysetDesiredKeyTypesRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "desiredKeyTypes" in value;
-
-    return isInstance;
+export function instanceOfSetKeysetDesiredKeyTypesRequest(value: object): value is SetKeysetDesiredKeyTypesRequest {
+    if (!('desiredKeyTypes' in value) || value['desiredKeyTypes'] === undefined) return false;
+    return true;
 }
 
 export function SetKeysetDesiredKeyTypesRequestFromJSON(json: any): SetKeysetDesiredKeyTypesRequest {
@@ -49,7 +48,7 @@ export function SetKeysetDesiredKeyTypesRequestFromJSON(json: any): SetKeysetDes
 }
 
 export function SetKeysetDesiredKeyTypesRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): SetKeysetDesiredKeyTypesRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -58,16 +57,18 @@ export function SetKeysetDesiredKeyTypesRequestFromJSONTyped(json: any, ignoreDi
     };
 }
 
-export function SetKeysetDesiredKeyTypesRequestToJSON(value?: SetKeysetDesiredKeyTypesRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SetKeysetDesiredKeyTypesRequestToJSON(json: any): SetKeysetDesiredKeyTypesRequest {
+    return SetKeysetDesiredKeyTypesRequestToJSONTyped(json, false);
+}
+
+export function SetKeysetDesiredKeyTypesRequestToJSONTyped(value?: SetKeysetDesiredKeyTypesRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'desired_key_types': ((value.desiredKeyTypes as Array<any>).map(KeyTypeToJSON)),
+        'desired_key_types': ((value['desiredKeyTypes'] as Array<any>).map(KeyTypeToJSON)),
     };
 }
 

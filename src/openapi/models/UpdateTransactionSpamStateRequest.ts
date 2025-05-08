@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -30,11 +30,9 @@ export interface UpdateTransactionSpamStateRequest {
 /**
  * Check if a given object implements the UpdateTransactionSpamStateRequest interface.
  */
-export function instanceOfUpdateTransactionSpamStateRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "isSpam" in value;
-
-    return isInstance;
+export function instanceOfUpdateTransactionSpamStateRequest(value: object): value is UpdateTransactionSpamStateRequest {
+    if (!('isSpam' in value) || value['isSpam'] === undefined) return false;
+    return true;
 }
 
 export function UpdateTransactionSpamStateRequestFromJSON(json: any): UpdateTransactionSpamStateRequest {
@@ -42,7 +40,7 @@ export function UpdateTransactionSpamStateRequestFromJSON(json: any): UpdateTran
 }
 
 export function UpdateTransactionSpamStateRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): UpdateTransactionSpamStateRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -51,16 +49,18 @@ export function UpdateTransactionSpamStateRequestFromJSONTyped(json: any, ignore
     };
 }
 
-export function UpdateTransactionSpamStateRequestToJSON(value?: UpdateTransactionSpamStateRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UpdateTransactionSpamStateRequestToJSON(json: any): UpdateTransactionSpamStateRequest {
+    return UpdateTransactionSpamStateRequestToJSONTyped(json, false);
+}
+
+export function UpdateTransactionSpamStateRequestToJSONTyped(value?: UpdateTransactionSpamStateRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'is_spam': value.isSpam,
+        'is_spam': value['isSpam'],
     };
 }
 

@@ -12,12 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { PartialErrorResponse } from './PartialErrorResponse';
+import {
+    PartialErrorResponseFromJSON,
+    PartialErrorResponseFromJSONTyped,
+    PartialErrorResponseToJSON,
+    PartialErrorResponseToJSONTyped,
+} from './PartialErrorResponse';
 import type { Allowance } from './Allowance';
 import {
     AllowanceFromJSON,
     AllowanceFromJSONTyped,
     AllowanceToJSON,
+    AllowanceToJSONTyped,
 } from './Allowance';
 
 /**
@@ -26,6 +34,12 @@ import {
  * @interface ListAllowancesResponse
  */
 export interface ListAllowancesResponse {
+    /**
+     * 
+     * @type {PartialErrorResponse}
+     * @memberof ListAllowancesResponse
+     */
+    partialError?: PartialErrorResponse;
     /**
      * 
      * @type {number}
@@ -55,14 +69,12 @@ export interface ListAllowancesResponse {
 /**
  * Check if a given object implements the ListAllowancesResponse interface.
  */
-export function instanceOfListAllowancesResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "total" in value;
-    isInstance = isInstance && "page" in value;
-    isInstance = isInstance && "size" in value;
-    isInstance = isInstance && "allowances" in value;
-
-    return isInstance;
+export function instanceOfListAllowancesResponse(value: object): value is ListAllowancesResponse {
+    if (!('total' in value) || value['total'] === undefined) return false;
+    if (!('page' in value) || value['page'] === undefined) return false;
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('allowances' in value) || value['allowances'] === undefined) return false;
+    return true;
 }
 
 export function ListAllowancesResponseFromJSON(json: any): ListAllowancesResponse {
@@ -70,11 +82,12 @@ export function ListAllowancesResponseFromJSON(json: any): ListAllowancesRespons
 }
 
 export function ListAllowancesResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): ListAllowancesResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
+        'partialError': json['partial_error'] == null ? undefined : PartialErrorResponseFromJSON(json['partial_error']),
         'total': json['total'],
         'page': json['page'],
         'size': json['size'],
@@ -82,19 +95,22 @@ export function ListAllowancesResponseFromJSONTyped(json: any, ignoreDiscriminat
     };
 }
 
-export function ListAllowancesResponseToJSON(value?: ListAllowancesResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ListAllowancesResponseToJSON(json: any): ListAllowancesResponse {
+    return ListAllowancesResponseToJSONTyped(json, false);
+}
+
+export function ListAllowancesResponseToJSONTyped(value?: ListAllowancesResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'total': value.total,
-        'page': value.page,
-        'size': value.size,
-        'allowances': ((value.allowances as Array<any>).map(AllowanceToJSON)),
+        'partial_error': PartialErrorResponseToJSON(value['partialError']),
+        'total': value['total'],
+        'page': value['page'],
+        'size': value['size'],
+        'allowances': ((value['allowances'] as Array<any>).map(AllowanceToJSON)),
     };
 }
 

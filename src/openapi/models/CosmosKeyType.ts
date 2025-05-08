@@ -24,6 +24,17 @@ export const CosmosKeyType = {
 export type CosmosKeyType = typeof CosmosKeyType[keyof typeof CosmosKeyType];
 
 
+export function instanceOfCosmosKeyType(value: any): boolean {
+    for (const key in CosmosKeyType) {
+        if (Object.prototype.hasOwnProperty.call(CosmosKeyType, key)) {
+            if (CosmosKeyType[key as keyof typeof CosmosKeyType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function CosmosKeyTypeFromJSON(json: any): CosmosKeyType {
     return CosmosKeyTypeFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function CosmosKeyTypeFromJSONTyped(json: any, ignoreDiscriminator: boole
 
 export function CosmosKeyTypeToJSON(value?: CosmosKeyType | null): any {
     return value as any;
+}
+
+export function CosmosKeyTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): CosmosKeyType {
+    return value as CosmosKeyType;
 }
 

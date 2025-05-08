@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -30,11 +30,9 @@ export interface IssueInternalAuthTokenResponse {
 /**
  * Check if a given object implements the IssueInternalAuthTokenResponse interface.
  */
-export function instanceOfIssueInternalAuthTokenResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "accessToken" in value;
-
-    return isInstance;
+export function instanceOfIssueInternalAuthTokenResponse(value: object): value is IssueInternalAuthTokenResponse {
+    if (!('accessToken' in value) || value['accessToken'] === undefined) return false;
+    return true;
 }
 
 export function IssueInternalAuthTokenResponseFromJSON(json: any): IssueInternalAuthTokenResponse {
@@ -42,7 +40,7 @@ export function IssueInternalAuthTokenResponseFromJSON(json: any): IssueInternal
 }
 
 export function IssueInternalAuthTokenResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): IssueInternalAuthTokenResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -51,16 +49,18 @@ export function IssueInternalAuthTokenResponseFromJSONTyped(json: any, ignoreDis
     };
 }
 
-export function IssueInternalAuthTokenResponseToJSON(value?: IssueInternalAuthTokenResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function IssueInternalAuthTokenResponseToJSON(json: any): IssueInternalAuthTokenResponse {
+    return IssueInternalAuthTokenResponseToJSONTyped(json, false);
+}
+
+export function IssueInternalAuthTokenResponseToJSONTyped(value?: IssueInternalAuthTokenResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'access_token': value.accessToken,
+        'access_token': value['accessToken'],
     };
 }
 

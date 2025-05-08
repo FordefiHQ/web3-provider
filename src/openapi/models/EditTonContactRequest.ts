@@ -12,13 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { TonChainUniqueId } from './TonChainUniqueId';
 import {
     TonChainUniqueIdFromJSON,
     TonChainUniqueIdFromJSONTyped,
     TonChainUniqueIdToJSON,
+    TonChainUniqueIdToJSONTyped,
 } from './TonChainUniqueId';
+import type { TonAssetIdentifierRequest } from './TonAssetIdentifierRequest';
+import {
+    TonAssetIdentifierRequestFromJSON,
+    TonAssetIdentifierRequestFromJSONTyped,
+    TonAssetIdentifierRequestToJSON,
+    TonAssetIdentifierRequestToJSONTyped,
+} from './TonAssetIdentifierRequest';
 
 /**
  * 
@@ -44,6 +52,18 @@ export interface EditTonContactRequest {
      * @memberof EditTonContactRequest
      */
     chains: Array<TonChainUniqueId>;
+    /**
+     * 
+     * @type {Array<TonAssetIdentifierRequest>}
+     * @memberof EditTonContactRequest
+     */
+    assetsIdentifiers?: Array<TonAssetIdentifierRequest>;
+    /**
+     * 
+     * @type {string}
+     * @memberof EditTonContactRequest
+     */
+    comment?: string;
 }
 
 
@@ -59,13 +79,11 @@ export type EditTonContactRequestTypeEnum = typeof EditTonContactRequestTypeEnum
 /**
  * Check if a given object implements the EditTonContactRequest interface.
  */
-export function instanceOfEditTonContactRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chains" in value;
-
-    return isInstance;
+export function instanceOfEditTonContactRequest(value: object): value is EditTonContactRequest {
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chains' in value) || value['chains'] === undefined) return false;
+    return true;
 }
 
 export function EditTonContactRequestFromJSON(json: any): EditTonContactRequest {
@@ -73,7 +91,7 @@ export function EditTonContactRequestFromJSON(json: any): EditTonContactRequest 
 }
 
 export function EditTonContactRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): EditTonContactRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -81,21 +99,27 @@ export function EditTonContactRequestFromJSONTyped(json: any, ignoreDiscriminato
         'name': json['name'],
         'type': json['type'],
         'chains': ((json['chains'] as Array<any>).map(TonChainUniqueIdFromJSON)),
+        'assetsIdentifiers': json['assets_identifiers'] == null ? undefined : ((json['assets_identifiers'] as Array<any>).map(TonAssetIdentifierRequestFromJSON)),
+        'comment': json['comment'] == null ? undefined : json['comment'],
     };
 }
 
-export function EditTonContactRequestToJSON(value?: EditTonContactRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EditTonContactRequestToJSON(json: any): EditTonContactRequest {
+    return EditTonContactRequestToJSONTyped(json, false);
+}
+
+export function EditTonContactRequestToJSONTyped(value?: EditTonContactRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'type': value.type,
-        'chains': ((value.chains as Array<any>).map(TonChainUniqueIdToJSON)),
+        'name': value['name'],
+        'type': value['type'],
+        'chains': ((value['chains'] as Array<any>).map(TonChainUniqueIdToJSON)),
+        'assets_identifiers': value['assetsIdentifiers'] == null ? undefined : ((value['assetsIdentifiers'] as Array<any>).map(TonAssetIdentifierRequestToJSON)),
+        'comment': value['comment'],
     };
 }
 

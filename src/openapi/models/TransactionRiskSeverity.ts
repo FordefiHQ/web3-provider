@@ -25,6 +25,17 @@ export const TransactionRiskSeverity = {
 export type TransactionRiskSeverity = typeof TransactionRiskSeverity[keyof typeof TransactionRiskSeverity];
 
 
+export function instanceOfTransactionRiskSeverity(value: any): boolean {
+    for (const key in TransactionRiskSeverity) {
+        if (Object.prototype.hasOwnProperty.call(TransactionRiskSeverity, key)) {
+            if (TransactionRiskSeverity[key as keyof typeof TransactionRiskSeverity] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function TransactionRiskSeverityFromJSON(json: any): TransactionRiskSeverity {
     return TransactionRiskSeverityFromJSONTyped(json, false);
 }
@@ -35,5 +46,9 @@ export function TransactionRiskSeverityFromJSONTyped(json: any, ignoreDiscrimina
 
 export function TransactionRiskSeverityToJSON(value?: TransactionRiskSeverity | null): any {
     return value as any;
+}
+
+export function TransactionRiskSeverityToJSONTyped(value: any, ignoreDiscriminator: boolean): TransactionRiskSeverity {
+    return value as TransactionRiskSeverity;
 }
 

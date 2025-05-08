@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -36,12 +36,10 @@ export interface DisableUserMembershipResponse {
 /**
  * Check if a given object implements the DisableUserMembershipResponse interface.
  */
-export function instanceOfDisableUserMembershipResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "auth0Log" in value;
-    isInstance = isInstance && "dbLog" in value;
-
-    return isInstance;
+export function instanceOfDisableUserMembershipResponse(value: object): value is DisableUserMembershipResponse {
+    if (!('auth0Log' in value) || value['auth0Log'] === undefined) return false;
+    if (!('dbLog' in value) || value['dbLog'] === undefined) return false;
+    return true;
 }
 
 export function DisableUserMembershipResponseFromJSON(json: any): DisableUserMembershipResponse {
@@ -49,7 +47,7 @@ export function DisableUserMembershipResponseFromJSON(json: any): DisableUserMem
 }
 
 export function DisableUserMembershipResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): DisableUserMembershipResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -59,17 +57,19 @@ export function DisableUserMembershipResponseFromJSONTyped(json: any, ignoreDisc
     };
 }
 
-export function DisableUserMembershipResponseToJSON(value?: DisableUserMembershipResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function DisableUserMembershipResponseToJSON(json: any): DisableUserMembershipResponse {
+    return DisableUserMembershipResponseToJSONTyped(json, false);
+}
+
+export function DisableUserMembershipResponseToJSONTyped(value?: DisableUserMembershipResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'auth0_log': value.auth0Log,
-        'db_log': value.dbLog,
+        'auth0_log': value['auth0Log'],
+        'db_log': value['dbLog'],
     };
 }
 

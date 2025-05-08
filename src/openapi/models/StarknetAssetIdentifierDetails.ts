@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { StarknetErc20AssetIdentifierRequest } from './StarknetErc20AssetIdentifierRequest';
 import {
-    StarknetErc20AssetIdentifierRequest,
     instanceOfStarknetErc20AssetIdentifierRequest,
     StarknetErc20AssetIdentifierRequestFromJSON,
     StarknetErc20AssetIdentifierRequestFromJSONTyped,
     StarknetErc20AssetIdentifierRequestToJSON,
 } from './StarknetErc20AssetIdentifierRequest';
+import type { StarknetNativeAssetIdentifierRequest } from './StarknetNativeAssetIdentifierRequest';
 import {
-    StarknetNativeAssetIdentifierRequest,
     instanceOfStarknetNativeAssetIdentifierRequest,
     StarknetNativeAssetIdentifierRequestFromJSON,
     StarknetNativeAssetIdentifierRequestFromJSONTyped,
@@ -39,31 +39,32 @@ export function StarknetAssetIdentifierDetailsFromJSON(json: any): StarknetAsset
 }
 
 export function StarknetAssetIdentifierDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): StarknetAssetIdentifierDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'erc20':
-            return {...StarknetErc20AssetIdentifierRequestFromJSONTyped(json, true), type: 'erc20'};
+            return Object.assign({}, StarknetErc20AssetIdentifierRequestFromJSONTyped(json, true), { type: 'erc20' } as const);
         case 'native':
-            return {...StarknetNativeAssetIdentifierRequestFromJSONTyped(json, true), type: 'native'};
+            return Object.assign({}, StarknetNativeAssetIdentifierRequestFromJSONTyped(json, true), { type: 'native' } as const);
         default:
             throw new Error(`No variant of StarknetAssetIdentifierDetails exists with 'type=${json['type']}'`);
     }
 }
 
-export function StarknetAssetIdentifierDetailsToJSON(value?: StarknetAssetIdentifierDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function StarknetAssetIdentifierDetailsToJSON(json: any): any {
+    return StarknetAssetIdentifierDetailsToJSONTyped(json, false);
+}
+
+export function StarknetAssetIdentifierDetailsToJSONTyped(value?: StarknetAssetIdentifierDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'erc20':
-            return StarknetErc20AssetIdentifierRequestToJSON(value);
+            return Object.assign({}, StarknetErc20AssetIdentifierRequestToJSON(value), { type: 'erc20' } as const);
         case 'native':
-            return StarknetNativeAssetIdentifierRequestToJSON(value);
+            return Object.assign({}, StarknetNativeAssetIdentifierRequestToJSON(value), { type: 'native' } as const);
         default:
             throw new Error(`No variant of StarknetAssetIdentifierDetails exists with 'type=${value['type']}'`);
     }

@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type SuiPureBoolInputTypeEnum = typeof SuiPureBoolInputTypeEnum[keyof typ
 /**
  * Check if a given object implements the SuiPureBoolInput interface.
  */
-export function instanceOfSuiPureBoolInput(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "value" in value;
-
-    return isInstance;
+export function instanceOfSuiPureBoolInput(value: object): value is SuiPureBoolInput {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('value' in value) || value['value'] === undefined) return false;
+    return true;
 }
 
 export function SuiPureBoolInputFromJSON(json: any): SuiPureBoolInput {
@@ -59,7 +57,7 @@ export function SuiPureBoolInputFromJSON(json: any): SuiPureBoolInput {
 }
 
 export function SuiPureBoolInputFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiPureBoolInput {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function SuiPureBoolInputFromJSONTyped(json: any, ignoreDiscriminator: bo
     };
 }
 
-export function SuiPureBoolInputToJSON(value?: SuiPureBoolInput | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiPureBoolInputToJSON(json: any): SuiPureBoolInput {
+    return SuiPureBoolInputToJSONTyped(json, false);
+}
+
+export function SuiPureBoolInputToJSONTyped(value?: SuiPureBoolInput | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'value': value.value,
+        'type': value['type'],
+        'value': value['value'],
     };
 }
 

@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -36,12 +36,10 @@ export interface CreateKeysetRequest {
 /**
  * Check if a given object implements the CreateKeysetRequest interface.
  */
-export function instanceOfCreateKeysetRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "userId" in value;
-    isInstance = isInstance && "name" in value;
-
-    return isInstance;
+export function instanceOfCreateKeysetRequest(value: object): value is CreateKeysetRequest {
+    if (!('userId' in value) || value['userId'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    return true;
 }
 
 export function CreateKeysetRequestFromJSON(json: any): CreateKeysetRequest {
@@ -49,7 +47,7 @@ export function CreateKeysetRequestFromJSON(json: any): CreateKeysetRequest {
 }
 
 export function CreateKeysetRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateKeysetRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -59,17 +57,19 @@ export function CreateKeysetRequestFromJSONTyped(json: any, ignoreDiscriminator:
     };
 }
 
-export function CreateKeysetRequestToJSON(value?: CreateKeysetRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateKeysetRequestToJSON(json: any): CreateKeysetRequest {
+    return CreateKeysetRequestToJSONTyped(json, false);
+}
+
+export function CreateKeysetRequestToJSONTyped(value?: CreateKeysetRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'user_id': value.userId,
-        'name': value.name,
+        'user_id': value['userId'],
+        'name': value['name'],
     };
 }
 

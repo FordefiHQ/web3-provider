@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedStarknetChain } from './EnrichedStarknetChain';
 import {
     EnrichedStarknetChainFromJSON,
     EnrichedStarknetChainFromJSONTyped,
     EnrichedStarknetChainToJSON,
+    EnrichedStarknetChainToJSONTyped,
 } from './EnrichedStarknetChain';
 
 /**
@@ -59,13 +60,11 @@ export type StarknetAddressBookContactAddressChainTypeEnum = typeof StarknetAddr
 /**
  * Check if a given object implements the StarknetAddressBookContactAddress interface.
  */
-export function instanceOfStarknetAddressBookContactAddress(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chainType" in value;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "chains" in value;
-
-    return isInstance;
+export function instanceOfStarknetAddressBookContactAddress(value: object): value is StarknetAddressBookContactAddress {
+    if (!('chainType' in value) || value['chainType'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('chains' in value) || value['chains'] === undefined) return false;
+    return true;
 }
 
 export function StarknetAddressBookContactAddressFromJSON(json: any): StarknetAddressBookContactAddress {
@@ -73,7 +72,7 @@ export function StarknetAddressBookContactAddressFromJSON(json: any): StarknetAd
 }
 
 export function StarknetAddressBookContactAddressFromJSONTyped(json: any, ignoreDiscriminator: boolean): StarknetAddressBookContactAddress {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -84,18 +83,20 @@ export function StarknetAddressBookContactAddressFromJSONTyped(json: any, ignore
     };
 }
 
-export function StarknetAddressBookContactAddressToJSON(value?: StarknetAddressBookContactAddress | null): any {
-    if (value === undefined) {
-        return undefined;
+export function StarknetAddressBookContactAddressToJSON(json: any): StarknetAddressBookContactAddress {
+    return StarknetAddressBookContactAddressToJSONTyped(json, false);
+}
+
+export function StarknetAddressBookContactAddressToJSONTyped(value?: StarknetAddressBookContactAddress | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain_type': value.chainType,
-        'address': value.address,
-        'chains': ((value.chains as Array<any>).map(EnrichedStarknetChainToJSON)),
+        'chain_type': value['chainType'],
+        'address': value['address'],
+        'chains': ((value['chains'] as Array<any>).map(EnrichedStarknetChainToJSON)),
     };
 }
 

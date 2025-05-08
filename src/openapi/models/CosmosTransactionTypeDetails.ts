@@ -12,22 +12,22 @@
  * Do not edit the class manually.
  */
 
+import type { CosmosMultipleMessagesTransactionDetails } from './CosmosMultipleMessagesTransactionDetails';
 import {
-    CosmosMultipleMessagesTransactionDetails,
     instanceOfCosmosMultipleMessagesTransactionDetails,
     CosmosMultipleMessagesTransactionDetailsFromJSON,
     CosmosMultipleMessagesTransactionDetailsFromJSONTyped,
     CosmosMultipleMessagesTransactionDetailsToJSON,
 } from './CosmosMultipleMessagesTransactionDetails';
+import type { CosmosNativeTransferDetails } from './CosmosNativeTransferDetails';
 import {
-    CosmosNativeTransferDetails,
     instanceOfCosmosNativeTransferDetails,
     CosmosNativeTransferDetailsFromJSON,
     CosmosNativeTransferDetailsFromJSONTyped,
     CosmosNativeTransferDetailsToJSON,
 } from './CosmosNativeTransferDetails';
+import type { CosmosTokenTransferDetails } from './CosmosTokenTransferDetails';
 import {
-    CosmosTokenTransferDetails,
     instanceOfCosmosTokenTransferDetails,
     CosmosTokenTransferDetailsFromJSON,
     CosmosTokenTransferDetailsFromJSONTyped,
@@ -46,35 +46,36 @@ export function CosmosTransactionTypeDetailsFromJSON(json: any): CosmosTransacti
 }
 
 export function CosmosTransactionTypeDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosTransactionTypeDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'messages':
-            return {...CosmosMultipleMessagesTransactionDetailsFromJSONTyped(json, true), type: 'messages'};
+            return Object.assign({}, CosmosMultipleMessagesTransactionDetailsFromJSONTyped(json, true), { type: 'messages' } as const);
         case 'native_transfer':
-            return {...CosmosNativeTransferDetailsFromJSONTyped(json, true), type: 'native_transfer'};
+            return Object.assign({}, CosmosNativeTransferDetailsFromJSONTyped(json, true), { type: 'native_transfer' } as const);
         case 'token_transfer':
-            return {...CosmosTokenTransferDetailsFromJSONTyped(json, true), type: 'token_transfer'};
+            return Object.assign({}, CosmosTokenTransferDetailsFromJSONTyped(json, true), { type: 'token_transfer' } as const);
         default:
             throw new Error(`No variant of CosmosTransactionTypeDetails exists with 'type=${json['type']}'`);
     }
 }
 
-export function CosmosTransactionTypeDetailsToJSON(value?: CosmosTransactionTypeDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function CosmosTransactionTypeDetailsToJSON(json: any): any {
+    return CosmosTransactionTypeDetailsToJSONTyped(json, false);
+}
+
+export function CosmosTransactionTypeDetailsToJSONTyped(value?: CosmosTransactionTypeDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'messages':
-            return CosmosMultipleMessagesTransactionDetailsToJSON(value);
+            return Object.assign({}, CosmosMultipleMessagesTransactionDetailsToJSON(value), { type: 'messages' } as const);
         case 'native_transfer':
-            return CosmosNativeTransferDetailsToJSON(value);
+            return Object.assign({}, CosmosNativeTransferDetailsToJSON(value), { type: 'native_transfer' } as const);
         case 'token_transfer':
-            return CosmosTokenTransferDetailsToJSON(value);
+            return Object.assign({}, CosmosTokenTransferDetailsToJSON(value), { type: 'token_transfer' } as const);
         default:
             throw new Error(`No variant of CosmosTransactionTypeDetails exists with 'type=${value['type']}'`);
     }

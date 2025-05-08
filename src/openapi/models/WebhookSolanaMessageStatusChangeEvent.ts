@@ -12,37 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { SolanaChain } from './SolanaChain';
-import {
-    SolanaChainFromJSON,
-    SolanaChainFromJSONTyped,
-    SolanaChainToJSON,
-} from './SolanaChain';
-import type { SolanaMessageState } from './SolanaMessageState';
-import {
-    SolanaMessageStateFromJSON,
-    SolanaMessageStateFromJSONTyped,
-    SolanaMessageStateToJSON,
-} from './SolanaMessageState';
-import type { SolanaMessageType } from './SolanaMessageType';
-import {
-    SolanaMessageTypeFromJSON,
-    SolanaMessageTypeFromJSONTyped,
-    SolanaMessageTypeToJSON,
-} from './SolanaMessageType';
-import type { TransactionDirection } from './TransactionDirection';
-import {
-    TransactionDirectionFromJSON,
-    TransactionDirectionFromJSONTyped,
-    TransactionDirectionToJSON,
-} from './TransactionDirection';
+import { mapValues } from '../runtime';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
     TransactionSpamStateFromJSONTyped,
     TransactionSpamStateToJSON,
+    TransactionSpamStateToJSONTyped,
 } from './TransactionSpamState';
+import type { TransactionDirection } from './TransactionDirection';
+import {
+    TransactionDirectionFromJSON,
+    TransactionDirectionFromJSONTyped,
+    TransactionDirectionToJSON,
+    TransactionDirectionToJSONTyped,
+} from './TransactionDirection';
+import type { SolanaMessageType } from './SolanaMessageType';
+import {
+    SolanaMessageTypeFromJSON,
+    SolanaMessageTypeFromJSONTyped,
+    SolanaMessageTypeToJSON,
+    SolanaMessageTypeToJSONTyped,
+} from './SolanaMessageType';
+import type { SolanaChain } from './SolanaChain';
+import {
+    SolanaChainFromJSON,
+    SolanaChainFromJSONTyped,
+    SolanaChainToJSON,
+    SolanaChainToJSONTyped,
+} from './SolanaChain';
+import type { NonPushableTransactionState } from './NonPushableTransactionState';
+import {
+    NonPushableTransactionStateFromJSON,
+    NonPushableTransactionStateFromJSONTyped,
+    NonPushableTransactionStateToJSON,
+    NonPushableTransactionStateToJSONTyped,
+} from './NonPushableTransactionState';
 
 /**
  * 
@@ -83,6 +88,12 @@ export interface WebhookSolanaMessageStatusChangeEvent {
     spamState: TransactionSpamState;
     /**
      * 
+     * @type {NonPushableTransactionState}
+     * @memberof WebhookSolanaMessageStatusChangeEvent
+     */
+    state: NonPushableTransactionState;
+    /**
+     * 
      * @type {string}
      * @memberof WebhookSolanaMessageStatusChangeEvent
      */
@@ -93,12 +104,6 @@ export interface WebhookSolanaMessageStatusChangeEvent {
      * @memberof WebhookSolanaMessageStatusChangeEvent
      */
     solanaMessageType: SolanaMessageType;
-    /**
-     * 
-     * @type {SolanaMessageState}
-     * @memberof WebhookSolanaMessageStatusChangeEvent
-     */
-    state: SolanaMessageState;
     /**
      * 
      * @type {SolanaChain}
@@ -120,18 +125,16 @@ export type WebhookSolanaMessageStatusChangeEventTypeEnum = typeof WebhookSolana
 /**
  * Check if a given object implements the WebhookSolanaMessageStatusChangeEvent interface.
  */
-export function instanceOfWebhookSolanaMessageStatusChangeEvent(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "transactionId" in value;
-    isInstance = isInstance && "isManagedTransaction" in value;
-    isInstance = isInstance && "direction" in value;
-    isInstance = isInstance && "spamState" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "solanaMessageType" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfWebhookSolanaMessageStatusChangeEvent(value: object): value is WebhookSolanaMessageStatusChangeEvent {
+    if (!('transactionId' in value) || value['transactionId'] === undefined) return false;
+    if (!('isManagedTransaction' in value) || value['isManagedTransaction'] === undefined) return false;
+    if (!('direction' in value) || value['direction'] === undefined) return false;
+    if (!('spamState' in value) || value['spamState'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('solanaMessageType' in value) || value['solanaMessageType'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function WebhookSolanaMessageStatusChangeEventFromJSON(json: any): WebhookSolanaMessageStatusChangeEvent {
@@ -139,7 +142,7 @@ export function WebhookSolanaMessageStatusChangeEventFromJSON(json: any): Webhoo
 }
 
 export function WebhookSolanaMessageStatusChangeEventFromJSONTyped(json: any, ignoreDiscriminator: boolean): WebhookSolanaMessageStatusChangeEvent {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -147,33 +150,35 @@ export function WebhookSolanaMessageStatusChangeEventFromJSONTyped(json: any, ig
         'transactionId': json['transaction_id'],
         'isManagedTransaction': json['is_managed_transaction'],
         'direction': TransactionDirectionFromJSON(json['direction']),
-        'note': !exists(json, 'note') ? undefined : json['note'],
+        'note': json['note'] == null ? undefined : json['note'],
         'spamState': TransactionSpamStateFromJSON(json['spam_state']),
+        'state': NonPushableTransactionStateFromJSON(json['state']),
         'type': json['type'],
         'solanaMessageType': SolanaMessageTypeFromJSON(json['solana_message_type']),
-        'state': SolanaMessageStateFromJSON(json['state']),
         'chain': SolanaChainFromJSON(json['chain']),
     };
 }
 
-export function WebhookSolanaMessageStatusChangeEventToJSON(value?: WebhookSolanaMessageStatusChangeEvent | null): any {
-    if (value === undefined) {
-        return undefined;
+export function WebhookSolanaMessageStatusChangeEventToJSON(json: any): WebhookSolanaMessageStatusChangeEvent {
+    return WebhookSolanaMessageStatusChangeEventToJSONTyped(json, false);
+}
+
+export function WebhookSolanaMessageStatusChangeEventToJSONTyped(value?: WebhookSolanaMessageStatusChangeEvent | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'transaction_id': value.transactionId,
-        'is_managed_transaction': value.isManagedTransaction,
-        'direction': TransactionDirectionToJSON(value.direction),
-        'note': value.note,
-        'spam_state': TransactionSpamStateToJSON(value.spamState),
-        'type': value.type,
-        'solana_message_type': SolanaMessageTypeToJSON(value.solanaMessageType),
-        'state': SolanaMessageStateToJSON(value.state),
-        'chain': SolanaChainToJSON(value.chain),
+        'transaction_id': value['transactionId'],
+        'is_managed_transaction': value['isManagedTransaction'],
+        'direction': TransactionDirectionToJSON(value['direction']),
+        'note': value['note'],
+        'spam_state': TransactionSpamStateToJSON(value['spamState']),
+        'state': NonPushableTransactionStateToJSON(value['state']),
+        'type': value['type'],
+        'solana_message_type': SolanaMessageTypeToJSON(value['solanaMessageType']),
+        'chain': SolanaChainToJSON(value['chain']),
     };
 }
 

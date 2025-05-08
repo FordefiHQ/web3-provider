@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedCosmosChain } from './EnrichedCosmosChain';
 import {
     EnrichedCosmosChainFromJSON,
     EnrichedCosmosChainFromJSONTyped,
     EnrichedCosmosChainToJSON,
+    EnrichedCosmosChainToJSONTyped,
 } from './EnrichedCosmosChain';
 
 /**
@@ -44,6 +45,12 @@ export interface CosmosAddressBookContactAddress {
      * @memberof CosmosAddressBookContactAddress
      */
     chain: EnrichedCosmosChain;
+    /**
+     * 
+     * @type {string}
+     * @memberof CosmosAddressBookContactAddress
+     */
+    memo?: string;
 }
 
 
@@ -59,13 +66,11 @@ export type CosmosAddressBookContactAddressChainTypeEnum = typeof CosmosAddressB
 /**
  * Check if a given object implements the CosmosAddressBookContactAddress interface.
  */
-export function instanceOfCosmosAddressBookContactAddress(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chainType" in value;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfCosmosAddressBookContactAddress(value: object): value is CosmosAddressBookContactAddress {
+    if (!('chainType' in value) || value['chainType'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function CosmosAddressBookContactAddressFromJSON(json: any): CosmosAddressBookContactAddress {
@@ -73,7 +78,7 @@ export function CosmosAddressBookContactAddressFromJSON(json: any): CosmosAddres
 }
 
 export function CosmosAddressBookContactAddressFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosAddressBookContactAddress {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -81,21 +86,25 @@ export function CosmosAddressBookContactAddressFromJSONTyped(json: any, ignoreDi
         'chainType': json['chain_type'],
         'address': json['address'],
         'chain': EnrichedCosmosChainFromJSON(json['chain']),
+        'memo': json['memo'] == null ? undefined : json['memo'],
     };
 }
 
-export function CosmosAddressBookContactAddressToJSON(value?: CosmosAddressBookContactAddress | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosAddressBookContactAddressToJSON(json: any): CosmosAddressBookContactAddress {
+    return CosmosAddressBookContactAddressToJSONTyped(json, false);
+}
+
+export function CosmosAddressBookContactAddressToJSONTyped(value?: CosmosAddressBookContactAddress | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain_type': value.chainType,
-        'address': value.address,
-        'chain': EnrichedCosmosChainToJSON(value.chain),
+        'chain_type': value['chainType'],
+        'address': value['address'],
+        'chain': EnrichedCosmosChainToJSON(value['chain']),
+        'memo': value['memo'],
     };
 }
 

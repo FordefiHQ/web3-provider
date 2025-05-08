@@ -12,36 +12,36 @@
  * Do not edit the class manually.
  */
 
+import type { EnrichedCosmosAssetIdentifier } from './EnrichedCosmosAssetIdentifier';
 import {
-    EnrichedCosmosAssetIdentifier,
     instanceOfEnrichedCosmosAssetIdentifier,
     EnrichedCosmosAssetIdentifierFromJSON,
     EnrichedCosmosAssetIdentifierFromJSONTyped,
     EnrichedCosmosAssetIdentifierToJSON,
 } from './EnrichedCosmosAssetIdentifier';
+import type { EnrichedEvmAssetIdentifier } from './EnrichedEvmAssetIdentifier';
 import {
-    EnrichedEvmAssetIdentifier,
     instanceOfEnrichedEvmAssetIdentifier,
     EnrichedEvmAssetIdentifierFromJSON,
     EnrichedEvmAssetIdentifierFromJSONTyped,
     EnrichedEvmAssetIdentifierToJSON,
 } from './EnrichedEvmAssetIdentifier';
+import type { EnrichedSolanaAssetIdentifier } from './EnrichedSolanaAssetIdentifier';
 import {
-    EnrichedSolanaAssetIdentifier,
     instanceOfEnrichedSolanaAssetIdentifier,
     EnrichedSolanaAssetIdentifierFromJSON,
     EnrichedSolanaAssetIdentifierFromJSONTyped,
     EnrichedSolanaAssetIdentifierToJSON,
 } from './EnrichedSolanaAssetIdentifier';
+import type { EnrichedSuiAssetIdentifier } from './EnrichedSuiAssetIdentifier';
 import {
-    EnrichedSuiAssetIdentifier,
     instanceOfEnrichedSuiAssetIdentifier,
     EnrichedSuiAssetIdentifierFromJSON,
     EnrichedSuiAssetIdentifierFromJSONTyped,
     EnrichedSuiAssetIdentifierToJSON,
 } from './EnrichedSuiAssetIdentifier';
+import type { EnrichedUtxoAssetIdentifier } from './EnrichedUtxoAssetIdentifier';
 import {
-    EnrichedUtxoAssetIdentifier,
     instanceOfEnrichedUtxoAssetIdentifier,
     EnrichedUtxoAssetIdentifierFromJSON,
     EnrichedUtxoAssetIdentifierFromJSONTyped,
@@ -60,43 +60,44 @@ export function EnrichedAssetIdentifierFromJSON(json: any): EnrichedAssetIdentif
 }
 
 export function EnrichedAssetIdentifierFromJSONTyped(json: any, ignoreDiscriminator: boolean): EnrichedAssetIdentifier {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'cosmos':
-            return {...EnrichedCosmosAssetIdentifierFromJSONTyped(json, true), type: 'cosmos'};
+            return Object.assign({}, EnrichedCosmosAssetIdentifierFromJSONTyped(json, true), { type: 'cosmos' } as const);
         case 'evm':
-            return {...EnrichedEvmAssetIdentifierFromJSONTyped(json, true), type: 'evm'};
+            return Object.assign({}, EnrichedEvmAssetIdentifierFromJSONTyped(json, true), { type: 'evm' } as const);
         case 'solana':
-            return {...EnrichedSolanaAssetIdentifierFromJSONTyped(json, true), type: 'solana'};
+            return Object.assign({}, EnrichedSolanaAssetIdentifierFromJSONTyped(json, true), { type: 'solana' } as const);
         case 'sui':
-            return {...EnrichedSuiAssetIdentifierFromJSONTyped(json, true), type: 'sui'};
+            return Object.assign({}, EnrichedSuiAssetIdentifierFromJSONTyped(json, true), { type: 'sui' } as const);
         case 'utxo':
-            return {...EnrichedUtxoAssetIdentifierFromJSONTyped(json, true), type: 'utxo'};
+            return Object.assign({}, EnrichedUtxoAssetIdentifierFromJSONTyped(json, true), { type: 'utxo' } as const);
         default:
             throw new Error(`No variant of EnrichedAssetIdentifier exists with 'type=${json['type']}'`);
     }
 }
 
-export function EnrichedAssetIdentifierToJSON(value?: EnrichedAssetIdentifier | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function EnrichedAssetIdentifierToJSON(json: any): any {
+    return EnrichedAssetIdentifierToJSONTyped(json, false);
+}
+
+export function EnrichedAssetIdentifierToJSONTyped(value?: EnrichedAssetIdentifier | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'cosmos':
-            return EnrichedCosmosAssetIdentifierToJSON(value);
+            return Object.assign({}, EnrichedCosmosAssetIdentifierToJSON(value), { type: 'cosmos' } as const);
         case 'evm':
-            return EnrichedEvmAssetIdentifierToJSON(value);
+            return Object.assign({}, EnrichedEvmAssetIdentifierToJSON(value), { type: 'evm' } as const);
         case 'solana':
-            return EnrichedSolanaAssetIdentifierToJSON(value);
+            return Object.assign({}, EnrichedSolanaAssetIdentifierToJSON(value), { type: 'solana' } as const);
         case 'sui':
-            return EnrichedSuiAssetIdentifierToJSON(value);
+            return Object.assign({}, EnrichedSuiAssetIdentifierToJSON(value), { type: 'sui' } as const);
         case 'utxo':
-            return EnrichedUtxoAssetIdentifierToJSON(value);
+            return Object.assign({}, EnrichedUtxoAssetIdentifierToJSON(value), { type: 'utxo' } as const);
         default:
             throw new Error(`No variant of EnrichedAssetIdentifier exists with 'type=${value['type']}'`);
     }

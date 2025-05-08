@@ -12,24 +12,27 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AptosEffects } from './AptosEffects';
 import {
     AptosEffectsFromJSON,
     AptosEffectsFromJSONTyped,
     AptosEffectsToJSON,
+    AptosEffectsToJSONTyped,
 } from './AptosEffects';
 import type { AptosFeeStatement } from './AptosFeeStatement';
 import {
     AptosFeeStatementFromJSON,
     AptosFeeStatementFromJSONTyped,
     AptosFeeStatementToJSON,
+    AptosFeeStatementToJSONTyped,
 } from './AptosFeeStatement';
 import type { AptosReversion } from './AptosReversion';
 import {
     AptosReversionFromJSON,
     AptosReversionFromJSONTyped,
     AptosReversionToJSON,
+    AptosReversionToJSONTyped,
 } from './AptosReversion';
 
 /**
@@ -67,13 +70,11 @@ export interface AptosTransactionResult {
 /**
  * Check if a given object implements the AptosTransactionResult interface.
  */
-export function instanceOfAptosTransactionResult(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "reversion" in value;
-    isInstance = isInstance && "feeStatement" in value;
-    isInstance = isInstance && "effects" in value;
-
-    return isInstance;
+export function instanceOfAptosTransactionResult(value: object): value is AptosTransactionResult {
+    if (!('reversion' in value) || value['reversion'] === undefined) return false;
+    if (!('feeStatement' in value) || value['feeStatement'] === undefined) return false;
+    if (!('effects' in value) || value['effects'] === undefined) return false;
+    return true;
 }
 
 export function AptosTransactionResultFromJSON(json: any): AptosTransactionResult {
@@ -81,7 +82,7 @@ export function AptosTransactionResultFromJSON(json: any): AptosTransactionResul
 }
 
 export function AptosTransactionResultFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosTransactionResult {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -89,23 +90,25 @@ export function AptosTransactionResultFromJSONTyped(json: any, ignoreDiscriminat
         'reversion': AptosReversionFromJSON(json['reversion']),
         'feeStatement': AptosFeeStatementFromJSON(json['fee_statement']),
         'effects': AptosEffectsFromJSON(json['effects']),
-        'rawResult': !exists(json, 'raw_result') ? undefined : json['raw_result'],
+        'rawResult': json['raw_result'] == null ? undefined : json['raw_result'],
     };
 }
 
-export function AptosTransactionResultToJSON(value?: AptosTransactionResult | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AptosTransactionResultToJSON(json: any): AptosTransactionResult {
+    return AptosTransactionResultToJSONTyped(json, false);
+}
+
+export function AptosTransactionResultToJSONTyped(value?: AptosTransactionResult | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'reversion': AptosReversionToJSON(value.reversion),
-        'fee_statement': AptosFeeStatementToJSON(value.feeStatement),
-        'effects': AptosEffectsToJSON(value.effects),
-        'raw_result': value.rawResult,
+        'reversion': AptosReversionToJSON(value['reversion']),
+        'fee_statement': AptosFeeStatementToJSON(value['feeStatement']),
+        'effects': AptosEffectsToJSON(value['effects']),
+        'raw_result': value['rawResult'],
     };
 }
 

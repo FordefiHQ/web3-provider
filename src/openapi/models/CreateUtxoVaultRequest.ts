@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { ImportVaultOptions } from './ImportVaultOptions';
-import {
-    ImportVaultOptionsFromJSON,
-    ImportVaultOptionsFromJSONTyped,
-    ImportVaultOptionsToJSON,
-} from './ImportVaultOptions';
+import { mapValues } from '../runtime';
 import type { UtxoChainUniqueId } from './UtxoChainUniqueId';
 import {
     UtxoChainUniqueIdFromJSON,
     UtxoChainUniqueIdFromJSONTyped,
     UtxoChainUniqueIdToJSON,
+    UtxoChainUniqueIdToJSONTyped,
 } from './UtxoChainUniqueId';
+import type { ImportVaultUtxoOptions } from './ImportVaultUtxoOptions';
+import {
+    ImportVaultUtxoOptionsFromJSON,
+    ImportVaultUtxoOptionsFromJSONTyped,
+    ImportVaultUtxoOptionsToJSON,
+    ImportVaultUtxoOptionsToJSONTyped,
+} from './ImportVaultUtxoOptions';
 
 /**
  * 
@@ -59,12 +61,6 @@ export interface CreateUtxoVaultRequest {
     vaultGroupId?: string;
     /**
      * 
-     * @type {ImportVaultOptions}
-     * @memberof CreateUtxoVaultRequest
-     */
-    importVault?: ImportVaultOptions;
-    /**
-     * 
      * @type {string}
      * @memberof CreateUtxoVaultRequest
      */
@@ -75,6 +71,12 @@ export interface CreateUtxoVaultRequest {
      * @memberof CreateUtxoVaultRequest
      */
     chain: UtxoChainUniqueId;
+    /**
+     * 
+     * @type {ImportVaultUtxoOptions}
+     * @memberof CreateUtxoVaultRequest
+     */
+    importVault?: ImportVaultUtxoOptions;
 }
 
 
@@ -90,13 +92,11 @@ export type CreateUtxoVaultRequestTypeEnum = typeof CreateUtxoVaultRequestTypeEn
 /**
  * Check if a given object implements the CreateUtxoVaultRequest interface.
  */
-export function instanceOfCreateUtxoVaultRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfCreateUtxoVaultRequest(value: object): value is CreateUtxoVaultRequest {
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function CreateUtxoVaultRequestFromJSON(json: any): CreateUtxoVaultRequest {
@@ -104,37 +104,39 @@ export function CreateUtxoVaultRequestFromJSON(json: any): CreateUtxoVaultReques
 }
 
 export function CreateUtxoVaultRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateUtxoVaultRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'name': json['name'],
-        'keysetId': !exists(json, 'keyset_id') ? undefined : json['keyset_id'],
-        'endUserId': !exists(json, 'end_user_id') ? undefined : json['end_user_id'],
-        'vaultGroupId': !exists(json, 'vault_group_id') ? undefined : json['vault_group_id'],
-        'importVault': !exists(json, 'import_vault') ? undefined : ImportVaultOptionsFromJSON(json['import_vault']),
+        'keysetId': json['keyset_id'] == null ? undefined : json['keyset_id'],
+        'endUserId': json['end_user_id'] == null ? undefined : json['end_user_id'],
+        'vaultGroupId': json['vault_group_id'] == null ? undefined : json['vault_group_id'],
         'type': json['type'],
         'chain': UtxoChainUniqueIdFromJSON(json['chain']),
+        'importVault': json['import_vault'] == null ? undefined : ImportVaultUtxoOptionsFromJSON(json['import_vault']),
     };
 }
 
-export function CreateUtxoVaultRequestToJSON(value?: CreateUtxoVaultRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateUtxoVaultRequestToJSON(json: any): CreateUtxoVaultRequest {
+    return CreateUtxoVaultRequestToJSONTyped(json, false);
+}
+
+export function CreateUtxoVaultRequestToJSONTyped(value?: CreateUtxoVaultRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'keyset_id': value.keysetId,
-        'end_user_id': value.endUserId,
-        'vault_group_id': value.vaultGroupId,
-        'import_vault': ImportVaultOptionsToJSON(value.importVault),
-        'type': value.type,
-        'chain': UtxoChainUniqueIdToJSON(value.chain),
+        'name': value['name'],
+        'keyset_id': value['keysetId'],
+        'end_user_id': value['endUserId'],
+        'vault_group_id': value['vaultGroupId'],
+        'type': value['type'],
+        'chain': UtxoChainUniqueIdToJSON(value['chain']),
+        'import_vault': ImportVaultUtxoOptionsToJSON(value['importVault']),
     };
 }
 

@@ -45,6 +45,7 @@ export const CreateTransactionErrorType = {
     invalidPushMode: 'invalid_push_mode',
     chainDoesNotSupportSecureNode: 'chain_does_not_support_secure_node',
     invalidSolanaSecretKey: 'invalid_solana_secret_key',
+    invalidSolanaRawTransactionAccountsField: 'invalid_solana_raw_transaction_accounts_field',
     insufficientGasCoins: 'insufficient_gas_coins',
     invalidAptosSerializedEntryPoint: 'invalid_aptos_serialized_entry_point',
     invalidAptosSerializedType: 'invalid_aptos_serialized_type',
@@ -55,10 +56,25 @@ export const CreateTransactionErrorType = {
     invalidStarknetVaultState: 'invalid_starknet_vault_state',
     missingSecretKeyOrRecentBlockhash: 'missing_secret_key_or_recent_blockhash',
     missingSecretKeyOrSignature: 'missing_secret_key_or_signature',
-    revokeAllowanceGasLimitTooHigh: 'revoke_allowance_gas_limit_too_high'
+    revokeAllowanceGasLimitTooHigh: 'revoke_allowance_gas_limit_too_high',
+    chainIsDisabled: 'chain_is_disabled',
+    priorityFeeAlreadySet: 'priority_fee_already_set',
+    quoteNotFound: 'quote_not_found',
+    invalidTransactionGasConfigField: 'invalid_transaction_gas_config_field'
 } as const;
 export type CreateTransactionErrorType = typeof CreateTransactionErrorType[keyof typeof CreateTransactionErrorType];
 
+
+export function instanceOfCreateTransactionErrorType(value: any): boolean {
+    for (const key in CreateTransactionErrorType) {
+        if (Object.prototype.hasOwnProperty.call(CreateTransactionErrorType, key)) {
+            if (CreateTransactionErrorType[key as keyof typeof CreateTransactionErrorType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 export function CreateTransactionErrorTypeFromJSON(json: any): CreateTransactionErrorType {
     return CreateTransactionErrorTypeFromJSONTyped(json, false);
@@ -70,5 +86,9 @@ export function CreateTransactionErrorTypeFromJSONTyped(json: any, ignoreDiscrim
 
 export function CreateTransactionErrorTypeToJSON(value?: CreateTransactionErrorType | null): any {
     return value as any;
+}
+
+export function CreateTransactionErrorTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): CreateTransactionErrorType {
+    return value as CreateTransactionErrorType;
 }
 

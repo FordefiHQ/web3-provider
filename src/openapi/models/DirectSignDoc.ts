@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedCosmosChain } from './EnrichedCosmosChain';
 import {
     EnrichedCosmosChainFromJSON,
     EnrichedCosmosChainFromJSONTyped,
     EnrichedCosmosChainToJSON,
+    EnrichedCosmosChainToJSONTyped,
 } from './EnrichedCosmosChain';
 
 /**
@@ -83,17 +84,15 @@ export type DirectSignDocFormatEnum = typeof DirectSignDocFormatEnum[keyof typeo
 /**
  * Check if a given object implements the DirectSignDoc interface.
  */
-export function instanceOfDirectSignDoc(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "format" in value;
-    isInstance = isInstance && "body" in value;
-    isInstance = isInstance && "authInfo" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "accountNumber" in value;
-    isInstance = isInstance && "signedBody" in value;
-    isInstance = isInstance && "signedAuthInfo" in value;
-
-    return isInstance;
+export function instanceOfDirectSignDoc(value: object): value is DirectSignDoc {
+    if (!('format' in value) || value['format'] === undefined) return false;
+    if (!('body' in value) || value['body'] === undefined) return false;
+    if (!('authInfo' in value) || value['authInfo'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('accountNumber' in value) || value['accountNumber'] === undefined) return false;
+    if (!('signedBody' in value) || value['signedBody'] === undefined) return false;
+    if (!('signedAuthInfo' in value) || value['signedAuthInfo'] === undefined) return false;
+    return true;
 }
 
 export function DirectSignDocFromJSON(json: any): DirectSignDoc {
@@ -101,7 +100,7 @@ export function DirectSignDocFromJSON(json: any): DirectSignDoc {
 }
 
 export function DirectSignDocFromJSONTyped(json: any, ignoreDiscriminator: boolean): DirectSignDoc {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -116,22 +115,24 @@ export function DirectSignDocFromJSONTyped(json: any, ignoreDiscriminator: boole
     };
 }
 
-export function DirectSignDocToJSON(value?: DirectSignDoc | null): any {
-    if (value === undefined) {
-        return undefined;
+export function DirectSignDocToJSON(json: any): DirectSignDoc {
+    return DirectSignDocToJSONTyped(json, false);
+}
+
+export function DirectSignDocToJSONTyped(value?: DirectSignDoc | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'format': value.format,
-        'body': value.body,
-        'auth_info': value.authInfo,
-        'chain': EnrichedCosmosChainToJSON(value.chain),
-        'account_number': value.accountNumber,
-        'signed_body': value.signedBody,
-        'signed_auth_info': value.signedAuthInfo,
+        'format': value['format'],
+        'body': value['body'],
+        'auth_info': value['authInfo'],
+        'chain': EnrichedCosmosChainToJSON(value['chain']),
+        'account_number': value['accountNumber'],
+        'signed_body': value['signedBody'],
+        'signed_auth_info': value['signedAuthInfo'],
     };
 }
 

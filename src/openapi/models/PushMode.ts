@@ -25,6 +25,17 @@ export const PushMode = {
 export type PushMode = typeof PushMode[keyof typeof PushMode];
 
 
+export function instanceOfPushMode(value: any): boolean {
+    for (const key in PushMode) {
+        if (Object.prototype.hasOwnProperty.call(PushMode, key)) {
+            if (PushMode[key as keyof typeof PushMode] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function PushModeFromJSON(json: any): PushMode {
     return PushModeFromJSONTyped(json, false);
 }
@@ -35,5 +46,9 @@ export function PushModeFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
 
 export function PushModeToJSON(value?: PushMode | null): any {
     return value as any;
+}
+
+export function PushModeToJSONTyped(value: any, ignoreDiscriminator: boolean): PushMode {
+    return value as PushMode;
 }
 

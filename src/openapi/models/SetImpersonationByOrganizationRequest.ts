@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -30,11 +30,9 @@ export interface SetImpersonationByOrganizationRequest {
 /**
  * Check if a given object implements the SetImpersonationByOrganizationRequest interface.
  */
-export function instanceOfSetImpersonationByOrganizationRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "impersonatedOrganizationId" in value;
-
-    return isInstance;
+export function instanceOfSetImpersonationByOrganizationRequest(value: object): value is SetImpersonationByOrganizationRequest {
+    if (!('impersonatedOrganizationId' in value) || value['impersonatedOrganizationId'] === undefined) return false;
+    return true;
 }
 
 export function SetImpersonationByOrganizationRequestFromJSON(json: any): SetImpersonationByOrganizationRequest {
@@ -42,7 +40,7 @@ export function SetImpersonationByOrganizationRequestFromJSON(json: any): SetImp
 }
 
 export function SetImpersonationByOrganizationRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): SetImpersonationByOrganizationRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -51,16 +49,18 @@ export function SetImpersonationByOrganizationRequestFromJSONTyped(json: any, ig
     };
 }
 
-export function SetImpersonationByOrganizationRequestToJSON(value?: SetImpersonationByOrganizationRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SetImpersonationByOrganizationRequestToJSON(json: any): SetImpersonationByOrganizationRequest {
+    return SetImpersonationByOrganizationRequestToJSONTyped(json, false);
+}
+
+export function SetImpersonationByOrganizationRequestToJSONTyped(value?: SetImpersonationByOrganizationRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'impersonated_organization_id': value.impersonatedOrganizationId,
+        'impersonated_organization_id': value['impersonatedOrganizationId'],
     };
 }
 

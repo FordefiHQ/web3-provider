@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { StarknetAddressRequest } from './StarknetAddressRequest';
 import {
     StarknetAddressRequestFromJSON,
     StarknetAddressRequestFromJSONTyped,
     StarknetAddressRequestToJSON,
+    StarknetAddressRequestToJSONTyped,
 } from './StarknetAddressRequest';
 
 /**
@@ -53,12 +54,10 @@ export type StarknetErc20AssetIdentifierRequestTypeEnum = typeof StarknetErc20As
 /**
  * Check if a given object implements the StarknetErc20AssetIdentifierRequest interface.
  */
-export function instanceOfStarknetErc20AssetIdentifierRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "erc20" in value;
-
-    return isInstance;
+export function instanceOfStarknetErc20AssetIdentifierRequest(value: object): value is StarknetErc20AssetIdentifierRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('erc20' in value) || value['erc20'] === undefined) return false;
+    return true;
 }
 
 export function StarknetErc20AssetIdentifierRequestFromJSON(json: any): StarknetErc20AssetIdentifierRequest {
@@ -66,7 +65,7 @@ export function StarknetErc20AssetIdentifierRequestFromJSON(json: any): Starknet
 }
 
 export function StarknetErc20AssetIdentifierRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): StarknetErc20AssetIdentifierRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function StarknetErc20AssetIdentifierRequestFromJSONTyped(json: any, igno
     };
 }
 
-export function StarknetErc20AssetIdentifierRequestToJSON(value?: StarknetErc20AssetIdentifierRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function StarknetErc20AssetIdentifierRequestToJSON(json: any): StarknetErc20AssetIdentifierRequest {
+    return StarknetErc20AssetIdentifierRequestToJSONTyped(json, false);
+}
+
+export function StarknetErc20AssetIdentifierRequestToJSONTyped(value?: StarknetErc20AssetIdentifierRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'erc20': StarknetAddressRequestToJSON(value.erc20),
+        'type': value['type'],
+        'erc20': StarknetAddressRequestToJSON(value['erc20']),
     };
 }
 

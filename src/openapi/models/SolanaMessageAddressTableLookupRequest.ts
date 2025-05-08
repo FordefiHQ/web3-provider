@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -42,13 +42,11 @@ export interface SolanaMessageAddressTableLookupRequest {
 /**
  * Check if a given object implements the SolanaMessageAddressTableLookupRequest interface.
  */
-export function instanceOfSolanaMessageAddressTableLookupRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "accountKey" in value;
-    isInstance = isInstance && "writableIndexes" in value;
-    isInstance = isInstance && "readonlyIndexes" in value;
-
-    return isInstance;
+export function instanceOfSolanaMessageAddressTableLookupRequest(value: object): value is SolanaMessageAddressTableLookupRequest {
+    if (!('accountKey' in value) || value['accountKey'] === undefined) return false;
+    if (!('writableIndexes' in value) || value['writableIndexes'] === undefined) return false;
+    if (!('readonlyIndexes' in value) || value['readonlyIndexes'] === undefined) return false;
+    return true;
 }
 
 export function SolanaMessageAddressTableLookupRequestFromJSON(json: any): SolanaMessageAddressTableLookupRequest {
@@ -56,7 +54,7 @@ export function SolanaMessageAddressTableLookupRequestFromJSON(json: any): Solan
 }
 
 export function SolanaMessageAddressTableLookupRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): SolanaMessageAddressTableLookupRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -67,18 +65,20 @@ export function SolanaMessageAddressTableLookupRequestFromJSONTyped(json: any, i
     };
 }
 
-export function SolanaMessageAddressTableLookupRequestToJSON(value?: SolanaMessageAddressTableLookupRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SolanaMessageAddressTableLookupRequestToJSON(json: any): SolanaMessageAddressTableLookupRequest {
+    return SolanaMessageAddressTableLookupRequestToJSONTyped(json, false);
+}
+
+export function SolanaMessageAddressTableLookupRequestToJSONTyped(value?: SolanaMessageAddressTableLookupRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'account_key': value.accountKey,
-        'writable_indexes': value.writableIndexes,
-        'readonly_indexes': value.readonlyIndexes,
+        'account_key': value['accountKey'],
+        'writable_indexes': value['writableIndexes'],
+        'readonly_indexes': value['readonlyIndexes'],
     };
 }
 

@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AssetIdentifierRequest } from './AssetIdentifierRequest';
 import {
     AssetIdentifierRequestFromJSON,
     AssetIdentifierRequestFromJSONTyped,
     AssetIdentifierRequestToJSON,
+    AssetIdentifierRequestToJSONTyped,
 } from './AssetIdentifierRequest';
 
 /**
@@ -37,11 +38,9 @@ export interface CreateAssetInfoRequest {
 /**
  * Check if a given object implements the CreateAssetInfoRequest interface.
  */
-export function instanceOfCreateAssetInfoRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "assetIdentifier" in value;
-
-    return isInstance;
+export function instanceOfCreateAssetInfoRequest(value: object): value is CreateAssetInfoRequest {
+    if (!('assetIdentifier' in value) || value['assetIdentifier'] === undefined) return false;
+    return true;
 }
 
 export function CreateAssetInfoRequestFromJSON(json: any): CreateAssetInfoRequest {
@@ -49,7 +48,7 @@ export function CreateAssetInfoRequestFromJSON(json: any): CreateAssetInfoReques
 }
 
 export function CreateAssetInfoRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateAssetInfoRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -58,16 +57,18 @@ export function CreateAssetInfoRequestFromJSONTyped(json: any, ignoreDiscriminat
     };
 }
 
-export function CreateAssetInfoRequestToJSON(value?: CreateAssetInfoRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateAssetInfoRequestToJSON(json: any): CreateAssetInfoRequest {
+    return CreateAssetInfoRequestToJSONTyped(json, false);
+}
+
+export function CreateAssetInfoRequestToJSONTyped(value?: CreateAssetInfoRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'asset_identifier': AssetIdentifierRequestToJSON(value.assetIdentifier),
+        'asset_identifier': AssetIdentifierRequestToJSON(value['assetIdentifier']),
     };
 }
 

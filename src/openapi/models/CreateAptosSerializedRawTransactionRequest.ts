@@ -12,24 +12,27 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { AptosChainUniqueId } from './AptosChainUniqueId';
-import {
-    AptosChainUniqueIdFromJSON,
-    AptosChainUniqueIdFromJSONTyped,
-    AptosChainUniqueIdToJSON,
-} from './AptosChainUniqueId';
+import { mapValues } from '../runtime';
 import type { AptosGasConfigRequest } from './AptosGasConfigRequest';
 import {
     AptosGasConfigRequestFromJSON,
     AptosGasConfigRequestFromJSONTyped,
     AptosGasConfigRequestToJSON,
+    AptosGasConfigRequestToJSONTyped,
 } from './AptosGasConfigRequest';
+import type { AptosChainUniqueId } from './AptosChainUniqueId';
+import {
+    AptosChainUniqueIdFromJSON,
+    AptosChainUniqueIdFromJSONTyped,
+    AptosChainUniqueIdToJSON,
+    AptosChainUniqueIdToJSONTyped,
+} from './AptosChainUniqueId';
 import type { PushMode } from './PushMode';
 import {
     PushModeFromJSON,
     PushModeFromJSONTyped,
     PushModeToJSON,
+    PushModeToJSONTyped,
 } from './PushMode';
 
 /**
@@ -55,7 +58,7 @@ export interface CreateAptosSerializedRawTransactionRequest {
      * @type {AptosGasConfigRequest}
      * @memberof CreateAptosSerializedRawTransactionRequest
      */
-    gasConfig: AptosGasConfigRequest;
+    gasConfig?: AptosGasConfigRequest;
     /**
      * 
      * @type {AptosChainUniqueId}
@@ -95,14 +98,11 @@ export type CreateAptosSerializedRawTransactionRequestTypeEnum = typeof CreateAp
 /**
  * Check if a given object implements the CreateAptosSerializedRawTransactionRequest interface.
  */
-export function instanceOfCreateAptosSerializedRawTransactionRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "gasConfig" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "serializedTransactionPayload" in value;
-
-    return isInstance;
+export function instanceOfCreateAptosSerializedRawTransactionRequest(value: object): value is CreateAptosSerializedRawTransactionRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('serializedTransactionPayload' in value) || value['serializedTransactionPayload'] === undefined) return false;
+    return true;
 }
 
 export function CreateAptosSerializedRawTransactionRequestFromJSON(json: any): CreateAptosSerializedRawTransactionRequest {
@@ -110,37 +110,39 @@ export function CreateAptosSerializedRawTransactionRequestFromJSON(json: any): C
 }
 
 export function CreateAptosSerializedRawTransactionRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateAptosSerializedRawTransactionRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
-        'failOnPredictionFailure': !exists(json, 'fail_on_prediction_failure') ? undefined : json['fail_on_prediction_failure'],
-        'gasConfig': AptosGasConfigRequestFromJSON(json['gas_config']),
+        'failOnPredictionFailure': json['fail_on_prediction_failure'] == null ? undefined : json['fail_on_prediction_failure'],
+        'gasConfig': json['gas_config'] == null ? undefined : AptosGasConfigRequestFromJSON(json['gas_config']),
         'chain': AptosChainUniqueIdFromJSON(json['chain']),
         'serializedTransactionPayload': json['serialized_transaction_payload'],
-        'skipPrediction': !exists(json, 'skip_prediction') ? undefined : json['skip_prediction'],
-        'pushMode': !exists(json, 'push_mode') ? undefined : PushModeFromJSON(json['push_mode']),
+        'skipPrediction': json['skip_prediction'] == null ? undefined : json['skip_prediction'],
+        'pushMode': json['push_mode'] == null ? undefined : PushModeFromJSON(json['push_mode']),
     };
 }
 
-export function CreateAptosSerializedRawTransactionRequestToJSON(value?: CreateAptosSerializedRawTransactionRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateAptosSerializedRawTransactionRequestToJSON(json: any): CreateAptosSerializedRawTransactionRequest {
+    return CreateAptosSerializedRawTransactionRequestToJSONTyped(json, false);
+}
+
+export function CreateAptosSerializedRawTransactionRequestToJSONTyped(value?: CreateAptosSerializedRawTransactionRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'fail_on_prediction_failure': value.failOnPredictionFailure,
-        'gas_config': AptosGasConfigRequestToJSON(value.gasConfig),
-        'chain': AptosChainUniqueIdToJSON(value.chain),
-        'serialized_transaction_payload': value.serializedTransactionPayload,
-        'skip_prediction': value.skipPrediction,
-        'push_mode': PushModeToJSON(value.pushMode),
+        'type': value['type'],
+        'fail_on_prediction_failure': value['failOnPredictionFailure'],
+        'gas_config': AptosGasConfigRequestToJSON(value['gasConfig']),
+        'chain': AptosChainUniqueIdToJSON(value['chain']),
+        'serialized_transaction_payload': value['serializedTransactionPayload'],
+        'skip_prediction': value['skipPrediction'],
+        'push_mode': PushModeToJSON(value['pushMode']),
     };
 }
 

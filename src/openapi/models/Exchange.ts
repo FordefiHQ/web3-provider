@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { ExchangeType } from './ExchangeType';
 import {
     ExchangeTypeFromJSON,
     ExchangeTypeFromJSONTyped,
     ExchangeTypeToJSON,
+    ExchangeTypeToJSONTyped,
 } from './ExchangeType';
 
 /**
@@ -44,18 +45,25 @@ export interface Exchange {
      * @memberof Exchange
      */
     hasAccounts: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof Exchange
+     */
+    logoUrl: string;
 }
+
+
 
 /**
  * Check if a given object implements the Exchange interface.
  */
-export function instanceOfExchange(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "exchangeType" in value;
-    isInstance = isInstance && "hasPassphrase" in value;
-    isInstance = isInstance && "hasAccounts" in value;
-
-    return isInstance;
+export function instanceOfExchange(value: object): value is Exchange {
+    if (!('exchangeType' in value) || value['exchangeType'] === undefined) return false;
+    if (!('hasPassphrase' in value) || value['hasPassphrase'] === undefined) return false;
+    if (!('hasAccounts' in value) || value['hasAccounts'] === undefined) return false;
+    if (!('logoUrl' in value) || value['logoUrl'] === undefined) return false;
+    return true;
 }
 
 export function ExchangeFromJSON(json: any): Exchange {
@@ -63,7 +71,7 @@ export function ExchangeFromJSON(json: any): Exchange {
 }
 
 export function ExchangeFromJSONTyped(json: any, ignoreDiscriminator: boolean): Exchange {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -71,21 +79,25 @@ export function ExchangeFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'exchangeType': ExchangeTypeFromJSON(json['exchange_type']),
         'hasPassphrase': json['has_passphrase'],
         'hasAccounts': json['has_accounts'],
+        'logoUrl': json['logo_url'],
     };
 }
 
-export function ExchangeToJSON(value?: Exchange | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ExchangeToJSON(json: any): Exchange {
+    return ExchangeToJSONTyped(json, false);
+}
+
+export function ExchangeToJSONTyped(value?: Exchange | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'exchange_type': ExchangeTypeToJSON(value.exchangeType),
-        'has_passphrase': value.hasPassphrase,
-        'has_accounts': value.hasAccounts,
+        'exchange_type': ExchangeTypeToJSON(value['exchangeType']),
+        'has_passphrase': value['hasPassphrase'],
+        'has_accounts': value['hasAccounts'],
+        'logo_url': value['logoUrl'],
     };
 }
 

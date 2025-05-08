@@ -12,24 +12,34 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { ApprovalRequest } from './ApprovalRequest';
 import {
     ApprovalRequestFromJSON,
     ApprovalRequestFromJSONTyped,
     ApprovalRequestToJSON,
+    ApprovalRequestToJSONTyped,
 } from './ApprovalRequest';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
     UserRefFromJSONTyped,
     UserRefToJSON,
+    UserRefToJSONTyped,
 } from './UserRef';
+import type { VerificationRequest } from './VerificationRequest';
+import {
+    VerificationRequestFromJSON,
+    VerificationRequestFromJSONTyped,
+    VerificationRequestToJSON,
+    VerificationRequestToJSONTyped,
+} from './VerificationRequest';
 import type { VaultGroupChangeActionPendingChanges } from './VaultGroupChangeActionPendingChanges';
 import {
     VaultGroupChangeActionPendingChangesFromJSON,
     VaultGroupChangeActionPendingChangesFromJSONTyped,
     VaultGroupChangeActionPendingChangesToJSON,
+    VaultGroupChangeActionPendingChangesToJSONTyped,
 } from './VaultGroupChangeActionPendingChanges';
 
 /**
@@ -58,16 +68,16 @@ export interface VaultGroupChangeAction {
     modifiedAt: Date;
     /**
      * 
-     * @type {string}
-     * @memberof VaultGroupChangeAction
-     */
-    type: VaultGroupChangeActionTypeEnum;
-    /**
-     * 
      * @type {boolean}
      * @memberof VaultGroupChangeAction
      */
     isPending: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof VaultGroupChangeAction
+     */
+    type: VaultGroupChangeActionTypeEnum;
     /**
      * 
      * @type {UserRef}
@@ -115,7 +125,13 @@ export interface VaultGroupChangeAction {
      * @type {ApprovalRequest}
      * @memberof VaultGroupChangeAction
      */
-    approvalRequest: ApprovalRequest;
+    approvalRequest?: ApprovalRequest;
+    /**
+     * 
+     * @type {VerificationRequest}
+     * @memberof VaultGroupChangeAction
+     */
+    verificationRequest?: VerificationRequest;
 }
 
 
@@ -131,6 +147,8 @@ export type VaultGroupChangeActionTypeEnum = typeof VaultGroupChangeActionTypeEn
  * @export
  */
 export const VaultGroupChangeActionStateEnum = {
+    pendingVerification: 'pending_verification',
+    pendingApproval: 'pending_approval',
     created: 'created',
     completed: 'completed',
     aborted: 'aborted',
@@ -142,22 +160,19 @@ export type VaultGroupChangeActionStateEnum = typeof VaultGroupChangeActionState
 /**
  * Check if a given object implements the VaultGroupChangeAction interface.
  */
-export function instanceOfVaultGroupChangeAction(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "isPending" in value;
-    isInstance = isInstance && "createdBy" in value;
-    isInstance = isInstance && "vaultGroupId" in value;
-    isInstance = isInstance && "groupName" in value;
-    isInstance = isInstance && "pendingChanges" in value;
-    isInstance = isInstance && "changeRequestId" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "approvalRequest" in value;
-
-    return isInstance;
+export function instanceOfVaultGroupChangeAction(value: object): value is VaultGroupChangeAction {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('isPending' in value) || value['isPending'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('createdBy' in value) || value['createdBy'] === undefined) return false;
+    if (!('vaultGroupId' in value) || value['vaultGroupId'] === undefined) return false;
+    if (!('groupName' in value) || value['groupName'] === undefined) return false;
+    if (!('pendingChanges' in value) || value['pendingChanges'] === undefined) return false;
+    if (!('changeRequestId' in value) || value['changeRequestId'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    return true;
 }
 
 export function VaultGroupChangeActionFromJSON(json: any): VaultGroupChangeAction {
@@ -165,7 +180,7 @@ export function VaultGroupChangeActionFromJSON(json: any): VaultGroupChangeActio
 }
 
 export function VaultGroupChangeActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): VaultGroupChangeAction {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -173,41 +188,45 @@ export function VaultGroupChangeActionFromJSONTyped(json: any, ignoreDiscriminat
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
-        'type': json['type'],
         'isPending': json['is_pending'],
+        'type': json['type'],
         'createdBy': UserRefFromJSON(json['created_by']),
-        'abortedBy': !exists(json, 'aborted_by') ? undefined : UserRefFromJSON(json['aborted_by']),
+        'abortedBy': json['aborted_by'] == null ? undefined : UserRefFromJSON(json['aborted_by']),
         'vaultGroupId': json['vault_group_id'],
         'groupName': json['group_name'],
         'pendingChanges': VaultGroupChangeActionPendingChangesFromJSON(json['pending_changes']),
         'changeRequestId': json['change_request_id'],
         'state': json['state'],
-        'approvalRequest': ApprovalRequestFromJSON(json['approval_request']),
+        'approvalRequest': json['approval_request'] == null ? undefined : ApprovalRequestFromJSON(json['approval_request']),
+        'verificationRequest': json['verification_request'] == null ? undefined : VerificationRequestFromJSON(json['verification_request']),
     };
 }
 
-export function VaultGroupChangeActionToJSON(value?: VaultGroupChangeAction | null): any {
-    if (value === undefined) {
-        return undefined;
+export function VaultGroupChangeActionToJSON(json: any): VaultGroupChangeAction {
+    return VaultGroupChangeActionToJSONTyped(json, false);
+}
+
+export function VaultGroupChangeActionToJSONTyped(value?: VaultGroupChangeAction | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'type': value.type,
-        'is_pending': value.isPending,
-        'created_by': UserRefToJSON(value.createdBy),
-        'aborted_by': UserRefToJSON(value.abortedBy),
-        'vault_group_id': value.vaultGroupId,
-        'group_name': value.groupName,
-        'pending_changes': VaultGroupChangeActionPendingChangesToJSON(value.pendingChanges),
-        'change_request_id': value.changeRequestId,
-        'state': value.state,
-        'approval_request': ApprovalRequestToJSON(value.approvalRequest),
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'is_pending': value['isPending'],
+        'type': value['type'],
+        'created_by': UserRefToJSON(value['createdBy']),
+        'aborted_by': UserRefToJSON(value['abortedBy']),
+        'vault_group_id': value['vaultGroupId'],
+        'group_name': value['groupName'],
+        'pending_changes': VaultGroupChangeActionPendingChangesToJSON(value['pendingChanges']),
+        'change_request_id': value['changeRequestId'],
+        'state': value['state'],
+        'approval_request': ApprovalRequestToJSON(value['approvalRequest']),
+        'verification_request': VerificationRequestToJSON(value['verificationRequest']),
     };
 }
 

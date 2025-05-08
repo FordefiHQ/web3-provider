@@ -12,99 +12,99 @@
  * Do not edit the class manually.
  */
 
+import type { AddApiSignerAction } from './AddApiSignerAction';
 import {
-    AddApiSignerAction,
     instanceOfAddApiSignerAction,
     AddApiSignerActionFromJSON,
     AddApiSignerActionFromJSONTyped,
     AddApiSignerActionToJSON,
 } from './AddApiSignerAction';
+import type { AddDeviceAction } from './AddDeviceAction';
 import {
-    AddDeviceAction,
     instanceOfAddDeviceAction,
     AddDeviceActionFromJSON,
     AddDeviceActionFromJSONTyped,
     AddDeviceActionToJSON,
 } from './AddDeviceAction';
+import type { AddPersonMembershipAction } from './AddPersonMembershipAction';
 import {
-    AddPersonMembershipAction,
     instanceOfAddPersonMembershipAction,
     AddPersonMembershipActionFromJSON,
     AddPersonMembershipActionFromJSONTyped,
     AddPersonMembershipActionToJSON,
 } from './AddPersonMembershipAction';
+import type { AddressGroupChangeAction } from './AddressGroupChangeAction';
 import {
-    AddressGroupChangeAction,
     instanceOfAddressGroupChangeAction,
     AddressGroupChangeActionFromJSON,
     AddressGroupChangeActionFromJSONTyped,
     AddressGroupChangeActionToJSON,
 } from './AddressGroupChangeAction';
+import type { AdminQuorumChangeAction } from './AdminQuorumChangeAction';
 import {
-    AdminQuorumChangeAction,
     instanceOfAdminQuorumChangeAction,
     AdminQuorumChangeActionFromJSON,
     AdminQuorumChangeActionFromJSONTyped,
     AdminQuorumChangeActionToJSON,
 } from './AdminQuorumChangeAction';
+import type { BackupEmailChangeAction } from './BackupEmailChangeAction';
 import {
-    BackupEmailChangeAction,
     instanceOfBackupEmailChangeAction,
     BackupEmailChangeActionFromJSON,
     BackupEmailChangeActionFromJSONTyped,
     BackupEmailChangeActionToJSON,
 } from './BackupEmailChangeAction';
+import type { ContactChangeAction } from './ContactChangeAction';
 import {
-    ContactChangeAction,
     instanceOfContactChangeAction,
     ContactChangeActionFromJSON,
     ContactChangeActionFromJSONTyped,
     ContactChangeActionToJSON,
 } from './ContactChangeAction';
+import type { CreateBackupAction } from './CreateBackupAction';
 import {
-    CreateBackupAction,
     instanceOfCreateBackupAction,
     CreateBackupActionFromJSON,
     CreateBackupActionFromJSONTyped,
     CreateBackupActionToJSON,
 } from './CreateBackupAction';
+import type { ImportKeysAction } from './ImportKeysAction';
 import {
-    ImportKeysAction,
     instanceOfImportKeysAction,
     ImportKeysActionFromJSON,
     ImportKeysActionFromJSONTyped,
     ImportKeysActionToJSON,
 } from './ImportKeysAction';
+import type { TransactionAction } from './TransactionAction';
 import {
-    TransactionAction,
     instanceOfTransactionAction,
     TransactionActionFromJSON,
     TransactionActionFromJSONTyped,
     TransactionActionToJSON,
 } from './TransactionAction';
+import type { TransactionsPolicyAction } from './TransactionsPolicyAction';
 import {
-    TransactionsPolicyAction,
     instanceOfTransactionsPolicyAction,
     TransactionsPolicyActionFromJSON,
     TransactionsPolicyActionFromJSONTyped,
     TransactionsPolicyActionToJSON,
 } from './TransactionsPolicyAction';
+import type { UserChangeAction } from './UserChangeAction';
 import {
-    UserChangeAction,
     instanceOfUserChangeAction,
     UserChangeActionFromJSON,
     UserChangeActionFromJSONTyped,
     UserChangeActionToJSON,
 } from './UserChangeAction';
+import type { UserGroupChangeAction } from './UserGroupChangeAction';
 import {
-    UserGroupChangeAction,
     instanceOfUserGroupChangeAction,
     UserGroupChangeActionFromJSON,
     UserGroupChangeActionFromJSONTyped,
     UserGroupChangeActionToJSON,
 } from './UserGroupChangeAction';
+import type { VaultGroupChangeAction } from './VaultGroupChangeAction';
 import {
-    VaultGroupChangeAction,
     instanceOfVaultGroupChangeAction,
     VaultGroupChangeActionFromJSON,
     VaultGroupChangeActionFromJSONTyped,
@@ -123,79 +123,80 @@ export function UserActionFromJSON(json: any): UserAction {
 }
 
 export function UserActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): UserAction {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'add_api_signer':
-            return {...AddApiSignerActionFromJSONTyped(json, true), type: 'add_api_signer'};
+            return Object.assign({}, AddApiSignerActionFromJSONTyped(json, true), { type: 'add_api_signer' } as const);
         case 'add_device':
-            return {...AddDeviceActionFromJSONTyped(json, true), type: 'add_device'};
+            return Object.assign({}, AddDeviceActionFromJSONTyped(json, true), { type: 'add_device' } as const);
         case 'add_person_membership':
-            return {...AddPersonMembershipActionFromJSONTyped(json, true), type: 'add_person_membership'};
+            return Object.assign({}, AddPersonMembershipActionFromJSONTyped(json, true), { type: 'add_person_membership' } as const);
         case 'addressbook_contact_change':
-            return {...ContactChangeActionFromJSONTyped(json, true), type: 'addressbook_contact_change'};
+            return Object.assign({}, ContactChangeActionFromJSONTyped(json, true), { type: 'addressbook_contact_change' } as const);
         case 'addressbook_group_change':
-            return {...AddressGroupChangeActionFromJSONTyped(json, true), type: 'addressbook_group_change'};
+            return Object.assign({}, AddressGroupChangeActionFromJSONTyped(json, true), { type: 'addressbook_group_change' } as const);
         case 'admin_quorum_change':
-            return {...AdminQuorumChangeActionFromJSONTyped(json, true), type: 'admin_quorum_change'};
+            return Object.assign({}, AdminQuorumChangeActionFromJSONTyped(json, true), { type: 'admin_quorum_change' } as const);
         case 'backup_email_change':
-            return {...BackupEmailChangeActionFromJSONTyped(json, true), type: 'backup_email_change'};
+            return Object.assign({}, BackupEmailChangeActionFromJSONTyped(json, true), { type: 'backup_email_change' } as const);
         case 'create_backup':
-            return {...CreateBackupActionFromJSONTyped(json, true), type: 'create_backup'};
+            return Object.assign({}, CreateBackupActionFromJSONTyped(json, true), { type: 'create_backup' } as const);
         case 'import_keys':
-            return {...ImportKeysActionFromJSONTyped(json, true), type: 'import_keys'};
+            return Object.assign({}, ImportKeysActionFromJSONTyped(json, true), { type: 'import_keys' } as const);
         case 'transaction':
-            return {...TransactionActionFromJSONTyped(json, true), type: 'transaction'};
+            return Object.assign({}, TransactionActionFromJSONTyped(json, true), { type: 'transaction' } as const);
         case 'transactions_policy':
-            return {...TransactionsPolicyActionFromJSONTyped(json, true), type: 'transactions_policy'};
+            return Object.assign({}, TransactionsPolicyActionFromJSONTyped(json, true), { type: 'transactions_policy' } as const);
         case 'user_change':
-            return {...UserChangeActionFromJSONTyped(json, true), type: 'user_change'};
+            return Object.assign({}, UserChangeActionFromJSONTyped(json, true), { type: 'user_change' } as const);
         case 'user_group_change':
-            return {...UserGroupChangeActionFromJSONTyped(json, true), type: 'user_group_change'};
+            return Object.assign({}, UserGroupChangeActionFromJSONTyped(json, true), { type: 'user_group_change' } as const);
         case 'vault_group_change':
-            return {...VaultGroupChangeActionFromJSONTyped(json, true), type: 'vault_group_change'};
+            return Object.assign({}, VaultGroupChangeActionFromJSONTyped(json, true), { type: 'vault_group_change' } as const);
         default:
             throw new Error(`No variant of UserAction exists with 'type=${json['type']}'`);
     }
 }
 
-export function UserActionToJSON(value?: UserAction | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function UserActionToJSON(json: any): any {
+    return UserActionToJSONTyped(json, false);
+}
+
+export function UserActionToJSONTyped(value?: UserAction | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'add_api_signer':
-            return AddApiSignerActionToJSON(value);
+            return Object.assign({}, AddApiSignerActionToJSON(value), { type: 'add_api_signer' } as const);
         case 'add_device':
-            return AddDeviceActionToJSON(value);
+            return Object.assign({}, AddDeviceActionToJSON(value), { type: 'add_device' } as const);
         case 'add_person_membership':
-            return AddPersonMembershipActionToJSON(value);
+            return Object.assign({}, AddPersonMembershipActionToJSON(value), { type: 'add_person_membership' } as const);
         case 'addressbook_contact_change':
-            return ContactChangeActionToJSON(value);
+            return Object.assign({}, ContactChangeActionToJSON(value), { type: 'addressbook_contact_change' } as const);
         case 'addressbook_group_change':
-            return AddressGroupChangeActionToJSON(value);
+            return Object.assign({}, AddressGroupChangeActionToJSON(value), { type: 'addressbook_group_change' } as const);
         case 'admin_quorum_change':
-            return AdminQuorumChangeActionToJSON(value);
+            return Object.assign({}, AdminQuorumChangeActionToJSON(value), { type: 'admin_quorum_change' } as const);
         case 'backup_email_change':
-            return BackupEmailChangeActionToJSON(value);
+            return Object.assign({}, BackupEmailChangeActionToJSON(value), { type: 'backup_email_change' } as const);
         case 'create_backup':
-            return CreateBackupActionToJSON(value);
+            return Object.assign({}, CreateBackupActionToJSON(value), { type: 'create_backup' } as const);
         case 'import_keys':
-            return ImportKeysActionToJSON(value);
+            return Object.assign({}, ImportKeysActionToJSON(value), { type: 'import_keys' } as const);
         case 'transaction':
-            return TransactionActionToJSON(value);
+            return Object.assign({}, TransactionActionToJSON(value), { type: 'transaction' } as const);
         case 'transactions_policy':
-            return TransactionsPolicyActionToJSON(value);
+            return Object.assign({}, TransactionsPolicyActionToJSON(value), { type: 'transactions_policy' } as const);
         case 'user_change':
-            return UserChangeActionToJSON(value);
+            return Object.assign({}, UserChangeActionToJSON(value), { type: 'user_change' } as const);
         case 'user_group_change':
-            return UserGroupChangeActionToJSON(value);
+            return Object.assign({}, UserGroupChangeActionToJSON(value), { type: 'user_group_change' } as const);
         case 'vault_group_change':
-            return VaultGroupChangeActionToJSON(value);
+            return Object.assign({}, VaultGroupChangeActionToJSON(value), { type: 'vault_group_change' } as const);
         default:
             throw new Error(`No variant of UserAction exists with 'type=${value['type']}'`);
     }

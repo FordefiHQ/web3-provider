@@ -12,55 +12,70 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { AptosVaultMetadataValue } from './AptosVaultMetadataValue';
-import {
-    AptosVaultMetadataValueFromJSON,
-    AptosVaultMetadataValueFromJSONTyped,
-    AptosVaultMetadataValueToJSON,
-} from './AptosVaultMetadataValue';
+import { mapValues } from '../runtime';
 import type { AptosVaultPendingVaultGroupAction } from './AptosVaultPendingVaultGroupAction';
 import {
     AptosVaultPendingVaultGroupActionFromJSON,
     AptosVaultPendingVaultGroupActionFromJSONTyped,
     AptosVaultPendingVaultGroupActionToJSON,
+    AptosVaultPendingVaultGroupActionToJSONTyped,
 } from './AptosVaultPendingVaultGroupAction';
 import type { EndUserRef } from './EndUserRef';
 import {
     EndUserRefFromJSON,
     EndUserRefFromJSONTyped,
     EndUserRefToJSON,
+    EndUserRefToJSONTyped,
 } from './EndUserRef';
+import type { VaultState } from './VaultState';
+import {
+    VaultStateFromJSON,
+    VaultStateFromJSONTyped,
+    VaultStateToJSON,
+    VaultStateToJSONTyped,
+} from './VaultState';
+import type { AptosVaultMetadataValue } from './AptosVaultMetadataValue';
+import {
+    AptosVaultMetadataValueFromJSON,
+    AptosVaultMetadataValueFromJSONTyped,
+    AptosVaultMetadataValueToJSON,
+    AptosVaultMetadataValueToJSONTyped,
+} from './AptosVaultMetadataValue';
+import type { VaultOriginType } from './VaultOriginType';
+import {
+    VaultOriginTypeFromJSON,
+    VaultOriginTypeFromJSONTyped,
+    VaultOriginTypeToJSON,
+    VaultOriginTypeToJSONTyped,
+} from './VaultOriginType';
+import type { VaultGroupRef } from './VaultGroupRef';
+import {
+    VaultGroupRefFromJSON,
+    VaultGroupRefFromJSONTyped,
+    VaultGroupRefToJSON,
+    VaultGroupRefToJSONTyped,
+} from './VaultGroupRef';
 import type { KeysetRef } from './KeysetRef';
 import {
     KeysetRefFromJSON,
     KeysetRefFromJSONTyped,
     KeysetRefToJSON,
+    KeysetRefToJSONTyped,
 } from './KeysetRef';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
     UserRefFromJSONTyped,
     UserRefToJSON,
+    UserRefToJSONTyped,
 } from './UserRef';
 import type { VaultDerivationInfo } from './VaultDerivationInfo';
 import {
     VaultDerivationInfoFromJSON,
     VaultDerivationInfoFromJSONTyped,
     VaultDerivationInfoToJSON,
+    VaultDerivationInfoToJSONTyped,
 } from './VaultDerivationInfo';
-import type { VaultGroupRef } from './VaultGroupRef';
-import {
-    VaultGroupRefFromJSON,
-    VaultGroupRefFromJSONTyped,
-    VaultGroupRefToJSON,
-} from './VaultGroupRef';
-import type { VaultState } from './VaultState';
-import {
-    VaultStateFromJSON,
-    VaultStateFromJSONTyped,
-    VaultStateToJSON,
-} from './VaultState';
 
 /**
  * 
@@ -124,6 +139,12 @@ export interface TonVault {
     state: VaultState;
     /**
      * 
+     * @type {boolean}
+     * @memberof TonVault
+     */
+    areAllChainsDisabled: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof TonVault
      * @deprecated
@@ -153,6 +174,12 @@ export interface TonVault {
      * @memberof TonVault
      */
     keyHolder?: EndUserRef;
+    /**
+     * 
+     * @type {VaultOriginType}
+     * @memberof TonVault
+     */
+    originType: VaultOriginType;
     /**
      * 
      * @type {string}
@@ -198,26 +225,26 @@ export type TonVaultTypeEnum = typeof TonVaultTypeEnum[keyof typeof TonVaultType
 /**
  * Check if a given object implements the TonVault interface.
  */
-export function instanceOfTonVault(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "createdBy" in value;
-    isInstance = isInstance && "vaultGroup" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "derivationPath" in value;
-    isInstance = isInstance && "publicKeyCompressed" in value;
-    isInstance = isInstance && "derivationInfo" in value;
-    isInstance = isInstance && "keyset" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "rawAccount" in value;
-    isInstance = isInstance && "base64UrlBounceableAccount" in value;
-    isInstance = isInstance && "base64UrlNonBounceableAccount" in value;
-    isInstance = isInstance && "stateInit" in value;
-
-    return isInstance;
+export function instanceOfTonVault(value: object): value is TonVault {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('createdBy' in value) || value['createdBy'] === undefined) return false;
+    if (!('vaultGroup' in value) || value['vaultGroup'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('areAllChainsDisabled' in value) || value['areAllChainsDisabled'] === undefined) return false;
+    if (!('derivationPath' in value) || value['derivationPath'] === undefined) return false;
+    if (!('publicKeyCompressed' in value) || value['publicKeyCompressed'] === undefined) return false;
+    if (!('derivationInfo' in value) || value['derivationInfo'] === undefined) return false;
+    if (!('keyset' in value) || value['keyset'] === undefined) return false;
+    if (!('originType' in value) || value['originType'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('rawAccount' in value) || value['rawAccount'] === undefined) return false;
+    if (!('base64UrlBounceableAccount' in value) || value['base64UrlBounceableAccount'] === undefined) return false;
+    if (!('base64UrlNonBounceableAccount' in value) || value['base64UrlNonBounceableAccount'] === undefined) return false;
+    if (!('stateInit' in value) || value['stateInit'] === undefined) return false;
+    return true;
 }
 
 export function TonVaultFromJSON(json: any): TonVault {
@@ -225,7 +252,7 @@ export function TonVaultFromJSON(json: any): TonVault {
 }
 
 export function TonVaultFromJSONTyped(json: any, ignoreDiscriminator: boolean): TonVault {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -233,17 +260,19 @@ export function TonVaultFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
-        'metadata': !exists(json, 'metadata') ? undefined : (mapValues(json['metadata'], AptosVaultMetadataValueFromJSON)),
+        'metadata': json['metadata'] == null ? undefined : (mapValues(json['metadata'], AptosVaultMetadataValueFromJSON)),
         'name': json['name'],
         'createdBy': UserRefFromJSON(json['created_by']),
         'vaultGroup': VaultGroupRefFromJSON(json['vault_group']),
-        'pendingVaultGroupAction': !exists(json, 'pending_vault_group_action') ? undefined : AptosVaultPendingVaultGroupActionFromJSON(json['pending_vault_group_action']),
+        'pendingVaultGroupAction': json['pending_vault_group_action'] == null ? undefined : AptosVaultPendingVaultGroupActionFromJSON(json['pending_vault_group_action']),
         'state': VaultStateFromJSON(json['state']),
+        'areAllChainsDisabled': json['are_all_chains_disabled'],
         'derivationPath': json['derivation_path'],
         'publicKeyCompressed': json['public_key_compressed'],
         'derivationInfo': VaultDerivationInfoFromJSON(json['derivation_info']),
         'keyset': KeysetRefFromJSON(json['keyset']),
-        'keyHolder': !exists(json, 'key_holder') ? undefined : EndUserRefFromJSON(json['key_holder']),
+        'keyHolder': json['key_holder'] == null ? undefined : EndUserRefFromJSON(json['key_holder']),
+        'originType': VaultOriginTypeFromJSON(json['origin_type']),
         'type': json['type'],
         'rawAccount': json['raw_account'],
         'base64UrlBounceableAccount': json['base64_url_bounceable_account'],
@@ -252,34 +281,38 @@ export function TonVaultFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     };
 }
 
-export function TonVaultToJSON(value?: TonVault | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TonVaultToJSON(json: any): TonVault {
+    return TonVaultToJSONTyped(json, false);
+}
+
+export function TonVaultToJSONTyped(value?: TonVault | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'metadata': value.metadata === undefined ? undefined : (mapValues(value.metadata, AptosVaultMetadataValueToJSON)),
-        'name': value.name,
-        'created_by': UserRefToJSON(value.createdBy),
-        'vault_group': VaultGroupRefToJSON(value.vaultGroup),
-        'pending_vault_group_action': AptosVaultPendingVaultGroupActionToJSON(value.pendingVaultGroupAction),
-        'state': VaultStateToJSON(value.state),
-        'derivation_path': value.derivationPath,
-        'public_key_compressed': value.publicKeyCompressed,
-        'derivation_info': VaultDerivationInfoToJSON(value.derivationInfo),
-        'keyset': KeysetRefToJSON(value.keyset),
-        'key_holder': EndUserRefToJSON(value.keyHolder),
-        'type': value.type,
-        'raw_account': value.rawAccount,
-        'base64_url_bounceable_account': value.base64UrlBounceableAccount,
-        'base64_url_non_bounceable_account': value.base64UrlNonBounceableAccount,
-        'state_init': value.stateInit,
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'metadata': value['metadata'] == null ? undefined : (mapValues(value['metadata'], AptosVaultMetadataValueToJSON)),
+        'name': value['name'],
+        'created_by': UserRefToJSON(value['createdBy']),
+        'vault_group': VaultGroupRefToJSON(value['vaultGroup']),
+        'pending_vault_group_action': AptosVaultPendingVaultGroupActionToJSON(value['pendingVaultGroupAction']),
+        'state': VaultStateToJSON(value['state']),
+        'are_all_chains_disabled': value['areAllChainsDisabled'],
+        'derivation_path': value['derivationPath'],
+        'public_key_compressed': value['publicKeyCompressed'],
+        'derivation_info': VaultDerivationInfoToJSON(value['derivationInfo']),
+        'keyset': KeysetRefToJSON(value['keyset']),
+        'key_holder': EndUserRefToJSON(value['keyHolder']),
+        'origin_type': VaultOriginTypeToJSON(value['originType']),
+        'type': value['type'],
+        'raw_account': value['rawAccount'],
+        'base64_url_bounceable_account': value['base64UrlBounceableAccount'],
+        'base64_url_non_bounceable_account': value['base64UrlNonBounceableAccount'],
+        'state_init': value['stateInit'],
     };
 }
 

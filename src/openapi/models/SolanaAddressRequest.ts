@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { SolanaChainUniqueId } from './SolanaChainUniqueId';
 import {
     SolanaChainUniqueIdFromJSON,
     SolanaChainUniqueIdFromJSONTyped,
     SolanaChainUniqueIdToJSON,
+    SolanaChainUniqueIdToJSONTyped,
 } from './SolanaChainUniqueId';
 
 /**
@@ -40,15 +41,15 @@ export interface SolanaAddressRequest {
     base58Repr: string;
 }
 
+
+
 /**
  * Check if a given object implements the SolanaAddressRequest interface.
  */
-export function instanceOfSolanaAddressRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "base58Repr" in value;
-
-    return isInstance;
+export function instanceOfSolanaAddressRequest(value: object): value is SolanaAddressRequest {
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('base58Repr' in value) || value['base58Repr'] === undefined) return false;
+    return true;
 }
 
 export function SolanaAddressRequestFromJSON(json: any): SolanaAddressRequest {
@@ -56,7 +57,7 @@ export function SolanaAddressRequestFromJSON(json: any): SolanaAddressRequest {
 }
 
 export function SolanaAddressRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): SolanaAddressRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -66,17 +67,19 @@ export function SolanaAddressRequestFromJSONTyped(json: any, ignoreDiscriminator
     };
 }
 
-export function SolanaAddressRequestToJSON(value?: SolanaAddressRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SolanaAddressRequestToJSON(json: any): SolanaAddressRequest {
+    return SolanaAddressRequestToJSONTyped(json, false);
+}
+
+export function SolanaAddressRequestToJSONTyped(value?: SolanaAddressRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain': SolanaChainUniqueIdToJSON(value.chain),
-        'base58_repr': value.base58Repr,
+        'chain': SolanaChainUniqueIdToJSON(value['chain']),
+        'base58_repr': value['base58Repr'],
     };
 }
 

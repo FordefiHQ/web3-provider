@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -41,11 +41,9 @@ export type PendingUserChangeNewRoleEnum = typeof PendingUserChangeNewRoleEnum[k
 /**
  * Check if a given object implements the PendingUserChange interface.
  */
-export function instanceOfPendingUserChange(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "newRole" in value;
-
-    return isInstance;
+export function instanceOfPendingUserChange(value: object): value is PendingUserChange {
+    if (!('newRole' in value) || value['newRole'] === undefined) return false;
+    return true;
 }
 
 export function PendingUserChangeFromJSON(json: any): PendingUserChange {
@@ -53,7 +51,7 @@ export function PendingUserChangeFromJSON(json: any): PendingUserChange {
 }
 
 export function PendingUserChangeFromJSONTyped(json: any, ignoreDiscriminator: boolean): PendingUserChange {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -62,16 +60,18 @@ export function PendingUserChangeFromJSONTyped(json: any, ignoreDiscriminator: b
     };
 }
 
-export function PendingUserChangeToJSON(value?: PendingUserChange | null): any {
-    if (value === undefined) {
-        return undefined;
+export function PendingUserChangeToJSON(json: any): PendingUserChange {
+    return PendingUserChangeToJSONTyped(json, false);
+}
+
+export function PendingUserChangeToJSONTyped(value?: PendingUserChange | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'new_role': value.newRole,
+        'new_role': value['newRole'],
     };
 }
 

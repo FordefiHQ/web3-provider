@@ -26,6 +26,17 @@ export const AbortTransactionErrorType = {
 export type AbortTransactionErrorType = typeof AbortTransactionErrorType[keyof typeof AbortTransactionErrorType];
 
 
+export function instanceOfAbortTransactionErrorType(value: any): boolean {
+    for (const key in AbortTransactionErrorType) {
+        if (Object.prototype.hasOwnProperty.call(AbortTransactionErrorType, key)) {
+            if (AbortTransactionErrorType[key as keyof typeof AbortTransactionErrorType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function AbortTransactionErrorTypeFromJSON(json: any): AbortTransactionErrorType {
     return AbortTransactionErrorTypeFromJSONTyped(json, false);
 }
@@ -36,5 +47,9 @@ export function AbortTransactionErrorTypeFromJSONTyped(json: any, ignoreDiscrimi
 
 export function AbortTransactionErrorTypeToJSON(value?: AbortTransactionErrorType | null): any {
     return value as any;
+}
+
+export function AbortTransactionErrorTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): AbortTransactionErrorType {
+    return value as AbortTransactionErrorType;
 }
 

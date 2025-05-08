@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -36,12 +36,10 @@ export interface DirectMessage {
 /**
  * Check if a given object implements the DirectMessage interface.
  */
-export function instanceOfDirectMessage(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "value" in value;
-
-    return isInstance;
+export function instanceOfDirectMessage(value: object): value is DirectMessage {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('value' in value) || value['value'] === undefined) return false;
+    return true;
 }
 
 export function DirectMessageFromJSON(json: any): DirectMessage {
@@ -49,7 +47,7 @@ export function DirectMessageFromJSON(json: any): DirectMessage {
 }
 
 export function DirectMessageFromJSONTyped(json: any, ignoreDiscriminator: boolean): DirectMessage {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -59,17 +57,19 @@ export function DirectMessageFromJSONTyped(json: any, ignoreDiscriminator: boole
     };
 }
 
-export function DirectMessageToJSON(value?: DirectMessage | null): any {
-    if (value === undefined) {
-        return undefined;
+export function DirectMessageToJSON(json: any): DirectMessage {
+    return DirectMessageToJSONTyped(json, false);
+}
+
+export function DirectMessageToJSONTyped(value?: DirectMessage | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'value': value.value,
+        'type': value['type'],
+        'value': value['value'],
     };
 }
 

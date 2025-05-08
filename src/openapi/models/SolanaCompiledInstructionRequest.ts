@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -42,13 +42,11 @@ export interface SolanaCompiledInstructionRequest {
 /**
  * Check if a given object implements the SolanaCompiledInstructionRequest interface.
  */
-export function instanceOfSolanaCompiledInstructionRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "programIndex" in value;
-    isInstance = isInstance && "data" in value;
-    isInstance = isInstance && "accountIndexes" in value;
-
-    return isInstance;
+export function instanceOfSolanaCompiledInstructionRequest(value: object): value is SolanaCompiledInstructionRequest {
+    if (!('programIndex' in value) || value['programIndex'] === undefined) return false;
+    if (!('data' in value) || value['data'] === undefined) return false;
+    if (!('accountIndexes' in value) || value['accountIndexes'] === undefined) return false;
+    return true;
 }
 
 export function SolanaCompiledInstructionRequestFromJSON(json: any): SolanaCompiledInstructionRequest {
@@ -56,7 +54,7 @@ export function SolanaCompiledInstructionRequestFromJSON(json: any): SolanaCompi
 }
 
 export function SolanaCompiledInstructionRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): SolanaCompiledInstructionRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -67,18 +65,20 @@ export function SolanaCompiledInstructionRequestFromJSONTyped(json: any, ignoreD
     };
 }
 
-export function SolanaCompiledInstructionRequestToJSON(value?: SolanaCompiledInstructionRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SolanaCompiledInstructionRequestToJSON(json: any): SolanaCompiledInstructionRequest {
+    return SolanaCompiledInstructionRequestToJSONTyped(json, false);
+}
+
+export function SolanaCompiledInstructionRequestToJSONTyped(value?: SolanaCompiledInstructionRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'program_index': value.programIndex,
-        'data': value.data,
-        'account_indexes': value.accountIndexes,
+        'program_index': value['programIndex'],
+        'data': value['data'],
+        'account_indexes': value['accountIndexes'],
     };
 }
 

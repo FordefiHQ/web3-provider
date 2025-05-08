@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { DeletePrerequisiteSeverity } from './DeletePrerequisiteSeverity';
 import {
     DeletePrerequisiteSeverityFromJSON,
     DeletePrerequisiteSeverityFromJSONTyped,
     DeletePrerequisiteSeverityToJSON,
+    DeletePrerequisiteSeverityToJSONTyped,
 } from './DeletePrerequisiteSeverity';
 import type { DeleteUserPrerequisiteType } from './DeleteUserPrerequisiteType';
 import {
     DeleteUserPrerequisiteTypeFromJSON,
     DeleteUserPrerequisiteTypeFromJSONTyped,
     DeleteUserPrerequisiteTypeToJSON,
+    DeleteUserPrerequisiteTypeToJSONTyped,
 } from './DeleteUserPrerequisiteType';
 
 /**
@@ -46,15 +48,15 @@ export interface DeleteUserPrerequisite {
     severity: DeletePrerequisiteSeverity;
 }
 
+
+
 /**
  * Check if a given object implements the DeleteUserPrerequisite interface.
  */
-export function instanceOfDeleteUserPrerequisite(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "severity" in value;
-
-    return isInstance;
+export function instanceOfDeleteUserPrerequisite(value: object): value is DeleteUserPrerequisite {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('severity' in value) || value['severity'] === undefined) return false;
+    return true;
 }
 
 export function DeleteUserPrerequisiteFromJSON(json: any): DeleteUserPrerequisite {
@@ -62,7 +64,7 @@ export function DeleteUserPrerequisiteFromJSON(json: any): DeleteUserPrerequisit
 }
 
 export function DeleteUserPrerequisiteFromJSONTyped(json: any, ignoreDiscriminator: boolean): DeleteUserPrerequisite {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -72,17 +74,19 @@ export function DeleteUserPrerequisiteFromJSONTyped(json: any, ignoreDiscriminat
     };
 }
 
-export function DeleteUserPrerequisiteToJSON(value?: DeleteUserPrerequisite | null): any {
-    if (value === undefined) {
-        return undefined;
+export function DeleteUserPrerequisiteToJSON(json: any): DeleteUserPrerequisite {
+    return DeleteUserPrerequisiteToJSONTyped(json, false);
+}
+
+export function DeleteUserPrerequisiteToJSONTyped(value?: DeleteUserPrerequisite | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': DeleteUserPrerequisiteTypeToJSON(value.type),
-        'severity': DeletePrerequisiteSeverityToJSON(value.severity),
+        'type': DeleteUserPrerequisiteTypeToJSON(value['type']),
+        'severity': DeletePrerequisiteSeverityToJSON(value['severity']),
     };
 }
 

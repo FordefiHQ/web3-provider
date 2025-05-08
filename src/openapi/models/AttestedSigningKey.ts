@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { Attestation } from './Attestation';
 import {
     AttestationFromJSON,
     AttestationFromJSONTyped,
     AttestationToJSON,
+    AttestationToJSONTyped,
 } from './Attestation';
 
 /**
@@ -43,12 +44,10 @@ export interface AttestedSigningKey {
 /**
  * Check if a given object implements the AttestedSigningKey interface.
  */
-export function instanceOfAttestedSigningKey(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "publicKey" in value;
-    isInstance = isInstance && "attestation" in value;
-
-    return isInstance;
+export function instanceOfAttestedSigningKey(value: object): value is AttestedSigningKey {
+    if (!('publicKey' in value) || value['publicKey'] === undefined) return false;
+    if (!('attestation' in value) || value['attestation'] === undefined) return false;
+    return true;
 }
 
 export function AttestedSigningKeyFromJSON(json: any): AttestedSigningKey {
@@ -56,7 +55,7 @@ export function AttestedSigningKeyFromJSON(json: any): AttestedSigningKey {
 }
 
 export function AttestedSigningKeyFromJSONTyped(json: any, ignoreDiscriminator: boolean): AttestedSigningKey {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -66,17 +65,19 @@ export function AttestedSigningKeyFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-export function AttestedSigningKeyToJSON(value?: AttestedSigningKey | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AttestedSigningKeyToJSON(json: any): AttestedSigningKey {
+    return AttestedSigningKeyToJSONTyped(json, false);
+}
+
+export function AttestedSigningKeyToJSONTyped(value?: AttestedSigningKey | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'public_key': value.publicKey,
-        'attestation': AttestationToJSON(value.attestation),
+        'public_key': value['publicKey'],
+        'attestation': AttestationToJSON(value['attestation']),
     };
 }
 

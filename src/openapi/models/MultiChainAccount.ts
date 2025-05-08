@@ -12,50 +12,71 @@
  * Do not edit the class manually.
  */
 
+import type { AptosAccountRepr } from './AptosAccountRepr';
 import {
-    AptosAccountRepr,
     instanceOfAptosAccountRepr,
     AptosAccountReprFromJSON,
     AptosAccountReprFromJSONTyped,
     AptosAccountReprToJSON,
 } from './AptosAccountRepr';
+import type { CosmosAccountRepr } from './CosmosAccountRepr';
 import {
-    CosmosAccountRepr,
     instanceOfCosmosAccountRepr,
     CosmosAccountReprFromJSON,
     CosmosAccountReprFromJSONTyped,
     CosmosAccountReprToJSON,
 } from './CosmosAccountRepr';
+import type { EvmAccountRepr } from './EvmAccountRepr';
 import {
-    EvmAccountRepr,
     instanceOfEvmAccountRepr,
     EvmAccountReprFromJSON,
     EvmAccountReprFromJSONTyped,
     EvmAccountReprToJSON,
 } from './EvmAccountRepr';
+import type { SolanaAccountRepr } from './SolanaAccountRepr';
 import {
-    SolanaAccountRepr,
     instanceOfSolanaAccountRepr,
     SolanaAccountReprFromJSON,
     SolanaAccountReprFromJSONTyped,
     SolanaAccountReprToJSON,
 } from './SolanaAccountRepr';
+import type { StacksAccountRepr } from './StacksAccountRepr';
 import {
-    SuiAccountRepr,
+    instanceOfStacksAccountRepr,
+    StacksAccountReprFromJSON,
+    StacksAccountReprFromJSONTyped,
+    StacksAccountReprToJSON,
+} from './StacksAccountRepr';
+import type { StarknetAccountRepr } from './StarknetAccountRepr';
+import {
+    instanceOfStarknetAccountRepr,
+    StarknetAccountReprFromJSON,
+    StarknetAccountReprFromJSONTyped,
+    StarknetAccountReprToJSON,
+} from './StarknetAccountRepr';
+import type { SuiAccountRepr } from './SuiAccountRepr';
+import {
     instanceOfSuiAccountRepr,
     SuiAccountReprFromJSON,
     SuiAccountReprFromJSONTyped,
     SuiAccountReprToJSON,
 } from './SuiAccountRepr';
+import type { TonAccountRepr } from './TonAccountRepr';
 import {
-    TonAccountRepr,
     instanceOfTonAccountRepr,
     TonAccountReprFromJSON,
     TonAccountReprFromJSONTyped,
     TonAccountReprToJSON,
 } from './TonAccountRepr';
+import type { TronAccountRepr } from './TronAccountRepr';
 import {
-    UtxoAccountRepr,
+    instanceOfTronAccountRepr,
+    TronAccountReprFromJSON,
+    TronAccountReprFromJSONTyped,
+    TronAccountReprToJSON,
+} from './TronAccountRepr';
+import type { UtxoAccountRepr } from './UtxoAccountRepr';
+import {
     instanceOfUtxoAccountRepr,
     UtxoAccountReprFromJSON,
     UtxoAccountReprFromJSONTyped,
@@ -67,58 +88,71 @@ import {
  * 
  * @export
  */
-export type MultiChainAccount = { chainType: 'aptos' } & AptosAccountRepr | { chainType: 'cosmos' } & CosmosAccountRepr | { chainType: 'evm' } & EvmAccountRepr | { chainType: 'solana' } & SolanaAccountRepr | { chainType: 'sui' } & SuiAccountRepr | { chainType: 'ton' } & TonAccountRepr | { chainType: 'utxo' } & UtxoAccountRepr;
+export type MultiChainAccount = { chainType: 'aptos' } & AptosAccountRepr | { chainType: 'cosmos' } & CosmosAccountRepr | { chainType: 'evm' } & EvmAccountRepr | { chainType: 'solana' } & SolanaAccountRepr | { chainType: 'stacks' } & StacksAccountRepr | { chainType: 'starknet' } & StarknetAccountRepr | { chainType: 'sui' } & SuiAccountRepr | { chainType: 'ton' } & TonAccountRepr | { chainType: 'tron' } & TronAccountRepr | { chainType: 'utxo' } & UtxoAccountRepr;
 
 export function MultiChainAccountFromJSON(json: any): MultiChainAccount {
     return MultiChainAccountFromJSONTyped(json, false);
 }
 
 export function MultiChainAccountFromJSONTyped(json: any, ignoreDiscriminator: boolean): MultiChainAccount {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['chain_type']) {
         case 'aptos':
-            return {...AptosAccountReprFromJSONTyped(json, true), chainType: 'aptos'};
+            return Object.assign({}, AptosAccountReprFromJSONTyped(json, true), { chainType: 'aptos' } as const);
         case 'cosmos':
-            return {...CosmosAccountReprFromJSONTyped(json, true), chainType: 'cosmos'};
+            return Object.assign({}, CosmosAccountReprFromJSONTyped(json, true), { chainType: 'cosmos' } as const);
         case 'evm':
-            return {...EvmAccountReprFromJSONTyped(json, true), chainType: 'evm'};
+            return Object.assign({}, EvmAccountReprFromJSONTyped(json, true), { chainType: 'evm' } as const);
         case 'solana':
-            return {...SolanaAccountReprFromJSONTyped(json, true), chainType: 'solana'};
+            return Object.assign({}, SolanaAccountReprFromJSONTyped(json, true), { chainType: 'solana' } as const);
+        case 'stacks':
+            return Object.assign({}, StacksAccountReprFromJSONTyped(json, true), { chainType: 'stacks' } as const);
+        case 'starknet':
+            return Object.assign({}, StarknetAccountReprFromJSONTyped(json, true), { chainType: 'starknet' } as const);
         case 'sui':
-            return {...SuiAccountReprFromJSONTyped(json, true), chainType: 'sui'};
+            return Object.assign({}, SuiAccountReprFromJSONTyped(json, true), { chainType: 'sui' } as const);
         case 'ton':
-            return {...TonAccountReprFromJSONTyped(json, true), chainType: 'ton'};
+            return Object.assign({}, TonAccountReprFromJSONTyped(json, true), { chainType: 'ton' } as const);
+        case 'tron':
+            return Object.assign({}, TronAccountReprFromJSONTyped(json, true), { chainType: 'tron' } as const);
         case 'utxo':
-            return {...UtxoAccountReprFromJSONTyped(json, true), chainType: 'utxo'};
+            return Object.assign({}, UtxoAccountReprFromJSONTyped(json, true), { chainType: 'utxo' } as const);
         default:
             throw new Error(`No variant of MultiChainAccount exists with 'chainType=${json['chainType']}'`);
     }
 }
 
-export function MultiChainAccountToJSON(value?: MultiChainAccount | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function MultiChainAccountToJSON(json: any): any {
+    return MultiChainAccountToJSONTyped(json, false);
+}
+
+export function MultiChainAccountToJSONTyped(value?: MultiChainAccount | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['chainType']) {
         case 'aptos':
-            return AptosAccountReprToJSON(value);
+            return Object.assign({}, AptosAccountReprToJSON(value), { chainType: 'aptos' } as const);
         case 'cosmos':
-            return CosmosAccountReprToJSON(value);
+            return Object.assign({}, CosmosAccountReprToJSON(value), { chainType: 'cosmos' } as const);
         case 'evm':
-            return EvmAccountReprToJSON(value);
+            return Object.assign({}, EvmAccountReprToJSON(value), { chainType: 'evm' } as const);
         case 'solana':
-            return SolanaAccountReprToJSON(value);
+            return Object.assign({}, SolanaAccountReprToJSON(value), { chainType: 'solana' } as const);
+        case 'stacks':
+            return Object.assign({}, StacksAccountReprToJSON(value), { chainType: 'stacks' } as const);
+        case 'starknet':
+            return Object.assign({}, StarknetAccountReprToJSON(value), { chainType: 'starknet' } as const);
         case 'sui':
-            return SuiAccountReprToJSON(value);
+            return Object.assign({}, SuiAccountReprToJSON(value), { chainType: 'sui' } as const);
         case 'ton':
-            return TonAccountReprToJSON(value);
+            return Object.assign({}, TonAccountReprToJSON(value), { chainType: 'ton' } as const);
+        case 'tron':
+            return Object.assign({}, TronAccountReprToJSON(value), { chainType: 'tron' } as const);
         case 'utxo':
-            return UtxoAccountReprToJSON(value);
+            return Object.assign({}, UtxoAccountReprToJSON(value), { chainType: 'utxo' } as const);
         default:
             throw new Error(`No variant of MultiChainAccount exists with 'chainType=${value['chainType']}'`);
     }

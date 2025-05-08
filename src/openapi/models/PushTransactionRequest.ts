@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { CosmosPushData } from './CosmosPushData';
 import {
     CosmosPushDataFromJSON,
     CosmosPushDataFromJSONTyped,
     CosmosPushDataToJSON,
+    CosmosPushDataToJSONTyped,
 } from './CosmosPushData';
 
 /**
@@ -37,10 +38,8 @@ export interface PushTransactionRequest {
 /**
  * Check if a given object implements the PushTransactionRequest interface.
  */
-export function instanceOfPushTransactionRequest(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfPushTransactionRequest(value: object): value is PushTransactionRequest {
+    return true;
 }
 
 export function PushTransactionRequestFromJSON(json: any): PushTransactionRequest {
@@ -48,25 +47,27 @@ export function PushTransactionRequestFromJSON(json: any): PushTransactionReques
 }
 
 export function PushTransactionRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): PushTransactionRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'pushData': !exists(json, 'push_data') ? undefined : CosmosPushDataFromJSON(json['push_data']),
+        'pushData': json['push_data'] == null ? undefined : CosmosPushDataFromJSON(json['push_data']),
     };
 }
 
-export function PushTransactionRequestToJSON(value?: PushTransactionRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function PushTransactionRequestToJSON(json: any): PushTransactionRequest {
+    return PushTransactionRequestToJSONTyped(json, false);
+}
+
+export function PushTransactionRequestToJSONTyped(value?: PushTransactionRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'push_data': CosmosPushDataToJSON(value.pushData),
+        'push_data': CosmosPushDataToJSON(value['pushData']),
     };
 }
 

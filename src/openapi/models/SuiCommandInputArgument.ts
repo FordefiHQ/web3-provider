@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type SuiCommandInputArgumentTypeEnum = typeof SuiCommandInputArgumentType
 /**
  * Check if a given object implements the SuiCommandInputArgument interface.
  */
-export function instanceOfSuiCommandInputArgument(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "index" in value;
-
-    return isInstance;
+export function instanceOfSuiCommandInputArgument(value: object): value is SuiCommandInputArgument {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('index' in value) || value['index'] === undefined) return false;
+    return true;
 }
 
 export function SuiCommandInputArgumentFromJSON(json: any): SuiCommandInputArgument {
@@ -59,7 +57,7 @@ export function SuiCommandInputArgumentFromJSON(json: any): SuiCommandInputArgum
 }
 
 export function SuiCommandInputArgumentFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiCommandInputArgument {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function SuiCommandInputArgumentFromJSONTyped(json: any, ignoreDiscrimina
     };
 }
 
-export function SuiCommandInputArgumentToJSON(value?: SuiCommandInputArgument | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiCommandInputArgumentToJSON(json: any): SuiCommandInputArgument {
+    return SuiCommandInputArgumentToJSONTyped(json, false);
+}
+
+export function SuiCommandInputArgumentToJSONTyped(value?: SuiCommandInputArgument | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'index': value.index,
+        'type': value['type'],
+        'index': value['index'],
     };
 }
 

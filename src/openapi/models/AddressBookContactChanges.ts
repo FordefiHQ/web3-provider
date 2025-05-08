@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AddressBookContactChangeReason } from './AddressBookContactChangeReason';
 import {
     AddressBookContactChangeReasonFromJSON,
     AddressBookContactChangeReasonFromJSONTyped,
     AddressBookContactChangeReasonToJSON,
+    AddressBookContactChangeReasonToJSONTyped,
 } from './AddressBookContactChangeReason';
 
 /**
@@ -47,15 +48,15 @@ export interface AddressBookContactChanges {
     changeRequestReason: AddressBookContactChangeReason;
 }
 
+
+
 /**
  * Check if a given object implements the AddressBookContactChanges interface.
  */
-export function instanceOfAddressBookContactChanges(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "isBeingEdited" in value;
-    isInstance = isInstance && "changeRequestReason" in value;
-
-    return isInstance;
+export function instanceOfAddressBookContactChanges(value: object): value is AddressBookContactChanges {
+    if (!('isBeingEdited' in value) || value['isBeingEdited'] === undefined) return false;
+    if (!('changeRequestReason' in value) || value['changeRequestReason'] === undefined) return false;
+    return true;
 }
 
 export function AddressBookContactChangesFromJSON(json: any): AddressBookContactChanges {
@@ -63,29 +64,31 @@ export function AddressBookContactChangesFromJSON(json: any): AddressBookContact
 }
 
 export function AddressBookContactChangesFromJSONTyped(json: any, ignoreDiscriminator: boolean): AddressBookContactChanges {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'isBeingEdited': json['is_being_edited'],
-        'changeRequestId': !exists(json, 'change_request_id') ? undefined : json['change_request_id'],
+        'changeRequestId': json['change_request_id'] == null ? undefined : json['change_request_id'],
         'changeRequestReason': AddressBookContactChangeReasonFromJSON(json['change_request_reason']),
     };
 }
 
-export function AddressBookContactChangesToJSON(value?: AddressBookContactChanges | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AddressBookContactChangesToJSON(json: any): AddressBookContactChanges {
+    return AddressBookContactChangesToJSONTyped(json, false);
+}
+
+export function AddressBookContactChangesToJSONTyped(value?: AddressBookContactChanges | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'is_being_edited': value.isBeingEdited,
-        'change_request_id': value.changeRequestId,
-        'change_request_reason': AddressBookContactChangeReasonToJSON(value.changeRequestReason),
+        'is_being_edited': value['isBeingEdited'],
+        'change_request_id': value['changeRequestId'],
+        'change_request_reason': AddressBookContactChangeReasonToJSON(value['changeRequestReason']),
     };
 }
 

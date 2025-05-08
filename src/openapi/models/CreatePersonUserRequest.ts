@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { UserRole } from './UserRole';
 import {
     UserRoleFromJSON,
     UserRoleFromJSONTyped,
     UserRoleToJSON,
+    UserRoleToJSONTyped,
 } from './UserRole';
 
 /**
@@ -65,13 +66,11 @@ export type CreatePersonUserRequestUserTypeEnum = typeof CreatePersonUserRequest
 /**
  * Check if a given object implements the CreatePersonUserRequest interface.
  */
-export function instanceOfCreatePersonUserRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "userType" in value;
-    isInstance = isInstance && "userEmail" in value;
-    isInstance = isInstance && "userRole" in value;
-
-    return isInstance;
+export function instanceOfCreatePersonUserRequest(value: object): value is CreatePersonUserRequest {
+    if (!('userType' in value) || value['userType'] === undefined) return false;
+    if (!('userEmail' in value) || value['userEmail'] === undefined) return false;
+    if (!('userRole' in value) || value['userRole'] === undefined) return false;
+    return true;
 }
 
 export function CreatePersonUserRequestFromJSON(json: any): CreatePersonUserRequest {
@@ -79,7 +78,7 @@ export function CreatePersonUserRequestFromJSON(json: any): CreatePersonUserRequ
 }
 
 export function CreatePersonUserRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreatePersonUserRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -87,23 +86,25 @@ export function CreatePersonUserRequestFromJSONTyped(json: any, ignoreDiscrimina
         'userType': json['user_type'],
         'userEmail': json['user_email'],
         'userRole': UserRoleFromJSON(json['user_role']),
-        'userGroupIds': !exists(json, 'user_group_ids') ? undefined : json['user_group_ids'],
+        'userGroupIds': json['user_group_ids'] == null ? undefined : json['user_group_ids'],
     };
 }
 
-export function CreatePersonUserRequestToJSON(value?: CreatePersonUserRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreatePersonUserRequestToJSON(json: any): CreatePersonUserRequest {
+    return CreatePersonUserRequestToJSONTyped(json, false);
+}
+
+export function CreatePersonUserRequestToJSONTyped(value?: CreatePersonUserRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'user_type': value.userType,
-        'user_email': value.userEmail,
-        'user_role': UserRoleToJSON(value.userRole),
-        'user_group_ids': value.userGroupIds,
+        'user_type': value['userType'],
+        'user_email': value['userEmail'],
+        'user_role': UserRoleToJSON(value['userRole']),
+        'user_group_ids': value['userGroupIds'],
     };
 }
 

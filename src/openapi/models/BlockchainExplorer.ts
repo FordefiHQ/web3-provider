@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -42,27 +42,29 @@ export interface BlockchainExplorer {
      * @type {string}
      * @memberof BlockchainExplorer
      */
-    transactionFormatUrl: string;
+    transactionFormatUrl?: string;
     /**
      * 
      * @type {string}
      * @memberof BlockchainExplorer
      */
-    addressFormatUrl: string;
+    addressFormatUrl?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlockchainExplorer
+     */
+    assetFormatUrl?: string;
 }
 
 /**
  * Check if a given object implements the BlockchainExplorer interface.
  */
-export function instanceOfBlockchainExplorer(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "transactionUrl" in value;
-    isInstance = isInstance && "addressUrl" in value;
-    isInstance = isInstance && "rootUrl" in value;
-    isInstance = isInstance && "transactionFormatUrl" in value;
-    isInstance = isInstance && "addressFormatUrl" in value;
-
-    return isInstance;
+export function instanceOfBlockchainExplorer(value: object): value is BlockchainExplorer {
+    if (!('transactionUrl' in value) || value['transactionUrl'] === undefined) return false;
+    if (!('addressUrl' in value) || value['addressUrl'] === undefined) return false;
+    if (!('rootUrl' in value) || value['rootUrl'] === undefined) return false;
+    return true;
 }
 
 export function BlockchainExplorerFromJSON(json: any): BlockchainExplorer {
@@ -70,7 +72,7 @@ export function BlockchainExplorerFromJSON(json: any): BlockchainExplorer {
 }
 
 export function BlockchainExplorerFromJSONTyped(json: any, ignoreDiscriminator: boolean): BlockchainExplorer {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -78,25 +80,29 @@ export function BlockchainExplorerFromJSONTyped(json: any, ignoreDiscriminator: 
         'transactionUrl': json['transaction_url'],
         'addressUrl': json['address_url'],
         'rootUrl': json['root_url'],
-        'transactionFormatUrl': json['transaction_format_url'],
-        'addressFormatUrl': json['address_format_url'],
+        'transactionFormatUrl': json['transaction_format_url'] == null ? undefined : json['transaction_format_url'],
+        'addressFormatUrl': json['address_format_url'] == null ? undefined : json['address_format_url'],
+        'assetFormatUrl': json['asset_format_url'] == null ? undefined : json['asset_format_url'],
     };
 }
 
-export function BlockchainExplorerToJSON(value?: BlockchainExplorer | null): any {
-    if (value === undefined) {
-        return undefined;
+export function BlockchainExplorerToJSON(json: any): BlockchainExplorer {
+    return BlockchainExplorerToJSONTyped(json, false);
+}
+
+export function BlockchainExplorerToJSONTyped(value?: BlockchainExplorer | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'transaction_url': value.transactionUrl,
-        'address_url': value.addressUrl,
-        'root_url': value.rootUrl,
-        'transaction_format_url': value.transactionFormatUrl,
-        'address_format_url': value.addressFormatUrl,
+        'transaction_url': value['transactionUrl'],
+        'address_url': value['addressUrl'],
+        'root_url': value['rootUrl'],
+        'transaction_format_url': value['transactionFormatUrl'],
+        'address_format_url': value['addressFormatUrl'],
+        'asset_format_url': value['assetFormatUrl'],
     };
 }
 

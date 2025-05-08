@@ -12,25 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AptosBalanceChangeEffectType } from './AptosBalanceChangeEffectType';
 import {
     AptosBalanceChangeEffectTypeFromJSON,
     AptosBalanceChangeEffectTypeFromJSONTyped,
     AptosBalanceChangeEffectTypeToJSON,
+    AptosBalanceChangeEffectTypeToJSONTyped,
 } from './AptosBalanceChangeEffectType';
-import type { EnrichedAptosAddress } from './EnrichedAptosAddress';
-import {
-    EnrichedAptosAddressFromJSON,
-    EnrichedAptosAddressFromJSONTyped,
-    EnrichedAptosAddressToJSON,
-} from './EnrichedAptosAddress';
 import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
     PricedAssetFromJSONTyped,
     PricedAssetToJSON,
+    PricedAssetToJSONTyped,
 } from './PricedAsset';
+import type { EnrichedAptosAddress } from './EnrichedAptosAddress';
+import {
+    EnrichedAptosAddressFromJSON,
+    EnrichedAptosAddressFromJSONTyped,
+    EnrichedAptosAddressToJSON,
+    EnrichedAptosAddressToJSONTyped,
+} from './EnrichedAptosAddress';
 
 /**
  * 
@@ -70,17 +73,17 @@ export interface AptosBalanceChangeEffect {
     owner?: EnrichedAptosAddress;
 }
 
+
+
 /**
  * Check if a given object implements the AptosBalanceChangeEffect interface.
  */
-export function instanceOfAptosBalanceChangeEffect(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "pricedAsset" in value;
-    isInstance = isInstance && "diff" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "address" in value;
-
-    return isInstance;
+export function instanceOfAptosBalanceChangeEffect(value: object): value is AptosBalanceChangeEffect {
+    if (!('pricedAsset' in value) || value['pricedAsset'] === undefined) return false;
+    if (!('diff' in value) || value['diff'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    return true;
 }
 
 export function AptosBalanceChangeEffectFromJSON(json: any): AptosBalanceChangeEffect {
@@ -88,7 +91,7 @@ export function AptosBalanceChangeEffectFromJSON(json: any): AptosBalanceChangeE
 }
 
 export function AptosBalanceChangeEffectFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosBalanceChangeEffect {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -97,24 +100,26 @@ export function AptosBalanceChangeEffectFromJSONTyped(json: any, ignoreDiscrimin
         'diff': json['diff'],
         'type': AptosBalanceChangeEffectTypeFromJSON(json['type']),
         'address': EnrichedAptosAddressFromJSON(json['address']),
-        'owner': !exists(json, 'owner') ? undefined : EnrichedAptosAddressFromJSON(json['owner']),
+        'owner': json['owner'] == null ? undefined : EnrichedAptosAddressFromJSON(json['owner']),
     };
 }
 
-export function AptosBalanceChangeEffectToJSON(value?: AptosBalanceChangeEffect | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AptosBalanceChangeEffectToJSON(json: any): AptosBalanceChangeEffect {
+    return AptosBalanceChangeEffectToJSONTyped(json, false);
+}
+
+export function AptosBalanceChangeEffectToJSONTyped(value?: AptosBalanceChangeEffect | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'priced_asset': PricedAssetToJSON(value.pricedAsset),
-        'diff': value.diff,
-        'type': AptosBalanceChangeEffectTypeToJSON(value.type),
-        'address': EnrichedAptosAddressToJSON(value.address),
-        'owner': EnrichedAptosAddressToJSON(value.owner),
+        'priced_asset': PricedAssetToJSON(value['pricedAsset']),
+        'diff': value['diff'],
+        'type': AptosBalanceChangeEffectTypeToJSON(value['type']),
+        'address': EnrichedAptosAddressToJSON(value['address']),
+        'owner': EnrichedAptosAddressToJSON(value['owner']),
     };
 }
 

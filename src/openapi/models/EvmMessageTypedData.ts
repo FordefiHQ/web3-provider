@@ -12,22 +12,22 @@
  * Do not edit the class manually.
  */
 
+import type { Permit2TypedMessageEvmMessage } from './Permit2TypedMessageEvmMessage';
 import {
-    Permit2TypedMessageEvmMessage,
     instanceOfPermit2TypedMessageEvmMessage,
     Permit2TypedMessageEvmMessageFromJSON,
     Permit2TypedMessageEvmMessageFromJSONTyped,
     Permit2TypedMessageEvmMessageToJSON,
 } from './Permit2TypedMessageEvmMessage';
+import type { PermitTypedMessageEvmMessage } from './PermitTypedMessageEvmMessage';
 import {
-    PermitTypedMessageEvmMessage,
     instanceOfPermitTypedMessageEvmMessage,
     PermitTypedMessageEvmMessageFromJSON,
     PermitTypedMessageEvmMessageFromJSONTyped,
     PermitTypedMessageEvmMessageToJSON,
 } from './PermitTypedMessageEvmMessage';
+import type { UnknownTypedMessageEvmMessage } from './UnknownTypedMessageEvmMessage';
 import {
-    UnknownTypedMessageEvmMessage,
     instanceOfUnknownTypedMessageEvmMessage,
     UnknownTypedMessageEvmMessageFromJSON,
     UnknownTypedMessageEvmMessageFromJSONTyped,
@@ -46,35 +46,36 @@ export function EvmMessageTypedDataFromJSON(json: any): EvmMessageTypedData {
 }
 
 export function EvmMessageTypedDataFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmMessageTypedData {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'permit':
-            return {...PermitTypedMessageEvmMessageFromJSONTyped(json, true), type: 'permit'};
+            return Object.assign({}, PermitTypedMessageEvmMessageFromJSONTyped(json, true), { type: 'permit' } as const);
         case 'permit2':
-            return {...Permit2TypedMessageEvmMessageFromJSONTyped(json, true), type: 'permit2'};
+            return Object.assign({}, Permit2TypedMessageEvmMessageFromJSONTyped(json, true), { type: 'permit2' } as const);
         case 'unknown':
-            return {...UnknownTypedMessageEvmMessageFromJSONTyped(json, true), type: 'unknown'};
+            return Object.assign({}, UnknownTypedMessageEvmMessageFromJSONTyped(json, true), { type: 'unknown' } as const);
         default:
             throw new Error(`No variant of EvmMessageTypedData exists with 'type=${json['type']}'`);
     }
 }
 
-export function EvmMessageTypedDataToJSON(value?: EvmMessageTypedData | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function EvmMessageTypedDataToJSON(json: any): any {
+    return EvmMessageTypedDataToJSONTyped(json, false);
+}
+
+export function EvmMessageTypedDataToJSONTyped(value?: EvmMessageTypedData | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'permit':
-            return PermitTypedMessageEvmMessageToJSON(value);
+            return Object.assign({}, PermitTypedMessageEvmMessageToJSON(value), { type: 'permit' } as const);
         case 'permit2':
-            return Permit2TypedMessageEvmMessageToJSON(value);
+            return Object.assign({}, Permit2TypedMessageEvmMessageToJSON(value), { type: 'permit2' } as const);
         case 'unknown':
-            return UnknownTypedMessageEvmMessageToJSON(value);
+            return Object.assign({}, UnknownTypedMessageEvmMessageToJSON(value), { type: 'unknown' } as const);
         default:
             throw new Error(`No variant of EvmMessageTypedData exists with 'type=${value['type']}'`);
     }

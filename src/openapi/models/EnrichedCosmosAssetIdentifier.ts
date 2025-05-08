@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedCosmosAssetIdentifierDetails } from './EnrichedCosmosAssetIdentifierDetails';
 import {
     EnrichedCosmosAssetIdentifierDetailsFromJSON,
     EnrichedCosmosAssetIdentifierDetailsFromJSONTyped,
     EnrichedCosmosAssetIdentifierDetailsToJSON,
+    EnrichedCosmosAssetIdentifierDetailsToJSONTyped,
 } from './EnrichedCosmosAssetIdentifierDetails';
 
 /**
@@ -53,12 +54,10 @@ export type EnrichedCosmosAssetIdentifierTypeEnum = typeof EnrichedCosmosAssetId
 /**
  * Check if a given object implements the EnrichedCosmosAssetIdentifier interface.
  */
-export function instanceOfEnrichedCosmosAssetIdentifier(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "details" in value;
-
-    return isInstance;
+export function instanceOfEnrichedCosmosAssetIdentifier(value: object): value is EnrichedCosmosAssetIdentifier {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    return true;
 }
 
 export function EnrichedCosmosAssetIdentifierFromJSON(json: any): EnrichedCosmosAssetIdentifier {
@@ -66,7 +65,7 @@ export function EnrichedCosmosAssetIdentifierFromJSON(json: any): EnrichedCosmos
 }
 
 export function EnrichedCosmosAssetIdentifierFromJSONTyped(json: any, ignoreDiscriminator: boolean): EnrichedCosmosAssetIdentifier {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function EnrichedCosmosAssetIdentifierFromJSONTyped(json: any, ignoreDisc
     };
 }
 
-export function EnrichedCosmosAssetIdentifierToJSON(value?: EnrichedCosmosAssetIdentifier | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EnrichedCosmosAssetIdentifierToJSON(json: any): EnrichedCosmosAssetIdentifier {
+    return EnrichedCosmosAssetIdentifierToJSONTyped(json, false);
+}
+
+export function EnrichedCosmosAssetIdentifierToJSONTyped(value?: EnrichedCosmosAssetIdentifier | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'details': EnrichedCosmosAssetIdentifierDetailsToJSON(value.details),
+        'type': value['type'],
+        'details': EnrichedCosmosAssetIdentifierDetailsToJSON(value['details']),
     };
 }
 

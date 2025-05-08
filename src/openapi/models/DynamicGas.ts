@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { GasPriorityLevel } from './GasPriorityLevel';
 import {
     GasPriorityLevelFromJSON,
     GasPriorityLevelFromJSONTyped,
     GasPriorityLevelToJSON,
+    GasPriorityLevelToJSONTyped,
 } from './GasPriorityLevel';
 
 /**
@@ -71,15 +72,13 @@ export type DynamicGasTypeEnum = typeof DynamicGasTypeEnum[keyof typeof DynamicG
 /**
  * Check if a given object implements the DynamicGas interface.
  */
-export function instanceOfDynamicGas(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "maxPriorityFeePerGas" in value;
-    isInstance = isInstance && "maxFeePerGas" in value;
-    isInstance = isInstance && "priority" in value;
-    isInstance = isInstance && "limit" in value;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfDynamicGas(value: object): value is DynamicGas {
+    if (!('maxPriorityFeePerGas' in value) || value['maxPriorityFeePerGas'] === undefined) return false;
+    if (!('maxFeePerGas' in value) || value['maxFeePerGas'] === undefined) return false;
+    if (!('priority' in value) || value['priority'] === undefined) return false;
+    if (!('limit' in value) || value['limit'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function DynamicGasFromJSON(json: any): DynamicGas {
@@ -87,7 +86,7 @@ export function DynamicGasFromJSON(json: any): DynamicGas {
 }
 
 export function DynamicGasFromJSONTyped(json: any, ignoreDiscriminator: boolean): DynamicGas {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -100,20 +99,22 @@ export function DynamicGasFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     };
 }
 
-export function DynamicGasToJSON(value?: DynamicGas | null): any {
-    if (value === undefined) {
-        return undefined;
+export function DynamicGasToJSON(json: any): DynamicGas {
+    return DynamicGasToJSONTyped(json, false);
+}
+
+export function DynamicGasToJSONTyped(value?: DynamicGas | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'max_priority_fee_per_gas': value.maxPriorityFeePerGas,
-        'max_fee_per_gas': value.maxFeePerGas,
-        'priority': GasPriorityLevelToJSON(value.priority),
-        'limit': value.limit,
-        'type': value.type,
+        'max_priority_fee_per_gas': value['maxPriorityFeePerGas'],
+        'max_fee_per_gas': value['maxFeePerGas'],
+        'priority': GasPriorityLevelToJSON(value['priority']),
+        'limit': value['limit'],
+        'type': value['type'],
     };
 }
 

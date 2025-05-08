@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { StdCoin } from './StdCoin';
 import {
     StdCoinFromJSON,
     StdCoinFromJSONTyped,
     StdCoinToJSON,
+    StdCoinToJSONTyped,
 } from './StdCoin';
 
 /**
@@ -61,12 +62,10 @@ export interface StdFeeRequest {
 /**
  * Check if a given object implements the StdFeeRequest interface.
  */
-export function instanceOfStdFeeRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "amount" in value;
-    isInstance = isInstance && "gas" in value;
-
-    return isInstance;
+export function instanceOfStdFeeRequest(value: object): value is StdFeeRequest {
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    if (!('gas' in value) || value['gas'] === undefined) return false;
+    return true;
 }
 
 export function StdFeeRequestFromJSON(json: any): StdFeeRequest {
@@ -74,33 +73,35 @@ export function StdFeeRequestFromJSON(json: any): StdFeeRequest {
 }
 
 export function StdFeeRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): StdFeeRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'amount': ((json['amount'] as Array<any>).map(StdCoinFromJSON)),
         'gas': json['gas'],
-        'payer': !exists(json, 'payer') ? undefined : json['payer'],
-        'granter': !exists(json, 'granter') ? undefined : json['granter'],
-        'feePayer': !exists(json, 'fee_payer') ? undefined : json['fee_payer'],
+        'payer': json['payer'] == null ? undefined : json['payer'],
+        'granter': json['granter'] == null ? undefined : json['granter'],
+        'feePayer': json['fee_payer'] == null ? undefined : json['fee_payer'],
     };
 }
 
-export function StdFeeRequestToJSON(value?: StdFeeRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function StdFeeRequestToJSON(json: any): StdFeeRequest {
+    return StdFeeRequestToJSONTyped(json, false);
+}
+
+export function StdFeeRequestToJSONTyped(value?: StdFeeRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'amount': ((value.amount as Array<any>).map(StdCoinToJSON)),
-        'gas': value.gas,
-        'payer': value.payer,
-        'granter': value.granter,
-        'fee_payer': value.feePayer,
+        'amount': ((value['amount'] as Array<any>).map(StdCoinToJSON)),
+        'gas': value['gas'],
+        'payer': value['payer'],
+        'granter': value['granter'],
+        'fee_payer': value['feePayer'],
     };
 }
 

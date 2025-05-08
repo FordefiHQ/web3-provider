@@ -12,7 +12,15 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { UtxoAssetIdentifierRequest } from './UtxoAssetIdentifierRequest';
+import {
+    UtxoAssetIdentifierRequestFromJSON,
+    UtxoAssetIdentifierRequestFromJSONTyped,
+    UtxoAssetIdentifierRequestToJSON,
+    UtxoAssetIdentifierRequestToJSONTyped,
+} from './UtxoAssetIdentifierRequest';
+
 /**
  * 
  * @export
@@ -31,6 +39,12 @@ export interface EditUtxoContactRequest {
      * @memberof EditUtxoContactRequest
      */
     type: EditUtxoContactRequestTypeEnum;
+    /**
+     * 
+     * @type {Array<UtxoAssetIdentifierRequest>}
+     * @memberof EditUtxoContactRequest
+     */
+    assetsIdentifiers?: Array<UtxoAssetIdentifierRequest>;
 }
 
 
@@ -46,12 +60,10 @@ export type EditUtxoContactRequestTypeEnum = typeof EditUtxoContactRequestTypeEn
 /**
  * Check if a given object implements the EditUtxoContactRequest interface.
  */
-export function instanceOfEditUtxoContactRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfEditUtxoContactRequest(value: object): value is EditUtxoContactRequest {
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function EditUtxoContactRequestFromJSON(json: any): EditUtxoContactRequest {
@@ -59,27 +71,31 @@ export function EditUtxoContactRequestFromJSON(json: any): EditUtxoContactReques
 }
 
 export function EditUtxoContactRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): EditUtxoContactRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'name': json['name'],
         'type': json['type'],
+        'assetsIdentifiers': json['assets_identifiers'] == null ? undefined : ((json['assets_identifiers'] as Array<any>).map(UtxoAssetIdentifierRequestFromJSON)),
     };
 }
 
-export function EditUtxoContactRequestToJSON(value?: EditUtxoContactRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EditUtxoContactRequestToJSON(json: any): EditUtxoContactRequest {
+    return EditUtxoContactRequestToJSONTyped(json, false);
+}
+
+export function EditUtxoContactRequestToJSONTyped(value?: EditUtxoContactRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'type': value.type,
+        'name': value['name'],
+        'type': value['type'],
+        'assets_identifiers': value['assetsIdentifiers'] == null ? undefined : ((value['assetsIdentifiers'] as Array<any>).map(UtxoAssetIdentifierRequestToJSON)),
     };
 }
 

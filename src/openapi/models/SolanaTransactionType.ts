@@ -20,10 +20,22 @@
 export const SolanaTransactionType = {
     nativeTransfer: 'native_transfer',
     tokenTransfer: 'token_transfer',
-    rawTransaction: 'raw_transaction'
+    rawTransaction: 'raw_transaction',
+    spotSwap: 'spot_swap'
 } as const;
 export type SolanaTransactionType = typeof SolanaTransactionType[keyof typeof SolanaTransactionType];
 
+
+export function instanceOfSolanaTransactionType(value: any): boolean {
+    for (const key in SolanaTransactionType) {
+        if (Object.prototype.hasOwnProperty.call(SolanaTransactionType, key)) {
+            if (SolanaTransactionType[key as keyof typeof SolanaTransactionType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 export function SolanaTransactionTypeFromJSON(json: any): SolanaTransactionType {
     return SolanaTransactionTypeFromJSONTyped(json, false);
@@ -35,5 +47,9 @@ export function SolanaTransactionTypeFromJSONTyped(json: any, ignoreDiscriminato
 
 export function SolanaTransactionTypeToJSON(value?: SolanaTransactionType | null): any {
     return value as any;
+}
+
+export function SolanaTransactionTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): SolanaTransactionType {
+    return value as SolanaTransactionType;
 }
 

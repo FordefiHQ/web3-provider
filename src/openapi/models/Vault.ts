@@ -12,64 +12,85 @@
  * Do not edit the class manually.
  */
 
+import type { AptosVault } from './AptosVault';
 import {
-    AptosVault,
     instanceOfAptosVault,
     AptosVaultFromJSON,
     AptosVaultFromJSONTyped,
     AptosVaultToJSON,
 } from './AptosVault';
+import type { BlackBoxVault } from './BlackBoxVault';
 import {
-    BlackBoxVault,
     instanceOfBlackBoxVault,
     BlackBoxVaultFromJSON,
     BlackBoxVaultFromJSONTyped,
     BlackBoxVaultToJSON,
 } from './BlackBoxVault';
+import type { CosmosVault } from './CosmosVault';
 import {
-    CosmosVault,
     instanceOfCosmosVault,
     CosmosVaultFromJSON,
     CosmosVaultFromJSONTyped,
     CosmosVaultToJSON,
 } from './CosmosVault';
+import type { EvmVault } from './EvmVault';
 import {
-    EvmVault,
     instanceOfEvmVault,
     EvmVaultFromJSON,
     EvmVaultFromJSONTyped,
     EvmVaultToJSON,
 } from './EvmVault';
+import type { ExchangeVault } from './ExchangeVault';
 import {
-    ExchangeVault,
     instanceOfExchangeVault,
     ExchangeVaultFromJSON,
     ExchangeVaultFromJSONTyped,
     ExchangeVaultToJSON,
 } from './ExchangeVault';
+import type { SolanaVault } from './SolanaVault';
 import {
-    SolanaVault,
     instanceOfSolanaVault,
     SolanaVaultFromJSON,
     SolanaVaultFromJSONTyped,
     SolanaVaultToJSON,
 } from './SolanaVault';
+import type { StacksVault } from './StacksVault';
 import {
-    SuiVault,
+    instanceOfStacksVault,
+    StacksVaultFromJSON,
+    StacksVaultFromJSONTyped,
+    StacksVaultToJSON,
+} from './StacksVault';
+import type { StarknetVault } from './StarknetVault';
+import {
+    instanceOfStarknetVault,
+    StarknetVaultFromJSON,
+    StarknetVaultFromJSONTyped,
+    StarknetVaultToJSON,
+} from './StarknetVault';
+import type { SuiVault } from './SuiVault';
+import {
     instanceOfSuiVault,
     SuiVaultFromJSON,
     SuiVaultFromJSONTyped,
     SuiVaultToJSON,
 } from './SuiVault';
+import type { TonVault } from './TonVault';
 import {
-    TonVault,
     instanceOfTonVault,
     TonVaultFromJSON,
     TonVaultFromJSONTyped,
     TonVaultToJSON,
 } from './TonVault';
+import type { TronVault } from './TronVault';
 import {
-    UtxoVault,
+    instanceOfTronVault,
+    TronVaultFromJSON,
+    TronVaultFromJSONTyped,
+    TronVaultToJSON,
+} from './TronVault';
+import type { UtxoVault } from './UtxoVault';
+import {
     instanceOfUtxoVault,
     UtxoVaultFromJSON,
     UtxoVaultFromJSONTyped,
@@ -81,66 +102,79 @@ import {
  * 
  * @export
  */
-export type Vault = { type: 'aptos' } & AptosVault | { type: 'black_box' } & BlackBoxVault | { type: 'cosmos' } & CosmosVault | { type: 'evm' } & EvmVault | { type: 'exchange' } & ExchangeVault | { type: 'solana' } & SolanaVault | { type: 'sui' } & SuiVault | { type: 'ton' } & TonVault | { type: 'utxo' } & UtxoVault;
+export type Vault = { type: 'aptos' } & AptosVault | { type: 'black_box' } & BlackBoxVault | { type: 'cosmos' } & CosmosVault | { type: 'evm' } & EvmVault | { type: 'exchange' } & ExchangeVault | { type: 'solana' } & SolanaVault | { type: 'stacks' } & StacksVault | { type: 'starknet' } & StarknetVault | { type: 'sui' } & SuiVault | { type: 'ton' } & TonVault | { type: 'tron' } & TronVault | { type: 'utxo' } & UtxoVault;
 
 export function VaultFromJSON(json: any): Vault {
     return VaultFromJSONTyped(json, false);
 }
 
 export function VaultFromJSONTyped(json: any, ignoreDiscriminator: boolean): Vault {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'aptos':
-            return {...AptosVaultFromJSONTyped(json, true), type: 'aptos'};
+            return Object.assign({}, AptosVaultFromJSONTyped(json, true), { type: 'aptos' } as const);
         case 'black_box':
-            return {...BlackBoxVaultFromJSONTyped(json, true), type: 'black_box'};
+            return Object.assign({}, BlackBoxVaultFromJSONTyped(json, true), { type: 'black_box' } as const);
         case 'cosmos':
-            return {...CosmosVaultFromJSONTyped(json, true), type: 'cosmos'};
+            return Object.assign({}, CosmosVaultFromJSONTyped(json, true), { type: 'cosmos' } as const);
         case 'evm':
-            return {...EvmVaultFromJSONTyped(json, true), type: 'evm'};
+            return Object.assign({}, EvmVaultFromJSONTyped(json, true), { type: 'evm' } as const);
         case 'exchange':
-            return {...ExchangeVaultFromJSONTyped(json, true), type: 'exchange'};
+            return Object.assign({}, ExchangeVaultFromJSONTyped(json, true), { type: 'exchange' } as const);
         case 'solana':
-            return {...SolanaVaultFromJSONTyped(json, true), type: 'solana'};
+            return Object.assign({}, SolanaVaultFromJSONTyped(json, true), { type: 'solana' } as const);
+        case 'stacks':
+            return Object.assign({}, StacksVaultFromJSONTyped(json, true), { type: 'stacks' } as const);
+        case 'starknet':
+            return Object.assign({}, StarknetVaultFromJSONTyped(json, true), { type: 'starknet' } as const);
         case 'sui':
-            return {...SuiVaultFromJSONTyped(json, true), type: 'sui'};
+            return Object.assign({}, SuiVaultFromJSONTyped(json, true), { type: 'sui' } as const);
         case 'ton':
-            return {...TonVaultFromJSONTyped(json, true), type: 'ton'};
+            return Object.assign({}, TonVaultFromJSONTyped(json, true), { type: 'ton' } as const);
+        case 'tron':
+            return Object.assign({}, TronVaultFromJSONTyped(json, true), { type: 'tron' } as const);
         case 'utxo':
-            return {...UtxoVaultFromJSONTyped(json, true), type: 'utxo'};
+            return Object.assign({}, UtxoVaultFromJSONTyped(json, true), { type: 'utxo' } as const);
         default:
             throw new Error(`No variant of Vault exists with 'type=${json['type']}'`);
     }
 }
 
-export function VaultToJSON(value?: Vault | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function VaultToJSON(json: any): any {
+    return VaultToJSONTyped(json, false);
+}
+
+export function VaultToJSONTyped(value?: Vault | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'aptos':
-            return AptosVaultToJSON(value);
+            return Object.assign({}, AptosVaultToJSON(value), { type: 'aptos' } as const);
         case 'black_box':
-            return BlackBoxVaultToJSON(value);
+            return Object.assign({}, BlackBoxVaultToJSON(value), { type: 'black_box' } as const);
         case 'cosmos':
-            return CosmosVaultToJSON(value);
+            return Object.assign({}, CosmosVaultToJSON(value), { type: 'cosmos' } as const);
         case 'evm':
-            return EvmVaultToJSON(value);
+            return Object.assign({}, EvmVaultToJSON(value), { type: 'evm' } as const);
         case 'exchange':
-            return ExchangeVaultToJSON(value);
+            return Object.assign({}, ExchangeVaultToJSON(value), { type: 'exchange' } as const);
         case 'solana':
-            return SolanaVaultToJSON(value);
+            return Object.assign({}, SolanaVaultToJSON(value), { type: 'solana' } as const);
+        case 'stacks':
+            return Object.assign({}, StacksVaultToJSON(value), { type: 'stacks' } as const);
+        case 'starknet':
+            return Object.assign({}, StarknetVaultToJSON(value), { type: 'starknet' } as const);
         case 'sui':
-            return SuiVaultToJSON(value);
+            return Object.assign({}, SuiVaultToJSON(value), { type: 'sui' } as const);
         case 'ton':
-            return TonVaultToJSON(value);
+            return Object.assign({}, TonVaultToJSON(value), { type: 'ton' } as const);
+        case 'tron':
+            return Object.assign({}, TronVaultToJSON(value), { type: 'tron' } as const);
         case 'utxo':
-            return UtxoVaultToJSON(value);
+            return Object.assign({}, UtxoVaultToJSON(value), { type: 'utxo' } as const);
         default:
             throw new Error(`No variant of Vault exists with 'type=${value['type']}'`);
     }

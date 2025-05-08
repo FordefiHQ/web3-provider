@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { StarknetTypedMessageRequest } from './StarknetTypedMessageRequest';
 import {
     StarknetTypedMessageRequestFromJSON,
     StarknetTypedMessageRequestFromJSONTyped,
     StarknetTypedMessageRequestToJSON,
+    StarknetTypedMessageRequestToJSONTyped,
 } from './StarknetTypedMessageRequest';
 
 /**
@@ -32,6 +33,12 @@ export interface PredictStarknetMessageRequest {
      * @memberof PredictStarknetMessageRequest
      */
     vaultId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PredictStarknetMessageRequest
+     */
+    note?: string;
     /**
      * 
      * @type {string}
@@ -59,13 +66,11 @@ export type PredictStarknetMessageRequestTypeEnum = typeof PredictStarknetMessag
 /**
  * Check if a given object implements the PredictStarknetMessageRequest interface.
  */
-export function instanceOfPredictStarknetMessageRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "vaultId" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "details" in value;
-
-    return isInstance;
+export function instanceOfPredictStarknetMessageRequest(value: object): value is PredictStarknetMessageRequest {
+    if (!('vaultId' in value) || value['vaultId'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    return true;
 }
 
 export function PredictStarknetMessageRequestFromJSON(json: any): PredictStarknetMessageRequest {
@@ -73,29 +78,33 @@ export function PredictStarknetMessageRequestFromJSON(json: any): PredictStarkne
 }
 
 export function PredictStarknetMessageRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): PredictStarknetMessageRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'vaultId': json['vault_id'],
+        'note': json['note'] == null ? undefined : json['note'],
         'type': json['type'],
         'details': StarknetTypedMessageRequestFromJSON(json['details']),
     };
 }
 
-export function PredictStarknetMessageRequestToJSON(value?: PredictStarknetMessageRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function PredictStarknetMessageRequestToJSON(json: any): PredictStarknetMessageRequest {
+    return PredictStarknetMessageRequestToJSONTyped(json, false);
+}
+
+export function PredictStarknetMessageRequestToJSONTyped(value?: PredictStarknetMessageRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'vault_id': value.vaultId,
-        'type': value.type,
-        'details': StarknetTypedMessageRequestToJSON(value.details),
+        'vault_id': value['vaultId'],
+        'note': value['note'],
+        'type': value['type'],
+        'details': StarknetTypedMessageRequestToJSON(value['details']),
     };
 }
 

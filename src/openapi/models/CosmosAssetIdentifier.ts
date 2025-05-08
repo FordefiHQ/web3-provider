@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { CosmosAssetIdentifierDetails } from './CosmosAssetIdentifierDetails';
-import {
-    CosmosAssetIdentifierDetailsFromJSON,
-    CosmosAssetIdentifierDetailsFromJSONTyped,
-    CosmosAssetIdentifierDetailsToJSON,
-} from './CosmosAssetIdentifierDetails';
+import { mapValues } from '../runtime';
 import type { EnrichedCosmosChain } from './EnrichedCosmosChain';
 import {
     EnrichedCosmosChainFromJSON,
     EnrichedCosmosChainFromJSONTyped,
     EnrichedCosmosChainToJSON,
+    EnrichedCosmosChainToJSONTyped,
 } from './EnrichedCosmosChain';
+import type { CosmosAssetIdentifierDetails } from './CosmosAssetIdentifierDetails';
+import {
+    CosmosAssetIdentifierDetailsFromJSON,
+    CosmosAssetIdentifierDetailsFromJSONTyped,
+    CosmosAssetIdentifierDetailsToJSON,
+    CosmosAssetIdentifierDetailsToJSONTyped,
+} from './CosmosAssetIdentifierDetails';
 
 /**
  * 
@@ -65,13 +67,11 @@ export type CosmosAssetIdentifierTypeEnum = typeof CosmosAssetIdentifierTypeEnum
 /**
  * Check if a given object implements the CosmosAssetIdentifier interface.
  */
-export function instanceOfCosmosAssetIdentifier(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "details" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfCosmosAssetIdentifier(value: object): value is CosmosAssetIdentifier {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function CosmosAssetIdentifierFromJSON(json: any): CosmosAssetIdentifier {
@@ -79,7 +79,7 @@ export function CosmosAssetIdentifierFromJSON(json: any): CosmosAssetIdentifier 
 }
 
 export function CosmosAssetIdentifierFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosAssetIdentifier {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -90,18 +90,20 @@ export function CosmosAssetIdentifierFromJSONTyped(json: any, ignoreDiscriminato
     };
 }
 
-export function CosmosAssetIdentifierToJSON(value?: CosmosAssetIdentifier | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosAssetIdentifierToJSON(json: any): CosmosAssetIdentifier {
+    return CosmosAssetIdentifierToJSONTyped(json, false);
+}
+
+export function CosmosAssetIdentifierToJSONTyped(value?: CosmosAssetIdentifier | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'details': CosmosAssetIdentifierDetailsToJSON(value.details),
-        'chain': EnrichedCosmosChainToJSON(value.chain),
+        'type': value['type'],
+        'details': CosmosAssetIdentifierDetailsToJSON(value['details']),
+        'chain': EnrichedCosmosChainToJSON(value['chain']),
     };
 }
 

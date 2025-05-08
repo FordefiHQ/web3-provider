@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { TonChainUniqueId } from './TonChainUniqueId';
 import {
     TonChainUniqueIdFromJSON,
     TonChainUniqueIdFromJSONTyped,
     TonChainUniqueIdToJSON,
+    TonChainUniqueIdToJSONTyped,
 } from './TonChainUniqueId';
 
 /**
@@ -53,12 +54,10 @@ export type TonChainChainTypeEnum = typeof TonChainChainTypeEnum[keyof typeof To
 /**
  * Check if a given object implements the TonChain interface.
  */
-export function instanceOfTonChain(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chainType" in value;
-    isInstance = isInstance && "uniqueId" in value;
-
-    return isInstance;
+export function instanceOfTonChain(value: object): value is TonChain {
+    if (!('chainType' in value) || value['chainType'] === undefined) return false;
+    if (!('uniqueId' in value) || value['uniqueId'] === undefined) return false;
+    return true;
 }
 
 export function TonChainFromJSON(json: any): TonChain {
@@ -66,7 +65,7 @@ export function TonChainFromJSON(json: any): TonChain {
 }
 
 export function TonChainFromJSONTyped(json: any, ignoreDiscriminator: boolean): TonChain {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function TonChainFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     };
 }
 
-export function TonChainToJSON(value?: TonChain | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TonChainToJSON(json: any): TonChain {
+    return TonChainToJSONTyped(json, false);
+}
+
+export function TonChainToJSONTyped(value?: TonChain | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain_type': value.chainType,
-        'unique_id': TonChainUniqueIdToJSON(value.uniqueId),
+        'chain_type': value['chainType'],
+        'unique_id': TonChainUniqueIdToJSON(value['uniqueId']),
     };
 }
 

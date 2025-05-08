@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { LogLevel } from './LogLevel';
-import {
-    LogLevelFromJSON,
-    LogLevelFromJSONTyped,
-    LogLevelToJSON,
-} from './LogLevel';
+import { mapValues } from '../runtime';
 import type { LogMessageArgument } from './LogMessageArgument';
 import {
     LogMessageArgumentFromJSON,
     LogMessageArgumentFromJSONTyped,
     LogMessageArgumentToJSON,
+    LogMessageArgumentToJSONTyped,
 } from './LogMessageArgument';
+import type { LogLevel } from './LogLevel';
+import {
+    LogLevelFromJSON,
+    LogLevelFromJSONTyped,
+    LogLevelToJSON,
+    LogLevelToJSONTyped,
+} from './LogLevel';
 
 /**
  * 
@@ -52,15 +54,15 @@ export interface LogMessage {
     arguments?: Array<LogMessageArgument>;
 }
 
+
+
 /**
  * Check if a given object implements the LogMessage interface.
  */
-export function instanceOfLogMessage(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "level" in value;
-    isInstance = isInstance && "message" in value;
-
-    return isInstance;
+export function instanceOfLogMessage(value: object): value is LogMessage {
+    if (!('level' in value) || value['level'] === undefined) return false;
+    if (!('message' in value) || value['message'] === undefined) return false;
+    return true;
 }
 
 export function LogMessageFromJSON(json: any): LogMessage {
@@ -68,29 +70,31 @@ export function LogMessageFromJSON(json: any): LogMessage {
 }
 
 export function LogMessageFromJSONTyped(json: any, ignoreDiscriminator: boolean): LogMessage {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'level': LogLevelFromJSON(json['level']),
         'message': json['message'],
-        'arguments': !exists(json, 'arguments') ? undefined : ((json['arguments'] as Array<any>).map(LogMessageArgumentFromJSON)),
+        'arguments': json['arguments'] == null ? undefined : ((json['arguments'] as Array<any>).map(LogMessageArgumentFromJSON)),
     };
 }
 
-export function LogMessageToJSON(value?: LogMessage | null): any {
-    if (value === undefined) {
-        return undefined;
+export function LogMessageToJSON(json: any): LogMessage {
+    return LogMessageToJSONTyped(json, false);
+}
+
+export function LogMessageToJSONTyped(value?: LogMessage | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'level': LogLevelToJSON(value.level),
-        'message': value.message,
-        'arguments': value.arguments === undefined ? undefined : ((value.arguments as Array<any>).map(LogMessageArgumentToJSON)),
+        'level': LogLevelToJSON(value['level']),
+        'message': value['message'],
+        'arguments': value['arguments'] == null ? undefined : ((value['arguments'] as Array<any>).map(LogMessageArgumentToJSON)),
     };
 }
 

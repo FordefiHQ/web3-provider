@@ -12,61 +12,70 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { EnrichedStarknetAddress } from './EnrichedStarknetAddress';
-import {
-    EnrichedStarknetAddressFromJSON,
-    EnrichedStarknetAddressFromJSONTyped,
-    EnrichedStarknetAddressToJSON,
-} from './EnrichedStarknetAddress';
-import type { EnrichedStarknetChain } from './EnrichedStarknetChain';
-import {
-    EnrichedStarknetChainFromJSON,
-    EnrichedStarknetChainFromJSONTyped,
-    EnrichedStarknetChainToJSON,
-} from './EnrichedStarknetChain';
+import { mapValues } from '../runtime';
 import type { ManagedTransactionData } from './ManagedTransactionData';
 import {
     ManagedTransactionDataFromJSON,
     ManagedTransactionDataFromJSONTyped,
     ManagedTransactionDataToJSON,
+    ManagedTransactionDataToJSONTyped,
 } from './ManagedTransactionData';
-import type { Signature } from './Signature';
-import {
-    SignatureFromJSON,
-    SignatureFromJSONTyped,
-    SignatureToJSON,
-} from './Signature';
-import type { StarknetMessageState } from './StarknetMessageState';
-import {
-    StarknetMessageStateFromJSON,
-    StarknetMessageStateFromJSONTyped,
-    StarknetMessageStateToJSON,
-} from './StarknetMessageState';
-import type { StarknetMessageStateChange } from './StarknetMessageStateChange';
-import {
-    StarknetMessageStateChangeFromJSON,
-    StarknetMessageStateChangeFromJSONTyped,
-    StarknetMessageStateChangeToJSON,
-} from './StarknetMessageStateChange';
-import type { StarknetMessageType } from './StarknetMessageType';
-import {
-    StarknetMessageTypeFromJSON,
-    StarknetMessageTypeFromJSONTyped,
-    StarknetMessageTypeToJSON,
-} from './StarknetMessageType';
-import type { TransactionDirection } from './TransactionDirection';
-import {
-    TransactionDirectionFromJSON,
-    TransactionDirectionFromJSONTyped,
-    TransactionDirectionToJSON,
-} from './TransactionDirection';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
     TransactionSpamStateFromJSONTyped,
     TransactionSpamStateToJSON,
+    TransactionSpamStateToJSONTyped,
 } from './TransactionSpamState';
+import type { EnrichedStarknetChain } from './EnrichedStarknetChain';
+import {
+    EnrichedStarknetChainFromJSON,
+    EnrichedStarknetChainFromJSONTyped,
+    EnrichedStarknetChainToJSON,
+    EnrichedStarknetChainToJSONTyped,
+} from './EnrichedStarknetChain';
+import type { TransactionDirection } from './TransactionDirection';
+import {
+    TransactionDirectionFromJSON,
+    TransactionDirectionFromJSONTyped,
+    TransactionDirectionToJSON,
+    TransactionDirectionToJSONTyped,
+} from './TransactionDirection';
+import type { StarknetMessageType } from './StarknetMessageType';
+import {
+    StarknetMessageTypeFromJSON,
+    StarknetMessageTypeFromJSONTyped,
+    StarknetMessageTypeToJSON,
+    StarknetMessageTypeToJSONTyped,
+} from './StarknetMessageType';
+import type { EnrichedStarknetAddress } from './EnrichedStarknetAddress';
+import {
+    EnrichedStarknetAddressFromJSON,
+    EnrichedStarknetAddressFromJSONTyped,
+    EnrichedStarknetAddressToJSON,
+    EnrichedStarknetAddressToJSONTyped,
+} from './EnrichedStarknetAddress';
+import type { Signature } from './Signature';
+import {
+    SignatureFromJSON,
+    SignatureFromJSONTyped,
+    SignatureToJSON,
+    SignatureToJSONTyped,
+} from './Signature';
+import type { NonPushableTransactionStateChange } from './NonPushableTransactionStateChange';
+import {
+    NonPushableTransactionStateChangeFromJSON,
+    NonPushableTransactionStateChangeFromJSONTyped,
+    NonPushableTransactionStateChangeToJSON,
+    NonPushableTransactionStateChangeToJSONTyped,
+} from './NonPushableTransactionStateChange';
+import type { NonPushableTransactionState } from './NonPushableTransactionState';
+import {
+    NonPushableTransactionStateFromJSON,
+    NonPushableTransactionStateFromJSONTyped,
+    NonPushableTransactionStateToJSON,
+    NonPushableTransactionStateToJSONTyped,
+} from './NonPushableTransactionState';
 
 /**
  * 
@@ -124,6 +133,24 @@ export interface StarknetMessage {
     direction: TransactionDirection;
     /**
      * 
+     * @type {boolean}
+     * @memberof StarknetMessage
+     */
+    signedExternally?: boolean;
+    /**
+     * 
+     * @type {NonPushableTransactionState}
+     * @memberof StarknetMessage
+     */
+    state: NonPushableTransactionState;
+    /**
+     * 
+     * @type {Array<NonPushableTransactionStateChange>}
+     * @memberof StarknetMessage
+     */
+    stateChanges: Array<NonPushableTransactionStateChange>;
+    /**
+     * 
      * @type {string}
      * @memberof StarknetMessage
      */
@@ -134,18 +161,6 @@ export interface StarknetMessage {
      * @memberof StarknetMessage
      */
     starknetMessageType: StarknetMessageType;
-    /**
-     * 
-     * @type {StarknetMessageState}
-     * @memberof StarknetMessage
-     */
-    state: StarknetMessageState;
-    /**
-     * 
-     * @type {Array<StarknetMessageStateChange>}
-     * @memberof StarknetMessage
-     */
-    stateChanges: Array<StarknetMessageStateChange>;
     /**
      * 
      * @type {string}
@@ -164,6 +179,18 @@ export interface StarknetMessage {
      * @memberof StarknetMessage
      */
     sender: EnrichedStarknetAddress;
+    /**
+     * 
+     * @type {string}
+     * @memberof StarknetMessage
+     */
+    messageHash: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof StarknetMessage
+     */
+    starknetSignatures: Array<string>;
 }
 
 
@@ -179,22 +206,22 @@ export type StarknetMessageTypeEnum = typeof StarknetMessageTypeEnum[keyof typeo
 /**
  * Check if a given object implements the StarknetMessage interface.
  */
-export function instanceOfStarknetMessage(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "signatures" in value;
-    isInstance = isInstance && "direction" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "starknetMessageType" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "stateChanges" in value;
-    isInstance = isInstance && "rawData" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "sender" in value;
-
-    return isInstance;
+export function instanceOfStarknetMessage(value: object): value is StarknetMessage {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('signatures' in value) || value['signatures'] === undefined) return false;
+    if (!('direction' in value) || value['direction'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('stateChanges' in value) || value['stateChanges'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('starknetMessageType' in value) || value['starknetMessageType'] === undefined) return false;
+    if (!('rawData' in value) || value['rawData'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    if (!('messageHash' in value) || value['messageHash'] === undefined) return false;
+    if (!('starknetSignatures' in value) || value['starknetSignatures'] === undefined) return false;
+    return true;
 }
 
 export function StarknetMessageFromJSON(json: any): StarknetMessage {
@@ -202,7 +229,7 @@ export function StarknetMessageFromJSON(json: any): StarknetMessage {
 }
 
 export function StarknetMessageFromJSONTyped(json: any, ignoreDiscriminator: boolean): StarknetMessage {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -210,45 +237,53 @@ export function StarknetMessageFromJSONTyped(json: any, ignoreDiscriminator: boo
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
-        'managedTransactionData': !exists(json, 'managed_transaction_data') ? undefined : ManagedTransactionDataFromJSON(json['managed_transaction_data']),
+        'managedTransactionData': json['managed_transaction_data'] == null ? undefined : ManagedTransactionDataFromJSON(json['managed_transaction_data']),
         'signatures': ((json['signatures'] as Array<any>).map(SignatureFromJSON)),
-        'note': !exists(json, 'note') ? undefined : json['note'],
-        'spamState': !exists(json, 'spam_state') ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
+        'note': json['note'] == null ? undefined : json['note'],
+        'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
+        'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'state': NonPushableTransactionStateFromJSON(json['state']),
+        'stateChanges': ((json['state_changes'] as Array<any>).map(NonPushableTransactionStateChangeFromJSON)),
         'type': json['type'],
         'starknetMessageType': StarknetMessageTypeFromJSON(json['starknet_message_type']),
-        'state': StarknetMessageStateFromJSON(json['state']),
-        'stateChanges': ((json['state_changes'] as Array<any>).map(StarknetMessageStateChangeFromJSON)),
         'rawData': json['raw_data'],
         'chain': EnrichedStarknetChainFromJSON(json['chain']),
         'sender': EnrichedStarknetAddressFromJSON(json['sender']),
+        'messageHash': json['message_hash'],
+        'starknetSignatures': json['starknet_signatures'],
     };
 }
 
-export function StarknetMessageToJSON(value?: StarknetMessage | null): any {
-    if (value === undefined) {
-        return undefined;
+export function StarknetMessageToJSON(json: any): StarknetMessage {
+    return StarknetMessageToJSONTyped(json, false);
+}
+
+export function StarknetMessageToJSONTyped(value?: StarknetMessage | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'managed_transaction_data': ManagedTransactionDataToJSON(value.managedTransactionData),
-        'signatures': ((value.signatures as Array<any>).map(SignatureToJSON)),
-        'note': value.note,
-        'spam_state': TransactionSpamStateToJSON(value.spamState),
-        'direction': TransactionDirectionToJSON(value.direction),
-        'type': value.type,
-        'starknet_message_type': StarknetMessageTypeToJSON(value.starknetMessageType),
-        'state': StarknetMessageStateToJSON(value.state),
-        'state_changes': ((value.stateChanges as Array<any>).map(StarknetMessageStateChangeToJSON)),
-        'raw_data': value.rawData,
-        'chain': EnrichedStarknetChainToJSON(value.chain),
-        'sender': EnrichedStarknetAddressToJSON(value.sender),
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'managed_transaction_data': ManagedTransactionDataToJSON(value['managedTransactionData']),
+        'signatures': ((value['signatures'] as Array<any>).map(SignatureToJSON)),
+        'note': value['note'],
+        'spam_state': TransactionSpamStateToJSON(value['spamState']),
+        'direction': TransactionDirectionToJSON(value['direction']),
+        'signed_externally': value['signedExternally'],
+        'state': NonPushableTransactionStateToJSON(value['state']),
+        'state_changes': ((value['stateChanges'] as Array<any>).map(NonPushableTransactionStateChangeToJSON)),
+        'type': value['type'],
+        'starknet_message_type': StarknetMessageTypeToJSON(value['starknetMessageType']),
+        'raw_data': value['rawData'],
+        'chain': EnrichedStarknetChainToJSON(value['chain']),
+        'sender': EnrichedStarknetAddressToJSON(value['sender']),
+        'message_hash': value['messageHash'],
+        'starknet_signatures': value['starknetSignatures'],
     };
 }
 

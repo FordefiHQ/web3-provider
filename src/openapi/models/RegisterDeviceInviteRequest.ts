@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EncryptionData } from './EncryptionData';
 import {
     EncryptionDataFromJSON,
     EncryptionDataFromJSONTyped,
     EncryptionDataToJSON,
+    EncryptionDataToJSONTyped,
 } from './EncryptionData';
 
 /**
@@ -49,13 +50,11 @@ export interface RegisterDeviceInviteRequest {
 /**
  * Check if a given object implements the RegisterDeviceInviteRequest interface.
  */
-export function instanceOfRegisterDeviceInviteRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "encryptedPinMessage" in value;
-    isInstance = isInstance && "signature" in value;
-    isInstance = isInstance && "encryptedMpcKey" in value;
-
-    return isInstance;
+export function instanceOfRegisterDeviceInviteRequest(value: object): value is RegisterDeviceInviteRequest {
+    if (!('encryptedPinMessage' in value) || value['encryptedPinMessage'] === undefined) return false;
+    if (!('signature' in value) || value['signature'] === undefined) return false;
+    if (!('encryptedMpcKey' in value) || value['encryptedMpcKey'] === undefined) return false;
+    return true;
 }
 
 export function RegisterDeviceInviteRequestFromJSON(json: any): RegisterDeviceInviteRequest {
@@ -63,7 +62,7 @@ export function RegisterDeviceInviteRequestFromJSON(json: any): RegisterDeviceIn
 }
 
 export function RegisterDeviceInviteRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): RegisterDeviceInviteRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -74,18 +73,20 @@ export function RegisterDeviceInviteRequestFromJSONTyped(json: any, ignoreDiscri
     };
 }
 
-export function RegisterDeviceInviteRequestToJSON(value?: RegisterDeviceInviteRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function RegisterDeviceInviteRequestToJSON(json: any): RegisterDeviceInviteRequest {
+    return RegisterDeviceInviteRequestToJSONTyped(json, false);
+}
+
+export function RegisterDeviceInviteRequestToJSONTyped(value?: RegisterDeviceInviteRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'encrypted_pin_message': EncryptionDataToJSON(value.encryptedPinMessage),
-        'signature': value.signature,
-        'encrypted_mpc_key': value.encryptedMpcKey,
+        'encrypted_pin_message': EncryptionDataToJSON(value['encryptedPinMessage']),
+        'signature': value['signature'],
+        'encrypted_mpc_key': value['encryptedMpcKey'],
     };
 }
 

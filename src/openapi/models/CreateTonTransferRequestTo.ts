@@ -12,58 +12,59 @@
  * Do not edit the class manually.
  */
 
+import type { RecipientVaultId } from './RecipientVaultId';
 import {
-    TonRecipientHex,
+    instanceOfRecipientVaultId,
+    RecipientVaultIdFromJSON,
+    RecipientVaultIdFromJSONTyped,
+    RecipientVaultIdToJSON,
+} from './RecipientVaultId';
+import type { TonRecipientHex } from './TonRecipientHex';
+import {
     instanceOfTonRecipientHex,
     TonRecipientHexFromJSON,
     TonRecipientHexFromJSONTyped,
     TonRecipientHexToJSON,
 } from './TonRecipientHex';
-import {
-    TonRecipientVaultId,
-    instanceOfTonRecipientVaultId,
-    TonRecipientVaultIdFromJSON,
-    TonRecipientVaultIdFromJSONTyped,
-    TonRecipientVaultIdToJSON,
-} from './TonRecipientVaultId';
 
 /**
  * @type CreateTonTransferRequestTo
  * 
  * @export
  */
-export type CreateTonTransferRequestTo = { type: 'hex' } & TonRecipientHex | { type: 'vault_id' } & TonRecipientVaultId;
+export type CreateTonTransferRequestTo = { type: 'hex' } & TonRecipientHex | { type: 'vault_id' } & RecipientVaultId;
 
 export function CreateTonTransferRequestToFromJSON(json: any): CreateTonTransferRequestTo {
     return CreateTonTransferRequestToFromJSONTyped(json, false);
 }
 
 export function CreateTonTransferRequestToFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateTonTransferRequestTo {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'hex':
-            return {...TonRecipientHexFromJSONTyped(json, true), type: 'hex'};
+            return Object.assign({}, TonRecipientHexFromJSONTyped(json, true), { type: 'hex' } as const);
         case 'vault_id':
-            return {...TonRecipientVaultIdFromJSONTyped(json, true), type: 'vault_id'};
+            return Object.assign({}, RecipientVaultIdFromJSONTyped(json, true), { type: 'vault_id' } as const);
         default:
             throw new Error(`No variant of CreateTonTransferRequestTo exists with 'type=${json['type']}'`);
     }
 }
 
-export function CreateTonTransferRequestToToJSON(value?: CreateTonTransferRequestTo | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function CreateTonTransferRequestToToJSON(json: any): any {
+    return CreateTonTransferRequestToToJSONTyped(json, false);
+}
+
+export function CreateTonTransferRequestToToJSONTyped(value?: CreateTonTransferRequestTo | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'hex':
-            return TonRecipientHexToJSON(value);
+            return Object.assign({}, TonRecipientHexToJSON(value), { type: 'hex' } as const);
         case 'vault_id':
-            return TonRecipientVaultIdToJSON(value);
+            return Object.assign({}, RecipientVaultIdToJSON(value), { type: 'vault_id' } as const);
         default:
             throw new Error(`No variant of CreateTonTransferRequestTo exists with 'type=${value['type']}'`);
     }

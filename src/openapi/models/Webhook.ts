@@ -12,25 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { WebhookState } from './WebhookState';
+import {
+    WebhookStateFromJSON,
+    WebhookStateFromJSONTyped,
+    WebhookStateToJSON,
+    WebhookStateToJSONTyped,
+} from './WebhookState';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
     UserRefFromJSONTyped,
     UserRefToJSON,
+    UserRefToJSONTyped,
 } from './UserRef';
 import type { WebhookResourceType } from './WebhookResourceType';
 import {
     WebhookResourceTypeFromJSON,
     WebhookResourceTypeFromJSONTyped,
     WebhookResourceTypeToJSON,
+    WebhookResourceTypeToJSONTyped,
 } from './WebhookResourceType';
-import type { WebhookState } from './WebhookState';
-import {
-    WebhookStateFromJSON,
-    WebhookStateFromJSONTyped,
-    WebhookStateToJSON,
-} from './WebhookState';
 
 /**
  * 
@@ -106,24 +109,24 @@ export interface Webhook {
     isRetriesSuspended: boolean;
 }
 
+
+
 /**
  * Check if a given object implements the Webhook interface.
  */
-export function instanceOfWebhook(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "createdBy" in value;
-    isInstance = isInstance && "events" in value;
-    isInstance = isInstance && "url" in value;
-    isInstance = isInstance && "lastSuccessfulCallAt" in value;
-    isInstance = isInstance && "firstFailedCallAt" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "isRetriesSuspended" in value;
-
-    return isInstance;
+export function instanceOfWebhook(value: object): value is Webhook {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('createdBy' in value) || value['createdBy'] === undefined) return false;
+    if (!('events' in value) || value['events'] === undefined) return false;
+    if (!('url' in value) || value['url'] === undefined) return false;
+    if (!('lastSuccessfulCallAt' in value) || value['lastSuccessfulCallAt'] === undefined) return false;
+    if (!('firstFailedCallAt' in value) || value['firstFailedCallAt'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('isRetriesSuspended' in value) || value['isRetriesSuspended'] === undefined) return false;
+    return true;
 }
 
 export function WebhookFromJSON(json: any): Webhook {
@@ -131,7 +134,7 @@ export function WebhookFromJSON(json: any): Webhook {
 }
 
 export function WebhookFromJSONTyped(json: any, ignoreDiscriminator: boolean): Webhook {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -150,26 +153,28 @@ export function WebhookFromJSONTyped(json: any, ignoreDiscriminator: boolean): W
     };
 }
 
-export function WebhookToJSON(value?: Webhook | null): any {
-    if (value === undefined) {
-        return undefined;
+export function WebhookToJSON(json: any): Webhook {
+    return WebhookToJSONTyped(json, false);
+}
+
+export function WebhookToJSONTyped(value?: Webhook | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'name': value.name,
-        'created_by': UserRefToJSON(value.createdBy),
-        'events': ((value.events as Array<any>).map(WebhookResourceTypeToJSON)),
-        'url': value.url,
-        'last_successful_call_at': (value.lastSuccessfulCallAt.toISOString()),
-        'first_failed_call_at': (value.firstFailedCallAt.toISOString()),
-        'state': WebhookStateToJSON(value.state),
-        'is_retries_suspended': value.isRetriesSuspended,
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'name': value['name'],
+        'created_by': UserRefToJSON(value['createdBy']),
+        'events': ((value['events'] as Array<any>).map(WebhookResourceTypeToJSON)),
+        'url': value['url'],
+        'last_successful_call_at': ((value['lastSuccessfulCallAt']).toISOString()),
+        'first_failed_call_at': ((value['firstFailedCallAt']).toISOString()),
+        'state': WebhookStateToJSON(value['state']),
+        'is_retries_suspended': value['isRetriesSuspended'],
     };
 }
 

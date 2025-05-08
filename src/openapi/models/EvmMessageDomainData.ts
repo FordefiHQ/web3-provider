@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
 import {
     EnrichedEvmAddressFromJSON,
     EnrichedEvmAddressFromJSONTyped,
     EnrichedEvmAddressToJSON,
+    EnrichedEvmAddressToJSONTyped,
 } from './EnrichedEvmAddress';
 
 /**
@@ -39,11 +40,11 @@ export interface EvmMessageDomainData {
      */
     version?: string;
     /**
-     * The EVM chain ID can be either one of those supported by the default chains above or a custom chain ID if one was added to your organization. <ul><li>1=`ethereum_mainnet`<li>5=`ethereum_goerli`<li>10=`optimism_mainnet`<li>16=`flare_testnet`<li>56=`bsc_mainnet`<li>100=`gnosis_mainnet`<li>137=`polygon_mainnet`<li>169=`manta_pacific_mainnet`<li>250=`fantom_mainnet`<li>324=`zksync_era_mainnet`<li>1030=`conflux_mainnet`<li>1100=`dymension_mainnet`<li>1101=`polygon_zkevm_mainnet`<li>1329=`sei_mainnet`<li>1729=`reya_mainnet`<li>2222=`kava_mainnet`<li>4200=`merlin_mainnet`<li>5000=`mantle_mainnet`<li>7000=`zeta_mainnet`<li>7700=`canto_mainnet`<li>8453=`base_mainnet`<li>17000=`ethereum_holesky`<li>80001=`polygon_mumbai`<li>42161=`arbitrum_mainnet`<li>43114=`avalanche_chain`<li>59144=`linea_mainnet`<li>81457=`blast_mainnet`<li>421614=`arbitrum_sepolia`<li>534352=`scroll_mainnet`<li>660279=`xai_mainnet`<li>810180=`zklink_nova_mainnet`<li>11155111=`ethereum_sepolia`</ul>
+     * The EVM chain ID can be either one of those supported by the default chains below or a custom chain ID if one was added to your organization. <ul><li>1=`ethereum_mainnet`</li><li>5=`ethereum_goerli`</li><li>10=`optimism_mainnet`</li><li>14=`flare_mainnet`</li><li>16=`flare_testnet`</li><li>56=`bsc_mainnet`</li><li>100=`gnosis_mainnet`</li><li>137=`polygon_mainnet`</li><li>146=`sonic_mainnet`</li><li>169=`manta_pacific_mainnet`</li><li>250=`fantom_mainnet`</li><li>324=`zksync_era_mainnet`</li><li>1030=`conflux_mainnet`</li><li>1100=`dymension_mainnet`</li><li>1101=`polygon_zkevm_mainnet`</li><li>1329=`sei_mainnet`</li><li>1729=`reya_mainnet`</li><li>2222=`kava_mainnet`</li><li>4200=`merlin_mainnet`</li><li>5000=`mantle_mainnet`</li><li>7000=`zeta_mainnet`</li><li>7700=`canto_mainnet`</li><li>8453=`base_mainnet`</li><li>8818=`clink_mainnet`</li><li>17000=`ethereum_holesky`</li><li>80001=`polygon_mumbai`</li><li>80094=`berachain_mainnet`</li><li>42161=`arbitrum_mainnet`</li><li>43114=`avalanche_chain`</li><li>59144=`linea_mainnet`</li><li>81457=`blast_mainnet`</li><li>421614=`arbitrum_sepolia`</li><li>534352=`scroll_mainnet`</li><li>660279=`xai_mainnet`</li><li>810180=`zklink_nova_mainnet`</li><li>11155111=`ethereum_sepolia`</li><li>123420000987=`clink_testnet`</li></ul>
      * @type {number}
      * @memberof EvmMessageDomainData
      */
-    chainId?: EvmMessageDomainDataChainIdEnum;
+    chainId?: number;
     /**
      * 
      * @type {EnrichedEvmAddress}
@@ -58,54 +59,11 @@ export interface EvmMessageDomainData {
     salt?: string;
 }
 
-
-/**
- * @export
- */
-export const EvmMessageDomainDataChainIdEnum = {
-    NUMBER_1: 1,
-    NUMBER_5: 5,
-    NUMBER_10: 10,
-    NUMBER_16: 16,
-    NUMBER_56: 56,
-    NUMBER_100: 100,
-    NUMBER_137: 137,
-    NUMBER_169: 169,
-    NUMBER_250: 250,
-    NUMBER_324: 324,
-    NUMBER_1030: 1030,
-    NUMBER_1100: 1100,
-    NUMBER_1101: 1101,
-    NUMBER_1329: 1329,
-    NUMBER_1729: 1729,
-    NUMBER_2222: 2222,
-    NUMBER_4200: 4200,
-    NUMBER_5000: 5000,
-    NUMBER_7000: 7000,
-    NUMBER_7700: 7700,
-    NUMBER_8453: 8453,
-    NUMBER_17000: 17000,
-    NUMBER_80001: 80001,
-    NUMBER_42161: 42161,
-    NUMBER_43114: 43114,
-    NUMBER_59144: 59144,
-    NUMBER_81457: 81457,
-    NUMBER_421614: 421614,
-    NUMBER_534352: 534352,
-    NUMBER_660279: 660279,
-    NUMBER_810180: 810180,
-    NUMBER_11155111: 11155111
-} as const;
-export type EvmMessageDomainDataChainIdEnum = typeof EvmMessageDomainDataChainIdEnum[keyof typeof EvmMessageDomainDataChainIdEnum];
-
-
 /**
  * Check if a given object implements the EvmMessageDomainData interface.
  */
-export function instanceOfEvmMessageDomainData(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfEvmMessageDomainData(value: object): value is EvmMessageDomainData {
+    return true;
 }
 
 export function EvmMessageDomainDataFromJSON(json: any): EvmMessageDomainData {
@@ -113,33 +71,35 @@ export function EvmMessageDomainDataFromJSON(json: any): EvmMessageDomainData {
 }
 
 export function EvmMessageDomainDataFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmMessageDomainData {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'version': !exists(json, 'version') ? undefined : json['version'],
-        'chainId': !exists(json, 'chain_id') ? undefined : json['chain_id'],
-        'verifyingContract': !exists(json, 'verifying_contract') ? undefined : EnrichedEvmAddressFromJSON(json['verifying_contract']),
-        'salt': !exists(json, 'salt') ? undefined : json['salt'],
+        'name': json['name'] == null ? undefined : json['name'],
+        'version': json['version'] == null ? undefined : json['version'],
+        'chainId': json['chain_id'] == null ? undefined : json['chain_id'],
+        'verifyingContract': json['verifying_contract'] == null ? undefined : EnrichedEvmAddressFromJSON(json['verifying_contract']),
+        'salt': json['salt'] == null ? undefined : json['salt'],
     };
 }
 
-export function EvmMessageDomainDataToJSON(value?: EvmMessageDomainData | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EvmMessageDomainDataToJSON(json: any): EvmMessageDomainData {
+    return EvmMessageDomainDataToJSONTyped(json, false);
+}
+
+export function EvmMessageDomainDataToJSONTyped(value?: EvmMessageDomainData | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'version': value.version,
-        'chain_id': value.chainId,
-        'verifying_contract': EnrichedEvmAddressToJSON(value.verifyingContract),
-        'salt': value.salt,
+        'name': value['name'],
+        'version': value['version'],
+        'chain_id': value['chainId'],
+        'verifying_contract': EnrichedEvmAddressToJSON(value['verifyingContract']),
+        'salt': value['salt'],
     };
 }
 

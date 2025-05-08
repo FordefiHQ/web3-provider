@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { CosmosNativeCoinWithAmount } from './CosmosNativeCoinWithAmount';
 import {
-    CosmosNativeCoinWithAmount,
     instanceOfCosmosNativeCoinWithAmount,
     CosmosNativeCoinWithAmountFromJSON,
     CosmosNativeCoinWithAmountFromJSONTyped,
     CosmosNativeCoinWithAmountToJSON,
 } from './CosmosNativeCoinWithAmount';
+import type { CosmosTokenWithAmount } from './CosmosTokenWithAmount';
 import {
-    CosmosTokenWithAmount,
     instanceOfCosmosTokenWithAmount,
     CosmosTokenWithAmountFromJSON,
     CosmosTokenWithAmountFromJSONTyped,
@@ -39,31 +39,32 @@ export function CosmosCoinWithAmountCoinWithAmountFromJSON(json: any): CosmosCoi
 }
 
 export function CosmosCoinWithAmountCoinWithAmountFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosCoinWithAmountCoinWithAmount {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'native':
-            return {...CosmosNativeCoinWithAmountFromJSONTyped(json, true), type: 'native'};
+            return Object.assign({}, CosmosNativeCoinWithAmountFromJSONTyped(json, true), { type: 'native' } as const);
         case 'token':
-            return {...CosmosTokenWithAmountFromJSONTyped(json, true), type: 'token'};
+            return Object.assign({}, CosmosTokenWithAmountFromJSONTyped(json, true), { type: 'token' } as const);
         default:
             throw new Error(`No variant of CosmosCoinWithAmountCoinWithAmount exists with 'type=${json['type']}'`);
     }
 }
 
-export function CosmosCoinWithAmountCoinWithAmountToJSON(value?: CosmosCoinWithAmountCoinWithAmount | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function CosmosCoinWithAmountCoinWithAmountToJSON(json: any): any {
+    return CosmosCoinWithAmountCoinWithAmountToJSONTyped(json, false);
+}
+
+export function CosmosCoinWithAmountCoinWithAmountToJSONTyped(value?: CosmosCoinWithAmountCoinWithAmount | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'native':
-            return CosmosNativeCoinWithAmountToJSON(value);
+            return Object.assign({}, CosmosNativeCoinWithAmountToJSON(value), { type: 'native' } as const);
         case 'token':
-            return CosmosTokenWithAmountToJSON(value);
+            return Object.assign({}, CosmosTokenWithAmountToJSON(value), { type: 'token' } as const);
         default:
             throw new Error(`No variant of CosmosCoinWithAmountCoinWithAmount exists with 'type=${value['type']}'`);
     }

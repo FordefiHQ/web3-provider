@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -40,11 +40,9 @@ export type FordefiRpcEndpointTypeEnum = typeof FordefiRpcEndpointTypeEnum[keyof
 /**
  * Check if a given object implements the FordefiRpcEndpoint interface.
  */
-export function instanceOfFordefiRpcEndpoint(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfFordefiRpcEndpoint(value: object): value is FordefiRpcEndpoint {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function FordefiRpcEndpointFromJSON(json: any): FordefiRpcEndpoint {
@@ -52,7 +50,7 @@ export function FordefiRpcEndpointFromJSON(json: any): FordefiRpcEndpoint {
 }
 
 export function FordefiRpcEndpointFromJSONTyped(json: any, ignoreDiscriminator: boolean): FordefiRpcEndpoint {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -61,16 +59,18 @@ export function FordefiRpcEndpointFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-export function FordefiRpcEndpointToJSON(value?: FordefiRpcEndpoint | null): any {
-    if (value === undefined) {
-        return undefined;
+export function FordefiRpcEndpointToJSON(json: any): FordefiRpcEndpoint {
+    return FordefiRpcEndpointToJSONTyped(json, false);
+}
+
+export function FordefiRpcEndpointToJSONTyped(value?: FordefiRpcEndpoint | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
+        'type': value['type'],
     };
 }
 

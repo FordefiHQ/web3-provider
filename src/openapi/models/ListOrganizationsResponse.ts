@@ -12,12 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { PartialErrorResponse } from './PartialErrorResponse';
+import {
+    PartialErrorResponseFromJSON,
+    PartialErrorResponseFromJSONTyped,
+    PartialErrorResponseToJSON,
+    PartialErrorResponseToJSONTyped,
+} from './PartialErrorResponse';
 import type { OrganizationInfo } from './OrganizationInfo';
 import {
     OrganizationInfoFromJSON,
     OrganizationInfoFromJSONTyped,
     OrganizationInfoToJSON,
+    OrganizationInfoToJSONTyped,
 } from './OrganizationInfo';
 
 /**
@@ -26,6 +34,30 @@ import {
  * @interface ListOrganizationsResponse
  */
 export interface ListOrganizationsResponse {
+    /**
+     * 
+     * @type {PartialErrorResponse}
+     * @memberof ListOrganizationsResponse
+     */
+    partialError?: PartialErrorResponse;
+    /**
+     * 
+     * @type {number}
+     * @memberof ListOrganizationsResponse
+     */
+    total: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ListOrganizationsResponse
+     */
+    page: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ListOrganizationsResponse
+     */
+    size: number;
     /**
      * 
      * @type {Array<OrganizationInfo>}
@@ -37,11 +69,12 @@ export interface ListOrganizationsResponse {
 /**
  * Check if a given object implements the ListOrganizationsResponse interface.
  */
-export function instanceOfListOrganizationsResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "organizations" in value;
-
-    return isInstance;
+export function instanceOfListOrganizationsResponse(value: object): value is ListOrganizationsResponse {
+    if (!('total' in value) || value['total'] === undefined) return false;
+    if (!('page' in value) || value['page'] === undefined) return false;
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('organizations' in value) || value['organizations'] === undefined) return false;
+    return true;
 }
 
 export function ListOrganizationsResponseFromJSON(json: any): ListOrganizationsResponse {
@@ -49,25 +82,35 @@ export function ListOrganizationsResponseFromJSON(json: any): ListOrganizationsR
 }
 
 export function ListOrganizationsResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): ListOrganizationsResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
+        'partialError': json['partial_error'] == null ? undefined : PartialErrorResponseFromJSON(json['partial_error']),
+        'total': json['total'],
+        'page': json['page'],
+        'size': json['size'],
         'organizations': ((json['organizations'] as Array<any>).map(OrganizationInfoFromJSON)),
     };
 }
 
-export function ListOrganizationsResponseToJSON(value?: ListOrganizationsResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ListOrganizationsResponseToJSON(json: any): ListOrganizationsResponse {
+    return ListOrganizationsResponseToJSONTyped(json, false);
+}
+
+export function ListOrganizationsResponseToJSONTyped(value?: ListOrganizationsResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'organizations': ((value.organizations as Array<any>).map(OrganizationInfoToJSON)),
+        'partial_error': PartialErrorResponseToJSON(value['partialError']),
+        'total': value['total'],
+        'page': value['page'],
+        'size': value['size'],
+        'organizations': ((value['organizations'] as Array<any>).map(OrganizationInfoToJSON)),
     };
 }
 

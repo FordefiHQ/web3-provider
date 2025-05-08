@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { UtxoChainUniqueId } from './UtxoChainUniqueId';
 import {
     UtxoChainUniqueIdFromJSON,
     UtxoChainUniqueIdFromJSONTyped,
     UtxoChainUniqueIdToJSON,
+    UtxoChainUniqueIdToJSONTyped,
 } from './UtxoChainUniqueId';
 
 /**
@@ -71,15 +72,13 @@ export type UtxoSuggestedFeesTypeEnum = typeof UtxoSuggestedFeesTypeEnum[keyof t
 /**
  * Check if a given object implements the UtxoSuggestedFees interface.
  */
-export function instanceOfUtxoSuggestedFees(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "low" in value;
-    isInstance = isInstance && "medium" in value;
-    isInstance = isInstance && "high" in value;
-    isInstance = isInstance && "chainUniqueId" in value;
-
-    return isInstance;
+export function instanceOfUtxoSuggestedFees(value: object): value is UtxoSuggestedFees {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('low' in value) || value['low'] === undefined) return false;
+    if (!('medium' in value) || value['medium'] === undefined) return false;
+    if (!('high' in value) || value['high'] === undefined) return false;
+    if (!('chainUniqueId' in value) || value['chainUniqueId'] === undefined) return false;
+    return true;
 }
 
 export function UtxoSuggestedFeesFromJSON(json: any): UtxoSuggestedFees {
@@ -87,7 +86,7 @@ export function UtxoSuggestedFeesFromJSON(json: any): UtxoSuggestedFees {
 }
 
 export function UtxoSuggestedFeesFromJSONTyped(json: any, ignoreDiscriminator: boolean): UtxoSuggestedFees {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -100,20 +99,22 @@ export function UtxoSuggestedFeesFromJSONTyped(json: any, ignoreDiscriminator: b
     };
 }
 
-export function UtxoSuggestedFeesToJSON(value?: UtxoSuggestedFees | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UtxoSuggestedFeesToJSON(json: any): UtxoSuggestedFees {
+    return UtxoSuggestedFeesToJSONTyped(json, false);
+}
+
+export function UtxoSuggestedFeesToJSONTyped(value?: UtxoSuggestedFees | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'low': value.low,
-        'medium': value.medium,
-        'high': value.high,
-        'chain_unique_id': UtxoChainUniqueIdToJSON(value.chainUniqueId),
+        'type': value['type'],
+        'low': value['low'],
+        'medium': value['medium'],
+        'high': value['high'],
+        'chain_unique_id': UtxoChainUniqueIdToJSON(value['chainUniqueId']),
     };
 }
 

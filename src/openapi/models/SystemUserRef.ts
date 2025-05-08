@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -52,13 +52,11 @@ export type SystemUserRefUserTypeEnum = typeof SystemUserRefUserTypeEnum[keyof t
 /**
  * Check if a given object implements the SystemUserRef interface.
  */
-export function instanceOfSystemUserRef(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "userType" in value;
-    isInstance = isInstance && "name" in value;
-
-    return isInstance;
+export function instanceOfSystemUserRef(value: object): value is SystemUserRef {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('userType' in value) || value['userType'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    return true;
 }
 
 export function SystemUserRefFromJSON(json: any): SystemUserRef {
@@ -66,7 +64,7 @@ export function SystemUserRefFromJSON(json: any): SystemUserRef {
 }
 
 export function SystemUserRefFromJSONTyped(json: any, ignoreDiscriminator: boolean): SystemUserRef {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -77,18 +75,20 @@ export function SystemUserRefFromJSONTyped(json: any, ignoreDiscriminator: boole
     };
 }
 
-export function SystemUserRefToJSON(value?: SystemUserRef | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SystemUserRefToJSON(json: any): SystemUserRef {
+    return SystemUserRefToJSONTyped(json, false);
+}
+
+export function SystemUserRefToJSONTyped(value?: SystemUserRef | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'user_type': value.userType,
-        'name': value.name,
+        'id': value['id'],
+        'user_type': value['userType'],
+        'name': value['name'],
     };
 }
 

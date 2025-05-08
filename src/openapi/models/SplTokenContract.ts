@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { Dapp } from './Dapp';
-import {
-    DappFromJSON,
-    DappFromJSONTyped,
-    DappToJSON,
-} from './Dapp';
+import { mapValues } from '../runtime';
 import type { SplToken } from './SplToken';
 import {
     SplTokenFromJSON,
     SplTokenFromJSONTyped,
     SplTokenToJSON,
+    SplTokenToJSONTyped,
 } from './SplToken';
+import type { Dapp } from './Dapp';
+import {
+    DappFromJSON,
+    DappFromJSONTyped,
+    DappToJSON,
+    DappToJSONTyped,
+} from './Dapp';
 
 /**
  * 
@@ -61,12 +63,10 @@ export interface SplTokenContract {
 /**
  * Check if a given object implements the SplTokenContract interface.
  */
-export function instanceOfSplTokenContract(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "isVerified" in value;
-    isInstance = isInstance && "token" in value;
-
-    return isInstance;
+export function instanceOfSplTokenContract(value: object): value is SplTokenContract {
+    if (!('isVerified' in value) || value['isVerified'] === undefined) return false;
+    if (!('token' in value) || value['token'] === undefined) return false;
+    return true;
 }
 
 export function SplTokenContractFromJSON(json: any): SplTokenContract {
@@ -74,31 +74,33 @@ export function SplTokenContractFromJSON(json: any): SplTokenContract {
 }
 
 export function SplTokenContractFromJSONTyped(json: any, ignoreDiscriminator: boolean): SplTokenContract {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'dapp': !exists(json, 'dapp') ? undefined : DappFromJSON(json['dapp']),
+        'name': json['name'] == null ? undefined : json['name'],
+        'dapp': json['dapp'] == null ? undefined : DappFromJSON(json['dapp']),
         'isVerified': json['is_verified'],
         'token': SplTokenFromJSON(json['token']),
     };
 }
 
-export function SplTokenContractToJSON(value?: SplTokenContract | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SplTokenContractToJSON(json: any): SplTokenContract {
+    return SplTokenContractToJSONTyped(json, false);
+}
+
+export function SplTokenContractToJSONTyped(value?: SplTokenContract | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'dapp': DappToJSON(value.dapp),
-        'is_verified': value.isVerified,
-        'token': SplTokenToJSON(value.token),
+        'name': value['name'],
+        'dapp': DappToJSON(value['dapp']),
+        'is_verified': value['isVerified'],
+        'token': SplTokenToJSON(value['token']),
     };
 }
 

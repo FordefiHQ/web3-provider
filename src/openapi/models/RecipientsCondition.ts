@@ -12,43 +12,63 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { ContactRef } from './ContactRef';
+import { mapValues } from '../runtime';
+import type { VaultRef } from './VaultRef';
 import {
-    ContactRefFromJSON,
-    ContactRefFromJSONTyped,
-    ContactRefToJSON,
-} from './ContactRef';
+    VaultRefFromJSON,
+    VaultRefFromJSONTyped,
+    VaultRefToJSON,
+    VaultRefToJSONTyped,
+} from './VaultRef';
 import type { EnrichedDapp } from './EnrichedDapp';
 import {
     EnrichedDappFromJSON,
     EnrichedDappFromJSONTyped,
     EnrichedDappToJSON,
+    EnrichedDappToJSONTyped,
 } from './EnrichedDapp';
+import type { AddressBookCondition } from './AddressBookCondition';
+import {
+    AddressBookConditionFromJSON,
+    AddressBookConditionFromJSONTyped,
+    AddressBookConditionToJSON,
+    AddressBookConditionToJSONTyped,
+} from './AddressBookCondition';
+import type { VaultGroupRef } from './VaultGroupRef';
+import {
+    VaultGroupRefFromJSON,
+    VaultGroupRefFromJSONTyped,
+    VaultGroupRefToJSON,
+    VaultGroupRefToJSONTyped,
+} from './VaultGroupRef';
+import type { VaultsCondition } from './VaultsCondition';
+import {
+    VaultsConditionFromJSON,
+    VaultsConditionFromJSONTyped,
+    VaultsConditionToJSON,
+    VaultsConditionToJSONTyped,
+} from './VaultsCondition';
+import type { ContactRef } from './ContactRef';
+import {
+    ContactRefFromJSON,
+    ContactRefFromJSONTyped,
+    ContactRefToJSON,
+    ContactRefToJSONTyped,
+} from './ContactRef';
 import type { GroupRef } from './GroupRef';
 import {
     GroupRefFromJSON,
     GroupRefFromJSONTyped,
     GroupRefToJSON,
+    GroupRefToJSONTyped,
 } from './GroupRef';
 import type { MultiChainAccount } from './MultiChainAccount';
 import {
     MultiChainAccountFromJSON,
     MultiChainAccountFromJSONTyped,
     MultiChainAccountToJSON,
+    MultiChainAccountToJSONTyped,
 } from './MultiChainAccount';
-import type { VaultGroupRef } from './VaultGroupRef';
-import {
-    VaultGroupRefFromJSON,
-    VaultGroupRefFromJSONTyped,
-    VaultGroupRefToJSON,
-} from './VaultGroupRef';
-import type { VaultRef } from './VaultRef';
-import {
-    VaultRefFromJSON,
-    VaultRefFromJSONTyped,
-    VaultRefToJSON,
-} from './VaultRef';
 
 /**
  * 
@@ -64,16 +84,10 @@ export interface RecipientsCondition {
     addresses?: Array<MultiChainAccount>;
     /**
      * 
-     * @type {Array<VaultRef>}
+     * @type {VaultsCondition}
      * @memberof RecipientsCondition
      */
-    vaults?: Array<VaultRef>;
-    /**
-     * 
-     * @type {Array<VaultGroupRef>}
-     * @memberof RecipientsCondition
-     */
-    vaultGroups?: Array<VaultGroupRef>;
+    vaultsConditions?: VaultsCondition;
     /**
      * 
      * @type {Array<EnrichedDapp>}
@@ -82,14 +96,36 @@ export interface RecipientsCondition {
     dapps?: Array<EnrichedDapp>;
     /**
      * 
+     * @type {AddressBookCondition}
+     * @memberof RecipientsCondition
+     */
+    addressbookContactsConditions?: AddressBookCondition;
+    /**
+     * 
+     * @type {Array<VaultRef>}
+     * @memberof RecipientsCondition
+     * @deprecated
+     */
+    vaults?: Array<VaultRef>;
+    /**
+     * 
+     * @type {Array<VaultGroupRef>}
+     * @memberof RecipientsCondition
+     * @deprecated
+     */
+    vaultGroups?: Array<VaultGroupRef>;
+    /**
+     * 
      * @type {Array<ContactRef>}
      * @memberof RecipientsCondition
+     * @deprecated
      */
     addressBookContacts?: Array<ContactRef>;
     /**
      * 
      * @type {Array<GroupRef>}
      * @memberof RecipientsCondition
+     * @deprecated
      */
     addressBookGroups?: Array<GroupRef>;
 }
@@ -97,10 +133,8 @@ export interface RecipientsCondition {
 /**
  * Check if a given object implements the RecipientsCondition interface.
  */
-export function instanceOfRecipientsCondition(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfRecipientsCondition(value: object): value is RecipientsCondition {
+    return true;
 }
 
 export function RecipientsConditionFromJSON(json: any): RecipientsCondition {
@@ -108,35 +142,41 @@ export function RecipientsConditionFromJSON(json: any): RecipientsCondition {
 }
 
 export function RecipientsConditionFromJSONTyped(json: any, ignoreDiscriminator: boolean): RecipientsCondition {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'addresses': !exists(json, 'addresses') ? undefined : ((json['addresses'] as Array<any>).map(MultiChainAccountFromJSON)),
-        'vaults': !exists(json, 'vaults') ? undefined : ((json['vaults'] as Array<any>).map(VaultRefFromJSON)),
-        'vaultGroups': !exists(json, 'vault_groups') ? undefined : ((json['vault_groups'] as Array<any>).map(VaultGroupRefFromJSON)),
-        'dapps': !exists(json, 'dapps') ? undefined : ((json['dapps'] as Array<any>).map(EnrichedDappFromJSON)),
-        'addressBookContacts': !exists(json, 'address_book_contacts') ? undefined : ((json['address_book_contacts'] as Array<any>).map(ContactRefFromJSON)),
-        'addressBookGroups': !exists(json, 'address_book_groups') ? undefined : ((json['address_book_groups'] as Array<any>).map(GroupRefFromJSON)),
+        'addresses': json['addresses'] == null ? undefined : ((json['addresses'] as Array<any>).map(MultiChainAccountFromJSON)),
+        'vaultsConditions': json['vaults_conditions'] == null ? undefined : VaultsConditionFromJSON(json['vaults_conditions']),
+        'dapps': json['dapps'] == null ? undefined : ((json['dapps'] as Array<any>).map(EnrichedDappFromJSON)),
+        'addressbookContactsConditions': json['addressbook_contacts_conditions'] == null ? undefined : AddressBookConditionFromJSON(json['addressbook_contacts_conditions']),
+        'vaults': json['vaults'] == null ? undefined : ((json['vaults'] as Array<any>).map(VaultRefFromJSON)),
+        'vaultGroups': json['vault_groups'] == null ? undefined : ((json['vault_groups'] as Array<any>).map(VaultGroupRefFromJSON)),
+        'addressBookContacts': json['address_book_contacts'] == null ? undefined : ((json['address_book_contacts'] as Array<any>).map(ContactRefFromJSON)),
+        'addressBookGroups': json['address_book_groups'] == null ? undefined : ((json['address_book_groups'] as Array<any>).map(GroupRefFromJSON)),
     };
 }
 
-export function RecipientsConditionToJSON(value?: RecipientsCondition | null): any {
-    if (value === undefined) {
-        return undefined;
+export function RecipientsConditionToJSON(json: any): RecipientsCondition {
+    return RecipientsConditionToJSONTyped(json, false);
+}
+
+export function RecipientsConditionToJSONTyped(value?: RecipientsCondition | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'addresses': value.addresses === undefined ? undefined : ((value.addresses as Array<any>).map(MultiChainAccountToJSON)),
-        'vaults': value.vaults === undefined ? undefined : ((value.vaults as Array<any>).map(VaultRefToJSON)),
-        'vault_groups': value.vaultGroups === undefined ? undefined : ((value.vaultGroups as Array<any>).map(VaultGroupRefToJSON)),
-        'dapps': value.dapps === undefined ? undefined : ((value.dapps as Array<any>).map(EnrichedDappToJSON)),
-        'address_book_contacts': value.addressBookContacts === undefined ? undefined : ((value.addressBookContacts as Array<any>).map(ContactRefToJSON)),
-        'address_book_groups': value.addressBookGroups === undefined ? undefined : ((value.addressBookGroups as Array<any>).map(GroupRefToJSON)),
+        'addresses': value['addresses'] == null ? undefined : ((value['addresses'] as Array<any>).map(MultiChainAccountToJSON)),
+        'vaults_conditions': VaultsConditionToJSON(value['vaultsConditions']),
+        'dapps': value['dapps'] == null ? undefined : ((value['dapps'] as Array<any>).map(EnrichedDappToJSON)),
+        'addressbook_contacts_conditions': AddressBookConditionToJSON(value['addressbookContactsConditions']),
+        'vaults': value['vaults'] == null ? undefined : ((value['vaults'] as Array<any>).map(VaultRefToJSON)),
+        'vault_groups': value['vaultGroups'] == null ? undefined : ((value['vaultGroups'] as Array<any>).map(VaultGroupRefToJSON)),
+        'address_book_contacts': value['addressBookContacts'] == null ? undefined : ((value['addressBookContacts'] as Array<any>).map(ContactRefToJSON)),
+        'address_book_groups': value['addressBookGroups'] == null ? undefined : ((value['addressBookGroups'] as Array<any>).map(GroupRefToJSON)),
     };
 }
 

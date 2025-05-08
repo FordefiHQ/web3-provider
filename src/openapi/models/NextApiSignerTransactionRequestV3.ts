@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -36,11 +36,9 @@ export interface NextApiSignerTransactionRequestV3 {
 /**
  * Check if a given object implements the NextApiSignerTransactionRequestV3 interface.
  */
-export function instanceOfNextApiSignerTransactionRequestV3(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "protocolVersion" in value;
-
-    return isInstance;
+export function instanceOfNextApiSignerTransactionRequestV3(value: object): value is NextApiSignerTransactionRequestV3 {
+    if (!('protocolVersion' in value) || value['protocolVersion'] === undefined) return false;
+    return true;
 }
 
 export function NextApiSignerTransactionRequestV3FromJSON(json: any): NextApiSignerTransactionRequestV3 {
@@ -48,27 +46,29 @@ export function NextApiSignerTransactionRequestV3FromJSON(json: any): NextApiSig
 }
 
 export function NextApiSignerTransactionRequestV3FromJSONTyped(json: any, ignoreDiscriminator: boolean): NextApiSignerTransactionRequestV3 {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'protocolVersion': json['protocol_version'],
-        'sessionSeed': !exists(json, 'session_seed') ? undefined : json['session_seed'],
+        'sessionSeed': json['session_seed'] == null ? undefined : json['session_seed'],
     };
 }
 
-export function NextApiSignerTransactionRequestV3ToJSON(value?: NextApiSignerTransactionRequestV3 | null): any {
-    if (value === undefined) {
-        return undefined;
+export function NextApiSignerTransactionRequestV3ToJSON(json: any): NextApiSignerTransactionRequestV3 {
+    return NextApiSignerTransactionRequestV3ToJSONTyped(json, false);
+}
+
+export function NextApiSignerTransactionRequestV3ToJSONTyped(value?: NextApiSignerTransactionRequestV3 | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'protocol_version': value.protocolVersion,
-        'session_seed': value.sessionSeed,
+        'protocol_version': value['protocolVersion'],
+        'session_seed': value['sessionSeed'],
     };
 }
 

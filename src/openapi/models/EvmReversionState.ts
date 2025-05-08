@@ -32,6 +32,17 @@ export const EvmReversionState = {
 export type EvmReversionState = typeof EvmReversionState[keyof typeof EvmReversionState];
 
 
+export function instanceOfEvmReversionState(value: any): boolean {
+    for (const key in EvmReversionState) {
+        if (Object.prototype.hasOwnProperty.call(EvmReversionState, key)) {
+            if (EvmReversionState[key as keyof typeof EvmReversionState] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function EvmReversionStateFromJSON(json: any): EvmReversionState {
     return EvmReversionStateFromJSONTyped(json, false);
 }
@@ -42,5 +53,9 @@ export function EvmReversionStateFromJSONTyped(json: any, ignoreDiscriminator: b
 
 export function EvmReversionStateToJSON(value?: EvmReversionState | null): any {
     return value as any;
+}
+
+export function EvmReversionStateToJSONTyped(value: any, ignoreDiscriminator: boolean): EvmReversionState {
+    return value as EvmReversionState;
 }
 

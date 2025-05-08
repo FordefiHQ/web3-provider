@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { AptosAssetIdentifierDetails } from './AptosAssetIdentifierDetails';
-import {
-    AptosAssetIdentifierDetailsFromJSON,
-    AptosAssetIdentifierDetailsFromJSONTyped,
-    AptosAssetIdentifierDetailsToJSON,
-} from './AptosAssetIdentifierDetails';
+import { mapValues } from '../runtime';
 import type { EnrichedAptosChain } from './EnrichedAptosChain';
 import {
     EnrichedAptosChainFromJSON,
     EnrichedAptosChainFromJSONTyped,
     EnrichedAptosChainToJSON,
+    EnrichedAptosChainToJSONTyped,
 } from './EnrichedAptosChain';
+import type { AptosAssetIdentifierDetails } from './AptosAssetIdentifierDetails';
+import {
+    AptosAssetIdentifierDetailsFromJSON,
+    AptosAssetIdentifierDetailsFromJSONTyped,
+    AptosAssetIdentifierDetailsToJSON,
+    AptosAssetIdentifierDetailsToJSONTyped,
+} from './AptosAssetIdentifierDetails';
 
 /**
  * 
@@ -65,13 +67,11 @@ export type AptosAssetIdentifierTypeEnum = typeof AptosAssetIdentifierTypeEnum[k
 /**
  * Check if a given object implements the AptosAssetIdentifier interface.
  */
-export function instanceOfAptosAssetIdentifier(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "details" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfAptosAssetIdentifier(value: object): value is AptosAssetIdentifier {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function AptosAssetIdentifierFromJSON(json: any): AptosAssetIdentifier {
@@ -79,7 +79,7 @@ export function AptosAssetIdentifierFromJSON(json: any): AptosAssetIdentifier {
 }
 
 export function AptosAssetIdentifierFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosAssetIdentifier {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -90,18 +90,20 @@ export function AptosAssetIdentifierFromJSONTyped(json: any, ignoreDiscriminator
     };
 }
 
-export function AptosAssetIdentifierToJSON(value?: AptosAssetIdentifier | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AptosAssetIdentifierToJSON(json: any): AptosAssetIdentifier {
+    return AptosAssetIdentifierToJSONTyped(json, false);
+}
+
+export function AptosAssetIdentifierToJSONTyped(value?: AptosAssetIdentifier | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'details': AptosAssetIdentifierDetailsToJSON(value.details),
-        'chain': EnrichedAptosChainToJSON(value.chain),
+        'type': value['type'],
+        'details': AptosAssetIdentifierDetailsToJSON(value['details']),
+        'chain': EnrichedAptosChainToJSON(value['chain']),
     };
 }
 

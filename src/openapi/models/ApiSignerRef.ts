@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -68,14 +68,12 @@ export type ApiSignerRefStateEnum = typeof ApiSignerRefStateEnum[keyof typeof Ap
 /**
  * Check if a given object implements the ApiSignerRef interface.
  */
-export function instanceOfApiSignerRef(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "userType" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "state" in value;
-
-    return isInstance;
+export function instanceOfApiSignerRef(value: object): value is ApiSignerRef {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('userType' in value) || value['userType'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    return true;
 }
 
 export function ApiSignerRefFromJSON(json: any): ApiSignerRef {
@@ -83,7 +81,7 @@ export function ApiSignerRefFromJSON(json: any): ApiSignerRef {
 }
 
 export function ApiSignerRefFromJSONTyped(json: any, ignoreDiscriminator: boolean): ApiSignerRef {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -95,19 +93,21 @@ export function ApiSignerRefFromJSONTyped(json: any, ignoreDiscriminator: boolea
     };
 }
 
-export function ApiSignerRefToJSON(value?: ApiSignerRef | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ApiSignerRefToJSON(json: any): ApiSignerRef {
+    return ApiSignerRefToJSONTyped(json, false);
+}
+
+export function ApiSignerRefToJSONTyped(value?: ApiSignerRef | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'user_type': value.userType,
-        'name': value.name,
-        'state': value.state,
+        'id': value['id'],
+        'user_type': value['userType'],
+        'name': value['name'],
+        'state': value['state'],
     };
 }
 

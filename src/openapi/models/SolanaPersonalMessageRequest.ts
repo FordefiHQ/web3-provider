@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { SolanaChainUniqueId } from './SolanaChainUniqueId';
 import {
     SolanaChainUniqueIdFromJSON,
     SolanaChainUniqueIdFromJSONTyped,
     SolanaChainUniqueIdToJSON,
+    SolanaChainUniqueIdToJSONTyped,
 } from './SolanaChainUniqueId';
 
 /**
@@ -59,13 +60,11 @@ export type SolanaPersonalMessageRequestTypeEnum = typeof SolanaPersonalMessageR
 /**
  * Check if a given object implements the SolanaPersonalMessageRequest interface.
  */
-export function instanceOfSolanaPersonalMessageRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "rawData" in value;
-
-    return isInstance;
+export function instanceOfSolanaPersonalMessageRequest(value: object): value is SolanaPersonalMessageRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('rawData' in value) || value['rawData'] === undefined) return false;
+    return true;
 }
 
 export function SolanaPersonalMessageRequestFromJSON(json: any): SolanaPersonalMessageRequest {
@@ -73,7 +72,7 @@ export function SolanaPersonalMessageRequestFromJSON(json: any): SolanaPersonalM
 }
 
 export function SolanaPersonalMessageRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): SolanaPersonalMessageRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -84,18 +83,20 @@ export function SolanaPersonalMessageRequestFromJSONTyped(json: any, ignoreDiscr
     };
 }
 
-export function SolanaPersonalMessageRequestToJSON(value?: SolanaPersonalMessageRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SolanaPersonalMessageRequestToJSON(json: any): SolanaPersonalMessageRequest {
+    return SolanaPersonalMessageRequestToJSONTyped(json, false);
+}
+
+export function SolanaPersonalMessageRequestToJSONTyped(value?: SolanaPersonalMessageRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'chain': SolanaChainUniqueIdToJSON(value.chain),
-        'raw_data': value.rawData,
+        'type': value['type'],
+        'chain': SolanaChainUniqueIdToJSON(value['chain']),
+        'raw_data': value['rawData'],
     };
 }
 

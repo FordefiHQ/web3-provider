@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { CosmosBalanceChangeEffect } from './CosmosBalanceChangeEffect';
-import {
-    CosmosBalanceChangeEffectFromJSON,
-    CosmosBalanceChangeEffectFromJSONTyped,
-    CosmosBalanceChangeEffectToJSON,
-} from './CosmosBalanceChangeEffect';
+import { mapValues } from '../runtime';
 import type { CosmosTransferEffect } from './CosmosTransferEffect';
 import {
     CosmosTransferEffectFromJSON,
     CosmosTransferEffectFromJSONTyped,
     CosmosTransferEffectToJSON,
+    CosmosTransferEffectToJSONTyped,
 } from './CosmosTransferEffect';
+import type { CosmosBalanceChangeEffect } from './CosmosBalanceChangeEffect';
+import {
+    CosmosBalanceChangeEffectFromJSON,
+    CosmosBalanceChangeEffectFromJSONTyped,
+    CosmosBalanceChangeEffectToJSON,
+    CosmosBalanceChangeEffectToJSONTyped,
+} from './CosmosBalanceChangeEffect';
 
 /**
  * 
@@ -49,12 +51,10 @@ export interface CosmosEffects {
 /**
  * Check if a given object implements the CosmosEffects interface.
  */
-export function instanceOfCosmosEffects(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "balanceChanges" in value;
-    isInstance = isInstance && "transfers" in value;
-
-    return isInstance;
+export function instanceOfCosmosEffects(value: object): value is CosmosEffects {
+    if (!('balanceChanges' in value) || value['balanceChanges'] === undefined) return false;
+    if (!('transfers' in value) || value['transfers'] === undefined) return false;
+    return true;
 }
 
 export function CosmosEffectsFromJSON(json: any): CosmosEffects {
@@ -62,7 +62,7 @@ export function CosmosEffectsFromJSON(json: any): CosmosEffects {
 }
 
 export function CosmosEffectsFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosEffects {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -72,17 +72,19 @@ export function CosmosEffectsFromJSONTyped(json: any, ignoreDiscriminator: boole
     };
 }
 
-export function CosmosEffectsToJSON(value?: CosmosEffects | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosEffectsToJSON(json: any): CosmosEffects {
+    return CosmosEffectsToJSONTyped(json, false);
+}
+
+export function CosmosEffectsToJSONTyped(value?: CosmosEffects | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'balance_changes': ((value.balanceChanges as Array<any>).map(CosmosBalanceChangeEffectToJSON)),
-        'transfers': ((value.transfers as Array<any>).map(CosmosTransferEffectToJSON)),
+        'balance_changes': ((value['balanceChanges'] as Array<any>).map(CosmosBalanceChangeEffectToJSON)),
+        'transfers': ((value['transfers'] as Array<any>).map(CosmosTransferEffectToJSON)),
     };
 }
 

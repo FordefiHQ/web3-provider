@@ -12,25 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+    PricedAssetToJSONTyped,
+} from './PricedAsset';
 import type { AptosTransferEffectType } from './AptosTransferEffectType';
 import {
     AptosTransferEffectTypeFromJSON,
     AptosTransferEffectTypeFromJSONTyped,
     AptosTransferEffectTypeToJSON,
+    AptosTransferEffectTypeToJSONTyped,
 } from './AptosTransferEffectType';
 import type { EnrichedAptosAddress } from './EnrichedAptosAddress';
 import {
     EnrichedAptosAddressFromJSON,
     EnrichedAptosAddressFromJSONTyped,
     EnrichedAptosAddressToJSON,
+    EnrichedAptosAddressToJSONTyped,
 } from './EnrichedAptosAddress';
-import type { PricedAsset } from './PricedAsset';
-import {
-    PricedAssetFromJSON,
-    PricedAssetFromJSONTyped,
-    PricedAssetToJSON,
-} from './PricedAsset';
 
 /**
  * 
@@ -70,18 +73,18 @@ export interface AptosTransferEffect {
     to: EnrichedAptosAddress;
 }
 
+
+
 /**
  * Check if a given object implements the AptosTransferEffect interface.
  */
-export function instanceOfAptosTransferEffect(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "pricedAsset" in value;
-    isInstance = isInstance && "amount" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "from" in value;
-    isInstance = isInstance && "to" in value;
-
-    return isInstance;
+export function instanceOfAptosTransferEffect(value: object): value is AptosTransferEffect {
+    if (!('pricedAsset' in value) || value['pricedAsset'] === undefined) return false;
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('from' in value) || value['from'] === undefined) return false;
+    if (!('to' in value) || value['to'] === undefined) return false;
+    return true;
 }
 
 export function AptosTransferEffectFromJSON(json: any): AptosTransferEffect {
@@ -89,7 +92,7 @@ export function AptosTransferEffectFromJSON(json: any): AptosTransferEffect {
 }
 
 export function AptosTransferEffectFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosTransferEffect {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -102,20 +105,22 @@ export function AptosTransferEffectFromJSONTyped(json: any, ignoreDiscriminator:
     };
 }
 
-export function AptosTransferEffectToJSON(value?: AptosTransferEffect | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AptosTransferEffectToJSON(json: any): AptosTransferEffect {
+    return AptosTransferEffectToJSONTyped(json, false);
+}
+
+export function AptosTransferEffectToJSONTyped(value?: AptosTransferEffect | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'priced_asset': PricedAssetToJSON(value.pricedAsset),
-        'amount': value.amount,
-        'type': AptosTransferEffectTypeToJSON(value.type),
-        'from': EnrichedAptosAddressToJSON(value.from),
-        'to': EnrichedAptosAddressToJSON(value.to),
+        'priced_asset': PricedAssetToJSON(value['pricedAsset']),
+        'amount': value['amount'],
+        'type': AptosTransferEffectTypeToJSON(value['type']),
+        'from': EnrichedAptosAddressToJSON(value['from']),
+        'to': EnrichedAptosAddressToJSON(value['to']),
     };
 }
 

@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -30,11 +30,9 @@ export interface ConfigMultiFactorAuthenticationRequest {
 /**
  * Check if a given object implements the ConfigMultiFactorAuthenticationRequest interface.
  */
-export function instanceOfConfigMultiFactorAuthenticationRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "isRequired" in value;
-
-    return isInstance;
+export function instanceOfConfigMultiFactorAuthenticationRequest(value: object): value is ConfigMultiFactorAuthenticationRequest {
+    if (!('isRequired' in value) || value['isRequired'] === undefined) return false;
+    return true;
 }
 
 export function ConfigMultiFactorAuthenticationRequestFromJSON(json: any): ConfigMultiFactorAuthenticationRequest {
@@ -42,7 +40,7 @@ export function ConfigMultiFactorAuthenticationRequestFromJSON(json: any): Confi
 }
 
 export function ConfigMultiFactorAuthenticationRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): ConfigMultiFactorAuthenticationRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -51,16 +49,18 @@ export function ConfigMultiFactorAuthenticationRequestFromJSONTyped(json: any, i
     };
 }
 
-export function ConfigMultiFactorAuthenticationRequestToJSON(value?: ConfigMultiFactorAuthenticationRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ConfigMultiFactorAuthenticationRequestToJSON(json: any): ConfigMultiFactorAuthenticationRequest {
+    return ConfigMultiFactorAuthenticationRequestToJSONTyped(json, false);
+}
+
+export function ConfigMultiFactorAuthenticationRequestToJSONTyped(value?: ConfigMultiFactorAuthenticationRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'is_required': value.isRequired,
+        'is_required': value['isRequired'],
     };
 }
 

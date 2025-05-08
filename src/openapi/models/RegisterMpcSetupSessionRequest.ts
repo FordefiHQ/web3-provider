@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { KeyType } from './KeyType';
 import {
     KeyTypeFromJSON,
     KeyTypeFromJSONTyped,
     KeyTypeToJSON,
+    KeyTypeToJSONTyped,
 } from './KeyType';
 import type { MpcMessage } from './MpcMessage';
 import {
     MpcMessageFromJSON,
     MpcMessageFromJSONTyped,
     MpcMessageToJSON,
+    MpcMessageToJSONTyped,
 } from './MpcMessage';
 
 /**
@@ -32,6 +34,12 @@ import {
  * @interface RegisterMpcSetupSessionRequest
  */
 export interface RegisterMpcSetupSessionRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof RegisterMpcSetupSessionRequest
+     */
+    keyId?: string;
     /**
      * 
      * @type {KeyType}
@@ -70,17 +78,17 @@ export interface RegisterMpcSetupSessionRequest {
     firstMpcProtocolMessage: MpcMessage;
 }
 
+
+
 /**
  * Check if a given object implements the RegisterMpcSetupSessionRequest interface.
  */
-export function instanceOfRegisterMpcSetupSessionRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "keyType" in value;
-    isInstance = isInstance && "protocolVersion" in value;
-    isInstance = isInstance && "sessionSeed" in value;
-    isInstance = isInstance && "firstMpcProtocolMessage" in value;
-
-    return isInstance;
+export function instanceOfRegisterMpcSetupSessionRequest(value: object): value is RegisterMpcSetupSessionRequest {
+    if (!('keyType' in value) || value['keyType'] === undefined) return false;
+    if (!('protocolVersion' in value) || value['protocolVersion'] === undefined) return false;
+    if (!('sessionSeed' in value) || value['sessionSeed'] === undefined) return false;
+    if (!('firstMpcProtocolMessage' in value) || value['firstMpcProtocolMessage'] === undefined) return false;
+    return true;
 }
 
 export function RegisterMpcSetupSessionRequestFromJSON(json: any): RegisterMpcSetupSessionRequest {
@@ -88,35 +96,39 @@ export function RegisterMpcSetupSessionRequestFromJSON(json: any): RegisterMpcSe
 }
 
 export function RegisterMpcSetupSessionRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): RegisterMpcSetupSessionRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
+        'keyId': json['key_id'] == null ? undefined : json['key_id'],
         'keyType': KeyTypeFromJSON(json['key_type']),
-        'keysetId': !exists(json, 'keyset_id') ? undefined : json['keyset_id'],
+        'keysetId': json['keyset_id'] == null ? undefined : json['keyset_id'],
         'protocolVersion': json['protocol_version'],
-        'signature': !exists(json, 'signature') ? undefined : json['signature'],
+        'signature': json['signature'] == null ? undefined : json['signature'],
         'sessionSeed': json['session_seed'],
         'firstMpcProtocolMessage': MpcMessageFromJSON(json['first_mpc_protocol_message']),
     };
 }
 
-export function RegisterMpcSetupSessionRequestToJSON(value?: RegisterMpcSetupSessionRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function RegisterMpcSetupSessionRequestToJSON(json: any): RegisterMpcSetupSessionRequest {
+    return RegisterMpcSetupSessionRequestToJSONTyped(json, false);
+}
+
+export function RegisterMpcSetupSessionRequestToJSONTyped(value?: RegisterMpcSetupSessionRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'key_type': KeyTypeToJSON(value.keyType),
-        'keyset_id': value.keysetId,
-        'protocol_version': value.protocolVersion,
-        'signature': value.signature,
-        'session_seed': value.sessionSeed,
-        'first_mpc_protocol_message': MpcMessageToJSON(value.firstMpcProtocolMessage),
+        'key_id': value['keyId'],
+        'key_type': KeyTypeToJSON(value['keyType']),
+        'keyset_id': value['keysetId'],
+        'protocol_version': value['protocolVersion'],
+        'signature': value['signature'],
+        'session_seed': value['sessionSeed'],
+        'first_mpc_protocol_message': MpcMessageToJSON(value['firstMpcProtocolMessage']),
     };
 }
 

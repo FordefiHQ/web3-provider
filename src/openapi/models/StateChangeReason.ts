@@ -24,6 +24,17 @@ export const StateChangeReason = {
 export type StateChangeReason = typeof StateChangeReason[keyof typeof StateChangeReason];
 
 
+export function instanceOfStateChangeReason(value: any): boolean {
+    for (const key in StateChangeReason) {
+        if (Object.prototype.hasOwnProperty.call(StateChangeReason, key)) {
+            if (StateChangeReason[key as keyof typeof StateChangeReason] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function StateChangeReasonFromJSON(json: any): StateChangeReason {
     return StateChangeReasonFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function StateChangeReasonFromJSONTyped(json: any, ignoreDiscriminator: b
 
 export function StateChangeReasonToJSON(value?: StateChangeReason | null): any {
     return value as any;
+}
+
+export function StateChangeReasonToJSONTyped(value: any, ignoreDiscriminator: boolean): StateChangeReason {
+    return value as StateChangeReason;
 }
 

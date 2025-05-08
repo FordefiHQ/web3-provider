@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { UpdateVaultGroupPermissionsErrorType } from './UpdateVaultGroupPermissionsErrorType';
 import {
     UpdateVaultGroupPermissionsErrorTypeFromJSON,
     UpdateVaultGroupPermissionsErrorTypeFromJSONTyped,
     UpdateVaultGroupPermissionsErrorTypeToJSON,
+    UpdateVaultGroupPermissionsErrorTypeToJSONTyped,
 } from './UpdateVaultGroupPermissionsErrorType';
 
 /**
@@ -58,15 +59,15 @@ export interface DefinedPreconditionErrorUpdateVaultGroupPermissionsErrorType {
     errorType?: UpdateVaultGroupPermissionsErrorType;
 }
 
+
+
 /**
  * Check if a given object implements the DefinedPreconditionErrorUpdateVaultGroupPermissionsErrorType interface.
  */
-export function instanceOfDefinedPreconditionErrorUpdateVaultGroupPermissionsErrorType(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "title" in value;
-    isInstance = isInstance && "detail" in value;
-
-    return isInstance;
+export function instanceOfDefinedPreconditionErrorUpdateVaultGroupPermissionsErrorType(value: object): value is DefinedPreconditionErrorUpdateVaultGroupPermissionsErrorType {
+    if (!('title' in value) || value['title'] === undefined) return false;
+    if (!('detail' in value) || value['detail'] === undefined) return false;
+    return true;
 }
 
 export function DefinedPreconditionErrorUpdateVaultGroupPermissionsErrorTypeFromJSON(json: any): DefinedPreconditionErrorUpdateVaultGroupPermissionsErrorType {
@@ -74,33 +75,35 @@ export function DefinedPreconditionErrorUpdateVaultGroupPermissionsErrorTypeFrom
 }
 
 export function DefinedPreconditionErrorUpdateVaultGroupPermissionsErrorTypeFromJSONTyped(json: any, ignoreDiscriminator: boolean): DefinedPreconditionErrorUpdateVaultGroupPermissionsErrorType {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'title': json['title'],
         'detail': json['detail'],
-        'requestId': !exists(json, 'request_id') ? undefined : json['request_id'],
-        'systemErrorCode': !exists(json, 'system_error_code') ? undefined : json['system_error_code'],
-        'errorType': !exists(json, 'error_type') ? undefined : UpdateVaultGroupPermissionsErrorTypeFromJSON(json['error_type']),
+        'requestId': json['request_id'] == null ? undefined : json['request_id'],
+        'systemErrorCode': json['system_error_code'] == null ? undefined : json['system_error_code'],
+        'errorType': json['error_type'] == null ? undefined : UpdateVaultGroupPermissionsErrorTypeFromJSON(json['error_type']),
     };
 }
 
-export function DefinedPreconditionErrorUpdateVaultGroupPermissionsErrorTypeToJSON(value?: DefinedPreconditionErrorUpdateVaultGroupPermissionsErrorType | null): any {
-    if (value === undefined) {
-        return undefined;
+export function DefinedPreconditionErrorUpdateVaultGroupPermissionsErrorTypeToJSON(json: any): DefinedPreconditionErrorUpdateVaultGroupPermissionsErrorType {
+    return DefinedPreconditionErrorUpdateVaultGroupPermissionsErrorTypeToJSONTyped(json, false);
+}
+
+export function DefinedPreconditionErrorUpdateVaultGroupPermissionsErrorTypeToJSONTyped(value?: DefinedPreconditionErrorUpdateVaultGroupPermissionsErrorType | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'title': value.title,
-        'detail': value.detail,
-        'request_id': value.requestId,
-        'system_error_code': value.systemErrorCode,
-        'error_type': UpdateVaultGroupPermissionsErrorTypeToJSON(value.errorType),
+        'title': value['title'],
+        'detail': value['detail'],
+        'request_id': value['requestId'],
+        'system_error_code': value['systemErrorCode'],
+        'error_type': UpdateVaultGroupPermissionsErrorTypeToJSON(value['errorType']),
     };
 }
 

@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { TonAddressRequest } from './TonAddressRequest';
 import {
     TonAddressRequestFromJSON,
     TonAddressRequestFromJSONTyped,
     TonAddressRequestToJSON,
+    TonAddressRequestToJSONTyped,
 } from './TonAddressRequest';
 
 /**
@@ -53,12 +54,10 @@ export type TonJettonAssetIdentifierRequestTypeEnum = typeof TonJettonAssetIdent
 /**
  * Check if a given object implements the TonJettonAssetIdentifierRequest interface.
  */
-export function instanceOfTonJettonAssetIdentifierRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "jetton" in value;
-
-    return isInstance;
+export function instanceOfTonJettonAssetIdentifierRequest(value: object): value is TonJettonAssetIdentifierRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('jetton' in value) || value['jetton'] === undefined) return false;
+    return true;
 }
 
 export function TonJettonAssetIdentifierRequestFromJSON(json: any): TonJettonAssetIdentifierRequest {
@@ -66,7 +65,7 @@ export function TonJettonAssetIdentifierRequestFromJSON(json: any): TonJettonAss
 }
 
 export function TonJettonAssetIdentifierRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): TonJettonAssetIdentifierRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function TonJettonAssetIdentifierRequestFromJSONTyped(json: any, ignoreDi
     };
 }
 
-export function TonJettonAssetIdentifierRequestToJSON(value?: TonJettonAssetIdentifierRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TonJettonAssetIdentifierRequestToJSON(json: any): TonJettonAssetIdentifierRequest {
+    return TonJettonAssetIdentifierRequestToJSONTyped(json, false);
+}
+
+export function TonJettonAssetIdentifierRequestToJSONTyped(value?: TonJettonAssetIdentifierRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'jetton': TonAddressRequestToJSON(value.jetton),
+        'type': value['type'],
+        'jetton': TonAddressRequestToJSON(value['jetton']),
     };
 }
 

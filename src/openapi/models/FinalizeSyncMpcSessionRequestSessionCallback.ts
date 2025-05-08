@@ -12,29 +12,29 @@
  * Do not edit the class manually.
  */
 
+import type { CreateMasterKeyCallbackArgs } from './CreateMasterKeyCallbackArgs';
 import {
-    CreateMasterKeyCallbackArgs,
     instanceOfCreateMasterKeyCallbackArgs,
     CreateMasterKeyCallbackArgsFromJSON,
     CreateMasterKeyCallbackArgsFromJSONTyped,
     CreateMasterKeyCallbackArgsToJSON,
 } from './CreateMasterKeyCallbackArgs';
+import type { CreateMpcSetupCallbackArgs } from './CreateMpcSetupCallbackArgs';
 import {
-    CreateMpcSetupCallbackArgs,
     instanceOfCreateMpcSetupCallbackArgs,
     CreateMpcSetupCallbackArgsFromJSON,
     CreateMpcSetupCallbackArgsFromJSONTyped,
     CreateMpcSetupCallbackArgsToJSON,
 } from './CreateMpcSetupCallbackArgs';
+import type { CreateUserKeyCallbackArgs } from './CreateUserKeyCallbackArgs';
 import {
-    CreateUserKeyCallbackArgs,
     instanceOfCreateUserKeyCallbackArgs,
     CreateUserKeyCallbackArgsFromJSON,
     CreateUserKeyCallbackArgsFromJSONTyped,
     CreateUserKeyCallbackArgsToJSON,
 } from './CreateUserKeyCallbackArgs';
+import type { SubmitTransactionCallbackArgs } from './SubmitTransactionCallbackArgs';
 import {
-    SubmitTransactionCallbackArgs,
     instanceOfSubmitTransactionCallbackArgs,
     SubmitTransactionCallbackArgsFromJSON,
     SubmitTransactionCallbackArgsFromJSONTyped,
@@ -53,39 +53,40 @@ export function FinalizeSyncMpcSessionRequestSessionCallbackFromJSON(json: any):
 }
 
 export function FinalizeSyncMpcSessionRequestSessionCallbackFromJSONTyped(json: any, ignoreDiscriminator: boolean): FinalizeSyncMpcSessionRequestSessionCallback {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'create_master_key':
-            return {...CreateMasterKeyCallbackArgsFromJSONTyped(json, true), type: 'create_master_key'};
+            return Object.assign({}, CreateMasterKeyCallbackArgsFromJSONTyped(json, true), { type: 'create_master_key' } as const);
         case 'create_mpc_setup':
-            return {...CreateMpcSetupCallbackArgsFromJSONTyped(json, true), type: 'create_mpc_setup'};
+            return Object.assign({}, CreateMpcSetupCallbackArgsFromJSONTyped(json, true), { type: 'create_mpc_setup' } as const);
         case 'create_user_key':
-            return {...CreateUserKeyCallbackArgsFromJSONTyped(json, true), type: 'create_user_key'};
+            return Object.assign({}, CreateUserKeyCallbackArgsFromJSONTyped(json, true), { type: 'create_user_key' } as const);
         case 'submit_transaction':
-            return {...SubmitTransactionCallbackArgsFromJSONTyped(json, true), type: 'submit_transaction'};
+            return Object.assign({}, SubmitTransactionCallbackArgsFromJSONTyped(json, true), { type: 'submit_transaction' } as const);
         default:
             throw new Error(`No variant of FinalizeSyncMpcSessionRequestSessionCallback exists with 'type=${json['type']}'`);
     }
 }
 
-export function FinalizeSyncMpcSessionRequestSessionCallbackToJSON(value?: FinalizeSyncMpcSessionRequestSessionCallback | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function FinalizeSyncMpcSessionRequestSessionCallbackToJSON(json: any): any {
+    return FinalizeSyncMpcSessionRequestSessionCallbackToJSONTyped(json, false);
+}
+
+export function FinalizeSyncMpcSessionRequestSessionCallbackToJSONTyped(value?: FinalizeSyncMpcSessionRequestSessionCallback | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'create_master_key':
-            return CreateMasterKeyCallbackArgsToJSON(value);
+            return Object.assign({}, CreateMasterKeyCallbackArgsToJSON(value), { type: 'create_master_key' } as const);
         case 'create_mpc_setup':
-            return CreateMpcSetupCallbackArgsToJSON(value);
+            return Object.assign({}, CreateMpcSetupCallbackArgsToJSON(value), { type: 'create_mpc_setup' } as const);
         case 'create_user_key':
-            return CreateUserKeyCallbackArgsToJSON(value);
+            return Object.assign({}, CreateUserKeyCallbackArgsToJSON(value), { type: 'create_user_key' } as const);
         case 'submit_transaction':
-            return SubmitTransactionCallbackArgsToJSON(value);
+            return Object.assign({}, SubmitTransactionCallbackArgsToJSON(value), { type: 'submit_transaction' } as const);
         default:
             throw new Error(`No variant of FinalizeSyncMpcSessionRequestSessionCallback exists with 'type=${value['type']}'`);
     }

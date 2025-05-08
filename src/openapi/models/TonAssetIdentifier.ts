@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedTonChain } from './EnrichedTonChain';
 import {
     EnrichedTonChainFromJSON,
     EnrichedTonChainFromJSONTyped,
     EnrichedTonChainToJSON,
+    EnrichedTonChainToJSONTyped,
 } from './EnrichedTonChain';
 import type { TonAssetIdentifierDetails } from './TonAssetIdentifierDetails';
 import {
     TonAssetIdentifierDetailsFromJSON,
     TonAssetIdentifierDetailsFromJSONTyped,
     TonAssetIdentifierDetailsToJSON,
+    TonAssetIdentifierDetailsToJSONTyped,
 } from './TonAssetIdentifierDetails';
 
 /**
@@ -65,13 +67,11 @@ export type TonAssetIdentifierTypeEnum = typeof TonAssetIdentifierTypeEnum[keyof
 /**
  * Check if a given object implements the TonAssetIdentifier interface.
  */
-export function instanceOfTonAssetIdentifier(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "details" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfTonAssetIdentifier(value: object): value is TonAssetIdentifier {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function TonAssetIdentifierFromJSON(json: any): TonAssetIdentifier {
@@ -79,7 +79,7 @@ export function TonAssetIdentifierFromJSON(json: any): TonAssetIdentifier {
 }
 
 export function TonAssetIdentifierFromJSONTyped(json: any, ignoreDiscriminator: boolean): TonAssetIdentifier {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -90,18 +90,20 @@ export function TonAssetIdentifierFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-export function TonAssetIdentifierToJSON(value?: TonAssetIdentifier | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TonAssetIdentifierToJSON(json: any): TonAssetIdentifier {
+    return TonAssetIdentifierToJSONTyped(json, false);
+}
+
+export function TonAssetIdentifierToJSONTyped(value?: TonAssetIdentifier | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'details': TonAssetIdentifierDetailsToJSON(value.details),
-        'chain': EnrichedTonChainToJSON(value.chain),
+        'type': value['type'],
+        'details': TonAssetIdentifierDetailsToJSON(value['details']),
+        'chain': EnrichedTonChainToJSON(value['chain']),
     };
 }
 

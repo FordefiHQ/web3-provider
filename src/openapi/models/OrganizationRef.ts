@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -36,12 +36,10 @@ export interface OrganizationRef {
 /**
  * Check if a given object implements the OrganizationRef interface.
  */
-export function instanceOfOrganizationRef(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "name" in value;
-
-    return isInstance;
+export function instanceOfOrganizationRef(value: object): value is OrganizationRef {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    return true;
 }
 
 export function OrganizationRefFromJSON(json: any): OrganizationRef {
@@ -49,7 +47,7 @@ export function OrganizationRefFromJSON(json: any): OrganizationRef {
 }
 
 export function OrganizationRefFromJSONTyped(json: any, ignoreDiscriminator: boolean): OrganizationRef {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -59,17 +57,19 @@ export function OrganizationRefFromJSONTyped(json: any, ignoreDiscriminator: boo
     };
 }
 
-export function OrganizationRefToJSON(value?: OrganizationRef | null): any {
-    if (value === undefined) {
-        return undefined;
+export function OrganizationRefToJSON(json: any): OrganizationRef {
+    return OrganizationRefToJSONTyped(json, false);
+}
+
+export function OrganizationRefToJSONTyped(value?: OrganizationRef | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'name': value.name,
+        'id': value['id'],
+        'name': value['name'],
     };
 }
 

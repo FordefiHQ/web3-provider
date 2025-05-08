@@ -26,6 +26,17 @@ export const LogClientType = {
 export type LogClientType = typeof LogClientType[keyof typeof LogClientType];
 
 
+export function instanceOfLogClientType(value: any): boolean {
+    for (const key in LogClientType) {
+        if (Object.prototype.hasOwnProperty.call(LogClientType, key)) {
+            if (LogClientType[key as keyof typeof LogClientType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function LogClientTypeFromJSON(json: any): LogClientType {
     return LogClientTypeFromJSONTyped(json, false);
 }
@@ -36,5 +47,9 @@ export function LogClientTypeFromJSONTyped(json: any, ignoreDiscriminator: boole
 
 export function LogClientTypeToJSON(value?: LogClientType | null): any {
     return value as any;
+}
+
+export function LogClientTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): LogClientType {
+    return value as LogClientType;
 }
 

@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { Dapp } from './Dapp';
-import {
-    DappFromJSON,
-    DappFromJSONTyped,
-    DappToJSON,
-} from './Dapp';
+import { mapValues } from '../runtime';
 import type { Erc1155 } from './Erc1155';
 import {
     Erc1155FromJSON,
     Erc1155FromJSONTyped,
     Erc1155ToJSON,
+    Erc1155ToJSONTyped,
 } from './Erc1155';
+import type { Dapp } from './Dapp';
+import {
+    DappFromJSON,
+    DappFromJSONTyped,
+    DappToJSON,
+    DappToJSONTyped,
+} from './Dapp';
 
 /**
  * 
@@ -61,12 +63,10 @@ export interface Erc1155Contract {
 /**
  * Check if a given object implements the Erc1155Contract interface.
  */
-export function instanceOfErc1155Contract(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "isVerified" in value;
-    isInstance = isInstance && "token" in value;
-
-    return isInstance;
+export function instanceOfErc1155Contract(value: object): value is Erc1155Contract {
+    if (!('isVerified' in value) || value['isVerified'] === undefined) return false;
+    if (!('token' in value) || value['token'] === undefined) return false;
+    return true;
 }
 
 export function Erc1155ContractFromJSON(json: any): Erc1155Contract {
@@ -74,31 +74,33 @@ export function Erc1155ContractFromJSON(json: any): Erc1155Contract {
 }
 
 export function Erc1155ContractFromJSONTyped(json: any, ignoreDiscriminator: boolean): Erc1155Contract {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'dapp': !exists(json, 'dapp') ? undefined : DappFromJSON(json['dapp']),
+        'name': json['name'] == null ? undefined : json['name'],
+        'dapp': json['dapp'] == null ? undefined : DappFromJSON(json['dapp']),
         'isVerified': json['is_verified'],
         'token': Erc1155FromJSON(json['token']),
     };
 }
 
-export function Erc1155ContractToJSON(value?: Erc1155Contract | null): any {
-    if (value === undefined) {
-        return undefined;
+export function Erc1155ContractToJSON(json: any): Erc1155Contract {
+    return Erc1155ContractToJSONTyped(json, false);
+}
+
+export function Erc1155ContractToJSONTyped(value?: Erc1155Contract | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'dapp': DappToJSON(value.dapp),
-        'is_verified': value.isVerified,
-        'token': Erc1155ToJSON(value.token),
+        'name': value['name'],
+        'dapp': DappToJSON(value['dapp']),
+        'is_verified': value['isVerified'],
+        'token': Erc1155ToJSON(value['token']),
     };
 }
 

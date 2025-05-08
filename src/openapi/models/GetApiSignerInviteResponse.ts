@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -42,13 +42,11 @@ export interface GetApiSignerInviteResponse {
 /**
  * Check if a given object implements the GetApiSignerInviteResponse interface.
  */
-export function instanceOfGetApiSignerInviteResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "encryptedInvite" in value;
-    isInstance = isInstance && "encryptedCredentials" in value;
-    isInstance = isInstance && "encryptedOrgKey" in value;
-
-    return isInstance;
+export function instanceOfGetApiSignerInviteResponse(value: object): value is GetApiSignerInviteResponse {
+    if (!('encryptedInvite' in value) || value['encryptedInvite'] === undefined) return false;
+    if (!('encryptedCredentials' in value) || value['encryptedCredentials'] === undefined) return false;
+    if (!('encryptedOrgKey' in value) || value['encryptedOrgKey'] === undefined) return false;
+    return true;
 }
 
 export function GetApiSignerInviteResponseFromJSON(json: any): GetApiSignerInviteResponse {
@@ -56,7 +54,7 @@ export function GetApiSignerInviteResponseFromJSON(json: any): GetApiSignerInvit
 }
 
 export function GetApiSignerInviteResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetApiSignerInviteResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -67,18 +65,20 @@ export function GetApiSignerInviteResponseFromJSONTyped(json: any, ignoreDiscrim
     };
 }
 
-export function GetApiSignerInviteResponseToJSON(value?: GetApiSignerInviteResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function GetApiSignerInviteResponseToJSON(json: any): GetApiSignerInviteResponse {
+    return GetApiSignerInviteResponseToJSONTyped(json, false);
+}
+
+export function GetApiSignerInviteResponseToJSONTyped(value?: GetApiSignerInviteResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'encrypted_invite': value.encryptedInvite,
-        'encrypted_credentials': value.encryptedCredentials,
-        'encrypted_org_key': value.encryptedOrgKey,
+        'encrypted_invite': value['encryptedInvite'],
+        'encrypted_credentials': value['encryptedCredentials'],
+        'encrypted_org_key': value['encryptedOrgKey'],
     };
 }
 

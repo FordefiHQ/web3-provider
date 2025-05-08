@@ -12,29 +12,29 @@
  * Do not edit the class manually.
  */
 
+import type { Erc1155AllowanceForAllChange } from './Erc1155AllowanceForAllChange';
 import {
-    Erc1155AllowanceForAllChange,
     instanceOfErc1155AllowanceForAllChange,
     Erc1155AllowanceForAllChangeFromJSON,
     Erc1155AllowanceForAllChangeFromJSONTyped,
     Erc1155AllowanceForAllChangeToJSON,
 } from './Erc1155AllowanceForAllChange';
+import type { Erc20AllowanceChange } from './Erc20AllowanceChange';
 import {
-    Erc20AllowanceChange,
     instanceOfErc20AllowanceChange,
     Erc20AllowanceChangeFromJSON,
     Erc20AllowanceChangeFromJSONTyped,
     Erc20AllowanceChangeToJSON,
 } from './Erc20AllowanceChange';
+import type { Erc721AllowanceChange } from './Erc721AllowanceChange';
 import {
-    Erc721AllowanceChange,
     instanceOfErc721AllowanceChange,
     Erc721AllowanceChangeFromJSON,
     Erc721AllowanceChangeFromJSONTyped,
     Erc721AllowanceChangeToJSON,
 } from './Erc721AllowanceChange';
+import type { Erc721AllowanceForAllChange } from './Erc721AllowanceForAllChange';
 import {
-    Erc721AllowanceForAllChange,
     instanceOfErc721AllowanceForAllChange,
     Erc721AllowanceForAllChangeFromJSON,
     Erc721AllowanceForAllChangeFromJSONTyped,
@@ -53,39 +53,40 @@ export function AllowanceEffectFromJSON(json: any): AllowanceEffect {
 }
 
 export function AllowanceEffectFromJSONTyped(json: any, ignoreDiscriminator: boolean): AllowanceEffect {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'erc1155_for_all':
-            return {...Erc1155AllowanceForAllChangeFromJSONTyped(json, true), type: 'erc1155_for_all'};
+            return Object.assign({}, Erc1155AllowanceForAllChangeFromJSONTyped(json, true), { type: 'erc1155_for_all' } as const);
         case 'erc20':
-            return {...Erc20AllowanceChangeFromJSONTyped(json, true), type: 'erc20'};
+            return Object.assign({}, Erc20AllowanceChangeFromJSONTyped(json, true), { type: 'erc20' } as const);
         case 'erc721':
-            return {...Erc721AllowanceChangeFromJSONTyped(json, true), type: 'erc721'};
+            return Object.assign({}, Erc721AllowanceChangeFromJSONTyped(json, true), { type: 'erc721' } as const);
         case 'erc721_for_all':
-            return {...Erc721AllowanceForAllChangeFromJSONTyped(json, true), type: 'erc721_for_all'};
+            return Object.assign({}, Erc721AllowanceForAllChangeFromJSONTyped(json, true), { type: 'erc721_for_all' } as const);
         default:
             throw new Error(`No variant of AllowanceEffect exists with 'type=${json['type']}'`);
     }
 }
 
-export function AllowanceEffectToJSON(value?: AllowanceEffect | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function AllowanceEffectToJSON(json: any): any {
+    return AllowanceEffectToJSONTyped(json, false);
+}
+
+export function AllowanceEffectToJSONTyped(value?: AllowanceEffect | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'erc1155_for_all':
-            return Erc1155AllowanceForAllChangeToJSON(value);
+            return Object.assign({}, Erc1155AllowanceForAllChangeToJSON(value), { type: 'erc1155_for_all' } as const);
         case 'erc20':
-            return Erc20AllowanceChangeToJSON(value);
+            return Object.assign({}, Erc20AllowanceChangeToJSON(value), { type: 'erc20' } as const);
         case 'erc721':
-            return Erc721AllowanceChangeToJSON(value);
+            return Object.assign({}, Erc721AllowanceChangeToJSON(value), { type: 'erc721' } as const);
         case 'erc721_for_all':
-            return Erc721AllowanceForAllChangeToJSON(value);
+            return Object.assign({}, Erc721AllowanceForAllChangeToJSON(value), { type: 'erc721_for_all' } as const);
         default:
             throw new Error(`No variant of AllowanceEffect exists with 'type=${value['type']}'`);
     }

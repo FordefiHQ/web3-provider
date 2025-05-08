@@ -24,6 +24,17 @@ export const CosmosBalanceChangeEffectType = {
 export type CosmosBalanceChangeEffectType = typeof CosmosBalanceChangeEffectType[keyof typeof CosmosBalanceChangeEffectType];
 
 
+export function instanceOfCosmosBalanceChangeEffectType(value: any): boolean {
+    for (const key in CosmosBalanceChangeEffectType) {
+        if (Object.prototype.hasOwnProperty.call(CosmosBalanceChangeEffectType, key)) {
+            if (CosmosBalanceChangeEffectType[key as keyof typeof CosmosBalanceChangeEffectType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function CosmosBalanceChangeEffectTypeFromJSON(json: any): CosmosBalanceChangeEffectType {
     return CosmosBalanceChangeEffectTypeFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function CosmosBalanceChangeEffectTypeFromJSONTyped(json: any, ignoreDisc
 
 export function CosmosBalanceChangeEffectTypeToJSON(value?: CosmosBalanceChangeEffectType | null): any {
     return value as any;
+}
+
+export function CosmosBalanceChangeEffectTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): CosmosBalanceChangeEffectType {
+    return value as CosmosBalanceChangeEffectType;
 }
 

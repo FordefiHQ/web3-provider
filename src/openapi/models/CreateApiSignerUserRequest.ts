@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type CreateApiSignerUserRequestUserTypeEnum = typeof CreateApiSignerUserR
 /**
  * Check if a given object implements the CreateApiSignerUserRequest interface.
  */
-export function instanceOfCreateApiSignerUserRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "userType" in value;
-    isInstance = isInstance && "userName" in value;
-
-    return isInstance;
+export function instanceOfCreateApiSignerUserRequest(value: object): value is CreateApiSignerUserRequest {
+    if (!('userType' in value) || value['userType'] === undefined) return false;
+    if (!('userName' in value) || value['userName'] === undefined) return false;
+    return true;
 }
 
 export function CreateApiSignerUserRequestFromJSON(json: any): CreateApiSignerUserRequest {
@@ -59,7 +57,7 @@ export function CreateApiSignerUserRequestFromJSON(json: any): CreateApiSignerUs
 }
 
 export function CreateApiSignerUserRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateApiSignerUserRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function CreateApiSignerUserRequestFromJSONTyped(json: any, ignoreDiscrim
     };
 }
 
-export function CreateApiSignerUserRequestToJSON(value?: CreateApiSignerUserRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateApiSignerUserRequestToJSON(json: any): CreateApiSignerUserRequest {
+    return CreateApiSignerUserRequestToJSONTyped(json, false);
+}
+
+export function CreateApiSignerUserRequestToJSONTyped(value?: CreateApiSignerUserRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'user_type': value.userType,
-        'user_name': value.userName,
+        'user_type': value['userType'],
+        'user_name': value['userName'],
     };
 }
 

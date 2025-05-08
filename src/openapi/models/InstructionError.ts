@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -42,12 +42,10 @@ export interface InstructionError {
 /**
  * Check if a given object implements the InstructionError interface.
  */
-export function instanceOfInstructionError(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "errorType" in value;
-    isInstance = isInstance && "instructionIndex" in value;
-
-    return isInstance;
+export function instanceOfInstructionError(value: object): value is InstructionError {
+    if (!('errorType' in value) || value['errorType'] === undefined) return false;
+    if (!('instructionIndex' in value) || value['instructionIndex'] === undefined) return false;
+    return true;
 }
 
 export function InstructionErrorFromJSON(json: any): InstructionError {
@@ -55,29 +53,31 @@ export function InstructionErrorFromJSON(json: any): InstructionError {
 }
 
 export function InstructionErrorFromJSONTyped(json: any, ignoreDiscriminator: boolean): InstructionError {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'errorType': json['error_type'],
         'instructionIndex': json['instruction_index'],
-        'errorDescription': !exists(json, 'error_description') ? undefined : json['error_description'],
+        'errorDescription': json['error_description'] == null ? undefined : json['error_description'],
     };
 }
 
-export function InstructionErrorToJSON(value?: InstructionError | null): any {
-    if (value === undefined) {
-        return undefined;
+export function InstructionErrorToJSON(json: any): InstructionError {
+    return InstructionErrorToJSONTyped(json, false);
+}
+
+export function InstructionErrorToJSONTyped(value?: InstructionError | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'error_type': value.errorType,
-        'instruction_index': value.instructionIndex,
-        'error_description': value.errorDescription,
+        'error_type': value['errorType'],
+        'instruction_index': value['instructionIndex'],
+        'error_description': value['errorDescription'],
     };
 }
 

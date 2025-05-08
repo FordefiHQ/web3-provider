@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AmountLimitCurrencyCondition } from './AmountLimitCurrencyCondition';
 import {
     AmountLimitCurrencyConditionFromJSON,
     AmountLimitCurrencyConditionFromJSONTyped,
     AmountLimitCurrencyConditionToJSON,
+    AmountLimitCurrencyConditionToJSONTyped,
 } from './AmountLimitCurrencyCondition';
 
 /**
@@ -46,15 +47,15 @@ export interface AmountLimitCondition {
     isNetAmount: boolean;
 }
 
+
+
 /**
  * Check if a given object implements the AmountLimitCondition interface.
  */
-export function instanceOfAmountLimitCondition(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "currency" in value;
-    isInstance = isInstance && "isNetAmount" in value;
-
-    return isInstance;
+export function instanceOfAmountLimitCondition(value: object): value is AmountLimitCondition {
+    if (!('currency' in value) || value['currency'] === undefined) return false;
+    if (!('isNetAmount' in value) || value['isNetAmount'] === undefined) return false;
+    return true;
 }
 
 export function AmountLimitConditionFromJSON(json: any): AmountLimitCondition {
@@ -62,29 +63,31 @@ export function AmountLimitConditionFromJSON(json: any): AmountLimitCondition {
 }
 
 export function AmountLimitConditionFromJSONTyped(json: any, ignoreDiscriminator: boolean): AmountLimitCondition {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'amount': !exists(json, 'amount') ? undefined : json['amount'],
+        'amount': json['amount'] == null ? undefined : json['amount'],
         'currency': AmountLimitCurrencyConditionFromJSON(json['currency']),
         'isNetAmount': json['is_net_amount'],
     };
 }
 
-export function AmountLimitConditionToJSON(value?: AmountLimitCondition | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AmountLimitConditionToJSON(json: any): AmountLimitCondition {
+    return AmountLimitConditionToJSONTyped(json, false);
+}
+
+export function AmountLimitConditionToJSONTyped(value?: AmountLimitCondition | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'amount': value.amount,
-        'currency': AmountLimitCurrencyConditionToJSON(value.currency),
-        'is_net_amount': value.isNetAmount,
+        'amount': value['amount'],
+        'currency': AmountLimitCurrencyConditionToJSON(value['currency']),
+        'is_net_amount': value['isNetAmount'],
     };
 }
 

@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedUtxoChain } from './EnrichedUtxoChain';
 import {
     EnrichedUtxoChainFromJSON,
     EnrichedUtxoChainFromJSONTyped,
     EnrichedUtxoChainToJSON,
+    EnrichedUtxoChainToJSONTyped,
 } from './EnrichedUtxoChain';
 
 /**
@@ -53,12 +54,10 @@ export type EnrichedUtxoNativeAssetIdentifierTypeEnum = typeof EnrichedUtxoNativ
 /**
  * Check if a given object implements the EnrichedUtxoNativeAssetIdentifier interface.
  */
-export function instanceOfEnrichedUtxoNativeAssetIdentifier(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfEnrichedUtxoNativeAssetIdentifier(value: object): value is EnrichedUtxoNativeAssetIdentifier {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function EnrichedUtxoNativeAssetIdentifierFromJSON(json: any): EnrichedUtxoNativeAssetIdentifier {
@@ -66,7 +65,7 @@ export function EnrichedUtxoNativeAssetIdentifierFromJSON(json: any): EnrichedUt
 }
 
 export function EnrichedUtxoNativeAssetIdentifierFromJSONTyped(json: any, ignoreDiscriminator: boolean): EnrichedUtxoNativeAssetIdentifier {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function EnrichedUtxoNativeAssetIdentifierFromJSONTyped(json: any, ignore
     };
 }
 
-export function EnrichedUtxoNativeAssetIdentifierToJSON(value?: EnrichedUtxoNativeAssetIdentifier | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EnrichedUtxoNativeAssetIdentifierToJSON(json: any): EnrichedUtxoNativeAssetIdentifier {
+    return EnrichedUtxoNativeAssetIdentifierToJSONTyped(json, false);
+}
+
+export function EnrichedUtxoNativeAssetIdentifierToJSONTyped(value?: EnrichedUtxoNativeAssetIdentifier | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'chain': EnrichedUtxoChainToJSON(value.chain),
+        'type': value['type'],
+        'chain': EnrichedUtxoChainToJSON(value['chain']),
     };
 }
 

@@ -24,6 +24,17 @@ export const DeletePrerequisiteSeverity = {
 export type DeletePrerequisiteSeverity = typeof DeletePrerequisiteSeverity[keyof typeof DeletePrerequisiteSeverity];
 
 
+export function instanceOfDeletePrerequisiteSeverity(value: any): boolean {
+    for (const key in DeletePrerequisiteSeverity) {
+        if (Object.prototype.hasOwnProperty.call(DeletePrerequisiteSeverity, key)) {
+            if (DeletePrerequisiteSeverity[key as keyof typeof DeletePrerequisiteSeverity] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function DeletePrerequisiteSeverityFromJSON(json: any): DeletePrerequisiteSeverity {
     return DeletePrerequisiteSeverityFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function DeletePrerequisiteSeverityFromJSONTyped(json: any, ignoreDiscrim
 
 export function DeletePrerequisiteSeverityToJSON(value?: DeletePrerequisiteSeverity | null): any {
     return value as any;
+}
+
+export function DeletePrerequisiteSeverityToJSONTyped(value: any, ignoreDiscriminator: boolean): DeletePrerequisiteSeverity {
+    return value as DeletePrerequisiteSeverity;
 }
 

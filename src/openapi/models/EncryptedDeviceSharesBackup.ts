@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -66,11 +66,9 @@ export interface EncryptedDeviceSharesBackup {
 /**
  * Check if a given object implements the EncryptedDeviceSharesBackup interface.
  */
-export function instanceOfEncryptedDeviceSharesBackup(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "createdAt" in value;
-
-    return isInstance;
+export function instanceOfEncryptedDeviceSharesBackup(value: object): value is EncryptedDeviceSharesBackup {
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    return true;
 }
 
 export function EncryptedDeviceSharesBackupFromJSON(json: any): EncryptedDeviceSharesBackup {
@@ -78,37 +76,39 @@ export function EncryptedDeviceSharesBackupFromJSON(json: any): EncryptedDeviceS
 }
 
 export function EncryptedDeviceSharesBackupFromJSONTyped(json: any, ignoreDiscriminator: boolean): EncryptedDeviceSharesBackup {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
+        'id': json['id'] == null ? undefined : json['id'],
         'createdAt': (new Date(json['created_at'])),
-        'ecdsa': !exists(json, 'ecdsa') ? undefined : json['ecdsa'],
-        'eddsa': !exists(json, 'eddsa') ? undefined : json['eddsa'],
-        'ecdsaStark': !exists(json, 'ecdsa_stark') ? undefined : json['ecdsa_stark'],
-        'schnorrSecp256k1': !exists(json, 'schnorr_secp256k1') ? undefined : json['schnorr_secp256k1'],
-        'authKey': !exists(json, 'auth_key') ? undefined : json['auth_key'],
+        'ecdsa': json['ecdsa'] == null ? undefined : json['ecdsa'],
+        'eddsa': json['eddsa'] == null ? undefined : json['eddsa'],
+        'ecdsaStark': json['ecdsa_stark'] == null ? undefined : json['ecdsa_stark'],
+        'schnorrSecp256k1': json['schnorr_secp256k1'] == null ? undefined : json['schnorr_secp256k1'],
+        'authKey': json['auth_key'] == null ? undefined : json['auth_key'],
     };
 }
 
-export function EncryptedDeviceSharesBackupToJSON(value?: EncryptedDeviceSharesBackup | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EncryptedDeviceSharesBackupToJSON(json: any): EncryptedDeviceSharesBackup {
+    return EncryptedDeviceSharesBackupToJSONTyped(json, false);
+}
+
+export function EncryptedDeviceSharesBackupToJSONTyped(value?: EncryptedDeviceSharesBackup | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'ecdsa': value.ecdsa,
-        'eddsa': value.eddsa,
-        'ecdsa_stark': value.ecdsaStark,
-        'schnorr_secp256k1': value.schnorrSecp256k1,
-        'auth_key': value.authKey,
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'ecdsa': value['ecdsa'],
+        'eddsa': value['eddsa'],
+        'ecdsa_stark': value['ecdsaStark'],
+        'schnorr_secp256k1': value['schnorrSecp256k1'],
+        'auth_key': value['authKey'],
     };
 }
 

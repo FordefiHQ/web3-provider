@@ -12,58 +12,70 @@
  * Do not edit the class manually.
  */
 
+import type { AptosCoinAssetIdentifierRequest } from './AptosCoinAssetIdentifierRequest';
 import {
-    AptosCoinAssetIdentifierRequest,
     instanceOfAptosCoinAssetIdentifierRequest,
     AptosCoinAssetIdentifierRequestFromJSON,
     AptosCoinAssetIdentifierRequestFromJSONTyped,
     AptosCoinAssetIdentifierRequestToJSON,
 } from './AptosCoinAssetIdentifierRequest';
+import type { AptosNativeAssetIdentifierRequest } from './AptosNativeAssetIdentifierRequest';
 import {
-    AptosNativeAssetIdentifierRequest,
     instanceOfAptosNativeAssetIdentifierRequest,
     AptosNativeAssetIdentifierRequestFromJSON,
     AptosNativeAssetIdentifierRequestFromJSONTyped,
     AptosNativeAssetIdentifierRequestToJSON,
 } from './AptosNativeAssetIdentifierRequest';
+import type { AptosNewCoinAssetIdentifierRequest } from './AptosNewCoinAssetIdentifierRequest';
+import {
+    instanceOfAptosNewCoinAssetIdentifierRequest,
+    AptosNewCoinAssetIdentifierRequestFromJSON,
+    AptosNewCoinAssetIdentifierRequestFromJSONTyped,
+    AptosNewCoinAssetIdentifierRequestToJSON,
+} from './AptosNewCoinAssetIdentifierRequest';
 
 /**
  * @type AptosAssetIdentifierDetails
  * 
  * @export
  */
-export type AptosAssetIdentifierDetails = { type: 'coin' } & AptosCoinAssetIdentifierRequest | { type: 'native' } & AptosNativeAssetIdentifierRequest;
+export type AptosAssetIdentifierDetails = { type: 'coin' } & AptosCoinAssetIdentifierRequest | { type: 'native' } & AptosNativeAssetIdentifierRequest | { type: 'new_coin' } & AptosNewCoinAssetIdentifierRequest;
 
 export function AptosAssetIdentifierDetailsFromJSON(json: any): AptosAssetIdentifierDetails {
     return AptosAssetIdentifierDetailsFromJSONTyped(json, false);
 }
 
 export function AptosAssetIdentifierDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosAssetIdentifierDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'coin':
-            return {...AptosCoinAssetIdentifierRequestFromJSONTyped(json, true), type: 'coin'};
+            return Object.assign({}, AptosCoinAssetIdentifierRequestFromJSONTyped(json, true), { type: 'coin' } as const);
         case 'native':
-            return {...AptosNativeAssetIdentifierRequestFromJSONTyped(json, true), type: 'native'};
+            return Object.assign({}, AptosNativeAssetIdentifierRequestFromJSONTyped(json, true), { type: 'native' } as const);
+        case 'new_coin':
+            return Object.assign({}, AptosNewCoinAssetIdentifierRequestFromJSONTyped(json, true), { type: 'new_coin' } as const);
         default:
             throw new Error(`No variant of AptosAssetIdentifierDetails exists with 'type=${json['type']}'`);
     }
 }
 
-export function AptosAssetIdentifierDetailsToJSON(value?: AptosAssetIdentifierDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function AptosAssetIdentifierDetailsToJSON(json: any): any {
+    return AptosAssetIdentifierDetailsToJSONTyped(json, false);
+}
+
+export function AptosAssetIdentifierDetailsToJSONTyped(value?: AptosAssetIdentifierDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'coin':
-            return AptosCoinAssetIdentifierRequestToJSON(value);
+            return Object.assign({}, AptosCoinAssetIdentifierRequestToJSON(value), { type: 'coin' } as const);
         case 'native':
-            return AptosNativeAssetIdentifierRequestToJSON(value);
+            return Object.assign({}, AptosNativeAssetIdentifierRequestToJSON(value), { type: 'native' } as const);
+        case 'new_coin':
+            return Object.assign({}, AptosNewCoinAssetIdentifierRequestToJSON(value), { type: 'new_coin' } as const);
         default:
             throw new Error(`No variant of AptosAssetIdentifierDetails exists with 'type=${value['type']}'`);
     }

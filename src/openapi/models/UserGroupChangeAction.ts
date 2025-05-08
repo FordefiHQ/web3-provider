@@ -12,25 +12,35 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { ApprovalRequest } from './ApprovalRequest';
 import {
     ApprovalRequestFromJSON,
     ApprovalRequestFromJSONTyped,
     ApprovalRequestToJSON,
+    ApprovalRequestToJSONTyped,
 } from './ApprovalRequest';
 import type { UserGroupChangeRequest } from './UserGroupChangeRequest';
 import {
     UserGroupChangeRequestFromJSON,
     UserGroupChangeRequestFromJSONTyped,
     UserGroupChangeRequestToJSON,
+    UserGroupChangeRequestToJSONTyped,
 } from './UserGroupChangeRequest';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
     UserRefFromJSONTyped,
     UserRefToJSON,
+    UserRefToJSONTyped,
 } from './UserRef';
+import type { VerificationRequest } from './VerificationRequest';
+import {
+    VerificationRequestFromJSON,
+    VerificationRequestFromJSONTyped,
+    VerificationRequestToJSON,
+    VerificationRequestToJSONTyped,
+} from './VerificationRequest';
 
 /**
  * 
@@ -58,16 +68,16 @@ export interface UserGroupChangeAction {
     modifiedAt: Date;
     /**
      * 
-     * @type {string}
-     * @memberof UserGroupChangeAction
-     */
-    type: UserGroupChangeActionTypeEnum;
-    /**
-     * 
      * @type {boolean}
      * @memberof UserGroupChangeAction
      */
     isPending: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserGroupChangeAction
+     */
+    type: UserGroupChangeActionTypeEnum;
     /**
      * 
      * @type {UserRef}
@@ -115,7 +125,13 @@ export interface UserGroupChangeAction {
      * @type {ApprovalRequest}
      * @memberof UserGroupChangeAction
      */
-    approvalRequest: ApprovalRequest;
+    approvalRequest?: ApprovalRequest;
+    /**
+     * 
+     * @type {VerificationRequest}
+     * @memberof UserGroupChangeAction
+     */
+    verificationRequest?: VerificationRequest;
     /**
      * 
      * @type {string}
@@ -137,6 +153,8 @@ export type UserGroupChangeActionTypeEnum = typeof UserGroupChangeActionTypeEnum
  * @export
  */
 export const UserGroupChangeActionStateEnum = {
+    pendingVerification: 'pending_verification',
+    pendingApproval: 'pending_approval',
     created: 'created',
     completed: 'completed',
     aborted: 'aborted',
@@ -148,22 +166,19 @@ export type UserGroupChangeActionStateEnum = typeof UserGroupChangeActionStateEn
 /**
  * Check if a given object implements the UserGroupChangeAction interface.
  */
-export function instanceOfUserGroupChangeAction(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "isPending" in value;
-    isInstance = isInstance && "createdBy" in value;
-    isInstance = isInstance && "groupId" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "proposedChange" in value;
-    isInstance = isInstance && "requestId" in value;
-    isInstance = isInstance && "approvalRequest" in value;
-    isInstance = isInstance && "state" in value;
-
-    return isInstance;
+export function instanceOfUserGroupChangeAction(value: object): value is UserGroupChangeAction {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('isPending' in value) || value['isPending'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('createdBy' in value) || value['createdBy'] === undefined) return false;
+    if (!('groupId' in value) || value['groupId'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('proposedChange' in value) || value['proposedChange'] === undefined) return false;
+    if (!('requestId' in value) || value['requestId'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    return true;
 }
 
 export function UserGroupChangeActionFromJSON(json: any): UserGroupChangeAction {
@@ -171,7 +186,7 @@ export function UserGroupChangeActionFromJSON(json: any): UserGroupChangeAction 
 }
 
 export function UserGroupChangeActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): UserGroupChangeAction {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -179,43 +194,47 @@ export function UserGroupChangeActionFromJSONTyped(json: any, ignoreDiscriminato
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
-        'type': json['type'],
         'isPending': json['is_pending'],
+        'type': json['type'],
         'createdBy': UserRefFromJSON(json['created_by']),
-        'abortedBy': !exists(json, 'aborted_by') ? undefined : UserRefFromJSON(json['aborted_by']),
+        'abortedBy': json['aborted_by'] == null ? undefined : UserRefFromJSON(json['aborted_by']),
         'groupId': json['group_id'],
         'name': json['name'],
-        'users': !exists(json, 'users') ? undefined : ((json['users'] as Array<any>).map(UserRefFromJSON)),
+        'users': json['users'] == null ? undefined : ((json['users'] as Array<any>).map(UserRefFromJSON)),
         'proposedChange': UserGroupChangeRequestFromJSON(json['proposed_change']),
         'requestId': json['request_id'],
-        'approvalRequest': ApprovalRequestFromJSON(json['approval_request']),
+        'approvalRequest': json['approval_request'] == null ? undefined : ApprovalRequestFromJSON(json['approval_request']),
+        'verificationRequest': json['verification_request'] == null ? undefined : VerificationRequestFromJSON(json['verification_request']),
         'state': json['state'],
     };
 }
 
-export function UserGroupChangeActionToJSON(value?: UserGroupChangeAction | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UserGroupChangeActionToJSON(json: any): UserGroupChangeAction {
+    return UserGroupChangeActionToJSONTyped(json, false);
+}
+
+export function UserGroupChangeActionToJSONTyped(value?: UserGroupChangeAction | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'type': value.type,
-        'is_pending': value.isPending,
-        'created_by': UserRefToJSON(value.createdBy),
-        'aborted_by': UserRefToJSON(value.abortedBy),
-        'group_id': value.groupId,
-        'name': value.name,
-        'users': value.users === undefined ? undefined : ((value.users as Array<any>).map(UserRefToJSON)),
-        'proposed_change': UserGroupChangeRequestToJSON(value.proposedChange),
-        'request_id': value.requestId,
-        'approval_request': ApprovalRequestToJSON(value.approvalRequest),
-        'state': value.state,
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'is_pending': value['isPending'],
+        'type': value['type'],
+        'created_by': UserRefToJSON(value['createdBy']),
+        'aborted_by': UserRefToJSON(value['abortedBy']),
+        'group_id': value['groupId'],
+        'name': value['name'],
+        'users': value['users'] == null ? undefined : ((value['users'] as Array<any>).map(UserRefToJSON)),
+        'proposed_change': UserGroupChangeRequestToJSON(value['proposedChange']),
+        'request_id': value['requestId'],
+        'approval_request': ApprovalRequestToJSON(value['approvalRequest']),
+        'verification_request': VerificationRequestToJSON(value['verificationRequest']),
+        'state': value['state'],
     };
 }
 

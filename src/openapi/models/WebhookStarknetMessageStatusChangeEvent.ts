@@ -12,37 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { StarknetChain } from './StarknetChain';
-import {
-    StarknetChainFromJSON,
-    StarknetChainFromJSONTyped,
-    StarknetChainToJSON,
-} from './StarknetChain';
-import type { StarknetMessageState } from './StarknetMessageState';
-import {
-    StarknetMessageStateFromJSON,
-    StarknetMessageStateFromJSONTyped,
-    StarknetMessageStateToJSON,
-} from './StarknetMessageState';
-import type { StarknetMessageType } from './StarknetMessageType';
-import {
-    StarknetMessageTypeFromJSON,
-    StarknetMessageTypeFromJSONTyped,
-    StarknetMessageTypeToJSON,
-} from './StarknetMessageType';
-import type { TransactionDirection } from './TransactionDirection';
-import {
-    TransactionDirectionFromJSON,
-    TransactionDirectionFromJSONTyped,
-    TransactionDirectionToJSON,
-} from './TransactionDirection';
+import { mapValues } from '../runtime';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
     TransactionSpamStateFromJSONTyped,
     TransactionSpamStateToJSON,
+    TransactionSpamStateToJSONTyped,
 } from './TransactionSpamState';
+import type { TransactionDirection } from './TransactionDirection';
+import {
+    TransactionDirectionFromJSON,
+    TransactionDirectionFromJSONTyped,
+    TransactionDirectionToJSON,
+    TransactionDirectionToJSONTyped,
+} from './TransactionDirection';
+import type { StarknetMessageType } from './StarknetMessageType';
+import {
+    StarknetMessageTypeFromJSON,
+    StarknetMessageTypeFromJSONTyped,
+    StarknetMessageTypeToJSON,
+    StarknetMessageTypeToJSONTyped,
+} from './StarknetMessageType';
+import type { StarknetChain } from './StarknetChain';
+import {
+    StarknetChainFromJSON,
+    StarknetChainFromJSONTyped,
+    StarknetChainToJSON,
+    StarknetChainToJSONTyped,
+} from './StarknetChain';
+import type { NonPushableTransactionState } from './NonPushableTransactionState';
+import {
+    NonPushableTransactionStateFromJSON,
+    NonPushableTransactionStateFromJSONTyped,
+    NonPushableTransactionStateToJSON,
+    NonPushableTransactionStateToJSONTyped,
+} from './NonPushableTransactionState';
 
 /**
  * 
@@ -83,6 +88,12 @@ export interface WebhookStarknetMessageStatusChangeEvent {
     spamState: TransactionSpamState;
     /**
      * 
+     * @type {NonPushableTransactionState}
+     * @memberof WebhookStarknetMessageStatusChangeEvent
+     */
+    state: NonPushableTransactionState;
+    /**
+     * 
      * @type {string}
      * @memberof WebhookStarknetMessageStatusChangeEvent
      */
@@ -93,12 +104,6 @@ export interface WebhookStarknetMessageStatusChangeEvent {
      * @memberof WebhookStarknetMessageStatusChangeEvent
      */
     starknetMessageType: StarknetMessageType;
-    /**
-     * 
-     * @type {StarknetMessageState}
-     * @memberof WebhookStarknetMessageStatusChangeEvent
-     */
-    state: StarknetMessageState;
     /**
      * 
      * @type {StarknetChain}
@@ -120,18 +125,16 @@ export type WebhookStarknetMessageStatusChangeEventTypeEnum = typeof WebhookStar
 /**
  * Check if a given object implements the WebhookStarknetMessageStatusChangeEvent interface.
  */
-export function instanceOfWebhookStarknetMessageStatusChangeEvent(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "transactionId" in value;
-    isInstance = isInstance && "isManagedTransaction" in value;
-    isInstance = isInstance && "direction" in value;
-    isInstance = isInstance && "spamState" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "starknetMessageType" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfWebhookStarknetMessageStatusChangeEvent(value: object): value is WebhookStarknetMessageStatusChangeEvent {
+    if (!('transactionId' in value) || value['transactionId'] === undefined) return false;
+    if (!('isManagedTransaction' in value) || value['isManagedTransaction'] === undefined) return false;
+    if (!('direction' in value) || value['direction'] === undefined) return false;
+    if (!('spamState' in value) || value['spamState'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('starknetMessageType' in value) || value['starknetMessageType'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function WebhookStarknetMessageStatusChangeEventFromJSON(json: any): WebhookStarknetMessageStatusChangeEvent {
@@ -139,7 +142,7 @@ export function WebhookStarknetMessageStatusChangeEventFromJSON(json: any): Webh
 }
 
 export function WebhookStarknetMessageStatusChangeEventFromJSONTyped(json: any, ignoreDiscriminator: boolean): WebhookStarknetMessageStatusChangeEvent {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -147,33 +150,35 @@ export function WebhookStarknetMessageStatusChangeEventFromJSONTyped(json: any, 
         'transactionId': json['transaction_id'],
         'isManagedTransaction': json['is_managed_transaction'],
         'direction': TransactionDirectionFromJSON(json['direction']),
-        'note': !exists(json, 'note') ? undefined : json['note'],
+        'note': json['note'] == null ? undefined : json['note'],
         'spamState': TransactionSpamStateFromJSON(json['spam_state']),
+        'state': NonPushableTransactionStateFromJSON(json['state']),
         'type': json['type'],
         'starknetMessageType': StarknetMessageTypeFromJSON(json['starknet_message_type']),
-        'state': StarknetMessageStateFromJSON(json['state']),
         'chain': StarknetChainFromJSON(json['chain']),
     };
 }
 
-export function WebhookStarknetMessageStatusChangeEventToJSON(value?: WebhookStarknetMessageStatusChangeEvent | null): any {
-    if (value === undefined) {
-        return undefined;
+export function WebhookStarknetMessageStatusChangeEventToJSON(json: any): WebhookStarknetMessageStatusChangeEvent {
+    return WebhookStarknetMessageStatusChangeEventToJSONTyped(json, false);
+}
+
+export function WebhookStarknetMessageStatusChangeEventToJSONTyped(value?: WebhookStarknetMessageStatusChangeEvent | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'transaction_id': value.transactionId,
-        'is_managed_transaction': value.isManagedTransaction,
-        'direction': TransactionDirectionToJSON(value.direction),
-        'note': value.note,
-        'spam_state': TransactionSpamStateToJSON(value.spamState),
-        'type': value.type,
-        'starknet_message_type': StarknetMessageTypeToJSON(value.starknetMessageType),
-        'state': StarknetMessageStateToJSON(value.state),
-        'chain': StarknetChainToJSON(value.chain),
+        'transaction_id': value['transactionId'],
+        'is_managed_transaction': value['isManagedTransaction'],
+        'direction': TransactionDirectionToJSON(value['direction']),
+        'note': value['note'],
+        'spam_state': TransactionSpamStateToJSON(value['spamState']),
+        'state': NonPushableTransactionStateToJSON(value['state']),
+        'type': value['type'],
+        'starknet_message_type': StarknetMessageTypeToJSON(value['starknetMessageType']),
+        'chain': StarknetChainToJSON(value['chain']),
     };
 }
 

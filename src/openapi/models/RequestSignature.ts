@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -36,12 +36,10 @@ export interface RequestSignature {
 /**
  * Check if a given object implements the RequestSignature interface.
  */
-export function instanceOfRequestSignature(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "deviceId" in value;
-    isInstance = isInstance && "signature" in value;
-
-    return isInstance;
+export function instanceOfRequestSignature(value: object): value is RequestSignature {
+    if (!('deviceId' in value) || value['deviceId'] === undefined) return false;
+    if (!('signature' in value) || value['signature'] === undefined) return false;
+    return true;
 }
 
 export function RequestSignatureFromJSON(json: any): RequestSignature {
@@ -49,7 +47,7 @@ export function RequestSignatureFromJSON(json: any): RequestSignature {
 }
 
 export function RequestSignatureFromJSONTyped(json: any, ignoreDiscriminator: boolean): RequestSignature {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -59,17 +57,19 @@ export function RequestSignatureFromJSONTyped(json: any, ignoreDiscriminator: bo
     };
 }
 
-export function RequestSignatureToJSON(value?: RequestSignature | null): any {
-    if (value === undefined) {
-        return undefined;
+export function RequestSignatureToJSON(json: any): RequestSignature {
+    return RequestSignatureToJSONTyped(json, false);
+}
+
+export function RequestSignatureToJSONTyped(value?: RequestSignature | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'device_id': value.deviceId,
-        'signature': value.signature,
+        'device_id': value['deviceId'],
+        'signature': value['signature'],
     };
 }
 

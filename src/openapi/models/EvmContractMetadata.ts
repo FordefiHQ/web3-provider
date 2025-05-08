@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { Dapp } from './Dapp';
-import {
-    DappFromJSON,
-    DappFromJSONTyped,
-    DappToJSON,
-} from './Dapp';
+import { mapValues } from '../runtime';
 import type { EvmContractMetadataToken } from './EvmContractMetadataToken';
 import {
     EvmContractMetadataTokenFromJSON,
     EvmContractMetadataTokenFromJSONTyped,
     EvmContractMetadataTokenToJSON,
+    EvmContractMetadataTokenToJSONTyped,
 } from './EvmContractMetadataToken';
+import type { Dapp } from './Dapp';
+import {
+    DappFromJSON,
+    DappFromJSONTyped,
+    DappToJSON,
+    DappToJSONTyped,
+} from './Dapp';
 
 /**
  * 
@@ -61,11 +63,9 @@ export interface EvmContractMetadata {
 /**
  * Check if a given object implements the EvmContractMetadata interface.
  */
-export function instanceOfEvmContractMetadata(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "isVerified" in value;
-
-    return isInstance;
+export function instanceOfEvmContractMetadata(value: object): value is EvmContractMetadata {
+    if (!('isVerified' in value) || value['isVerified'] === undefined) return false;
+    return true;
 }
 
 export function EvmContractMetadataFromJSON(json: any): EvmContractMetadata {
@@ -73,31 +73,33 @@ export function EvmContractMetadataFromJSON(json: any): EvmContractMetadata {
 }
 
 export function EvmContractMetadataFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmContractMetadata {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'dapp': !exists(json, 'dapp') ? undefined : DappFromJSON(json['dapp']),
+        'name': json['name'] == null ? undefined : json['name'],
+        'dapp': json['dapp'] == null ? undefined : DappFromJSON(json['dapp']),
         'isVerified': json['is_verified'],
-        'token': !exists(json, 'token') ? undefined : EvmContractMetadataTokenFromJSON(json['token']),
+        'token': json['token'] == null ? undefined : EvmContractMetadataTokenFromJSON(json['token']),
     };
 }
 
-export function EvmContractMetadataToJSON(value?: EvmContractMetadata | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EvmContractMetadataToJSON(json: any): EvmContractMetadata {
+    return EvmContractMetadataToJSONTyped(json, false);
+}
+
+export function EvmContractMetadataToJSONTyped(value?: EvmContractMetadata | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'dapp': DappToJSON(value.dapp),
-        'is_verified': value.isVerified,
-        'token': EvmContractMetadataTokenToJSON(value.token),
+        'name': value['name'],
+        'dapp': DappToJSON(value['dapp']),
+        'is_verified': value['isVerified'],
+        'token': EvmContractMetadataTokenToJSON(value['token']),
     };
 }
 

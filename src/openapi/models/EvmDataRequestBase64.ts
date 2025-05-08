@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type EvmDataRequestBase64TypeEnum = typeof EvmDataRequestBase64TypeEnum[k
 /**
  * Check if a given object implements the EvmDataRequestBase64 interface.
  */
-export function instanceOfEvmDataRequestBase64(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "rawData" in value;
-
-    return isInstance;
+export function instanceOfEvmDataRequestBase64(value: object): value is EvmDataRequestBase64 {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('rawData' in value) || value['rawData'] === undefined) return false;
+    return true;
 }
 
 export function EvmDataRequestBase64FromJSON(json: any): EvmDataRequestBase64 {
@@ -59,7 +57,7 @@ export function EvmDataRequestBase64FromJSON(json: any): EvmDataRequestBase64 {
 }
 
 export function EvmDataRequestBase64FromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmDataRequestBase64 {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function EvmDataRequestBase64FromJSONTyped(json: any, ignoreDiscriminator
     };
 }
 
-export function EvmDataRequestBase64ToJSON(value?: EvmDataRequestBase64 | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EvmDataRequestBase64ToJSON(json: any): EvmDataRequestBase64 {
+    return EvmDataRequestBase64ToJSONTyped(json, false);
+}
+
+export function EvmDataRequestBase64ToJSONTyped(value?: EvmDataRequestBase64 | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'raw_data': value.rawData,
+        'type': value['type'],
+        'raw_data': value['rawData'],
     };
 }
 

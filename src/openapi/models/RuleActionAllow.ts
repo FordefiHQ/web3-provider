@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -40,11 +40,9 @@ export type RuleActionAllowTypeEnum = typeof RuleActionAllowTypeEnum[keyof typeo
 /**
  * Check if a given object implements the RuleActionAllow interface.
  */
-export function instanceOfRuleActionAllow(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfRuleActionAllow(value: object): value is RuleActionAllow {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function RuleActionAllowFromJSON(json: any): RuleActionAllow {
@@ -52,7 +50,7 @@ export function RuleActionAllowFromJSON(json: any): RuleActionAllow {
 }
 
 export function RuleActionAllowFromJSONTyped(json: any, ignoreDiscriminator: boolean): RuleActionAllow {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -61,16 +59,18 @@ export function RuleActionAllowFromJSONTyped(json: any, ignoreDiscriminator: boo
     };
 }
 
-export function RuleActionAllowToJSON(value?: RuleActionAllow | null): any {
-    if (value === undefined) {
-        return undefined;
+export function RuleActionAllowToJSON(json: any): RuleActionAllow {
+    return RuleActionAllowToJSONTyped(json, false);
+}
+
+export function RuleActionAllowToJSONTyped(value?: RuleActionAllow | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
+        'type': value['type'],
     };
 }
 

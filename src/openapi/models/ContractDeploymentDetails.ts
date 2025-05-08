@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
 import {
     EnrichedEvmAddressFromJSON,
     EnrichedEvmAddressFromJSONTyped,
     EnrichedEvmAddressToJSON,
+    EnrichedEvmAddressToJSONTyped,
 } from './EnrichedEvmAddress';
 
 /**
@@ -53,12 +54,10 @@ export type ContractDeploymentDetailsTypeEnum = typeof ContractDeploymentDetails
 /**
  * Check if a given object implements the ContractDeploymentDetails interface.
  */
-export function instanceOfContractDeploymentDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "contractAddress" in value;
-
-    return isInstance;
+export function instanceOfContractDeploymentDetails(value: object): value is ContractDeploymentDetails {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('contractAddress' in value) || value['contractAddress'] === undefined) return false;
+    return true;
 }
 
 export function ContractDeploymentDetailsFromJSON(json: any): ContractDeploymentDetails {
@@ -66,7 +65,7 @@ export function ContractDeploymentDetailsFromJSON(json: any): ContractDeployment
 }
 
 export function ContractDeploymentDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): ContractDeploymentDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function ContractDeploymentDetailsFromJSONTyped(json: any, ignoreDiscrimi
     };
 }
 
-export function ContractDeploymentDetailsToJSON(value?: ContractDeploymentDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ContractDeploymentDetailsToJSON(json: any): ContractDeploymentDetails {
+    return ContractDeploymentDetailsToJSONTyped(json, false);
+}
+
+export function ContractDeploymentDetailsToJSONTyped(value?: ContractDeploymentDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'contract_address': EnrichedEvmAddressToJSON(value.contractAddress),
+        'type': value['type'],
+        'contract_address': EnrichedEvmAddressToJSON(value['contractAddress']),
     };
 }
 

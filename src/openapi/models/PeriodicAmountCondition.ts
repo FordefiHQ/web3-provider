@@ -12,25 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { PeriodicAmountTimePeriod } from './PeriodicAmountTimePeriod';
+import {
+    PeriodicAmountTimePeriodFromJSON,
+    PeriodicAmountTimePeriodFromJSONTyped,
+    PeriodicAmountTimePeriodToJSON,
+    PeriodicAmountTimePeriodToJSONTyped,
+} from './PeriodicAmountTimePeriod';
 import type { PeriodicAmountScopeType } from './PeriodicAmountScopeType';
 import {
     PeriodicAmountScopeTypeFromJSON,
     PeriodicAmountScopeTypeFromJSONTyped,
     PeriodicAmountScopeTypeToJSON,
+    PeriodicAmountScopeTypeToJSONTyped,
 } from './PeriodicAmountScopeType';
 import type { PeriodicAmountThresholdType } from './PeriodicAmountThresholdType';
 import {
     PeriodicAmountThresholdTypeFromJSON,
     PeriodicAmountThresholdTypeFromJSONTyped,
     PeriodicAmountThresholdTypeToJSON,
+    PeriodicAmountThresholdTypeToJSONTyped,
 } from './PeriodicAmountThresholdType';
-import type { PeriodicAmountTimePeriod } from './PeriodicAmountTimePeriod';
-import {
-    PeriodicAmountTimePeriodFromJSON,
-    PeriodicAmountTimePeriodFromJSONTyped,
-    PeriodicAmountTimePeriodToJSON,
-} from './PeriodicAmountTimePeriod';
 
 /**
  * 
@@ -70,18 +73,18 @@ export interface PeriodicAmountCondition {
     vaultScope: PeriodicAmountScopeType;
 }
 
+
+
 /**
  * Check if a given object implements the PeriodicAmountCondition interface.
  */
-export function instanceOfPeriodicAmountCondition(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "threshold" in value;
-    isInstance = isInstance && "thresholdType" in value;
-    isInstance = isInstance && "timePeriod" in value;
-    isInstance = isInstance && "userScope" in value;
-    isInstance = isInstance && "vaultScope" in value;
-
-    return isInstance;
+export function instanceOfPeriodicAmountCondition(value: object): value is PeriodicAmountCondition {
+    if (!('threshold' in value) || value['threshold'] === undefined) return false;
+    if (!('thresholdType' in value) || value['thresholdType'] === undefined) return false;
+    if (!('timePeriod' in value) || value['timePeriod'] === undefined) return false;
+    if (!('userScope' in value) || value['userScope'] === undefined) return false;
+    if (!('vaultScope' in value) || value['vaultScope'] === undefined) return false;
+    return true;
 }
 
 export function PeriodicAmountConditionFromJSON(json: any): PeriodicAmountCondition {
@@ -89,7 +92,7 @@ export function PeriodicAmountConditionFromJSON(json: any): PeriodicAmountCondit
 }
 
 export function PeriodicAmountConditionFromJSONTyped(json: any, ignoreDiscriminator: boolean): PeriodicAmountCondition {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -102,20 +105,22 @@ export function PeriodicAmountConditionFromJSONTyped(json: any, ignoreDiscrimina
     };
 }
 
-export function PeriodicAmountConditionToJSON(value?: PeriodicAmountCondition | null): any {
-    if (value === undefined) {
-        return undefined;
+export function PeriodicAmountConditionToJSON(json: any): PeriodicAmountCondition {
+    return PeriodicAmountConditionToJSONTyped(json, false);
+}
+
+export function PeriodicAmountConditionToJSONTyped(value?: PeriodicAmountCondition | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'threshold': value.threshold,
-        'threshold_type': PeriodicAmountThresholdTypeToJSON(value.thresholdType),
-        'time_period': PeriodicAmountTimePeriodToJSON(value.timePeriod),
-        'user_scope': PeriodicAmountScopeTypeToJSON(value.userScope),
-        'vault_scope': PeriodicAmountScopeTypeToJSON(value.vaultScope),
+        'threshold': value['threshold'],
+        'threshold_type': PeriodicAmountThresholdTypeToJSON(value['thresholdType']),
+        'time_period': PeriodicAmountTimePeriodToJSON(value['timePeriod']),
+        'user_scope': PeriodicAmountScopeTypeToJSON(value['userScope']),
+        'vault_scope': PeriodicAmountScopeTypeToJSON(value['vaultScope']),
     };
 }
 

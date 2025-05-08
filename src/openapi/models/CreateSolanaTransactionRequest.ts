@@ -12,24 +12,34 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { CreateSolanaTransactionRequestDetails } from './CreateSolanaTransactionRequestDetails';
+import { mapValues } from '../runtime';
+import type { DappInfo } from './DappInfo';
 import {
-    CreateSolanaTransactionRequestDetailsFromJSON,
-    CreateSolanaTransactionRequestDetailsFromJSONTyped,
-    CreateSolanaTransactionRequestDetailsToJSON,
-} from './CreateSolanaTransactionRequestDetails';
+    DappInfoFromJSON,
+    DappInfoFromJSONTyped,
+    DappInfoToJSON,
+    DappInfoToJSONTyped,
+} from './DappInfo';
 import type { SignMode } from './SignMode';
 import {
     SignModeFromJSON,
     SignModeFromJSONTyped,
     SignModeToJSON,
+    SignModeToJSONTyped,
 } from './SignMode';
+import type { CreateSolanaTransactionRequestDetails } from './CreateSolanaTransactionRequestDetails';
+import {
+    CreateSolanaTransactionRequestDetailsFromJSON,
+    CreateSolanaTransactionRequestDetailsFromJSONTyped,
+    CreateSolanaTransactionRequestDetailsToJSON,
+    CreateSolanaTransactionRequestDetailsToJSONTyped,
+} from './CreateSolanaTransactionRequestDetails';
 import type { SignerType } from './SignerType';
 import {
     SignerTypeFromJSON,
     SignerTypeFromJSONTyped,
     SignerTypeToJSON,
+    SignerTypeToJSONTyped,
 } from './SignerType';
 
 /**
@@ -64,6 +74,12 @@ export interface CreateSolanaTransactionRequest {
     signMode?: SignMode;
     /**
      * 
+     * @type {DappInfo}
+     * @memberof CreateSolanaTransactionRequest
+     */
+    dappInfo?: DappInfo;
+    /**
+     * 
      * @type {string}
      * @memberof CreateSolanaTransactionRequest
      */
@@ -89,13 +105,11 @@ export type CreateSolanaTransactionRequestTypeEnum = typeof CreateSolanaTransact
 /**
  * Check if a given object implements the CreateSolanaTransactionRequest interface.
  */
-export function instanceOfCreateSolanaTransactionRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "vaultId" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "details" in value;
-
-    return isInstance;
+export function instanceOfCreateSolanaTransactionRequest(value: object): value is CreateSolanaTransactionRequest {
+    if (!('vaultId' in value) || value['vaultId'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    return true;
 }
 
 export function CreateSolanaTransactionRequestFromJSON(json: any): CreateSolanaTransactionRequest {
@@ -103,35 +117,39 @@ export function CreateSolanaTransactionRequestFromJSON(json: any): CreateSolanaT
 }
 
 export function CreateSolanaTransactionRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateSolanaTransactionRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'vaultId': json['vault_id'],
-        'note': !exists(json, 'note') ? undefined : json['note'],
-        'signerType': !exists(json, 'signer_type') ? undefined : SignerTypeFromJSON(json['signer_type']),
-        'signMode': !exists(json, 'sign_mode') ? undefined : SignModeFromJSON(json['sign_mode']),
+        'note': json['note'] == null ? undefined : json['note'],
+        'signerType': json['signer_type'] == null ? undefined : SignerTypeFromJSON(json['signer_type']),
+        'signMode': json['sign_mode'] == null ? undefined : SignModeFromJSON(json['sign_mode']),
+        'dappInfo': json['dapp_info'] == null ? undefined : DappInfoFromJSON(json['dapp_info']),
         'type': json['type'],
         'details': CreateSolanaTransactionRequestDetailsFromJSON(json['details']),
     };
 }
 
-export function CreateSolanaTransactionRequestToJSON(value?: CreateSolanaTransactionRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateSolanaTransactionRequestToJSON(json: any): CreateSolanaTransactionRequest {
+    return CreateSolanaTransactionRequestToJSONTyped(json, false);
+}
+
+export function CreateSolanaTransactionRequestToJSONTyped(value?: CreateSolanaTransactionRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'vault_id': value.vaultId,
-        'note': value.note,
-        'signer_type': SignerTypeToJSON(value.signerType),
-        'sign_mode': SignModeToJSON(value.signMode),
-        'type': value.type,
-        'details': CreateSolanaTransactionRequestDetailsToJSON(value.details),
+        'vault_id': value['vaultId'],
+        'note': value['note'],
+        'signer_type': SignerTypeToJSON(value['signerType']),
+        'sign_mode': SignModeToJSON(value['signMode']),
+        'dapp_info': DappInfoToJSON(value['dappInfo']),
+        'type': value['type'],
+        'details': CreateSolanaTransactionRequestDetailsToJSON(value['details']),
     };
 }
 

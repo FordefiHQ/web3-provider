@@ -24,6 +24,17 @@ export const PeriodicAmountScopeType = {
 export type PeriodicAmountScopeType = typeof PeriodicAmountScopeType[keyof typeof PeriodicAmountScopeType];
 
 
+export function instanceOfPeriodicAmountScopeType(value: any): boolean {
+    for (const key in PeriodicAmountScopeType) {
+        if (Object.prototype.hasOwnProperty.call(PeriodicAmountScopeType, key)) {
+            if (PeriodicAmountScopeType[key as keyof typeof PeriodicAmountScopeType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function PeriodicAmountScopeTypeFromJSON(json: any): PeriodicAmountScopeType {
     return PeriodicAmountScopeTypeFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function PeriodicAmountScopeTypeFromJSONTyped(json: any, ignoreDiscrimina
 
 export function PeriodicAmountScopeTypeToJSON(value?: PeriodicAmountScopeType | null): any {
     return value as any;
+}
+
+export function PeriodicAmountScopeTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): PeriodicAmountScopeType {
+    return value as PeriodicAmountScopeType;
 }
 

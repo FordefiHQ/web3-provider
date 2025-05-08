@@ -26,6 +26,17 @@ export const BackupState = {
 export type BackupState = typeof BackupState[keyof typeof BackupState];
 
 
+export function instanceOfBackupState(value: any): boolean {
+    for (const key in BackupState) {
+        if (Object.prototype.hasOwnProperty.call(BackupState, key)) {
+            if (BackupState[key as keyof typeof BackupState] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function BackupStateFromJSON(json: any): BackupState {
     return BackupStateFromJSONTyped(json, false);
 }
@@ -36,5 +47,9 @@ export function BackupStateFromJSONTyped(json: any, ignoreDiscriminator: boolean
 
 export function BackupStateToJSON(value?: BackupState | null): any {
     return value as any;
+}
+
+export function BackupStateToJSONTyped(value: any, ignoreDiscriminator: boolean): BackupState {
+    return value as BackupState;
 }
 

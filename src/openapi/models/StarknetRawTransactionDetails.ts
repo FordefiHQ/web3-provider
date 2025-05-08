@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedStarknetAddress } from './EnrichedStarknetAddress';
 import {
     EnrichedStarknetAddressFromJSON,
     EnrichedStarknetAddressFromJSONTyped,
     EnrichedStarknetAddressToJSON,
+    EnrichedStarknetAddressToJSONTyped,
 } from './EnrichedStarknetAddress';
 
 /**
@@ -53,12 +54,10 @@ export type StarknetRawTransactionDetailsTypeEnum = typeof StarknetRawTransactio
 /**
  * Check if a given object implements the StarknetRawTransactionDetails interface.
  */
-export function instanceOfStarknetRawTransactionDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "recipients" in value;
-
-    return isInstance;
+export function instanceOfStarknetRawTransactionDetails(value: object): value is StarknetRawTransactionDetails {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('recipients' in value) || value['recipients'] === undefined) return false;
+    return true;
 }
 
 export function StarknetRawTransactionDetailsFromJSON(json: any): StarknetRawTransactionDetails {
@@ -66,7 +65,7 @@ export function StarknetRawTransactionDetailsFromJSON(json: any): StarknetRawTra
 }
 
 export function StarknetRawTransactionDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): StarknetRawTransactionDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function StarknetRawTransactionDetailsFromJSONTyped(json: any, ignoreDisc
     };
 }
 
-export function StarknetRawTransactionDetailsToJSON(value?: StarknetRawTransactionDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function StarknetRawTransactionDetailsToJSON(json: any): StarknetRawTransactionDetails {
+    return StarknetRawTransactionDetailsToJSONTyped(json, false);
+}
+
+export function StarknetRawTransactionDetailsToJSONTyped(value?: StarknetRawTransactionDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'recipients': ((value.recipients as Array<any>).map(EnrichedStarknetAddressToJSON)),
+        'type': value['type'],
+        'recipients': ((value['recipients'] as Array<any>).map(EnrichedStarknetAddressToJSON)),
     };
 }
 

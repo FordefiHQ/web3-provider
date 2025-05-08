@@ -12,29 +12,29 @@
  * Do not edit the class manually.
  */
 
+import type { BlackBoxSignatureEcdsaSecp256k1Details } from './BlackBoxSignatureEcdsaSecp256k1Details';
 import {
-    BlackBoxSignatureEcdsaSecp256k1Details,
     instanceOfBlackBoxSignatureEcdsaSecp256k1Details,
     BlackBoxSignatureEcdsaSecp256k1DetailsFromJSON,
     BlackBoxSignatureEcdsaSecp256k1DetailsFromJSONTyped,
     BlackBoxSignatureEcdsaSecp256k1DetailsToJSON,
 } from './BlackBoxSignatureEcdsaSecp256k1Details';
+import type { BlackBoxSignatureEcdsaStarkDetails } from './BlackBoxSignatureEcdsaStarkDetails';
 import {
-    BlackBoxSignatureEcdsaStarkDetails,
     instanceOfBlackBoxSignatureEcdsaStarkDetails,
     BlackBoxSignatureEcdsaStarkDetailsFromJSON,
     BlackBoxSignatureEcdsaStarkDetailsFromJSONTyped,
     BlackBoxSignatureEcdsaStarkDetailsToJSON,
 } from './BlackBoxSignatureEcdsaStarkDetails';
+import type { BlackBoxSignatureEddsaEd25519Details } from './BlackBoxSignatureEddsaEd25519Details';
 import {
-    BlackBoxSignatureEddsaEd25519Details,
     instanceOfBlackBoxSignatureEddsaEd25519Details,
     BlackBoxSignatureEddsaEd25519DetailsFromJSON,
     BlackBoxSignatureEddsaEd25519DetailsFromJSONTyped,
     BlackBoxSignatureEddsaEd25519DetailsToJSON,
 } from './BlackBoxSignatureEddsaEd25519Details';
+import type { BlackBoxSignatureSchnorrSecp256k1Details } from './BlackBoxSignatureSchnorrSecp256k1Details';
 import {
-    BlackBoxSignatureSchnorrSecp256k1Details,
     instanceOfBlackBoxSignatureSchnorrSecp256k1Details,
     BlackBoxSignatureSchnorrSecp256k1DetailsFromJSON,
     BlackBoxSignatureSchnorrSecp256k1DetailsFromJSONTyped,
@@ -53,39 +53,40 @@ export function BlackBoxSignatureDetailsFromJSON(json: any): BlackBoxSignatureDe
 }
 
 export function BlackBoxSignatureDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): BlackBoxSignatureDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'ecdsa_secp256k1':
-            return {...BlackBoxSignatureEcdsaSecp256k1DetailsFromJSONTyped(json, true), type: 'ecdsa_secp256k1'};
+            return Object.assign({}, BlackBoxSignatureEcdsaSecp256k1DetailsFromJSONTyped(json, true), { type: 'ecdsa_secp256k1' } as const);
         case 'ecdsa_stark':
-            return {...BlackBoxSignatureEcdsaStarkDetailsFromJSONTyped(json, true), type: 'ecdsa_stark'};
+            return Object.assign({}, BlackBoxSignatureEcdsaStarkDetailsFromJSONTyped(json, true), { type: 'ecdsa_stark' } as const);
         case 'eddsa_ed25519':
-            return {...BlackBoxSignatureEddsaEd25519DetailsFromJSONTyped(json, true), type: 'eddsa_ed25519'};
+            return Object.assign({}, BlackBoxSignatureEddsaEd25519DetailsFromJSONTyped(json, true), { type: 'eddsa_ed25519' } as const);
         case 'schnorr_secp256k1':
-            return {...BlackBoxSignatureSchnorrSecp256k1DetailsFromJSONTyped(json, true), type: 'schnorr_secp256k1'};
+            return Object.assign({}, BlackBoxSignatureSchnorrSecp256k1DetailsFromJSONTyped(json, true), { type: 'schnorr_secp256k1' } as const);
         default:
             throw new Error(`No variant of BlackBoxSignatureDetails exists with 'type=${json['type']}'`);
     }
 }
 
-export function BlackBoxSignatureDetailsToJSON(value?: BlackBoxSignatureDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function BlackBoxSignatureDetailsToJSON(json: any): any {
+    return BlackBoxSignatureDetailsToJSONTyped(json, false);
+}
+
+export function BlackBoxSignatureDetailsToJSONTyped(value?: BlackBoxSignatureDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'ecdsa_secp256k1':
-            return BlackBoxSignatureEcdsaSecp256k1DetailsToJSON(value);
+            return Object.assign({}, BlackBoxSignatureEcdsaSecp256k1DetailsToJSON(value), { type: 'ecdsa_secp256k1' } as const);
         case 'ecdsa_stark':
-            return BlackBoxSignatureEcdsaStarkDetailsToJSON(value);
+            return Object.assign({}, BlackBoxSignatureEcdsaStarkDetailsToJSON(value), { type: 'ecdsa_stark' } as const);
         case 'eddsa_ed25519':
-            return BlackBoxSignatureEddsaEd25519DetailsToJSON(value);
+            return Object.assign({}, BlackBoxSignatureEddsaEd25519DetailsToJSON(value), { type: 'eddsa_ed25519' } as const);
         case 'schnorr_secp256k1':
-            return BlackBoxSignatureSchnorrSecp256k1DetailsToJSON(value);
+            return Object.assign({}, BlackBoxSignatureSchnorrSecp256k1DetailsToJSON(value), { type: 'schnorr_secp256k1' } as const);
         default:
             throw new Error(`No variant of BlackBoxSignatureDetails exists with 'type=${value['type']}'`);
     }

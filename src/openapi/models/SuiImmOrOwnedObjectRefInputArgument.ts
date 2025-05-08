@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -58,14 +58,12 @@ export type SuiImmOrOwnedObjectRefInputArgumentTypeEnum = typeof SuiImmOrOwnedOb
 /**
  * Check if a given object implements the SuiImmOrOwnedObjectRefInputArgument interface.
  */
-export function instanceOfSuiImmOrOwnedObjectRefInputArgument(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "digest" in value;
-    isInstance = isInstance && "objectId" in value;
-    isInstance = isInstance && "version" in value;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfSuiImmOrOwnedObjectRefInputArgument(value: object): value is SuiImmOrOwnedObjectRefInputArgument {
+    if (!('digest' in value) || value['digest'] === undefined) return false;
+    if (!('objectId' in value) || value['objectId'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function SuiImmOrOwnedObjectRefInputArgumentFromJSON(json: any): SuiImmOrOwnedObjectRefInputArgument {
@@ -73,7 +71,7 @@ export function SuiImmOrOwnedObjectRefInputArgumentFromJSON(json: any): SuiImmOr
 }
 
 export function SuiImmOrOwnedObjectRefInputArgumentFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiImmOrOwnedObjectRefInputArgument {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -85,19 +83,21 @@ export function SuiImmOrOwnedObjectRefInputArgumentFromJSONTyped(json: any, igno
     };
 }
 
-export function SuiImmOrOwnedObjectRefInputArgumentToJSON(value?: SuiImmOrOwnedObjectRefInputArgument | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiImmOrOwnedObjectRefInputArgumentToJSON(json: any): SuiImmOrOwnedObjectRefInputArgument {
+    return SuiImmOrOwnedObjectRefInputArgumentToJSONTyped(json, false);
+}
+
+export function SuiImmOrOwnedObjectRefInputArgumentToJSONTyped(value?: SuiImmOrOwnedObjectRefInputArgument | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'digest': value.digest,
-        'object_id': value.objectId,
-        'version': value.version,
-        'type': value.type,
+        'digest': value['digest'],
+        'object_id': value['objectId'],
+        'version': value['version'],
+        'type': value['type'],
     };
 }
 

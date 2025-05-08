@@ -12,22 +12,22 @@
  * Do not edit the class manually.
  */
 
+import type { ApiSigner } from './ApiSigner';
 import {
-    ApiSigner,
     instanceOfApiSigner,
     ApiSignerFromJSON,
     ApiSignerFromJSONTyped,
     ApiSignerToJSON,
 } from './ApiSigner';
+import type { ApiUserResponse } from './ApiUserResponse';
 import {
-    ApiUserResponse,
     instanceOfApiUserResponse,
     ApiUserResponseFromJSON,
     ApiUserResponseFromJSONTyped,
     ApiUserResponseToJSON,
 } from './ApiUserResponse';
+import type { CreatePersonResponse } from './CreatePersonResponse';
 import {
-    CreatePersonResponse,
     instanceOfCreatePersonResponse,
     CreatePersonResponseFromJSON,
     CreatePersonResponseFromJSONTyped,
@@ -46,35 +46,36 @@ export function CreateUserResponseFromJSON(json: any): CreateUserResponse {
 }
 
 export function CreateUserResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateUserResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['user_type']) {
         case 'api_signer':
-            return {...ApiSignerFromJSONTyped(json, true), userType: 'api_signer'};
+            return Object.assign({}, ApiSignerFromJSONTyped(json, true), { userType: 'api_signer' } as const);
         case 'api_user':
-            return {...ApiUserResponseFromJSONTyped(json, true), userType: 'api_user'};
+            return Object.assign({}, ApiUserResponseFromJSONTyped(json, true), { userType: 'api_user' } as const);
         case 'person':
-            return {...CreatePersonResponseFromJSONTyped(json, true), userType: 'person'};
+            return Object.assign({}, CreatePersonResponseFromJSONTyped(json, true), { userType: 'person' } as const);
         default:
             throw new Error(`No variant of CreateUserResponse exists with 'userType=${json['userType']}'`);
     }
 }
 
-export function CreateUserResponseToJSON(value?: CreateUserResponse | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function CreateUserResponseToJSON(json: any): any {
+    return CreateUserResponseToJSONTyped(json, false);
+}
+
+export function CreateUserResponseToJSONTyped(value?: CreateUserResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['userType']) {
         case 'api_signer':
-            return ApiSignerToJSON(value);
+            return Object.assign({}, ApiSignerToJSON(value), { userType: 'api_signer' } as const);
         case 'api_user':
-            return ApiUserResponseToJSON(value);
+            return Object.assign({}, ApiUserResponseToJSON(value), { userType: 'api_user' } as const);
         case 'person':
-            return CreatePersonResponseToJSON(value);
+            return Object.assign({}, CreatePersonResponseToJSON(value), { userType: 'person' } as const);
         default:
             throw new Error(`No variant of CreateUserResponse exists with 'userType=${value['userType']}'`);
     }

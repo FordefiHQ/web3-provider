@@ -22,9 +22,12 @@ export const EvmChainName = {
     arbitrumSepolia: 'arbitrum_sepolia',
     avalancheChain: 'avalanche_chain',
     baseMainnet: 'base_mainnet',
+    berachainMainnet: 'berachain_mainnet',
     blastMainnet: 'blast_mainnet',
     bscMainnet: 'bsc_mainnet',
     cantoMainnet: 'canto_mainnet',
+    clinkMainnet: 'clink_mainnet',
+    clinkTestnet: 'clink_testnet',
     confluxMainnet: 'conflux_mainnet',
     dymensionMainnet: 'dymension_mainnet',
     ethereumGoerli: 'ethereum_goerli',
@@ -32,6 +35,7 @@ export const EvmChainName = {
     ethereumMainnet: 'ethereum_mainnet',
     ethereumSepolia: 'ethereum_sepolia',
     fantomMainnet: 'fantom_mainnet',
+    flareMainnet: 'flare_mainnet',
     flareTestnet: 'flare_testnet',
     gnosisMainnet: 'gnosis_mainnet',
     kavaMainnet: 'kava_mainnet',
@@ -46,6 +50,7 @@ export const EvmChainName = {
     reyaMainnet: 'reya_mainnet',
     scrollMainnet: 'scroll_mainnet',
     seiMainnet: 'sei_mainnet',
+    sonicMainnet: 'sonic_mainnet',
     xaiMainnet: 'xai_mainnet',
     zetaMainnet: 'zeta_mainnet',
     zklinkNovaMainnet: 'zklink_nova_mainnet',
@@ -53,6 +58,17 @@ export const EvmChainName = {
 } as const;
 export type EvmChainName = typeof EvmChainName[keyof typeof EvmChainName];
 
+
+export function instanceOfEvmChainName(value: any): boolean {
+    for (const key in EvmChainName) {
+        if (Object.prototype.hasOwnProperty.call(EvmChainName, key)) {
+            if (EvmChainName[key as keyof typeof EvmChainName] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 export function EvmChainNameFromJSON(json: any): EvmChainName {
     return EvmChainNameFromJSONTyped(json, false);
@@ -64,5 +80,9 @@ export function EvmChainNameFromJSONTyped(json: any, ignoreDiscriminator: boolea
 
 export function EvmChainNameToJSON(value?: EvmChainName | null): any {
     return value as any;
+}
+
+export function EvmChainNameToJSONTyped(value: any, ignoreDiscriminator: boolean): EvmChainName {
+    return value as EvmChainName;
 }
 

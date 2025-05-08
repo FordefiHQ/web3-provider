@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
 import {
     EnrichedEvmAddressFromJSON,
     EnrichedEvmAddressFromJSONTyped,
     EnrichedEvmAddressToJSON,
+    EnrichedEvmAddressToJSONTyped,
 } from './EnrichedEvmAddress';
 
 /**
@@ -37,11 +38,9 @@ export interface EvmContractDeploymentEffect {
 /**
  * Check if a given object implements the EvmContractDeploymentEffect interface.
  */
-export function instanceOfEvmContractDeploymentEffect(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "address" in value;
-
-    return isInstance;
+export function instanceOfEvmContractDeploymentEffect(value: object): value is EvmContractDeploymentEffect {
+    if (!('address' in value) || value['address'] === undefined) return false;
+    return true;
 }
 
 export function EvmContractDeploymentEffectFromJSON(json: any): EvmContractDeploymentEffect {
@@ -49,7 +48,7 @@ export function EvmContractDeploymentEffectFromJSON(json: any): EvmContractDeplo
 }
 
 export function EvmContractDeploymentEffectFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmContractDeploymentEffect {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -58,16 +57,18 @@ export function EvmContractDeploymentEffectFromJSONTyped(json: any, ignoreDiscri
     };
 }
 
-export function EvmContractDeploymentEffectToJSON(value?: EvmContractDeploymentEffect | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EvmContractDeploymentEffectToJSON(json: any): EvmContractDeploymentEffect {
+    return EvmContractDeploymentEffectToJSONTyped(json, false);
+}
+
+export function EvmContractDeploymentEffectToJSONTyped(value?: EvmContractDeploymentEffect | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'address': EnrichedEvmAddressToJSON(value.address),
+        'address': EnrichedEvmAddressToJSON(value['address']),
     };
 }
 

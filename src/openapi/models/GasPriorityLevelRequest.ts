@@ -25,6 +25,17 @@ export const GasPriorityLevelRequest = {
 export type GasPriorityLevelRequest = typeof GasPriorityLevelRequest[keyof typeof GasPriorityLevelRequest];
 
 
+export function instanceOfGasPriorityLevelRequest(value: any): boolean {
+    for (const key in GasPriorityLevelRequest) {
+        if (Object.prototype.hasOwnProperty.call(GasPriorityLevelRequest, key)) {
+            if (GasPriorityLevelRequest[key as keyof typeof GasPriorityLevelRequest] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function GasPriorityLevelRequestFromJSON(json: any): GasPriorityLevelRequest {
     return GasPriorityLevelRequestFromJSONTyped(json, false);
 }
@@ -35,5 +46,9 @@ export function GasPriorityLevelRequestFromJSONTyped(json: any, ignoreDiscrimina
 
 export function GasPriorityLevelRequestToJSON(value?: GasPriorityLevelRequest | null): any {
     return value as any;
+}
+
+export function GasPriorityLevelRequestToJSONTyped(value: any, ignoreDiscriminator: boolean): GasPriorityLevelRequest {
+    return value as GasPriorityLevelRequest;
 }
 

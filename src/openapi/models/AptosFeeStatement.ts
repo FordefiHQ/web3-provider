@@ -12,12 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+    PricedAssetToJSONTyped,
+} from './PricedAsset';
 import type { Price } from './Price';
 import {
     PriceFromJSON,
     PriceFromJSONTyped,
     PriceToJSON,
+    PriceToJSONTyped,
 } from './Price';
 
 /**
@@ -68,21 +76,26 @@ export interface AptosFeeStatement {
      * @memberof AptosFeeStatement
      */
     fiatPrice?: Price;
+    /**
+     * 
+     * @type {PricedAsset}
+     * @memberof AptosFeeStatement
+     */
+    pricedAsset: PricedAsset;
 }
 
 /**
  * Check if a given object implements the AptosFeeStatement interface.
  */
-export function instanceOfAptosFeeStatement(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "executionGasUnits" in value;
-    isInstance = isInstance && "ioGasUnits" in value;
-    isInstance = isInstance && "storageFeeOctas" in value;
-    isInstance = isInstance && "storageFeeRefundOctas" in value;
-    isInstance = isInstance && "totalChargeGasUnits" in value;
-    isInstance = isInstance && "totalGas" in value;
-
-    return isInstance;
+export function instanceOfAptosFeeStatement(value: object): value is AptosFeeStatement {
+    if (!('executionGasUnits' in value) || value['executionGasUnits'] === undefined) return false;
+    if (!('ioGasUnits' in value) || value['ioGasUnits'] === undefined) return false;
+    if (!('storageFeeOctas' in value) || value['storageFeeOctas'] === undefined) return false;
+    if (!('storageFeeRefundOctas' in value) || value['storageFeeRefundOctas'] === undefined) return false;
+    if (!('totalChargeGasUnits' in value) || value['totalChargeGasUnits'] === undefined) return false;
+    if (!('totalGas' in value) || value['totalGas'] === undefined) return false;
+    if (!('pricedAsset' in value) || value['pricedAsset'] === undefined) return false;
+    return true;
 }
 
 export function AptosFeeStatementFromJSON(json: any): AptosFeeStatement {
@@ -90,7 +103,7 @@ export function AptosFeeStatementFromJSON(json: any): AptosFeeStatement {
 }
 
 export function AptosFeeStatementFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosFeeStatement {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -101,26 +114,30 @@ export function AptosFeeStatementFromJSONTyped(json: any, ignoreDiscriminator: b
         'storageFeeRefundOctas': json['storage_fee_refund_octas'],
         'totalChargeGasUnits': json['total_charge_gas_units'],
         'totalGas': json['total_gas'],
-        'fiatPrice': !exists(json, 'fiat_price') ? undefined : PriceFromJSON(json['fiat_price']),
+        'fiatPrice': json['fiat_price'] == null ? undefined : PriceFromJSON(json['fiat_price']),
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }
 
-export function AptosFeeStatementToJSON(value?: AptosFeeStatement | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AptosFeeStatementToJSON(json: any): AptosFeeStatement {
+    return AptosFeeStatementToJSONTyped(json, false);
+}
+
+export function AptosFeeStatementToJSONTyped(value?: AptosFeeStatement | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'execution_gas_units': value.executionGasUnits,
-        'io_gas_units': value.ioGasUnits,
-        'storage_fee_octas': value.storageFeeOctas,
-        'storage_fee_refund_octas': value.storageFeeRefundOctas,
-        'total_charge_gas_units': value.totalChargeGasUnits,
-        'total_gas': value.totalGas,
-        'fiat_price': PriceToJSON(value.fiatPrice),
+        'execution_gas_units': value['executionGasUnits'],
+        'io_gas_units': value['ioGasUnits'],
+        'storage_fee_octas': value['storageFeeOctas'],
+        'storage_fee_refund_octas': value['storageFeeRefundOctas'],
+        'total_charge_gas_units': value['totalChargeGasUnits'],
+        'total_gas': value['totalGas'],
+        'fiat_price': PriceToJSON(value['fiatPrice']),
+        'priced_asset': PricedAssetToJSON(value['pricedAsset']),
     };
 }
 

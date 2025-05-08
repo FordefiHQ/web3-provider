@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -36,12 +36,10 @@ export interface ExportEndUserKeysRequest {
 /**
  * Check if a given object implements the ExportEndUserKeysRequest interface.
  */
-export function instanceOfExportEndUserKeysRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "rsaPublicKey" in value;
-    isInstance = isInstance && "requestSignature" in value;
-
-    return isInstance;
+export function instanceOfExportEndUserKeysRequest(value: object): value is ExportEndUserKeysRequest {
+    if (!('rsaPublicKey' in value) || value['rsaPublicKey'] === undefined) return false;
+    if (!('requestSignature' in value) || value['requestSignature'] === undefined) return false;
+    return true;
 }
 
 export function ExportEndUserKeysRequestFromJSON(json: any): ExportEndUserKeysRequest {
@@ -49,7 +47,7 @@ export function ExportEndUserKeysRequestFromJSON(json: any): ExportEndUserKeysRe
 }
 
 export function ExportEndUserKeysRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): ExportEndUserKeysRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -59,17 +57,19 @@ export function ExportEndUserKeysRequestFromJSONTyped(json: any, ignoreDiscrimin
     };
 }
 
-export function ExportEndUserKeysRequestToJSON(value?: ExportEndUserKeysRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ExportEndUserKeysRequestToJSON(json: any): ExportEndUserKeysRequest {
+    return ExportEndUserKeysRequestToJSONTyped(json, false);
+}
+
+export function ExportEndUserKeysRequestToJSONTyped(value?: ExportEndUserKeysRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'rsa_public_key': value.rsaPublicKey,
-        'request_signature': value.requestSignature,
+        'rsa_public_key': value['rsaPublicKey'],
+        'request_signature': value['requestSignature'],
     };
 }
 

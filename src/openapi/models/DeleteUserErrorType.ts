@@ -23,6 +23,17 @@ export const DeleteUserErrorType = {
 export type DeleteUserErrorType = typeof DeleteUserErrorType[keyof typeof DeleteUserErrorType];
 
 
+export function instanceOfDeleteUserErrorType(value: any): boolean {
+    for (const key in DeleteUserErrorType) {
+        if (Object.prototype.hasOwnProperty.call(DeleteUserErrorType, key)) {
+            if (DeleteUserErrorType[key as keyof typeof DeleteUserErrorType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function DeleteUserErrorTypeFromJSON(json: any): DeleteUserErrorType {
     return DeleteUserErrorTypeFromJSONTyped(json, false);
 }
@@ -33,5 +44,9 @@ export function DeleteUserErrorTypeFromJSONTyped(json: any, ignoreDiscriminator:
 
 export function DeleteUserErrorTypeToJSON(value?: DeleteUserErrorType | null): any {
     return value as any;
+}
+
+export function DeleteUserErrorTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): DeleteUserErrorType {
+    return value as DeleteUserErrorType;
 }
 

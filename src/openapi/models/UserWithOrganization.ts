@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { User } from './User';
 import {
     UserFromJSON,
     UserFromJSONTyped,
     UserToJSON,
+    UserToJSONTyped,
 } from './User';
 
 /**
@@ -49,13 +50,11 @@ export interface UserWithOrganization {
 /**
  * Check if a given object implements the UserWithOrganization interface.
  */
-export function instanceOfUserWithOrganization(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "user" in value;
-    isInstance = isInstance && "organizationId" in value;
-    isInstance = isInstance && "organizationName" in value;
-
-    return isInstance;
+export function instanceOfUserWithOrganization(value: object): value is UserWithOrganization {
+    if (!('user' in value) || value['user'] === undefined) return false;
+    if (!('organizationId' in value) || value['organizationId'] === undefined) return false;
+    if (!('organizationName' in value) || value['organizationName'] === undefined) return false;
+    return true;
 }
 
 export function UserWithOrganizationFromJSON(json: any): UserWithOrganization {
@@ -63,7 +62,7 @@ export function UserWithOrganizationFromJSON(json: any): UserWithOrganization {
 }
 
 export function UserWithOrganizationFromJSONTyped(json: any, ignoreDiscriminator: boolean): UserWithOrganization {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -74,18 +73,20 @@ export function UserWithOrganizationFromJSONTyped(json: any, ignoreDiscriminator
     };
 }
 
-export function UserWithOrganizationToJSON(value?: UserWithOrganization | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UserWithOrganizationToJSON(json: any): UserWithOrganization {
+    return UserWithOrganizationToJSONTyped(json, false);
+}
+
+export function UserWithOrganizationToJSONTyped(value?: UserWithOrganization | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'user': UserToJSON(value.user),
-        'organization_id': value.organizationId,
-        'organization_name': value.organizationName,
+        'user': UserToJSON(value['user']),
+        'organization_id': value['organizationId'],
+        'organization_name': value['organizationName'],
     };
 }
 

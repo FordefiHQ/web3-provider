@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { TypedCosmosRawTransactionRequest } from './TypedCosmosRawTransactionRequest';
 import {
-    TypedCosmosRawTransactionRequest,
     instanceOfTypedCosmosRawTransactionRequest,
     TypedCosmosRawTransactionRequestFromJSON,
     TypedCosmosRawTransactionRequestFromJSONTyped,
     TypedCosmosRawTransactionRequestToJSON,
 } from './TypedCosmosRawTransactionRequest';
+import type { TypedCosmosTransferRequest } from './TypedCosmosTransferRequest';
 import {
-    TypedCosmosTransferRequest,
     instanceOfTypedCosmosTransferRequest,
     TypedCosmosTransferRequestFromJSON,
     TypedCosmosTransferRequestFromJSONTyped,
@@ -39,31 +39,32 @@ export function CreateCosmosTransactionRequestDetailsFromJSON(json: any): Create
 }
 
 export function CreateCosmosTransactionRequestDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateCosmosTransactionRequestDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'cosmos_raw_transaction':
-            return {...TypedCosmosRawTransactionRequestFromJSONTyped(json, true), type: 'cosmos_raw_transaction'};
+            return Object.assign({}, TypedCosmosRawTransactionRequestFromJSONTyped(json, true), { type: 'cosmos_raw_transaction' } as const);
         case 'cosmos_transfer':
-            return {...TypedCosmosTransferRequestFromJSONTyped(json, true), type: 'cosmos_transfer'};
+            return Object.assign({}, TypedCosmosTransferRequestFromJSONTyped(json, true), { type: 'cosmos_transfer' } as const);
         default:
             throw new Error(`No variant of CreateCosmosTransactionRequestDetails exists with 'type=${json['type']}'`);
     }
 }
 
-export function CreateCosmosTransactionRequestDetailsToJSON(value?: CreateCosmosTransactionRequestDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function CreateCosmosTransactionRequestDetailsToJSON(json: any): any {
+    return CreateCosmosTransactionRequestDetailsToJSONTyped(json, false);
+}
+
+export function CreateCosmosTransactionRequestDetailsToJSONTyped(value?: CreateCosmosTransactionRequestDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'cosmos_raw_transaction':
-            return TypedCosmosRawTransactionRequestToJSON(value);
+            return Object.assign({}, TypedCosmosRawTransactionRequestToJSON(value), { type: 'cosmos_raw_transaction' } as const);
         case 'cosmos_transfer':
-            return TypedCosmosTransferRequestToJSON(value);
+            return Object.assign({}, TypedCosmosTransferRequestToJSON(value), { type: 'cosmos_transfer' } as const);
         default:
             throw new Error(`No variant of CreateCosmosTransactionRequestDetails exists with 'type=${value['type']}'`);
     }

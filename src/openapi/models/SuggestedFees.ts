@@ -12,50 +12,50 @@
  * Do not edit the class manually.
  */
 
+import type { AptosSuggestedFees } from './AptosSuggestedFees';
 import {
-    AptosSuggestedFees,
     instanceOfAptosSuggestedFees,
     AptosSuggestedFeesFromJSON,
     AptosSuggestedFeesFromJSONTyped,
     AptosSuggestedFeesToJSON,
 } from './AptosSuggestedFees';
+import type { CosmosSuggestedFees } from './CosmosSuggestedFees';
 import {
-    CosmosSuggestedFees,
     instanceOfCosmosSuggestedFees,
     CosmosSuggestedFeesFromJSON,
     CosmosSuggestedFeesFromJSONTyped,
     CosmosSuggestedFeesToJSON,
 } from './CosmosSuggestedFees';
+import type { EvmSuggestedFees } from './EvmSuggestedFees';
 import {
-    EvmSuggestedFees,
     instanceOfEvmSuggestedFees,
     EvmSuggestedFeesFromJSON,
     EvmSuggestedFeesFromJSONTyped,
     EvmSuggestedFeesToJSON,
 } from './EvmSuggestedFees';
+import type { StarknetSuggestedFees } from './StarknetSuggestedFees';
 import {
-    SolanaSuggestedFees,
-    instanceOfSolanaSuggestedFees,
-    SolanaSuggestedFeesFromJSON,
-    SolanaSuggestedFeesFromJSONTyped,
-    SolanaSuggestedFeesToJSON,
-} from './SolanaSuggestedFees';
+    instanceOfStarknetSuggestedFees,
+    StarknetSuggestedFeesFromJSON,
+    StarknetSuggestedFeesFromJSONTyped,
+    StarknetSuggestedFeesToJSON,
+} from './StarknetSuggestedFees';
+import type { SuiSuggestedFees } from './SuiSuggestedFees';
 import {
-    SuiSuggestedFees,
     instanceOfSuiSuggestedFees,
     SuiSuggestedFeesFromJSON,
     SuiSuggestedFeesFromJSONTyped,
     SuiSuggestedFeesToJSON,
 } from './SuiSuggestedFees';
+import type { TonSuggestedFees } from './TonSuggestedFees';
 import {
-    TonSuggestedFees,
     instanceOfTonSuggestedFees,
     TonSuggestedFeesFromJSON,
     TonSuggestedFeesFromJSONTyped,
     TonSuggestedFeesToJSON,
 } from './TonSuggestedFees';
+import type { UtxoSuggestedFees } from './UtxoSuggestedFees';
 import {
-    UtxoSuggestedFees,
     instanceOfUtxoSuggestedFees,
     UtxoSuggestedFeesFromJSON,
     UtxoSuggestedFeesFromJSONTyped,
@@ -67,58 +67,59 @@ import {
  * 
  * @export
  */
-export type SuggestedFees = { type: 'aptos' } & AptosSuggestedFees | { type: 'cosmos' } & CosmosSuggestedFees | { type: 'evm' } & EvmSuggestedFees | { type: 'solana' } & SolanaSuggestedFees | { type: 'sui' } & SuiSuggestedFees | { type: 'ton' } & TonSuggestedFees | { type: 'utxo' } & UtxoSuggestedFees;
+export type SuggestedFees = { type: 'aptos' } & AptosSuggestedFees | { type: 'cosmos' } & CosmosSuggestedFees | { type: 'evm' } & EvmSuggestedFees | { type: 'starknet' } & StarknetSuggestedFees | { type: 'sui' } & SuiSuggestedFees | { type: 'ton' } & TonSuggestedFees | { type: 'utxo' } & UtxoSuggestedFees;
 
 export function SuggestedFeesFromJSON(json: any): SuggestedFees {
     return SuggestedFeesFromJSONTyped(json, false);
 }
 
 export function SuggestedFeesFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuggestedFees {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'aptos':
-            return {...AptosSuggestedFeesFromJSONTyped(json, true), type: 'aptos'};
+            return Object.assign({}, AptosSuggestedFeesFromJSONTyped(json, true), { type: 'aptos' } as const);
         case 'cosmos':
-            return {...CosmosSuggestedFeesFromJSONTyped(json, true), type: 'cosmos'};
+            return Object.assign({}, CosmosSuggestedFeesFromJSONTyped(json, true), { type: 'cosmos' } as const);
         case 'evm':
-            return {...EvmSuggestedFeesFromJSONTyped(json, true), type: 'evm'};
-        case 'solana':
-            return {...SolanaSuggestedFeesFromJSONTyped(json, true), type: 'solana'};
+            return Object.assign({}, EvmSuggestedFeesFromJSONTyped(json, true), { type: 'evm' } as const);
+        case 'starknet':
+            return Object.assign({}, StarknetSuggestedFeesFromJSONTyped(json, true), { type: 'starknet' } as const);
         case 'sui':
-            return {...SuiSuggestedFeesFromJSONTyped(json, true), type: 'sui'};
+            return Object.assign({}, SuiSuggestedFeesFromJSONTyped(json, true), { type: 'sui' } as const);
         case 'ton':
-            return {...TonSuggestedFeesFromJSONTyped(json, true), type: 'ton'};
+            return Object.assign({}, TonSuggestedFeesFromJSONTyped(json, true), { type: 'ton' } as const);
         case 'utxo':
-            return {...UtxoSuggestedFeesFromJSONTyped(json, true), type: 'utxo'};
+            return Object.assign({}, UtxoSuggestedFeesFromJSONTyped(json, true), { type: 'utxo' } as const);
         default:
             throw new Error(`No variant of SuggestedFees exists with 'type=${json['type']}'`);
     }
 }
 
-export function SuggestedFeesToJSON(value?: SuggestedFees | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function SuggestedFeesToJSON(json: any): any {
+    return SuggestedFeesToJSONTyped(json, false);
+}
+
+export function SuggestedFeesToJSONTyped(value?: SuggestedFees | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'aptos':
-            return AptosSuggestedFeesToJSON(value);
+            return Object.assign({}, AptosSuggestedFeesToJSON(value), { type: 'aptos' } as const);
         case 'cosmos':
-            return CosmosSuggestedFeesToJSON(value);
+            return Object.assign({}, CosmosSuggestedFeesToJSON(value), { type: 'cosmos' } as const);
         case 'evm':
-            return EvmSuggestedFeesToJSON(value);
-        case 'solana':
-            return SolanaSuggestedFeesToJSON(value);
+            return Object.assign({}, EvmSuggestedFeesToJSON(value), { type: 'evm' } as const);
+        case 'starknet':
+            return Object.assign({}, StarknetSuggestedFeesToJSON(value), { type: 'starknet' } as const);
         case 'sui':
-            return SuiSuggestedFeesToJSON(value);
+            return Object.assign({}, SuiSuggestedFeesToJSON(value), { type: 'sui' } as const);
         case 'ton':
-            return TonSuggestedFeesToJSON(value);
+            return Object.assign({}, TonSuggestedFeesToJSON(value), { type: 'ton' } as const);
         case 'utxo':
-            return UtxoSuggestedFeesToJSON(value);
+            return Object.assign({}, UtxoSuggestedFeesToJSON(value), { type: 'utxo' } as const);
         default:
             throw new Error(`No variant of SuggestedFees exists with 'type=${value['type']}'`);
     }

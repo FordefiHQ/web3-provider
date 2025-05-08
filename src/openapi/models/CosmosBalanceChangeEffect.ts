@@ -12,37 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { CosmosBalanceChangeEffectCoinInfo } from './CosmosBalanceChangeEffectCoinInfo';
-import {
-    CosmosBalanceChangeEffectCoinInfoFromJSON,
-    CosmosBalanceChangeEffectCoinInfoFromJSONTyped,
-    CosmosBalanceChangeEffectCoinInfoToJSON,
-} from './CosmosBalanceChangeEffectCoinInfo';
-import type { CosmosBalanceChangeEffectType } from './CosmosBalanceChangeEffectType';
-import {
-    CosmosBalanceChangeEffectTypeFromJSON,
-    CosmosBalanceChangeEffectTypeFromJSONTyped,
-    CosmosBalanceChangeEffectTypeToJSON,
-} from './CosmosBalanceChangeEffectType';
+import { mapValues } from '../runtime';
 import type { EnrichedCosmosBechAddress } from './EnrichedCosmosBechAddress';
 import {
     EnrichedCosmosBechAddressFromJSON,
     EnrichedCosmosBechAddressFromJSONTyped,
     EnrichedCosmosBechAddressToJSON,
+    EnrichedCosmosBechAddressToJSONTyped,
 } from './EnrichedCosmosBechAddress';
-import type { Price } from './Price';
-import {
-    PriceFromJSON,
-    PriceFromJSONTyped,
-    PriceToJSON,
-} from './Price';
 import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
     PricedAssetFromJSONTyped,
     PricedAssetToJSON,
+    PricedAssetToJSONTyped,
 } from './PricedAsset';
+import type { CosmosBalanceChangeEffectType } from './CosmosBalanceChangeEffectType';
+import {
+    CosmosBalanceChangeEffectTypeFromJSON,
+    CosmosBalanceChangeEffectTypeFromJSONTyped,
+    CosmosBalanceChangeEffectTypeToJSON,
+    CosmosBalanceChangeEffectTypeToJSONTyped,
+} from './CosmosBalanceChangeEffectType';
+import type { Price } from './Price';
+import {
+    PriceFromJSON,
+    PriceFromJSONTyped,
+    PriceToJSON,
+    PriceToJSONTyped,
+} from './Price';
+import type { CosmosBalanceChangeEffectCoinInfo } from './CosmosBalanceChangeEffectCoinInfo';
+import {
+    CosmosBalanceChangeEffectCoinInfoFromJSON,
+    CosmosBalanceChangeEffectCoinInfoFromJSONTyped,
+    CosmosBalanceChangeEffectCoinInfoToJSON,
+    CosmosBalanceChangeEffectCoinInfoToJSONTyped,
+} from './CosmosBalanceChangeEffectCoinInfo';
 
 /**
  * 
@@ -95,18 +100,18 @@ export interface CosmosBalanceChangeEffect {
     price?: Price;
 }
 
+
+
 /**
  * Check if a given object implements the CosmosBalanceChangeEffect interface.
  */
-export function instanceOfCosmosBalanceChangeEffect(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "pricedAsset" in value;
-    isInstance = isInstance && "diff" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "coinInfo" in value;
-    isInstance = isInstance && "address" in value;
-
-    return isInstance;
+export function instanceOfCosmosBalanceChangeEffect(value: object): value is CosmosBalanceChangeEffect {
+    if (!('pricedAsset' in value) || value['pricedAsset'] === undefined) return false;
+    if (!('diff' in value) || value['diff'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('coinInfo' in value) || value['coinInfo'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    return true;
 }
 
 export function CosmosBalanceChangeEffectFromJSON(json: any): CosmosBalanceChangeEffect {
@@ -114,7 +119,7 @@ export function CosmosBalanceChangeEffectFromJSON(json: any): CosmosBalanceChang
 }
 
 export function CosmosBalanceChangeEffectFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosBalanceChangeEffect {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -124,27 +129,29 @@ export function CosmosBalanceChangeEffectFromJSONTyped(json: any, ignoreDiscrimi
         'type': CosmosBalanceChangeEffectTypeFromJSON(json['type']),
         'coinInfo': CosmosBalanceChangeEffectCoinInfoFromJSON(json['coin_info']),
         'address': EnrichedCosmosBechAddressFromJSON(json['address']),
-        'owner': !exists(json, 'owner') ? undefined : EnrichedCosmosBechAddressFromJSON(json['owner']),
-        'price': !exists(json, 'price') ? undefined : PriceFromJSON(json['price']),
+        'owner': json['owner'] == null ? undefined : EnrichedCosmosBechAddressFromJSON(json['owner']),
+        'price': json['price'] == null ? undefined : PriceFromJSON(json['price']),
     };
 }
 
-export function CosmosBalanceChangeEffectToJSON(value?: CosmosBalanceChangeEffect | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosBalanceChangeEffectToJSON(json: any): CosmosBalanceChangeEffect {
+    return CosmosBalanceChangeEffectToJSONTyped(json, false);
+}
+
+export function CosmosBalanceChangeEffectToJSONTyped(value?: CosmosBalanceChangeEffect | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'priced_asset': PricedAssetToJSON(value.pricedAsset),
-        'diff': value.diff,
-        'type': CosmosBalanceChangeEffectTypeToJSON(value.type),
-        'coin_info': CosmosBalanceChangeEffectCoinInfoToJSON(value.coinInfo),
-        'address': EnrichedCosmosBechAddressToJSON(value.address),
-        'owner': EnrichedCosmosBechAddressToJSON(value.owner),
-        'price': PriceToJSON(value.price),
+        'priced_asset': PricedAssetToJSON(value['pricedAsset']),
+        'diff': value['diff'],
+        'type': CosmosBalanceChangeEffectTypeToJSON(value['type']),
+        'coin_info': CosmosBalanceChangeEffectCoinInfoToJSON(value['coinInfo']),
+        'address': EnrichedCosmosBechAddressToJSON(value['address']),
+        'owner': EnrichedCosmosBechAddressToJSON(value['owner']),
+        'price': PriceToJSON(value['price']),
     };
 }
 

@@ -20,10 +20,23 @@
 export const ExchangeType = {
     binance: 'binance',
     bybit: 'bybit',
+    coinbaseInternational: 'coinbase_international',
+    coinbaseUs: 'coinbase_us',
     okx: 'okx'
 } as const;
 export type ExchangeType = typeof ExchangeType[keyof typeof ExchangeType];
 
+
+export function instanceOfExchangeType(value: any): boolean {
+    for (const key in ExchangeType) {
+        if (Object.prototype.hasOwnProperty.call(ExchangeType, key)) {
+            if (ExchangeType[key as keyof typeof ExchangeType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 export function ExchangeTypeFromJSON(json: any): ExchangeType {
     return ExchangeTypeFromJSONTyped(json, false);
@@ -35,5 +48,9 @@ export function ExchangeTypeFromJSONTyped(json: any, ignoreDiscriminator: boolea
 
 export function ExchangeTypeToJSON(value?: ExchangeType | null): any {
     return value as any;
+}
+
+export function ExchangeTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): ExchangeType {
+    return value as ExchangeType;
 }
 

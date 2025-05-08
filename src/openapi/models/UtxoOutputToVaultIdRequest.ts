@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type UtxoOutputToVaultIdRequestTypeEnum = typeof UtxoOutputToVaultIdReque
 /**
  * Check if a given object implements the UtxoOutputToVaultIdRequest interface.
  */
-export function instanceOfUtxoOutputToVaultIdRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "vaultId" in value;
-
-    return isInstance;
+export function instanceOfUtxoOutputToVaultIdRequest(value: object): value is UtxoOutputToVaultIdRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('vaultId' in value) || value['vaultId'] === undefined) return false;
+    return true;
 }
 
 export function UtxoOutputToVaultIdRequestFromJSON(json: any): UtxoOutputToVaultIdRequest {
@@ -59,7 +57,7 @@ export function UtxoOutputToVaultIdRequestFromJSON(json: any): UtxoOutputToVault
 }
 
 export function UtxoOutputToVaultIdRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): UtxoOutputToVaultIdRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function UtxoOutputToVaultIdRequestFromJSONTyped(json: any, ignoreDiscrim
     };
 }
 
-export function UtxoOutputToVaultIdRequestToJSON(value?: UtxoOutputToVaultIdRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UtxoOutputToVaultIdRequestToJSON(json: any): UtxoOutputToVaultIdRequest {
+    return UtxoOutputToVaultIdRequestToJSONTyped(json, false);
+}
+
+export function UtxoOutputToVaultIdRequestToJSONTyped(value?: UtxoOutputToVaultIdRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'vault_id': value.vaultId,
+        'type': value['type'],
+        'vault_id': value['vaultId'],
     };
 }
 

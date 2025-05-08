@@ -12,18 +12,27 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedTonAddress } from './EnrichedTonAddress';
 import {
     EnrichedTonAddressFromJSON,
     EnrichedTonAddressFromJSONTyped,
     EnrichedTonAddressToJSON,
+    EnrichedTonAddressToJSONTyped,
 } from './EnrichedTonAddress';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+    PricedAssetToJSONTyped,
+} from './PricedAsset';
 import type { Price } from './Price';
 import {
     PriceFromJSON,
     PriceFromJSONTyped,
     PriceToJSON,
+    PriceToJSONTyped,
 } from './Price';
 
 /**
@@ -50,17 +59,22 @@ export interface TonAddressFee {
      * @memberof TonAddressFee
      */
     fiatPrice?: Price;
+    /**
+     * 
+     * @type {PricedAsset}
+     * @memberof TonAddressFee
+     */
+    pricedAsset: PricedAsset;
 }
 
 /**
  * Check if a given object implements the TonAddressFee interface.
  */
-export function instanceOfTonAddressFee(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "totalFee" in value;
-
-    return isInstance;
+export function instanceOfTonAddressFee(value: object): value is TonAddressFee {
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('totalFee' in value) || value['totalFee'] === undefined) return false;
+    if (!('pricedAsset' in value) || value['pricedAsset'] === undefined) return false;
+    return true;
 }
 
 export function TonAddressFeeFromJSON(json: any): TonAddressFee {
@@ -68,29 +82,33 @@ export function TonAddressFeeFromJSON(json: any): TonAddressFee {
 }
 
 export function TonAddressFeeFromJSONTyped(json: any, ignoreDiscriminator: boolean): TonAddressFee {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'address': EnrichedTonAddressFromJSON(json['address']),
         'totalFee': json['total_fee'],
-        'fiatPrice': !exists(json, 'fiat_price') ? undefined : PriceFromJSON(json['fiat_price']),
+        'fiatPrice': json['fiat_price'] == null ? undefined : PriceFromJSON(json['fiat_price']),
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }
 
-export function TonAddressFeeToJSON(value?: TonAddressFee | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TonAddressFeeToJSON(json: any): TonAddressFee {
+    return TonAddressFeeToJSONTyped(json, false);
+}
+
+export function TonAddressFeeToJSONTyped(value?: TonAddressFee | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'address': EnrichedTonAddressToJSON(value.address),
-        'total_fee': value.totalFee,
-        'fiat_price': PriceToJSON(value.fiatPrice),
+        'address': EnrichedTonAddressToJSON(value['address']),
+        'total_fee': value['totalFee'],
+        'fiat_price': PriceToJSON(value['fiatPrice']),
+        'priced_asset': PricedAssetToJSON(value['pricedAsset']),
     };
 }
 

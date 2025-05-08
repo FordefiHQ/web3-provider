@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { RpcEndpointDetails } from './RpcEndpointDetails';
 import {
     RpcEndpointDetailsFromJSON,
     RpcEndpointDetailsFromJSONTyped,
     RpcEndpointDetailsToJSON,
+    RpcEndpointDetailsToJSONTyped,
 } from './RpcEndpointDetails';
 
 /**
@@ -43,12 +44,10 @@ export interface RpcEndpoint {
 /**
  * Check if a given object implements the RpcEndpoint interface.
  */
-export function instanceOfRpcEndpoint(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "url" in value;
-    isInstance = isInstance && "details" in value;
-
-    return isInstance;
+export function instanceOfRpcEndpoint(value: object): value is RpcEndpoint {
+    if (!('url' in value) || value['url'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    return true;
 }
 
 export function RpcEndpointFromJSON(json: any): RpcEndpoint {
@@ -56,7 +55,7 @@ export function RpcEndpointFromJSON(json: any): RpcEndpoint {
 }
 
 export function RpcEndpointFromJSONTyped(json: any, ignoreDiscriminator: boolean): RpcEndpoint {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -66,17 +65,19 @@ export function RpcEndpointFromJSONTyped(json: any, ignoreDiscriminator: boolean
     };
 }
 
-export function RpcEndpointToJSON(value?: RpcEndpoint | null): any {
-    if (value === undefined) {
-        return undefined;
+export function RpcEndpointToJSON(json: any): RpcEndpoint {
+    return RpcEndpointToJSONTyped(json, false);
+}
+
+export function RpcEndpointToJSONTyped(value?: RpcEndpoint | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'url': value.url,
-        'details': RpcEndpointDetailsToJSON(value.details),
+        'url': value['url'],
+        'details': RpcEndpointDetailsToJSON(value['details']),
     };
 }
 

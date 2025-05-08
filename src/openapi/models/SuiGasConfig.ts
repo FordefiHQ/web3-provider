@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { SuiObjectRef } from './SuiObjectRef';
 import {
     SuiObjectRefFromJSON,
     SuiObjectRefFromJSONTyped,
     SuiObjectRefToJSON,
+    SuiObjectRefToJSONTyped,
 } from './SuiObjectRef';
 
 /**
@@ -49,11 +50,9 @@ export interface SuiGasConfig {
 /**
  * Check if a given object implements the SuiGasConfig interface.
  */
-export function instanceOfSuiGasConfig(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "payment" in value;
-
-    return isInstance;
+export function instanceOfSuiGasConfig(value: object): value is SuiGasConfig {
+    if (!('payment' in value) || value['payment'] === undefined) return false;
+    return true;
 }
 
 export function SuiGasConfigFromJSON(json: any): SuiGasConfig {
@@ -61,29 +60,31 @@ export function SuiGasConfigFromJSON(json: any): SuiGasConfig {
 }
 
 export function SuiGasConfigFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiGasConfig {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'budget': !exists(json, 'budget') ? undefined : json['budget'],
-        'price': !exists(json, 'price') ? undefined : json['price'],
+        'budget': json['budget'] == null ? undefined : json['budget'],
+        'price': json['price'] == null ? undefined : json['price'],
         'payment': ((json['payment'] as Array<any>).map(SuiObjectRefFromJSON)),
     };
 }
 
-export function SuiGasConfigToJSON(value?: SuiGasConfig | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiGasConfigToJSON(json: any): SuiGasConfig {
+    return SuiGasConfigToJSONTyped(json, false);
+}
+
+export function SuiGasConfigToJSONTyped(value?: SuiGasConfig | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'budget': value.budget,
-        'price': value.price,
-        'payment': ((value.payment as Array<any>).map(SuiObjectRefToJSON)),
+        'budget': value['budget'],
+        'price': value['price'],
+        'payment': ((value['payment'] as Array<any>).map(SuiObjectRefToJSON)),
     };
 }
 

@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { KeyType } from './KeyType';
 import {
     KeyTypeFromJSON,
     KeyTypeFromJSONTyped,
     KeyTypeToJSON,
+    KeyTypeToJSONTyped,
 } from './KeyType';
 
 /**
@@ -40,15 +41,15 @@ export interface SetMockKeygenSeedRequest {
     keyType: KeyType;
 }
 
+
+
 /**
  * Check if a given object implements the SetMockKeygenSeedRequest interface.
  */
-export function instanceOfSetMockKeygenSeedRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "seed" in value;
-    isInstance = isInstance && "keyType" in value;
-
-    return isInstance;
+export function instanceOfSetMockKeygenSeedRequest(value: object): value is SetMockKeygenSeedRequest {
+    if (!('seed' in value) || value['seed'] === undefined) return false;
+    if (!('keyType' in value) || value['keyType'] === undefined) return false;
+    return true;
 }
 
 export function SetMockKeygenSeedRequestFromJSON(json: any): SetMockKeygenSeedRequest {
@@ -56,7 +57,7 @@ export function SetMockKeygenSeedRequestFromJSON(json: any): SetMockKeygenSeedRe
 }
 
 export function SetMockKeygenSeedRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): SetMockKeygenSeedRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -66,17 +67,19 @@ export function SetMockKeygenSeedRequestFromJSONTyped(json: any, ignoreDiscrimin
     };
 }
 
-export function SetMockKeygenSeedRequestToJSON(value?: SetMockKeygenSeedRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SetMockKeygenSeedRequestToJSON(json: any): SetMockKeygenSeedRequest {
+    return SetMockKeygenSeedRequestToJSONTyped(json, false);
+}
+
+export function SetMockKeygenSeedRequestToJSONTyped(value?: SetMockKeygenSeedRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'seed': value.seed,
-        'key_type': KeyTypeToJSON(value.keyType),
+        'seed': value['seed'],
+        'key_type': KeyTypeToJSON(value['keyType']),
     };
 }
 

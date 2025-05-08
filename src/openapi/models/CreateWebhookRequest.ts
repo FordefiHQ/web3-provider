@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { WebhookResourceType } from './WebhookResourceType';
 import {
     WebhookResourceTypeFromJSON,
     WebhookResourceTypeFromJSONTyped,
     WebhookResourceTypeToJSON,
+    WebhookResourceTypeToJSONTyped,
 } from './WebhookResourceType';
 
 /**
@@ -49,13 +50,11 @@ export interface CreateWebhookRequest {
 /**
  * Check if a given object implements the CreateWebhookRequest interface.
  */
-export function instanceOfCreateWebhookRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "events" in value;
-    isInstance = isInstance && "url" in value;
-
-    return isInstance;
+export function instanceOfCreateWebhookRequest(value: object): value is CreateWebhookRequest {
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('events' in value) || value['events'] === undefined) return false;
+    if (!('url' in value) || value['url'] === undefined) return false;
+    return true;
 }
 
 export function CreateWebhookRequestFromJSON(json: any): CreateWebhookRequest {
@@ -63,7 +62,7 @@ export function CreateWebhookRequestFromJSON(json: any): CreateWebhookRequest {
 }
 
 export function CreateWebhookRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateWebhookRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -74,18 +73,20 @@ export function CreateWebhookRequestFromJSONTyped(json: any, ignoreDiscriminator
     };
 }
 
-export function CreateWebhookRequestToJSON(value?: CreateWebhookRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateWebhookRequestToJSON(json: any): CreateWebhookRequest {
+    return CreateWebhookRequestToJSONTyped(json, false);
+}
+
+export function CreateWebhookRequestToJSONTyped(value?: CreateWebhookRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'events': ((value.events as Array<any>).map(WebhookResourceTypeToJSON)),
-        'url': value.url,
+        'name': value['name'],
+        'events': ((value['events'] as Array<any>).map(WebhookResourceTypeToJSON)),
+        'url': value['url'],
     };
 }
 

@@ -24,6 +24,17 @@ export const DefaultActionDiff = {
 export type DefaultActionDiff = typeof DefaultActionDiff[keyof typeof DefaultActionDiff];
 
 
+export function instanceOfDefaultActionDiff(value: any): boolean {
+    for (const key in DefaultActionDiff) {
+        if (Object.prototype.hasOwnProperty.call(DefaultActionDiff, key)) {
+            if (DefaultActionDiff[key as keyof typeof DefaultActionDiff] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function DefaultActionDiffFromJSON(json: any): DefaultActionDiff {
     return DefaultActionDiffFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function DefaultActionDiffFromJSONTyped(json: any, ignoreDiscriminator: b
 
 export function DefaultActionDiffToJSON(value?: DefaultActionDiff | null): any {
     return value as any;
+}
+
+export function DefaultActionDiffToJSONTyped(value: any, ignoreDiscriminator: boolean): DefaultActionDiff {
+    return value as DefaultActionDiff;
 }
 

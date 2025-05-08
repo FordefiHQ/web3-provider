@@ -24,6 +24,17 @@ export const DeleteAddressBookGroupPrerequisiteType = {
 export type DeleteAddressBookGroupPrerequisiteType = typeof DeleteAddressBookGroupPrerequisiteType[keyof typeof DeleteAddressBookGroupPrerequisiteType];
 
 
+export function instanceOfDeleteAddressBookGroupPrerequisiteType(value: any): boolean {
+    for (const key in DeleteAddressBookGroupPrerequisiteType) {
+        if (Object.prototype.hasOwnProperty.call(DeleteAddressBookGroupPrerequisiteType, key)) {
+            if (DeleteAddressBookGroupPrerequisiteType[key as keyof typeof DeleteAddressBookGroupPrerequisiteType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function DeleteAddressBookGroupPrerequisiteTypeFromJSON(json: any): DeleteAddressBookGroupPrerequisiteType {
     return DeleteAddressBookGroupPrerequisiteTypeFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function DeleteAddressBookGroupPrerequisiteTypeFromJSONTyped(json: any, i
 
 export function DeleteAddressBookGroupPrerequisiteTypeToJSON(value?: DeleteAddressBookGroupPrerequisiteType | null): any {
     return value as any;
+}
+
+export function DeleteAddressBookGroupPrerequisiteTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): DeleteAddressBookGroupPrerequisiteType {
+    return value as DeleteAddressBookGroupPrerequisiteType;
 }
 

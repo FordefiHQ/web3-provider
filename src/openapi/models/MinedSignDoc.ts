@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedCosmosChain } from './EnrichedCosmosChain';
 import {
     EnrichedCosmosChainFromJSON,
     EnrichedCosmosChainFromJSONTyped,
     EnrichedCosmosChainToJSON,
+    EnrichedCosmosChainToJSONTyped,
 } from './EnrichedCosmosChain';
 
 /**
@@ -59,13 +60,11 @@ export type MinedSignDocFormatEnum = typeof MinedSignDocFormatEnum[keyof typeof 
 /**
  * Check if a given object implements the MinedSignDoc interface.
  */
-export function instanceOfMinedSignDoc(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "format" in value;
-    isInstance = isInstance && "messages" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfMinedSignDoc(value: object): value is MinedSignDoc {
+    if (!('format' in value) || value['format'] === undefined) return false;
+    if (!('messages' in value) || value['messages'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function MinedSignDocFromJSON(json: any): MinedSignDoc {
@@ -73,7 +72,7 @@ export function MinedSignDocFromJSON(json: any): MinedSignDoc {
 }
 
 export function MinedSignDocFromJSONTyped(json: any, ignoreDiscriminator: boolean): MinedSignDoc {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -84,18 +83,20 @@ export function MinedSignDocFromJSONTyped(json: any, ignoreDiscriminator: boolea
     };
 }
 
-export function MinedSignDocToJSON(value?: MinedSignDoc | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MinedSignDocToJSON(json: any): MinedSignDoc {
+    return MinedSignDocToJSONTyped(json, false);
+}
+
+export function MinedSignDocToJSONTyped(value?: MinedSignDoc | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'format': value.format,
-        'messages': value.messages,
-        'chain': EnrichedCosmosChainToJSON(value.chain),
+        'format': value['format'],
+        'messages': value['messages'],
+        'chain': EnrichedCosmosChainToJSON(value['chain']),
     };
 }
 

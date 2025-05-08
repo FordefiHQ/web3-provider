@@ -12,58 +12,59 @@
  * Do not edit the class manually.
  */
 
+import type { RecipientVaultId } from './RecipientVaultId';
 import {
-    SuiRecipientHex,
+    instanceOfRecipientVaultId,
+    RecipientVaultIdFromJSON,
+    RecipientVaultIdFromJSONTyped,
+    RecipientVaultIdToJSON,
+} from './RecipientVaultId';
+import type { SuiRecipientHex } from './SuiRecipientHex';
+import {
     instanceOfSuiRecipientHex,
     SuiRecipientHexFromJSON,
     SuiRecipientHexFromJSONTyped,
     SuiRecipientHexToJSON,
 } from './SuiRecipientHex';
-import {
-    SuiRecipientVaultId,
-    instanceOfSuiRecipientVaultId,
-    SuiRecipientVaultIdFromJSON,
-    SuiRecipientVaultIdFromJSONTyped,
-    SuiRecipientVaultIdToJSON,
-} from './SuiRecipientVaultId';
 
 /**
  * @type CreateSuiTransferRequestTo
  * 
  * @export
  */
-export type CreateSuiTransferRequestTo = { type: 'hex' } & SuiRecipientHex | { type: 'vault_id' } & SuiRecipientVaultId;
+export type CreateSuiTransferRequestTo = { type: 'hex' } & SuiRecipientHex | { type: 'vault_id' } & RecipientVaultId;
 
 export function CreateSuiTransferRequestToFromJSON(json: any): CreateSuiTransferRequestTo {
     return CreateSuiTransferRequestToFromJSONTyped(json, false);
 }
 
 export function CreateSuiTransferRequestToFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateSuiTransferRequestTo {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'hex':
-            return {...SuiRecipientHexFromJSONTyped(json, true), type: 'hex'};
+            return Object.assign({}, SuiRecipientHexFromJSONTyped(json, true), { type: 'hex' } as const);
         case 'vault_id':
-            return {...SuiRecipientVaultIdFromJSONTyped(json, true), type: 'vault_id'};
+            return Object.assign({}, RecipientVaultIdFromJSONTyped(json, true), { type: 'vault_id' } as const);
         default:
             throw new Error(`No variant of CreateSuiTransferRequestTo exists with 'type=${json['type']}'`);
     }
 }
 
-export function CreateSuiTransferRequestToToJSON(value?: CreateSuiTransferRequestTo | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function CreateSuiTransferRequestToToJSON(json: any): any {
+    return CreateSuiTransferRequestToToJSONTyped(json, false);
+}
+
+export function CreateSuiTransferRequestToToJSONTyped(value?: CreateSuiTransferRequestTo | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'hex':
-            return SuiRecipientHexToJSON(value);
+            return Object.assign({}, SuiRecipientHexToJSON(value), { type: 'hex' } as const);
         case 'vault_id':
-            return SuiRecipientVaultIdToJSON(value);
+            return Object.assign({}, RecipientVaultIdToJSON(value), { type: 'vault_id' } as const);
         default:
             throw new Error(`No variant of CreateSuiTransferRequestTo exists with 'type=${value['type']}'`);
     }

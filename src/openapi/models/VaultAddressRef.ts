@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -48,14 +48,12 @@ export interface VaultAddressRef {
 /**
  * Check if a given object implements the VaultAddressRef interface.
  */
-export function instanceOfVaultAddressRef(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "vaultId" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "address" in value;
-
-    return isInstance;
+export function instanceOfVaultAddressRef(value: object): value is VaultAddressRef {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('vaultId' in value) || value['vaultId'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    return true;
 }
 
 export function VaultAddressRefFromJSON(json: any): VaultAddressRef {
@@ -63,7 +61,7 @@ export function VaultAddressRefFromJSON(json: any): VaultAddressRef {
 }
 
 export function VaultAddressRefFromJSONTyped(json: any, ignoreDiscriminator: boolean): VaultAddressRef {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -75,19 +73,21 @@ export function VaultAddressRefFromJSONTyped(json: any, ignoreDiscriminator: boo
     };
 }
 
-export function VaultAddressRefToJSON(value?: VaultAddressRef | null): any {
-    if (value === undefined) {
-        return undefined;
+export function VaultAddressRefToJSON(json: any): VaultAddressRef {
+    return VaultAddressRefToJSONTyped(json, false);
+}
+
+export function VaultAddressRefToJSONTyped(value?: VaultAddressRef | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'vault_id': value.vaultId,
-        'name': value.name,
-        'address': value.address,
+        'id': value['id'],
+        'vault_id': value['vaultId'],
+        'name': value['name'],
+        'address': value['address'],
     };
 }
 

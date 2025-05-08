@@ -12,22 +12,22 @@
  * Do not edit the class manually.
  */
 
+import type { AminoSignDoc } from './AminoSignDoc';
 import {
-    AminoSignDoc,
     instanceOfAminoSignDoc,
     AminoSignDocFromJSON,
     AminoSignDocFromJSONTyped,
     AminoSignDocToJSON,
 } from './AminoSignDoc';
+import type { DirectSignDoc } from './DirectSignDoc';
 import {
-    DirectSignDoc,
     instanceOfDirectSignDoc,
     DirectSignDocFromJSON,
     DirectSignDocFromJSONTyped,
     DirectSignDocToJSON,
 } from './DirectSignDoc';
+import type { MinedSignDoc } from './MinedSignDoc';
 import {
-    MinedSignDoc,
     instanceOfMinedSignDoc,
     MinedSignDocFromJSON,
     MinedSignDocFromJSONTyped,
@@ -46,35 +46,36 @@ export function SignDocFromJSON(json: any): SignDoc {
 }
 
 export function SignDocFromJSONTyped(json: any, ignoreDiscriminator: boolean): SignDoc {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['format']) {
         case 'amino':
-            return {...AminoSignDocFromJSONTyped(json, true), format: 'amino'};
+            return Object.assign({}, AminoSignDocFromJSONTyped(json, true), { format: 'amino' } as const);
         case 'direct':
-            return {...DirectSignDocFromJSONTyped(json, true), format: 'direct'};
+            return Object.assign({}, DirectSignDocFromJSONTyped(json, true), { format: 'direct' } as const);
         case 'mined':
-            return {...MinedSignDocFromJSONTyped(json, true), format: 'mined'};
+            return Object.assign({}, MinedSignDocFromJSONTyped(json, true), { format: 'mined' } as const);
         default:
             throw new Error(`No variant of SignDoc exists with 'format=${json['format']}'`);
     }
 }
 
-export function SignDocToJSON(value?: SignDoc | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function SignDocToJSON(json: any): any {
+    return SignDocToJSONTyped(json, false);
+}
+
+export function SignDocToJSONTyped(value?: SignDoc | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['format']) {
         case 'amino':
-            return AminoSignDocToJSON(value);
+            return Object.assign({}, AminoSignDocToJSON(value), { format: 'amino' } as const);
         case 'direct':
-            return DirectSignDocToJSON(value);
+            return Object.assign({}, DirectSignDocToJSON(value), { format: 'direct' } as const);
         case 'mined':
-            return MinedSignDocToJSON(value);
+            return Object.assign({}, MinedSignDocToJSON(value), { format: 'mined' } as const);
         default:
             throw new Error(`No variant of SignDoc exists with 'format=${value['format']}'`);
     }

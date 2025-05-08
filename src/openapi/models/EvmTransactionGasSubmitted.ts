@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { DynamicGas } from './DynamicGas';
 import {
-    DynamicGas,
     instanceOfDynamicGas,
     DynamicGasFromJSON,
     DynamicGasFromJSONTyped,
     DynamicGasToJSON,
 } from './DynamicGas';
+import type { LegacyGas } from './LegacyGas';
 import {
-    LegacyGas,
     instanceOfLegacyGas,
     LegacyGasFromJSON,
     LegacyGasFromJSONTyped,
@@ -39,31 +39,32 @@ export function EvmTransactionGasSubmittedFromJSON(json: any): EvmTransactionGas
 }
 
 export function EvmTransactionGasSubmittedFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmTransactionGasSubmitted {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'dynamic':
-            return {...DynamicGasFromJSONTyped(json, true), type: 'dynamic'};
+            return Object.assign({}, DynamicGasFromJSONTyped(json, true), { type: 'dynamic' } as const);
         case 'legacy':
-            return {...LegacyGasFromJSONTyped(json, true), type: 'legacy'};
+            return Object.assign({}, LegacyGasFromJSONTyped(json, true), { type: 'legacy' } as const);
         default:
             throw new Error(`No variant of EvmTransactionGasSubmitted exists with 'type=${json['type']}'`);
     }
 }
 
-export function EvmTransactionGasSubmittedToJSON(value?: EvmTransactionGasSubmitted | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function EvmTransactionGasSubmittedToJSON(json: any): any {
+    return EvmTransactionGasSubmittedToJSONTyped(json, false);
+}
+
+export function EvmTransactionGasSubmittedToJSONTyped(value?: EvmTransactionGasSubmitted | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'dynamic':
-            return DynamicGasToJSON(value);
+            return Object.assign({}, DynamicGasToJSON(value), { type: 'dynamic' } as const);
         case 'legacy':
-            return LegacyGasToJSON(value);
+            return Object.assign({}, LegacyGasToJSON(value), { type: 'legacy' } as const);
         default:
             throw new Error(`No variant of EvmTransactionGasSubmitted exists with 'type=${value['type']}'`);
     }

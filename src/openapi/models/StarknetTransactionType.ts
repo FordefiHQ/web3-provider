@@ -26,6 +26,17 @@ export const StarknetTransactionType = {
 export type StarknetTransactionType = typeof StarknetTransactionType[keyof typeof StarknetTransactionType];
 
 
+export function instanceOfStarknetTransactionType(value: any): boolean {
+    for (const key in StarknetTransactionType) {
+        if (Object.prototype.hasOwnProperty.call(StarknetTransactionType, key)) {
+            if (StarknetTransactionType[key as keyof typeof StarknetTransactionType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function StarknetTransactionTypeFromJSON(json: any): StarknetTransactionType {
     return StarknetTransactionTypeFromJSONTyped(json, false);
 }
@@ -36,5 +47,9 @@ export function StarknetTransactionTypeFromJSONTyped(json: any, ignoreDiscrimina
 
 export function StarknetTransactionTypeToJSON(value?: StarknetTransactionType | null): any {
     return value as any;
+}
+
+export function StarknetTransactionTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): StarknetTransactionType {
+    return value as StarknetTransactionType;
 }
 

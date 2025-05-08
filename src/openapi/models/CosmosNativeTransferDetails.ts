@@ -12,24 +12,27 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { EnrichedCosmosBechAddress } from './EnrichedCosmosBechAddress';
-import {
-    EnrichedCosmosBechAddressFromJSON,
-    EnrichedCosmosBechAddressFromJSONTyped,
-    EnrichedCosmosBechAddressToJSON,
-} from './EnrichedCosmosBechAddress';
+import { mapValues } from '../runtime';
 import type { MessagesList } from './MessagesList';
 import {
     MessagesListFromJSON,
     MessagesListFromJSONTyped,
     MessagesListToJSON,
+    MessagesListToJSONTyped,
 } from './MessagesList';
+import type { EnrichedCosmosBechAddress } from './EnrichedCosmosBechAddress';
+import {
+    EnrichedCosmosBechAddressFromJSON,
+    EnrichedCosmosBechAddressFromJSONTyped,
+    EnrichedCosmosBechAddressToJSON,
+    EnrichedCosmosBechAddressToJSONTyped,
+} from './EnrichedCosmosBechAddress';
 import type { TransferDirection } from './TransferDirection';
 import {
     TransferDirectionFromJSON,
     TransferDirectionFromJSONTyped,
     TransferDirectionToJSON,
+    TransferDirectionToJSONTyped,
 } from './TransferDirection';
 
 /**
@@ -89,15 +92,13 @@ export type CosmosNativeTransferDetailsTypeEnum = typeof CosmosNativeTransferDet
 /**
  * Check if a given object implements the CosmosNativeTransferDetails interface.
  */
-export function instanceOfCosmosNativeTransferDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "transactionData" in value;
-    isInstance = isInstance && "direction" in value;
-    isInstance = isInstance && "sender" in value;
-    isInstance = isInstance && "recipient" in value;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfCosmosNativeTransferDetails(value: object): value is CosmosNativeTransferDetails {
+    if (!('transactionData' in value) || value['transactionData'] === undefined) return false;
+    if (!('direction' in value) || value['direction'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    if (!('recipient' in value) || value['recipient'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function CosmosNativeTransferDetailsFromJSON(json: any): CosmosNativeTransferDetails {
@@ -105,7 +106,7 @@ export function CosmosNativeTransferDetailsFromJSON(json: any): CosmosNativeTran
 }
 
 export function CosmosNativeTransferDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosNativeTransferDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -114,26 +115,28 @@ export function CosmosNativeTransferDetailsFromJSONTyped(json: any, ignoreDiscri
         'direction': TransferDirectionFromJSON(json['direction']),
         'sender': EnrichedCosmosBechAddressFromJSON(json['sender']),
         'recipient': EnrichedCosmosBechAddressFromJSON(json['recipient']),
-        'isInternal': !exists(json, 'is_internal') ? undefined : json['is_internal'],
+        'isInternal': json['is_internal'] == null ? undefined : json['is_internal'],
         'type': json['type'],
     };
 }
 
-export function CosmosNativeTransferDetailsToJSON(value?: CosmosNativeTransferDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosNativeTransferDetailsToJSON(json: any): CosmosNativeTransferDetails {
+    return CosmosNativeTransferDetailsToJSONTyped(json, false);
+}
+
+export function CosmosNativeTransferDetailsToJSONTyped(value?: CosmosNativeTransferDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'transaction_data': MessagesListToJSON(value.transactionData),
-        'direction': TransferDirectionToJSON(value.direction),
-        'sender': EnrichedCosmosBechAddressToJSON(value.sender),
-        'recipient': EnrichedCosmosBechAddressToJSON(value.recipient),
-        'is_internal': value.isInternal,
-        'type': value.type,
+        'transaction_data': MessagesListToJSON(value['transactionData']),
+        'direction': TransferDirectionToJSON(value['direction']),
+        'sender': EnrichedCosmosBechAddressToJSON(value['sender']),
+        'recipient': EnrichedCosmosBechAddressToJSON(value['recipient']),
+        'is_internal': value['isInternal'],
+        'type': value['type'],
     };
 }
 

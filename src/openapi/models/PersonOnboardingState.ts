@@ -27,6 +27,17 @@ export const PersonOnboardingState = {
 export type PersonOnboardingState = typeof PersonOnboardingState[keyof typeof PersonOnboardingState];
 
 
+export function instanceOfPersonOnboardingState(value: any): boolean {
+    for (const key in PersonOnboardingState) {
+        if (Object.prototype.hasOwnProperty.call(PersonOnboardingState, key)) {
+            if (PersonOnboardingState[key as keyof typeof PersonOnboardingState] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function PersonOnboardingStateFromJSON(json: any): PersonOnboardingState {
     return PersonOnboardingStateFromJSONTyped(json, false);
 }
@@ -37,5 +48,9 @@ export function PersonOnboardingStateFromJSONTyped(json: any, ignoreDiscriminato
 
 export function PersonOnboardingStateToJSON(value?: PersonOnboardingState | null): any {
     return value as any;
+}
+
+export function PersonOnboardingStateToJSONTyped(value: any, ignoreDiscriminator: boolean): PersonOnboardingState {
+    return value as PersonOnboardingState;
 }
 

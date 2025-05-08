@@ -22,19 +22,34 @@ export const CosmosBech32Prefix = {
     akash: 'akash',
     archway: 'archway',
     axelar: 'axelar',
+    bbn: 'bbn',
     celestia: 'celestia',
     cosmos: 'cosmos',
     dydx: 'dydx',
     dym: 'dym',
     inj: 'inj',
     neutron: 'neutron',
+    nillion: 'nillion',
     noble: 'noble',
     osmo: 'osmo',
     sei: 'sei',
-    stride: 'stride'
+    stride: 'stride',
+    thor: 'thor',
+    mantra: 'mantra'
 } as const;
 export type CosmosBech32Prefix = typeof CosmosBech32Prefix[keyof typeof CosmosBech32Prefix];
 
+
+export function instanceOfCosmosBech32Prefix(value: any): boolean {
+    for (const key in CosmosBech32Prefix) {
+        if (Object.prototype.hasOwnProperty.call(CosmosBech32Prefix, key)) {
+            if (CosmosBech32Prefix[key as keyof typeof CosmosBech32Prefix] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 export function CosmosBech32PrefixFromJSON(json: any): CosmosBech32Prefix {
     return CosmosBech32PrefixFromJSONTyped(json, false);
@@ -46,5 +61,9 @@ export function CosmosBech32PrefixFromJSONTyped(json: any, ignoreDiscriminator: 
 
 export function CosmosBech32PrefixToJSON(value?: CosmosBech32Prefix | null): any {
     return value as any;
+}
+
+export function CosmosBech32PrefixToJSONTyped(value: any, ignoreDiscriminator: boolean): CosmosBech32Prefix {
+    return value as CosmosBech32Prefix;
 }
 

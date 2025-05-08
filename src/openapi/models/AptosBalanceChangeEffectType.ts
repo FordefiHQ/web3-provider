@@ -24,6 +24,17 @@ export const AptosBalanceChangeEffectType = {
 export type AptosBalanceChangeEffectType = typeof AptosBalanceChangeEffectType[keyof typeof AptosBalanceChangeEffectType];
 
 
+export function instanceOfAptosBalanceChangeEffectType(value: any): boolean {
+    for (const key in AptosBalanceChangeEffectType) {
+        if (Object.prototype.hasOwnProperty.call(AptosBalanceChangeEffectType, key)) {
+            if (AptosBalanceChangeEffectType[key as keyof typeof AptosBalanceChangeEffectType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function AptosBalanceChangeEffectTypeFromJSON(json: any): AptosBalanceChangeEffectType {
     return AptosBalanceChangeEffectTypeFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function AptosBalanceChangeEffectTypeFromJSONTyped(json: any, ignoreDiscr
 
 export function AptosBalanceChangeEffectTypeToJSON(value?: AptosBalanceChangeEffectType | null): any {
     return value as any;
+}
+
+export function AptosBalanceChangeEffectTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): AptosBalanceChangeEffectType {
+    return value as AptosBalanceChangeEffectType;
 }
 

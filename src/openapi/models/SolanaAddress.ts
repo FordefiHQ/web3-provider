@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { SolanaChain } from './SolanaChain';
 import {
     SolanaChainFromJSON,
     SolanaChainFromJSONTyped,
     SolanaChainToJSON,
+    SolanaChainToJSONTyped,
 } from './SolanaChain';
 
 /**
@@ -43,12 +44,10 @@ export interface SolanaAddress {
 /**
  * Check if a given object implements the SolanaAddress interface.
  */
-export function instanceOfSolanaAddress(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "base58Repr" in value;
-
-    return isInstance;
+export function instanceOfSolanaAddress(value: object): value is SolanaAddress {
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('base58Repr' in value) || value['base58Repr'] === undefined) return false;
+    return true;
 }
 
 export function SolanaAddressFromJSON(json: any): SolanaAddress {
@@ -56,7 +55,7 @@ export function SolanaAddressFromJSON(json: any): SolanaAddress {
 }
 
 export function SolanaAddressFromJSONTyped(json: any, ignoreDiscriminator: boolean): SolanaAddress {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -66,17 +65,19 @@ export function SolanaAddressFromJSONTyped(json: any, ignoreDiscriminator: boole
     };
 }
 
-export function SolanaAddressToJSON(value?: SolanaAddress | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SolanaAddressToJSON(json: any): SolanaAddress {
+    return SolanaAddressToJSONTyped(json, false);
+}
+
+export function SolanaAddressToJSONTyped(value?: SolanaAddress | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain': SolanaChainToJSON(value.chain),
-        'base58_repr': value.base58Repr,
+        'chain': SolanaChainToJSON(value['chain']),
+        'base58_repr': value['base58Repr'],
     };
 }
 

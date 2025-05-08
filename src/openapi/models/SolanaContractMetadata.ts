@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { Dapp } from './Dapp';
-import {
-    DappFromJSON,
-    DappFromJSONTyped,
-    DappToJSON,
-} from './Dapp';
+import { mapValues } from '../runtime';
 import type { SplToken } from './SplToken';
 import {
     SplTokenFromJSON,
     SplTokenFromJSONTyped,
     SplTokenToJSON,
+    SplTokenToJSONTyped,
 } from './SplToken';
+import type { Dapp } from './Dapp';
+import {
+    DappFromJSON,
+    DappFromJSONTyped,
+    DappToJSON,
+    DappToJSONTyped,
+} from './Dapp';
 
 /**
  * 
@@ -61,11 +63,9 @@ export interface SolanaContractMetadata {
 /**
  * Check if a given object implements the SolanaContractMetadata interface.
  */
-export function instanceOfSolanaContractMetadata(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "isVerified" in value;
-
-    return isInstance;
+export function instanceOfSolanaContractMetadata(value: object): value is SolanaContractMetadata {
+    if (!('isVerified' in value) || value['isVerified'] === undefined) return false;
+    return true;
 }
 
 export function SolanaContractMetadataFromJSON(json: any): SolanaContractMetadata {
@@ -73,31 +73,33 @@ export function SolanaContractMetadataFromJSON(json: any): SolanaContractMetadat
 }
 
 export function SolanaContractMetadataFromJSONTyped(json: any, ignoreDiscriminator: boolean): SolanaContractMetadata {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'dapp': !exists(json, 'dapp') ? undefined : DappFromJSON(json['dapp']),
+        'name': json['name'] == null ? undefined : json['name'],
+        'dapp': json['dapp'] == null ? undefined : DappFromJSON(json['dapp']),
         'isVerified': json['is_verified'],
-        'token': !exists(json, 'token') ? undefined : SplTokenFromJSON(json['token']),
+        'token': json['token'] == null ? undefined : SplTokenFromJSON(json['token']),
     };
 }
 
-export function SolanaContractMetadataToJSON(value?: SolanaContractMetadata | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SolanaContractMetadataToJSON(json: any): SolanaContractMetadata {
+    return SolanaContractMetadataToJSONTyped(json, false);
+}
+
+export function SolanaContractMetadataToJSONTyped(value?: SolanaContractMetadata | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'dapp': DappToJSON(value.dapp),
-        'is_verified': value.isVerified,
-        'token': SplTokenToJSON(value.token),
+        'name': value['name'],
+        'dapp': DappToJSON(value['dapp']),
+        'is_verified': value['isVerified'],
+        'token': SplTokenToJSON(value['token']),
     };
 }
 

@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { CreateBatchTransactionInstanceResponse } from './CreateBatchTransactionInstanceResponse';
 import {
     CreateBatchTransactionInstanceResponseFromJSON,
     CreateBatchTransactionInstanceResponseFromJSONTyped,
     CreateBatchTransactionInstanceResponseToJSON,
+    CreateBatchTransactionInstanceResponseToJSONTyped,
 } from './CreateBatchTransactionInstanceResponse';
 
 /**
@@ -43,12 +44,10 @@ export interface CreateBatchTransactionResponse {
 /**
  * Check if a given object implements the CreateBatchTransactionResponse interface.
  */
-export function instanceOfCreateBatchTransactionResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "batchId" in value;
-    isInstance = isInstance && "transactions" in value;
-
-    return isInstance;
+export function instanceOfCreateBatchTransactionResponse(value: object): value is CreateBatchTransactionResponse {
+    if (!('batchId' in value) || value['batchId'] === undefined) return false;
+    if (!('transactions' in value) || value['transactions'] === undefined) return false;
+    return true;
 }
 
 export function CreateBatchTransactionResponseFromJSON(json: any): CreateBatchTransactionResponse {
@@ -56,7 +55,7 @@ export function CreateBatchTransactionResponseFromJSON(json: any): CreateBatchTr
 }
 
 export function CreateBatchTransactionResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateBatchTransactionResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -66,17 +65,19 @@ export function CreateBatchTransactionResponseFromJSONTyped(json: any, ignoreDis
     };
 }
 
-export function CreateBatchTransactionResponseToJSON(value?: CreateBatchTransactionResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateBatchTransactionResponseToJSON(json: any): CreateBatchTransactionResponse {
+    return CreateBatchTransactionResponseToJSONTyped(json, false);
+}
+
+export function CreateBatchTransactionResponseToJSONTyped(value?: CreateBatchTransactionResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'batch_id': value.batchId,
-        'transactions': ((value.transactions as Array<any>).map(CreateBatchTransactionInstanceResponseToJSON)),
+        'batch_id': value['batchId'],
+        'transactions': ((value['transactions'] as Array<any>).map(CreateBatchTransactionInstanceResponseToJSON)),
     };
 }
 

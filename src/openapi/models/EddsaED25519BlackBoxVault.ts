@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -40,11 +40,9 @@ export type EddsaED25519BlackBoxVaultTypeEnum = typeof EddsaED25519BlackBoxVault
 /**
  * Check if a given object implements the EddsaED25519BlackBoxVault interface.
  */
-export function instanceOfEddsaED25519BlackBoxVault(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfEddsaED25519BlackBoxVault(value: object): value is EddsaED25519BlackBoxVault {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function EddsaED25519BlackBoxVaultFromJSON(json: any): EddsaED25519BlackBoxVault {
@@ -52,7 +50,7 @@ export function EddsaED25519BlackBoxVaultFromJSON(json: any): EddsaED25519BlackB
 }
 
 export function EddsaED25519BlackBoxVaultFromJSONTyped(json: any, ignoreDiscriminator: boolean): EddsaED25519BlackBoxVault {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -61,16 +59,18 @@ export function EddsaED25519BlackBoxVaultFromJSONTyped(json: any, ignoreDiscrimi
     };
 }
 
-export function EddsaED25519BlackBoxVaultToJSON(value?: EddsaED25519BlackBoxVault | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EddsaED25519BlackBoxVaultToJSON(json: any): EddsaED25519BlackBoxVault {
+    return EddsaED25519BlackBoxVaultToJSONTyped(json, false);
+}
+
+export function EddsaED25519BlackBoxVaultToJSONTyped(value?: EddsaED25519BlackBoxVault | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
+        'type': value['type'],
     };
 }
 

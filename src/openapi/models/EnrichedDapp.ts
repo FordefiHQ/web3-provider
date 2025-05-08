@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedChain } from './EnrichedChain';
 import {
     EnrichedChainFromJSON,
     EnrichedChainFromJSONTyped,
     EnrichedChainToJSON,
+    EnrichedChainToJSONTyped,
 } from './EnrichedChain';
 
 /**
@@ -61,13 +62,11 @@ export interface EnrichedDapp {
 /**
  * Check if a given object implements the EnrichedDapp interface.
  */
-export function instanceOfEnrichedDapp(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfEnrichedDapp(value: object): value is EnrichedDapp {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function EnrichedDappFromJSON(json: any): EnrichedDapp {
@@ -75,33 +74,35 @@ export function EnrichedDappFromJSON(json: any): EnrichedDapp {
 }
 
 export function EnrichedDappFromJSONTyped(json: any, ignoreDiscriminator: boolean): EnrichedDapp {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'id': json['id'],
         'name': json['name'],
-        'url': !exists(json, 'url') ? undefined : json['url'],
-        'logoUrl': !exists(json, 'logo_url') ? undefined : json['logo_url'],
+        'url': json['url'] == null ? undefined : json['url'],
+        'logoUrl': json['logo_url'] == null ? undefined : json['logo_url'],
         'chain': EnrichedChainFromJSON(json['chain']),
     };
 }
 
-export function EnrichedDappToJSON(value?: EnrichedDapp | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EnrichedDappToJSON(json: any): EnrichedDapp {
+    return EnrichedDappToJSONTyped(json, false);
+}
+
+export function EnrichedDappToJSONTyped(value?: EnrichedDapp | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'name': value.name,
-        'url': value.url,
-        'logo_url': value.logoUrl,
-        'chain': EnrichedChainToJSON(value.chain),
+        'id': value['id'],
+        'name': value['name'],
+        'url': value['url'],
+        'logo_url': value['logoUrl'],
+        'chain': EnrichedChainToJSON(value['chain']),
     };
 }
 

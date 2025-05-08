@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AptosChainUniqueId } from './AptosChainUniqueId';
 import {
     AptosChainUniqueIdFromJSON,
     AptosChainUniqueIdFromJSONTyped,
     AptosChainUniqueIdToJSON,
+    AptosChainUniqueIdToJSONTyped,
 } from './AptosChainUniqueId';
 
 /**
@@ -71,15 +72,13 @@ export type AptosSuggestedFeesTypeEnum = typeof AptosSuggestedFeesTypeEnum[keyof
 /**
  * Check if a given object implements the AptosSuggestedFees interface.
  */
-export function instanceOfAptosSuggestedFees(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "low" in value;
-    isInstance = isInstance && "medium" in value;
-    isInstance = isInstance && "high" in value;
-    isInstance = isInstance && "chainUniqueId" in value;
-
-    return isInstance;
+export function instanceOfAptosSuggestedFees(value: object): value is AptosSuggestedFees {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('low' in value) || value['low'] === undefined) return false;
+    if (!('medium' in value) || value['medium'] === undefined) return false;
+    if (!('high' in value) || value['high'] === undefined) return false;
+    if (!('chainUniqueId' in value) || value['chainUniqueId'] === undefined) return false;
+    return true;
 }
 
 export function AptosSuggestedFeesFromJSON(json: any): AptosSuggestedFees {
@@ -87,7 +86,7 @@ export function AptosSuggestedFeesFromJSON(json: any): AptosSuggestedFees {
 }
 
 export function AptosSuggestedFeesFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosSuggestedFees {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -100,20 +99,22 @@ export function AptosSuggestedFeesFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-export function AptosSuggestedFeesToJSON(value?: AptosSuggestedFees | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AptosSuggestedFeesToJSON(json: any): AptosSuggestedFees {
+    return AptosSuggestedFeesToJSONTyped(json, false);
+}
+
+export function AptosSuggestedFeesToJSONTyped(value?: AptosSuggestedFees | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'low': value.low,
-        'medium': value.medium,
-        'high': value.high,
-        'chain_unique_id': AptosChainUniqueIdToJSON(value.chainUniqueId),
+        'type': value['type'],
+        'low': value['low'],
+        'medium': value['medium'],
+        'high': value['high'],
+        'chain_unique_id': AptosChainUniqueIdToJSON(value['chainUniqueId']),
     };
 }
 

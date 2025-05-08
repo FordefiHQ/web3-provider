@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -30,11 +30,9 @@ export interface CreateDeviceRequest {
 /**
  * Check if a given object implements the CreateDeviceRequest interface.
  */
-export function instanceOfCreateDeviceRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "userId" in value;
-
-    return isInstance;
+export function instanceOfCreateDeviceRequest(value: object): value is CreateDeviceRequest {
+    if (!('userId' in value) || value['userId'] === undefined) return false;
+    return true;
 }
 
 export function CreateDeviceRequestFromJSON(json: any): CreateDeviceRequest {
@@ -42,7 +40,7 @@ export function CreateDeviceRequestFromJSON(json: any): CreateDeviceRequest {
 }
 
 export function CreateDeviceRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateDeviceRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -51,16 +49,18 @@ export function CreateDeviceRequestFromJSONTyped(json: any, ignoreDiscriminator:
     };
 }
 
-export function CreateDeviceRequestToJSON(value?: CreateDeviceRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateDeviceRequestToJSON(json: any): CreateDeviceRequest {
+    return CreateDeviceRequestToJSONTyped(json, false);
+}
+
+export function CreateDeviceRequestToJSONTyped(value?: CreateDeviceRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'user_id': value.userId,
+        'user_id': value['userId'],
     };
 }
 

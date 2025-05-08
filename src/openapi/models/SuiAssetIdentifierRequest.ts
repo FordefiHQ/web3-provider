@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { SuiAssetIdentifierDetails } from './SuiAssetIdentifierDetails';
 import {
     SuiAssetIdentifierDetailsFromJSON,
     SuiAssetIdentifierDetailsFromJSONTyped,
     SuiAssetIdentifierDetailsToJSON,
+    SuiAssetIdentifierDetailsToJSONTyped,
 } from './SuiAssetIdentifierDetails';
 
 /**
@@ -53,12 +54,10 @@ export type SuiAssetIdentifierRequestTypeEnum = typeof SuiAssetIdentifierRequest
 /**
  * Check if a given object implements the SuiAssetIdentifierRequest interface.
  */
-export function instanceOfSuiAssetIdentifierRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "details" in value;
-
-    return isInstance;
+export function instanceOfSuiAssetIdentifierRequest(value: object): value is SuiAssetIdentifierRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    return true;
 }
 
 export function SuiAssetIdentifierRequestFromJSON(json: any): SuiAssetIdentifierRequest {
@@ -66,7 +65,7 @@ export function SuiAssetIdentifierRequestFromJSON(json: any): SuiAssetIdentifier
 }
 
 export function SuiAssetIdentifierRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiAssetIdentifierRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function SuiAssetIdentifierRequestFromJSONTyped(json: any, ignoreDiscrimi
     };
 }
 
-export function SuiAssetIdentifierRequestToJSON(value?: SuiAssetIdentifierRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiAssetIdentifierRequestToJSON(json: any): SuiAssetIdentifierRequest {
+    return SuiAssetIdentifierRequestToJSONTyped(json, false);
+}
+
+export function SuiAssetIdentifierRequestToJSONTyped(value?: SuiAssetIdentifierRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'details': SuiAssetIdentifierDetailsToJSON(value.details),
+        'type': value['type'],
+        'details': SuiAssetIdentifierDetailsToJSON(value['details']),
     };
 }
 

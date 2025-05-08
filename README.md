@@ -123,8 +123,8 @@ interface FordefiProviderConfig {
    * Chain ID as a number or a named chain.
    *
    * For example, assuming Ethereum Sepolia chain:
-   * - Numeric value: `EvmChainId.NUMBER_11155111` or `11155111`
-   * - Named chain: `EvmChainUniqueId.ethereumSepolia` or 'evm_ethereum_sepolia'.
+   * - Numeric value: 11155111.
+   * - Named chain: 'evm_ethereum_sepolia'.
    */
   chainId: EvmChainId | EvmChainUniqueId;
 

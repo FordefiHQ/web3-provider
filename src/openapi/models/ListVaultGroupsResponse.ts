@@ -12,12 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { PartialErrorResponse } from './PartialErrorResponse';
+import {
+    PartialErrorResponseFromJSON,
+    PartialErrorResponseFromJSONTyped,
+    PartialErrorResponseToJSON,
+    PartialErrorResponseToJSONTyped,
+} from './PartialErrorResponse';
 import type { VaultGroup } from './VaultGroup';
 import {
     VaultGroupFromJSON,
     VaultGroupFromJSONTyped,
     VaultGroupToJSON,
+    VaultGroupToJSONTyped,
 } from './VaultGroup';
 
 /**
@@ -26,6 +34,12 @@ import {
  * @interface ListVaultGroupsResponse
  */
 export interface ListVaultGroupsResponse {
+    /**
+     * 
+     * @type {PartialErrorResponse}
+     * @memberof ListVaultGroupsResponse
+     */
+    partialError?: PartialErrorResponse;
     /**
      * 
      * @type {number}
@@ -55,14 +69,12 @@ export interface ListVaultGroupsResponse {
 /**
  * Check if a given object implements the ListVaultGroupsResponse interface.
  */
-export function instanceOfListVaultGroupsResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "total" in value;
-    isInstance = isInstance && "page" in value;
-    isInstance = isInstance && "size" in value;
-    isInstance = isInstance && "vaultGroups" in value;
-
-    return isInstance;
+export function instanceOfListVaultGroupsResponse(value: object): value is ListVaultGroupsResponse {
+    if (!('total' in value) || value['total'] === undefined) return false;
+    if (!('page' in value) || value['page'] === undefined) return false;
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('vaultGroups' in value) || value['vaultGroups'] === undefined) return false;
+    return true;
 }
 
 export function ListVaultGroupsResponseFromJSON(json: any): ListVaultGroupsResponse {
@@ -70,11 +82,12 @@ export function ListVaultGroupsResponseFromJSON(json: any): ListVaultGroupsRespo
 }
 
 export function ListVaultGroupsResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): ListVaultGroupsResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
+        'partialError': json['partial_error'] == null ? undefined : PartialErrorResponseFromJSON(json['partial_error']),
         'total': json['total'],
         'page': json['page'],
         'size': json['size'],
@@ -82,19 +95,22 @@ export function ListVaultGroupsResponseFromJSONTyped(json: any, ignoreDiscrimina
     };
 }
 
-export function ListVaultGroupsResponseToJSON(value?: ListVaultGroupsResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ListVaultGroupsResponseToJSON(json: any): ListVaultGroupsResponse {
+    return ListVaultGroupsResponseToJSONTyped(json, false);
+}
+
+export function ListVaultGroupsResponseToJSONTyped(value?: ListVaultGroupsResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'total': value.total,
-        'page': value.page,
-        'size': value.size,
-        'vault_groups': ((value.vaultGroups as Array<any>).map(VaultGroupToJSON)),
+        'partial_error': PartialErrorResponseToJSON(value['partialError']),
+        'total': value['total'],
+        'page': value['page'],
+        'size': value['size'],
+        'vault_groups': ((value['vaultGroups'] as Array<any>).map(VaultGroupToJSON)),
     };
 }
 

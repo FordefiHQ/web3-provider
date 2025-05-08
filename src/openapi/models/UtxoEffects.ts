@@ -12,36 +12,41 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { Price } from './Price';
-import {
-    PriceFromJSON,
-    PriceFromJSONTyped,
-    PriceToJSON,
-} from './Price';
+import { mapValues } from '../runtime';
 import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
     PricedAssetFromJSONTyped,
     PricedAssetToJSON,
+    PricedAssetToJSONTyped,
 } from './PricedAsset';
+import type { Price } from './Price';
+import {
+    PriceFromJSON,
+    PriceFromJSONTyped,
+    PriceToJSON,
+    PriceToJSONTyped,
+} from './Price';
 import type { UtxoBalanceChangeEffect } from './UtxoBalanceChangeEffect';
 import {
     UtxoBalanceChangeEffectFromJSON,
     UtxoBalanceChangeEffectFromJSONTyped,
     UtxoBalanceChangeEffectToJSON,
+    UtxoBalanceChangeEffectToJSONTyped,
 } from './UtxoBalanceChangeEffect';
 import type { UtxoInput } from './UtxoInput';
 import {
     UtxoInputFromJSON,
     UtxoInputFromJSONTyped,
     UtxoInputToJSON,
+    UtxoInputToJSONTyped,
 } from './UtxoInput';
 import type { UtxoOutput } from './UtxoOutput';
 import {
     UtxoOutputFromJSON,
     UtxoOutputFromJSONTyped,
     UtxoOutputToJSON,
+    UtxoOutputToJSONTyped,
 } from './UtxoOutput';
 
 /**
@@ -91,15 +96,13 @@ export interface UtxoEffects {
 /**
  * Check if a given object implements the UtxoEffects interface.
  */
-export function instanceOfUtxoEffects(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "inputs" in value;
-    isInstance = isInstance && "outputs" in value;
-    isInstance = isInstance && "balanceChanges" in value;
-    isInstance = isInstance && "totalValue" in value;
-    isInstance = isInstance && "pricedAsset" in value;
-
-    return isInstance;
+export function instanceOfUtxoEffects(value: object): value is UtxoEffects {
+    if (!('inputs' in value) || value['inputs'] === undefined) return false;
+    if (!('outputs' in value) || value['outputs'] === undefined) return false;
+    if (!('balanceChanges' in value) || value['balanceChanges'] === undefined) return false;
+    if (!('totalValue' in value) || value['totalValue'] === undefined) return false;
+    if (!('pricedAsset' in value) || value['pricedAsset'] === undefined) return false;
+    return true;
 }
 
 export function UtxoEffectsFromJSON(json: any): UtxoEffects {
@@ -107,7 +110,7 @@ export function UtxoEffectsFromJSON(json: any): UtxoEffects {
 }
 
 export function UtxoEffectsFromJSONTyped(json: any, ignoreDiscriminator: boolean): UtxoEffects {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -116,26 +119,28 @@ export function UtxoEffectsFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'outputs': ((json['outputs'] as Array<any>).map(UtxoOutputFromJSON)),
         'balanceChanges': ((json['balance_changes'] as Array<any>).map(UtxoBalanceChangeEffectFromJSON)),
         'totalValue': json['total_value'],
-        'price': !exists(json, 'price') ? undefined : PriceFromJSON(json['price']),
+        'price': json['price'] == null ? undefined : PriceFromJSON(json['price']),
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }
 
-export function UtxoEffectsToJSON(value?: UtxoEffects | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UtxoEffectsToJSON(json: any): UtxoEffects {
+    return UtxoEffectsToJSONTyped(json, false);
+}
+
+export function UtxoEffectsToJSONTyped(value?: UtxoEffects | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'inputs': ((value.inputs as Array<any>).map(UtxoInputToJSON)),
-        'outputs': ((value.outputs as Array<any>).map(UtxoOutputToJSON)),
-        'balance_changes': ((value.balanceChanges as Array<any>).map(UtxoBalanceChangeEffectToJSON)),
-        'total_value': value.totalValue,
-        'price': PriceToJSON(value.price),
-        'priced_asset': PricedAssetToJSON(value.pricedAsset),
+        'inputs': ((value['inputs'] as Array<any>).map(UtxoInputToJSON)),
+        'outputs': ((value['outputs'] as Array<any>).map(UtxoOutputToJSON)),
+        'balance_changes': ((value['balanceChanges'] as Array<any>).map(UtxoBalanceChangeEffectToJSON)),
+        'total_value': value['totalValue'],
+        'price': PriceToJSON(value['price']),
+        'priced_asset': PricedAssetToJSON(value['pricedAsset']),
     };
 }
 

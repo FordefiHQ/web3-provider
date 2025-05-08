@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { SignTransactionErrorType } from './SignTransactionErrorType';
 import {
     SignTransactionErrorTypeFromJSON,
     SignTransactionErrorTypeFromJSONTyped,
     SignTransactionErrorTypeToJSON,
+    SignTransactionErrorTypeToJSONTyped,
 } from './SignTransactionErrorType';
 
 /**
@@ -58,15 +59,15 @@ export interface DefinedPreconditionErrorSignTransactionErrorType {
     errorType?: SignTransactionErrorType;
 }
 
+
+
 /**
  * Check if a given object implements the DefinedPreconditionErrorSignTransactionErrorType interface.
  */
-export function instanceOfDefinedPreconditionErrorSignTransactionErrorType(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "title" in value;
-    isInstance = isInstance && "detail" in value;
-
-    return isInstance;
+export function instanceOfDefinedPreconditionErrorSignTransactionErrorType(value: object): value is DefinedPreconditionErrorSignTransactionErrorType {
+    if (!('title' in value) || value['title'] === undefined) return false;
+    if (!('detail' in value) || value['detail'] === undefined) return false;
+    return true;
 }
 
 export function DefinedPreconditionErrorSignTransactionErrorTypeFromJSON(json: any): DefinedPreconditionErrorSignTransactionErrorType {
@@ -74,33 +75,35 @@ export function DefinedPreconditionErrorSignTransactionErrorTypeFromJSON(json: a
 }
 
 export function DefinedPreconditionErrorSignTransactionErrorTypeFromJSONTyped(json: any, ignoreDiscriminator: boolean): DefinedPreconditionErrorSignTransactionErrorType {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'title': json['title'],
         'detail': json['detail'],
-        'requestId': !exists(json, 'request_id') ? undefined : json['request_id'],
-        'systemErrorCode': !exists(json, 'system_error_code') ? undefined : json['system_error_code'],
-        'errorType': !exists(json, 'error_type') ? undefined : SignTransactionErrorTypeFromJSON(json['error_type']),
+        'requestId': json['request_id'] == null ? undefined : json['request_id'],
+        'systemErrorCode': json['system_error_code'] == null ? undefined : json['system_error_code'],
+        'errorType': json['error_type'] == null ? undefined : SignTransactionErrorTypeFromJSON(json['error_type']),
     };
 }
 
-export function DefinedPreconditionErrorSignTransactionErrorTypeToJSON(value?: DefinedPreconditionErrorSignTransactionErrorType | null): any {
-    if (value === undefined) {
-        return undefined;
+export function DefinedPreconditionErrorSignTransactionErrorTypeToJSON(json: any): DefinedPreconditionErrorSignTransactionErrorType {
+    return DefinedPreconditionErrorSignTransactionErrorTypeToJSONTyped(json, false);
+}
+
+export function DefinedPreconditionErrorSignTransactionErrorTypeToJSONTyped(value?: DefinedPreconditionErrorSignTransactionErrorType | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'title': value.title,
-        'detail': value.detail,
-        'request_id': value.requestId,
-        'system_error_code': value.systemErrorCode,
-        'error_type': SignTransactionErrorTypeToJSON(value.errorType),
+        'title': value['title'],
+        'detail': value['detail'],
+        'request_id': value['requestId'],
+        'system_error_code': value['systemErrorCode'],
+        'error_type': SignTransactionErrorTypeToJSON(value['errorType']),
     };
 }
 

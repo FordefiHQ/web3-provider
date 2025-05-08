@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedAptosAddress } from './EnrichedAptosAddress';
 import {
     EnrichedAptosAddressFromJSON,
     EnrichedAptosAddressFromJSONTyped,
     EnrichedAptosAddressToJSON,
+    EnrichedAptosAddressToJSONTyped,
 } from './EnrichedAptosAddress';
 
 /**
@@ -53,12 +54,10 @@ export type AptosEntryPointDetailsTypeEnum = typeof AptosEntryPointDetailsTypeEn
 /**
  * Check if a given object implements the AptosEntryPointDetails interface.
  */
-export function instanceOfAptosEntryPointDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "recipient" in value;
-
-    return isInstance;
+export function instanceOfAptosEntryPointDetails(value: object): value is AptosEntryPointDetails {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('recipient' in value) || value['recipient'] === undefined) return false;
+    return true;
 }
 
 export function AptosEntryPointDetailsFromJSON(json: any): AptosEntryPointDetails {
@@ -66,7 +65,7 @@ export function AptosEntryPointDetailsFromJSON(json: any): AptosEntryPointDetail
 }
 
 export function AptosEntryPointDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosEntryPointDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function AptosEntryPointDetailsFromJSONTyped(json: any, ignoreDiscriminat
     };
 }
 
-export function AptosEntryPointDetailsToJSON(value?: AptosEntryPointDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AptosEntryPointDetailsToJSON(json: any): AptosEntryPointDetails {
+    return AptosEntryPointDetailsToJSONTyped(json, false);
+}
+
+export function AptosEntryPointDetailsToJSONTyped(value?: AptosEntryPointDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'recipient': EnrichedAptosAddressToJSON(value.recipient),
+        'type': value['type'],
+        'recipient': EnrichedAptosAddressToJSON(value['recipient']),
     };
 }
 

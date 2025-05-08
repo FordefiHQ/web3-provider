@@ -12,58 +12,70 @@
  * Do not edit the class manually.
  */
 
+import type { CreateEvmPersonalMessageRequest } from './CreateEvmPersonalMessageRequest';
 import {
-    CreateEvmPersonalMessageRequest,
     instanceOfCreateEvmPersonalMessageRequest,
     CreateEvmPersonalMessageRequestFromJSON,
     CreateEvmPersonalMessageRequestFromJSONTyped,
     CreateEvmPersonalMessageRequestToJSON,
 } from './CreateEvmPersonalMessageRequest';
+import type { CreateEvmTypedMessageRequest } from './CreateEvmTypedMessageRequest';
 import {
-    CreateEvmTypedMessageRequest,
     instanceOfCreateEvmTypedMessageRequest,
     CreateEvmTypedMessageRequestFromJSON,
     CreateEvmTypedMessageRequestFromJSONTyped,
     CreateEvmTypedMessageRequestToJSON,
 } from './CreateEvmTypedMessageRequest';
+import type { CreateEvmTypedV1MessageRequest } from './CreateEvmTypedV1MessageRequest';
+import {
+    instanceOfCreateEvmTypedV1MessageRequest,
+    CreateEvmTypedV1MessageRequestFromJSON,
+    CreateEvmTypedV1MessageRequestFromJSONTyped,
+    CreateEvmTypedV1MessageRequestToJSON,
+} from './CreateEvmTypedV1MessageRequest';
 
 /**
  * @type CreateEvmMessageRequestDetails
  * 
  * @export
  */
-export type CreateEvmMessageRequestDetails = { type: 'personal_message_type' } & CreateEvmPersonalMessageRequest | { type: 'typed_message_type' } & CreateEvmTypedMessageRequest;
+export type CreateEvmMessageRequestDetails = { type: 'personal_message_type' } & CreateEvmPersonalMessageRequest | { type: 'typed_message_type' } & CreateEvmTypedMessageRequest | { type: 'typed_message_type_v1' } & CreateEvmTypedV1MessageRequest;
 
 export function CreateEvmMessageRequestDetailsFromJSON(json: any): CreateEvmMessageRequestDetails {
     return CreateEvmMessageRequestDetailsFromJSONTyped(json, false);
 }
 
 export function CreateEvmMessageRequestDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateEvmMessageRequestDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'personal_message_type':
-            return {...CreateEvmPersonalMessageRequestFromJSONTyped(json, true), type: 'personal_message_type'};
+            return Object.assign({}, CreateEvmPersonalMessageRequestFromJSONTyped(json, true), { type: 'personal_message_type' } as const);
         case 'typed_message_type':
-            return {...CreateEvmTypedMessageRequestFromJSONTyped(json, true), type: 'typed_message_type'};
+            return Object.assign({}, CreateEvmTypedMessageRequestFromJSONTyped(json, true), { type: 'typed_message_type' } as const);
+        case 'typed_message_type_v1':
+            return Object.assign({}, CreateEvmTypedV1MessageRequestFromJSONTyped(json, true), { type: 'typed_message_type_v1' } as const);
         default:
             throw new Error(`No variant of CreateEvmMessageRequestDetails exists with 'type=${json['type']}'`);
     }
 }
 
-export function CreateEvmMessageRequestDetailsToJSON(value?: CreateEvmMessageRequestDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function CreateEvmMessageRequestDetailsToJSON(json: any): any {
+    return CreateEvmMessageRequestDetailsToJSONTyped(json, false);
+}
+
+export function CreateEvmMessageRequestDetailsToJSONTyped(value?: CreateEvmMessageRequestDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'personal_message_type':
-            return CreateEvmPersonalMessageRequestToJSON(value);
+            return Object.assign({}, CreateEvmPersonalMessageRequestToJSON(value), { type: 'personal_message_type' } as const);
         case 'typed_message_type':
-            return CreateEvmTypedMessageRequestToJSON(value);
+            return Object.assign({}, CreateEvmTypedMessageRequestToJSON(value), { type: 'typed_message_type' } as const);
+        case 'typed_message_type_v1':
+            return Object.assign({}, CreateEvmTypedV1MessageRequestToJSON(value), { type: 'typed_message_type_v1' } as const);
         default:
             throw new Error(`No variant of CreateEvmMessageRequestDetails exists with 'type=${value['type']}'`);
     }

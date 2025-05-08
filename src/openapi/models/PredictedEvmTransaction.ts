@@ -12,73 +12,105 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { EvmSuggestedFees } from './EvmSuggestedFees';
+import {
+    EvmSuggestedFeesFromJSON,
+    EvmSuggestedFeesFromJSONTyped,
+    EvmSuggestedFeesToJSON,
+    EvmSuggestedFeesToJSONTyped,
+} from './EvmSuggestedFees';
+import type { EvmTransactionResult } from './EvmTransactionResult';
+import {
+    EvmTransactionResultFromJSON,
+    EvmTransactionResultFromJSONTyped,
+    EvmTransactionResultToJSON,
+    EvmTransactionResultToJSONTyped,
+} from './EvmTransactionResult';
+import type { AmlPolicyMatchOutgoing } from './AmlPolicyMatchOutgoing';
+import {
+    AmlPolicyMatchOutgoingFromJSON,
+    AmlPolicyMatchOutgoingFromJSONTyped,
+    AmlPolicyMatchOutgoingToJSON,
+    AmlPolicyMatchOutgoingToJSONTyped,
+} from './AmlPolicyMatchOutgoing';
+import type { EvmTransactionGasSubmitted } from './EvmTransactionGasSubmitted';
+import {
+    EvmTransactionGasSubmittedFromJSON,
+    EvmTransactionGasSubmittedFromJSONTyped,
+    EvmTransactionGasSubmittedToJSON,
+    EvmTransactionGasSubmittedToJSONTyped,
+} from './EvmTransactionGasSubmitted';
+import type { EvmTransactionParsedData } from './EvmTransactionParsedData';
+import {
+    EvmTransactionParsedDataFromJSON,
+    EvmTransactionParsedDataFromJSONTyped,
+    EvmTransactionParsedDataToJSON,
+    EvmTransactionParsedDataToJSONTyped,
+} from './EvmTransactionParsedData';
 import type { ApprovalRequest } from './ApprovalRequest';
 import {
     ApprovalRequestFromJSON,
     ApprovalRequestFromJSONTyped,
     ApprovalRequestToJSON,
+    ApprovalRequestToJSONTyped,
 } from './ApprovalRequest';
 import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
 import {
     EnrichedEvmAddressFromJSON,
     EnrichedEvmAddressFromJSONTyped,
     EnrichedEvmAddressToJSON,
+    EnrichedEvmAddressToJSONTyped,
 } from './EnrichedEvmAddress';
-import type { EnrichedEvmChain } from './EnrichedEvmChain';
-import {
-    EnrichedEvmChainFromJSON,
-    EnrichedEvmChainFromJSONTyped,
-    EnrichedEvmChainToJSON,
-} from './EnrichedEvmChain';
-import type { EvmGasEstimation } from './EvmGasEstimation';
-import {
-    EvmGasEstimationFromJSON,
-    EvmGasEstimationFromJSONTyped,
-    EvmGasEstimationToJSON,
-} from './EvmGasEstimation';
-import type { EvmSuggestedFees } from './EvmSuggestedFees';
-import {
-    EvmSuggestedFeesFromJSON,
-    EvmSuggestedFeesFromJSONTyped,
-    EvmSuggestedFeesToJSON,
-} from './EvmSuggestedFees';
-import type { EvmTransactionEvmTransactionTypeDetails } from './EvmTransactionEvmTransactionTypeDetails';
-import {
-    EvmTransactionEvmTransactionTypeDetailsFromJSON,
-    EvmTransactionEvmTransactionTypeDetailsFromJSONTyped,
-    EvmTransactionEvmTransactionTypeDetailsToJSON,
-} from './EvmTransactionEvmTransactionTypeDetails';
-import type { EvmTransactionParsedData } from './EvmTransactionParsedData';
-import {
-    EvmTransactionParsedDataFromJSON,
-    EvmTransactionParsedDataFromJSONTyped,
-    EvmTransactionParsedDataToJSON,
-} from './EvmTransactionParsedData';
-import type { EvmTransactionResult } from './EvmTransactionResult';
-import {
-    EvmTransactionResultFromJSON,
-    EvmTransactionResultFromJSONTyped,
-    EvmTransactionResultToJSON,
-} from './EvmTransactionResult';
 import type { PolicyMatch } from './PolicyMatch';
 import {
     PolicyMatchFromJSON,
     PolicyMatchFromJSONTyped,
     PolicyMatchToJSON,
+    PolicyMatchToJSONTyped,
 } from './PolicyMatch';
-import type { SimulationStatusResult } from './SimulationStatusResult';
-import {
-    SimulationStatusResultFromJSON,
-    SimulationStatusResultFromJSONTyped,
-    SimulationStatusResultToJSON,
-} from './SimulationStatusResult';
 import type { TransactionRisk } from './TransactionRisk';
 import {
     TransactionRiskFromJSON,
     TransactionRiskFromJSONTyped,
     TransactionRiskToJSON,
+    TransactionRiskToJSONTyped,
 } from './TransactionRisk';
+import type { EnrichedEvmChain } from './EnrichedEvmChain';
+import {
+    EnrichedEvmChainFromJSON,
+    EnrichedEvmChainFromJSONTyped,
+    EnrichedEvmChainToJSON,
+    EnrichedEvmChainToJSONTyped,
+} from './EnrichedEvmChain';
+import type { SimulationStatusResult } from './SimulationStatusResult';
+import {
+    SimulationStatusResultFromJSON,
+    SimulationStatusResultFromJSONTyped,
+    SimulationStatusResultToJSON,
+    SimulationStatusResultToJSONTyped,
+} from './SimulationStatusResult';
+import type { EvmTransactionEvmTransactionTypeDetails } from './EvmTransactionEvmTransactionTypeDetails';
+import {
+    EvmTransactionEvmTransactionTypeDetailsFromJSON,
+    EvmTransactionEvmTransactionTypeDetailsFromJSONTyped,
+    EvmTransactionEvmTransactionTypeDetailsToJSON,
+    EvmTransactionEvmTransactionTypeDetailsToJSONTyped,
+} from './EvmTransactionEvmTransactionTypeDetails';
+import type { EvmGasEstimation } from './EvmGasEstimation';
+import {
+    EvmGasEstimationFromJSON,
+    EvmGasEstimationFromJSONTyped,
+    EvmGasEstimationToJSON,
+    EvmGasEstimationToJSONTyped,
+} from './EvmGasEstimation';
+import type { AmlResults } from './AmlResults';
+import {
+    AmlResultsFromJSON,
+    AmlResultsFromJSONTyped,
+    AmlResultsToJSON,
+    AmlResultsToJSONTyped,
+} from './AmlResults';
 
 /**
  * 
@@ -86,6 +118,12 @@ import {
  * @interface PredictedEvmTransaction
  */
 export interface PredictedEvmTransaction {
+    /**
+     * 
+     * @type {AmlPolicyMatchOutgoing}
+     * @memberof PredictedEvmTransaction
+     */
+    amlPolicyMatch?: AmlPolicyMatchOutgoing;
     /**
      * 
      * @type {PolicyMatch}
@@ -104,6 +142,18 @@ export interface PredictedEvmTransaction {
      * @memberof PredictedEvmTransaction
      */
     risks: Array<TransactionRisk>;
+    /**
+     * 
+     * @type {string}
+     * @memberof PredictedEvmTransaction
+     */
+    note?: string;
+    /**
+     * 
+     * @type {AmlResults}
+     * @memberof PredictedEvmTransaction
+     */
+    amlResults?: AmlResults;
     /**
      * 
      * @type {string}
@@ -170,6 +220,12 @@ export interface PredictedEvmTransaction {
      * @memberof PredictedEvmTransaction
      */
     hexData?: string;
+    /**
+     * 
+     * @type {EvmTransactionGasSubmitted}
+     * @memberof PredictedEvmTransaction
+     */
+    gasSubmitted: EvmTransactionGasSubmitted;
 }
 
 
@@ -185,21 +241,20 @@ export type PredictedEvmTransactionTypeEnum = typeof PredictedEvmTransactionType
 /**
  * Check if a given object implements the PredictedEvmTransaction interface.
  */
-export function instanceOfPredictedEvmTransaction(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "policyMatch" in value;
-    isInstance = isInstance && "risks" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "expectedResult" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "simulationStatusResult" in value;
-    isInstance = isInstance && "evmTransactionTypeDetails" in value;
-    isInstance = isInstance && "parsedData" in value;
-    isInstance = isInstance && "suggestedFees" in value;
-    isInstance = isInstance && "sender" in value;
-    isInstance = isInstance && "to" in value;
-
-    return isInstance;
+export function instanceOfPredictedEvmTransaction(value: object): value is PredictedEvmTransaction {
+    if (!('policyMatch' in value) || value['policyMatch'] === undefined) return false;
+    if (!('risks' in value) || value['risks'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('expectedResult' in value) || value['expectedResult'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('simulationStatusResult' in value) || value['simulationStatusResult'] === undefined) return false;
+    if (!('evmTransactionTypeDetails' in value) || value['evmTransactionTypeDetails'] === undefined) return false;
+    if (!('parsedData' in value) || value['parsedData'] === undefined) return false;
+    if (!('suggestedFees' in value) || value['suggestedFees'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    if (!('to' in value) || value['to'] === undefined) return false;
+    if (!('gasSubmitted' in value) || value['gasSubmitted'] === undefined) return false;
+    return true;
 }
 
 export function PredictedEvmTransactionFromJSON(json: any): PredictedEvmTransaction {
@@ -207,51 +262,61 @@ export function PredictedEvmTransactionFromJSON(json: any): PredictedEvmTransact
 }
 
 export function PredictedEvmTransactionFromJSONTyped(json: any, ignoreDiscriminator: boolean): PredictedEvmTransaction {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
+        'amlPolicyMatch': json['aml_policy_match'] == null ? undefined : AmlPolicyMatchOutgoingFromJSON(json['aml_policy_match']),
         'policyMatch': PolicyMatchFromJSON(json['policy_match']),
-        'approvalRequest': !exists(json, 'approval_request') ? undefined : ApprovalRequestFromJSON(json['approval_request']),
+        'approvalRequest': json['approval_request'] == null ? undefined : ApprovalRequestFromJSON(json['approval_request']),
         'risks': ((json['risks'] as Array<any>).map(TransactionRiskFromJSON)),
+        'note': json['note'] == null ? undefined : json['note'],
+        'amlResults': json['aml_results'] == null ? undefined : AmlResultsFromJSON(json['aml_results']),
         'type': json['type'],
         'expectedResult': EvmTransactionResultFromJSON(json['expected_result']),
         'chain': EnrichedEvmChainFromJSON(json['chain']),
         'simulationStatusResult': SimulationStatusResultFromJSON(json['simulation_status_result']),
         'evmTransactionTypeDetails': EvmTransactionEvmTransactionTypeDetailsFromJSON(json['evm_transaction_type_details']),
         'parsedData': EvmTransactionParsedDataFromJSON(json['parsed_data']),
-        'gasEstimation': !exists(json, 'gas_estimation') ? undefined : EvmGasEstimationFromJSON(json['gas_estimation']),
+        'gasEstimation': json['gas_estimation'] == null ? undefined : EvmGasEstimationFromJSON(json['gas_estimation']),
         'suggestedFees': EvmSuggestedFeesFromJSON(json['suggested_fees']),
         'sender': EnrichedEvmAddressFromJSON(json['sender']),
         'to': EnrichedEvmAddressFromJSON(json['to']),
-        'hexData': !exists(json, 'hex_data') ? undefined : json['hex_data'],
+        'hexData': json['hex_data'] == null ? undefined : json['hex_data'],
+        'gasSubmitted': EvmTransactionGasSubmittedFromJSON(json['gas_submitted']),
     };
 }
 
-export function PredictedEvmTransactionToJSON(value?: PredictedEvmTransaction | null): any {
-    if (value === undefined) {
-        return undefined;
+export function PredictedEvmTransactionToJSON(json: any): PredictedEvmTransaction {
+    return PredictedEvmTransactionToJSONTyped(json, false);
+}
+
+export function PredictedEvmTransactionToJSONTyped(value?: PredictedEvmTransaction | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'policy_match': PolicyMatchToJSON(value.policyMatch),
-        'approval_request': ApprovalRequestToJSON(value.approvalRequest),
-        'risks': ((value.risks as Array<any>).map(TransactionRiskToJSON)),
-        'type': value.type,
-        'expected_result': EvmTransactionResultToJSON(value.expectedResult),
-        'chain': EnrichedEvmChainToJSON(value.chain),
-        'simulation_status_result': SimulationStatusResultToJSON(value.simulationStatusResult),
-        'evm_transaction_type_details': EvmTransactionEvmTransactionTypeDetailsToJSON(value.evmTransactionTypeDetails),
-        'parsed_data': EvmTransactionParsedDataToJSON(value.parsedData),
-        'gas_estimation': EvmGasEstimationToJSON(value.gasEstimation),
-        'suggested_fees': EvmSuggestedFeesToJSON(value.suggestedFees),
-        'sender': EnrichedEvmAddressToJSON(value.sender),
-        'to': EnrichedEvmAddressToJSON(value.to),
-        'hex_data': value.hexData,
+        'aml_policy_match': AmlPolicyMatchOutgoingToJSON(value['amlPolicyMatch']),
+        'policy_match': PolicyMatchToJSON(value['policyMatch']),
+        'approval_request': ApprovalRequestToJSON(value['approvalRequest']),
+        'risks': ((value['risks'] as Array<any>).map(TransactionRiskToJSON)),
+        'note': value['note'],
+        'aml_results': AmlResultsToJSON(value['amlResults']),
+        'type': value['type'],
+        'expected_result': EvmTransactionResultToJSON(value['expectedResult']),
+        'chain': EnrichedEvmChainToJSON(value['chain']),
+        'simulation_status_result': SimulationStatusResultToJSON(value['simulationStatusResult']),
+        'evm_transaction_type_details': EvmTransactionEvmTransactionTypeDetailsToJSON(value['evmTransactionTypeDetails']),
+        'parsed_data': EvmTransactionParsedDataToJSON(value['parsedData']),
+        'gas_estimation': EvmGasEstimationToJSON(value['gasEstimation']),
+        'suggested_fees': EvmSuggestedFeesToJSON(value['suggestedFees']),
+        'sender': EnrichedEvmAddressToJSON(value['sender']),
+        'to': EnrichedEvmAddressToJSON(value['to']),
+        'hex_data': value['hexData'],
+        'gas_submitted': EvmTransactionGasSubmittedToJSON(value['gasSubmitted']),
     };
 }
 

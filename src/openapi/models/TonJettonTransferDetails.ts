@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedTonAddress } from './EnrichedTonAddress';
 import {
     EnrichedTonAddressFromJSON,
     EnrichedTonAddressFromJSONTyped,
     EnrichedTonAddressToJSON,
+    EnrichedTonAddressToJSONTyped,
 } from './EnrichedTonAddress';
 
 /**
@@ -65,13 +66,11 @@ export type TonJettonTransferDetailsTypeEnum = typeof TonJettonTransferDetailsTy
 /**
  * Check if a given object implements the TonJettonTransferDetails interface.
  */
-export function instanceOfTonJettonTransferDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "sender" in value;
-    isInstance = isInstance && "recipient" in value;
-
-    return isInstance;
+export function instanceOfTonJettonTransferDetails(value: object): value is TonJettonTransferDetails {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    if (!('recipient' in value) || value['recipient'] === undefined) return false;
+    return true;
 }
 
 export function TonJettonTransferDetailsFromJSON(json: any): TonJettonTransferDetails {
@@ -79,7 +78,7 @@ export function TonJettonTransferDetailsFromJSON(json: any): TonJettonTransferDe
 }
 
 export function TonJettonTransferDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): TonJettonTransferDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -87,23 +86,25 @@ export function TonJettonTransferDetailsFromJSONTyped(json: any, ignoreDiscrimin
         'type': json['type'],
         'sender': EnrichedTonAddressFromJSON(json['sender']),
         'recipient': EnrichedTonAddressFromJSON(json['recipient']),
-        'isInternal': !exists(json, 'is_internal') ? undefined : json['is_internal'],
+        'isInternal': json['is_internal'] == null ? undefined : json['is_internal'],
     };
 }
 
-export function TonJettonTransferDetailsToJSON(value?: TonJettonTransferDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TonJettonTransferDetailsToJSON(json: any): TonJettonTransferDetails {
+    return TonJettonTransferDetailsToJSONTyped(json, false);
+}
+
+export function TonJettonTransferDetailsToJSONTyped(value?: TonJettonTransferDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'sender': EnrichedTonAddressToJSON(value.sender),
-        'recipient': EnrichedTonAddressToJSON(value.recipient),
-        'is_internal': value.isInternal,
+        'type': value['type'],
+        'sender': EnrichedTonAddressToJSON(value['sender']),
+        'recipient': EnrichedTonAddressToJSON(value['recipient']),
+        'is_internal': value['isInternal'],
     };
 }
 

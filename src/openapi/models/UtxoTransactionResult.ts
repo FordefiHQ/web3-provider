@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { UtxoEffects } from './UtxoEffects';
 import {
     UtxoEffectsFromJSON,
     UtxoEffectsFromJSONTyped,
     UtxoEffectsToJSON,
+    UtxoEffectsToJSONTyped,
 } from './UtxoEffects';
 import type { UtxoFees } from './UtxoFees';
 import {
     UtxoFeesFromJSON,
     UtxoFeesFromJSONTyped,
     UtxoFeesToJSON,
+    UtxoFeesToJSONTyped,
 } from './UtxoFees';
 
 /**
@@ -49,11 +51,9 @@ export interface UtxoTransactionResult {
 /**
  * Check if a given object implements the UtxoTransactionResult interface.
  */
-export function instanceOfUtxoTransactionResult(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "effects" in value;
-
-    return isInstance;
+export function instanceOfUtxoTransactionResult(value: object): value is UtxoTransactionResult {
+    if (!('effects' in value) || value['effects'] === undefined) return false;
+    return true;
 }
 
 export function UtxoTransactionResultFromJSON(json: any): UtxoTransactionResult {
@@ -61,27 +61,29 @@ export function UtxoTransactionResultFromJSON(json: any): UtxoTransactionResult 
 }
 
 export function UtxoTransactionResultFromJSONTyped(json: any, ignoreDiscriminator: boolean): UtxoTransactionResult {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'fees': !exists(json, 'fees') ? undefined : UtxoFeesFromJSON(json['fees']),
+        'fees': json['fees'] == null ? undefined : UtxoFeesFromJSON(json['fees']),
         'effects': UtxoEffectsFromJSON(json['effects']),
     };
 }
 
-export function UtxoTransactionResultToJSON(value?: UtxoTransactionResult | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UtxoTransactionResultToJSON(json: any): UtxoTransactionResult {
+    return UtxoTransactionResultToJSONTyped(json, false);
+}
+
+export function UtxoTransactionResultToJSONTyped(value?: UtxoTransactionResult | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'fees': UtxoFeesToJSON(value.fees),
-        'effects': UtxoEffectsToJSON(value.effects),
+        'fees': UtxoFeesToJSON(value['fees']),
+        'effects': UtxoEffectsToJSON(value['effects']),
     };
 }
 

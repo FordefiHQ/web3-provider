@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type SuiCommandResultArgumentTypeEnum = typeof SuiCommandResultArgumentTy
 /**
  * Check if a given object implements the SuiCommandResultArgument interface.
  */
-export function instanceOfSuiCommandResultArgument(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "index" in value;
-
-    return isInstance;
+export function instanceOfSuiCommandResultArgument(value: object): value is SuiCommandResultArgument {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('index' in value) || value['index'] === undefined) return false;
+    return true;
 }
 
 export function SuiCommandResultArgumentFromJSON(json: any): SuiCommandResultArgument {
@@ -59,7 +57,7 @@ export function SuiCommandResultArgumentFromJSON(json: any): SuiCommandResultArg
 }
 
 export function SuiCommandResultArgumentFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiCommandResultArgument {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function SuiCommandResultArgumentFromJSONTyped(json: any, ignoreDiscrimin
     };
 }
 
-export function SuiCommandResultArgumentToJSON(value?: SuiCommandResultArgument | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiCommandResultArgumentToJSON(json: any): SuiCommandResultArgument {
+    return SuiCommandResultArgumentToJSONTyped(json, false);
+}
+
+export function SuiCommandResultArgumentToJSONTyped(value?: SuiCommandResultArgument | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'index': value.index,
+        'type': value['type'],
+        'index': value['index'],
     };
 }
 

@@ -12,37 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { AptosChain } from './AptosChain';
-import {
-    AptosChainFromJSON,
-    AptosChainFromJSONTyped,
-    AptosChainToJSON,
-} from './AptosChain';
-import type { AptosMessageState } from './AptosMessageState';
-import {
-    AptosMessageStateFromJSON,
-    AptosMessageStateFromJSONTyped,
-    AptosMessageStateToJSON,
-} from './AptosMessageState';
-import type { AptosMessageType } from './AptosMessageType';
-import {
-    AptosMessageTypeFromJSON,
-    AptosMessageTypeFromJSONTyped,
-    AptosMessageTypeToJSON,
-} from './AptosMessageType';
-import type { TransactionDirection } from './TransactionDirection';
-import {
-    TransactionDirectionFromJSON,
-    TransactionDirectionFromJSONTyped,
-    TransactionDirectionToJSON,
-} from './TransactionDirection';
+import { mapValues } from '../runtime';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
     TransactionSpamStateFromJSONTyped,
     TransactionSpamStateToJSON,
+    TransactionSpamStateToJSONTyped,
 } from './TransactionSpamState';
+import type { TransactionDirection } from './TransactionDirection';
+import {
+    TransactionDirectionFromJSON,
+    TransactionDirectionFromJSONTyped,
+    TransactionDirectionToJSON,
+    TransactionDirectionToJSONTyped,
+} from './TransactionDirection';
+import type { AptosChain } from './AptosChain';
+import {
+    AptosChainFromJSON,
+    AptosChainFromJSONTyped,
+    AptosChainToJSON,
+    AptosChainToJSONTyped,
+} from './AptosChain';
+import type { AptosMessageType } from './AptosMessageType';
+import {
+    AptosMessageTypeFromJSON,
+    AptosMessageTypeFromJSONTyped,
+    AptosMessageTypeToJSON,
+    AptosMessageTypeToJSONTyped,
+} from './AptosMessageType';
+import type { NonPushableTransactionState } from './NonPushableTransactionState';
+import {
+    NonPushableTransactionStateFromJSON,
+    NonPushableTransactionStateFromJSONTyped,
+    NonPushableTransactionStateToJSON,
+    NonPushableTransactionStateToJSONTyped,
+} from './NonPushableTransactionState';
 
 /**
  * 
@@ -83,6 +88,12 @@ export interface WebhookAptosMessageStatusChangeEvent {
     spamState: TransactionSpamState;
     /**
      * 
+     * @type {NonPushableTransactionState}
+     * @memberof WebhookAptosMessageStatusChangeEvent
+     */
+    state: NonPushableTransactionState;
+    /**
+     * 
      * @type {string}
      * @memberof WebhookAptosMessageStatusChangeEvent
      */
@@ -93,12 +104,6 @@ export interface WebhookAptosMessageStatusChangeEvent {
      * @memberof WebhookAptosMessageStatusChangeEvent
      */
     aptosMessageType: AptosMessageType;
-    /**
-     * 
-     * @type {AptosMessageState}
-     * @memberof WebhookAptosMessageStatusChangeEvent
-     */
-    state: AptosMessageState;
     /**
      * 
      * @type {AptosChain}
@@ -120,18 +125,16 @@ export type WebhookAptosMessageStatusChangeEventTypeEnum = typeof WebhookAptosMe
 /**
  * Check if a given object implements the WebhookAptosMessageStatusChangeEvent interface.
  */
-export function instanceOfWebhookAptosMessageStatusChangeEvent(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "transactionId" in value;
-    isInstance = isInstance && "isManagedTransaction" in value;
-    isInstance = isInstance && "direction" in value;
-    isInstance = isInstance && "spamState" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "aptosMessageType" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfWebhookAptosMessageStatusChangeEvent(value: object): value is WebhookAptosMessageStatusChangeEvent {
+    if (!('transactionId' in value) || value['transactionId'] === undefined) return false;
+    if (!('isManagedTransaction' in value) || value['isManagedTransaction'] === undefined) return false;
+    if (!('direction' in value) || value['direction'] === undefined) return false;
+    if (!('spamState' in value) || value['spamState'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('aptosMessageType' in value) || value['aptosMessageType'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function WebhookAptosMessageStatusChangeEventFromJSON(json: any): WebhookAptosMessageStatusChangeEvent {
@@ -139,7 +142,7 @@ export function WebhookAptosMessageStatusChangeEventFromJSON(json: any): Webhook
 }
 
 export function WebhookAptosMessageStatusChangeEventFromJSONTyped(json: any, ignoreDiscriminator: boolean): WebhookAptosMessageStatusChangeEvent {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -147,33 +150,35 @@ export function WebhookAptosMessageStatusChangeEventFromJSONTyped(json: any, ign
         'transactionId': json['transaction_id'],
         'isManagedTransaction': json['is_managed_transaction'],
         'direction': TransactionDirectionFromJSON(json['direction']),
-        'note': !exists(json, 'note') ? undefined : json['note'],
+        'note': json['note'] == null ? undefined : json['note'],
         'spamState': TransactionSpamStateFromJSON(json['spam_state']),
+        'state': NonPushableTransactionStateFromJSON(json['state']),
         'type': json['type'],
         'aptosMessageType': AptosMessageTypeFromJSON(json['aptos_message_type']),
-        'state': AptosMessageStateFromJSON(json['state']),
         'chain': AptosChainFromJSON(json['chain']),
     };
 }
 
-export function WebhookAptosMessageStatusChangeEventToJSON(value?: WebhookAptosMessageStatusChangeEvent | null): any {
-    if (value === undefined) {
-        return undefined;
+export function WebhookAptosMessageStatusChangeEventToJSON(json: any): WebhookAptosMessageStatusChangeEvent {
+    return WebhookAptosMessageStatusChangeEventToJSONTyped(json, false);
+}
+
+export function WebhookAptosMessageStatusChangeEventToJSONTyped(value?: WebhookAptosMessageStatusChangeEvent | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'transaction_id': value.transactionId,
-        'is_managed_transaction': value.isManagedTransaction,
-        'direction': TransactionDirectionToJSON(value.direction),
-        'note': value.note,
-        'spam_state': TransactionSpamStateToJSON(value.spamState),
-        'type': value.type,
-        'aptos_message_type': AptosMessageTypeToJSON(value.aptosMessageType),
-        'state': AptosMessageStateToJSON(value.state),
-        'chain': AptosChainToJSON(value.chain),
+        'transaction_id': value['transactionId'],
+        'is_managed_transaction': value['isManagedTransaction'],
+        'direction': TransactionDirectionToJSON(value['direction']),
+        'note': value['note'],
+        'spam_state': TransactionSpamStateToJSON(value['spamState']),
+        'state': NonPushableTransactionStateToJSON(value['state']),
+        'type': value['type'],
+        'aptos_message_type': AptosMessageTypeToJSON(value['aptosMessageType']),
+        'chain': AptosChainToJSON(value['chain']),
     };
 }
 

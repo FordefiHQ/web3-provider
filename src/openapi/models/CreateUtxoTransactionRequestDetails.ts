@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { TransactionDetailsUtxoPsbtRequest } from './TransactionDetailsUtxoPsbtRequest';
 import {
-    TransactionDetailsUtxoPsbtRequest,
     instanceOfTransactionDetailsUtxoPsbtRequest,
     TransactionDetailsUtxoPsbtRequestFromJSON,
     TransactionDetailsUtxoPsbtRequestFromJSONTyped,
     TransactionDetailsUtxoPsbtRequestToJSON,
 } from './TransactionDetailsUtxoPsbtRequest';
+import type { TransactionDetailsUtxoTransferRequest } from './TransactionDetailsUtxoTransferRequest';
 import {
-    TransactionDetailsUtxoTransferRequest,
     instanceOfTransactionDetailsUtxoTransferRequest,
     TransactionDetailsUtxoTransferRequestFromJSON,
     TransactionDetailsUtxoTransferRequestFromJSONTyped,
@@ -39,31 +39,32 @@ export function CreateUtxoTransactionRequestDetailsFromJSON(json: any): CreateUt
 }
 
 export function CreateUtxoTransactionRequestDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateUtxoTransactionRequestDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'utxo_partially_signed_bitcoin_transaction':
-            return {...TransactionDetailsUtxoPsbtRequestFromJSONTyped(json, true), type: 'utxo_partially_signed_bitcoin_transaction'};
+            return Object.assign({}, TransactionDetailsUtxoPsbtRequestFromJSONTyped(json, true), { type: 'utxo_partially_signed_bitcoin_transaction' } as const);
         case 'utxo_transfer':
-            return {...TransactionDetailsUtxoTransferRequestFromJSONTyped(json, true), type: 'utxo_transfer'};
+            return Object.assign({}, TransactionDetailsUtxoTransferRequestFromJSONTyped(json, true), { type: 'utxo_transfer' } as const);
         default:
             throw new Error(`No variant of CreateUtxoTransactionRequestDetails exists with 'type=${json['type']}'`);
     }
 }
 
-export function CreateUtxoTransactionRequestDetailsToJSON(value?: CreateUtxoTransactionRequestDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function CreateUtxoTransactionRequestDetailsToJSON(json: any): any {
+    return CreateUtxoTransactionRequestDetailsToJSONTyped(json, false);
+}
+
+export function CreateUtxoTransactionRequestDetailsToJSONTyped(value?: CreateUtxoTransactionRequestDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'utxo_partially_signed_bitcoin_transaction':
-            return TransactionDetailsUtxoPsbtRequestToJSON(value);
+            return Object.assign({}, TransactionDetailsUtxoPsbtRequestToJSON(value), { type: 'utxo_partially_signed_bitcoin_transaction' } as const);
         case 'utxo_transfer':
-            return TransactionDetailsUtxoTransferRequestToJSON(value);
+            return Object.assign({}, TransactionDetailsUtxoTransferRequestToJSON(value), { type: 'utxo_transfer' } as const);
         default:
             throw new Error(`No variant of CreateUtxoTransactionRequestDetails exists with 'type=${value['type']}'`);
     }

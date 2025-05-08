@@ -12,36 +12,36 @@
  * Do not edit the class manually.
  */
 
+import type { CosmosAsset } from './CosmosAsset';
 import {
-    CosmosAsset,
     instanceOfCosmosAsset,
     CosmosAssetFromJSON,
     CosmosAssetFromJSONTyped,
     CosmosAssetToJSON,
 } from './CosmosAsset';
+import type { EvmAsset } from './EvmAsset';
 import {
-    EvmAsset,
     instanceOfEvmAsset,
     EvmAssetFromJSON,
     EvmAssetFromJSONTyped,
     EvmAssetToJSON,
 } from './EvmAsset';
+import type { SolanaAsset } from './SolanaAsset';
 import {
-    SolanaAsset,
     instanceOfSolanaAsset,
     SolanaAssetFromJSON,
     SolanaAssetFromJSONTyped,
     SolanaAssetToJSON,
 } from './SolanaAsset';
+import type { SuiAsset } from './SuiAsset';
 import {
-    SuiAsset,
     instanceOfSuiAsset,
     SuiAssetFromJSON,
     SuiAssetFromJSONTyped,
     SuiAssetToJSON,
 } from './SuiAsset';
+import type { UtxoAsset } from './UtxoAsset';
 import {
-    UtxoAsset,
     instanceOfUtxoAsset,
     UtxoAssetFromJSON,
     UtxoAssetFromJSONTyped,
@@ -60,43 +60,44 @@ export function AssetFromJSON(json: any): Asset {
 }
 
 export function AssetFromJSONTyped(json: any, ignoreDiscriminator: boolean): Asset {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'cosmos_asset':
-            return {...CosmosAssetFromJSONTyped(json, true), type: 'cosmos_asset'};
+            return Object.assign({}, CosmosAssetFromJSONTyped(json, true), { type: 'cosmos_asset' } as const);
         case 'evm_asset':
-            return {...EvmAssetFromJSONTyped(json, true), type: 'evm_asset'};
+            return Object.assign({}, EvmAssetFromJSONTyped(json, true), { type: 'evm_asset' } as const);
         case 'solana_asset':
-            return {...SolanaAssetFromJSONTyped(json, true), type: 'solana_asset'};
+            return Object.assign({}, SolanaAssetFromJSONTyped(json, true), { type: 'solana_asset' } as const);
         case 'sui_asset':
-            return {...SuiAssetFromJSONTyped(json, true), type: 'sui_asset'};
+            return Object.assign({}, SuiAssetFromJSONTyped(json, true), { type: 'sui_asset' } as const);
         case 'utxo_asset':
-            return {...UtxoAssetFromJSONTyped(json, true), type: 'utxo_asset'};
+            return Object.assign({}, UtxoAssetFromJSONTyped(json, true), { type: 'utxo_asset' } as const);
         default:
             throw new Error(`No variant of Asset exists with 'type=${json['type']}'`);
     }
 }
 
-export function AssetToJSON(value?: Asset | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function AssetToJSON(json: any): any {
+    return AssetToJSONTyped(json, false);
+}
+
+export function AssetToJSONTyped(value?: Asset | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'cosmos_asset':
-            return CosmosAssetToJSON(value);
+            return Object.assign({}, CosmosAssetToJSON(value), { type: 'cosmos_asset' } as const);
         case 'evm_asset':
-            return EvmAssetToJSON(value);
+            return Object.assign({}, EvmAssetToJSON(value), { type: 'evm_asset' } as const);
         case 'solana_asset':
-            return SolanaAssetToJSON(value);
+            return Object.assign({}, SolanaAssetToJSON(value), { type: 'solana_asset' } as const);
         case 'sui_asset':
-            return SuiAssetToJSON(value);
+            return Object.assign({}, SuiAssetToJSON(value), { type: 'sui_asset' } as const);
         case 'utxo_asset':
-            return UtxoAssetToJSON(value);
+            return Object.assign({}, UtxoAssetToJSON(value), { type: 'utxo_asset' } as const);
         default:
             throw new Error(`No variant of Asset exists with 'type=${value['type']}'`);
     }

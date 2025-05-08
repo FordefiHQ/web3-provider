@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { VaultGroupAccessPermissionsAll } from './VaultGroupAccessPermissionsAll';
 import {
-    VaultGroupAccessPermissionsAll,
     instanceOfVaultGroupAccessPermissionsAll,
     VaultGroupAccessPermissionsAllFromJSON,
     VaultGroupAccessPermissionsAllFromJSONTyped,
     VaultGroupAccessPermissionsAllToJSON,
 } from './VaultGroupAccessPermissionsAll';
+import type { VaultGroupAccessPermissionsPermitted } from './VaultGroupAccessPermissionsPermitted';
 import {
-    VaultGroupAccessPermissionsPermitted,
     instanceOfVaultGroupAccessPermissionsPermitted,
     VaultGroupAccessPermissionsPermittedFromJSON,
     VaultGroupAccessPermissionsPermittedFromJSONTyped,
@@ -39,31 +39,32 @@ export function VaultGroupAccessPermissionsFromJSON(json: any): VaultGroupAccess
 }
 
 export function VaultGroupAccessPermissionsFromJSONTyped(json: any, ignoreDiscriminator: boolean): VaultGroupAccessPermissions {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['access_type']) {
         case 'all':
-            return {...VaultGroupAccessPermissionsAllFromJSONTyped(json, true), accessType: 'all'};
+            return Object.assign({}, VaultGroupAccessPermissionsAllFromJSONTyped(json, true), { accessType: 'all' } as const);
         case 'permitted':
-            return {...VaultGroupAccessPermissionsPermittedFromJSONTyped(json, true), accessType: 'permitted'};
+            return Object.assign({}, VaultGroupAccessPermissionsPermittedFromJSONTyped(json, true), { accessType: 'permitted' } as const);
         default:
             throw new Error(`No variant of VaultGroupAccessPermissions exists with 'accessType=${json['accessType']}'`);
     }
 }
 
-export function VaultGroupAccessPermissionsToJSON(value?: VaultGroupAccessPermissions | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function VaultGroupAccessPermissionsToJSON(json: any): any {
+    return VaultGroupAccessPermissionsToJSONTyped(json, false);
+}
+
+export function VaultGroupAccessPermissionsToJSONTyped(value?: VaultGroupAccessPermissions | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['accessType']) {
         case 'all':
-            return VaultGroupAccessPermissionsAllToJSON(value);
+            return Object.assign({}, VaultGroupAccessPermissionsAllToJSON(value), { accessType: 'all' } as const);
         case 'permitted':
-            return VaultGroupAccessPermissionsPermittedToJSON(value);
+            return Object.assign({}, VaultGroupAccessPermissionsPermittedToJSON(value), { accessType: 'permitted' } as const);
         default:
             throw new Error(`No variant of VaultGroupAccessPermissions exists with 'accessType=${value['accessType']}'`);
     }

@@ -12,13 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { Keyset } from './Keyset';
 import {
     KeysetFromJSON,
     KeysetFromJSONTyped,
     KeysetToJSON,
+    KeysetToJSONTyped,
 } from './Keyset';
+import type { PartialErrorResponse } from './PartialErrorResponse';
+import {
+    PartialErrorResponseFromJSON,
+    PartialErrorResponseFromJSONTyped,
+    PartialErrorResponseToJSON,
+    PartialErrorResponseToJSONTyped,
+} from './PartialErrorResponse';
 
 /**
  * 
@@ -26,6 +34,12 @@ import {
  * @interface ListKeysetsResponse
  */
 export interface ListKeysetsResponse {
+    /**
+     * 
+     * @type {PartialErrorResponse}
+     * @memberof ListKeysetsResponse
+     */
+    partialError?: PartialErrorResponse;
     /**
      * 
      * @type {number}
@@ -55,14 +69,12 @@ export interface ListKeysetsResponse {
 /**
  * Check if a given object implements the ListKeysetsResponse interface.
  */
-export function instanceOfListKeysetsResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "total" in value;
-    isInstance = isInstance && "page" in value;
-    isInstance = isInstance && "size" in value;
-    isInstance = isInstance && "keysets" in value;
-
-    return isInstance;
+export function instanceOfListKeysetsResponse(value: object): value is ListKeysetsResponse {
+    if (!('total' in value) || value['total'] === undefined) return false;
+    if (!('page' in value) || value['page'] === undefined) return false;
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('keysets' in value) || value['keysets'] === undefined) return false;
+    return true;
 }
 
 export function ListKeysetsResponseFromJSON(json: any): ListKeysetsResponse {
@@ -70,11 +82,12 @@ export function ListKeysetsResponseFromJSON(json: any): ListKeysetsResponse {
 }
 
 export function ListKeysetsResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): ListKeysetsResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
+        'partialError': json['partial_error'] == null ? undefined : PartialErrorResponseFromJSON(json['partial_error']),
         'total': json['total'],
         'page': json['page'],
         'size': json['size'],
@@ -82,19 +95,22 @@ export function ListKeysetsResponseFromJSONTyped(json: any, ignoreDiscriminator:
     };
 }
 
-export function ListKeysetsResponseToJSON(value?: ListKeysetsResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ListKeysetsResponseToJSON(json: any): ListKeysetsResponse {
+    return ListKeysetsResponseToJSONTyped(json, false);
+}
+
+export function ListKeysetsResponseToJSONTyped(value?: ListKeysetsResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'total': value.total,
-        'page': value.page,
-        'size': value.size,
-        'keysets': ((value.keysets as Array<any>).map(KeysetToJSON)),
+        'partial_error': PartialErrorResponseToJSON(value['partialError']),
+        'total': value['total'],
+        'page': value['page'],
+        'size': value['size'],
+        'keysets': ((value['keysets'] as Array<any>).map(KeysetToJSON)),
     };
 }
 

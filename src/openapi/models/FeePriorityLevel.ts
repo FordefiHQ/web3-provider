@@ -26,6 +26,17 @@ export const FeePriorityLevel = {
 export type FeePriorityLevel = typeof FeePriorityLevel[keyof typeof FeePriorityLevel];
 
 
+export function instanceOfFeePriorityLevel(value: any): boolean {
+    for (const key in FeePriorityLevel) {
+        if (Object.prototype.hasOwnProperty.call(FeePriorityLevel, key)) {
+            if (FeePriorityLevel[key as keyof typeof FeePriorityLevel] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function FeePriorityLevelFromJSON(json: any): FeePriorityLevel {
     return FeePriorityLevelFromJSONTyped(json, false);
 }
@@ -36,5 +47,9 @@ export function FeePriorityLevelFromJSONTyped(json: any, ignoreDiscriminator: bo
 
 export function FeePriorityLevelToJSON(value?: FeePriorityLevel | null): any {
     return value as any;
+}
+
+export function FeePriorityLevelToJSONTyped(value: any, ignoreDiscriminator: boolean): FeePriorityLevel {
+    return value as FeePriorityLevel;
 }
 

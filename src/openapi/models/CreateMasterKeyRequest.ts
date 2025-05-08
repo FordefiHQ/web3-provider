@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { KeyType } from './KeyType';
 import {
     KeyTypeFromJSON,
     KeyTypeFromJSONTyped,
     KeyTypeToJSON,
+    KeyTypeToJSONTyped,
 } from './KeyType';
 
 /**
@@ -46,16 +47,16 @@ export interface CreateMasterKeyRequest {
     keyType: KeyType;
 }
 
+
+
 /**
  * Check if a given object implements the CreateMasterKeyRequest interface.
  */
-export function instanceOfCreateMasterKeyRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "encryptedShare" in value;
-    isInstance = isInstance && "signature" in value;
-    isInstance = isInstance && "keyType" in value;
-
-    return isInstance;
+export function instanceOfCreateMasterKeyRequest(value: object): value is CreateMasterKeyRequest {
+    if (!('encryptedShare' in value) || value['encryptedShare'] === undefined) return false;
+    if (!('signature' in value) || value['signature'] === undefined) return false;
+    if (!('keyType' in value) || value['keyType'] === undefined) return false;
+    return true;
 }
 
 export function CreateMasterKeyRequestFromJSON(json: any): CreateMasterKeyRequest {
@@ -63,7 +64,7 @@ export function CreateMasterKeyRequestFromJSON(json: any): CreateMasterKeyReques
 }
 
 export function CreateMasterKeyRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateMasterKeyRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -74,18 +75,20 @@ export function CreateMasterKeyRequestFromJSONTyped(json: any, ignoreDiscriminat
     };
 }
 
-export function CreateMasterKeyRequestToJSON(value?: CreateMasterKeyRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateMasterKeyRequestToJSON(json: any): CreateMasterKeyRequest {
+    return CreateMasterKeyRequestToJSONTyped(json, false);
+}
+
+export function CreateMasterKeyRequestToJSONTyped(value?: CreateMasterKeyRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'encrypted_share': value.encryptedShare,
-        'signature': value.signature,
-        'key_type': KeyTypeToJSON(value.keyType),
+        'encrypted_share': value['encryptedShare'],
+        'signature': value['signature'],
+        'key_type': KeyTypeToJSON(value['keyType']),
     };
 }
 

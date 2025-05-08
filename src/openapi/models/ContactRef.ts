@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { ContactRefAddressRef } from './ContactRefAddressRef';
 import {
     ContactRefAddressRefFromJSON,
     ContactRefAddressRefFromJSONTyped,
     ContactRefAddressRefToJSON,
+    ContactRefAddressRefToJSONTyped,
 } from './ContactRefAddressRef';
 
 /**
@@ -49,13 +50,11 @@ export interface ContactRef {
 /**
  * Check if a given object implements the ContactRef interface.
  */
-export function instanceOfContactRef(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "addressRef" in value;
-
-    return isInstance;
+export function instanceOfContactRef(value: object): value is ContactRef {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('addressRef' in value) || value['addressRef'] === undefined) return false;
+    return true;
 }
 
 export function ContactRefFromJSON(json: any): ContactRef {
@@ -63,7 +62,7 @@ export function ContactRefFromJSON(json: any): ContactRef {
 }
 
 export function ContactRefFromJSONTyped(json: any, ignoreDiscriminator: boolean): ContactRef {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -74,18 +73,20 @@ export function ContactRefFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     };
 }
 
-export function ContactRefToJSON(value?: ContactRef | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ContactRefToJSON(json: any): ContactRef {
+    return ContactRefToJSONTyped(json, false);
+}
+
+export function ContactRefToJSONTyped(value?: ContactRef | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'name': value.name,
-        'address_ref': ContactRefAddressRefToJSON(value.addressRef),
+        'id': value['id'],
+        'name': value['name'],
+        'address_ref': ContactRefAddressRefToJSON(value['addressRef']),
     };
 }
 

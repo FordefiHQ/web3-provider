@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { TimestampedSignature } from './TimestampedSignature';
 import {
     TimestampedSignatureFromJSON,
     TimestampedSignatureFromJSONTyped,
     TimestampedSignatureToJSON,
+    TimestampedSignatureToJSONTyped,
 } from './TimestampedSignature';
 
 /**
@@ -43,12 +44,10 @@ export interface SignedEncryptionKey {
 /**
  * Check if a given object implements the SignedEncryptionKey interface.
  */
-export function instanceOfSignedEncryptionKey(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "publicKey" in value;
-    isInstance = isInstance && "timestampedSignature" in value;
-
-    return isInstance;
+export function instanceOfSignedEncryptionKey(value: object): value is SignedEncryptionKey {
+    if (!('publicKey' in value) || value['publicKey'] === undefined) return false;
+    if (!('timestampedSignature' in value) || value['timestampedSignature'] === undefined) return false;
+    return true;
 }
 
 export function SignedEncryptionKeyFromJSON(json: any): SignedEncryptionKey {
@@ -56,7 +55,7 @@ export function SignedEncryptionKeyFromJSON(json: any): SignedEncryptionKey {
 }
 
 export function SignedEncryptionKeyFromJSONTyped(json: any, ignoreDiscriminator: boolean): SignedEncryptionKey {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -66,17 +65,19 @@ export function SignedEncryptionKeyFromJSONTyped(json: any, ignoreDiscriminator:
     };
 }
 
-export function SignedEncryptionKeyToJSON(value?: SignedEncryptionKey | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SignedEncryptionKeyToJSON(json: any): SignedEncryptionKey {
+    return SignedEncryptionKeyToJSONTyped(json, false);
+}
+
+export function SignedEncryptionKeyToJSONTyped(value?: SignedEncryptionKey | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'public_key': value.publicKey,
-        'timestamped_signature': TimestampedSignatureToJSON(value.timestampedSignature),
+        'public_key': value['publicKey'],
+        'timestamped_signature': TimestampedSignatureToJSON(value['timestampedSignature']),
     };
 }
 

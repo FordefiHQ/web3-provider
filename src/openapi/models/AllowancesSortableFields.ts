@@ -26,6 +26,17 @@ export const AllowancesSortableFields = {
 export type AllowancesSortableFields = typeof AllowancesSortableFields[keyof typeof AllowancesSortableFields];
 
 
+export function instanceOfAllowancesSortableFields(value: any): boolean {
+    for (const key in AllowancesSortableFields) {
+        if (Object.prototype.hasOwnProperty.call(AllowancesSortableFields, key)) {
+            if (AllowancesSortableFields[key as keyof typeof AllowancesSortableFields] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function AllowancesSortableFieldsFromJSON(json: any): AllowancesSortableFields {
     return AllowancesSortableFieldsFromJSONTyped(json, false);
 }
@@ -36,5 +47,9 @@ export function AllowancesSortableFieldsFromJSONTyped(json: any, ignoreDiscrimin
 
 export function AllowancesSortableFieldsToJSON(value?: AllowancesSortableFields | null): any {
     return value as any;
+}
+
+export function AllowancesSortableFieldsToJSONTyped(value: any, ignoreDiscriminator: boolean): AllowancesSortableFields {
+    return value as AllowancesSortableFields;
 }
 

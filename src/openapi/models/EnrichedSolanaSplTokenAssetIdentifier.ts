@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedSolanaAddress } from './EnrichedSolanaAddress';
 import {
     EnrichedSolanaAddressFromJSON,
     EnrichedSolanaAddressFromJSONTyped,
     EnrichedSolanaAddressToJSON,
+    EnrichedSolanaAddressToJSONTyped,
 } from './EnrichedSolanaAddress';
 import type { EnrichedSolanaChain } from './EnrichedSolanaChain';
 import {
     EnrichedSolanaChainFromJSON,
     EnrichedSolanaChainFromJSONTyped,
     EnrichedSolanaChainToJSON,
+    EnrichedSolanaChainToJSONTyped,
 } from './EnrichedSolanaChain';
 
 /**
@@ -65,13 +67,11 @@ export type EnrichedSolanaSplTokenAssetIdentifierTypeEnum = typeof EnrichedSolan
 /**
  * Check if a given object implements the EnrichedSolanaSplTokenAssetIdentifier interface.
  */
-export function instanceOfEnrichedSolanaSplTokenAssetIdentifier(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "token" in value;
-
-    return isInstance;
+export function instanceOfEnrichedSolanaSplTokenAssetIdentifier(value: object): value is EnrichedSolanaSplTokenAssetIdentifier {
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('token' in value) || value['token'] === undefined) return false;
+    return true;
 }
 
 export function EnrichedSolanaSplTokenAssetIdentifierFromJSON(json: any): EnrichedSolanaSplTokenAssetIdentifier {
@@ -79,7 +79,7 @@ export function EnrichedSolanaSplTokenAssetIdentifierFromJSON(json: any): Enrich
 }
 
 export function EnrichedSolanaSplTokenAssetIdentifierFromJSONTyped(json: any, ignoreDiscriminator: boolean): EnrichedSolanaSplTokenAssetIdentifier {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -90,18 +90,20 @@ export function EnrichedSolanaSplTokenAssetIdentifierFromJSONTyped(json: any, ig
     };
 }
 
-export function EnrichedSolanaSplTokenAssetIdentifierToJSON(value?: EnrichedSolanaSplTokenAssetIdentifier | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EnrichedSolanaSplTokenAssetIdentifierToJSON(json: any): EnrichedSolanaSplTokenAssetIdentifier {
+    return EnrichedSolanaSplTokenAssetIdentifierToJSONTyped(json, false);
+}
+
+export function EnrichedSolanaSplTokenAssetIdentifierToJSONTyped(value?: EnrichedSolanaSplTokenAssetIdentifier | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain': EnrichedSolanaChainToJSON(value.chain),
-        'type': value.type,
-        'token': EnrichedSolanaAddressToJSON(value.token),
+        'chain': EnrichedSolanaChainToJSON(value['chain']),
+        'type': value['type'],
+        'token': EnrichedSolanaAddressToJSON(value['token']),
     };
 }
 

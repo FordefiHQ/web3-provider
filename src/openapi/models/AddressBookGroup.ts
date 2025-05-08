@@ -12,30 +12,34 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { AddressBookContact } from './AddressBookContact';
-import {
-    AddressBookContactFromJSON,
-    AddressBookContactFromJSONTyped,
-    AddressBookContactToJSON,
-} from './AddressBookContact';
+import { mapValues } from '../runtime';
 import type { AddressBookGroupChanges } from './AddressBookGroupChanges';
 import {
     AddressBookGroupChangesFromJSON,
     AddressBookGroupChangesFromJSONTyped,
     AddressBookGroupChangesToJSON,
+    AddressBookGroupChangesToJSONTyped,
 } from './AddressBookGroupChanges';
+import type { AddressBookContact } from './AddressBookContact';
+import {
+    AddressBookContactFromJSON,
+    AddressBookContactFromJSONTyped,
+    AddressBookContactToJSON,
+    AddressBookContactToJSONTyped,
+} from './AddressBookContact';
 import type { AddressBookGroupState } from './AddressBookGroupState';
 import {
     AddressBookGroupStateFromJSON,
     AddressBookGroupStateFromJSONTyped,
     AddressBookGroupStateToJSON,
+    AddressBookGroupStateToJSONTyped,
 } from './AddressBookGroupState';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
     UserRefFromJSONTyped,
     UserRefToJSON,
+    UserRefToJSONTyped,
 } from './UserRef';
 
 /**
@@ -88,26 +92,33 @@ export interface AddressBookGroup {
     pendingChanges?: AddressBookGroupChanges;
     /**
      * 
+     * @type {number}
+     * @memberof AddressBookGroup
+     */
+    contactCount: number;
+    /**
+     * 
      * @type {AddressBookGroupState}
      * @memberof AddressBookGroup
      */
     state: AddressBookGroupState;
 }
 
+
+
 /**
  * Check if a given object implements the AddressBookGroup interface.
  */
-export function instanceOfAddressBookGroup(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "contacts" in value;
-    isInstance = isInstance && "modifiedBy" in value;
-    isInstance = isInstance && "state" in value;
-
-    return isInstance;
+export function instanceOfAddressBookGroup(value: object): value is AddressBookGroup {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('contacts' in value) || value['contacts'] === undefined) return false;
+    if (!('modifiedBy' in value) || value['modifiedBy'] === undefined) return false;
+    if (!('contactCount' in value) || value['contactCount'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    return true;
 }
 
 export function AddressBookGroupFromJSON(json: any): AddressBookGroup {
@@ -115,7 +126,7 @@ export function AddressBookGroupFromJSON(json: any): AddressBookGroup {
 }
 
 export function AddressBookGroupFromJSONTyped(json: any, ignoreDiscriminator: boolean): AddressBookGroup {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -126,28 +137,32 @@ export function AddressBookGroupFromJSONTyped(json: any, ignoreDiscriminator: bo
         'name': json['name'],
         'contacts': ((json['contacts'] as Array<any>).map(AddressBookContactFromJSON)),
         'modifiedBy': UserRefFromJSON(json['modified_by']),
-        'pendingChanges': !exists(json, 'pending_changes') ? undefined : AddressBookGroupChangesFromJSON(json['pending_changes']),
+        'pendingChanges': json['pending_changes'] == null ? undefined : AddressBookGroupChangesFromJSON(json['pending_changes']),
+        'contactCount': json['contact_count'],
         'state': AddressBookGroupStateFromJSON(json['state']),
     };
 }
 
-export function AddressBookGroupToJSON(value?: AddressBookGroup | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AddressBookGroupToJSON(json: any): AddressBookGroup {
+    return AddressBookGroupToJSONTyped(json, false);
+}
+
+export function AddressBookGroupToJSONTyped(value?: AddressBookGroup | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'name': value.name,
-        'contacts': ((value.contacts as Array<any>).map(AddressBookContactToJSON)),
-        'modified_by': UserRefToJSON(value.modifiedBy),
-        'pending_changes': AddressBookGroupChangesToJSON(value.pendingChanges),
-        'state': AddressBookGroupStateToJSON(value.state),
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'name': value['name'],
+        'contacts': ((value['contacts'] as Array<any>).map(AddressBookContactToJSON)),
+        'modified_by': UserRefToJSON(value['modifiedBy']),
+        'pending_changes': AddressBookGroupChangesToJSON(value['pendingChanges']),
+        'contact_count': value['contactCount'],
+        'state': AddressBookGroupStateToJSON(value['state']),
     };
 }
 

@@ -25,6 +25,17 @@ export const TonTransactionType = {
 export type TonTransactionType = typeof TonTransactionType[keyof typeof TonTransactionType];
 
 
+export function instanceOfTonTransactionType(value: any): boolean {
+    for (const key in TonTransactionType) {
+        if (Object.prototype.hasOwnProperty.call(TonTransactionType, key)) {
+            if (TonTransactionType[key as keyof typeof TonTransactionType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function TonTransactionTypeFromJSON(json: any): TonTransactionType {
     return TonTransactionTypeFromJSONTyped(json, false);
 }
@@ -35,5 +46,9 @@ export function TonTransactionTypeFromJSONTyped(json: any, ignoreDiscriminator: 
 
 export function TonTransactionTypeToJSON(value?: TonTransactionType | null): any {
     return value as any;
+}
+
+export function TonTransactionTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): TonTransactionType {
+    return value as TonTransactionType;
 }
 

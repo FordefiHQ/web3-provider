@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -36,12 +36,10 @@ export interface AminoMessage {
 /**
  * Check if a given object implements the AminoMessage interface.
  */
-export function instanceOfAminoMessage(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "value" in value;
-
-    return isInstance;
+export function instanceOfAminoMessage(value: object): value is AminoMessage {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('value' in value) || value['value'] === undefined) return false;
+    return true;
 }
 
 export function AminoMessageFromJSON(json: any): AminoMessage {
@@ -49,7 +47,7 @@ export function AminoMessageFromJSON(json: any): AminoMessage {
 }
 
 export function AminoMessageFromJSONTyped(json: any, ignoreDiscriminator: boolean): AminoMessage {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -59,17 +57,19 @@ export function AminoMessageFromJSONTyped(json: any, ignoreDiscriminator: boolea
     };
 }
 
-export function AminoMessageToJSON(value?: AminoMessage | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AminoMessageToJSON(json: any): AminoMessage {
+    return AminoMessageToJSONTyped(json, false);
+}
+
+export function AminoMessageToJSONTyped(value?: AminoMessage | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'value': value.value,
+        'type': value['type'],
+        'value': value['value'],
     };
 }
 

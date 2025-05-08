@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -96,16 +96,14 @@ export type CosmosTokenTypeEnum = typeof CosmosTokenTypeEnum[keyof typeof Cosmos
 /**
  * Check if a given object implements the CosmosToken interface.
  */
-export function instanceOfCosmosToken(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "symbol" in value;
-    isInstance = isInstance && "baseDenom" in value;
-    isInstance = isInstance && "denom" in value;
-    isInstance = isInstance && "decimals" in value;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfCosmosToken(value: object): value is CosmosToken {
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('symbol' in value) || value['symbol'] === undefined) return false;
+    if (!('baseDenom' in value) || value['baseDenom'] === undefined) return false;
+    if (!('denom' in value) || value['denom'] === undefined) return false;
+    if (!('decimals' in value) || value['decimals'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function CosmosTokenFromJSON(json: any): CosmosToken {
@@ -113,43 +111,45 @@ export function CosmosTokenFromJSON(json: any): CosmosToken {
 }
 
 export function CosmosTokenFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosToken {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'name': json['name'],
         'symbol': json['symbol'],
-        'display': !exists(json, 'display') ? undefined : json['display'],
-        'description': !exists(json, 'description') ? undefined : json['description'],
+        'display': json['display'] == null ? undefined : json['display'],
+        'description': json['description'] == null ? undefined : json['description'],
         'baseDenom': json['base_denom'],
         'denom': json['denom'],
         'decimals': json['decimals'],
-        'logoUrl': !exists(json, 'logo_url') ? undefined : json['logo_url'],
-        'explorerUrl': !exists(json, 'explorer_url') ? undefined : json['explorer_url'],
+        'logoUrl': json['logo_url'] == null ? undefined : json['logo_url'],
+        'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
         'type': json['type'],
     };
 }
 
-export function CosmosTokenToJSON(value?: CosmosToken | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosTokenToJSON(json: any): CosmosToken {
+    return CosmosTokenToJSONTyped(json, false);
+}
+
+export function CosmosTokenToJSONTyped(value?: CosmosToken | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'symbol': value.symbol,
-        'display': value.display,
-        'description': value.description,
-        'base_denom': value.baseDenom,
-        'denom': value.denom,
-        'decimals': value.decimals,
-        'logo_url': value.logoUrl,
-        'explorer_url': value.explorerUrl,
-        'type': value.type,
+        'name': value['name'],
+        'symbol': value['symbol'],
+        'display': value['display'],
+        'description': value['description'],
+        'base_denom': value['baseDenom'],
+        'denom': value['denom'],
+        'decimals': value['decimals'],
+        'logo_url': value['logoUrl'],
+        'explorer_url': value['explorerUrl'],
+        'type': value['type'],
     };
 }
 

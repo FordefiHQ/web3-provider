@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { ValidationErrorDetail } from './ValidationErrorDetail';
 import {
     ValidationErrorDetailFromJSON,
     ValidationErrorDetailFromJSONTyped,
     ValidationErrorDetailToJSON,
+    ValidationErrorDetailToJSONTyped,
 } from './ValidationErrorDetail';
 
 /**
@@ -49,12 +50,10 @@ export interface ValidationError {
 /**
  * Check if a given object implements the ValidationError interface.
  */
-export function instanceOfValidationError(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "title" in value;
-    isInstance = isInstance && "detail" in value;
-
-    return isInstance;
+export function instanceOfValidationError(value: object): value is ValidationError {
+    if (!('title' in value) || value['title'] === undefined) return false;
+    if (!('detail' in value) || value['detail'] === undefined) return false;
+    return true;
 }
 
 export function ValidationErrorFromJSON(json: any): ValidationError {
@@ -62,29 +61,31 @@ export function ValidationErrorFromJSON(json: any): ValidationError {
 }
 
 export function ValidationErrorFromJSONTyped(json: any, ignoreDiscriminator: boolean): ValidationError {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'title': json['title'],
         'detail': ((json['detail'] as Array<any>).map(ValidationErrorDetailFromJSON)),
-        'requestId': !exists(json, 'request_id') ? undefined : json['request_id'],
+        'requestId': json['request_id'] == null ? undefined : json['request_id'],
     };
 }
 
-export function ValidationErrorToJSON(value?: ValidationError | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ValidationErrorToJSON(json: any): ValidationError {
+    return ValidationErrorToJSONTyped(json, false);
+}
+
+export function ValidationErrorToJSONTyped(value?: ValidationError | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'title': value.title,
-        'detail': ((value.detail as Array<any>).map(ValidationErrorDetailToJSON)),
-        'request_id': value.requestId,
+        'title': value['title'],
+        'detail': ((value['detail'] as Array<any>).map(ValidationErrorDetailToJSON)),
+        'request_id': value['requestId'],
     };
 }
 

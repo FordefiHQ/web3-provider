@@ -12,50 +12,78 @@
  * Do not edit the class manually.
  */
 
+import type { EnrichedAptosChain } from './EnrichedAptosChain';
 import {
-    EnrichedAptosChain,
     instanceOfEnrichedAptosChain,
     EnrichedAptosChainFromJSON,
     EnrichedAptosChainFromJSONTyped,
     EnrichedAptosChainToJSON,
 } from './EnrichedAptosChain';
+import type { EnrichedCosmosChain } from './EnrichedCosmosChain';
 import {
-    EnrichedCosmosChain,
     instanceOfEnrichedCosmosChain,
     EnrichedCosmosChainFromJSON,
     EnrichedCosmosChainFromJSONTyped,
     EnrichedCosmosChainToJSON,
 } from './EnrichedCosmosChain';
+import type { EnrichedEvmChain } from './EnrichedEvmChain';
 import {
-    EnrichedEvmChain,
     instanceOfEnrichedEvmChain,
     EnrichedEvmChainFromJSON,
     EnrichedEvmChainFromJSONTyped,
     EnrichedEvmChainToJSON,
 } from './EnrichedEvmChain';
+import type { EnrichedExchangeChain } from './EnrichedExchangeChain';
 import {
-    EnrichedSolanaChain,
+    instanceOfEnrichedExchangeChain,
+    EnrichedExchangeChainFromJSON,
+    EnrichedExchangeChainFromJSONTyped,
+    EnrichedExchangeChainToJSON,
+} from './EnrichedExchangeChain';
+import type { EnrichedSolanaChain } from './EnrichedSolanaChain';
+import {
     instanceOfEnrichedSolanaChain,
     EnrichedSolanaChainFromJSON,
     EnrichedSolanaChainFromJSONTyped,
     EnrichedSolanaChainToJSON,
 } from './EnrichedSolanaChain';
+import type { EnrichedStacksChain } from './EnrichedStacksChain';
 import {
-    EnrichedSuiChain,
+    instanceOfEnrichedStacksChain,
+    EnrichedStacksChainFromJSON,
+    EnrichedStacksChainFromJSONTyped,
+    EnrichedStacksChainToJSON,
+} from './EnrichedStacksChain';
+import type { EnrichedStarknetChain } from './EnrichedStarknetChain';
+import {
+    instanceOfEnrichedStarknetChain,
+    EnrichedStarknetChainFromJSON,
+    EnrichedStarknetChainFromJSONTyped,
+    EnrichedStarknetChainToJSON,
+} from './EnrichedStarknetChain';
+import type { EnrichedSuiChain } from './EnrichedSuiChain';
+import {
     instanceOfEnrichedSuiChain,
     EnrichedSuiChainFromJSON,
     EnrichedSuiChainFromJSONTyped,
     EnrichedSuiChainToJSON,
 } from './EnrichedSuiChain';
+import type { EnrichedTonChain } from './EnrichedTonChain';
 import {
-    EnrichedTonChain,
     instanceOfEnrichedTonChain,
     EnrichedTonChainFromJSON,
     EnrichedTonChainFromJSONTyped,
     EnrichedTonChainToJSON,
 } from './EnrichedTonChain';
+import type { EnrichedTronChain } from './EnrichedTronChain';
 import {
-    EnrichedUtxoChain,
+    instanceOfEnrichedTronChain,
+    EnrichedTronChainFromJSON,
+    EnrichedTronChainFromJSONTyped,
+    EnrichedTronChainToJSON,
+} from './EnrichedTronChain';
+import type { EnrichedUtxoChain } from './EnrichedUtxoChain';
+import {
     instanceOfEnrichedUtxoChain,
     EnrichedUtxoChainFromJSON,
     EnrichedUtxoChainFromJSONTyped,
@@ -67,58 +95,75 @@ import {
  * 
  * @export
  */
-export type EnrichedChain = { chainType: 'aptos' } & EnrichedAptosChain | { chainType: 'cosmos' } & EnrichedCosmosChain | { chainType: 'evm' } & EnrichedEvmChain | { chainType: 'solana' } & EnrichedSolanaChain | { chainType: 'sui' } & EnrichedSuiChain | { chainType: 'ton' } & EnrichedTonChain | { chainType: 'utxo' } & EnrichedUtxoChain;
+export type EnrichedChain = { chainType: 'aptos' } & EnrichedAptosChain | { chainType: 'cosmos' } & EnrichedCosmosChain | { chainType: 'evm' } & EnrichedEvmChain | { chainType: 'exchange' } & EnrichedExchangeChain | { chainType: 'solana' } & EnrichedSolanaChain | { chainType: 'stacks' } & EnrichedStacksChain | { chainType: 'starknet' } & EnrichedStarknetChain | { chainType: 'sui' } & EnrichedSuiChain | { chainType: 'ton' } & EnrichedTonChain | { chainType: 'tron' } & EnrichedTronChain | { chainType: 'utxo' } & EnrichedUtxoChain;
 
 export function EnrichedChainFromJSON(json: any): EnrichedChain {
     return EnrichedChainFromJSONTyped(json, false);
 }
 
 export function EnrichedChainFromJSONTyped(json: any, ignoreDiscriminator: boolean): EnrichedChain {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['chain_type']) {
         case 'aptos':
-            return {...EnrichedAptosChainFromJSONTyped(json, true), chainType: 'aptos'};
+            return Object.assign({}, EnrichedAptosChainFromJSONTyped(json, true), { chainType: 'aptos' } as const);
         case 'cosmos':
-            return {...EnrichedCosmosChainFromJSONTyped(json, true), chainType: 'cosmos'};
+            return Object.assign({}, EnrichedCosmosChainFromJSONTyped(json, true), { chainType: 'cosmos' } as const);
         case 'evm':
-            return {...EnrichedEvmChainFromJSONTyped(json, true), chainType: 'evm'};
+            return Object.assign({}, EnrichedEvmChainFromJSONTyped(json, true), { chainType: 'evm' } as const);
+        case 'exchange':
+            return Object.assign({}, EnrichedExchangeChainFromJSONTyped(json, true), { chainType: 'exchange' } as const);
         case 'solana':
-            return {...EnrichedSolanaChainFromJSONTyped(json, true), chainType: 'solana'};
+            return Object.assign({}, EnrichedSolanaChainFromJSONTyped(json, true), { chainType: 'solana' } as const);
+        case 'stacks':
+            return Object.assign({}, EnrichedStacksChainFromJSONTyped(json, true), { chainType: 'stacks' } as const);
+        case 'starknet':
+            return Object.assign({}, EnrichedStarknetChainFromJSONTyped(json, true), { chainType: 'starknet' } as const);
         case 'sui':
-            return {...EnrichedSuiChainFromJSONTyped(json, true), chainType: 'sui'};
+            return Object.assign({}, EnrichedSuiChainFromJSONTyped(json, true), { chainType: 'sui' } as const);
         case 'ton':
-            return {...EnrichedTonChainFromJSONTyped(json, true), chainType: 'ton'};
+            return Object.assign({}, EnrichedTonChainFromJSONTyped(json, true), { chainType: 'ton' } as const);
+        case 'tron':
+            return Object.assign({}, EnrichedTronChainFromJSONTyped(json, true), { chainType: 'tron' } as const);
         case 'utxo':
-            return {...EnrichedUtxoChainFromJSONTyped(json, true), chainType: 'utxo'};
+            return Object.assign({}, EnrichedUtxoChainFromJSONTyped(json, true), { chainType: 'utxo' } as const);
         default:
             throw new Error(`No variant of EnrichedChain exists with 'chainType=${json['chainType']}'`);
     }
 }
 
-export function EnrichedChainToJSON(value?: EnrichedChain | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function EnrichedChainToJSON(json: any): any {
+    return EnrichedChainToJSONTyped(json, false);
+}
+
+export function EnrichedChainToJSONTyped(value?: EnrichedChain | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['chainType']) {
         case 'aptos':
-            return EnrichedAptosChainToJSON(value);
+            return Object.assign({}, EnrichedAptosChainToJSON(value), { chainType: 'aptos' } as const);
         case 'cosmos':
-            return EnrichedCosmosChainToJSON(value);
+            return Object.assign({}, EnrichedCosmosChainToJSON(value), { chainType: 'cosmos' } as const);
         case 'evm':
-            return EnrichedEvmChainToJSON(value);
+            return Object.assign({}, EnrichedEvmChainToJSON(value), { chainType: 'evm' } as const);
+        case 'exchange':
+            return Object.assign({}, EnrichedExchangeChainToJSON(value), { chainType: 'exchange' } as const);
         case 'solana':
-            return EnrichedSolanaChainToJSON(value);
+            return Object.assign({}, EnrichedSolanaChainToJSON(value), { chainType: 'solana' } as const);
+        case 'stacks':
+            return Object.assign({}, EnrichedStacksChainToJSON(value), { chainType: 'stacks' } as const);
+        case 'starknet':
+            return Object.assign({}, EnrichedStarknetChainToJSON(value), { chainType: 'starknet' } as const);
         case 'sui':
-            return EnrichedSuiChainToJSON(value);
+            return Object.assign({}, EnrichedSuiChainToJSON(value), { chainType: 'sui' } as const);
         case 'ton':
-            return EnrichedTonChainToJSON(value);
+            return Object.assign({}, EnrichedTonChainToJSON(value), { chainType: 'ton' } as const);
+        case 'tron':
+            return Object.assign({}, EnrichedTronChainToJSON(value), { chainType: 'tron' } as const);
         case 'utxo':
-            return EnrichedUtxoChainToJSON(value);
+            return Object.assign({}, EnrichedUtxoChainToJSON(value), { chainType: 'utxo' } as const);
         default:
             throw new Error(`No variant of EnrichedChain exists with 'chainType=${value['chainType']}'`);
     }

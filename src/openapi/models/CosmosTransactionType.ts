@@ -25,6 +25,17 @@ export const CosmosTransactionType = {
 export type CosmosTransactionType = typeof CosmosTransactionType[keyof typeof CosmosTransactionType];
 
 
+export function instanceOfCosmosTransactionType(value: any): boolean {
+    for (const key in CosmosTransactionType) {
+        if (Object.prototype.hasOwnProperty.call(CosmosTransactionType, key)) {
+            if (CosmosTransactionType[key as keyof typeof CosmosTransactionType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function CosmosTransactionTypeFromJSON(json: any): CosmosTransactionType {
     return CosmosTransactionTypeFromJSONTyped(json, false);
 }
@@ -35,5 +46,9 @@ export function CosmosTransactionTypeFromJSONTyped(json: any, ignoreDiscriminato
 
 export function CosmosTransactionTypeToJSON(value?: CosmosTransactionType | null): any {
     return value as any;
+}
+
+export function CosmosTransactionTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): CosmosTransactionType {
+    return value as CosmosTransactionType;
 }
 

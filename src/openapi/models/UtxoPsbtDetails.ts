@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedUtxoAddress } from './EnrichedUtxoAddress';
 import {
     EnrichedUtxoAddressFromJSON,
     EnrichedUtxoAddressFromJSONTyped,
     EnrichedUtxoAddressToJSON,
+    EnrichedUtxoAddressToJSONTyped,
 } from './EnrichedUtxoAddress';
 
 /**
@@ -71,13 +72,11 @@ export type UtxoPsbtDetailsTypeEnum = typeof UtxoPsbtDetailsTypeEnum[keyof typeo
 /**
  * Check if a given object implements the UtxoPsbtDetails interface.
  */
-export function instanceOfUtxoPsbtDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "psbtRawData" in value;
-    isInstance = isInstance && "sender" in value;
-
-    return isInstance;
+export function instanceOfUtxoPsbtDetails(value: object): value is UtxoPsbtDetails {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('psbtRawData' in value) || value['psbtRawData'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    return true;
 }
 
 export function UtxoPsbtDetailsFromJSON(json: any): UtxoPsbtDetails {
@@ -85,33 +84,35 @@ export function UtxoPsbtDetailsFromJSON(json: any): UtxoPsbtDetails {
 }
 
 export function UtxoPsbtDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): UtxoPsbtDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
         'psbtRawData': json['psbt_raw_data'],
-        'signedPsbtRawData': !exists(json, 'signed_psbt_raw_data') ? undefined : json['signed_psbt_raw_data'],
+        'signedPsbtRawData': json['signed_psbt_raw_data'] == null ? undefined : json['signed_psbt_raw_data'],
         'sender': EnrichedUtxoAddressFromJSON(json['sender']),
-        'jsonRepresentation': !exists(json, 'json_representation') ? undefined : json['json_representation'],
+        'jsonRepresentation': json['json_representation'] == null ? undefined : json['json_representation'],
     };
 }
 
-export function UtxoPsbtDetailsToJSON(value?: UtxoPsbtDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UtxoPsbtDetailsToJSON(json: any): UtxoPsbtDetails {
+    return UtxoPsbtDetailsToJSONTyped(json, false);
+}
+
+export function UtxoPsbtDetailsToJSONTyped(value?: UtxoPsbtDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'psbt_raw_data': value.psbtRawData,
-        'signed_psbt_raw_data': value.signedPsbtRawData,
-        'sender': EnrichedUtxoAddressToJSON(value.sender),
-        'json_representation': value.jsonRepresentation,
+        'type': value['type'],
+        'psbt_raw_data': value['psbtRawData'],
+        'signed_psbt_raw_data': value['signedPsbtRawData'],
+        'sender': EnrichedUtxoAddressToJSON(value['sender']),
+        'json_representation': value['jsonRepresentation'],
     };
 }
 

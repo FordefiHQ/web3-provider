@@ -23,6 +23,17 @@ export const TestChainErrorType = {
 export type TestChainErrorType = typeof TestChainErrorType[keyof typeof TestChainErrorType];
 
 
+export function instanceOfTestChainErrorType(value: any): boolean {
+    for (const key in TestChainErrorType) {
+        if (Object.prototype.hasOwnProperty.call(TestChainErrorType, key)) {
+            if (TestChainErrorType[key as keyof typeof TestChainErrorType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function TestChainErrorTypeFromJSON(json: any): TestChainErrorType {
     return TestChainErrorTypeFromJSONTyped(json, false);
 }
@@ -33,5 +44,9 @@ export function TestChainErrorTypeFromJSONTyped(json: any, ignoreDiscriminator: 
 
 export function TestChainErrorTypeToJSON(value?: TestChainErrorType | null): any {
     return value as any;
+}
+
+export function TestChainErrorTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): TestChainErrorType {
+    return value as TestChainErrorType;
 }
 

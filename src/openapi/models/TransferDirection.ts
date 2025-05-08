@@ -25,6 +25,17 @@ export const TransferDirection = {
 export type TransferDirection = typeof TransferDirection[keyof typeof TransferDirection];
 
 
+export function instanceOfTransferDirection(value: any): boolean {
+    for (const key in TransferDirection) {
+        if (Object.prototype.hasOwnProperty.call(TransferDirection, key)) {
+            if (TransferDirection[key as keyof typeof TransferDirection] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function TransferDirectionFromJSON(json: any): TransferDirection {
     return TransferDirectionFromJSONTyped(json, false);
 }
@@ -35,5 +46,9 @@ export function TransferDirectionFromJSONTyped(json: any, ignoreDiscriminator: b
 
 export function TransferDirectionToJSON(value?: TransferDirection | null): any {
     return value as any;
+}
+
+export function TransferDirectionToJSONTyped(value: any, ignoreDiscriminator: boolean): TransferDirection {
+    return value as TransferDirection;
 }
 

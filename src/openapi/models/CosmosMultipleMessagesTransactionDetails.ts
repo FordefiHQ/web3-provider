@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { MessagesList } from './MessagesList';
 import {
     MessagesListFromJSON,
     MessagesListFromJSONTyped,
     MessagesListToJSON,
+    MessagesListToJSONTyped,
 } from './MessagesList';
 
 /**
@@ -53,12 +54,10 @@ export type CosmosMultipleMessagesTransactionDetailsTypeEnum = typeof CosmosMult
 /**
  * Check if a given object implements the CosmosMultipleMessagesTransactionDetails interface.
  */
-export function instanceOfCosmosMultipleMessagesTransactionDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "transactionData" in value;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfCosmosMultipleMessagesTransactionDetails(value: object): value is CosmosMultipleMessagesTransactionDetails {
+    if (!('transactionData' in value) || value['transactionData'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function CosmosMultipleMessagesTransactionDetailsFromJSON(json: any): CosmosMultipleMessagesTransactionDetails {
@@ -66,7 +65,7 @@ export function CosmosMultipleMessagesTransactionDetailsFromJSON(json: any): Cos
 }
 
 export function CosmosMultipleMessagesTransactionDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosMultipleMessagesTransactionDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function CosmosMultipleMessagesTransactionDetailsFromJSONTyped(json: any,
     };
 }
 
-export function CosmosMultipleMessagesTransactionDetailsToJSON(value?: CosmosMultipleMessagesTransactionDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosMultipleMessagesTransactionDetailsToJSON(json: any): CosmosMultipleMessagesTransactionDetails {
+    return CosmosMultipleMessagesTransactionDetailsToJSONTyped(json, false);
+}
+
+export function CosmosMultipleMessagesTransactionDetailsToJSONTyped(value?: CosmosMultipleMessagesTransactionDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'transaction_data': MessagesListToJSON(value.transactionData),
-        'type': value.type,
+        'transaction_data': MessagesListToJSON(value['transactionData']),
+        'type': value['type'],
     };
 }
 

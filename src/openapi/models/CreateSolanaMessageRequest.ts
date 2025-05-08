@@ -12,25 +12,35 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { SolanaPersonalMessageRequest } from './SolanaPersonalMessageRequest';
+import {
+    SolanaPersonalMessageRequestFromJSON,
+    SolanaPersonalMessageRequestFromJSONTyped,
+    SolanaPersonalMessageRequestToJSON,
+    SolanaPersonalMessageRequestToJSONTyped,
+} from './SolanaPersonalMessageRequest';
+import type { DappInfo } from './DappInfo';
+import {
+    DappInfoFromJSON,
+    DappInfoFromJSONTyped,
+    DappInfoToJSON,
+    DappInfoToJSONTyped,
+} from './DappInfo';
 import type { SignMode } from './SignMode';
 import {
     SignModeFromJSON,
     SignModeFromJSONTyped,
     SignModeToJSON,
+    SignModeToJSONTyped,
 } from './SignMode';
 import type { SignerType } from './SignerType';
 import {
     SignerTypeFromJSON,
     SignerTypeFromJSONTyped,
     SignerTypeToJSON,
+    SignerTypeToJSONTyped,
 } from './SignerType';
-import type { SolanaPersonalMessageRequest } from './SolanaPersonalMessageRequest';
-import {
-    SolanaPersonalMessageRequestFromJSON,
-    SolanaPersonalMessageRequestFromJSONTyped,
-    SolanaPersonalMessageRequestToJSON,
-} from './SolanaPersonalMessageRequest';
 
 /**
  * 
@@ -64,6 +74,12 @@ export interface CreateSolanaMessageRequest {
     signMode?: SignMode;
     /**
      * 
+     * @type {DappInfo}
+     * @memberof CreateSolanaMessageRequest
+     */
+    dappInfo?: DappInfo;
+    /**
+     * 
      * @type {string}
      * @memberof CreateSolanaMessageRequest
      */
@@ -89,13 +105,11 @@ export type CreateSolanaMessageRequestTypeEnum = typeof CreateSolanaMessageReque
 /**
  * Check if a given object implements the CreateSolanaMessageRequest interface.
  */
-export function instanceOfCreateSolanaMessageRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "vaultId" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "details" in value;
-
-    return isInstance;
+export function instanceOfCreateSolanaMessageRequest(value: object): value is CreateSolanaMessageRequest {
+    if (!('vaultId' in value) || value['vaultId'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    return true;
 }
 
 export function CreateSolanaMessageRequestFromJSON(json: any): CreateSolanaMessageRequest {
@@ -103,35 +117,39 @@ export function CreateSolanaMessageRequestFromJSON(json: any): CreateSolanaMessa
 }
 
 export function CreateSolanaMessageRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateSolanaMessageRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'vaultId': json['vault_id'],
-        'note': !exists(json, 'note') ? undefined : json['note'],
-        'signerType': !exists(json, 'signer_type') ? undefined : SignerTypeFromJSON(json['signer_type']),
-        'signMode': !exists(json, 'sign_mode') ? undefined : SignModeFromJSON(json['sign_mode']),
+        'note': json['note'] == null ? undefined : json['note'],
+        'signerType': json['signer_type'] == null ? undefined : SignerTypeFromJSON(json['signer_type']),
+        'signMode': json['sign_mode'] == null ? undefined : SignModeFromJSON(json['sign_mode']),
+        'dappInfo': json['dapp_info'] == null ? undefined : DappInfoFromJSON(json['dapp_info']),
         'type': json['type'],
         'details': SolanaPersonalMessageRequestFromJSON(json['details']),
     };
 }
 
-export function CreateSolanaMessageRequestToJSON(value?: CreateSolanaMessageRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateSolanaMessageRequestToJSON(json: any): CreateSolanaMessageRequest {
+    return CreateSolanaMessageRequestToJSONTyped(json, false);
+}
+
+export function CreateSolanaMessageRequestToJSONTyped(value?: CreateSolanaMessageRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'vault_id': value.vaultId,
-        'note': value.note,
-        'signer_type': SignerTypeToJSON(value.signerType),
-        'sign_mode': SignModeToJSON(value.signMode),
-        'type': value.type,
-        'details': SolanaPersonalMessageRequestToJSON(value.details),
+        'vault_id': value['vaultId'],
+        'note': value['note'],
+        'signer_type': SignerTypeToJSON(value['signerType']),
+        'sign_mode': SignModeToJSON(value['signMode']),
+        'dapp_info': DappInfoToJSON(value['dappInfo']),
+        'type': value['type'],
+        'details': SolanaPersonalMessageRequestToJSON(value['details']),
     };
 }
 

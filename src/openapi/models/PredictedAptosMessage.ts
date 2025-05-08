@@ -12,43 +12,56 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { ApprovalRequest } from './ApprovalRequest';
-import {
-    ApprovalRequestFromJSON,
-    ApprovalRequestFromJSONTyped,
-    ApprovalRequestToJSON,
-} from './ApprovalRequest';
-import type { AptosMessageType } from './AptosMessageType';
-import {
-    AptosMessageTypeFromJSON,
-    AptosMessageTypeFromJSONTyped,
-    AptosMessageTypeToJSON,
-} from './AptosMessageType';
-import type { EnrichedAptosAddress } from './EnrichedAptosAddress';
-import {
-    EnrichedAptosAddressFromJSON,
-    EnrichedAptosAddressFromJSONTyped,
-    EnrichedAptosAddressToJSON,
-} from './EnrichedAptosAddress';
+import { mapValues } from '../runtime';
 import type { EnrichedAptosChain } from './EnrichedAptosChain';
 import {
     EnrichedAptosChainFromJSON,
     EnrichedAptosChainFromJSONTyped,
     EnrichedAptosChainToJSON,
+    EnrichedAptosChainToJSONTyped,
 } from './EnrichedAptosChain';
-import type { PolicyMatch } from './PolicyMatch';
+import type { AmlPolicyMatchOutgoing } from './AmlPolicyMatchOutgoing';
 import {
-    PolicyMatchFromJSON,
-    PolicyMatchFromJSONTyped,
-    PolicyMatchToJSON,
-} from './PolicyMatch';
+    AmlPolicyMatchOutgoingFromJSON,
+    AmlPolicyMatchOutgoingFromJSONTyped,
+    AmlPolicyMatchOutgoingToJSON,
+    AmlPolicyMatchOutgoingToJSONTyped,
+} from './AmlPolicyMatchOutgoing';
 import type { TransactionRisk } from './TransactionRisk';
 import {
     TransactionRiskFromJSON,
     TransactionRiskFromJSONTyped,
     TransactionRiskToJSON,
+    TransactionRiskToJSONTyped,
 } from './TransactionRisk';
+import type { ApprovalRequest } from './ApprovalRequest';
+import {
+    ApprovalRequestFromJSON,
+    ApprovalRequestFromJSONTyped,
+    ApprovalRequestToJSON,
+    ApprovalRequestToJSONTyped,
+} from './ApprovalRequest';
+import type { EnrichedAptosAddress } from './EnrichedAptosAddress';
+import {
+    EnrichedAptosAddressFromJSON,
+    EnrichedAptosAddressFromJSONTyped,
+    EnrichedAptosAddressToJSON,
+    EnrichedAptosAddressToJSONTyped,
+} from './EnrichedAptosAddress';
+import type { AptosMessageType } from './AptosMessageType';
+import {
+    AptosMessageTypeFromJSON,
+    AptosMessageTypeFromJSONTyped,
+    AptosMessageTypeToJSON,
+    AptosMessageTypeToJSONTyped,
+} from './AptosMessageType';
+import type { PolicyMatch } from './PolicyMatch';
+import {
+    PolicyMatchFromJSON,
+    PolicyMatchFromJSONTyped,
+    PolicyMatchToJSON,
+    PolicyMatchToJSONTyped,
+} from './PolicyMatch';
 
 /**
  * 
@@ -56,6 +69,12 @@ import {
  * @interface PredictedAptosMessage
  */
 export interface PredictedAptosMessage {
+    /**
+     * 
+     * @type {AmlPolicyMatchOutgoing}
+     * @memberof PredictedAptosMessage
+     */
+    amlPolicyMatch?: AmlPolicyMatchOutgoing;
     /**
      * 
      * @type {PolicyMatch}
@@ -74,6 +93,12 @@ export interface PredictedAptosMessage {
      * @memberof PredictedAptosMessage
      */
     risks: Array<TransactionRisk>;
+    /**
+     * 
+     * @type {string}
+     * @memberof PredictedAptosMessage
+     */
+    note?: string;
     /**
      * 
      * @type {string}
@@ -119,17 +144,15 @@ export type PredictedAptosMessageTypeEnum = typeof PredictedAptosMessageTypeEnum
 /**
  * Check if a given object implements the PredictedAptosMessage interface.
  */
-export function instanceOfPredictedAptosMessage(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "policyMatch" in value;
-    isInstance = isInstance && "risks" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "sender" in value;
-    isInstance = isInstance && "aptosMessageType" in value;
-    isInstance = isInstance && "messageToDisplay" in value;
-
-    return isInstance;
+export function instanceOfPredictedAptosMessage(value: object): value is PredictedAptosMessage {
+    if (!('policyMatch' in value) || value['policyMatch'] === undefined) return false;
+    if (!('risks' in value) || value['risks'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    if (!('aptosMessageType' in value) || value['aptosMessageType'] === undefined) return false;
+    if (!('messageToDisplay' in value) || value['messageToDisplay'] === undefined) return false;
+    return true;
 }
 
 export function PredictedAptosMessageFromJSON(json: any): PredictedAptosMessage {
@@ -137,14 +160,16 @@ export function PredictedAptosMessageFromJSON(json: any): PredictedAptosMessage 
 }
 
 export function PredictedAptosMessageFromJSONTyped(json: any, ignoreDiscriminator: boolean): PredictedAptosMessage {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
+        'amlPolicyMatch': json['aml_policy_match'] == null ? undefined : AmlPolicyMatchOutgoingFromJSON(json['aml_policy_match']),
         'policyMatch': PolicyMatchFromJSON(json['policy_match']),
-        'approvalRequest': !exists(json, 'approval_request') ? undefined : ApprovalRequestFromJSON(json['approval_request']),
+        'approvalRequest': json['approval_request'] == null ? undefined : ApprovalRequestFromJSON(json['approval_request']),
         'risks': ((json['risks'] as Array<any>).map(TransactionRiskFromJSON)),
+        'note': json['note'] == null ? undefined : json['note'],
         'type': json['type'],
         'chain': EnrichedAptosChainFromJSON(json['chain']),
         'sender': EnrichedAptosAddressFromJSON(json['sender']),
@@ -153,23 +178,27 @@ export function PredictedAptosMessageFromJSONTyped(json: any, ignoreDiscriminato
     };
 }
 
-export function PredictedAptosMessageToJSON(value?: PredictedAptosMessage | null): any {
-    if (value === undefined) {
-        return undefined;
+export function PredictedAptosMessageToJSON(json: any): PredictedAptosMessage {
+    return PredictedAptosMessageToJSONTyped(json, false);
+}
+
+export function PredictedAptosMessageToJSONTyped(value?: PredictedAptosMessage | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'policy_match': PolicyMatchToJSON(value.policyMatch),
-        'approval_request': ApprovalRequestToJSON(value.approvalRequest),
-        'risks': ((value.risks as Array<any>).map(TransactionRiskToJSON)),
-        'type': value.type,
-        'chain': EnrichedAptosChainToJSON(value.chain),
-        'sender': EnrichedAptosAddressToJSON(value.sender),
-        'aptos_message_type': AptosMessageTypeToJSON(value.aptosMessageType),
-        'message_to_display': value.messageToDisplay,
+        'aml_policy_match': AmlPolicyMatchOutgoingToJSON(value['amlPolicyMatch']),
+        'policy_match': PolicyMatchToJSON(value['policyMatch']),
+        'approval_request': ApprovalRequestToJSON(value['approvalRequest']),
+        'risks': ((value['risks'] as Array<any>).map(TransactionRiskToJSON)),
+        'note': value['note'],
+        'type': value['type'],
+        'chain': EnrichedAptosChainToJSON(value['chain']),
+        'sender': EnrichedAptosAddressToJSON(value['sender']),
+        'aptos_message_type': AptosMessageTypeToJSON(value['aptosMessageType']),
+        'message_to_display': value['messageToDisplay'],
     };
 }
 

@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { CosmosCoinWithAmount } from './CosmosCoinWithAmount';
 import {
     CosmosCoinWithAmountFromJSON,
     CosmosCoinWithAmountFromJSONTyped,
     CosmosCoinWithAmountToJSON,
+    CosmosCoinWithAmountToJSONTyped,
 } from './CosmosCoinWithAmount';
 import type { Price } from './Price';
 import {
     PriceFromJSON,
     PriceFromJSONTyped,
     PriceToJSON,
+    PriceToJSONTyped,
 } from './Price';
 
 /**
@@ -55,13 +57,11 @@ export interface CosmosGasDebit {
 /**
  * Check if a given object implements the CosmosGasDebit interface.
  */
-export function instanceOfCosmosGasDebit(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "gasUsed" in value;
-    isInstance = isInstance && "totalFee" in value;
-    isInstance = isInstance && "fiatPrices" in value;
-
-    return isInstance;
+export function instanceOfCosmosGasDebit(value: object): value is CosmosGasDebit {
+    if (!('gasUsed' in value) || value['gasUsed'] === undefined) return false;
+    if (!('totalFee' in value) || value['totalFee'] === undefined) return false;
+    if (!('fiatPrices' in value) || value['fiatPrices'] === undefined) return false;
+    return true;
 }
 
 export function CosmosGasDebitFromJSON(json: any): CosmosGasDebit {
@@ -69,7 +69,7 @@ export function CosmosGasDebitFromJSON(json: any): CosmosGasDebit {
 }
 
 export function CosmosGasDebitFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosGasDebit {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -80,18 +80,20 @@ export function CosmosGasDebitFromJSONTyped(json: any, ignoreDiscriminator: bool
     };
 }
 
-export function CosmosGasDebitToJSON(value?: CosmosGasDebit | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosGasDebitToJSON(json: any): CosmosGasDebit {
+    return CosmosGasDebitToJSONTyped(json, false);
+}
+
+export function CosmosGasDebitToJSONTyped(value?: CosmosGasDebit | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'gas_used': value.gasUsed,
-        'total_fee': ((value.totalFee as Array<any>).map(CosmosCoinWithAmountToJSON)),
-        'fiat_prices': ((value.fiatPrices as Array<any>).map(PriceToJSON)),
+        'gas_used': value['gasUsed'],
+        'total_fee': ((value['totalFee'] as Array<any>).map(CosmosCoinWithAmountToJSON)),
+        'fiat_prices': ((value['fiatPrices'] as Array<any>).map(PriceToJSON)),
     };
 }
 

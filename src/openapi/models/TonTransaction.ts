@@ -12,85 +12,112 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedTonAddress } from './EnrichedTonAddress';
 import {
     EnrichedTonAddressFromJSON,
     EnrichedTonAddressFromJSONTyped,
     EnrichedTonAddressToJSON,
+    EnrichedTonAddressToJSONTyped,
 } from './EnrichedTonAddress';
-import type { EnrichedTonChain } from './EnrichedTonChain';
-import {
-    EnrichedTonChainFromJSON,
-    EnrichedTonChainFromJSONTyped,
-    EnrichedTonChainToJSON,
-} from './EnrichedTonChain';
 import type { ManagedTransactionData } from './ManagedTransactionData';
 import {
     ManagedTransactionDataFromJSON,
     ManagedTransactionDataFromJSONTyped,
     ManagedTransactionDataToJSON,
+    ManagedTransactionDataToJSONTyped,
 } from './ManagedTransactionData';
+import type { EnrichedTonChain } from './EnrichedTonChain';
+import {
+    EnrichedTonChainFromJSON,
+    EnrichedTonChainFromJSONTyped,
+    EnrichedTonChainToJSON,
+    EnrichedTonChainToJSONTyped,
+} from './EnrichedTonChain';
 import type { PredictedTonTransactionTonTransactionTypeDetails } from './PredictedTonTransactionTonTransactionTypeDetails';
 import {
     PredictedTonTransactionTonTransactionTypeDetailsFromJSON,
     PredictedTonTransactionTonTransactionTypeDetailsFromJSONTyped,
     PredictedTonTransactionTonTransactionTypeDetailsToJSON,
+    PredictedTonTransactionTonTransactionTypeDetailsToJSONTyped,
 } from './PredictedTonTransactionTonTransactionTypeDetails';
+import type { PushableTransactionStateChange } from './PushableTransactionStateChange';
+import {
+    PushableTransactionStateChangeFromJSON,
+    PushableTransactionStateChangeFromJSONTyped,
+    PushableTransactionStateChangeToJSON,
+    PushableTransactionStateChangeToJSONTyped,
+} from './PushableTransactionStateChange';
+import type { PushableTransactionState } from './PushableTransactionState';
+import {
+    PushableTransactionStateFromJSON,
+    PushableTransactionStateFromJSONTyped,
+    PushableTransactionStateToJSON,
+    PushableTransactionStateToJSONTyped,
+} from './PushableTransactionState';
+import type { TonTransactionResult } from './TonTransactionResult';
+import {
+    TonTransactionResultFromJSON,
+    TonTransactionResultFromJSONTyped,
+    TonTransactionResultToJSON,
+    TonTransactionResultToJSONTyped,
+} from './TonTransactionResult';
+import type { AmlPolicyMatchIncoming } from './AmlPolicyMatchIncoming';
+import {
+    AmlPolicyMatchIncomingFromJSON,
+    AmlPolicyMatchIncomingFromJSONTyped,
+    AmlPolicyMatchIncomingToJSON,
+    AmlPolicyMatchIncomingToJSONTyped,
+} from './AmlPolicyMatchIncoming';
+import type { TransactionSpamState } from './TransactionSpamState';
+import {
+    TransactionSpamStateFromJSON,
+    TransactionSpamStateFromJSONTyped,
+    TransactionSpamStateToJSON,
+    TransactionSpamStateToJSONTyped,
+} from './TransactionSpamState';
+import type { TransactionDirection } from './TransactionDirection';
+import {
+    TransactionDirectionFromJSON,
+    TransactionDirectionFromJSONTyped,
+    TransactionDirectionToJSON,
+    TransactionDirectionToJSONTyped,
+} from './TransactionDirection';
 import type { Signature } from './Signature';
 import {
     SignatureFromJSON,
     SignatureFromJSONTyped,
     SignatureToJSON,
+    SignatureToJSONTyped,
 } from './Signature';
 import type { SimulationStatusResult } from './SimulationStatusResult';
 import {
     SimulationStatusResultFromJSON,
     SimulationStatusResultFromJSONTyped,
     SimulationStatusResultToJSON,
+    SimulationStatusResultToJSONTyped,
 } from './SimulationStatusResult';
 import type { TonBlock } from './TonBlock';
 import {
     TonBlockFromJSON,
     TonBlockFromJSONTyped,
     TonBlockToJSON,
+    TonBlockToJSONTyped,
 } from './TonBlock';
+import type { AmlResults } from './AmlResults';
+import {
+    AmlResultsFromJSON,
+    AmlResultsFromJSONTyped,
+    AmlResultsToJSON,
+    AmlResultsToJSONTyped,
+} from './AmlResults';
 import type { TonTransactionPayload } from './TonTransactionPayload';
 import {
     TonTransactionPayloadFromJSON,
     TonTransactionPayloadFromJSONTyped,
     TonTransactionPayloadToJSON,
+    TonTransactionPayloadToJSONTyped,
 } from './TonTransactionPayload';
-import type { TonTransactionResult } from './TonTransactionResult';
-import {
-    TonTransactionResultFromJSON,
-    TonTransactionResultFromJSONTyped,
-    TonTransactionResultToJSON,
-} from './TonTransactionResult';
-import type { TonTransactionState } from './TonTransactionState';
-import {
-    TonTransactionStateFromJSON,
-    TonTransactionStateFromJSONTyped,
-    TonTransactionStateToJSON,
-} from './TonTransactionState';
-import type { TonTransactionStateChange } from './TonTransactionStateChange';
-import {
-    TonTransactionStateChangeFromJSON,
-    TonTransactionStateChangeFromJSONTyped,
-    TonTransactionStateChangeToJSON,
-} from './TonTransactionStateChange';
-import type { TransactionDirection } from './TransactionDirection';
-import {
-    TransactionDirectionFromJSON,
-    TransactionDirectionFromJSONTyped,
-    TransactionDirectionToJSON,
-} from './TransactionDirection';
-import type { TransactionSpamState } from './TransactionSpamState';
-import {
-    TransactionSpamStateFromJSON,
-    TransactionSpamStateFromJSONTyped,
-    TransactionSpamStateToJSON,
-} from './TransactionSpamState';
 
 /**
  * 
@@ -148,6 +175,36 @@ export interface TonTransaction {
     direction: TransactionDirection;
     /**
      * 
+     * @type {boolean}
+     * @memberof TonTransaction
+     */
+    signedExternally?: boolean;
+    /**
+     * 
+     * @type {PushableTransactionState}
+     * @memberof TonTransaction
+     */
+    state: PushableTransactionState;
+    /**
+     * 
+     * @type {Array<PushableTransactionStateChange>}
+     * @memberof TonTransaction
+     */
+    stateChanges: Array<PushableTransactionStateChange>;
+    /**
+     * 
+     * @type {AmlResults}
+     * @memberof TonTransaction
+     */
+    amlResults?: AmlResults;
+    /**
+     * 
+     * @type {AmlPolicyMatchIncoming}
+     * @memberof TonTransaction
+     */
+    incomingAmlPolicyMatch?: AmlPolicyMatchIncoming;
+    /**
+     * 
      * @type {string}
      * @memberof TonTransaction
      */
@@ -164,18 +221,6 @@ export interface TonTransaction {
      * @memberof TonTransaction
      */
     chain: EnrichedTonChain;
-    /**
-     * 
-     * @type {TonTransactionState}
-     * @memberof TonTransaction
-     */
-    state: TonTransactionState;
-    /**
-     * 
-     * @type {Array<TonTransactionStateChange>}
-     * @memberof TonTransaction
-     */
-    stateChanges: Array<TonTransactionStateChange>;
     /**
      * 
      * @type {number}
@@ -251,22 +296,20 @@ export type TonTransactionTypeEnum = typeof TonTransactionTypeEnum[keyof typeof 
 /**
  * Check if a given object implements the TonTransaction interface.
  */
-export function instanceOfTonTransaction(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "signatures" in value;
-    isInstance = isInstance && "direction" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "tonTransactionTypeDetails" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "stateChanges" in value;
-    isInstance = isInstance && "sender" in value;
-    isInstance = isInstance && "payload" in value;
-
-    return isInstance;
+export function instanceOfTonTransaction(value: object): value is TonTransaction {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('signatures' in value) || value['signatures'] === undefined) return false;
+    if (!('direction' in value) || value['direction'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('stateChanges' in value) || value['stateChanges'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('tonTransactionTypeDetails' in value) || value['tonTransactionTypeDetails'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    if (!('payload' in value) || value['payload'] === undefined) return false;
+    return true;
 }
 
 export function TonTransactionFromJSON(json: any): TonTransaction {
@@ -274,7 +317,7 @@ export function TonTransactionFromJSON(json: any): TonTransaction {
 }
 
 export function TonTransactionFromJSONTyped(json: any, ignoreDiscriminator: boolean): TonTransaction {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -282,61 +325,69 @@ export function TonTransactionFromJSONTyped(json: any, ignoreDiscriminator: bool
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
-        'managedTransactionData': !exists(json, 'managed_transaction_data') ? undefined : ManagedTransactionDataFromJSON(json['managed_transaction_data']),
+        'managedTransactionData': json['managed_transaction_data'] == null ? undefined : ManagedTransactionDataFromJSON(json['managed_transaction_data']),
         'signatures': ((json['signatures'] as Array<any>).map(SignatureFromJSON)),
-        'note': !exists(json, 'note') ? undefined : json['note'],
-        'spamState': !exists(json, 'spam_state') ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
+        'note': json['note'] == null ? undefined : json['note'],
+        'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
+        'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'state': PushableTransactionStateFromJSON(json['state']),
+        'stateChanges': ((json['state_changes'] as Array<any>).map(PushableTransactionStateChangeFromJSON)),
+        'amlResults': json['aml_results'] == null ? undefined : AmlResultsFromJSON(json['aml_results']),
+        'incomingAmlPolicyMatch': json['incoming_aml_policy_match'] == null ? undefined : AmlPolicyMatchIncomingFromJSON(json['incoming_aml_policy_match']),
         'type': json['type'],
         'tonTransactionTypeDetails': PredictedTonTransactionTonTransactionTypeDetailsFromJSON(json['ton_transaction_type_details']),
         'chain': EnrichedTonChainFromJSON(json['chain']),
-        'state': TonTransactionStateFromJSON(json['state']),
-        'stateChanges': ((json['state_changes'] as Array<any>).map(TonTransactionStateChangeFromJSON)),
-        'nonce': !exists(json, 'nonce') ? undefined : json['nonce'],
+        'nonce': json['nonce'] == null ? undefined : json['nonce'],
         'sender': EnrichedTonAddressFromJSON(json['sender']),
         'payload': TonTransactionPayloadFromJSON(json['payload']),
-        'hash': !exists(json, 'hash') ? undefined : json['hash'],
-        'block': !exists(json, 'block') ? undefined : TonBlockFromJSON(json['block']),
-        'serializedSignedTransaction': !exists(json, 'serialized_signed_transaction') ? undefined : json['serialized_signed_transaction'],
-        'expectedResult': !exists(json, 'expected_result') ? undefined : TonTransactionResultFromJSON(json['expected_result']),
-        'simulationStatusResult': !exists(json, 'simulation_status_result') ? undefined : SimulationStatusResultFromJSON(json['simulation_status_result']),
-        'minedResult': !exists(json, 'mined_result') ? undefined : TonTransactionResultFromJSON(json['mined_result']),
-        'explorerUrl': !exists(json, 'explorer_url') ? undefined : json['explorer_url'],
+        'hash': json['hash'] == null ? undefined : json['hash'],
+        'block': json['block'] == null ? undefined : TonBlockFromJSON(json['block']),
+        'serializedSignedTransaction': json['serialized_signed_transaction'] == null ? undefined : json['serialized_signed_transaction'],
+        'expectedResult': json['expected_result'] == null ? undefined : TonTransactionResultFromJSON(json['expected_result']),
+        'simulationStatusResult': json['simulation_status_result'] == null ? undefined : SimulationStatusResultFromJSON(json['simulation_status_result']),
+        'minedResult': json['mined_result'] == null ? undefined : TonTransactionResultFromJSON(json['mined_result']),
+        'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
     };
 }
 
-export function TonTransactionToJSON(value?: TonTransaction | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TonTransactionToJSON(json: any): TonTransaction {
+    return TonTransactionToJSONTyped(json, false);
+}
+
+export function TonTransactionToJSONTyped(value?: TonTransaction | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'managed_transaction_data': ManagedTransactionDataToJSON(value.managedTransactionData),
-        'signatures': ((value.signatures as Array<any>).map(SignatureToJSON)),
-        'note': value.note,
-        'spam_state': TransactionSpamStateToJSON(value.spamState),
-        'direction': TransactionDirectionToJSON(value.direction),
-        'type': value.type,
-        'ton_transaction_type_details': PredictedTonTransactionTonTransactionTypeDetailsToJSON(value.tonTransactionTypeDetails),
-        'chain': EnrichedTonChainToJSON(value.chain),
-        'state': TonTransactionStateToJSON(value.state),
-        'state_changes': ((value.stateChanges as Array<any>).map(TonTransactionStateChangeToJSON)),
-        'nonce': value.nonce,
-        'sender': EnrichedTonAddressToJSON(value.sender),
-        'payload': TonTransactionPayloadToJSON(value.payload),
-        'hash': value.hash,
-        'block': TonBlockToJSON(value.block),
-        'serialized_signed_transaction': value.serializedSignedTransaction,
-        'expected_result': TonTransactionResultToJSON(value.expectedResult),
-        'simulation_status_result': SimulationStatusResultToJSON(value.simulationStatusResult),
-        'mined_result': TonTransactionResultToJSON(value.minedResult),
-        'explorer_url': value.explorerUrl,
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'managed_transaction_data': ManagedTransactionDataToJSON(value['managedTransactionData']),
+        'signatures': ((value['signatures'] as Array<any>).map(SignatureToJSON)),
+        'note': value['note'],
+        'spam_state': TransactionSpamStateToJSON(value['spamState']),
+        'direction': TransactionDirectionToJSON(value['direction']),
+        'signed_externally': value['signedExternally'],
+        'state': PushableTransactionStateToJSON(value['state']),
+        'state_changes': ((value['stateChanges'] as Array<any>).map(PushableTransactionStateChangeToJSON)),
+        'aml_results': AmlResultsToJSON(value['amlResults']),
+        'incoming_aml_policy_match': AmlPolicyMatchIncomingToJSON(value['incomingAmlPolicyMatch']),
+        'type': value['type'],
+        'ton_transaction_type_details': PredictedTonTransactionTonTransactionTypeDetailsToJSON(value['tonTransactionTypeDetails']),
+        'chain': EnrichedTonChainToJSON(value['chain']),
+        'nonce': value['nonce'],
+        'sender': EnrichedTonAddressToJSON(value['sender']),
+        'payload': TonTransactionPayloadToJSON(value['payload']),
+        'hash': value['hash'],
+        'block': TonBlockToJSON(value['block']),
+        'serialized_signed_transaction': value['serializedSignedTransaction'],
+        'expected_result': TonTransactionResultToJSON(value['expectedResult']),
+        'simulation_status_result': SimulationStatusResultToJSON(value['simulationStatusResult']),
+        'mined_result': TonTransactionResultToJSON(value['minedResult']),
+        'explorer_url': value['explorerUrl'],
     };
 }
 

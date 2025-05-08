@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -72,59 +72,18 @@ export const AddEvmChainRequestChainTypeEnum = {
 } as const;
 export type AddEvmChainRequestChainTypeEnum = typeof AddEvmChainRequestChainTypeEnum[keyof typeof AddEvmChainRequestChainTypeEnum];
 
-/**
- * @export
- */
-export const AddEvmChainRequestChainIdEnum = {
-    NUMBER_1: 1,
-    NUMBER_5: 5,
-    NUMBER_10: 10,
-    NUMBER_16: 16,
-    NUMBER_56: 56,
-    NUMBER_100: 100,
-    NUMBER_137: 137,
-    NUMBER_169: 169,
-    NUMBER_250: 250,
-    NUMBER_324: 324,
-    NUMBER_1030: 1030,
-    NUMBER_1100: 1100,
-    NUMBER_1101: 1101,
-    NUMBER_1329: 1329,
-    NUMBER_1729: 1729,
-    NUMBER_2222: 2222,
-    NUMBER_4200: 4200,
-    NUMBER_5000: 5000,
-    NUMBER_7000: 7000,
-    NUMBER_7700: 7700,
-    NUMBER_8453: 8453,
-    NUMBER_17000: 17000,
-    NUMBER_80001: 80001,
-    NUMBER_42161: 42161,
-    NUMBER_43114: 43114,
-    NUMBER_59144: 59144,
-    NUMBER_81457: 81457,
-    NUMBER_421614: 421614,
-    NUMBER_534352: 534352,
-    NUMBER_660279: 660279,
-    NUMBER_810180: 810180,
-    NUMBER_11155111: 11155111
-} as const;
-export type AddEvmChainRequestChainIdEnum = typeof AddEvmChainRequestChainIdEnum[keyof typeof AddEvmChainRequestChainIdEnum];
-
 
 /**
  * Check if a given object implements the AddEvmChainRequest interface.
  */
-export function instanceOfAddEvmChainRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chainType" in value;
-    isInstance = isInstance && "chainId" in value;
-    isInstance = isInstance && "chainName" in value;
-    isInstance = isInstance && "currencySymbol" in value;
-    isInstance = isInstance && "isTestnet" in value;
-    isInstance = isInstance && "rpcUrl" in value;
-
-    return isInstance;
+export function instanceOfAddEvmChainRequest(value: object): value is AddEvmChainRequest {
+    if (!('chainType' in value) || value['chainType'] === undefined) return false;
+    if (!('chainId' in value) || value['chainId'] === undefined) return false;
+    if (!('chainName' in value) || value['chainName'] === undefined) return false;
+    if (!('currencySymbol' in value) || value['currencySymbol'] === undefined) return false;
+    if (!('isTestnet' in value) || value['isTestnet'] === undefined) return false;
+    if (!('rpcUrl' in value) || value['rpcUrl'] === undefined) return false;
+    return true;
 }
 
 export function AddEvmChainRequestFromJSON(json: any): AddEvmChainRequest {
@@ -132,7 +91,7 @@ export function AddEvmChainRequestFromJSON(json: any): AddEvmChainRequest {
 }
 
 export function AddEvmChainRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): AddEvmChainRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -143,26 +102,28 @@ export function AddEvmChainRequestFromJSONTyped(json: any, ignoreDiscriminator: 
         'currencySymbol': json['currency_symbol'],
         'isTestnet': json['is_testnet'],
         'rpcUrl': json['rpc_url'],
-        'blockchainExplorerUrl': !exists(json, 'blockchain_explorer_url') ? undefined : json['blockchain_explorer_url'],
+        'blockchainExplorerUrl': json['blockchain_explorer_url'] == null ? undefined : json['blockchain_explorer_url'],
     };
 }
 
-export function AddEvmChainRequestToJSON(value?: AddEvmChainRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AddEvmChainRequestToJSON(json: any): AddEvmChainRequest {
+    return AddEvmChainRequestToJSONTyped(json, false);
+}
+
+export function AddEvmChainRequestToJSONTyped(value?: AddEvmChainRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain_type': value.chainType,
-        'chain_id': value.chainId,
-        'chain_name': value.chainName,
-        'currency_symbol': value.currencySymbol,
-        'is_testnet': value.isTestnet,
-        'rpc_url': value.rpcUrl,
-        'blockchain_explorer_url': value.blockchainExplorerUrl,
+        'chain_type': value['chainType'],
+        'chain_id': value['chainId'],
+        'chain_name': value['chainName'],
+        'currency_symbol': value['currencySymbol'],
+        'is_testnet': value['isTestnet'],
+        'rpc_url': value['rpcUrl'],
+        'blockchain_explorer_url': value['blockchainExplorerUrl'],
     };
 }
 

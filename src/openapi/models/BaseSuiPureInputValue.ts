@@ -12,29 +12,29 @@
  * Do not edit the class manually.
  */
 
+import type { SuiPureBoolInput } from './SuiPureBoolInput';
 import {
-    SuiPureBoolInput,
     instanceOfSuiPureBoolInput,
     SuiPureBoolInputFromJSON,
     SuiPureBoolInputFromJSONTyped,
     SuiPureBoolInputToJSON,
 } from './SuiPureBoolInput';
+import type { SuiPureByteArrayInput } from './SuiPureByteArrayInput';
 import {
-    SuiPureByteArrayInput,
     instanceOfSuiPureByteArrayInput,
     SuiPureByteArrayInputFromJSON,
     SuiPureByteArrayInputFromJSONTyped,
     SuiPureByteArrayInputToJSON,
 } from './SuiPureByteArrayInput';
+import type { SuiPureNumberInput } from './SuiPureNumberInput';
 import {
-    SuiPureNumberInput,
     instanceOfSuiPureNumberInput,
     SuiPureNumberInputFromJSON,
     SuiPureNumberInputFromJSONTyped,
     SuiPureNumberInputToJSON,
 } from './SuiPureNumberInput';
+import type { SuiPureStringInput } from './SuiPureStringInput';
 import {
-    SuiPureStringInput,
     instanceOfSuiPureStringInput,
     SuiPureStringInputFromJSON,
     SuiPureStringInputFromJSONTyped,
@@ -53,39 +53,40 @@ export function BaseSuiPureInputValueFromJSON(json: any): BaseSuiPureInputValue 
 }
 
 export function BaseSuiPureInputValueFromJSONTyped(json: any, ignoreDiscriminator: boolean): BaseSuiPureInputValue {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'bool_pure_input':
-            return {...SuiPureBoolInputFromJSONTyped(json, true), type: 'bool_pure_input'};
+            return Object.assign({}, SuiPureBoolInputFromJSONTyped(json, true), { type: 'bool_pure_input' } as const);
         case 'byte_array_pure_input':
-            return {...SuiPureByteArrayInputFromJSONTyped(json, true), type: 'byte_array_pure_input'};
+            return Object.assign({}, SuiPureByteArrayInputFromJSONTyped(json, true), { type: 'byte_array_pure_input' } as const);
         case 'number_pure_input':
-            return {...SuiPureNumberInputFromJSONTyped(json, true), type: 'number_pure_input'};
+            return Object.assign({}, SuiPureNumberInputFromJSONTyped(json, true), { type: 'number_pure_input' } as const);
         case 'string_pure_input':
-            return {...SuiPureStringInputFromJSONTyped(json, true), type: 'string_pure_input'};
+            return Object.assign({}, SuiPureStringInputFromJSONTyped(json, true), { type: 'string_pure_input' } as const);
         default:
             throw new Error(`No variant of BaseSuiPureInputValue exists with 'type=${json['type']}'`);
     }
 }
 
-export function BaseSuiPureInputValueToJSON(value?: BaseSuiPureInputValue | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function BaseSuiPureInputValueToJSON(json: any): any {
+    return BaseSuiPureInputValueToJSONTyped(json, false);
+}
+
+export function BaseSuiPureInputValueToJSONTyped(value?: BaseSuiPureInputValue | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'bool_pure_input':
-            return SuiPureBoolInputToJSON(value);
+            return Object.assign({}, SuiPureBoolInputToJSON(value), { type: 'bool_pure_input' } as const);
         case 'byte_array_pure_input':
-            return SuiPureByteArrayInputToJSON(value);
+            return Object.assign({}, SuiPureByteArrayInputToJSON(value), { type: 'byte_array_pure_input' } as const);
         case 'number_pure_input':
-            return SuiPureNumberInputToJSON(value);
+            return Object.assign({}, SuiPureNumberInputToJSON(value), { type: 'number_pure_input' } as const);
         case 'string_pure_input':
-            return SuiPureStringInputToJSON(value);
+            return Object.assign({}, SuiPureStringInputToJSON(value), { type: 'string_pure_input' } as const);
         default:
             throw new Error(`No variant of BaseSuiPureInputValue exists with 'type=${value['type']}'`);
     }

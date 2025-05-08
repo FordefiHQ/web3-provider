@@ -12,31 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { SolanaPersonalMessageRequest } from './SolanaPersonalMessageRequest';
+import {
+    SolanaPersonalMessageRequestFromJSON,
+    SolanaPersonalMessageRequestFromJSONTyped,
+    SolanaPersonalMessageRequestToJSON,
+    SolanaPersonalMessageRequestToJSONTyped,
+} from './SolanaPersonalMessageRequest';
+import type { DappInfo } from './DappInfo';
+import {
+    DappInfoFromJSON,
+    DappInfoFromJSONTyped,
+    DappInfoToJSON,
+    DappInfoToJSONTyped,
+} from './DappInfo';
 import type { SignMode } from './SignMode';
 import {
     SignModeFromJSON,
     SignModeFromJSONTyped,
     SignModeToJSON,
+    SignModeToJSONTyped,
 } from './SignMode';
 import type { SignerType } from './SignerType';
 import {
     SignerTypeFromJSON,
     SignerTypeFromJSONTyped,
     SignerTypeToJSON,
+    SignerTypeToJSONTyped,
 } from './SignerType';
-import type { SolanaMessageState } from './SolanaMessageState';
+import type { NonPushableTransactionState } from './NonPushableTransactionState';
 import {
-    SolanaMessageStateFromJSON,
-    SolanaMessageStateFromJSONTyped,
-    SolanaMessageStateToJSON,
-} from './SolanaMessageState';
-import type { SolanaPersonalMessageRequest } from './SolanaPersonalMessageRequest';
-import {
-    SolanaPersonalMessageRequestFromJSON,
-    SolanaPersonalMessageRequestFromJSONTyped,
-    SolanaPersonalMessageRequestToJSON,
-} from './SolanaPersonalMessageRequest';
+    NonPushableTransactionStateFromJSON,
+    NonPushableTransactionStateFromJSONTyped,
+    NonPushableTransactionStateToJSON,
+    NonPushableTransactionStateToJSONTyped,
+} from './NonPushableTransactionState';
 
 /**
  * 
@@ -70,6 +81,12 @@ export interface CreateSolanaMessageWithWaitRequest {
     signMode?: SignMode;
     /**
      * 
+     * @type {DappInfo}
+     * @memberof CreateSolanaMessageWithWaitRequest
+     */
+    dappInfo?: DappInfo;
+    /**
+     * 
      * @type {string}
      * @memberof CreateSolanaMessageWithWaitRequest
      */
@@ -88,10 +105,10 @@ export interface CreateSolanaMessageWithWaitRequest {
     timeout?: number;
     /**
      * 
-     * @type {SolanaMessageState}
+     * @type {NonPushableTransactionState}
      * @memberof CreateSolanaMessageWithWaitRequest
      */
-    waitForState: SolanaMessageState;
+    waitForState: NonPushableTransactionState;
 }
 
 
@@ -107,14 +124,12 @@ export type CreateSolanaMessageWithWaitRequestTypeEnum = typeof CreateSolanaMess
 /**
  * Check if a given object implements the CreateSolanaMessageWithWaitRequest interface.
  */
-export function instanceOfCreateSolanaMessageWithWaitRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "vaultId" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "details" in value;
-    isInstance = isInstance && "waitForState" in value;
-
-    return isInstance;
+export function instanceOfCreateSolanaMessageWithWaitRequest(value: object): value is CreateSolanaMessageWithWaitRequest {
+    if (!('vaultId' in value) || value['vaultId'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    if (!('waitForState' in value) || value['waitForState'] === undefined) return false;
+    return true;
 }
 
 export function CreateSolanaMessageWithWaitRequestFromJSON(json: any): CreateSolanaMessageWithWaitRequest {
@@ -122,39 +137,43 @@ export function CreateSolanaMessageWithWaitRequestFromJSON(json: any): CreateSol
 }
 
 export function CreateSolanaMessageWithWaitRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateSolanaMessageWithWaitRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'vaultId': json['vault_id'],
-        'note': !exists(json, 'note') ? undefined : json['note'],
-        'signerType': !exists(json, 'signer_type') ? undefined : SignerTypeFromJSON(json['signer_type']),
-        'signMode': !exists(json, 'sign_mode') ? undefined : SignModeFromJSON(json['sign_mode']),
+        'note': json['note'] == null ? undefined : json['note'],
+        'signerType': json['signer_type'] == null ? undefined : SignerTypeFromJSON(json['signer_type']),
+        'signMode': json['sign_mode'] == null ? undefined : SignModeFromJSON(json['sign_mode']),
+        'dappInfo': json['dapp_info'] == null ? undefined : DappInfoFromJSON(json['dapp_info']),
         'type': json['type'],
         'details': SolanaPersonalMessageRequestFromJSON(json['details']),
-        'timeout': !exists(json, 'timeout') ? undefined : json['timeout'],
-        'waitForState': SolanaMessageStateFromJSON(json['wait_for_state']),
+        'timeout': json['timeout'] == null ? undefined : json['timeout'],
+        'waitForState': NonPushableTransactionStateFromJSON(json['wait_for_state']),
     };
 }
 
-export function CreateSolanaMessageWithWaitRequestToJSON(value?: CreateSolanaMessageWithWaitRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateSolanaMessageWithWaitRequestToJSON(json: any): CreateSolanaMessageWithWaitRequest {
+    return CreateSolanaMessageWithWaitRequestToJSONTyped(json, false);
+}
+
+export function CreateSolanaMessageWithWaitRequestToJSONTyped(value?: CreateSolanaMessageWithWaitRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'vault_id': value.vaultId,
-        'note': value.note,
-        'signer_type': SignerTypeToJSON(value.signerType),
-        'sign_mode': SignModeToJSON(value.signMode),
-        'type': value.type,
-        'details': SolanaPersonalMessageRequestToJSON(value.details),
-        'timeout': value.timeout,
-        'wait_for_state': SolanaMessageStateToJSON(value.waitForState),
+        'vault_id': value['vaultId'],
+        'note': value['note'],
+        'signer_type': SignerTypeToJSON(value['signerType']),
+        'sign_mode': SignModeToJSON(value['signMode']),
+        'dapp_info': DappInfoToJSON(value['dappInfo']),
+        'type': value['type'],
+        'details': SolanaPersonalMessageRequestToJSON(value['details']),
+        'timeout': value['timeout'],
+        'wait_for_state': NonPushableTransactionStateToJSON(value['waitForState']),
     };
 }
 

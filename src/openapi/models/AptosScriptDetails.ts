@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -40,11 +40,9 @@ export type AptosScriptDetailsTypeEnum = typeof AptosScriptDetailsTypeEnum[keyof
 /**
  * Check if a given object implements the AptosScriptDetails interface.
  */
-export function instanceOfAptosScriptDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfAptosScriptDetails(value: object): value is AptosScriptDetails {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function AptosScriptDetailsFromJSON(json: any): AptosScriptDetails {
@@ -52,7 +50,7 @@ export function AptosScriptDetailsFromJSON(json: any): AptosScriptDetails {
 }
 
 export function AptosScriptDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosScriptDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -61,16 +59,18 @@ export function AptosScriptDetailsFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-export function AptosScriptDetailsToJSON(value?: AptosScriptDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AptosScriptDetailsToJSON(json: any): AptosScriptDetails {
+    return AptosScriptDetailsToJSONTyped(json, false);
+}
+
+export function AptosScriptDetailsToJSONTyped(value?: AptosScriptDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
+        'type': value['type'],
     };
 }
 

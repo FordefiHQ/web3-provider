@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { EvmBridgeEffectSourceErc20 } from './EvmBridgeEffectSourceErc20';
 import {
-    EvmBridgeEffectSourceErc20,
     instanceOfEvmBridgeEffectSourceErc20,
     EvmBridgeEffectSourceErc20FromJSON,
     EvmBridgeEffectSourceErc20FromJSONTyped,
     EvmBridgeEffectSourceErc20ToJSON,
 } from './EvmBridgeEffectSourceErc20';
+import type { EvmBridgeEffectSourceNative } from './EvmBridgeEffectSourceNative';
 import {
-    EvmBridgeEffectSourceNative,
     instanceOfEvmBridgeEffectSourceNative,
     EvmBridgeEffectSourceNativeFromJSON,
     EvmBridgeEffectSourceNativeFromJSONTyped,
@@ -39,31 +39,32 @@ export function EvmBridgeEffectSourceFromJSON(json: any): EvmBridgeEffectSource 
 }
 
 export function EvmBridgeEffectSourceFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmBridgeEffectSource {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'erc20':
-            return {...EvmBridgeEffectSourceErc20FromJSONTyped(json, true), type: 'erc20'};
+            return Object.assign({}, EvmBridgeEffectSourceErc20FromJSONTyped(json, true), { type: 'erc20' } as const);
         case 'native':
-            return {...EvmBridgeEffectSourceNativeFromJSONTyped(json, true), type: 'native'};
+            return Object.assign({}, EvmBridgeEffectSourceNativeFromJSONTyped(json, true), { type: 'native' } as const);
         default:
             throw new Error(`No variant of EvmBridgeEffectSource exists with 'type=${json['type']}'`);
     }
 }
 
-export function EvmBridgeEffectSourceToJSON(value?: EvmBridgeEffectSource | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function EvmBridgeEffectSourceToJSON(json: any): any {
+    return EvmBridgeEffectSourceToJSONTyped(json, false);
+}
+
+export function EvmBridgeEffectSourceToJSONTyped(value?: EvmBridgeEffectSource | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'erc20':
-            return EvmBridgeEffectSourceErc20ToJSON(value);
+            return Object.assign({}, EvmBridgeEffectSourceErc20ToJSON(value), { type: 'erc20' } as const);
         case 'native':
-            return EvmBridgeEffectSourceNativeToJSON(value);
+            return Object.assign({}, EvmBridgeEffectSourceNativeToJSON(value), { type: 'native' } as const);
         default:
             throw new Error(`No variant of EvmBridgeEffectSource exists with 'type=${value['type']}'`);
     }

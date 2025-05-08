@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
+import type { TestEvmChainRequest } from './TestEvmChainRequest';
 import {
-    TestEvmChainRequest,
     instanceOfTestEvmChainRequest,
     TestEvmChainRequestFromJSON,
     TestEvmChainRequestFromJSONTyped,
@@ -32,27 +32,28 @@ export function TestChainRequestFromJSON(json: any): TestChainRequest {
 }
 
 export function TestChainRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): TestChainRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['chain_type']) {
         case 'evm':
-            return {...TestEvmChainRequestFromJSONTyped(json, true), chainType: 'evm'};
+            return Object.assign({}, TestEvmChainRequestFromJSONTyped(json, true), { chainType: 'evm' } as const);
         default:
             throw new Error(`No variant of TestChainRequest exists with 'chainType=${json['chainType']}'`);
     }
 }
 
-export function TestChainRequestToJSON(value?: TestChainRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function TestChainRequestToJSON(json: any): any {
+    return TestChainRequestToJSONTyped(json, false);
+}
+
+export function TestChainRequestToJSONTyped(value?: TestChainRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['chainType']) {
         case 'evm':
-            return TestEvmChainRequestToJSON(value);
+            return Object.assign({}, TestEvmChainRequestToJSON(value), { chainType: 'evm' } as const);
         default:
             throw new Error(`No variant of TestChainRequest exists with 'chainType=${value['chainType']}'`);
     }

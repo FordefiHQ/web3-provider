@@ -12,24 +12,27 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { EvmEffects } from './EvmEffects';
-import {
-    EvmEffectsFromJSON,
-    EvmEffectsFromJSONTyped,
-    EvmEffectsToJSON,
-} from './EvmEffects';
+import { mapValues } from '../runtime';
 import type { EvmReversion } from './EvmReversion';
 import {
     EvmReversionFromJSON,
     EvmReversionFromJSONTyped,
     EvmReversionToJSON,
+    EvmReversionToJSONTyped,
 } from './EvmReversion';
+import type { EvmEffects } from './EvmEffects';
+import {
+    EvmEffectsFromJSON,
+    EvmEffectsFromJSONTyped,
+    EvmEffectsToJSON,
+    EvmEffectsToJSONTyped,
+} from './EvmEffects';
 import type { GasDebit } from './GasDebit';
 import {
     GasDebitFromJSON,
     GasDebitFromJSONTyped,
     GasDebitToJSON,
+    GasDebitToJSONTyped,
 } from './GasDebit';
 
 /**
@@ -61,13 +64,11 @@ export interface EvmTransactionResult {
 /**
  * Check if a given object implements the EvmTransactionResult interface.
  */
-export function instanceOfEvmTransactionResult(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "reversion" in value;
-    isInstance = isInstance && "gasDebit" in value;
-    isInstance = isInstance && "effects" in value;
-
-    return isInstance;
+export function instanceOfEvmTransactionResult(value: object): value is EvmTransactionResult {
+    if (!('reversion' in value) || value['reversion'] === undefined) return false;
+    if (!('gasDebit' in value) || value['gasDebit'] === undefined) return false;
+    if (!('effects' in value) || value['effects'] === undefined) return false;
+    return true;
 }
 
 export function EvmTransactionResultFromJSON(json: any): EvmTransactionResult {
@@ -75,7 +76,7 @@ export function EvmTransactionResultFromJSON(json: any): EvmTransactionResult {
 }
 
 export function EvmTransactionResultFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmTransactionResult {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -86,18 +87,20 @@ export function EvmTransactionResultFromJSONTyped(json: any, ignoreDiscriminator
     };
 }
 
-export function EvmTransactionResultToJSON(value?: EvmTransactionResult | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EvmTransactionResultToJSON(json: any): EvmTransactionResult {
+    return EvmTransactionResultToJSONTyped(json, false);
+}
+
+export function EvmTransactionResultToJSONTyped(value?: EvmTransactionResult | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'reversion': EvmReversionToJSON(value.reversion),
-        'gas_debit': GasDebitToJSON(value.gasDebit),
-        'effects': EvmEffectsToJSON(value.effects),
+        'reversion': EvmReversionToJSON(value['reversion']),
+        'gas_debit': GasDebitToJSON(value['gasDebit']),
+        'effects': EvmEffectsToJSON(value['effects']),
     };
 }
 

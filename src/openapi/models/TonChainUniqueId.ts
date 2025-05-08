@@ -23,6 +23,17 @@ export const TonChainUniqueId = {
 export type TonChainUniqueId = typeof TonChainUniqueId[keyof typeof TonChainUniqueId];
 
 
+export function instanceOfTonChainUniqueId(value: any): boolean {
+    for (const key in TonChainUniqueId) {
+        if (Object.prototype.hasOwnProperty.call(TonChainUniqueId, key)) {
+            if (TonChainUniqueId[key as keyof typeof TonChainUniqueId] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function TonChainUniqueIdFromJSON(json: any): TonChainUniqueId {
     return TonChainUniqueIdFromJSONTyped(json, false);
 }
@@ -33,5 +44,9 @@ export function TonChainUniqueIdFromJSONTyped(json: any, ignoreDiscriminator: bo
 
 export function TonChainUniqueIdToJSON(value?: TonChainUniqueId | null): any {
     return value as any;
+}
+
+export function TonChainUniqueIdToJSONTyped(value: any, ignoreDiscriminator: boolean): TonChainUniqueId {
+    return value as TonChainUniqueId;
 }
 

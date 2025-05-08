@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -42,13 +42,11 @@ export interface SuiObjectRef {
 /**
  * Check if a given object implements the SuiObjectRef interface.
  */
-export function instanceOfSuiObjectRef(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "digest" in value;
-    isInstance = isInstance && "objectId" in value;
-    isInstance = isInstance && "version" in value;
-
-    return isInstance;
+export function instanceOfSuiObjectRef(value: object): value is SuiObjectRef {
+    if (!('digest' in value) || value['digest'] === undefined) return false;
+    if (!('objectId' in value) || value['objectId'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    return true;
 }
 
 export function SuiObjectRefFromJSON(json: any): SuiObjectRef {
@@ -56,7 +54,7 @@ export function SuiObjectRefFromJSON(json: any): SuiObjectRef {
 }
 
 export function SuiObjectRefFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiObjectRef {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -67,18 +65,20 @@ export function SuiObjectRefFromJSONTyped(json: any, ignoreDiscriminator: boolea
     };
 }
 
-export function SuiObjectRefToJSON(value?: SuiObjectRef | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiObjectRefToJSON(json: any): SuiObjectRef {
+    return SuiObjectRefToJSONTyped(json, false);
+}
+
+export function SuiObjectRefToJSONTyped(value?: SuiObjectRef | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'digest': value.digest,
-        'object_id': value.objectId,
-        'version': value.version,
+        'digest': value['digest'],
+        'object_id': value['objectId'],
+        'version': value['version'],
     };
 }
 

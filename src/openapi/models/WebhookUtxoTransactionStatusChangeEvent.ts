@@ -12,37 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { TransactionDirection } from './TransactionDirection';
-import {
-    TransactionDirectionFromJSON,
-    TransactionDirectionFromJSONTyped,
-    TransactionDirectionToJSON,
-} from './TransactionDirection';
+import { mapValues } from '../runtime';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
     TransactionSpamStateFromJSONTyped,
     TransactionSpamStateToJSON,
+    TransactionSpamStateToJSONTyped,
 } from './TransactionSpamState';
-import type { UtxoChain } from './UtxoChain';
+import type { TransactionDirection } from './TransactionDirection';
 import {
-    UtxoChainFromJSON,
-    UtxoChainFromJSONTyped,
-    UtxoChainToJSON,
-} from './UtxoChain';
-import type { UtxoTransactionState } from './UtxoTransactionState';
-import {
-    UtxoTransactionStateFromJSON,
-    UtxoTransactionStateFromJSONTyped,
-    UtxoTransactionStateToJSON,
-} from './UtxoTransactionState';
+    TransactionDirectionFromJSON,
+    TransactionDirectionFromJSONTyped,
+    TransactionDirectionToJSON,
+    TransactionDirectionToJSONTyped,
+} from './TransactionDirection';
 import type { UtxoTransactionType } from './UtxoTransactionType';
 import {
     UtxoTransactionTypeFromJSON,
     UtxoTransactionTypeFromJSONTyped,
     UtxoTransactionTypeToJSON,
+    UtxoTransactionTypeToJSONTyped,
 } from './UtxoTransactionType';
+import type { PushableTransactionState } from './PushableTransactionState';
+import {
+    PushableTransactionStateFromJSON,
+    PushableTransactionStateFromJSONTyped,
+    PushableTransactionStateToJSON,
+    PushableTransactionStateToJSONTyped,
+} from './PushableTransactionState';
+import type { UtxoChain } from './UtxoChain';
+import {
+    UtxoChainFromJSON,
+    UtxoChainFromJSONTyped,
+    UtxoChainToJSON,
+    UtxoChainToJSONTyped,
+} from './UtxoChain';
 
 /**
  * 
@@ -83,6 +88,12 @@ export interface WebhookUtxoTransactionStatusChangeEvent {
     spamState: TransactionSpamState;
     /**
      * 
+     * @type {PushableTransactionState}
+     * @memberof WebhookUtxoTransactionStatusChangeEvent
+     */
+    state: PushableTransactionState;
+    /**
+     * 
      * @type {string}
      * @memberof WebhookUtxoTransactionStatusChangeEvent
      */
@@ -93,12 +104,6 @@ export interface WebhookUtxoTransactionStatusChangeEvent {
      * @memberof WebhookUtxoTransactionStatusChangeEvent
      */
     utxoTransactionType: UtxoTransactionType;
-    /**
-     * 
-     * @type {UtxoTransactionState}
-     * @memberof WebhookUtxoTransactionStatusChangeEvent
-     */
-    state: UtxoTransactionState;
     /**
      * 
      * @type {string}
@@ -126,18 +131,16 @@ export type WebhookUtxoTransactionStatusChangeEventTypeEnum = typeof WebhookUtxo
 /**
  * Check if a given object implements the WebhookUtxoTransactionStatusChangeEvent interface.
  */
-export function instanceOfWebhookUtxoTransactionStatusChangeEvent(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "transactionId" in value;
-    isInstance = isInstance && "isManagedTransaction" in value;
-    isInstance = isInstance && "direction" in value;
-    isInstance = isInstance && "spamState" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "utxoTransactionType" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfWebhookUtxoTransactionStatusChangeEvent(value: object): value is WebhookUtxoTransactionStatusChangeEvent {
+    if (!('transactionId' in value) || value['transactionId'] === undefined) return false;
+    if (!('isManagedTransaction' in value) || value['isManagedTransaction'] === undefined) return false;
+    if (!('direction' in value) || value['direction'] === undefined) return false;
+    if (!('spamState' in value) || value['spamState'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('utxoTransactionType' in value) || value['utxoTransactionType'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function WebhookUtxoTransactionStatusChangeEventFromJSON(json: any): WebhookUtxoTransactionStatusChangeEvent {
@@ -145,7 +148,7 @@ export function WebhookUtxoTransactionStatusChangeEventFromJSON(json: any): Webh
 }
 
 export function WebhookUtxoTransactionStatusChangeEventFromJSONTyped(json: any, ignoreDiscriminator: boolean): WebhookUtxoTransactionStatusChangeEvent {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -153,35 +156,37 @@ export function WebhookUtxoTransactionStatusChangeEventFromJSONTyped(json: any, 
         'transactionId': json['transaction_id'],
         'isManagedTransaction': json['is_managed_transaction'],
         'direction': TransactionDirectionFromJSON(json['direction']),
-        'note': !exists(json, 'note') ? undefined : json['note'],
+        'note': json['note'] == null ? undefined : json['note'],
         'spamState': TransactionSpamStateFromJSON(json['spam_state']),
+        'state': PushableTransactionStateFromJSON(json['state']),
         'type': json['type'],
         'utxoTransactionType': UtxoTransactionTypeFromJSON(json['utxo_transaction_type']),
-        'state': UtxoTransactionStateFromJSON(json['state']),
-        'hash': !exists(json, 'hash') ? undefined : json['hash'],
+        'hash': json['hash'] == null ? undefined : json['hash'],
         'chain': UtxoChainFromJSON(json['chain']),
     };
 }
 
-export function WebhookUtxoTransactionStatusChangeEventToJSON(value?: WebhookUtxoTransactionStatusChangeEvent | null): any {
-    if (value === undefined) {
-        return undefined;
+export function WebhookUtxoTransactionStatusChangeEventToJSON(json: any): WebhookUtxoTransactionStatusChangeEvent {
+    return WebhookUtxoTransactionStatusChangeEventToJSONTyped(json, false);
+}
+
+export function WebhookUtxoTransactionStatusChangeEventToJSONTyped(value?: WebhookUtxoTransactionStatusChangeEvent | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'transaction_id': value.transactionId,
-        'is_managed_transaction': value.isManagedTransaction,
-        'direction': TransactionDirectionToJSON(value.direction),
-        'note': value.note,
-        'spam_state': TransactionSpamStateToJSON(value.spamState),
-        'type': value.type,
-        'utxo_transaction_type': UtxoTransactionTypeToJSON(value.utxoTransactionType),
-        'state': UtxoTransactionStateToJSON(value.state),
-        'hash': value.hash,
-        'chain': UtxoChainToJSON(value.chain),
+        'transaction_id': value['transactionId'],
+        'is_managed_transaction': value['isManagedTransaction'],
+        'direction': TransactionDirectionToJSON(value['direction']),
+        'note': value['note'],
+        'spam_state': TransactionSpamStateToJSON(value['spamState']),
+        'state': PushableTransactionStateToJSON(value['state']),
+        'type': value['type'],
+        'utxo_transaction_type': UtxoTransactionTypeToJSON(value['utxoTransactionType']),
+        'hash': value['hash'],
+        'chain': UtxoChainToJSON(value['chain']),
     };
 }
 

@@ -23,6 +23,17 @@ export const TonMessageType = {
 export type TonMessageType = typeof TonMessageType[keyof typeof TonMessageType];
 
 
+export function instanceOfTonMessageType(value: any): boolean {
+    for (const key in TonMessageType) {
+        if (Object.prototype.hasOwnProperty.call(TonMessageType, key)) {
+            if (TonMessageType[key as keyof typeof TonMessageType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function TonMessageTypeFromJSON(json: any): TonMessageType {
     return TonMessageTypeFromJSONTyped(json, false);
 }
@@ -33,5 +44,9 @@ export function TonMessageTypeFromJSONTyped(json: any, ignoreDiscriminator: bool
 
 export function TonMessageTypeToJSON(value?: TonMessageType | null): any {
     return value as any;
+}
+
+export function TonMessageTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): TonMessageType {
+    return value as TonMessageType;
 }
 

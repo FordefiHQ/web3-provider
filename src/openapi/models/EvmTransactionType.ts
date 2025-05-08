@@ -28,6 +28,17 @@ export const EvmTransactionType = {
 export type EvmTransactionType = typeof EvmTransactionType[keyof typeof EvmTransactionType];
 
 
+export function instanceOfEvmTransactionType(value: any): boolean {
+    for (const key in EvmTransactionType) {
+        if (Object.prototype.hasOwnProperty.call(EvmTransactionType, key)) {
+            if (EvmTransactionType[key as keyof typeof EvmTransactionType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function EvmTransactionTypeFromJSON(json: any): EvmTransactionType {
     return EvmTransactionTypeFromJSONTyped(json, false);
 }
@@ -38,5 +49,9 @@ export function EvmTransactionTypeFromJSONTyped(json: any, ignoreDiscriminator: 
 
 export function EvmTransactionTypeToJSON(value?: EvmTransactionType | null): any {
     return value as any;
+}
+
+export function EvmTransactionTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): EvmTransactionType {
+    return value as EvmTransactionType;
 }
 

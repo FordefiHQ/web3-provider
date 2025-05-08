@@ -12,19 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EndUserRef } from './EndUserRef';
 import {
     EndUserRefFromJSON,
     EndUserRefFromJSONTyped,
     EndUserRefToJSON,
+    EndUserRefToJSONTyped,
 } from './EndUserRef';
 import type { VaultState } from './VaultState';
 import {
     VaultStateFromJSON,
     VaultStateFromJSONTyped,
     VaultStateToJSON,
+    VaultStateToJSONTyped,
 } from './VaultState';
+import type { VaultType } from './VaultType';
+import {
+    VaultTypeFromJSON,
+    VaultTypeFromJSONTyped,
+    VaultTypeToJSON,
+    VaultTypeToJSONTyped,
+} from './VaultType';
 
 /**
  * 
@@ -58,22 +67,35 @@ export interface VaultRef {
     state: VaultState;
     /**
      * 
+     * @type {VaultType}
+     * @memberof VaultRef
+     */
+    type: VaultType;
+    /**
+     * 
+     * @type {string}
+     * @memberof VaultRef
+     */
+    logoUrl?: string;
+    /**
+     * 
      * @type {EndUserRef}
      * @memberof VaultRef
      */
     endUser?: EndUserRef;
 }
 
+
+
 /**
  * Check if a given object implements the VaultRef interface.
  */
-export function instanceOfVaultRef(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "state" in value;
-
-    return isInstance;
+export function instanceOfVaultRef(value: object): value is VaultRef {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function VaultRefFromJSON(json: any): VaultRef {
@@ -81,33 +103,39 @@ export function VaultRefFromJSON(json: any): VaultRef {
 }
 
 export function VaultRefFromJSONTyped(json: any, ignoreDiscriminator: boolean): VaultRef {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'id': json['id'],
         'name': json['name'],
-        'address': !exists(json, 'address') ? undefined : json['address'],
+        'address': json['address'] == null ? undefined : json['address'],
         'state': VaultStateFromJSON(json['state']),
-        'endUser': !exists(json, 'end_user') ? undefined : EndUserRefFromJSON(json['end_user']),
+        'type': VaultTypeFromJSON(json['type']),
+        'logoUrl': json['logo_url'] == null ? undefined : json['logo_url'],
+        'endUser': json['end_user'] == null ? undefined : EndUserRefFromJSON(json['end_user']),
     };
 }
 
-export function VaultRefToJSON(value?: VaultRef | null): any {
-    if (value === undefined) {
-        return undefined;
+export function VaultRefToJSON(json: any): VaultRef {
+    return VaultRefToJSONTyped(json, false);
+}
+
+export function VaultRefToJSONTyped(value?: VaultRef | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'name': value.name,
-        'address': value.address,
-        'state': VaultStateToJSON(value.state),
-        'end_user': EndUserRefToJSON(value.endUser),
+        'id': value['id'],
+        'name': value['name'],
+        'address': value['address'],
+        'state': VaultStateToJSON(value['state']),
+        'type': VaultTypeToJSON(value['type']),
+        'logo_url': value['logoUrl'],
+        'end_user': EndUserRefToJSON(value['endUser']),
     };
 }
 

@@ -23,6 +23,17 @@ export const GetOnboardingStateErrorType = {
 export type GetOnboardingStateErrorType = typeof GetOnboardingStateErrorType[keyof typeof GetOnboardingStateErrorType];
 
 
+export function instanceOfGetOnboardingStateErrorType(value: any): boolean {
+    for (const key in GetOnboardingStateErrorType) {
+        if (Object.prototype.hasOwnProperty.call(GetOnboardingStateErrorType, key)) {
+            if (GetOnboardingStateErrorType[key as keyof typeof GetOnboardingStateErrorType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function GetOnboardingStateErrorTypeFromJSON(json: any): GetOnboardingStateErrorType {
     return GetOnboardingStateErrorTypeFromJSONTyped(json, false);
 }
@@ -33,5 +44,9 @@ export function GetOnboardingStateErrorTypeFromJSONTyped(json: any, ignoreDiscri
 
 export function GetOnboardingStateErrorTypeToJSON(value?: GetOnboardingStateErrorType | null): any {
     return value as any;
+}
+
+export function GetOnboardingStateErrorTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): GetOnboardingStateErrorType {
+    return value as GetOnboardingStateErrorType;
 }
 

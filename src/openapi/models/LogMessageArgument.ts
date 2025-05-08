@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -36,12 +36,10 @@ export interface LogMessageArgument {
 /**
  * Check if a given object implements the LogMessageArgument interface.
  */
-export function instanceOfLogMessageArgument(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "value" in value;
-
-    return isInstance;
+export function instanceOfLogMessageArgument(value: object): value is LogMessageArgument {
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('value' in value) || value['value'] === undefined) return false;
+    return true;
 }
 
 export function LogMessageArgumentFromJSON(json: any): LogMessageArgument {
@@ -49,7 +47,7 @@ export function LogMessageArgumentFromJSON(json: any): LogMessageArgument {
 }
 
 export function LogMessageArgumentFromJSONTyped(json: any, ignoreDiscriminator: boolean): LogMessageArgument {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -59,17 +57,19 @@ export function LogMessageArgumentFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-export function LogMessageArgumentToJSON(value?: LogMessageArgument | null): any {
-    if (value === undefined) {
-        return undefined;
+export function LogMessageArgumentToJSON(json: any): LogMessageArgument {
+    return LogMessageArgumentToJSONTyped(json, false);
+}
+
+export function LogMessageArgumentToJSONTyped(value?: LogMessageArgument | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'value': value.value,
+        'name': value['name'],
+        'value': value['value'],
     };
 }
 

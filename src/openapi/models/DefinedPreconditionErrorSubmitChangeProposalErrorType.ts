@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { SubmitChangeProposalErrorType } from './SubmitChangeProposalErrorType';
 import {
     SubmitChangeProposalErrorTypeFromJSON,
     SubmitChangeProposalErrorTypeFromJSONTyped,
     SubmitChangeProposalErrorTypeToJSON,
+    SubmitChangeProposalErrorTypeToJSONTyped,
 } from './SubmitChangeProposalErrorType';
 
 /**
@@ -58,15 +59,15 @@ export interface DefinedPreconditionErrorSubmitChangeProposalErrorType {
     errorType?: SubmitChangeProposalErrorType;
 }
 
+
+
 /**
  * Check if a given object implements the DefinedPreconditionErrorSubmitChangeProposalErrorType interface.
  */
-export function instanceOfDefinedPreconditionErrorSubmitChangeProposalErrorType(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "title" in value;
-    isInstance = isInstance && "detail" in value;
-
-    return isInstance;
+export function instanceOfDefinedPreconditionErrorSubmitChangeProposalErrorType(value: object): value is DefinedPreconditionErrorSubmitChangeProposalErrorType {
+    if (!('title' in value) || value['title'] === undefined) return false;
+    if (!('detail' in value) || value['detail'] === undefined) return false;
+    return true;
 }
 
 export function DefinedPreconditionErrorSubmitChangeProposalErrorTypeFromJSON(json: any): DefinedPreconditionErrorSubmitChangeProposalErrorType {
@@ -74,33 +75,35 @@ export function DefinedPreconditionErrorSubmitChangeProposalErrorTypeFromJSON(js
 }
 
 export function DefinedPreconditionErrorSubmitChangeProposalErrorTypeFromJSONTyped(json: any, ignoreDiscriminator: boolean): DefinedPreconditionErrorSubmitChangeProposalErrorType {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'title': json['title'],
         'detail': json['detail'],
-        'requestId': !exists(json, 'request_id') ? undefined : json['request_id'],
-        'systemErrorCode': !exists(json, 'system_error_code') ? undefined : json['system_error_code'],
-        'errorType': !exists(json, 'error_type') ? undefined : SubmitChangeProposalErrorTypeFromJSON(json['error_type']),
+        'requestId': json['request_id'] == null ? undefined : json['request_id'],
+        'systemErrorCode': json['system_error_code'] == null ? undefined : json['system_error_code'],
+        'errorType': json['error_type'] == null ? undefined : SubmitChangeProposalErrorTypeFromJSON(json['error_type']),
     };
 }
 
-export function DefinedPreconditionErrorSubmitChangeProposalErrorTypeToJSON(value?: DefinedPreconditionErrorSubmitChangeProposalErrorType | null): any {
-    if (value === undefined) {
-        return undefined;
+export function DefinedPreconditionErrorSubmitChangeProposalErrorTypeToJSON(json: any): DefinedPreconditionErrorSubmitChangeProposalErrorType {
+    return DefinedPreconditionErrorSubmitChangeProposalErrorTypeToJSONTyped(json, false);
+}
+
+export function DefinedPreconditionErrorSubmitChangeProposalErrorTypeToJSONTyped(value?: DefinedPreconditionErrorSubmitChangeProposalErrorType | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'title': value.title,
-        'detail': value.detail,
-        'request_id': value.requestId,
-        'system_error_code': value.systemErrorCode,
-        'error_type': SubmitChangeProposalErrorTypeToJSON(value.errorType),
+        'title': value['title'],
+        'detail': value['detail'],
+        'request_id': value['requestId'],
+        'system_error_code': value['systemErrorCode'],
+        'error_type': SubmitChangeProposalErrorTypeToJSON(value['errorType']),
     };
 }
 

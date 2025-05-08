@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { RegisterTransactionSignSessionResponse } from './RegisterTransactionSignSessionResponse';
 import {
     RegisterTransactionSignSessionResponseFromJSON,
     RegisterTransactionSignSessionResponseFromJSONTyped,
     RegisterTransactionSignSessionResponseToJSON,
+    RegisterTransactionSignSessionResponseToJSONTyped,
 } from './RegisterTransactionSignSessionResponse';
 
 /**
@@ -43,12 +44,10 @@ export interface NextApiSignerTransactionResponseV3Body {
 /**
  * Check if a given object implements the NextApiSignerTransactionResponseV3Body interface.
  */
-export function instanceOfNextApiSignerTransactionResponseV3Body(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "transactionId" in value;
-    isInstance = isInstance && "registerSignInfo" in value;
-
-    return isInstance;
+export function instanceOfNextApiSignerTransactionResponseV3Body(value: object): value is NextApiSignerTransactionResponseV3Body {
+    if (!('transactionId' in value) || value['transactionId'] === undefined) return false;
+    if (!('registerSignInfo' in value) || value['registerSignInfo'] === undefined) return false;
+    return true;
 }
 
 export function NextApiSignerTransactionResponseV3BodyFromJSON(json: any): NextApiSignerTransactionResponseV3Body {
@@ -56,7 +55,7 @@ export function NextApiSignerTransactionResponseV3BodyFromJSON(json: any): NextA
 }
 
 export function NextApiSignerTransactionResponseV3BodyFromJSONTyped(json: any, ignoreDiscriminator: boolean): NextApiSignerTransactionResponseV3Body {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -66,17 +65,19 @@ export function NextApiSignerTransactionResponseV3BodyFromJSONTyped(json: any, i
     };
 }
 
-export function NextApiSignerTransactionResponseV3BodyToJSON(value?: NextApiSignerTransactionResponseV3Body | null): any {
-    if (value === undefined) {
-        return undefined;
+export function NextApiSignerTransactionResponseV3BodyToJSON(json: any): NextApiSignerTransactionResponseV3Body {
+    return NextApiSignerTransactionResponseV3BodyToJSONTyped(json, false);
+}
+
+export function NextApiSignerTransactionResponseV3BodyToJSONTyped(value?: NextApiSignerTransactionResponseV3Body | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'transaction_id': value.transactionId,
-        'register_sign_info': RegisterTransactionSignSessionResponseToJSON(value.registerSignInfo),
+        'transaction_id': value['transactionId'],
+        'register_sign_info': RegisterTransactionSignSessionResponseToJSON(value['registerSignInfo']),
     };
 }
 

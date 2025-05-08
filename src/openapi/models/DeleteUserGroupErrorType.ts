@@ -23,6 +23,17 @@ export const DeleteUserGroupErrorType = {
 export type DeleteUserGroupErrorType = typeof DeleteUserGroupErrorType[keyof typeof DeleteUserGroupErrorType];
 
 
+export function instanceOfDeleteUserGroupErrorType(value: any): boolean {
+    for (const key in DeleteUserGroupErrorType) {
+        if (Object.prototype.hasOwnProperty.call(DeleteUserGroupErrorType, key)) {
+            if (DeleteUserGroupErrorType[key as keyof typeof DeleteUserGroupErrorType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function DeleteUserGroupErrorTypeFromJSON(json: any): DeleteUserGroupErrorType {
     return DeleteUserGroupErrorTypeFromJSONTyped(json, false);
 }
@@ -33,5 +44,9 @@ export function DeleteUserGroupErrorTypeFromJSONTyped(json: any, ignoreDiscrimin
 
 export function DeleteUserGroupErrorTypeToJSON(value?: DeleteUserGroupErrorType | null): any {
     return value as any;
+}
+
+export function DeleteUserGroupErrorTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): DeleteUserGroupErrorType {
+    return value as DeleteUserGroupErrorType;
 }
 

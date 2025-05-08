@@ -12,24 +12,27 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { RuleAction } from './RuleAction';
-import {
-    RuleActionFromJSON,
-    RuleActionFromJSONTyped,
-    RuleActionToJSON,
-} from './RuleAction';
+import { mapValues } from '../runtime';
 import type { TransactionRuleConditions } from './TransactionRuleConditions';
 import {
     TransactionRuleConditionsFromJSON,
     TransactionRuleConditionsFromJSONTyped,
     TransactionRuleConditionsToJSON,
+    TransactionRuleConditionsToJSONTyped,
 } from './TransactionRuleConditions';
+import type { RuleAction } from './RuleAction';
+import {
+    RuleActionFromJSON,
+    RuleActionFromJSONTyped,
+    RuleActionToJSON,
+    RuleActionToJSONTyped,
+} from './RuleAction';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
     UserRefFromJSONTyped,
     UserRefToJSON,
+    UserRefToJSONTyped,
 } from './UserRef';
 
 /**
@@ -85,17 +88,15 @@ export interface TransactionRule {
 /**
  * Check if a given object implements the TransactionRule interface.
  */
-export function instanceOfTransactionRule(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "ruleConditions" in value;
-    isInstance = isInstance && "ruleAction" in value;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "modifiedBy" in value;
-
-    return isInstance;
+export function instanceOfTransactionRule(value: object): value is TransactionRule {
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('ruleConditions' in value) || value['ruleConditions'] === undefined) return false;
+    if (!('ruleAction' in value) || value['ruleAction'] === undefined) return false;
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('modifiedBy' in value) || value['modifiedBy'] === undefined) return false;
+    return true;
 }
 
 export function TransactionRuleFromJSON(json: any): TransactionRule {
@@ -103,7 +104,7 @@ export function TransactionRuleFromJSON(json: any): TransactionRule {
 }
 
 export function TransactionRuleFromJSONTyped(json: any, ignoreDiscriminator: boolean): TransactionRule {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -118,22 +119,24 @@ export function TransactionRuleFromJSONTyped(json: any, ignoreDiscriminator: boo
     };
 }
 
-export function TransactionRuleToJSON(value?: TransactionRule | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TransactionRuleToJSON(json: any): TransactionRule {
+    return TransactionRuleToJSONTyped(json, false);
+}
+
+export function TransactionRuleToJSONTyped(value?: TransactionRule | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'rule_conditions': TransactionRuleConditionsToJSON(value.ruleConditions),
-        'rule_action': RuleActionToJSON(value.ruleAction),
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'modified_by': UserRefToJSON(value.modifiedBy),
+        'name': value['name'],
+        'rule_conditions': TransactionRuleConditionsToJSON(value['ruleConditions']),
+        'rule_action': RuleActionToJSON(value['ruleAction']),
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'modified_by': UserRefToJSON(value['modifiedBy']),
     };
 }
 

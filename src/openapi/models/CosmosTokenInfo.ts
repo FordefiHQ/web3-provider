@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { CosmosToken } from './CosmosToken';
 import {
     CosmosTokenFromJSON,
     CosmosTokenFromJSONTyped,
     CosmosTokenToJSON,
+    CosmosTokenToJSONTyped,
 } from './CosmosToken';
 
 /**
@@ -43,12 +44,10 @@ export interface CosmosTokenInfo {
 /**
  * Check if a given object implements the CosmosTokenInfo interface.
  */
-export function instanceOfCosmosTokenInfo(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "isVerified" in value;
-    isInstance = isInstance && "coin" in value;
-
-    return isInstance;
+export function instanceOfCosmosTokenInfo(value: object): value is CosmosTokenInfo {
+    if (!('isVerified' in value) || value['isVerified'] === undefined) return false;
+    if (!('coin' in value) || value['coin'] === undefined) return false;
+    return true;
 }
 
 export function CosmosTokenInfoFromJSON(json: any): CosmosTokenInfo {
@@ -56,7 +55,7 @@ export function CosmosTokenInfoFromJSON(json: any): CosmosTokenInfo {
 }
 
 export function CosmosTokenInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosTokenInfo {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -66,17 +65,19 @@ export function CosmosTokenInfoFromJSONTyped(json: any, ignoreDiscriminator: boo
     };
 }
 
-export function CosmosTokenInfoToJSON(value?: CosmosTokenInfo | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosTokenInfoToJSON(json: any): CosmosTokenInfo {
+    return CosmosTokenInfoToJSONTyped(json, false);
+}
+
+export function CosmosTokenInfoToJSONTyped(value?: CosmosTokenInfo | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'is_verified': value.isVerified,
-        'coin': CosmosTokenToJSON(value.coin),
+        'is_verified': value['isVerified'],
+        'coin': CosmosTokenToJSON(value['coin']),
     };
 }
 

@@ -12,24 +12,27 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { ActionSigningRequest } from './ActionSigningRequest';
-import {
-    ActionSigningRequestFromJSON,
-    ActionSigningRequestFromJSONTyped,
-    ActionSigningRequestToJSON,
-} from './ActionSigningRequest';
+import { mapValues } from '../runtime';
 import type { ApiSignerRef } from './ApiSignerRef';
 import {
     ApiSignerRefFromJSON,
     ApiSignerRefFromJSONTyped,
     ApiSignerRefToJSON,
+    ApiSignerRefToJSONTyped,
 } from './ApiSignerRef';
+import type { ActionSigningRequest } from './ActionSigningRequest';
+import {
+    ActionSigningRequestFromJSON,
+    ActionSigningRequestFromJSONTyped,
+    ActionSigningRequestToJSON,
+    ActionSigningRequestToJSONTyped,
+} from './ActionSigningRequest';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
     UserRefFromJSONTyped,
     UserRefToJSON,
+    UserRefToJSONTyped,
 } from './UserRef';
 
 /**
@@ -58,16 +61,16 @@ export interface AddApiSignerAction {
     modifiedAt: Date;
     /**
      * 
-     * @type {string}
-     * @memberof AddApiSignerAction
-     */
-    type: AddApiSignerActionTypeEnum;
-    /**
-     * 
      * @type {boolean}
      * @memberof AddApiSignerAction
      */
     isPending: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof AddApiSignerAction
+     */
+    type: AddApiSignerActionTypeEnum;
     /**
      * 
      * @type {UserRef}
@@ -123,19 +126,17 @@ export type AddApiSignerActionStateEnum = typeof AddApiSignerActionStateEnum[key
 /**
  * Check if a given object implements the AddApiSignerAction interface.
  */
-export function instanceOfAddApiSignerAction(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "isPending" in value;
-    isInstance = isInstance && "createdBy" in value;
-    isInstance = isInstance && "apiSignerRef" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "deviceSigningRequest" in value;
-
-    return isInstance;
+export function instanceOfAddApiSignerAction(value: object): value is AddApiSignerAction {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('isPending' in value) || value['isPending'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('createdBy' in value) || value['createdBy'] === undefined) return false;
+    if (!('apiSignerRef' in value) || value['apiSignerRef'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('deviceSigningRequest' in value) || value['deviceSigningRequest'] === undefined) return false;
+    return true;
 }
 
 export function AddApiSignerActionFromJSON(json: any): AddApiSignerAction {
@@ -143,7 +144,7 @@ export function AddApiSignerActionFromJSON(json: any): AddApiSignerAction {
 }
 
 export function AddApiSignerActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): AddApiSignerAction {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -151,35 +152,37 @@ export function AddApiSignerActionFromJSONTyped(json: any, ignoreDiscriminator: 
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
-        'type': json['type'],
         'isPending': json['is_pending'],
+        'type': json['type'],
         'createdBy': UserRefFromJSON(json['created_by']),
-        'abortedBy': !exists(json, 'aborted_by') ? undefined : UserRefFromJSON(json['aborted_by']),
+        'abortedBy': json['aborted_by'] == null ? undefined : UserRefFromJSON(json['aborted_by']),
         'apiSignerRef': ApiSignerRefFromJSON(json['api_signer_ref']),
         'state': json['state'],
         'deviceSigningRequest': ActionSigningRequestFromJSON(json['device_signing_request']),
     };
 }
 
-export function AddApiSignerActionToJSON(value?: AddApiSignerAction | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AddApiSignerActionToJSON(json: any): AddApiSignerAction {
+    return AddApiSignerActionToJSONTyped(json, false);
+}
+
+export function AddApiSignerActionToJSONTyped(value?: AddApiSignerAction | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'type': value.type,
-        'is_pending': value.isPending,
-        'created_by': UserRefToJSON(value.createdBy),
-        'aborted_by': UserRefToJSON(value.abortedBy),
-        'api_signer_ref': ApiSignerRefToJSON(value.apiSignerRef),
-        'state': value.state,
-        'device_signing_request': ActionSigningRequestToJSON(value.deviceSigningRequest),
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'is_pending': value['isPending'],
+        'type': value['type'],
+        'created_by': UserRefToJSON(value['createdBy']),
+        'aborted_by': UserRefToJSON(value['abortedBy']),
+        'api_signer_ref': ApiSignerRefToJSON(value['apiSignerRef']),
+        'state': value['state'],
+        'device_signing_request': ActionSigningRequestToJSON(value['deviceSigningRequest']),
     };
 }
 

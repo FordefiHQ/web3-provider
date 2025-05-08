@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AptosBalanceChangeEffect } from './AptosBalanceChangeEffect';
 import {
     AptosBalanceChangeEffectFromJSON,
     AptosBalanceChangeEffectFromJSONTyped,
     AptosBalanceChangeEffectToJSON,
+    AptosBalanceChangeEffectToJSONTyped,
 } from './AptosBalanceChangeEffect';
 import type { AptosTransferEffect } from './AptosTransferEffect';
 import {
     AptosTransferEffectFromJSON,
     AptosTransferEffectFromJSONTyped,
     AptosTransferEffectToJSON,
+    AptosTransferEffectToJSONTyped,
 } from './AptosTransferEffect';
 
 /**
@@ -49,12 +51,10 @@ export interface AptosEffects {
 /**
  * Check if a given object implements the AptosEffects interface.
  */
-export function instanceOfAptosEffects(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "balanceChanges" in value;
-    isInstance = isInstance && "transfers" in value;
-
-    return isInstance;
+export function instanceOfAptosEffects(value: object): value is AptosEffects {
+    if (!('balanceChanges' in value) || value['balanceChanges'] === undefined) return false;
+    if (!('transfers' in value) || value['transfers'] === undefined) return false;
+    return true;
 }
 
 export function AptosEffectsFromJSON(json: any): AptosEffects {
@@ -62,7 +62,7 @@ export function AptosEffectsFromJSON(json: any): AptosEffects {
 }
 
 export function AptosEffectsFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosEffects {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -72,17 +72,19 @@ export function AptosEffectsFromJSONTyped(json: any, ignoreDiscriminator: boolea
     };
 }
 
-export function AptosEffectsToJSON(value?: AptosEffects | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AptosEffectsToJSON(json: any): AptosEffects {
+    return AptosEffectsToJSONTyped(json, false);
+}
+
+export function AptosEffectsToJSONTyped(value?: AptosEffects | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'balance_changes': ((value.balanceChanges as Array<any>).map(AptosBalanceChangeEffectToJSON)),
-        'transfers': ((value.transfers as Array<any>).map(AptosTransferEffectToJSON)),
+        'balance_changes': ((value['balanceChanges'] as Array<any>).map(AptosBalanceChangeEffectToJSON)),
+        'transfers': ((value['transfers'] as Array<any>).map(AptosTransferEffectToJSON)),
     };
 }
 

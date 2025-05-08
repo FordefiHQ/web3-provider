@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type PsbtSignerIdentityAddressTypeEnum = typeof PsbtSignerIdentityAddress
 /**
  * Check if a given object implements the PsbtSignerIdentityAddress interface.
  */
-export function instanceOfPsbtSignerIdentityAddress(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "address" in value;
-
-    return isInstance;
+export function instanceOfPsbtSignerIdentityAddress(value: object): value is PsbtSignerIdentityAddress {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    return true;
 }
 
 export function PsbtSignerIdentityAddressFromJSON(json: any): PsbtSignerIdentityAddress {
@@ -59,7 +57,7 @@ export function PsbtSignerIdentityAddressFromJSON(json: any): PsbtSignerIdentity
 }
 
 export function PsbtSignerIdentityAddressFromJSONTyped(json: any, ignoreDiscriminator: boolean): PsbtSignerIdentityAddress {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function PsbtSignerIdentityAddressFromJSONTyped(json: any, ignoreDiscrimi
     };
 }
 
-export function PsbtSignerIdentityAddressToJSON(value?: PsbtSignerIdentityAddress | null): any {
-    if (value === undefined) {
-        return undefined;
+export function PsbtSignerIdentityAddressToJSON(json: any): PsbtSignerIdentityAddress {
+    return PsbtSignerIdentityAddressToJSONTyped(json, false);
+}
+
+export function PsbtSignerIdentityAddressToJSONTyped(value?: PsbtSignerIdentityAddress | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'address': value.address,
+        'type': value['type'],
+        'address': value['address'],
     };
 }
 

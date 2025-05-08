@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { IssueEndUserAuthTokenErrorType } from './IssueEndUserAuthTokenErrorType';
 import {
     IssueEndUserAuthTokenErrorTypeFromJSON,
     IssueEndUserAuthTokenErrorTypeFromJSONTyped,
     IssueEndUserAuthTokenErrorTypeToJSON,
+    IssueEndUserAuthTokenErrorTypeToJSONTyped,
 } from './IssueEndUserAuthTokenErrorType';
 
 /**
@@ -58,15 +59,15 @@ export interface DefinedPreconditionErrorIssueEndUserAuthTokenErrorType {
     errorType?: IssueEndUserAuthTokenErrorType;
 }
 
+
+
 /**
  * Check if a given object implements the DefinedPreconditionErrorIssueEndUserAuthTokenErrorType interface.
  */
-export function instanceOfDefinedPreconditionErrorIssueEndUserAuthTokenErrorType(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "title" in value;
-    isInstance = isInstance && "detail" in value;
-
-    return isInstance;
+export function instanceOfDefinedPreconditionErrorIssueEndUserAuthTokenErrorType(value: object): value is DefinedPreconditionErrorIssueEndUserAuthTokenErrorType {
+    if (!('title' in value) || value['title'] === undefined) return false;
+    if (!('detail' in value) || value['detail'] === undefined) return false;
+    return true;
 }
 
 export function DefinedPreconditionErrorIssueEndUserAuthTokenErrorTypeFromJSON(json: any): DefinedPreconditionErrorIssueEndUserAuthTokenErrorType {
@@ -74,33 +75,35 @@ export function DefinedPreconditionErrorIssueEndUserAuthTokenErrorTypeFromJSON(j
 }
 
 export function DefinedPreconditionErrorIssueEndUserAuthTokenErrorTypeFromJSONTyped(json: any, ignoreDiscriminator: boolean): DefinedPreconditionErrorIssueEndUserAuthTokenErrorType {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'title': json['title'],
         'detail': json['detail'],
-        'requestId': !exists(json, 'request_id') ? undefined : json['request_id'],
-        'systemErrorCode': !exists(json, 'system_error_code') ? undefined : json['system_error_code'],
-        'errorType': !exists(json, 'error_type') ? undefined : IssueEndUserAuthTokenErrorTypeFromJSON(json['error_type']),
+        'requestId': json['request_id'] == null ? undefined : json['request_id'],
+        'systemErrorCode': json['system_error_code'] == null ? undefined : json['system_error_code'],
+        'errorType': json['error_type'] == null ? undefined : IssueEndUserAuthTokenErrorTypeFromJSON(json['error_type']),
     };
 }
 
-export function DefinedPreconditionErrorIssueEndUserAuthTokenErrorTypeToJSON(value?: DefinedPreconditionErrorIssueEndUserAuthTokenErrorType | null): any {
-    if (value === undefined) {
-        return undefined;
+export function DefinedPreconditionErrorIssueEndUserAuthTokenErrorTypeToJSON(json: any): DefinedPreconditionErrorIssueEndUserAuthTokenErrorType {
+    return DefinedPreconditionErrorIssueEndUserAuthTokenErrorTypeToJSONTyped(json, false);
+}
+
+export function DefinedPreconditionErrorIssueEndUserAuthTokenErrorTypeToJSONTyped(value?: DefinedPreconditionErrorIssueEndUserAuthTokenErrorType | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'title': value.title,
-        'detail': value.detail,
-        'request_id': value.requestId,
-        'system_error_code': value.systemErrorCode,
-        'error_type': IssueEndUserAuthTokenErrorTypeToJSON(value.errorType),
+        'title': value['title'],
+        'detail': value['detail'],
+        'request_id': value['requestId'],
+        'system_error_code': value['systemErrorCode'],
+        'error_type': IssueEndUserAuthTokenErrorTypeToJSON(value['errorType']),
     };
 }
 

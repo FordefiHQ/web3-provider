@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { OrganizationType } from './OrganizationType';
 import {
     OrganizationTypeFromJSON,
     OrganizationTypeFromJSONTyped,
     OrganizationTypeToJSON,
+    OrganizationTypeToJSONTyped,
 } from './OrganizationType';
 
 /**
@@ -44,18 +45,25 @@ export interface OrganizationInfo {
      * @memberof OrganizationInfo
      */
     type: OrganizationType;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationInfo
+     */
+    crmId: string;
 }
+
+
 
 /**
  * Check if a given object implements the OrganizationInfo interface.
  */
-export function instanceOfOrganizationInfo(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfOrganizationInfo(value: object): value is OrganizationInfo {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('crmId' in value) || value['crmId'] === undefined) return false;
+    return true;
 }
 
 export function OrganizationInfoFromJSON(json: any): OrganizationInfo {
@@ -63,7 +71,7 @@ export function OrganizationInfoFromJSON(json: any): OrganizationInfo {
 }
 
 export function OrganizationInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean): OrganizationInfo {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -71,21 +79,25 @@ export function OrganizationInfoFromJSONTyped(json: any, ignoreDiscriminator: bo
         'id': json['id'],
         'name': json['name'],
         'type': OrganizationTypeFromJSON(json['type']),
+        'crmId': json['crm_id'],
     };
 }
 
-export function OrganizationInfoToJSON(value?: OrganizationInfo | null): any {
-    if (value === undefined) {
-        return undefined;
+export function OrganizationInfoToJSON(json: any): OrganizationInfo {
+    return OrganizationInfoToJSONTyped(json, false);
+}
+
+export function OrganizationInfoToJSONTyped(value?: OrganizationInfo | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'name': value.name,
-        'type': OrganizationTypeToJSON(value.type),
+        'id': value['id'],
+        'name': value['name'],
+        'type': OrganizationTypeToJSON(value['type']),
+        'crm_id': value['crmId'],
     };
 }
 

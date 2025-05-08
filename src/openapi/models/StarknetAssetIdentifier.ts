@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedStarknetChain } from './EnrichedStarknetChain';
 import {
     EnrichedStarknetChainFromJSON,
     EnrichedStarknetChainFromJSONTyped,
     EnrichedStarknetChainToJSON,
+    EnrichedStarknetChainToJSONTyped,
 } from './EnrichedStarknetChain';
 import type { StarknetAssetIdentifierDetails } from './StarknetAssetIdentifierDetails';
 import {
     StarknetAssetIdentifierDetailsFromJSON,
     StarknetAssetIdentifierDetailsFromJSONTyped,
     StarknetAssetIdentifierDetailsToJSON,
+    StarknetAssetIdentifierDetailsToJSONTyped,
 } from './StarknetAssetIdentifierDetails';
 
 /**
@@ -65,13 +67,11 @@ export type StarknetAssetIdentifierTypeEnum = typeof StarknetAssetIdentifierType
 /**
  * Check if a given object implements the StarknetAssetIdentifier interface.
  */
-export function instanceOfStarknetAssetIdentifier(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "details" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfStarknetAssetIdentifier(value: object): value is StarknetAssetIdentifier {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function StarknetAssetIdentifierFromJSON(json: any): StarknetAssetIdentifier {
@@ -79,7 +79,7 @@ export function StarknetAssetIdentifierFromJSON(json: any): StarknetAssetIdentif
 }
 
 export function StarknetAssetIdentifierFromJSONTyped(json: any, ignoreDiscriminator: boolean): StarknetAssetIdentifier {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -90,18 +90,20 @@ export function StarknetAssetIdentifierFromJSONTyped(json: any, ignoreDiscrimina
     };
 }
 
-export function StarknetAssetIdentifierToJSON(value?: StarknetAssetIdentifier | null): any {
-    if (value === undefined) {
-        return undefined;
+export function StarknetAssetIdentifierToJSON(json: any): StarknetAssetIdentifier {
+    return StarknetAssetIdentifierToJSONTyped(json, false);
+}
+
+export function StarknetAssetIdentifierToJSONTyped(value?: StarknetAssetIdentifier | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'details': StarknetAssetIdentifierDetailsToJSON(value.details),
-        'chain': EnrichedStarknetChainToJSON(value.chain),
+        'type': value['type'],
+        'details': StarknetAssetIdentifierDetailsToJSON(value['details']),
+        'chain': EnrichedStarknetChainToJSON(value['chain']),
     };
 }
 

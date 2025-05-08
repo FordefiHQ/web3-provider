@@ -13,7 +13,7 @@ import {
   DynamicGasRequestTypeEnum,
   EvmChain,
   EvmDataRequestHexTypeEnum,
-  EvmTransactionState,
+  PushableTransactionState,
   GasPriorityLevelRequest,
   GasPriorityRequestTypeEnum,
   LegacyGasTypeEnum,
@@ -211,7 +211,7 @@ export const buildEvmRawTransactionRequest = ({
 
 interface WaitForTransactionStateParams<T extends AnyEvmTx> {
   transaction: T;
-  desiredState: EvmTransactionState;
+  desiredState: PushableTransactionState;
   apiClient: ApiClient;
   timeoutDurationMs: number;
   pollingIntervalMs: number;
@@ -282,25 +282,27 @@ export const parseTypedDataParams = (
   return { typedData, fromAddress };
 };
 
-const orderedTransactionStates: EvmTransactionState[] = [
-  EvmTransactionState.waitingForApproval,
-  EvmTransactionState.approved,
-  EvmTransactionState.signed,
-  EvmTransactionState.queued,
-  EvmTransactionState.pushedToBlockchain,
-  EvmTransactionState.stuck,
-  EvmTransactionState.mined,
-  EvmTransactionState.completed,
+const orderedTransactionStates: PushableTransactionState[] = [
+  PushableTransactionState.waitingForApproval,
+  PushableTransactionState.approved,
+  PushableTransactionState.signed,
+  PushableTransactionState.queued,
+  PushableTransactionState.pushedToBlockchain,
+  PushableTransactionState.stuck,
+  PushableTransactionState.mined,
+  PushableTransactionState.completed,
 ];
-const errorTransactionStates: EvmTransactionState[] = [
-  EvmTransactionState.errorSigning,
-  EvmTransactionState.errorPushingToBlockchain,
-  EvmTransactionState.aborted,
-  EvmTransactionState.stuck,
-  EvmTransactionState.cancelled,
+const errorTransactionStates: PushableTransactionState[] = [
+  PushableTransactionState.errorSigning,
+  PushableTransactionState.errorPushingToBlockchain,
+  PushableTransactionState.aborted,
+  PushableTransactionState.stuck,
+  PushableTransactionState.cancelled,
 ];
 
-const didStateAlreadyOccur = (currentState: EvmTransactionState, desiredState: EvmTransactionState): boolean =>
-  orderedTransactionStates.indexOf(currentState) >= orderedTransactionStates.indexOf(desiredState);
+const didStateAlreadyOccur = (
+  currentState: PushableTransactionState,
+  desiredState: PushableTransactionState,
+): boolean => orderedTransactionStates.indexOf(currentState) >= orderedTransactionStates.indexOf(desiredState);
 
-const isErrorState = (state: EvmTransactionState) => errorTransactionStates.includes(state);
+const isErrorState = (state: PushableTransactionState) => errorTransactionStates.includes(state);

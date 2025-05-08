@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -36,12 +36,10 @@ export interface CreateKeyShareBackupRequest {
 /**
  * Check if a given object implements the CreateKeyShareBackupRequest interface.
  */
-export function instanceOfCreateKeyShareBackupRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "backupEmail" in value;
-    isInstance = isInstance && "userIds" in value;
-
-    return isInstance;
+export function instanceOfCreateKeyShareBackupRequest(value: object): value is CreateKeyShareBackupRequest {
+    if (!('backupEmail' in value) || value['backupEmail'] === undefined) return false;
+    if (!('userIds' in value) || value['userIds'] === undefined) return false;
+    return true;
 }
 
 export function CreateKeyShareBackupRequestFromJSON(json: any): CreateKeyShareBackupRequest {
@@ -49,7 +47,7 @@ export function CreateKeyShareBackupRequestFromJSON(json: any): CreateKeyShareBa
 }
 
 export function CreateKeyShareBackupRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateKeyShareBackupRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -59,17 +57,19 @@ export function CreateKeyShareBackupRequestFromJSONTyped(json: any, ignoreDiscri
     };
 }
 
-export function CreateKeyShareBackupRequestToJSON(value?: CreateKeyShareBackupRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateKeyShareBackupRequestToJSON(json: any): CreateKeyShareBackupRequest {
+    return CreateKeyShareBackupRequestToJSONTyped(json, false);
+}
+
+export function CreateKeyShareBackupRequestToJSONTyped(value?: CreateKeyShareBackupRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'backup_email': value.backupEmail,
-        'user_ids': value.userIds,
+        'backup_email': value['backupEmail'],
+        'user_ids': value['userIds'],
     };
 }
 

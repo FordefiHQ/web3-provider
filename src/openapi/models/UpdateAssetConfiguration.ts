@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AssetIdentifierRequest } from './AssetIdentifierRequest';
 import {
     AssetIdentifierRequestFromJSON,
     AssetIdentifierRequestFromJSONTyped,
     AssetIdentifierRequestToJSON,
+    AssetIdentifierRequestToJSONTyped,
 } from './AssetIdentifierRequest';
 
 /**
@@ -43,12 +44,10 @@ export interface UpdateAssetConfiguration {
 /**
  * Check if a given object implements the UpdateAssetConfiguration interface.
  */
-export function instanceOfUpdateAssetConfiguration(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "asset" in value;
-    isInstance = isInstance && "hidden" in value;
-
-    return isInstance;
+export function instanceOfUpdateAssetConfiguration(value: object): value is UpdateAssetConfiguration {
+    if (!('asset' in value) || value['asset'] === undefined) return false;
+    if (!('hidden' in value) || value['hidden'] === undefined) return false;
+    return true;
 }
 
 export function UpdateAssetConfigurationFromJSON(json: any): UpdateAssetConfiguration {
@@ -56,7 +55,7 @@ export function UpdateAssetConfigurationFromJSON(json: any): UpdateAssetConfigur
 }
 
 export function UpdateAssetConfigurationFromJSONTyped(json: any, ignoreDiscriminator: boolean): UpdateAssetConfiguration {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -66,17 +65,19 @@ export function UpdateAssetConfigurationFromJSONTyped(json: any, ignoreDiscrimin
     };
 }
 
-export function UpdateAssetConfigurationToJSON(value?: UpdateAssetConfiguration | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UpdateAssetConfigurationToJSON(json: any): UpdateAssetConfiguration {
+    return UpdateAssetConfigurationToJSONTyped(json, false);
+}
+
+export function UpdateAssetConfigurationToJSONTyped(value?: UpdateAssetConfiguration | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'asset': AssetIdentifierRequestToJSON(value.asset),
-        'hidden': value.hidden,
+        'asset': AssetIdentifierRequestToJSON(value['asset']),
+        'hidden': value['hidden'],
     };
 }
 

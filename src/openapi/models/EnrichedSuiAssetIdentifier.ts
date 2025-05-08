@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedSuiAssetIdentifierDetails } from './EnrichedSuiAssetIdentifierDetails';
 import {
     EnrichedSuiAssetIdentifierDetailsFromJSON,
     EnrichedSuiAssetIdentifierDetailsFromJSONTyped,
     EnrichedSuiAssetIdentifierDetailsToJSON,
+    EnrichedSuiAssetIdentifierDetailsToJSONTyped,
 } from './EnrichedSuiAssetIdentifierDetails';
 
 /**
@@ -53,12 +54,10 @@ export type EnrichedSuiAssetIdentifierTypeEnum = typeof EnrichedSuiAssetIdentifi
 /**
  * Check if a given object implements the EnrichedSuiAssetIdentifier interface.
  */
-export function instanceOfEnrichedSuiAssetIdentifier(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "details" in value;
-
-    return isInstance;
+export function instanceOfEnrichedSuiAssetIdentifier(value: object): value is EnrichedSuiAssetIdentifier {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    return true;
 }
 
 export function EnrichedSuiAssetIdentifierFromJSON(json: any): EnrichedSuiAssetIdentifier {
@@ -66,7 +65,7 @@ export function EnrichedSuiAssetIdentifierFromJSON(json: any): EnrichedSuiAssetI
 }
 
 export function EnrichedSuiAssetIdentifierFromJSONTyped(json: any, ignoreDiscriminator: boolean): EnrichedSuiAssetIdentifier {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function EnrichedSuiAssetIdentifierFromJSONTyped(json: any, ignoreDiscrim
     };
 }
 
-export function EnrichedSuiAssetIdentifierToJSON(value?: EnrichedSuiAssetIdentifier | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EnrichedSuiAssetIdentifierToJSON(json: any): EnrichedSuiAssetIdentifier {
+    return EnrichedSuiAssetIdentifierToJSONTyped(json, false);
+}
+
+export function EnrichedSuiAssetIdentifierToJSONTyped(value?: EnrichedSuiAssetIdentifier | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'details': EnrichedSuiAssetIdentifierDetailsToJSON(value.details),
+        'type': value['type'],
+        'details': EnrichedSuiAssetIdentifierDetailsToJSON(value['details']),
     };
 }
 

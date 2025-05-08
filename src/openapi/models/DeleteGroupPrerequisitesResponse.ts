@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { DeleteAddressBookGroupPrerequisite } from './DeleteAddressBookGroupPrerequisite';
 import {
     DeleteAddressBookGroupPrerequisiteFromJSON,
     DeleteAddressBookGroupPrerequisiteFromJSONTyped,
     DeleteAddressBookGroupPrerequisiteToJSON,
+    DeleteAddressBookGroupPrerequisiteToJSONTyped,
 } from './DeleteAddressBookGroupPrerequisite';
 
 /**
@@ -37,11 +38,9 @@ export interface DeleteGroupPrerequisitesResponse {
 /**
  * Check if a given object implements the DeleteGroupPrerequisitesResponse interface.
  */
-export function instanceOfDeleteGroupPrerequisitesResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "prerequisites" in value;
-
-    return isInstance;
+export function instanceOfDeleteGroupPrerequisitesResponse(value: object): value is DeleteGroupPrerequisitesResponse {
+    if (!('prerequisites' in value) || value['prerequisites'] === undefined) return false;
+    return true;
 }
 
 export function DeleteGroupPrerequisitesResponseFromJSON(json: any): DeleteGroupPrerequisitesResponse {
@@ -49,7 +48,7 @@ export function DeleteGroupPrerequisitesResponseFromJSON(json: any): DeleteGroup
 }
 
 export function DeleteGroupPrerequisitesResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): DeleteGroupPrerequisitesResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -58,16 +57,18 @@ export function DeleteGroupPrerequisitesResponseFromJSONTyped(json: any, ignoreD
     };
 }
 
-export function DeleteGroupPrerequisitesResponseToJSON(value?: DeleteGroupPrerequisitesResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function DeleteGroupPrerequisitesResponseToJSON(json: any): DeleteGroupPrerequisitesResponse {
+    return DeleteGroupPrerequisitesResponseToJSONTyped(json, false);
+}
+
+export function DeleteGroupPrerequisitesResponseToJSONTyped(value?: DeleteGroupPrerequisitesResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'prerequisites': ((value.prerequisites as Array<any>).map(DeleteAddressBookGroupPrerequisiteToJSON)),
+        'prerequisites': ((value['prerequisites'] as Array<any>).map(DeleteAddressBookGroupPrerequisiteToJSON)),
     };
 }
 

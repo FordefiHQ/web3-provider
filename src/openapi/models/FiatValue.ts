@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { FiatCurrency } from './FiatCurrency';
 import {
     FiatCurrencyFromJSON,
     FiatCurrencyFromJSONTyped,
     FiatCurrencyToJSON,
+    FiatCurrencyToJSONTyped,
 } from './FiatCurrency';
 
 /**
@@ -43,12 +44,10 @@ export interface FiatValue {
 /**
  * Check if a given object implements the FiatValue interface.
  */
-export function instanceOfFiatValue(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "value" in value;
-    isInstance = isInstance && "currency" in value;
-
-    return isInstance;
+export function instanceOfFiatValue(value: object): value is FiatValue {
+    if (!('value' in value) || value['value'] === undefined) return false;
+    if (!('currency' in value) || value['currency'] === undefined) return false;
+    return true;
 }
 
 export function FiatValueFromJSON(json: any): FiatValue {
@@ -56,7 +55,7 @@ export function FiatValueFromJSON(json: any): FiatValue {
 }
 
 export function FiatValueFromJSONTyped(json: any, ignoreDiscriminator: boolean): FiatValue {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -66,17 +65,19 @@ export function FiatValueFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     };
 }
 
-export function FiatValueToJSON(value?: FiatValue | null): any {
-    if (value === undefined) {
-        return undefined;
+export function FiatValueToJSON(json: any): FiatValue {
+    return FiatValueToJSONTyped(json, false);
+}
+
+export function FiatValueToJSONTyped(value?: FiatValue | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'value': value.value,
-        'currency': FiatCurrencyToJSON(value.currency),
+        'value': value['value'],
+        'currency': FiatCurrencyToJSON(value['currency']),
     };
 }
 

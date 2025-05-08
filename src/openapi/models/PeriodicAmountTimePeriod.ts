@@ -27,6 +27,17 @@ export const PeriodicAmountTimePeriod = {
 export type PeriodicAmountTimePeriod = typeof PeriodicAmountTimePeriod[keyof typeof PeriodicAmountTimePeriod];
 
 
+export function instanceOfPeriodicAmountTimePeriod(value: any): boolean {
+    for (const key in PeriodicAmountTimePeriod) {
+        if (Object.prototype.hasOwnProperty.call(PeriodicAmountTimePeriod, key)) {
+            if (PeriodicAmountTimePeriod[key as keyof typeof PeriodicAmountTimePeriod] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function PeriodicAmountTimePeriodFromJSON(json: any): PeriodicAmountTimePeriod {
     return PeriodicAmountTimePeriodFromJSONTyped(json, false);
 }
@@ -37,5 +48,9 @@ export function PeriodicAmountTimePeriodFromJSONTyped(json: any, ignoreDiscrimin
 
 export function PeriodicAmountTimePeriodToJSON(value?: PeriodicAmountTimePeriod | null): any {
     return value as any;
+}
+
+export function PeriodicAmountTimePeriodToJSONTyped(value: any, ignoreDiscriminator: boolean): PeriodicAmountTimePeriod {
+    return value as PeriodicAmountTimePeriod;
 }
 

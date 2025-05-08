@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type CustomFeeRequestTypeEnum = typeof CustomFeeRequestTypeEnum[keyof typ
 /**
  * Check if a given object implements the CustomFeeRequest interface.
  */
-export function instanceOfCustomFeeRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "feePerByte" in value;
-
-    return isInstance;
+export function instanceOfCustomFeeRequest(value: object): value is CustomFeeRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('feePerByte' in value) || value['feePerByte'] === undefined) return false;
+    return true;
 }
 
 export function CustomFeeRequestFromJSON(json: any): CustomFeeRequest {
@@ -59,7 +57,7 @@ export function CustomFeeRequestFromJSON(json: any): CustomFeeRequest {
 }
 
 export function CustomFeeRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CustomFeeRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function CustomFeeRequestFromJSONTyped(json: any, ignoreDiscriminator: bo
     };
 }
 
-export function CustomFeeRequestToJSON(value?: CustomFeeRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CustomFeeRequestToJSON(json: any): CustomFeeRequest {
+    return CustomFeeRequestToJSONTyped(json, false);
+}
+
+export function CustomFeeRequestToJSONTyped(value?: CustomFeeRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'fee_per_byte': value.feePerByte,
+        'type': value['type'],
+        'fee_per_byte': value['feePerByte'],
     };
 }
 

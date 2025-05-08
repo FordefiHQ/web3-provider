@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -48,56 +48,15 @@ export const TestEvmChainRequestChainTypeEnum = {
 } as const;
 export type TestEvmChainRequestChainTypeEnum = typeof TestEvmChainRequestChainTypeEnum[keyof typeof TestEvmChainRequestChainTypeEnum];
 
-/**
- * @export
- */
-export const TestEvmChainRequestChainIdEnum = {
-    NUMBER_1: 1,
-    NUMBER_5: 5,
-    NUMBER_10: 10,
-    NUMBER_16: 16,
-    NUMBER_56: 56,
-    NUMBER_100: 100,
-    NUMBER_137: 137,
-    NUMBER_169: 169,
-    NUMBER_250: 250,
-    NUMBER_324: 324,
-    NUMBER_1030: 1030,
-    NUMBER_1100: 1100,
-    NUMBER_1101: 1101,
-    NUMBER_1329: 1329,
-    NUMBER_1729: 1729,
-    NUMBER_2222: 2222,
-    NUMBER_4200: 4200,
-    NUMBER_5000: 5000,
-    NUMBER_7000: 7000,
-    NUMBER_7700: 7700,
-    NUMBER_8453: 8453,
-    NUMBER_17000: 17000,
-    NUMBER_80001: 80001,
-    NUMBER_42161: 42161,
-    NUMBER_43114: 43114,
-    NUMBER_59144: 59144,
-    NUMBER_81457: 81457,
-    NUMBER_421614: 421614,
-    NUMBER_534352: 534352,
-    NUMBER_660279: 660279,
-    NUMBER_810180: 810180,
-    NUMBER_11155111: 11155111
-} as const;
-export type TestEvmChainRequestChainIdEnum = typeof TestEvmChainRequestChainIdEnum[keyof typeof TestEvmChainRequestChainIdEnum];
-
 
 /**
  * Check if a given object implements the TestEvmChainRequest interface.
  */
-export function instanceOfTestEvmChainRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "rpcUrl" in value;
-    isInstance = isInstance && "chainType" in value;
-    isInstance = isInstance && "chainId" in value;
-
-    return isInstance;
+export function instanceOfTestEvmChainRequest(value: object): value is TestEvmChainRequest {
+    if (!('rpcUrl' in value) || value['rpcUrl'] === undefined) return false;
+    if (!('chainType' in value) || value['chainType'] === undefined) return false;
+    if (!('chainId' in value) || value['chainId'] === undefined) return false;
+    return true;
 }
 
 export function TestEvmChainRequestFromJSON(json: any): TestEvmChainRequest {
@@ -105,7 +64,7 @@ export function TestEvmChainRequestFromJSON(json: any): TestEvmChainRequest {
 }
 
 export function TestEvmChainRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): TestEvmChainRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -116,18 +75,20 @@ export function TestEvmChainRequestFromJSONTyped(json: any, ignoreDiscriminator:
     };
 }
 
-export function TestEvmChainRequestToJSON(value?: TestEvmChainRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TestEvmChainRequestToJSON(json: any): TestEvmChainRequest {
+    return TestEvmChainRequestToJSONTyped(json, false);
+}
+
+export function TestEvmChainRequestToJSONTyped(value?: TestEvmChainRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'rpc_url': value.rpcUrl,
-        'chain_type': value.chainType,
-        'chain_id': value.chainId,
+        'rpc_url': value['rpcUrl'],
+        'chain_type': value['chainType'],
+        'chain_id': value['chainId'],
     };
 }
 

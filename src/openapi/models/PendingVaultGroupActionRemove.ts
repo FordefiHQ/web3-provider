@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -40,11 +40,9 @@ export type PendingVaultGroupActionRemoveTypeEnum = typeof PendingVaultGroupActi
 /**
  * Check if a given object implements the PendingVaultGroupActionRemove interface.
  */
-export function instanceOfPendingVaultGroupActionRemove(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfPendingVaultGroupActionRemove(value: object): value is PendingVaultGroupActionRemove {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function PendingVaultGroupActionRemoveFromJSON(json: any): PendingVaultGroupActionRemove {
@@ -52,7 +50,7 @@ export function PendingVaultGroupActionRemoveFromJSON(json: any): PendingVaultGr
 }
 
 export function PendingVaultGroupActionRemoveFromJSONTyped(json: any, ignoreDiscriminator: boolean): PendingVaultGroupActionRemove {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -61,16 +59,18 @@ export function PendingVaultGroupActionRemoveFromJSONTyped(json: any, ignoreDisc
     };
 }
 
-export function PendingVaultGroupActionRemoveToJSON(value?: PendingVaultGroupActionRemove | null): any {
-    if (value === undefined) {
-        return undefined;
+export function PendingVaultGroupActionRemoveToJSON(json: any): PendingVaultGroupActionRemove {
+    return PendingVaultGroupActionRemoveToJSONTyped(json, false);
+}
+
+export function PendingVaultGroupActionRemoveToJSONTyped(value?: PendingVaultGroupActionRemove | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
+        'type': value['type'],
     };
 }
 

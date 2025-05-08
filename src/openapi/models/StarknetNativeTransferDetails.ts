@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedStarknetAddress } from './EnrichedStarknetAddress';
 import {
     EnrichedStarknetAddressFromJSON,
     EnrichedStarknetAddressFromJSONTyped,
     EnrichedStarknetAddressToJSON,
+    EnrichedStarknetAddressToJSONTyped,
 } from './EnrichedStarknetAddress';
 
 /**
@@ -65,13 +66,11 @@ export type StarknetNativeTransferDetailsTypeEnum = typeof StarknetNativeTransfe
 /**
  * Check if a given object implements the StarknetNativeTransferDetails interface.
  */
-export function instanceOfStarknetNativeTransferDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "sender" in value;
-    isInstance = isInstance && "recipient" in value;
-
-    return isInstance;
+export function instanceOfStarknetNativeTransferDetails(value: object): value is StarknetNativeTransferDetails {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    if (!('recipient' in value) || value['recipient'] === undefined) return false;
+    return true;
 }
 
 export function StarknetNativeTransferDetailsFromJSON(json: any): StarknetNativeTransferDetails {
@@ -79,7 +78,7 @@ export function StarknetNativeTransferDetailsFromJSON(json: any): StarknetNative
 }
 
 export function StarknetNativeTransferDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): StarknetNativeTransferDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -87,23 +86,25 @@ export function StarknetNativeTransferDetailsFromJSONTyped(json: any, ignoreDisc
         'type': json['type'],
         'sender': EnrichedStarknetAddressFromJSON(json['sender']),
         'recipient': EnrichedStarknetAddressFromJSON(json['recipient']),
-        'isInternal': !exists(json, 'is_internal') ? undefined : json['is_internal'],
+        'isInternal': json['is_internal'] == null ? undefined : json['is_internal'],
     };
 }
 
-export function StarknetNativeTransferDetailsToJSON(value?: StarknetNativeTransferDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function StarknetNativeTransferDetailsToJSON(json: any): StarknetNativeTransferDetails {
+    return StarknetNativeTransferDetailsToJSONTyped(json, false);
+}
+
+export function StarknetNativeTransferDetailsToJSONTyped(value?: StarknetNativeTransferDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'sender': EnrichedStarknetAddressToJSON(value.sender),
-        'recipient': EnrichedStarknetAddressToJSON(value.recipient),
-        'is_internal': value.isInternal,
+        'type': value['type'],
+        'sender': EnrichedStarknetAddressToJSON(value['sender']),
+        'recipient': EnrichedStarknetAddressToJSON(value['recipient']),
+        'is_internal': value['isInternal'],
     };
 }
 

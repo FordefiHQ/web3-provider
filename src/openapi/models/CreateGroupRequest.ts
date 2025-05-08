@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -36,12 +36,10 @@ export interface CreateGroupRequest {
 /**
  * Check if a given object implements the CreateGroupRequest interface.
  */
-export function instanceOfCreateGroupRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "contactIds" in value;
-
-    return isInstance;
+export function instanceOfCreateGroupRequest(value: object): value is CreateGroupRequest {
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('contactIds' in value) || value['contactIds'] === undefined) return false;
+    return true;
 }
 
 export function CreateGroupRequestFromJSON(json: any): CreateGroupRequest {
@@ -49,7 +47,7 @@ export function CreateGroupRequestFromJSON(json: any): CreateGroupRequest {
 }
 
 export function CreateGroupRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateGroupRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -59,17 +57,19 @@ export function CreateGroupRequestFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-export function CreateGroupRequestToJSON(value?: CreateGroupRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateGroupRequestToJSON(json: any): CreateGroupRequest {
+    return CreateGroupRequestToJSONTyped(json, false);
+}
+
+export function CreateGroupRequestToJSONTyped(value?: CreateGroupRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'contact_ids': value.contactIds,
+        'name': value['name'],
+        'contact_ids': value['contactIds'],
     };
 }
 

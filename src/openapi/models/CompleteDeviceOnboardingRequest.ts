@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { DeviceSystemInfo } from './DeviceSystemInfo';
 import {
     DeviceSystemInfoFromJSON,
     DeviceSystemInfoFromJSONTyped,
     DeviceSystemInfoToJSON,
+    DeviceSystemInfoToJSONTyped,
 } from './DeviceSystemInfo';
 import type { EncryptionData } from './EncryptionData';
 import {
     EncryptionDataFromJSON,
     EncryptionDataFromJSONTyped,
     EncryptionDataToJSON,
+    EncryptionDataToJSONTyped,
 } from './EncryptionData';
 
 /**
@@ -43,7 +45,13 @@ export interface CompleteDeviceOnboardingRequest {
      * @type {EncryptionData}
      * @memberof CompleteDeviceOnboardingRequest
      */
-    encryptedPinMessage: EncryptionData;
+    encryptedPinMessage?: EncryptionData;
+    /**
+     * 
+     * @type {string}
+     * @memberof CompleteDeviceOnboardingRequest
+     */
+    deviceRegistrationSignature?: string;
     /**
      * 
      * @type {DeviceSystemInfo}
@@ -55,13 +63,10 @@ export interface CompleteDeviceOnboardingRequest {
 /**
  * Check if a given object implements the CompleteDeviceOnboardingRequest interface.
  */
-export function instanceOfCompleteDeviceOnboardingRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "pubKey" in value;
-    isInstance = isInstance && "encryptedPinMessage" in value;
-    isInstance = isInstance && "deviceInfo" in value;
-
-    return isInstance;
+export function instanceOfCompleteDeviceOnboardingRequest(value: object): value is CompleteDeviceOnboardingRequest {
+    if (!('pubKey' in value) || value['pubKey'] === undefined) return false;
+    if (!('deviceInfo' in value) || value['deviceInfo'] === undefined) return false;
+    return true;
 }
 
 export function CompleteDeviceOnboardingRequestFromJSON(json: any): CompleteDeviceOnboardingRequest {
@@ -69,29 +74,33 @@ export function CompleteDeviceOnboardingRequestFromJSON(json: any): CompleteDevi
 }
 
 export function CompleteDeviceOnboardingRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CompleteDeviceOnboardingRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'pubKey': json['pub_key'],
-        'encryptedPinMessage': EncryptionDataFromJSON(json['encrypted_pin_message']),
+        'encryptedPinMessage': json['encrypted_pin_message'] == null ? undefined : EncryptionDataFromJSON(json['encrypted_pin_message']),
+        'deviceRegistrationSignature': json['device_registration_signature'] == null ? undefined : json['device_registration_signature'],
         'deviceInfo': DeviceSystemInfoFromJSON(json['device_info']),
     };
 }
 
-export function CompleteDeviceOnboardingRequestToJSON(value?: CompleteDeviceOnboardingRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CompleteDeviceOnboardingRequestToJSON(json: any): CompleteDeviceOnboardingRequest {
+    return CompleteDeviceOnboardingRequestToJSONTyped(json, false);
+}
+
+export function CompleteDeviceOnboardingRequestToJSONTyped(value?: CompleteDeviceOnboardingRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'pub_key': value.pubKey,
-        'encrypted_pin_message': EncryptionDataToJSON(value.encryptedPinMessage),
-        'device_info': DeviceSystemInfoToJSON(value.deviceInfo),
+        'pub_key': value['pubKey'],
+        'encrypted_pin_message': EncryptionDataToJSON(value['encryptedPinMessage']),
+        'device_registration_signature': value['deviceRegistrationSignature'],
+        'device_info': DeviceSystemInfoToJSON(value['deviceInfo']),
     };
 }
 

@@ -12,67 +12,77 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { CosmosMessageData } from './CosmosMessageData';
-import {
-    CosmosMessageDataFromJSON,
-    CosmosMessageDataFromJSONTyped,
-    CosmosMessageDataToJSON,
-} from './CosmosMessageData';
-import type { CosmosMessageState } from './CosmosMessageState';
-import {
-    CosmosMessageStateFromJSON,
-    CosmosMessageStateFromJSONTyped,
-    CosmosMessageStateToJSON,
-} from './CosmosMessageState';
-import type { CosmosMessageStateChange } from './CosmosMessageStateChange';
-import {
-    CosmosMessageStateChangeFromJSON,
-    CosmosMessageStateChangeFromJSONTyped,
-    CosmosMessageStateChangeToJSON,
-} from './CosmosMessageStateChange';
-import type { CosmosMessageType } from './CosmosMessageType';
-import {
-    CosmosMessageTypeFromJSON,
-    CosmosMessageTypeFromJSONTyped,
-    CosmosMessageTypeToJSON,
-} from './CosmosMessageType';
+import { mapValues } from '../runtime';
 import type { EnrichedCosmosBechAddress } from './EnrichedCosmosBechAddress';
 import {
     EnrichedCosmosBechAddressFromJSON,
     EnrichedCosmosBechAddressFromJSONTyped,
     EnrichedCosmosBechAddressToJSON,
+    EnrichedCosmosBechAddressToJSONTyped,
 } from './EnrichedCosmosBechAddress';
 import type { EnrichedCosmosChain } from './EnrichedCosmosChain';
 import {
     EnrichedCosmosChainFromJSON,
     EnrichedCosmosChainFromJSONTyped,
     EnrichedCosmosChainToJSON,
+    EnrichedCosmosChainToJSONTyped,
 } from './EnrichedCosmosChain';
 import type { ManagedTransactionData } from './ManagedTransactionData';
 import {
     ManagedTransactionDataFromJSON,
     ManagedTransactionDataFromJSONTyped,
     ManagedTransactionDataToJSON,
+    ManagedTransactionDataToJSONTyped,
 } from './ManagedTransactionData';
-import type { Signature } from './Signature';
-import {
-    SignatureFromJSON,
-    SignatureFromJSONTyped,
-    SignatureToJSON,
-} from './Signature';
-import type { TransactionDirection } from './TransactionDirection';
-import {
-    TransactionDirectionFromJSON,
-    TransactionDirectionFromJSONTyped,
-    TransactionDirectionToJSON,
-} from './TransactionDirection';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
     TransactionSpamStateFromJSONTyped,
     TransactionSpamStateToJSON,
+    TransactionSpamStateToJSONTyped,
 } from './TransactionSpamState';
+import type { TransactionDirection } from './TransactionDirection';
+import {
+    TransactionDirectionFromJSON,
+    TransactionDirectionFromJSONTyped,
+    TransactionDirectionToJSON,
+    TransactionDirectionToJSONTyped,
+} from './TransactionDirection';
+import type { CosmosMessageType } from './CosmosMessageType';
+import {
+    CosmosMessageTypeFromJSON,
+    CosmosMessageTypeFromJSONTyped,
+    CosmosMessageTypeToJSON,
+    CosmosMessageTypeToJSONTyped,
+} from './CosmosMessageType';
+import type { Signature } from './Signature';
+import {
+    SignatureFromJSON,
+    SignatureFromJSONTyped,
+    SignatureToJSON,
+    SignatureToJSONTyped,
+} from './Signature';
+import type { NonPushableTransactionStateChange } from './NonPushableTransactionStateChange';
+import {
+    NonPushableTransactionStateChangeFromJSON,
+    NonPushableTransactionStateChangeFromJSONTyped,
+    NonPushableTransactionStateChangeToJSON,
+    NonPushableTransactionStateChangeToJSONTyped,
+} from './NonPushableTransactionStateChange';
+import type { CosmosMessageData } from './CosmosMessageData';
+import {
+    CosmosMessageDataFromJSON,
+    CosmosMessageDataFromJSONTyped,
+    CosmosMessageDataToJSON,
+    CosmosMessageDataToJSONTyped,
+} from './CosmosMessageData';
+import type { NonPushableTransactionState } from './NonPushableTransactionState';
+import {
+    NonPushableTransactionStateFromJSON,
+    NonPushableTransactionStateFromJSONTyped,
+    NonPushableTransactionStateToJSON,
+    NonPushableTransactionStateToJSONTyped,
+} from './NonPushableTransactionState';
 
 /**
  * 
@@ -130,6 +140,24 @@ export interface CosmosMessage {
     direction: TransactionDirection;
     /**
      * 
+     * @type {boolean}
+     * @memberof CosmosMessage
+     */
+    signedExternally?: boolean;
+    /**
+     * 
+     * @type {NonPushableTransactionState}
+     * @memberof CosmosMessage
+     */
+    state: NonPushableTransactionState;
+    /**
+     * 
+     * @type {Array<NonPushableTransactionStateChange>}
+     * @memberof CosmosMessage
+     */
+    stateChanges: Array<NonPushableTransactionStateChange>;
+    /**
+     * 
      * @type {string}
      * @memberof CosmosMessage
      */
@@ -140,18 +168,6 @@ export interface CosmosMessage {
      * @memberof CosmosMessage
      */
     cosmosMessageType: CosmosMessageType;
-    /**
-     * 
-     * @type {CosmosMessageState}
-     * @memberof CosmosMessage
-     */
-    state: CosmosMessageState;
-    /**
-     * 
-     * @type {Array<CosmosMessageStateChange>}
-     * @memberof CosmosMessage
-     */
-    stateChanges: Array<CosmosMessageStateChange>;
     /**
      * 
      * @type {CosmosMessageData}
@@ -185,22 +201,20 @@ export type CosmosMessageTypeEnum = typeof CosmosMessageTypeEnum[keyof typeof Co
 /**
  * Check if a given object implements the CosmosMessage interface.
  */
-export function instanceOfCosmosMessage(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "signatures" in value;
-    isInstance = isInstance && "direction" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "cosmosMessageType" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "stateChanges" in value;
-    isInstance = isInstance && "data" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "sender" in value;
-
-    return isInstance;
+export function instanceOfCosmosMessage(value: object): value is CosmosMessage {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('signatures' in value) || value['signatures'] === undefined) return false;
+    if (!('direction' in value) || value['direction'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('stateChanges' in value) || value['stateChanges'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('cosmosMessageType' in value) || value['cosmosMessageType'] === undefined) return false;
+    if (!('data' in value) || value['data'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    return true;
 }
 
 export function CosmosMessageFromJSON(json: any): CosmosMessage {
@@ -208,7 +222,7 @@ export function CosmosMessageFromJSON(json: any): CosmosMessage {
 }
 
 export function CosmosMessageFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosMessage {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -216,45 +230,49 @@ export function CosmosMessageFromJSONTyped(json: any, ignoreDiscriminator: boole
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
-        'managedTransactionData': !exists(json, 'managed_transaction_data') ? undefined : ManagedTransactionDataFromJSON(json['managed_transaction_data']),
+        'managedTransactionData': json['managed_transaction_data'] == null ? undefined : ManagedTransactionDataFromJSON(json['managed_transaction_data']),
         'signatures': ((json['signatures'] as Array<any>).map(SignatureFromJSON)),
-        'note': !exists(json, 'note') ? undefined : json['note'],
-        'spamState': !exists(json, 'spam_state') ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
+        'note': json['note'] == null ? undefined : json['note'],
+        'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
+        'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'state': NonPushableTransactionStateFromJSON(json['state']),
+        'stateChanges': ((json['state_changes'] as Array<any>).map(NonPushableTransactionStateChangeFromJSON)),
         'type': json['type'],
         'cosmosMessageType': CosmosMessageTypeFromJSON(json['cosmos_message_type']),
-        'state': CosmosMessageStateFromJSON(json['state']),
-        'stateChanges': ((json['state_changes'] as Array<any>).map(CosmosMessageStateChangeFromJSON)),
         'data': CosmosMessageDataFromJSON(json['data']),
         'chain': EnrichedCosmosChainFromJSON(json['chain']),
         'sender': EnrichedCosmosBechAddressFromJSON(json['sender']),
     };
 }
 
-export function CosmosMessageToJSON(value?: CosmosMessage | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosMessageToJSON(json: any): CosmosMessage {
+    return CosmosMessageToJSONTyped(json, false);
+}
+
+export function CosmosMessageToJSONTyped(value?: CosmosMessage | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'managed_transaction_data': ManagedTransactionDataToJSON(value.managedTransactionData),
-        'signatures': ((value.signatures as Array<any>).map(SignatureToJSON)),
-        'note': value.note,
-        'spam_state': TransactionSpamStateToJSON(value.spamState),
-        'direction': TransactionDirectionToJSON(value.direction),
-        'type': value.type,
-        'cosmos_message_type': CosmosMessageTypeToJSON(value.cosmosMessageType),
-        'state': CosmosMessageStateToJSON(value.state),
-        'state_changes': ((value.stateChanges as Array<any>).map(CosmosMessageStateChangeToJSON)),
-        'data': CosmosMessageDataToJSON(value.data),
-        'chain': EnrichedCosmosChainToJSON(value.chain),
-        'sender': EnrichedCosmosBechAddressToJSON(value.sender),
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'managed_transaction_data': ManagedTransactionDataToJSON(value['managedTransactionData']),
+        'signatures': ((value['signatures'] as Array<any>).map(SignatureToJSON)),
+        'note': value['note'],
+        'spam_state': TransactionSpamStateToJSON(value['spamState']),
+        'direction': TransactionDirectionToJSON(value['direction']),
+        'signed_externally': value['signedExternally'],
+        'state': NonPushableTransactionStateToJSON(value['state']),
+        'state_changes': ((value['stateChanges'] as Array<any>).map(NonPushableTransactionStateChangeToJSON)),
+        'type': value['type'],
+        'cosmos_message_type': CosmosMessageTypeToJSON(value['cosmosMessageType']),
+        'data': CosmosMessageDataToJSON(value['data']),
+        'chain': EnrichedCosmosChainToJSON(value['chain']),
+        'sender': EnrichedCosmosBechAddressToJSON(value['sender']),
     };
 }
 

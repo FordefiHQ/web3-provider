@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { TransferDirection } from './TransferDirection';
 import {
     TransferDirectionFromJSON,
     TransferDirectionFromJSONTyped,
     TransferDirectionToJSON,
+    TransferDirectionToJSONTyped,
 } from './TransferDirection';
 
 /**
@@ -59,12 +60,10 @@ export type EvmNativeTransferDetailsTypeEnum = typeof EvmNativeTransferDetailsTy
 /**
  * Check if a given object implements the EvmNativeTransferDetails interface.
  */
-export function instanceOfEvmNativeTransferDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "direction" in value;
-
-    return isInstance;
+export function instanceOfEvmNativeTransferDetails(value: object): value is EvmNativeTransferDetails {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('direction' in value) || value['direction'] === undefined) return false;
+    return true;
 }
 
 export function EvmNativeTransferDetailsFromJSON(json: any): EvmNativeTransferDetails {
@@ -72,29 +71,31 @@ export function EvmNativeTransferDetailsFromJSON(json: any): EvmNativeTransferDe
 }
 
 export function EvmNativeTransferDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmNativeTransferDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
         'direction': TransferDirectionFromJSON(json['direction']),
-        'isInternal': !exists(json, 'is_internal') ? undefined : json['is_internal'],
+        'isInternal': json['is_internal'] == null ? undefined : json['is_internal'],
     };
 }
 
-export function EvmNativeTransferDetailsToJSON(value?: EvmNativeTransferDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EvmNativeTransferDetailsToJSON(json: any): EvmNativeTransferDetails {
+    return EvmNativeTransferDetailsToJSONTyped(json, false);
+}
+
+export function EvmNativeTransferDetailsToJSONTyped(value?: EvmNativeTransferDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'direction': TransferDirectionToJSON(value.direction),
-        'is_internal': value.isInternal,
+        'type': value['type'],
+        'direction': TransferDirectionToJSON(value['direction']),
+        'is_internal': value['isInternal'],
     };
 }
 

@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { UtxoChainUniqueId } from './UtxoChainUniqueId';
 import {
     UtxoChainUniqueIdFromJSON,
     UtxoChainUniqueIdFromJSONTyped,
     UtxoChainUniqueIdToJSON,
+    UtxoChainUniqueIdToJSONTyped,
 } from './UtxoChainUniqueId';
 
 /**
@@ -53,12 +54,10 @@ export type UtxoNativeAssetIdentifierRequestTypeEnum = typeof UtxoNativeAssetIde
 /**
  * Check if a given object implements the UtxoNativeAssetIdentifierRequest interface.
  */
-export function instanceOfUtxoNativeAssetIdentifierRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfUtxoNativeAssetIdentifierRequest(value: object): value is UtxoNativeAssetIdentifierRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function UtxoNativeAssetIdentifierRequestFromJSON(json: any): UtxoNativeAssetIdentifierRequest {
@@ -66,7 +65,7 @@ export function UtxoNativeAssetIdentifierRequestFromJSON(json: any): UtxoNativeA
 }
 
 export function UtxoNativeAssetIdentifierRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): UtxoNativeAssetIdentifierRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function UtxoNativeAssetIdentifierRequestFromJSONTyped(json: any, ignoreD
     };
 }
 
-export function UtxoNativeAssetIdentifierRequestToJSON(value?: UtxoNativeAssetIdentifierRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UtxoNativeAssetIdentifierRequestToJSON(json: any): UtxoNativeAssetIdentifierRequest {
+    return UtxoNativeAssetIdentifierRequestToJSONTyped(json, false);
+}
+
+export function UtxoNativeAssetIdentifierRequestToJSONTyped(value?: UtxoNativeAssetIdentifierRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'chain': UtxoChainUniqueIdToJSON(value.chain),
+        'type': value['type'],
+        'chain': UtxoChainUniqueIdToJSON(value['chain']),
     };
 }
 

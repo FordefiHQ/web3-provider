@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedCosmosBechAddress } from './EnrichedCosmosBechAddress';
 import {
     EnrichedCosmosBechAddressFromJSON,
     EnrichedCosmosBechAddressFromJSONTyped,
     EnrichedCosmosBechAddressToJSON,
+    EnrichedCosmosBechAddressToJSONTyped,
 } from './EnrichedCosmosBechAddress';
 
 /**
@@ -55,14 +56,12 @@ export interface SignerInfo {
 /**
  * Check if a given object implements the SignerInfo interface.
  */
-export function instanceOfSignerInfo(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "signerAddress" in value;
-    isInstance = isInstance && "publicKey" in value;
-    isInstance = isInstance && "account" in value;
-    isInstance = isInstance && "sequence" in value;
-
-    return isInstance;
+export function instanceOfSignerInfo(value: object): value is SignerInfo {
+    if (!('signerAddress' in value) || value['signerAddress'] === undefined) return false;
+    if (!('publicKey' in value) || value['publicKey'] === undefined) return false;
+    if (!('account' in value) || value['account'] === undefined) return false;
+    if (!('sequence' in value) || value['sequence'] === undefined) return false;
+    return true;
 }
 
 export function SignerInfoFromJSON(json: any): SignerInfo {
@@ -70,7 +69,7 @@ export function SignerInfoFromJSON(json: any): SignerInfo {
 }
 
 export function SignerInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean): SignerInfo {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -82,19 +81,21 @@ export function SignerInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     };
 }
 
-export function SignerInfoToJSON(value?: SignerInfo | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SignerInfoToJSON(json: any): SignerInfo {
+    return SignerInfoToJSONTyped(json, false);
+}
+
+export function SignerInfoToJSONTyped(value?: SignerInfo | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'signer_address': EnrichedCosmosBechAddressToJSON(value.signerAddress),
-        'public_key': value.publicKey,
-        'account': value.account,
-        'sequence': value.sequence,
+        'signer_address': EnrichedCosmosBechAddressToJSON(value['signerAddress']),
+        'public_key': value['publicKey'],
+        'account': value['account'],
+        'sequence': value['sequence'],
     };
 }
 

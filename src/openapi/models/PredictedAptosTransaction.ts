@@ -12,67 +12,98 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { ApprovalRequest } from './ApprovalRequest';
-import {
-    ApprovalRequestFromJSON,
-    ApprovalRequestFromJSONTyped,
-    ApprovalRequestToJSON,
-} from './ApprovalRequest';
-import type { AptosSuggestedFees } from './AptosSuggestedFees';
-import {
-    AptosSuggestedFeesFromJSON,
-    AptosSuggestedFeesFromJSONTyped,
-    AptosSuggestedFeesToJSON,
-} from './AptosSuggestedFees';
-import type { AptosTransactionAptosTransactionTypeDetails } from './AptosTransactionAptosTransactionTypeDetails';
-import {
-    AptosTransactionAptosTransactionTypeDetailsFromJSON,
-    AptosTransactionAptosTransactionTypeDetailsFromJSONTyped,
-    AptosTransactionAptosTransactionTypeDetailsToJSON,
-} from './AptosTransactionAptosTransactionTypeDetails';
-import type { AptosTransactionPayload } from './AptosTransactionPayload';
-import {
-    AptosTransactionPayloadFromJSON,
-    AptosTransactionPayloadFromJSONTyped,
-    AptosTransactionPayloadToJSON,
-} from './AptosTransactionPayload';
-import type { AptosTransactionResult } from './AptosTransactionResult';
-import {
-    AptosTransactionResultFromJSON,
-    AptosTransactionResultFromJSONTyped,
-    AptosTransactionResultToJSON,
-} from './AptosTransactionResult';
-import type { EnrichedAptosAddress } from './EnrichedAptosAddress';
-import {
-    EnrichedAptosAddressFromJSON,
-    EnrichedAptosAddressFromJSONTyped,
-    EnrichedAptosAddressToJSON,
-} from './EnrichedAptosAddress';
+import { mapValues } from '../runtime';
 import type { EnrichedAptosChain } from './EnrichedAptosChain';
 import {
     EnrichedAptosChainFromJSON,
     EnrichedAptosChainFromJSONTyped,
     EnrichedAptosChainToJSON,
+    EnrichedAptosChainToJSONTyped,
 } from './EnrichedAptosChain';
+import type { AmlPolicyMatchOutgoing } from './AmlPolicyMatchOutgoing';
+import {
+    AmlPolicyMatchOutgoingFromJSON,
+    AmlPolicyMatchOutgoingFromJSONTyped,
+    AmlPolicyMatchOutgoingToJSON,
+    AmlPolicyMatchOutgoingToJSONTyped,
+} from './AmlPolicyMatchOutgoing';
+import type { AptosGasData } from './AptosGasData';
+import {
+    AptosGasDataFromJSON,
+    AptosGasDataFromJSONTyped,
+    AptosGasDataToJSON,
+    AptosGasDataToJSONTyped,
+} from './AptosGasData';
+import type { AptosTransactionResult } from './AptosTransactionResult';
+import {
+    AptosTransactionResultFromJSON,
+    AptosTransactionResultFromJSONTyped,
+    AptosTransactionResultToJSON,
+    AptosTransactionResultToJSONTyped,
+} from './AptosTransactionResult';
+import type { AptosTransactionAptosTransactionTypeDetails } from './AptosTransactionAptosTransactionTypeDetails';
+import {
+    AptosTransactionAptosTransactionTypeDetailsFromJSON,
+    AptosTransactionAptosTransactionTypeDetailsFromJSONTyped,
+    AptosTransactionAptosTransactionTypeDetailsToJSON,
+    AptosTransactionAptosTransactionTypeDetailsToJSONTyped,
+} from './AptosTransactionAptosTransactionTypeDetails';
+import type { ApprovalRequest } from './ApprovalRequest';
+import {
+    ApprovalRequestFromJSON,
+    ApprovalRequestFromJSONTyped,
+    ApprovalRequestToJSON,
+    ApprovalRequestToJSONTyped,
+} from './ApprovalRequest';
+import type { EnrichedAptosAddress } from './EnrichedAptosAddress';
+import {
+    EnrichedAptosAddressFromJSON,
+    EnrichedAptosAddressFromJSONTyped,
+    EnrichedAptosAddressToJSON,
+    EnrichedAptosAddressToJSONTyped,
+} from './EnrichedAptosAddress';
 import type { PolicyMatch } from './PolicyMatch';
 import {
     PolicyMatchFromJSON,
     PolicyMatchFromJSONTyped,
     PolicyMatchToJSON,
+    PolicyMatchToJSONTyped,
 } from './PolicyMatch';
-import type { SimulationStatusResult } from './SimulationStatusResult';
+import type { AptosSuggestedFees } from './AptosSuggestedFees';
 import {
-    SimulationStatusResultFromJSON,
-    SimulationStatusResultFromJSONTyped,
-    SimulationStatusResultToJSON,
-} from './SimulationStatusResult';
+    AptosSuggestedFeesFromJSON,
+    AptosSuggestedFeesFromJSONTyped,
+    AptosSuggestedFeesToJSON,
+    AptosSuggestedFeesToJSONTyped,
+} from './AptosSuggestedFees';
+import type { AptosTransactionPayload } from './AptosTransactionPayload';
+import {
+    AptosTransactionPayloadFromJSON,
+    AptosTransactionPayloadFromJSONTyped,
+    AptosTransactionPayloadToJSON,
+    AptosTransactionPayloadToJSONTyped,
+} from './AptosTransactionPayload';
 import type { TransactionRisk } from './TransactionRisk';
 import {
     TransactionRiskFromJSON,
     TransactionRiskFromJSONTyped,
     TransactionRiskToJSON,
+    TransactionRiskToJSONTyped,
 } from './TransactionRisk';
+import type { SimulationStatusResult } from './SimulationStatusResult';
+import {
+    SimulationStatusResultFromJSON,
+    SimulationStatusResultFromJSONTyped,
+    SimulationStatusResultToJSON,
+    SimulationStatusResultToJSONTyped,
+} from './SimulationStatusResult';
+import type { AmlResults } from './AmlResults';
+import {
+    AmlResultsFromJSON,
+    AmlResultsFromJSONTyped,
+    AmlResultsToJSON,
+    AmlResultsToJSONTyped,
+} from './AmlResults';
 
 /**
  * 
@@ -80,6 +111,12 @@ import {
  * @interface PredictedAptosTransaction
  */
 export interface PredictedAptosTransaction {
+    /**
+     * 
+     * @type {AmlPolicyMatchOutgoing}
+     * @memberof PredictedAptosTransaction
+     */
+    amlPolicyMatch?: AmlPolicyMatchOutgoing;
     /**
      * 
      * @type {PolicyMatch}
@@ -98,6 +135,18 @@ export interface PredictedAptosTransaction {
      * @memberof PredictedAptosTransaction
      */
     risks: Array<TransactionRisk>;
+    /**
+     * 
+     * @type {string}
+     * @memberof PredictedAptosTransaction
+     */
+    note?: string;
+    /**
+     * 
+     * @type {AmlResults}
+     * @memberof PredictedAptosTransaction
+     */
+    amlResults?: AmlResults;
     /**
      * 
      * @type {string}
@@ -142,6 +191,12 @@ export interface PredictedAptosTransaction {
     suggestedFees: AptosSuggestedFees;
     /**
      * 
+     * @type {AptosGasData}
+     * @memberof PredictedAptosTransaction
+     */
+    gasSubmitted: AptosGasData;
+    /**
+     * 
      * @type {EnrichedAptosAddress}
      * @memberof PredictedAptosTransaction
      */
@@ -161,20 +216,19 @@ export type PredictedAptosTransactionTypeEnum = typeof PredictedAptosTransaction
 /**
  * Check if a given object implements the PredictedAptosTransaction interface.
  */
-export function instanceOfPredictedAptosTransaction(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "policyMatch" in value;
-    isInstance = isInstance && "risks" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "expectedResult" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "simulationStatusResult" in value;
-    isInstance = isInstance && "payload" in value;
-    isInstance = isInstance && "aptosTransactionTypeDetails" in value;
-    isInstance = isInstance && "suggestedFees" in value;
-    isInstance = isInstance && "sender" in value;
-
-    return isInstance;
+export function instanceOfPredictedAptosTransaction(value: object): value is PredictedAptosTransaction {
+    if (!('policyMatch' in value) || value['policyMatch'] === undefined) return false;
+    if (!('risks' in value) || value['risks'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('expectedResult' in value) || value['expectedResult'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('simulationStatusResult' in value) || value['simulationStatusResult'] === undefined) return false;
+    if (!('payload' in value) || value['payload'] === undefined) return false;
+    if (!('aptosTransactionTypeDetails' in value) || value['aptosTransactionTypeDetails'] === undefined) return false;
+    if (!('suggestedFees' in value) || value['suggestedFees'] === undefined) return false;
+    if (!('gasSubmitted' in value) || value['gasSubmitted'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    return true;
 }
 
 export function PredictedAptosTransactionFromJSON(json: any): PredictedAptosTransaction {
@@ -182,14 +236,17 @@ export function PredictedAptosTransactionFromJSON(json: any): PredictedAptosTran
 }
 
 export function PredictedAptosTransactionFromJSONTyped(json: any, ignoreDiscriminator: boolean): PredictedAptosTransaction {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
+        'amlPolicyMatch': json['aml_policy_match'] == null ? undefined : AmlPolicyMatchOutgoingFromJSON(json['aml_policy_match']),
         'policyMatch': PolicyMatchFromJSON(json['policy_match']),
-        'approvalRequest': !exists(json, 'approval_request') ? undefined : ApprovalRequestFromJSON(json['approval_request']),
+        'approvalRequest': json['approval_request'] == null ? undefined : ApprovalRequestFromJSON(json['approval_request']),
         'risks': ((json['risks'] as Array<any>).map(TransactionRiskFromJSON)),
+        'note': json['note'] == null ? undefined : json['note'],
+        'amlResults': json['aml_results'] == null ? undefined : AmlResultsFromJSON(json['aml_results']),
         'type': json['type'],
         'expectedResult': AptosTransactionResultFromJSON(json['expected_result']),
         'chain': EnrichedAptosChainFromJSON(json['chain']),
@@ -197,30 +254,37 @@ export function PredictedAptosTransactionFromJSONTyped(json: any, ignoreDiscrimi
         'payload': AptosTransactionPayloadFromJSON(json['payload']),
         'aptosTransactionTypeDetails': AptosTransactionAptosTransactionTypeDetailsFromJSON(json['aptos_transaction_type_details']),
         'suggestedFees': AptosSuggestedFeesFromJSON(json['suggested_fees']),
+        'gasSubmitted': AptosGasDataFromJSON(json['gas_submitted']),
         'sender': EnrichedAptosAddressFromJSON(json['sender']),
     };
 }
 
-export function PredictedAptosTransactionToJSON(value?: PredictedAptosTransaction | null): any {
-    if (value === undefined) {
-        return undefined;
+export function PredictedAptosTransactionToJSON(json: any): PredictedAptosTransaction {
+    return PredictedAptosTransactionToJSONTyped(json, false);
+}
+
+export function PredictedAptosTransactionToJSONTyped(value?: PredictedAptosTransaction | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'policy_match': PolicyMatchToJSON(value.policyMatch),
-        'approval_request': ApprovalRequestToJSON(value.approvalRequest),
-        'risks': ((value.risks as Array<any>).map(TransactionRiskToJSON)),
-        'type': value.type,
-        'expected_result': AptosTransactionResultToJSON(value.expectedResult),
-        'chain': EnrichedAptosChainToJSON(value.chain),
-        'simulation_status_result': SimulationStatusResultToJSON(value.simulationStatusResult),
-        'payload': AptosTransactionPayloadToJSON(value.payload),
-        'aptos_transaction_type_details': AptosTransactionAptosTransactionTypeDetailsToJSON(value.aptosTransactionTypeDetails),
-        'suggested_fees': AptosSuggestedFeesToJSON(value.suggestedFees),
-        'sender': EnrichedAptosAddressToJSON(value.sender),
+        'aml_policy_match': AmlPolicyMatchOutgoingToJSON(value['amlPolicyMatch']),
+        'policy_match': PolicyMatchToJSON(value['policyMatch']),
+        'approval_request': ApprovalRequestToJSON(value['approvalRequest']),
+        'risks': ((value['risks'] as Array<any>).map(TransactionRiskToJSON)),
+        'note': value['note'],
+        'aml_results': AmlResultsToJSON(value['amlResults']),
+        'type': value['type'],
+        'expected_result': AptosTransactionResultToJSON(value['expectedResult']),
+        'chain': EnrichedAptosChainToJSON(value['chain']),
+        'simulation_status_result': SimulationStatusResultToJSON(value['simulationStatusResult']),
+        'payload': AptosTransactionPayloadToJSON(value['payload']),
+        'aptos_transaction_type_details': AptosTransactionAptosTransactionTypeDetailsToJSON(value['aptosTransactionTypeDetails']),
+        'suggested_fees': AptosSuggestedFeesToJSON(value['suggestedFees']),
+        'gas_submitted': AptosGasDataToJSON(value['gasSubmitted']),
+        'sender': EnrichedAptosAddressToJSON(value['sender']),
     };
 }
 

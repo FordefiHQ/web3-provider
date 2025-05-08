@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { FiatValue } from './FiatValue';
 import {
     FiatValueFromJSON,
     FiatValueFromJSONTyped,
     FiatValueToJSON,
+    FiatValueToJSONTyped,
 } from './FiatValue';
 
 /**
@@ -37,11 +38,9 @@ export interface GetTotalValueResponse {
 /**
  * Check if a given object implements the GetTotalValueResponse interface.
  */
-export function instanceOfGetTotalValueResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "totalValue" in value;
-
-    return isInstance;
+export function instanceOfGetTotalValueResponse(value: object): value is GetTotalValueResponse {
+    if (!('totalValue' in value) || value['totalValue'] === undefined) return false;
+    return true;
 }
 
 export function GetTotalValueResponseFromJSON(json: any): GetTotalValueResponse {
@@ -49,7 +48,7 @@ export function GetTotalValueResponseFromJSON(json: any): GetTotalValueResponse 
 }
 
 export function GetTotalValueResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetTotalValueResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -58,16 +57,18 @@ export function GetTotalValueResponseFromJSONTyped(json: any, ignoreDiscriminato
     };
 }
 
-export function GetTotalValueResponseToJSON(value?: GetTotalValueResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function GetTotalValueResponseToJSON(json: any): GetTotalValueResponse {
+    return GetTotalValueResponseToJSONTyped(json, false);
+}
+
+export function GetTotalValueResponseToJSONTyped(value?: GetTotalValueResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'total_value': FiatValueToJSON(value.totalValue),
+        'total_value': FiatValueToJSON(value['totalValue']),
     };
 }
 

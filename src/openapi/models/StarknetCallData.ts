@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedStarknetAddress } from './EnrichedStarknetAddress';
 import {
     EnrichedStarknetAddressFromJSON,
     EnrichedStarknetAddressFromJSONTyped,
     EnrichedStarknetAddressToJSON,
+    EnrichedStarknetAddressToJSONTyped,
 } from './EnrichedStarknetAddress';
 
 /**
@@ -49,13 +50,11 @@ export interface StarknetCallData {
 /**
  * Check if a given object implements the StarknetCallData interface.
  */
-export function instanceOfStarknetCallData(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "to" in value;
-    isInstance = isInstance && "methodName" in value;
-    isInstance = isInstance && "methodArguments" in value;
-
-    return isInstance;
+export function instanceOfStarknetCallData(value: object): value is StarknetCallData {
+    if (!('to' in value) || value['to'] === undefined) return false;
+    if (!('methodName' in value) || value['methodName'] === undefined) return false;
+    if (!('methodArguments' in value) || value['methodArguments'] === undefined) return false;
+    return true;
 }
 
 export function StarknetCallDataFromJSON(json: any): StarknetCallData {
@@ -63,7 +62,7 @@ export function StarknetCallDataFromJSON(json: any): StarknetCallData {
 }
 
 export function StarknetCallDataFromJSONTyped(json: any, ignoreDiscriminator: boolean): StarknetCallData {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -74,18 +73,20 @@ export function StarknetCallDataFromJSONTyped(json: any, ignoreDiscriminator: bo
     };
 }
 
-export function StarknetCallDataToJSON(value?: StarknetCallData | null): any {
-    if (value === undefined) {
-        return undefined;
+export function StarknetCallDataToJSON(json: any): StarknetCallData {
+    return StarknetCallDataToJSONTyped(json, false);
+}
+
+export function StarknetCallDataToJSONTyped(value?: StarknetCallData | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'to': EnrichedStarknetAddressToJSON(value.to),
-        'method_name': value.methodName,
-        'method_arguments': value.methodArguments,
+        'to': EnrichedStarknetAddressToJSON(value['to']),
+        'method_name': value['methodName'],
+        'method_arguments': value['methodArguments'],
     };
 }
 

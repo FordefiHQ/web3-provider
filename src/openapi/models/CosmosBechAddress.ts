@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { CosmosChainUniqueId } from './CosmosChainUniqueId';
 import {
     CosmosChainUniqueIdFromJSON,
     CosmosChainUniqueIdFromJSONTyped,
     CosmosChainUniqueIdToJSON,
+    CosmosChainUniqueIdToJSONTyped,
 } from './CosmosChainUniqueId';
 import type { CosmosKeyType } from './CosmosKeyType';
 import {
     CosmosKeyTypeFromJSON,
     CosmosKeyTypeFromJSONTyped,
     CosmosKeyTypeToJSON,
+    CosmosKeyTypeToJSONTyped,
 } from './CosmosKeyType';
 
 /**
@@ -58,15 +60,15 @@ export interface CosmosBechAddress {
     keyType?: CosmosKeyType;
 }
 
+
+
 /**
  * Check if a given object implements the CosmosBechAddress interface.
  */
-export function instanceOfCosmosBechAddress(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "address" in value;
-
-    return isInstance;
+export function instanceOfCosmosBechAddress(value: object): value is CosmosBechAddress {
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    return true;
 }
 
 export function CosmosBechAddressFromJSON(json: any): CosmosBechAddress {
@@ -74,31 +76,33 @@ export function CosmosBechAddressFromJSON(json: any): CosmosBechAddress {
 }
 
 export function CosmosBechAddressFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosBechAddress {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'chain': CosmosChainUniqueIdFromJSON(json['chain']),
         'address': json['address'],
-        'hexRepr': !exists(json, 'hex_repr') ? undefined : json['hex_repr'],
-        'keyType': !exists(json, 'key_type') ? undefined : CosmosKeyTypeFromJSON(json['key_type']),
+        'hexRepr': json['hex_repr'] == null ? undefined : json['hex_repr'],
+        'keyType': json['key_type'] == null ? undefined : CosmosKeyTypeFromJSON(json['key_type']),
     };
 }
 
-export function CosmosBechAddressToJSON(value?: CosmosBechAddress | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosBechAddressToJSON(json: any): CosmosBechAddress {
+    return CosmosBechAddressToJSONTyped(json, false);
+}
+
+export function CosmosBechAddressToJSONTyped(value?: CosmosBechAddress | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain': CosmosChainUniqueIdToJSON(value.chain),
-        'address': value.address,
-        'hex_repr': value.hexRepr,
-        'key_type': CosmosKeyTypeToJSON(value.keyType),
+        'chain': CosmosChainUniqueIdToJSON(value['chain']),
+        'address': value['address'],
+        'hex_repr': value['hexRepr'],
+        'key_type': CosmosKeyTypeToJSON(value['keyType']),
     };
 }
 

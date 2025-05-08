@@ -12,24 +12,27 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { UserGroupChangeRequest } from './UserGroupChangeRequest';
 import {
     UserGroupChangeRequestFromJSON,
     UserGroupChangeRequestFromJSONTyped,
     UserGroupChangeRequestToJSON,
+    UserGroupChangeRequestToJSONTyped,
 } from './UserGroupChangeRequest';
 import type { UserGroupState } from './UserGroupState';
 import {
     UserGroupStateFromJSON,
     UserGroupStateFromJSONTyped,
     UserGroupStateToJSON,
+    UserGroupStateToJSONTyped,
 } from './UserGroupState';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
     UserRefFromJSONTyped,
     UserRefToJSON,
+    UserRefToJSONTyped,
 } from './UserRef';
 
 /**
@@ -70,6 +73,12 @@ export interface CreateUserGroupResponse {
     usersCount: number;
     /**
      * 
+     * @type {number}
+     * @memberof CreateUserGroupResponse
+     */
+    adminsCount: number;
+    /**
+     * 
      * @type {UserGroupState}
      * @memberof CreateUserGroupResponse
      */
@@ -88,20 +97,21 @@ export interface CreateUserGroupResponse {
     proposedChange?: UserGroupChangeRequest;
 }
 
+
+
 /**
  * Check if a given object implements the CreateUserGroupResponse interface.
  */
-export function instanceOfCreateUserGroupResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "usersCount" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "modifiedBy" in value;
-
-    return isInstance;
+export function instanceOfCreateUserGroupResponse(value: object): value is CreateUserGroupResponse {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('usersCount' in value) || value['usersCount'] === undefined) return false;
+    if (!('adminsCount' in value) || value['adminsCount'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('modifiedBy' in value) || value['modifiedBy'] === undefined) return false;
+    return true;
 }
 
 export function CreateUserGroupResponseFromJSON(json: any): CreateUserGroupResponse {
@@ -109,7 +119,7 @@ export function CreateUserGroupResponseFromJSON(json: any): CreateUserGroupRespo
 }
 
 export function CreateUserGroupResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateUserGroupResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -119,29 +129,33 @@ export function CreateUserGroupResponseFromJSONTyped(json: any, ignoreDiscrimina
         'modifiedAt': (new Date(json['modified_at'])),
         'name': json['name'],
         'usersCount': json['users_count'],
+        'adminsCount': json['admins_count'],
         'state': UserGroupStateFromJSON(json['state']),
         'modifiedBy': UserRefFromJSON(json['modified_by']),
-        'proposedChange': !exists(json, 'proposed_change') ? undefined : UserGroupChangeRequestFromJSON(json['proposed_change']),
+        'proposedChange': json['proposed_change'] == null ? undefined : UserGroupChangeRequestFromJSON(json['proposed_change']),
     };
 }
 
-export function CreateUserGroupResponseToJSON(value?: CreateUserGroupResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateUserGroupResponseToJSON(json: any): CreateUserGroupResponse {
+    return CreateUserGroupResponseToJSONTyped(json, false);
+}
+
+export function CreateUserGroupResponseToJSONTyped(value?: CreateUserGroupResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'name': value.name,
-        'users_count': value.usersCount,
-        'state': UserGroupStateToJSON(value.state),
-        'modified_by': UserRefToJSON(value.modifiedBy),
-        'proposed_change': UserGroupChangeRequestToJSON(value.proposedChange),
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'name': value['name'],
+        'users_count': value['usersCount'],
+        'admins_count': value['adminsCount'],
+        'state': UserGroupStateToJSON(value['state']),
+        'modified_by': UserRefToJSON(value['modifiedBy']),
+        'proposed_change': UserGroupChangeRequestToJSON(value['proposedChange']),
     };
 }
 

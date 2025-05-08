@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EvmTransactionMethodArgument } from './EvmTransactionMethodArgument';
 import {
     EvmTransactionMethodArgumentFromJSON,
     EvmTransactionMethodArgumentFromJSONTyped,
     EvmTransactionMethodArgumentToJSON,
+    EvmTransactionMethodArgumentToJSONTyped,
 } from './EvmTransactionMethodArgument';
 
 /**
@@ -43,12 +44,10 @@ export interface EvmTransactionParsedData {
 /**
  * Check if a given object implements the EvmTransactionParsedData interface.
  */
-export function instanceOfEvmTransactionParsedData(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "method" in value;
-    isInstance = isInstance && "methodArguments" in value;
-
-    return isInstance;
+export function instanceOfEvmTransactionParsedData(value: object): value is EvmTransactionParsedData {
+    if (!('method' in value) || value['method'] === undefined) return false;
+    if (!('methodArguments' in value) || value['methodArguments'] === undefined) return false;
+    return true;
 }
 
 export function EvmTransactionParsedDataFromJSON(json: any): EvmTransactionParsedData {
@@ -56,7 +55,7 @@ export function EvmTransactionParsedDataFromJSON(json: any): EvmTransactionParse
 }
 
 export function EvmTransactionParsedDataFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmTransactionParsedData {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -66,17 +65,19 @@ export function EvmTransactionParsedDataFromJSONTyped(json: any, ignoreDiscrimin
     };
 }
 
-export function EvmTransactionParsedDataToJSON(value?: EvmTransactionParsedData | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EvmTransactionParsedDataToJSON(json: any): EvmTransactionParsedData {
+    return EvmTransactionParsedDataToJSONTyped(json, false);
+}
+
+export function EvmTransactionParsedDataToJSONTyped(value?: EvmTransactionParsedData | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'method': value.method,
-        'method_arguments': ((value.methodArguments as Array<any>).map(EvmTransactionMethodArgumentToJSON)),
+        'method': value['method'],
+        'method_arguments': ((value['methodArguments'] as Array<any>).map(EvmTransactionMethodArgumentToJSON)),
     };
 }
 

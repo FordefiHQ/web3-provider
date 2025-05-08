@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EvmAddressRequest } from './EvmAddressRequest';
 import {
     EvmAddressRequestFromJSON,
     EvmAddressRequestFromJSONTyped,
     EvmAddressRequestToJSON,
+    EvmAddressRequestToJSONTyped,
 } from './EvmAddressRequest';
 
 /**
@@ -59,13 +60,11 @@ export type EvmErc721AssetIdentifierRequestTypeEnum = typeof EvmErc721AssetIdent
 /**
  * Check if a given object implements the EvmErc721AssetIdentifierRequest interface.
  */
-export function instanceOfEvmErc721AssetIdentifierRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "token" in value;
-    isInstance = isInstance && "tokenId" in value;
-
-    return isInstance;
+export function instanceOfEvmErc721AssetIdentifierRequest(value: object): value is EvmErc721AssetIdentifierRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('token' in value) || value['token'] === undefined) return false;
+    if (!('tokenId' in value) || value['tokenId'] === undefined) return false;
+    return true;
 }
 
 export function EvmErc721AssetIdentifierRequestFromJSON(json: any): EvmErc721AssetIdentifierRequest {
@@ -73,7 +72,7 @@ export function EvmErc721AssetIdentifierRequestFromJSON(json: any): EvmErc721Ass
 }
 
 export function EvmErc721AssetIdentifierRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmErc721AssetIdentifierRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -84,18 +83,20 @@ export function EvmErc721AssetIdentifierRequestFromJSONTyped(json: any, ignoreDi
     };
 }
 
-export function EvmErc721AssetIdentifierRequestToJSON(value?: EvmErc721AssetIdentifierRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EvmErc721AssetIdentifierRequestToJSON(json: any): EvmErc721AssetIdentifierRequest {
+    return EvmErc721AssetIdentifierRequestToJSONTyped(json, false);
+}
+
+export function EvmErc721AssetIdentifierRequestToJSONTyped(value?: EvmErc721AssetIdentifierRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'token': EvmAddressRequestToJSON(value.token),
-        'token_id': value.tokenId,
+        'type': value['type'],
+        'token': EvmAddressRequestToJSON(value['token']),
+        'token_id': value['tokenId'],
     };
 }
 

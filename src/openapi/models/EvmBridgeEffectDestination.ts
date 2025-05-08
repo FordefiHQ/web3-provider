@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { EvmBridgeEffectKnownDestination } from './EvmBridgeEffectKnownDestination';
 import {
-    EvmBridgeEffectKnownDestination,
     instanceOfEvmBridgeEffectKnownDestination,
     EvmBridgeEffectKnownDestinationFromJSON,
     EvmBridgeEffectKnownDestinationFromJSONTyped,
     EvmBridgeEffectKnownDestinationToJSON,
 } from './EvmBridgeEffectKnownDestination';
+import type { EvmBridgeEffectUnknownDestination } from './EvmBridgeEffectUnknownDestination';
 import {
-    EvmBridgeEffectUnknownDestination,
     instanceOfEvmBridgeEffectUnknownDestination,
     EvmBridgeEffectUnknownDestinationFromJSON,
     EvmBridgeEffectUnknownDestinationFromJSONTyped,
@@ -39,31 +39,32 @@ export function EvmBridgeEffectDestinationFromJSON(json: any): EvmBridgeEffectDe
 }
 
 export function EvmBridgeEffectDestinationFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmBridgeEffectDestination {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'known_target_chain':
-            return {...EvmBridgeEffectKnownDestinationFromJSONTyped(json, true), type: 'known_target_chain'};
+            return Object.assign({}, EvmBridgeEffectKnownDestinationFromJSONTyped(json, true), { type: 'known_target_chain' } as const);
         case 'unknown_target_chain':
-            return {...EvmBridgeEffectUnknownDestinationFromJSONTyped(json, true), type: 'unknown_target_chain'};
+            return Object.assign({}, EvmBridgeEffectUnknownDestinationFromJSONTyped(json, true), { type: 'unknown_target_chain' } as const);
         default:
             throw new Error(`No variant of EvmBridgeEffectDestination exists with 'type=${json['type']}'`);
     }
 }
 
-export function EvmBridgeEffectDestinationToJSON(value?: EvmBridgeEffectDestination | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function EvmBridgeEffectDestinationToJSON(json: any): any {
+    return EvmBridgeEffectDestinationToJSONTyped(json, false);
+}
+
+export function EvmBridgeEffectDestinationToJSONTyped(value?: EvmBridgeEffectDestination | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'known_target_chain':
-            return EvmBridgeEffectKnownDestinationToJSON(value);
+            return Object.assign({}, EvmBridgeEffectKnownDestinationToJSON(value), { type: 'known_target_chain' } as const);
         case 'unknown_target_chain':
-            return EvmBridgeEffectUnknownDestinationToJSON(value);
+            return Object.assign({}, EvmBridgeEffectUnknownDestinationToJSON(value), { type: 'unknown_target_chain' } as const);
         default:
             throw new Error(`No variant of EvmBridgeEffectDestination exists with 'type=${value['type']}'`);
     }

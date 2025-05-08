@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { Transaction } from './Transaction';
 import {
     TransactionFromJSON,
     TransactionFromJSONTyped,
     TransactionToJSON,
+    TransactionToJSONTyped,
 } from './Transaction';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
     UserRefFromJSONTyped,
     UserRefToJSON,
+    UserRefToJSONTyped,
 } from './UserRef';
 
 /**
@@ -52,16 +54,16 @@ export interface TransactionAction {
     modifiedAt: Date;
     /**
      * 
-     * @type {string}
-     * @memberof TransactionAction
-     */
-    type: TransactionActionTypeEnum;
-    /**
-     * 
      * @type {boolean}
      * @memberof TransactionAction
      */
     isPending: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransactionAction
+     */
+    type: TransactionActionTypeEnum;
     /**
      * 
      * @type {UserRef}
@@ -95,17 +97,15 @@ export type TransactionActionTypeEnum = typeof TransactionActionTypeEnum[keyof t
 /**
  * Check if a given object implements the TransactionAction interface.
  */
-export function instanceOfTransactionAction(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "isPending" in value;
-    isInstance = isInstance && "createdBy" in value;
-    isInstance = isInstance && "transaction" in value;
-
-    return isInstance;
+export function instanceOfTransactionAction(value: object): value is TransactionAction {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('isPending' in value) || value['isPending'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('createdBy' in value) || value['createdBy'] === undefined) return false;
+    if (!('transaction' in value) || value['transaction'] === undefined) return false;
+    return true;
 }
 
 export function TransactionActionFromJSON(json: any): TransactionAction {
@@ -113,7 +113,7 @@ export function TransactionActionFromJSON(json: any): TransactionAction {
 }
 
 export function TransactionActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): TransactionAction {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -121,31 +121,33 @@ export function TransactionActionFromJSONTyped(json: any, ignoreDiscriminator: b
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
-        'type': json['type'],
         'isPending': json['is_pending'],
+        'type': json['type'],
         'createdBy': UserRefFromJSON(json['created_by']),
-        'abortedBy': !exists(json, 'aborted_by') ? undefined : UserRefFromJSON(json['aborted_by']),
+        'abortedBy': json['aborted_by'] == null ? undefined : UserRefFromJSON(json['aborted_by']),
         'transaction': TransactionFromJSON(json['transaction']),
     };
 }
 
-export function TransactionActionToJSON(value?: TransactionAction | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TransactionActionToJSON(json: any): TransactionAction {
+    return TransactionActionToJSONTyped(json, false);
+}
+
+export function TransactionActionToJSONTyped(value?: TransactionAction | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'type': value.type,
-        'is_pending': value.isPending,
-        'created_by': UserRefToJSON(value.createdBy),
-        'aborted_by': UserRefToJSON(value.abortedBy),
-        'transaction': TransactionToJSON(value.transaction),
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'is_pending': value['isPending'],
+        'type': value['type'],
+        'created_by': UserRefToJSON(value['createdBy']),
+        'aborted_by': UserRefToJSON(value['abortedBy']),
+        'transaction': TransactionToJSON(value['transaction']),
     };
 }
 

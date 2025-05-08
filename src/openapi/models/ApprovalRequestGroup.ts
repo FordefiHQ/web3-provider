@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { RequestApprover } from './RequestApprover';
 import {
     RequestApproverFromJSON,
     RequestApproverFromJSONTyped,
     RequestApproverToJSON,
+    RequestApproverToJSONTyped,
 } from './RequestApprover';
 
 /**
@@ -43,12 +44,10 @@ export interface ApprovalRequestGroup {
 /**
  * Check if a given object implements the ApprovalRequestGroup interface.
  */
-export function instanceOfApprovalRequestGroup(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "quorumSize" in value;
-    isInstance = isInstance && "approvers" in value;
-
-    return isInstance;
+export function instanceOfApprovalRequestGroup(value: object): value is ApprovalRequestGroup {
+    if (!('quorumSize' in value) || value['quorumSize'] === undefined) return false;
+    if (!('approvers' in value) || value['approvers'] === undefined) return false;
+    return true;
 }
 
 export function ApprovalRequestGroupFromJSON(json: any): ApprovalRequestGroup {
@@ -56,7 +55,7 @@ export function ApprovalRequestGroupFromJSON(json: any): ApprovalRequestGroup {
 }
 
 export function ApprovalRequestGroupFromJSONTyped(json: any, ignoreDiscriminator: boolean): ApprovalRequestGroup {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -66,17 +65,19 @@ export function ApprovalRequestGroupFromJSONTyped(json: any, ignoreDiscriminator
     };
 }
 
-export function ApprovalRequestGroupToJSON(value?: ApprovalRequestGroup | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ApprovalRequestGroupToJSON(json: any): ApprovalRequestGroup {
+    return ApprovalRequestGroupToJSONTyped(json, false);
+}
+
+export function ApprovalRequestGroupToJSONTyped(value?: ApprovalRequestGroup | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'quorum_size': value.quorumSize,
-        'approvers': ((value.approvers as Array<any>).map(RequestApproverToJSON)),
+        'quorum_size': value['quorumSize'],
+        'approvers': ((value['approvers'] as Array<any>).map(RequestApproverToJSON)),
     };
 }
 

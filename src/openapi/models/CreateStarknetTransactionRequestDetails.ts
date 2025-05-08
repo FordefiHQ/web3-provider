@@ -12,22 +12,22 @@
  * Do not edit the class manually.
  */
 
+import type { CreateStarknetContractDeploymentRequest } from './CreateStarknetContractDeploymentRequest';
 import {
-    CreateStarknetContractDeploymentRequest,
     instanceOfCreateStarknetContractDeploymentRequest,
     CreateStarknetContractDeploymentRequestFromJSON,
     CreateStarknetContractDeploymentRequestFromJSONTyped,
     CreateStarknetContractDeploymentRequestToJSON,
 } from './CreateStarknetContractDeploymentRequest';
+import type { CreateStarknetTransactionInvokeRequest } from './CreateStarknetTransactionInvokeRequest';
 import {
-    CreateStarknetTransactionInvokeRequest,
     instanceOfCreateStarknetTransactionInvokeRequest,
     CreateStarknetTransactionInvokeRequestFromJSON,
     CreateStarknetTransactionInvokeRequestFromJSONTyped,
     CreateStarknetTransactionInvokeRequestToJSON,
 } from './CreateStarknetTransactionInvokeRequest';
+import type { CreateStarknetTransferRequest } from './CreateStarknetTransferRequest';
 import {
-    CreateStarknetTransferRequest,
     instanceOfCreateStarknetTransferRequest,
     CreateStarknetTransferRequestFromJSON,
     CreateStarknetTransferRequestFromJSONTyped,
@@ -46,35 +46,36 @@ export function CreateStarknetTransactionRequestDetailsFromJSON(json: any): Crea
 }
 
 export function CreateStarknetTransactionRequestDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateStarknetTransactionRequestDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'starknet_contract_call':
-            return {...CreateStarknetTransactionInvokeRequestFromJSONTyped(json, true), type: 'starknet_contract_call'};
+            return Object.assign({}, CreateStarknetTransactionInvokeRequestFromJSONTyped(json, true), { type: 'starknet_contract_call' } as const);
         case 'starknet_contract_deployment':
-            return {...CreateStarknetContractDeploymentRequestFromJSONTyped(json, true), type: 'starknet_contract_deployment'};
+            return Object.assign({}, CreateStarknetContractDeploymentRequestFromJSONTyped(json, true), { type: 'starknet_contract_deployment' } as const);
         case 'starknet_transfer':
-            return {...CreateStarknetTransferRequestFromJSONTyped(json, true), type: 'starknet_transfer'};
+            return Object.assign({}, CreateStarknetTransferRequestFromJSONTyped(json, true), { type: 'starknet_transfer' } as const);
         default:
             throw new Error(`No variant of CreateStarknetTransactionRequestDetails exists with 'type=${json['type']}'`);
     }
 }
 
-export function CreateStarknetTransactionRequestDetailsToJSON(value?: CreateStarknetTransactionRequestDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function CreateStarknetTransactionRequestDetailsToJSON(json: any): any {
+    return CreateStarknetTransactionRequestDetailsToJSONTyped(json, false);
+}
+
+export function CreateStarknetTransactionRequestDetailsToJSONTyped(value?: CreateStarknetTransactionRequestDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'starknet_contract_call':
-            return CreateStarknetTransactionInvokeRequestToJSON(value);
+            return Object.assign({}, CreateStarknetTransactionInvokeRequestToJSON(value), { type: 'starknet_contract_call' } as const);
         case 'starknet_contract_deployment':
-            return CreateStarknetContractDeploymentRequestToJSON(value);
+            return Object.assign({}, CreateStarknetContractDeploymentRequestToJSON(value), { type: 'starknet_contract_deployment' } as const);
         case 'starknet_transfer':
-            return CreateStarknetTransferRequestToJSON(value);
+            return Object.assign({}, CreateStarknetTransferRequestToJSON(value), { type: 'starknet_transfer' } as const);
         default:
             throw new Error(`No variant of CreateStarknetTransactionRequestDetails exists with 'type=${value['type']}'`);
     }

@@ -12,13 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { TonChainUniqueId } from './TonChainUniqueId';
 import {
     TonChainUniqueIdFromJSON,
     TonChainUniqueIdFromJSONTyped,
     TonChainUniqueIdToJSON,
+    TonChainUniqueIdToJSONTyped,
 } from './TonChainUniqueId';
+import type { TonAssetIdentifierRequest } from './TonAssetIdentifierRequest';
+import {
+    TonAssetIdentifierRequestFromJSON,
+    TonAssetIdentifierRequestFromJSONTyped,
+    TonAssetIdentifierRequestToJSON,
+    TonAssetIdentifierRequestToJSONTyped,
+} from './TonAssetIdentifierRequest';
 
 /**
  * 
@@ -50,6 +58,18 @@ export interface CreateTonContactRequest {
      * @memberof CreateTonContactRequest
      */
     chains: Array<TonChainUniqueId>;
+    /**
+     * 
+     * @type {Array<TonAssetIdentifierRequest>}
+     * @memberof CreateTonContactRequest
+     */
+    assetsIdentifiers?: Array<TonAssetIdentifierRequest>;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateTonContactRequest
+     */
+    comment?: string;
 }
 
 
@@ -65,14 +85,12 @@ export type CreateTonContactRequestTypeEnum = typeof CreateTonContactRequestType
 /**
  * Check if a given object implements the CreateTonContactRequest interface.
  */
-export function instanceOfCreateTonContactRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "chains" in value;
-
-    return isInstance;
+export function instanceOfCreateTonContactRequest(value: object): value is CreateTonContactRequest {
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('chains' in value) || value['chains'] === undefined) return false;
+    return true;
 }
 
 export function CreateTonContactRequestFromJSON(json: any): CreateTonContactRequest {
@@ -80,7 +98,7 @@ export function CreateTonContactRequestFromJSON(json: any): CreateTonContactRequ
 }
 
 export function CreateTonContactRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateTonContactRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -89,22 +107,28 @@ export function CreateTonContactRequestFromJSONTyped(json: any, ignoreDiscrimina
         'type': json['type'],
         'address': json['address'],
         'chains': ((json['chains'] as Array<any>).map(TonChainUniqueIdFromJSON)),
+        'assetsIdentifiers': json['assets_identifiers'] == null ? undefined : ((json['assets_identifiers'] as Array<any>).map(TonAssetIdentifierRequestFromJSON)),
+        'comment': json['comment'] == null ? undefined : json['comment'],
     };
 }
 
-export function CreateTonContactRequestToJSON(value?: CreateTonContactRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateTonContactRequestToJSON(json: any): CreateTonContactRequest {
+    return CreateTonContactRequestToJSONTyped(json, false);
+}
+
+export function CreateTonContactRequestToJSONTyped(value?: CreateTonContactRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'type': value.type,
-        'address': value.address,
-        'chains': ((value.chains as Array<any>).map(TonChainUniqueIdToJSON)),
+        'name': value['name'],
+        'type': value['type'],
+        'address': value['address'],
+        'chains': ((value['chains'] as Array<any>).map(TonChainUniqueIdToJSON)),
+        'assets_identifiers': value['assetsIdentifiers'] == null ? undefined : ((value['assetsIdentifiers'] as Array<any>).map(TonAssetIdentifierRequestToJSON)),
+        'comment': value['comment'],
     };
 }
 

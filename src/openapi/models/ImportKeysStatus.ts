@@ -25,6 +25,17 @@ export const ImportKeysStatus = {
 export type ImportKeysStatus = typeof ImportKeysStatus[keyof typeof ImportKeysStatus];
 
 
+export function instanceOfImportKeysStatus(value: any): boolean {
+    for (const key in ImportKeysStatus) {
+        if (Object.prototype.hasOwnProperty.call(ImportKeysStatus, key)) {
+            if (ImportKeysStatus[key as keyof typeof ImportKeysStatus] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function ImportKeysStatusFromJSON(json: any): ImportKeysStatus {
     return ImportKeysStatusFromJSONTyped(json, false);
 }
@@ -35,5 +46,9 @@ export function ImportKeysStatusFromJSONTyped(json: any, ignoreDiscriminator: bo
 
 export function ImportKeysStatusToJSON(value?: ImportKeysStatus | null): any {
     return value as any;
+}
+
+export function ImportKeysStatusToJSONTyped(value: any, ignoreDiscriminator: boolean): ImportKeysStatus {
+    return value as ImportKeysStatus;
 }
 

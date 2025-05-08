@@ -12,37 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { EnrichedCosmosBechAddress } from './EnrichedCosmosBechAddress';
+import {
+    EnrichedCosmosBechAddressFromJSON,
+    EnrichedCosmosBechAddressFromJSONTyped,
+    EnrichedCosmosBechAddressToJSON,
+    EnrichedCosmosBechAddressToJSONTyped,
+} from './EnrichedCosmosBechAddress';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+    PricedAssetToJSONTyped,
+} from './PricedAsset';
+import type { Price } from './Price';
+import {
+    PriceFromJSON,
+    PriceFromJSONTyped,
+    PriceToJSON,
+    PriceToJSONTyped,
+} from './Price';
 import type { CosmosBalanceChangeEffectCoinInfo } from './CosmosBalanceChangeEffectCoinInfo';
 import {
     CosmosBalanceChangeEffectCoinInfoFromJSON,
     CosmosBalanceChangeEffectCoinInfoFromJSONTyped,
     CosmosBalanceChangeEffectCoinInfoToJSON,
+    CosmosBalanceChangeEffectCoinInfoToJSONTyped,
 } from './CosmosBalanceChangeEffectCoinInfo';
 import type { CosmosTransferEffectType } from './CosmosTransferEffectType';
 import {
     CosmosTransferEffectTypeFromJSON,
     CosmosTransferEffectTypeFromJSONTyped,
     CosmosTransferEffectTypeToJSON,
+    CosmosTransferEffectTypeToJSONTyped,
 } from './CosmosTransferEffectType';
-import type { EnrichedCosmosBechAddress } from './EnrichedCosmosBechAddress';
-import {
-    EnrichedCosmosBechAddressFromJSON,
-    EnrichedCosmosBechAddressFromJSONTyped,
-    EnrichedCosmosBechAddressToJSON,
-} from './EnrichedCosmosBechAddress';
-import type { Price } from './Price';
-import {
-    PriceFromJSON,
-    PriceFromJSONTyped,
-    PriceToJSON,
-} from './Price';
-import type { PricedAsset } from './PricedAsset';
-import {
-    PricedAssetFromJSON,
-    PricedAssetFromJSONTyped,
-    PricedAssetToJSON,
-} from './PricedAsset';
 
 /**
  * 
@@ -95,19 +100,19 @@ export interface CosmosTransferEffect {
     price?: Price;
 }
 
+
+
 /**
  * Check if a given object implements the CosmosTransferEffect interface.
  */
-export function instanceOfCosmosTransferEffect(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "pricedAsset" in value;
-    isInstance = isInstance && "amount" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "coinInfo" in value;
-    isInstance = isInstance && "from" in value;
-    isInstance = isInstance && "to" in value;
-
-    return isInstance;
+export function instanceOfCosmosTransferEffect(value: object): value is CosmosTransferEffect {
+    if (!('pricedAsset' in value) || value['pricedAsset'] === undefined) return false;
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('coinInfo' in value) || value['coinInfo'] === undefined) return false;
+    if (!('from' in value) || value['from'] === undefined) return false;
+    if (!('to' in value) || value['to'] === undefined) return false;
+    return true;
 }
 
 export function CosmosTransferEffectFromJSON(json: any): CosmosTransferEffect {
@@ -115,7 +120,7 @@ export function CosmosTransferEffectFromJSON(json: any): CosmosTransferEffect {
 }
 
 export function CosmosTransferEffectFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosTransferEffect {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -126,26 +131,28 @@ export function CosmosTransferEffectFromJSONTyped(json: any, ignoreDiscriminator
         'coinInfo': CosmosBalanceChangeEffectCoinInfoFromJSON(json['coin_info']),
         'from': EnrichedCosmosBechAddressFromJSON(json['from']),
         'to': EnrichedCosmosBechAddressFromJSON(json['to']),
-        'price': !exists(json, 'price') ? undefined : PriceFromJSON(json['price']),
+        'price': json['price'] == null ? undefined : PriceFromJSON(json['price']),
     };
 }
 
-export function CosmosTransferEffectToJSON(value?: CosmosTransferEffect | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosTransferEffectToJSON(json: any): CosmosTransferEffect {
+    return CosmosTransferEffectToJSONTyped(json, false);
+}
+
+export function CosmosTransferEffectToJSONTyped(value?: CosmosTransferEffect | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'priced_asset': PricedAssetToJSON(value.pricedAsset),
-        'amount': value.amount,
-        'type': CosmosTransferEffectTypeToJSON(value.type),
-        'coin_info': CosmosBalanceChangeEffectCoinInfoToJSON(value.coinInfo),
-        'from': EnrichedCosmosBechAddressToJSON(value.from),
-        'to': EnrichedCosmosBechAddressToJSON(value.to),
-        'price': PriceToJSON(value.price),
+        'priced_asset': PricedAssetToJSON(value['pricedAsset']),
+        'amount': value['amount'],
+        'type': CosmosTransferEffectTypeToJSON(value['type']),
+        'coin_info': CosmosBalanceChangeEffectCoinInfoToJSON(value['coinInfo']),
+        'from': EnrichedCosmosBechAddressToJSON(value['from']),
+        'to': EnrichedCosmosBechAddressToJSON(value['to']),
+        'price': PriceToJSON(value['price']),
     };
 }
 

@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedAptosAddress } from './EnrichedAptosAddress';
 import {
     EnrichedAptosAddressFromJSON,
     EnrichedAptosAddressFromJSONTyped,
     EnrichedAptosAddressToJSON,
+    EnrichedAptosAddressToJSONTyped,
 } from './EnrichedAptosAddress';
 
 /**
@@ -65,13 +66,11 @@ export type AptosNativeTransferDetailsTypeEnum = typeof AptosNativeTransferDetai
 /**
  * Check if a given object implements the AptosNativeTransferDetails interface.
  */
-export function instanceOfAptosNativeTransferDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "sender" in value;
-    isInstance = isInstance && "recipient" in value;
-
-    return isInstance;
+export function instanceOfAptosNativeTransferDetails(value: object): value is AptosNativeTransferDetails {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    if (!('recipient' in value) || value['recipient'] === undefined) return false;
+    return true;
 }
 
 export function AptosNativeTransferDetailsFromJSON(json: any): AptosNativeTransferDetails {
@@ -79,7 +78,7 @@ export function AptosNativeTransferDetailsFromJSON(json: any): AptosNativeTransf
 }
 
 export function AptosNativeTransferDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosNativeTransferDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -87,23 +86,25 @@ export function AptosNativeTransferDetailsFromJSONTyped(json: any, ignoreDiscrim
         'type': json['type'],
         'sender': EnrichedAptosAddressFromJSON(json['sender']),
         'recipient': EnrichedAptosAddressFromJSON(json['recipient']),
-        'isInternal': !exists(json, 'is_internal') ? undefined : json['is_internal'],
+        'isInternal': json['is_internal'] == null ? undefined : json['is_internal'],
     };
 }
 
-export function AptosNativeTransferDetailsToJSON(value?: AptosNativeTransferDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AptosNativeTransferDetailsToJSON(json: any): AptosNativeTransferDetails {
+    return AptosNativeTransferDetailsToJSONTyped(json, false);
+}
+
+export function AptosNativeTransferDetailsToJSONTyped(value?: AptosNativeTransferDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'sender': EnrichedAptosAddressToJSON(value.sender),
-        'recipient': EnrichedAptosAddressToJSON(value.recipient),
-        'is_internal': value.isInternal,
+        'type': value['type'],
+        'sender': EnrichedAptosAddressToJSON(value['sender']),
+        'recipient': EnrichedAptosAddressToJSON(value['recipient']),
+        'is_internal': value['isInternal'],
     };
 }
 

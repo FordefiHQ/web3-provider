@@ -22,11 +22,25 @@ export const TransactionTypeCondition = {
     allowance: 'allowance',
     contractCall: 'contract_call',
     messageSignature: 'message_signature',
+    evmPersonalMessage: 'evm_personal_message',
+    evmTypedMessage: 'evm_typed_message',
+    nonEvmMessage: 'non_evm_message',
     blackBoxSignature: 'black_box_signature',
     contractDeployment: 'contract_deployment'
 } as const;
 export type TransactionTypeCondition = typeof TransactionTypeCondition[keyof typeof TransactionTypeCondition];
 
+
+export function instanceOfTransactionTypeCondition(value: any): boolean {
+    for (const key in TransactionTypeCondition) {
+        if (Object.prototype.hasOwnProperty.call(TransactionTypeCondition, key)) {
+            if (TransactionTypeCondition[key as keyof typeof TransactionTypeCondition] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 export function TransactionTypeConditionFromJSON(json: any): TransactionTypeCondition {
     return TransactionTypeConditionFromJSONTyped(json, false);
@@ -38,5 +52,9 @@ export function TransactionTypeConditionFromJSONTyped(json: any, ignoreDiscrimin
 
 export function TransactionTypeConditionToJSON(value?: TransactionTypeCondition | null): any {
     return value as any;
+}
+
+export function TransactionTypeConditionToJSONTyped(value: any, ignoreDiscriminator: boolean): TransactionTypeCondition {
+    return value as TransactionTypeCondition;
 }
 

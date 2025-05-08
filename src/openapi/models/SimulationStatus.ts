@@ -26,6 +26,17 @@ export const SimulationStatus = {
 export type SimulationStatus = typeof SimulationStatus[keyof typeof SimulationStatus];
 
 
+export function instanceOfSimulationStatus(value: any): boolean {
+    for (const key in SimulationStatus) {
+        if (Object.prototype.hasOwnProperty.call(SimulationStatus, key)) {
+            if (SimulationStatus[key as keyof typeof SimulationStatus] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function SimulationStatusFromJSON(json: any): SimulationStatus {
     return SimulationStatusFromJSONTyped(json, false);
 }
@@ -36,5 +47,9 @@ export function SimulationStatusFromJSONTyped(json: any, ignoreDiscriminator: bo
 
 export function SimulationStatusToJSON(value?: SimulationStatus | null): any {
     return value as any;
+}
+
+export function SimulationStatusToJSONTyped(value: any, ignoreDiscriminator: boolean): SimulationStatus {
+    return value as SimulationStatus;
 }
 

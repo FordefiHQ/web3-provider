@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -48,14 +48,12 @@ export interface GetEncryptedMPCKeysResponse {
 /**
  * Check if a given object implements the GetEncryptedMPCKeysResponse interface.
  */
-export function instanceOfGetEncryptedMPCKeysResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "encryptedMpcKey" in value;
-    isInstance = isInstance && "encryptedShareEcdsa" in value;
-    isInstance = isInstance && "encryptedShareEddsa" in value;
-    isInstance = isInstance && "encryptedShareEcdsaStark" in value;
-
-    return isInstance;
+export function instanceOfGetEncryptedMPCKeysResponse(value: object): value is GetEncryptedMPCKeysResponse {
+    if (!('encryptedMpcKey' in value) || value['encryptedMpcKey'] === undefined) return false;
+    if (!('encryptedShareEcdsa' in value) || value['encryptedShareEcdsa'] === undefined) return false;
+    if (!('encryptedShareEddsa' in value) || value['encryptedShareEddsa'] === undefined) return false;
+    if (!('encryptedShareEcdsaStark' in value) || value['encryptedShareEcdsaStark'] === undefined) return false;
+    return true;
 }
 
 export function GetEncryptedMPCKeysResponseFromJSON(json: any): GetEncryptedMPCKeysResponse {
@@ -63,7 +61,7 @@ export function GetEncryptedMPCKeysResponseFromJSON(json: any): GetEncryptedMPCK
 }
 
 export function GetEncryptedMPCKeysResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetEncryptedMPCKeysResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -75,19 +73,21 @@ export function GetEncryptedMPCKeysResponseFromJSONTyped(json: any, ignoreDiscri
     };
 }
 
-export function GetEncryptedMPCKeysResponseToJSON(value?: GetEncryptedMPCKeysResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function GetEncryptedMPCKeysResponseToJSON(json: any): GetEncryptedMPCKeysResponse {
+    return GetEncryptedMPCKeysResponseToJSONTyped(json, false);
+}
+
+export function GetEncryptedMPCKeysResponseToJSONTyped(value?: GetEncryptedMPCKeysResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'encrypted_mpc_key': value.encryptedMpcKey,
-        'encrypted_share_ecdsa': value.encryptedShareEcdsa,
-        'encrypted_share_eddsa': value.encryptedShareEddsa,
-        'encrypted_share_ecdsa_stark': value.encryptedShareEcdsaStark,
+        'encrypted_mpc_key': value['encryptedMpcKey'],
+        'encrypted_share_ecdsa': value['encryptedShareEcdsa'],
+        'encrypted_share_eddsa': value['encryptedShareEddsa'],
+        'encrypted_share_ecdsa_stark': value['encryptedShareEcdsaStark'],
     };
 }
 

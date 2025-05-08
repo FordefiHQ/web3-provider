@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type SuiPureStringInputTypeEnum = typeof SuiPureStringInputTypeEnum[keyof
 /**
  * Check if a given object implements the SuiPureStringInput interface.
  */
-export function instanceOfSuiPureStringInput(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "value" in value;
-
-    return isInstance;
+export function instanceOfSuiPureStringInput(value: object): value is SuiPureStringInput {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('value' in value) || value['value'] === undefined) return false;
+    return true;
 }
 
 export function SuiPureStringInputFromJSON(json: any): SuiPureStringInput {
@@ -59,7 +57,7 @@ export function SuiPureStringInputFromJSON(json: any): SuiPureStringInput {
 }
 
 export function SuiPureStringInputFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiPureStringInput {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function SuiPureStringInputFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-export function SuiPureStringInputToJSON(value?: SuiPureStringInput | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiPureStringInputToJSON(json: any): SuiPureStringInput {
+    return SuiPureStringInputToJSONTyped(json, false);
+}
+
+export function SuiPureStringInputToJSONTyped(value?: SuiPureStringInput | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'value': value.value,
+        'type': value['type'],
+        'value': value['value'],
     };
 }
 

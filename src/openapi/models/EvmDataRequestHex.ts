@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type EvmDataRequestHexTypeEnum = typeof EvmDataRequestHexTypeEnum[keyof t
 /**
  * Check if a given object implements the EvmDataRequestHex interface.
  */
-export function instanceOfEvmDataRequestHex(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "hexData" in value;
-
-    return isInstance;
+export function instanceOfEvmDataRequestHex(value: object): value is EvmDataRequestHex {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('hexData' in value) || value['hexData'] === undefined) return false;
+    return true;
 }
 
 export function EvmDataRequestHexFromJSON(json: any): EvmDataRequestHex {
@@ -59,7 +57,7 @@ export function EvmDataRequestHexFromJSON(json: any): EvmDataRequestHex {
 }
 
 export function EvmDataRequestHexFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmDataRequestHex {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function EvmDataRequestHexFromJSONTyped(json: any, ignoreDiscriminator: b
     };
 }
 
-export function EvmDataRequestHexToJSON(value?: EvmDataRequestHex | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EvmDataRequestHexToJSON(json: any): EvmDataRequestHex {
+    return EvmDataRequestHexToJSONTyped(json, false);
+}
+
+export function EvmDataRequestHexToJSONTyped(value?: EvmDataRequestHex | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'hex_data': value.hexData,
+        'type': value['type'],
+        'hex_data': value['hexData'],
     };
 }
 

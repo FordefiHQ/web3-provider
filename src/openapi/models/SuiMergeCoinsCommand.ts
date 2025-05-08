@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { SuiCommandArgument } from './SuiCommandArgument';
 import {
     SuiCommandArgumentFromJSON,
     SuiCommandArgumentFromJSONTyped,
     SuiCommandArgumentToJSON,
+    SuiCommandArgumentToJSONTyped,
 } from './SuiCommandArgument';
 
 /**
@@ -59,13 +60,11 @@ export type SuiMergeCoinsCommandTypeEnum = typeof SuiMergeCoinsCommandTypeEnum[k
 /**
  * Check if a given object implements the SuiMergeCoinsCommand interface.
  */
-export function instanceOfSuiMergeCoinsCommand(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "sourceCoinObjects" in value;
-    isInstance = isInstance && "destinationCoinObject" in value;
-
-    return isInstance;
+export function instanceOfSuiMergeCoinsCommand(value: object): value is SuiMergeCoinsCommand {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('sourceCoinObjects' in value) || value['sourceCoinObjects'] === undefined) return false;
+    if (!('destinationCoinObject' in value) || value['destinationCoinObject'] === undefined) return false;
+    return true;
 }
 
 export function SuiMergeCoinsCommandFromJSON(json: any): SuiMergeCoinsCommand {
@@ -73,7 +72,7 @@ export function SuiMergeCoinsCommandFromJSON(json: any): SuiMergeCoinsCommand {
 }
 
 export function SuiMergeCoinsCommandFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiMergeCoinsCommand {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -84,18 +83,20 @@ export function SuiMergeCoinsCommandFromJSONTyped(json: any, ignoreDiscriminator
     };
 }
 
-export function SuiMergeCoinsCommandToJSON(value?: SuiMergeCoinsCommand | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiMergeCoinsCommandToJSON(json: any): SuiMergeCoinsCommand {
+    return SuiMergeCoinsCommandToJSONTyped(json, false);
+}
+
+export function SuiMergeCoinsCommandToJSONTyped(value?: SuiMergeCoinsCommand | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'source_coin_objects': ((value.sourceCoinObjects as Array<any>).map(SuiCommandArgumentToJSON)),
-        'destination_coin_object': SuiCommandArgumentToJSON(value.destinationCoinObject),
+        'type': value['type'],
+        'source_coin_objects': ((value['sourceCoinObjects'] as Array<any>).map(SuiCommandArgumentToJSON)),
+        'destination_coin_object': SuiCommandArgumentToJSON(value['destinationCoinObject']),
     };
 }
 

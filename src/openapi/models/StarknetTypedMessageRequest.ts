@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { StarknetChainUniqueId } from './StarknetChainUniqueId';
 import {
     StarknetChainUniqueIdFromJSON,
     StarknetChainUniqueIdFromJSONTyped,
     StarknetChainUniqueIdToJSON,
+    StarknetChainUniqueIdToJSONTyped,
 } from './StarknetChainUniqueId';
 
 /**
@@ -59,13 +60,11 @@ export type StarknetTypedMessageRequestTypeEnum = typeof StarknetTypedMessageReq
 /**
  * Check if a given object implements the StarknetTypedMessageRequest interface.
  */
-export function instanceOfStarknetTypedMessageRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "rawData" in value;
-
-    return isInstance;
+export function instanceOfStarknetTypedMessageRequest(value: object): value is StarknetTypedMessageRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('rawData' in value) || value['rawData'] === undefined) return false;
+    return true;
 }
 
 export function StarknetTypedMessageRequestFromJSON(json: any): StarknetTypedMessageRequest {
@@ -73,7 +72,7 @@ export function StarknetTypedMessageRequestFromJSON(json: any): StarknetTypedMes
 }
 
 export function StarknetTypedMessageRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): StarknetTypedMessageRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -84,18 +83,20 @@ export function StarknetTypedMessageRequestFromJSONTyped(json: any, ignoreDiscri
     };
 }
 
-export function StarknetTypedMessageRequestToJSON(value?: StarknetTypedMessageRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function StarknetTypedMessageRequestToJSON(json: any): StarknetTypedMessageRequest {
+    return StarknetTypedMessageRequestToJSONTyped(json, false);
+}
+
+export function StarknetTypedMessageRequestToJSONTyped(value?: StarknetTypedMessageRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'chain': StarknetChainUniqueIdToJSON(value.chain),
-        'raw_data': value.rawData,
+        'type': value['type'],
+        'chain': StarknetChainUniqueIdToJSON(value['chain']),
+        'raw_data': value['rawData'],
     };
 }
 

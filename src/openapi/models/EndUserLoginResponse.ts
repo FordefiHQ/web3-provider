@@ -12,24 +12,27 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EncryptedDeviceSharesBackup } from './EncryptedDeviceSharesBackup';
 import {
     EncryptedDeviceSharesBackupFromJSON,
     EncryptedDeviceSharesBackupFromJSONTyped,
     EncryptedDeviceSharesBackupToJSON,
+    EncryptedDeviceSharesBackupToJSONTyped,
 } from './EncryptedDeviceSharesBackup';
 import type { KeyType } from './KeyType';
 import {
     KeyTypeFromJSON,
     KeyTypeFromJSONTyped,
     KeyTypeToJSON,
+    KeyTypeToJSONTyped,
 } from './KeyType';
 import type { KeysetKey } from './KeysetKey';
 import {
     KeysetKeyFromJSON,
     KeysetKeyFromJSONTyped,
     KeysetKeyToJSON,
+    KeysetKeyToJSONTyped,
 } from './KeysetKey';
 
 /**
@@ -146,19 +149,17 @@ export interface EndUserLoginResponse {
 /**
  * Check if a given object implements the EndUserLoginResponse interface.
  */
-export function instanceOfEndUserLoginResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "externalId" in value;
-    isInstance = isInstance && "lastLoginAt" in value;
-    isInstance = isInstance && "keysetId" in value;
-    isInstance = isInstance && "lastBackupAt" in value;
-    isInstance = isInstance && "exportAllowed" in value;
-    isInstance = isInstance && "lastExportAt" in value;
-
-    return isInstance;
+export function instanceOfEndUserLoginResponse(value: object): value is EndUserLoginResponse {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('externalId' in value) || value['externalId'] === undefined) return false;
+    if (!('lastLoginAt' in value) || value['lastLoginAt'] === undefined) return false;
+    if (!('keysetId' in value) || value['keysetId'] === undefined) return false;
+    if (!('lastBackupAt' in value) || value['lastBackupAt'] === undefined) return false;
+    if (!('exportAllowed' in value) || value['exportAllowed'] === undefined) return false;
+    if (!('lastExportAt' in value) || value['lastExportAt'] === undefined) return false;
+    return true;
 }
 
 export function EndUserLoginResponseFromJSON(json: any): EndUserLoginResponse {
@@ -166,7 +167,7 @@ export function EndUserLoginResponseFromJSON(json: any): EndUserLoginResponse {
 }
 
 export function EndUserLoginResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): EndUserLoginResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -176,47 +177,49 @@ export function EndUserLoginResponseFromJSONTyped(json: any, ignoreDiscriminator
         'modifiedAt': (new Date(json['modified_at'])),
         'externalId': json['external_id'],
         'lastLoginAt': (new Date(json['last_login_at'])),
-        'desiredKeyTypes': !exists(json, 'desired_key_types') ? undefined : ((json['desired_key_types'] as Array<any>).map(KeyTypeFromJSON)),
+        'desiredKeyTypes': json['desired_key_types'] == null ? undefined : ((json['desired_key_types'] as Array<any>).map(KeyTypeFromJSON)),
         'keysetId': json['keyset_id'],
-        'ecdsa': !exists(json, 'ecdsa') ? undefined : KeysetKeyFromJSON(json['ecdsa']),
-        'eddsa': !exists(json, 'eddsa') ? undefined : KeysetKeyFromJSON(json['eddsa']),
-        'ecdsaStark': !exists(json, 'ecdsa_stark') ? undefined : KeysetKeyFromJSON(json['ecdsa_stark']),
-        'schnorrSecp256k1': !exists(json, 'schnorr_secp256k1') ? undefined : KeysetKeyFromJSON(json['schnorr_secp256k1']),
-        'authPublicKey': !exists(json, 'auth_public_key') ? undefined : json['auth_public_key'],
-        'encryptedDeviceAuthKey': !exists(json, 'encrypted_device_auth_key') ? undefined : json['encrypted_device_auth_key'],
-        'encryptedDeviceSharesBackups': !exists(json, 'encrypted_device_shares_backups') ? undefined : ((json['encrypted_device_shares_backups'] as Array<any>).map(EncryptedDeviceSharesBackupFromJSON)),
+        'ecdsa': json['ecdsa'] == null ? undefined : KeysetKeyFromJSON(json['ecdsa']),
+        'eddsa': json['eddsa'] == null ? undefined : KeysetKeyFromJSON(json['eddsa']),
+        'ecdsaStark': json['ecdsa_stark'] == null ? undefined : KeysetKeyFromJSON(json['ecdsa_stark']),
+        'schnorrSecp256k1': json['schnorr_secp256k1'] == null ? undefined : KeysetKeyFromJSON(json['schnorr_secp256k1']),
+        'authPublicKey': json['auth_public_key'] == null ? undefined : json['auth_public_key'],
+        'encryptedDeviceAuthKey': json['encrypted_device_auth_key'] == null ? undefined : json['encrypted_device_auth_key'],
+        'encryptedDeviceSharesBackups': json['encrypted_device_shares_backups'] == null ? undefined : ((json['encrypted_device_shares_backups'] as Array<any>).map(EncryptedDeviceSharesBackupFromJSON)),
         'lastBackupAt': (new Date(json['last_backup_at'])),
         'exportAllowed': json['export_allowed'],
         'lastExportAt': (new Date(json['last_export_at'])),
     };
 }
 
-export function EndUserLoginResponseToJSON(value?: EndUserLoginResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EndUserLoginResponseToJSON(json: any): EndUserLoginResponse {
+    return EndUserLoginResponseToJSONTyped(json, false);
+}
+
+export function EndUserLoginResponseToJSONTyped(value?: EndUserLoginResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'external_id': value.externalId,
-        'last_login_at': (value.lastLoginAt.toISOString()),
-        'desired_key_types': value.desiredKeyTypes === undefined ? undefined : ((value.desiredKeyTypes as Array<any>).map(KeyTypeToJSON)),
-        'keyset_id': value.keysetId,
-        'ecdsa': KeysetKeyToJSON(value.ecdsa),
-        'eddsa': KeysetKeyToJSON(value.eddsa),
-        'ecdsa_stark': KeysetKeyToJSON(value.ecdsaStark),
-        'schnorr_secp256k1': KeysetKeyToJSON(value.schnorrSecp256k1),
-        'auth_public_key': value.authPublicKey,
-        'encrypted_device_auth_key': value.encryptedDeviceAuthKey,
-        'encrypted_device_shares_backups': value.encryptedDeviceSharesBackups === undefined ? undefined : ((value.encryptedDeviceSharesBackups as Array<any>).map(EncryptedDeviceSharesBackupToJSON)),
-        'last_backup_at': (value.lastBackupAt.toISOString()),
-        'export_allowed': value.exportAllowed,
-        'last_export_at': (value.lastExportAt.toISOString()),
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'external_id': value['externalId'],
+        'last_login_at': ((value['lastLoginAt']).toISOString()),
+        'desired_key_types': value['desiredKeyTypes'] == null ? undefined : ((value['desiredKeyTypes'] as Array<any>).map(KeyTypeToJSON)),
+        'keyset_id': value['keysetId'],
+        'ecdsa': KeysetKeyToJSON(value['ecdsa']),
+        'eddsa': KeysetKeyToJSON(value['eddsa']),
+        'ecdsa_stark': KeysetKeyToJSON(value['ecdsaStark']),
+        'schnorr_secp256k1': KeysetKeyToJSON(value['schnorrSecp256k1']),
+        'auth_public_key': value['authPublicKey'],
+        'encrypted_device_auth_key': value['encryptedDeviceAuthKey'],
+        'encrypted_device_shares_backups': value['encryptedDeviceSharesBackups'] == null ? undefined : ((value['encryptedDeviceSharesBackups'] as Array<any>).map(EncryptedDeviceSharesBackupToJSON)),
+        'last_backup_at': ((value['lastBackupAt']).toISOString()),
+        'export_allowed': value['exportAllowed'],
+        'last_export_at': ((value['lastExportAt']).toISOString()),
     };
 }
 

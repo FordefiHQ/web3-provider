@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -30,11 +30,9 @@ export interface CreateBackupEmailChangeRequest {
 /**
  * Check if a given object implements the CreateBackupEmailChangeRequest interface.
  */
-export function instanceOfCreateBackupEmailChangeRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "backupEmail" in value;
-
-    return isInstance;
+export function instanceOfCreateBackupEmailChangeRequest(value: object): value is CreateBackupEmailChangeRequest {
+    if (!('backupEmail' in value) || value['backupEmail'] === undefined) return false;
+    return true;
 }
 
 export function CreateBackupEmailChangeRequestFromJSON(json: any): CreateBackupEmailChangeRequest {
@@ -42,7 +40,7 @@ export function CreateBackupEmailChangeRequestFromJSON(json: any): CreateBackupE
 }
 
 export function CreateBackupEmailChangeRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateBackupEmailChangeRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -51,16 +49,18 @@ export function CreateBackupEmailChangeRequestFromJSONTyped(json: any, ignoreDis
     };
 }
 
-export function CreateBackupEmailChangeRequestToJSON(value?: CreateBackupEmailChangeRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateBackupEmailChangeRequestToJSON(json: any): CreateBackupEmailChangeRequest {
+    return CreateBackupEmailChangeRequestToJSONTyped(json, false);
+}
+
+export function CreateBackupEmailChangeRequestToJSONTyped(value?: CreateBackupEmailChangeRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'backup_email': value.backupEmail,
+        'backup_email': value['backupEmail'],
     };
 }
 

@@ -12,31 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { ApprovalRequest } from './ApprovalRequest';
-import {
-    ApprovalRequestFromJSON,
-    ApprovalRequestFromJSONTyped,
-    ApprovalRequestToJSON,
-} from './ApprovalRequest';
-import type { PendingUserChange } from './PendingUserChange';
-import {
-    PendingUserChangeFromJSON,
-    PendingUserChangeFromJSONTyped,
-    PendingUserChangeToJSON,
-} from './PendingUserChange';
-import type { UserRef } from './UserRef';
-import {
-    UserRefFromJSON,
-    UserRefFromJSONTyped,
-    UserRefToJSON,
-} from './UserRef';
+import { mapValues } from '../runtime';
 import type { UserRole } from './UserRole';
 import {
     UserRoleFromJSON,
     UserRoleFromJSONTyped,
     UserRoleToJSON,
+    UserRoleToJSONTyped,
 } from './UserRole';
+import type { ApprovalRequest } from './ApprovalRequest';
+import {
+    ApprovalRequestFromJSON,
+    ApprovalRequestFromJSONTyped,
+    ApprovalRequestToJSON,
+    ApprovalRequestToJSONTyped,
+} from './ApprovalRequest';
+import type { UserRef } from './UserRef';
+import {
+    UserRefFromJSON,
+    UserRefFromJSONTyped,
+    UserRefToJSON,
+    UserRefToJSONTyped,
+} from './UserRef';
+import type { VerificationRequest } from './VerificationRequest';
+import {
+    VerificationRequestFromJSON,
+    VerificationRequestFromJSONTyped,
+    VerificationRequestToJSON,
+    VerificationRequestToJSONTyped,
+} from './VerificationRequest';
+import type { PendingUserChange } from './PendingUserChange';
+import {
+    PendingUserChangeFromJSON,
+    PendingUserChangeFromJSONTyped,
+    PendingUserChangeToJSON,
+    PendingUserChangeToJSONTyped,
+} from './PendingUserChange';
 
 /**
  * 
@@ -64,16 +75,16 @@ export interface UserChangeAction {
     modifiedAt: Date;
     /**
      * 
-     * @type {string}
-     * @memberof UserChangeAction
-     */
-    type: UserChangeActionTypeEnum;
-    /**
-     * 
      * @type {boolean}
      * @memberof UserChangeAction
      */
     isPending: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserChangeAction
+     */
+    type: UserChangeActionTypeEnum;
     /**
      * 
      * @type {UserRef}
@@ -121,7 +132,13 @@ export interface UserChangeAction {
      * @type {ApprovalRequest}
      * @memberof UserChangeAction
      */
-    approvalRequest: ApprovalRequest;
+    approvalRequest?: ApprovalRequest;
+    /**
+     * 
+     * @type {VerificationRequest}
+     * @memberof UserChangeAction
+     */
+    verificationRequest?: VerificationRequest;
 }
 
 
@@ -137,6 +154,8 @@ export type UserChangeActionTypeEnum = typeof UserChangeActionTypeEnum[keyof typ
  * @export
  */
 export const UserChangeActionStateEnum = {
+    pendingVerification: 'pending_verification',
+    pendingApproval: 'pending_approval',
     created: 'created',
     completed: 'completed',
     aborted: 'aborted',
@@ -148,22 +167,19 @@ export type UserChangeActionStateEnum = typeof UserChangeActionStateEnum[keyof t
 /**
  * Check if a given object implements the UserChangeAction interface.
  */
-export function instanceOfUserChangeAction(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "isPending" in value;
-    isInstance = isInstance && "createdBy" in value;
-    isInstance = isInstance && "user" in value;
-    isInstance = isInstance && "userRole" in value;
-    isInstance = isInstance && "pendingChange" in value;
-    isInstance = isInstance && "changeRequestId" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "approvalRequest" in value;
-
-    return isInstance;
+export function instanceOfUserChangeAction(value: object): value is UserChangeAction {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('isPending' in value) || value['isPending'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('createdBy' in value) || value['createdBy'] === undefined) return false;
+    if (!('user' in value) || value['user'] === undefined) return false;
+    if (!('userRole' in value) || value['userRole'] === undefined) return false;
+    if (!('pendingChange' in value) || value['pendingChange'] === undefined) return false;
+    if (!('changeRequestId' in value) || value['changeRequestId'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    return true;
 }
 
 export function UserChangeActionFromJSON(json: any): UserChangeAction {
@@ -171,7 +187,7 @@ export function UserChangeActionFromJSON(json: any): UserChangeAction {
 }
 
 export function UserChangeActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): UserChangeAction {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -179,41 +195,45 @@ export function UserChangeActionFromJSONTyped(json: any, ignoreDiscriminator: bo
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
-        'type': json['type'],
         'isPending': json['is_pending'],
+        'type': json['type'],
         'createdBy': UserRefFromJSON(json['created_by']),
-        'abortedBy': !exists(json, 'aborted_by') ? undefined : UserRefFromJSON(json['aborted_by']),
+        'abortedBy': json['aborted_by'] == null ? undefined : UserRefFromJSON(json['aborted_by']),
         'user': UserRefFromJSON(json['user']),
         'userRole': UserRoleFromJSON(json['user_role']),
         'pendingChange': PendingUserChangeFromJSON(json['pending_change']),
         'changeRequestId': json['change_request_id'],
         'state': json['state'],
-        'approvalRequest': ApprovalRequestFromJSON(json['approval_request']),
+        'approvalRequest': json['approval_request'] == null ? undefined : ApprovalRequestFromJSON(json['approval_request']),
+        'verificationRequest': json['verification_request'] == null ? undefined : VerificationRequestFromJSON(json['verification_request']),
     };
 }
 
-export function UserChangeActionToJSON(value?: UserChangeAction | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UserChangeActionToJSON(json: any): UserChangeAction {
+    return UserChangeActionToJSONTyped(json, false);
+}
+
+export function UserChangeActionToJSONTyped(value?: UserChangeAction | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'type': value.type,
-        'is_pending': value.isPending,
-        'created_by': UserRefToJSON(value.createdBy),
-        'aborted_by': UserRefToJSON(value.abortedBy),
-        'user': UserRefToJSON(value.user),
-        'user_role': UserRoleToJSON(value.userRole),
-        'pending_change': PendingUserChangeToJSON(value.pendingChange),
-        'change_request_id': value.changeRequestId,
-        'state': value.state,
-        'approval_request': ApprovalRequestToJSON(value.approvalRequest),
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'is_pending': value['isPending'],
+        'type': value['type'],
+        'created_by': UserRefToJSON(value['createdBy']),
+        'aborted_by': UserRefToJSON(value['abortedBy']),
+        'user': UserRefToJSON(value['user']),
+        'user_role': UserRoleToJSON(value['userRole']),
+        'pending_change': PendingUserChangeToJSON(value['pendingChange']),
+        'change_request_id': value['changeRequestId'],
+        'state': value['state'],
+        'approval_request': ApprovalRequestToJSON(value['approvalRequest']),
+        'verification_request': VerificationRequestToJSON(value['verificationRequest']),
     };
 }
 

@@ -12,22 +12,22 @@
  * Do not edit the class manually.
  */
 
+import type { EvmDataRequestBase64 } from './EvmDataRequestBase64';
 import {
-    EvmDataRequestBase64,
     instanceOfEvmDataRequestBase64,
     EvmDataRequestBase64FromJSON,
     EvmDataRequestBase64FromJSONTyped,
     EvmDataRequestBase64ToJSON,
 } from './EvmDataRequestBase64';
+import type { EvmDataRequestFullDetails } from './EvmDataRequestFullDetails';
 import {
-    EvmDataRequestFullDetails,
     instanceOfEvmDataRequestFullDetails,
     EvmDataRequestFullDetailsFromJSON,
     EvmDataRequestFullDetailsFromJSONTyped,
     EvmDataRequestFullDetailsToJSON,
 } from './EvmDataRequestFullDetails';
+import type { EvmDataRequestHex } from './EvmDataRequestHex';
 import {
-    EvmDataRequestHex,
     instanceOfEvmDataRequestHex,
     EvmDataRequestHexFromJSON,
     EvmDataRequestHexFromJSONTyped,
@@ -46,35 +46,36 @@ export function EvmDataRequestFromJSON(json: any): EvmDataRequest {
 }
 
 export function EvmDataRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmDataRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'base64':
-            return {...EvmDataRequestBase64FromJSONTyped(json, true), type: 'base64'};
+            return Object.assign({}, EvmDataRequestBase64FromJSONTyped(json, true), { type: 'base64' } as const);
         case 'full_details':
-            return {...EvmDataRequestFullDetailsFromJSONTyped(json, true), type: 'full_details'};
+            return Object.assign({}, EvmDataRequestFullDetailsFromJSONTyped(json, true), { type: 'full_details' } as const);
         case 'hex':
-            return {...EvmDataRequestHexFromJSONTyped(json, true), type: 'hex'};
+            return Object.assign({}, EvmDataRequestHexFromJSONTyped(json, true), { type: 'hex' } as const);
         default:
             throw new Error(`No variant of EvmDataRequest exists with 'type=${json['type']}'`);
     }
 }
 
-export function EvmDataRequestToJSON(value?: EvmDataRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function EvmDataRequestToJSON(json: any): any {
+    return EvmDataRequestToJSONTyped(json, false);
+}
+
+export function EvmDataRequestToJSONTyped(value?: EvmDataRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'base64':
-            return EvmDataRequestBase64ToJSON(value);
+            return Object.assign({}, EvmDataRequestBase64ToJSON(value), { type: 'base64' } as const);
         case 'full_details':
-            return EvmDataRequestFullDetailsToJSON(value);
+            return Object.assign({}, EvmDataRequestFullDetailsToJSON(value), { type: 'full_details' } as const);
         case 'hex':
-            return EvmDataRequestHexToJSON(value);
+            return Object.assign({}, EvmDataRequestHexToJSON(value), { type: 'hex' } as const);
         default:
             throw new Error(`No variant of EvmDataRequest exists with 'type=${value['type']}'`);
     }

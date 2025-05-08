@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { ContactRef } from './ContactRef';
-import {
-    ContactRefFromJSON,
-    ContactRefFromJSONTyped,
-    ContactRefToJSON,
-} from './ContactRef';
+import { mapValues } from '../runtime';
 import type { VaultRef } from './VaultRef';
 import {
     VaultRefFromJSON,
     VaultRefFromJSONTyped,
     VaultRefToJSON,
+    VaultRefToJSONTyped,
 } from './VaultRef';
+import type { ContactRef } from './ContactRef';
+import {
+    ContactRefFromJSON,
+    ContactRefFromJSONTyped,
+    ContactRefToJSON,
+    ContactRefToJSONTyped,
+} from './ContactRef';
 
 /**
  * 
@@ -95,15 +97,13 @@ export type EnrichedTonAddressTypeEnum = typeof EnrichedTonAddressTypeEnum[keyof
 /**
  * Check if a given object implements the EnrichedTonAddress interface.
  */
-export function instanceOfEnrichedTonAddress(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "rawAccount" in value;
-    isInstance = isInstance && "base64UrlBounceableAccount" in value;
-    isInstance = isInstance && "base64UrlNonBounceableAccount" in value;
-    isInstance = isInstance && "originalAccount" in value;
-
-    return isInstance;
+export function instanceOfEnrichedTonAddress(value: object): value is EnrichedTonAddress {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('rawAccount' in value) || value['rawAccount'] === undefined) return false;
+    if (!('base64UrlBounceableAccount' in value) || value['base64UrlBounceableAccount'] === undefined) return false;
+    if (!('base64UrlNonBounceableAccount' in value) || value['base64UrlNonBounceableAccount'] === undefined) return false;
+    if (!('originalAccount' in value) || value['originalAccount'] === undefined) return false;
+    return true;
 }
 
 export function EnrichedTonAddressFromJSON(json: any): EnrichedTonAddress {
@@ -111,14 +111,14 @@ export function EnrichedTonAddressFromJSON(json: any): EnrichedTonAddress {
 }
 
 export function EnrichedTonAddressFromJSONTyped(json: any, ignoreDiscriminator: boolean): EnrichedTonAddress {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'vault': !exists(json, 'vault') ? undefined : VaultRefFromJSON(json['vault']),
-        'explorerUrl': !exists(json, 'explorer_url') ? undefined : json['explorer_url'],
-        'contact': !exists(json, 'contact') ? undefined : ContactRefFromJSON(json['contact']),
+        'vault': json['vault'] == null ? undefined : VaultRefFromJSON(json['vault']),
+        'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
+        'contact': json['contact'] == null ? undefined : ContactRefFromJSON(json['contact']),
         'type': json['type'],
         'rawAccount': json['raw_account'],
         'base64UrlBounceableAccount': json['base64_url_bounceable_account'],
@@ -127,23 +127,25 @@ export function EnrichedTonAddressFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-export function EnrichedTonAddressToJSON(value?: EnrichedTonAddress | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EnrichedTonAddressToJSON(json: any): EnrichedTonAddress {
+    return EnrichedTonAddressToJSONTyped(json, false);
+}
+
+export function EnrichedTonAddressToJSONTyped(value?: EnrichedTonAddress | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'vault': VaultRefToJSON(value.vault),
-        'explorer_url': value.explorerUrl,
-        'contact': ContactRefToJSON(value.contact),
-        'type': value.type,
-        'raw_account': value.rawAccount,
-        'base64_url_bounceable_account': value.base64UrlBounceableAccount,
-        'base64_url_non_bounceable_account': value.base64UrlNonBounceableAccount,
-        'original_account': value.originalAccount,
+        'vault': VaultRefToJSON(value['vault']),
+        'explorer_url': value['explorerUrl'],
+        'contact': ContactRefToJSON(value['contact']),
+        'type': value['type'],
+        'raw_account': value['rawAccount'],
+        'base64_url_bounceable_account': value['base64UrlBounceableAccount'],
+        'base64_url_non_bounceable_account': value['base64UrlNonBounceableAccount'],
+        'original_account': value['originalAccount'],
     };
 }
 

@@ -12,25 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedSuiAddress } from './EnrichedSuiAddress';
 import {
     EnrichedSuiAddressFromJSON,
     EnrichedSuiAddressFromJSONTyped,
     EnrichedSuiAddressToJSON,
+    EnrichedSuiAddressToJSONTyped,
 } from './EnrichedSuiAddress';
-import type { PricedAsset } from './PricedAsset';
-import {
-    PricedAssetFromJSON,
-    PricedAssetFromJSONTyped,
-    PricedAssetToJSON,
-} from './PricedAsset';
 import type { SuiBalanceChangeEffectType } from './SuiBalanceChangeEffectType';
 import {
     SuiBalanceChangeEffectTypeFromJSON,
     SuiBalanceChangeEffectTypeFromJSONTyped,
     SuiBalanceChangeEffectTypeToJSON,
+    SuiBalanceChangeEffectTypeToJSONTyped,
 } from './SuiBalanceChangeEffectType';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+    PricedAssetToJSONTyped,
+} from './PricedAsset';
 
 /**
  * 
@@ -70,17 +73,17 @@ export interface SuiBalanceChangeEffect {
     address: EnrichedSuiAddress;
 }
 
+
+
 /**
  * Check if a given object implements the SuiBalanceChangeEffect interface.
  */
-export function instanceOfSuiBalanceChangeEffect(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "pricedAsset" in value;
-    isInstance = isInstance && "diff" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "address" in value;
-
-    return isInstance;
+export function instanceOfSuiBalanceChangeEffect(value: object): value is SuiBalanceChangeEffect {
+    if (!('pricedAsset' in value) || value['pricedAsset'] === undefined) return false;
+    if (!('diff' in value) || value['diff'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    return true;
 }
 
 export function SuiBalanceChangeEffectFromJSON(json: any): SuiBalanceChangeEffect {
@@ -88,7 +91,7 @@ export function SuiBalanceChangeEffectFromJSON(json: any): SuiBalanceChangeEffec
 }
 
 export function SuiBalanceChangeEffectFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiBalanceChangeEffect {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -96,25 +99,27 @@ export function SuiBalanceChangeEffectFromJSONTyped(json: any, ignoreDiscriminat
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
         'diff': json['diff'],
         'type': SuiBalanceChangeEffectTypeFromJSON(json['type']),
-        'owner': !exists(json, 'owner') ? undefined : EnrichedSuiAddressFromJSON(json['owner']),
+        'owner': json['owner'] == null ? undefined : EnrichedSuiAddressFromJSON(json['owner']),
         'address': EnrichedSuiAddressFromJSON(json['address']),
     };
 }
 
-export function SuiBalanceChangeEffectToJSON(value?: SuiBalanceChangeEffect | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiBalanceChangeEffectToJSON(json: any): SuiBalanceChangeEffect {
+    return SuiBalanceChangeEffectToJSONTyped(json, false);
+}
+
+export function SuiBalanceChangeEffectToJSONTyped(value?: SuiBalanceChangeEffect | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'priced_asset': PricedAssetToJSON(value.pricedAsset),
-        'diff': value.diff,
-        'type': SuiBalanceChangeEffectTypeToJSON(value.type),
-        'owner': EnrichedSuiAddressToJSON(value.owner),
-        'address': EnrichedSuiAddressToJSON(value.address),
+        'priced_asset': PricedAssetToJSON(value['pricedAsset']),
+        'diff': value['diff'],
+        'type': SuiBalanceChangeEffectTypeToJSON(value['type']),
+        'owner': EnrichedSuiAddressToJSON(value['owner']),
+        'address': EnrichedSuiAddressToJSON(value['address']),
     };
 }
 

@@ -12,13 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { WebDevice } from './WebDevice';
 import {
     WebDeviceFromJSON,
     WebDeviceFromJSONTyped,
     WebDeviceToJSON,
+    WebDeviceToJSONTyped,
 } from './WebDevice';
+import type { PartialErrorResponse } from './PartialErrorResponse';
+import {
+    PartialErrorResponseFromJSON,
+    PartialErrorResponseFromJSONTyped,
+    PartialErrorResponseToJSON,
+    PartialErrorResponseToJSONTyped,
+} from './PartialErrorResponse';
 
 /**
  * 
@@ -26,6 +34,12 @@ import {
  * @interface ListWebDevicesResponse
  */
 export interface ListWebDevicesResponse {
+    /**
+     * 
+     * @type {PartialErrorResponse}
+     * @memberof ListWebDevicesResponse
+     */
+    partialError?: PartialErrorResponse;
     /**
      * 
      * @type {number}
@@ -55,14 +69,12 @@ export interface ListWebDevicesResponse {
 /**
  * Check if a given object implements the ListWebDevicesResponse interface.
  */
-export function instanceOfListWebDevicesResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "total" in value;
-    isInstance = isInstance && "page" in value;
-    isInstance = isInstance && "size" in value;
-    isInstance = isInstance && "webDevices" in value;
-
-    return isInstance;
+export function instanceOfListWebDevicesResponse(value: object): value is ListWebDevicesResponse {
+    if (!('total' in value) || value['total'] === undefined) return false;
+    if (!('page' in value) || value['page'] === undefined) return false;
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('webDevices' in value) || value['webDevices'] === undefined) return false;
+    return true;
 }
 
 export function ListWebDevicesResponseFromJSON(json: any): ListWebDevicesResponse {
@@ -70,11 +82,12 @@ export function ListWebDevicesResponseFromJSON(json: any): ListWebDevicesRespons
 }
 
 export function ListWebDevicesResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): ListWebDevicesResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
+        'partialError': json['partial_error'] == null ? undefined : PartialErrorResponseFromJSON(json['partial_error']),
         'total': json['total'],
         'page': json['page'],
         'size': json['size'],
@@ -82,19 +95,22 @@ export function ListWebDevicesResponseFromJSONTyped(json: any, ignoreDiscriminat
     };
 }
 
-export function ListWebDevicesResponseToJSON(value?: ListWebDevicesResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ListWebDevicesResponseToJSON(json: any): ListWebDevicesResponse {
+    return ListWebDevicesResponseToJSONTyped(json, false);
+}
+
+export function ListWebDevicesResponseToJSONTyped(value?: ListWebDevicesResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'total': value.total,
-        'page': value.page,
-        'size': value.size,
-        'web_devices': ((value.webDevices as Array<any>).map(WebDeviceToJSON)),
+        'partial_error': PartialErrorResponseToJSON(value['partialError']),
+        'total': value['total'],
+        'page': value['page'],
+        'size': value['size'],
+        'web_devices': ((value['webDevices'] as Array<any>).map(WebDeviceToJSON)),
     };
 }
 

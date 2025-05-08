@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -42,10 +42,8 @@ export interface RefreshOwnedAssetsRequest {
 /**
  * Check if a given object implements the RefreshOwnedAssetsRequest interface.
  */
-export function instanceOfRefreshOwnedAssetsRequest(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfRefreshOwnedAssetsRequest(value: object): value is RefreshOwnedAssetsRequest {
+    return true;
 }
 
 export function RefreshOwnedAssetsRequestFromJSON(json: any): RefreshOwnedAssetsRequest {
@@ -53,29 +51,31 @@ export function RefreshOwnedAssetsRequestFromJSON(json: any): RefreshOwnedAssets
 }
 
 export function RefreshOwnedAssetsRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): RefreshOwnedAssetsRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'assetIds': !exists(json, 'asset_ids') ? undefined : json['asset_ids'],
-        'vaultIds': !exists(json, 'vault_ids') ? undefined : json['vault_ids'],
-        'onlyPrivateNative': !exists(json, 'only_private_native') ? undefined : json['only_private_native'],
+        'assetIds': json['asset_ids'] == null ? undefined : json['asset_ids'],
+        'vaultIds': json['vault_ids'] == null ? undefined : json['vault_ids'],
+        'onlyPrivateNative': json['only_private_native'] == null ? undefined : json['only_private_native'],
     };
 }
 
-export function RefreshOwnedAssetsRequestToJSON(value?: RefreshOwnedAssetsRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function RefreshOwnedAssetsRequestToJSON(json: any): RefreshOwnedAssetsRequest {
+    return RefreshOwnedAssetsRequestToJSONTyped(json, false);
+}
+
+export function RefreshOwnedAssetsRequestToJSONTyped(value?: RefreshOwnedAssetsRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'asset_ids': value.assetIds,
-        'vault_ids': value.vaultIds,
-        'only_private_native': value.onlyPrivateNative,
+        'asset_ids': value['assetIds'],
+        'vault_ids': value['vaultIds'],
+        'only_private_native': value['onlyPrivateNative'],
     };
 }
 

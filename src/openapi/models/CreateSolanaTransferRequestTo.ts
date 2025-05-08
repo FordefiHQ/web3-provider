@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -24,10 +24,8 @@ export interface CreateSolanaTransferRequestTo {
 /**
  * Check if a given object implements the CreateSolanaTransferRequestTo interface.
  */
-export function instanceOfCreateSolanaTransferRequestTo(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfCreateSolanaTransferRequestTo(value: object): value is CreateSolanaTransferRequestTo {
+    return true;
 }
 
 export function CreateSolanaTransferRequestToFromJSON(json: any): CreateSolanaTransferRequestTo {
@@ -38,7 +36,11 @@ export function CreateSolanaTransferRequestToFromJSONTyped(json: any, ignoreDisc
     return json;
 }
 
-export function CreateSolanaTransferRequestToToJSON(value?: CreateSolanaTransferRequestTo | null): any {
+export function CreateSolanaTransferRequestToToJSON(json: any): CreateSolanaTransferRequestTo {
+    return CreateSolanaTransferRequestToToJSONTyped(json, false);
+}
+
+export function CreateSolanaTransferRequestToToJSONTyped(value?: CreateSolanaTransferRequestTo | null, ignoreDiscriminator: boolean = false): any {
     return value;
 }
 

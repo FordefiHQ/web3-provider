@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { DeleteUserPrerequisite } from './DeleteUserPrerequisite';
 import {
     DeleteUserPrerequisiteFromJSON,
     DeleteUserPrerequisiteFromJSONTyped,
     DeleteUserPrerequisiteToJSON,
+    DeleteUserPrerequisiteToJSONTyped,
 } from './DeleteUserPrerequisite';
 
 /**
@@ -37,11 +38,9 @@ export interface GetDeleteUserPrerequisitesResponse {
 /**
  * Check if a given object implements the GetDeleteUserPrerequisitesResponse interface.
  */
-export function instanceOfGetDeleteUserPrerequisitesResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "prerequisites" in value;
-
-    return isInstance;
+export function instanceOfGetDeleteUserPrerequisitesResponse(value: object): value is GetDeleteUserPrerequisitesResponse {
+    if (!('prerequisites' in value) || value['prerequisites'] === undefined) return false;
+    return true;
 }
 
 export function GetDeleteUserPrerequisitesResponseFromJSON(json: any): GetDeleteUserPrerequisitesResponse {
@@ -49,7 +48,7 @@ export function GetDeleteUserPrerequisitesResponseFromJSON(json: any): GetDelete
 }
 
 export function GetDeleteUserPrerequisitesResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetDeleteUserPrerequisitesResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -58,16 +57,18 @@ export function GetDeleteUserPrerequisitesResponseFromJSONTyped(json: any, ignor
     };
 }
 
-export function GetDeleteUserPrerequisitesResponseToJSON(value?: GetDeleteUserPrerequisitesResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function GetDeleteUserPrerequisitesResponseToJSON(json: any): GetDeleteUserPrerequisitesResponse {
+    return GetDeleteUserPrerequisitesResponseToJSONTyped(json, false);
+}
+
+export function GetDeleteUserPrerequisitesResponseToJSONTyped(value?: GetDeleteUserPrerequisitesResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'prerequisites': ((value.prerequisites as Array<any>).map(DeleteUserPrerequisiteToJSON)),
+        'prerequisites': ((value['prerequisites'] as Array<any>).map(DeleteUserPrerequisiteToJSON)),
     };
 }
 

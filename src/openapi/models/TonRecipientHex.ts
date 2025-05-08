@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type TonRecipientHexTypeEnum = typeof TonRecipientHexTypeEnum[keyof typeo
 /**
  * Check if a given object implements the TonRecipientHex interface.
  */
-export function instanceOfTonRecipientHex(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "address" in value;
-
-    return isInstance;
+export function instanceOfTonRecipientHex(value: object): value is TonRecipientHex {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    return true;
 }
 
 export function TonRecipientHexFromJSON(json: any): TonRecipientHex {
@@ -59,7 +57,7 @@ export function TonRecipientHexFromJSON(json: any): TonRecipientHex {
 }
 
 export function TonRecipientHexFromJSONTyped(json: any, ignoreDiscriminator: boolean): TonRecipientHex {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function TonRecipientHexFromJSONTyped(json: any, ignoreDiscriminator: boo
     };
 }
 
-export function TonRecipientHexToJSON(value?: TonRecipientHex | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TonRecipientHexToJSON(json: any): TonRecipientHex {
+    return TonRecipientHexToJSONTyped(json, false);
+}
+
+export function TonRecipientHexToJSONTyped(value?: TonRecipientHex | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'address': value.address,
+        'type': value['type'],
+        'address': value['address'],
     };
 }
 

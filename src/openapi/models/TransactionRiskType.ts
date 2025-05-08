@@ -27,10 +27,22 @@ export const TransactionRiskType = {
     bridgeDestDifferFromSender: 'bridge_dest_differ_from_sender',
     nftApproveForAll: 'nft_approve_for_all',
     missingSimulation: 'missing_simulation',
-    unsupportedSimulation: 'unsupported_simulation'
+    unsupportedSimulation: 'unsupported_simulation',
+    postConditionsAllowMode: 'post_conditions_allow_mode'
 } as const;
 export type TransactionRiskType = typeof TransactionRiskType[keyof typeof TransactionRiskType];
 
+
+export function instanceOfTransactionRiskType(value: any): boolean {
+    for (const key in TransactionRiskType) {
+        if (Object.prototype.hasOwnProperty.call(TransactionRiskType, key)) {
+            if (TransactionRiskType[key as keyof typeof TransactionRiskType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 export function TransactionRiskTypeFromJSON(json: any): TransactionRiskType {
     return TransactionRiskTypeFromJSONTyped(json, false);
@@ -42,5 +54,9 @@ export function TransactionRiskTypeFromJSONTyped(json: any, ignoreDiscriminator:
 
 export function TransactionRiskTypeToJSON(value?: TransactionRiskType | null): any {
     return value as any;
+}
+
+export function TransactionRiskTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): TransactionRiskType {
+    return value as TransactionRiskType;
 }
 

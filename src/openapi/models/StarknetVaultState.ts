@@ -25,6 +25,17 @@ export const StarknetVaultState = {
 export type StarknetVaultState = typeof StarknetVaultState[keyof typeof StarknetVaultState];
 
 
+export function instanceOfStarknetVaultState(value: any): boolean {
+    for (const key in StarknetVaultState) {
+        if (Object.prototype.hasOwnProperty.call(StarknetVaultState, key)) {
+            if (StarknetVaultState[key as keyof typeof StarknetVaultState] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function StarknetVaultStateFromJSON(json: any): StarknetVaultState {
     return StarknetVaultStateFromJSONTyped(json, false);
 }
@@ -35,5 +46,9 @@ export function StarknetVaultStateFromJSONTyped(json: any, ignoreDiscriminator: 
 
 export function StarknetVaultStateToJSON(value?: StarknetVaultState | null): any {
     return value as any;
+}
+
+export function StarknetVaultStateToJSONTyped(value: any, ignoreDiscriminator: boolean): StarknetVaultState {
+    return value as StarknetVaultState;
 }
 

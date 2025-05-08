@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedUtxoNativeAssetIdentifier } from './EnrichedUtxoNativeAssetIdentifier';
 import {
     EnrichedUtxoNativeAssetIdentifierFromJSON,
     EnrichedUtxoNativeAssetIdentifierFromJSONTyped,
     EnrichedUtxoNativeAssetIdentifierToJSON,
+    EnrichedUtxoNativeAssetIdentifierToJSONTyped,
 } from './EnrichedUtxoNativeAssetIdentifier';
 
 /**
@@ -53,12 +54,10 @@ export type EnrichedUtxoAssetIdentifierTypeEnum = typeof EnrichedUtxoAssetIdenti
 /**
  * Check if a given object implements the EnrichedUtxoAssetIdentifier interface.
  */
-export function instanceOfEnrichedUtxoAssetIdentifier(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "details" in value;
-
-    return isInstance;
+export function instanceOfEnrichedUtxoAssetIdentifier(value: object): value is EnrichedUtxoAssetIdentifier {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    return true;
 }
 
 export function EnrichedUtxoAssetIdentifierFromJSON(json: any): EnrichedUtxoAssetIdentifier {
@@ -66,7 +65,7 @@ export function EnrichedUtxoAssetIdentifierFromJSON(json: any): EnrichedUtxoAsse
 }
 
 export function EnrichedUtxoAssetIdentifierFromJSONTyped(json: any, ignoreDiscriminator: boolean): EnrichedUtxoAssetIdentifier {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function EnrichedUtxoAssetIdentifierFromJSONTyped(json: any, ignoreDiscri
     };
 }
 
-export function EnrichedUtxoAssetIdentifierToJSON(value?: EnrichedUtxoAssetIdentifier | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EnrichedUtxoAssetIdentifierToJSON(json: any): EnrichedUtxoAssetIdentifier {
+    return EnrichedUtxoAssetIdentifierToJSONTyped(json, false);
+}
+
+export function EnrichedUtxoAssetIdentifierToJSONTyped(value?: EnrichedUtxoAssetIdentifier | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'details': EnrichedUtxoNativeAssetIdentifierToJSON(value.details),
+        'type': value['type'],
+        'details': EnrichedUtxoNativeAssetIdentifierToJSON(value['details']),
     };
 }
 

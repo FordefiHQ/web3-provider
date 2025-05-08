@@ -12,25 +12,35 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { CreateSuiTransactionRequestDetails } from './CreateSuiTransactionRequestDetails';
+import { mapValues } from '../runtime';
+import type { DappInfo } from './DappInfo';
 import {
-    CreateSuiTransactionRequestDetailsFromJSON,
-    CreateSuiTransactionRequestDetailsFromJSONTyped,
-    CreateSuiTransactionRequestDetailsToJSON,
-} from './CreateSuiTransactionRequestDetails';
+    DappInfoFromJSON,
+    DappInfoFromJSONTyped,
+    DappInfoToJSON,
+    DappInfoToJSONTyped,
+} from './DappInfo';
 import type { SignMode } from './SignMode';
 import {
     SignModeFromJSON,
     SignModeFromJSONTyped,
     SignModeToJSON,
+    SignModeToJSONTyped,
 } from './SignMode';
 import type { SignerType } from './SignerType';
 import {
     SignerTypeFromJSON,
     SignerTypeFromJSONTyped,
     SignerTypeToJSON,
+    SignerTypeToJSONTyped,
 } from './SignerType';
+import type { CreateSuiTransactionRequestDetails } from './CreateSuiTransactionRequestDetails';
+import {
+    CreateSuiTransactionRequestDetailsFromJSON,
+    CreateSuiTransactionRequestDetailsFromJSONTyped,
+    CreateSuiTransactionRequestDetailsToJSON,
+    CreateSuiTransactionRequestDetailsToJSONTyped,
+} from './CreateSuiTransactionRequestDetails';
 
 /**
  * 
@@ -64,6 +74,12 @@ export interface CreateSuiTransactionRequest {
     signMode?: SignMode;
     /**
      * 
+     * @type {DappInfo}
+     * @memberof CreateSuiTransactionRequest
+     */
+    dappInfo?: DappInfo;
+    /**
+     * 
      * @type {string}
      * @memberof CreateSuiTransactionRequest
      */
@@ -89,13 +105,11 @@ export type CreateSuiTransactionRequestTypeEnum = typeof CreateSuiTransactionReq
 /**
  * Check if a given object implements the CreateSuiTransactionRequest interface.
  */
-export function instanceOfCreateSuiTransactionRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "vaultId" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "details" in value;
-
-    return isInstance;
+export function instanceOfCreateSuiTransactionRequest(value: object): value is CreateSuiTransactionRequest {
+    if (!('vaultId' in value) || value['vaultId'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    return true;
 }
 
 export function CreateSuiTransactionRequestFromJSON(json: any): CreateSuiTransactionRequest {
@@ -103,35 +117,39 @@ export function CreateSuiTransactionRequestFromJSON(json: any): CreateSuiTransac
 }
 
 export function CreateSuiTransactionRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateSuiTransactionRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'vaultId': json['vault_id'],
-        'note': !exists(json, 'note') ? undefined : json['note'],
-        'signerType': !exists(json, 'signer_type') ? undefined : SignerTypeFromJSON(json['signer_type']),
-        'signMode': !exists(json, 'sign_mode') ? undefined : SignModeFromJSON(json['sign_mode']),
+        'note': json['note'] == null ? undefined : json['note'],
+        'signerType': json['signer_type'] == null ? undefined : SignerTypeFromJSON(json['signer_type']),
+        'signMode': json['sign_mode'] == null ? undefined : SignModeFromJSON(json['sign_mode']),
+        'dappInfo': json['dapp_info'] == null ? undefined : DappInfoFromJSON(json['dapp_info']),
         'type': json['type'],
         'details': CreateSuiTransactionRequestDetailsFromJSON(json['details']),
     };
 }
 
-export function CreateSuiTransactionRequestToJSON(value?: CreateSuiTransactionRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateSuiTransactionRequestToJSON(json: any): CreateSuiTransactionRequest {
+    return CreateSuiTransactionRequestToJSONTyped(json, false);
+}
+
+export function CreateSuiTransactionRequestToJSONTyped(value?: CreateSuiTransactionRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'vault_id': value.vaultId,
-        'note': value.note,
-        'signer_type': SignerTypeToJSON(value.signerType),
-        'sign_mode': SignModeToJSON(value.signMode),
-        'type': value.type,
-        'details': CreateSuiTransactionRequestDetailsToJSON(value.details),
+        'vault_id': value['vaultId'],
+        'note': value['note'],
+        'signer_type': SignerTypeToJSON(value['signerType']),
+        'sign_mode': SignModeToJSON(value['signMode']),
+        'dapp_info': DappInfoToJSON(value['dappInfo']),
+        'type': value['type'],
+        'details': CreateSuiTransactionRequestDetailsToJSON(value['details']),
     };
 }
 

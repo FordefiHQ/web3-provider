@@ -12,25 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { CosmosTokenInfo } from './CosmosTokenInfo';
+import {
+    CosmosTokenInfoFromJSON,
+    CosmosTokenInfoFromJSONTyped,
+    CosmosTokenInfoToJSON,
+    CosmosTokenInfoToJSONTyped,
+} from './CosmosTokenInfo';
 import type { CosmosNativeCoinInfo } from './CosmosNativeCoinInfo';
 import {
     CosmosNativeCoinInfoFromJSON,
     CosmosNativeCoinInfoFromJSONTyped,
     CosmosNativeCoinInfoToJSON,
+    CosmosNativeCoinInfoToJSONTyped,
 } from './CosmosNativeCoinInfo';
 import type { CosmosToken } from './CosmosToken';
 import {
     CosmosTokenFromJSON,
     CosmosTokenFromJSONTyped,
     CosmosTokenToJSON,
+    CosmosTokenToJSONTyped,
 } from './CosmosToken';
-import type { CosmosTokenInfo } from './CosmosTokenInfo';
-import {
-    CosmosTokenInfoFromJSON,
-    CosmosTokenInfoFromJSONTyped,
-    CosmosTokenInfoToJSON,
-} from './CosmosTokenInfo';
 
 /**
  * 
@@ -55,12 +58,10 @@ export interface CosmosBalanceChangeEffectCoinInfo {
 /**
  * Check if a given object implements the CosmosBalanceChangeEffectCoinInfo interface.
  */
-export function instanceOfCosmosBalanceChangeEffectCoinInfo(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "isVerified" in value;
-    isInstance = isInstance && "coin" in value;
-
-    return isInstance;
+export function instanceOfCosmosBalanceChangeEffectCoinInfo(value: object): value is CosmosBalanceChangeEffectCoinInfo {
+    if (!('isVerified' in value) || value['isVerified'] === undefined) return false;
+    if (!('coin' in value) || value['coin'] === undefined) return false;
+    return true;
 }
 
 export function CosmosBalanceChangeEffectCoinInfoFromJSON(json: any): CosmosBalanceChangeEffectCoinInfo {
@@ -68,7 +69,7 @@ export function CosmosBalanceChangeEffectCoinInfoFromJSON(json: any): CosmosBala
 }
 
 export function CosmosBalanceChangeEffectCoinInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosBalanceChangeEffectCoinInfo {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -78,17 +79,19 @@ export function CosmosBalanceChangeEffectCoinInfoFromJSONTyped(json: any, ignore
     };
 }
 
-export function CosmosBalanceChangeEffectCoinInfoToJSON(value?: CosmosBalanceChangeEffectCoinInfo | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosBalanceChangeEffectCoinInfoToJSON(json: any): CosmosBalanceChangeEffectCoinInfo {
+    return CosmosBalanceChangeEffectCoinInfoToJSONTyped(json, false);
+}
+
+export function CosmosBalanceChangeEffectCoinInfoToJSONTyped(value?: CosmosBalanceChangeEffectCoinInfo | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'is_verified': value.isVerified,
-        'coin': CosmosTokenToJSON(value.coin),
+        'is_verified': value['isVerified'],
+        'coin': CosmosTokenToJSON(value['coin']),
     };
 }
 

@@ -12,24 +12,27 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { RuleAction } from './RuleAction';
-import {
-    RuleActionFromJSON,
-    RuleActionFromJSONTyped,
-    RuleActionToJSON,
-} from './RuleAction';
+import { mapValues } from '../runtime';
 import type { TransactionRule } from './TransactionRule';
 import {
     TransactionRuleFromJSON,
     TransactionRuleFromJSONTyped,
     TransactionRuleToJSON,
+    TransactionRuleToJSONTyped,
 } from './TransactionRule';
+import type { RuleAction } from './RuleAction';
+import {
+    RuleActionFromJSON,
+    RuleActionFromJSONTyped,
+    RuleActionToJSON,
+    RuleActionToJSONTyped,
+} from './RuleAction';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
     UserRefFromJSONTyped,
     UserRefToJSON,
+    UserRefToJSONTyped,
 } from './UserRef';
 
 /**
@@ -73,12 +76,10 @@ export interface TransactionsPolicy {
 /**
  * Check if a given object implements the TransactionsPolicy interface.
  */
-export function instanceOfTransactionsPolicy(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "defaultAction" in value;
-    isInstance = isInstance && "rules" in value;
-
-    return isInstance;
+export function instanceOfTransactionsPolicy(value: object): value is TransactionsPolicy {
+    if (!('defaultAction' in value) || value['defaultAction'] === undefined) return false;
+    if (!('rules' in value) || value['rules'] === undefined) return false;
+    return true;
 }
 
 export function TransactionsPolicyFromJSON(json: any): TransactionsPolicy {
@@ -86,33 +87,35 @@ export function TransactionsPolicyFromJSON(json: any): TransactionsPolicy {
 }
 
 export function TransactionsPolicyFromJSONTyped(json: any, ignoreDiscriminator: boolean): TransactionsPolicy {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'createdAt': !exists(json, 'created_at') ? undefined : (new Date(json['created_at'])),
-        'modifiedAt': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
-        'modifiedBy': !exists(json, 'modified_by') ? undefined : UserRefFromJSON(json['modified_by']),
+        'createdAt': json['created_at'] == null ? undefined : (new Date(json['created_at'])),
+        'modifiedAt': json['modified_at'] == null ? undefined : (new Date(json['modified_at'])),
+        'modifiedBy': json['modified_by'] == null ? undefined : UserRefFromJSON(json['modified_by']),
         'defaultAction': RuleActionFromJSON(json['default_action']),
         'rules': ((json['rules'] as Array<any>).map(TransactionRuleFromJSON)),
     };
 }
 
-export function TransactionsPolicyToJSON(value?: TransactionsPolicy | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TransactionsPolicyToJSON(json: any): TransactionsPolicy {
+    return TransactionsPolicyToJSONTyped(json, false);
+}
+
+export function TransactionsPolicyToJSONTyped(value?: TransactionsPolicy | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'created_at': value.createdAt === undefined ? undefined : (value.createdAt.toISOString()),
-        'modified_at': value.modifiedAt === undefined ? undefined : (value.modifiedAt.toISOString()),
-        'modified_by': UserRefToJSON(value.modifiedBy),
-        'default_action': RuleActionToJSON(value.defaultAction),
-        'rules': ((value.rules as Array<any>).map(TransactionRuleToJSON)),
+        'created_at': value['createdAt'] == null ? undefined : ((value['createdAt']).toISOString()),
+        'modified_at': value['modifiedAt'] == null ? undefined : ((value['modifiedAt']).toISOString()),
+        'modified_by': UserRefToJSON(value['modifiedBy']),
+        'default_action': RuleActionToJSON(value['defaultAction']),
+        'rules': ((value['rules'] as Array<any>).map(TransactionRuleToJSON)),
     };
 }
 

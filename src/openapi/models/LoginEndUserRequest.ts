@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -54,11 +54,9 @@ export interface LoginEndUserRequest {
 /**
  * Check if a given object implements the LoginEndUserRequest interface.
  */
-export function instanceOfLoginEndUserRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "os" in value;
-
-    return isInstance;
+export function instanceOfLoginEndUserRequest(value: object): value is LoginEndUserRequest {
+    if (!('os' in value) || value['os'] === undefined) return false;
+    return true;
 }
 
 export function LoginEndUserRequestFromJSON(json: any): LoginEndUserRequest {
@@ -66,33 +64,35 @@ export function LoginEndUserRequestFromJSON(json: any): LoginEndUserRequest {
 }
 
 export function LoginEndUserRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): LoginEndUserRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'os': json['os'],
-        'osVersion': !exists(json, 'os_version') ? undefined : json['os_version'],
-        'deviceModel': !exists(json, 'device_model') ? undefined : json['device_model'],
-        'deviceAbi': !exists(json, 'device_abi') ? undefined : json['device_abi'],
-        'sdkVersion': !exists(json, 'sdk_version') ? undefined : json['sdk_version'],
+        'osVersion': json['os_version'] == null ? undefined : json['os_version'],
+        'deviceModel': json['device_model'] == null ? undefined : json['device_model'],
+        'deviceAbi': json['device_abi'] == null ? undefined : json['device_abi'],
+        'sdkVersion': json['sdk_version'] == null ? undefined : json['sdk_version'],
     };
 }
 
-export function LoginEndUserRequestToJSON(value?: LoginEndUserRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function LoginEndUserRequestToJSON(json: any): LoginEndUserRequest {
+    return LoginEndUserRequestToJSONTyped(json, false);
+}
+
+export function LoginEndUserRequestToJSONTyped(value?: LoginEndUserRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'os': value.os,
-        'os_version': value.osVersion,
-        'device_model': value.deviceModel,
-        'device_abi': value.deviceAbi,
-        'sdk_version': value.sdkVersion,
+        'os': value['os'],
+        'os_version': value['osVersion'],
+        'device_model': value['deviceModel'],
+        'device_abi': value['deviceAbi'],
+        'sdk_version': value['sdkVersion'],
     };
 }
 

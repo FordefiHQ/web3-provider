@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { DeviceSystemInfo } from './DeviceSystemInfo';
 import {
     DeviceSystemInfoFromJSON,
     DeviceSystemInfoFromJSONTyped,
     DeviceSystemInfoToJSON,
+    DeviceSystemInfoToJSONTyped,
 } from './DeviceSystemInfo';
 
 /**
@@ -43,12 +44,10 @@ export interface CompleteOrganizationOnboardingRequest {
 /**
  * Check if a given object implements the CompleteOrganizationOnboardingRequest interface.
  */
-export function instanceOfCompleteOrganizationOnboardingRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "adminPublicKey" in value;
-    isInstance = isInstance && "deviceInfo" in value;
-
-    return isInstance;
+export function instanceOfCompleteOrganizationOnboardingRequest(value: object): value is CompleteOrganizationOnboardingRequest {
+    if (!('adminPublicKey' in value) || value['adminPublicKey'] === undefined) return false;
+    if (!('deviceInfo' in value) || value['deviceInfo'] === undefined) return false;
+    return true;
 }
 
 export function CompleteOrganizationOnboardingRequestFromJSON(json: any): CompleteOrganizationOnboardingRequest {
@@ -56,7 +55,7 @@ export function CompleteOrganizationOnboardingRequestFromJSON(json: any): Comple
 }
 
 export function CompleteOrganizationOnboardingRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CompleteOrganizationOnboardingRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -66,17 +65,19 @@ export function CompleteOrganizationOnboardingRequestFromJSONTyped(json: any, ig
     };
 }
 
-export function CompleteOrganizationOnboardingRequestToJSON(value?: CompleteOrganizationOnboardingRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CompleteOrganizationOnboardingRequestToJSON(json: any): CompleteOrganizationOnboardingRequest {
+    return CompleteOrganizationOnboardingRequestToJSONTyped(json, false);
+}
+
+export function CompleteOrganizationOnboardingRequestToJSONTyped(value?: CompleteOrganizationOnboardingRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'admin_public_key': value.adminPublicKey,
-        'device_info': DeviceSystemInfoToJSON(value.deviceInfo),
+        'admin_public_key': value['adminPublicKey'],
+        'device_info': DeviceSystemInfoToJSON(value['deviceInfo']),
     };
 }
 

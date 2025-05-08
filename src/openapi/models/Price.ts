@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { FiatCurrency } from './FiatCurrency';
 import {
     FiatCurrencyFromJSON,
     FiatCurrencyFromJSONTyped,
     FiatCurrencyToJSON,
+    FiatCurrencyToJSONTyped,
 } from './FiatCurrency';
 
 /**
@@ -50,13 +51,11 @@ export interface Price {
 /**
  * Check if a given object implements the Price interface.
  */
-export function instanceOfPrice(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "price" in value;
-    isInstance = isInstance && "priceFloat" in value;
-    isInstance = isInstance && "fiatCurrency" in value;
-
-    return isInstance;
+export function instanceOfPrice(value: object): value is Price {
+    if (!('price' in value) || value['price'] === undefined) return false;
+    if (!('priceFloat' in value) || value['priceFloat'] === undefined) return false;
+    if (!('fiatCurrency' in value) || value['fiatCurrency'] === undefined) return false;
+    return true;
 }
 
 export function PriceFromJSON(json: any): Price {
@@ -64,7 +63,7 @@ export function PriceFromJSON(json: any): Price {
 }
 
 export function PriceFromJSONTyped(json: any, ignoreDiscriminator: boolean): Price {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -75,18 +74,20 @@ export function PriceFromJSONTyped(json: any, ignoreDiscriminator: boolean): Pri
     };
 }
 
-export function PriceToJSON(value?: Price | null): any {
-    if (value === undefined) {
-        return undefined;
+export function PriceToJSON(json: any): Price {
+    return PriceToJSONTyped(json, false);
+}
+
+export function PriceToJSONTyped(value?: Price | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'price': value.price,
-        'price_float': value.priceFloat,
-        'fiat_currency': FiatCurrencyToJSON(value.fiatCurrency),
+        'price': value['price'],
+        'price_float': value['priceFloat'],
+        'fiat_currency': FiatCurrencyToJSON(value['fiatCurrency']),
     };
 }
 

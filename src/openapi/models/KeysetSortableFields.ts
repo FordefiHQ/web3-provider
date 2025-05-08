@@ -28,6 +28,17 @@ export const KeysetSortableFields = {
 export type KeysetSortableFields = typeof KeysetSortableFields[keyof typeof KeysetSortableFields];
 
 
+export function instanceOfKeysetSortableFields(value: any): boolean {
+    for (const key in KeysetSortableFields) {
+        if (Object.prototype.hasOwnProperty.call(KeysetSortableFields, key)) {
+            if (KeysetSortableFields[key as keyof typeof KeysetSortableFields] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function KeysetSortableFieldsFromJSON(json: any): KeysetSortableFields {
     return KeysetSortableFieldsFromJSONTyped(json, false);
 }
@@ -38,5 +49,9 @@ export function KeysetSortableFieldsFromJSONTyped(json: any, ignoreDiscriminator
 
 export function KeysetSortableFieldsToJSON(value?: KeysetSortableFields | null): any {
     return value as any;
+}
+
+export function KeysetSortableFieldsToJSONTyped(value: any, ignoreDiscriminator: boolean): KeysetSortableFields {
+    return value as KeysetSortableFields;
 }
 

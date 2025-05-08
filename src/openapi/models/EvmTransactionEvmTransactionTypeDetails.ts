@@ -12,43 +12,43 @@
  * Do not edit the class manually.
  */
 
+import type { AllowanceDetails } from './AllowanceDetails';
 import {
-    AllowanceDetails,
     instanceOfAllowanceDetails,
     AllowanceDetailsFromJSON,
     AllowanceDetailsFromJSONTyped,
     AllowanceDetailsToJSON,
 } from './AllowanceDetails';
+import type { BridgeDetails } from './BridgeDetails';
 import {
-    BridgeDetails,
     instanceOfBridgeDetails,
     BridgeDetailsFromJSON,
     BridgeDetailsFromJSONTyped,
     BridgeDetailsToJSON,
 } from './BridgeDetails';
+import type { ContractCallDetails } from './ContractCallDetails';
 import {
-    ContractCallDetails,
     instanceOfContractCallDetails,
     ContractCallDetailsFromJSON,
     ContractCallDetailsFromJSONTyped,
     ContractCallDetailsToJSON,
 } from './ContractCallDetails';
+import type { ContractDeploymentDetails } from './ContractDeploymentDetails';
 import {
-    ContractDeploymentDetails,
     instanceOfContractDeploymentDetails,
     ContractDeploymentDetailsFromJSON,
     ContractDeploymentDetailsFromJSONTyped,
     ContractDeploymentDetailsToJSON,
 } from './ContractDeploymentDetails';
+import type { EvmNativeTransferDetails } from './EvmNativeTransferDetails';
 import {
-    EvmNativeTransferDetails,
     instanceOfEvmNativeTransferDetails,
     EvmNativeTransferDetailsFromJSON,
     EvmNativeTransferDetailsFromJSONTyped,
     EvmNativeTransferDetailsToJSON,
 } from './EvmNativeTransferDetails';
+import type { TokenTransferDetails } from './TokenTransferDetails';
 import {
-    TokenTransferDetails,
     instanceOfTokenTransferDetails,
     TokenTransferDetailsFromJSON,
     TokenTransferDetailsFromJSONTyped,
@@ -67,47 +67,48 @@ export function EvmTransactionEvmTransactionTypeDetailsFromJSON(json: any): EvmT
 }
 
 export function EvmTransactionEvmTransactionTypeDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmTransactionEvmTransactionTypeDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'allowance':
-            return {...AllowanceDetailsFromJSONTyped(json, true), type: 'allowance'};
+            return Object.assign({}, AllowanceDetailsFromJSONTyped(json, true), { type: 'allowance' } as const);
         case 'contract_call':
-            return {...ContractCallDetailsFromJSONTyped(json, true), type: 'contract_call'};
+            return Object.assign({}, ContractCallDetailsFromJSONTyped(json, true), { type: 'contract_call' } as const);
         case 'contract_deployment':
-            return {...ContractDeploymentDetailsFromJSONTyped(json, true), type: 'contract_deployment'};
+            return Object.assign({}, ContractDeploymentDetailsFromJSONTyped(json, true), { type: 'contract_deployment' } as const);
         case 'cross_chain_bridge':
-            return {...BridgeDetailsFromJSONTyped(json, true), type: 'cross_chain_bridge'};
+            return Object.assign({}, BridgeDetailsFromJSONTyped(json, true), { type: 'cross_chain_bridge' } as const);
         case 'native_transfer':
-            return {...EvmNativeTransferDetailsFromJSONTyped(json, true), type: 'native_transfer'};
+            return Object.assign({}, EvmNativeTransferDetailsFromJSONTyped(json, true), { type: 'native_transfer' } as const);
         case 'token_transfer':
-            return {...TokenTransferDetailsFromJSONTyped(json, true), type: 'token_transfer'};
+            return Object.assign({}, TokenTransferDetailsFromJSONTyped(json, true), { type: 'token_transfer' } as const);
         default:
             throw new Error(`No variant of EvmTransactionEvmTransactionTypeDetails exists with 'type=${json['type']}'`);
     }
 }
 
-export function EvmTransactionEvmTransactionTypeDetailsToJSON(value?: EvmTransactionEvmTransactionTypeDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function EvmTransactionEvmTransactionTypeDetailsToJSON(json: any): any {
+    return EvmTransactionEvmTransactionTypeDetailsToJSONTyped(json, false);
+}
+
+export function EvmTransactionEvmTransactionTypeDetailsToJSONTyped(value?: EvmTransactionEvmTransactionTypeDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'allowance':
-            return AllowanceDetailsToJSON(value);
+            return Object.assign({}, AllowanceDetailsToJSON(value), { type: 'allowance' } as const);
         case 'contract_call':
-            return ContractCallDetailsToJSON(value);
+            return Object.assign({}, ContractCallDetailsToJSON(value), { type: 'contract_call' } as const);
         case 'contract_deployment':
-            return ContractDeploymentDetailsToJSON(value);
+            return Object.assign({}, ContractDeploymentDetailsToJSON(value), { type: 'contract_deployment' } as const);
         case 'cross_chain_bridge':
-            return BridgeDetailsToJSON(value);
+            return Object.assign({}, BridgeDetailsToJSON(value), { type: 'cross_chain_bridge' } as const);
         case 'native_transfer':
-            return EvmNativeTransferDetailsToJSON(value);
+            return Object.assign({}, EvmNativeTransferDetailsToJSON(value), { type: 'native_transfer' } as const);
         case 'token_transfer':
-            return TokenTransferDetailsToJSON(value);
+            return Object.assign({}, TokenTransferDetailsToJSON(value), { type: 'token_transfer' } as const);
         default:
             throw new Error(`No variant of EvmTransactionEvmTransactionTypeDetails exists with 'type=${value['type']}'`);
     }

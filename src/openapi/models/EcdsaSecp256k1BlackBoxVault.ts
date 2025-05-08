@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -40,11 +40,9 @@ export type EcdsaSecp256k1BlackBoxVaultTypeEnum = typeof EcdsaSecp256k1BlackBoxV
 /**
  * Check if a given object implements the EcdsaSecp256k1BlackBoxVault interface.
  */
-export function instanceOfEcdsaSecp256k1BlackBoxVault(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfEcdsaSecp256k1BlackBoxVault(value: object): value is EcdsaSecp256k1BlackBoxVault {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function EcdsaSecp256k1BlackBoxVaultFromJSON(json: any): EcdsaSecp256k1BlackBoxVault {
@@ -52,7 +50,7 @@ export function EcdsaSecp256k1BlackBoxVaultFromJSON(json: any): EcdsaSecp256k1Bl
 }
 
 export function EcdsaSecp256k1BlackBoxVaultFromJSONTyped(json: any, ignoreDiscriminator: boolean): EcdsaSecp256k1BlackBoxVault {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -61,16 +59,18 @@ export function EcdsaSecp256k1BlackBoxVaultFromJSONTyped(json: any, ignoreDiscri
     };
 }
 
-export function EcdsaSecp256k1BlackBoxVaultToJSON(value?: EcdsaSecp256k1BlackBoxVault | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EcdsaSecp256k1BlackBoxVaultToJSON(json: any): EcdsaSecp256k1BlackBoxVault {
+    return EcdsaSecp256k1BlackBoxVaultToJSONTyped(json, false);
+}
+
+export function EcdsaSecp256k1BlackBoxVaultToJSONTyped(value?: EcdsaSecp256k1BlackBoxVault | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
+        'type': value['type'],
     };
 }
 

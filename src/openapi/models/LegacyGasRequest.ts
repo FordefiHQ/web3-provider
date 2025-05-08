@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type LegacyGasRequestTypeEnum = typeof LegacyGasRequestTypeEnum[keyof typ
 /**
  * Check if a given object implements the LegacyGasRequest interface.
  */
-export function instanceOfLegacyGasRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "price" in value;
-
-    return isInstance;
+export function instanceOfLegacyGasRequest(value: object): value is LegacyGasRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('price' in value) || value['price'] === undefined) return false;
+    return true;
 }
 
 export function LegacyGasRequestFromJSON(json: any): LegacyGasRequest {
@@ -59,7 +57,7 @@ export function LegacyGasRequestFromJSON(json: any): LegacyGasRequest {
 }
 
 export function LegacyGasRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): LegacyGasRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function LegacyGasRequestFromJSONTyped(json: any, ignoreDiscriminator: bo
     };
 }
 
-export function LegacyGasRequestToJSON(value?: LegacyGasRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function LegacyGasRequestToJSON(json: any): LegacyGasRequest {
+    return LegacyGasRequestToJSONTyped(json, false);
+}
+
+export function LegacyGasRequestToJSONTyped(value?: LegacyGasRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'price': value.price,
+        'type': value['type'],
+        'price': value['price'],
     };
 }
 

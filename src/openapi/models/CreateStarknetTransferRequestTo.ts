@@ -12,58 +12,59 @@
  * Do not edit the class manually.
  */
 
+import type { RecipientVaultId } from './RecipientVaultId';
 import {
-    StarknetRecipientHex,
+    instanceOfRecipientVaultId,
+    RecipientVaultIdFromJSON,
+    RecipientVaultIdFromJSONTyped,
+    RecipientVaultIdToJSON,
+} from './RecipientVaultId';
+import type { StarknetRecipientHex } from './StarknetRecipientHex';
+import {
     instanceOfStarknetRecipientHex,
     StarknetRecipientHexFromJSON,
     StarknetRecipientHexFromJSONTyped,
     StarknetRecipientHexToJSON,
 } from './StarknetRecipientHex';
-import {
-    StarknetRecipientVaultId,
-    instanceOfStarknetRecipientVaultId,
-    StarknetRecipientVaultIdFromJSON,
-    StarknetRecipientVaultIdFromJSONTyped,
-    StarknetRecipientVaultIdToJSON,
-} from './StarknetRecipientVaultId';
 
 /**
  * @type CreateStarknetTransferRequestTo
  * 
  * @export
  */
-export type CreateStarknetTransferRequestTo = { type: 'hex' } & StarknetRecipientHex | { type: 'vault_id' } & StarknetRecipientVaultId;
+export type CreateStarknetTransferRequestTo = { type: 'hex' } & StarknetRecipientHex | { type: 'vault_id' } & RecipientVaultId;
 
 export function CreateStarknetTransferRequestToFromJSON(json: any): CreateStarknetTransferRequestTo {
     return CreateStarknetTransferRequestToFromJSONTyped(json, false);
 }
 
 export function CreateStarknetTransferRequestToFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateStarknetTransferRequestTo {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'hex':
-            return {...StarknetRecipientHexFromJSONTyped(json, true), type: 'hex'};
+            return Object.assign({}, StarknetRecipientHexFromJSONTyped(json, true), { type: 'hex' } as const);
         case 'vault_id':
-            return {...StarknetRecipientVaultIdFromJSONTyped(json, true), type: 'vault_id'};
+            return Object.assign({}, RecipientVaultIdFromJSONTyped(json, true), { type: 'vault_id' } as const);
         default:
             throw new Error(`No variant of CreateStarknetTransferRequestTo exists with 'type=${json['type']}'`);
     }
 }
 
-export function CreateStarknetTransferRequestToToJSON(value?: CreateStarknetTransferRequestTo | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function CreateStarknetTransferRequestToToJSON(json: any): any {
+    return CreateStarknetTransferRequestToToJSONTyped(json, false);
+}
+
+export function CreateStarknetTransferRequestToToJSONTyped(value?: CreateStarknetTransferRequestTo | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'hex':
-            return StarknetRecipientHexToJSON(value);
+            return Object.assign({}, StarknetRecipientHexToJSON(value), { type: 'hex' } as const);
         case 'vault_id':
-            return StarknetRecipientVaultIdToJSON(value);
+            return Object.assign({}, RecipientVaultIdToJSON(value), { type: 'vault_id' } as const);
         default:
             throw new Error(`No variant of CreateStarknetTransferRequestTo exists with 'type=${value['type']}'`);
     }

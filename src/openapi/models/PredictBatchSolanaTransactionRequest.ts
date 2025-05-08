@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { PredictBatchSolanaTransactionRequestDetails } from './PredictBatchSolanaTransactionRequestDetails';
 import {
     PredictBatchSolanaTransactionRequestDetailsFromJSON,
     PredictBatchSolanaTransactionRequestDetailsFromJSONTyped,
     PredictBatchSolanaTransactionRequestDetailsToJSON,
+    PredictBatchSolanaTransactionRequestDetailsToJSONTyped,
 } from './PredictBatchSolanaTransactionRequestDetails';
 
 /**
@@ -32,6 +33,12 @@ export interface PredictBatchSolanaTransactionRequest {
      * @memberof PredictBatchSolanaTransactionRequest
      */
     vaultId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PredictBatchSolanaTransactionRequest
+     */
+    note?: string;
     /**
      * 
      * @type {string}
@@ -59,13 +66,11 @@ export type PredictBatchSolanaTransactionRequestTypeEnum = typeof PredictBatchSo
 /**
  * Check if a given object implements the PredictBatchSolanaTransactionRequest interface.
  */
-export function instanceOfPredictBatchSolanaTransactionRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "vaultId" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "details" in value;
-
-    return isInstance;
+export function instanceOfPredictBatchSolanaTransactionRequest(value: object): value is PredictBatchSolanaTransactionRequest {
+    if (!('vaultId' in value) || value['vaultId'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    return true;
 }
 
 export function PredictBatchSolanaTransactionRequestFromJSON(json: any): PredictBatchSolanaTransactionRequest {
@@ -73,29 +78,33 @@ export function PredictBatchSolanaTransactionRequestFromJSON(json: any): Predict
 }
 
 export function PredictBatchSolanaTransactionRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): PredictBatchSolanaTransactionRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'vaultId': json['vault_id'],
+        'note': json['note'] == null ? undefined : json['note'],
         'type': json['type'],
         'details': PredictBatchSolanaTransactionRequestDetailsFromJSON(json['details']),
     };
 }
 
-export function PredictBatchSolanaTransactionRequestToJSON(value?: PredictBatchSolanaTransactionRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function PredictBatchSolanaTransactionRequestToJSON(json: any): PredictBatchSolanaTransactionRequest {
+    return PredictBatchSolanaTransactionRequestToJSONTyped(json, false);
+}
+
+export function PredictBatchSolanaTransactionRequestToJSONTyped(value?: PredictBatchSolanaTransactionRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'vault_id': value.vaultId,
-        'type': value.type,
-        'details': PredictBatchSolanaTransactionRequestDetailsToJSON(value.details),
+        'vault_id': value['vaultId'],
+        'note': value['note'],
+        'type': value['type'],
+        'details': PredictBatchSolanaTransactionRequestDetailsToJSON(value['details']),
     };
 }
 

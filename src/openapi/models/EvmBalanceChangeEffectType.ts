@@ -26,6 +26,17 @@ export const EvmBalanceChangeEffectType = {
 export type EvmBalanceChangeEffectType = typeof EvmBalanceChangeEffectType[keyof typeof EvmBalanceChangeEffectType];
 
 
+export function instanceOfEvmBalanceChangeEffectType(value: any): boolean {
+    for (const key in EvmBalanceChangeEffectType) {
+        if (Object.prototype.hasOwnProperty.call(EvmBalanceChangeEffectType, key)) {
+            if (EvmBalanceChangeEffectType[key as keyof typeof EvmBalanceChangeEffectType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function EvmBalanceChangeEffectTypeFromJSON(json: any): EvmBalanceChangeEffectType {
     return EvmBalanceChangeEffectTypeFromJSONTyped(json, false);
 }
@@ -36,5 +47,9 @@ export function EvmBalanceChangeEffectTypeFromJSONTyped(json: any, ignoreDiscrim
 
 export function EvmBalanceChangeEffectTypeToJSON(value?: EvmBalanceChangeEffectType | null): any {
     return value as any;
+}
+
+export function EvmBalanceChangeEffectTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): EvmBalanceChangeEffectType {
+    return value as EvmBalanceChangeEffectType;
 }
 

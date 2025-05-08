@@ -12,7 +12,22 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+    PricedAssetToJSONTyped,
+} from './PricedAsset';
+import type { Price } from './Price';
+import {
+    PriceFromJSON,
+    PriceFromJSONTyped,
+    PriceToJSON,
+    PriceToJSONTyped,
+} from './Price';
+
 /**
  * 
  * @export
@@ -25,16 +40,27 @@ export interface StarknetFees {
      * @memberof StarknetFees
      */
     feePayed: string;
+    /**
+     * 
+     * @type {Price}
+     * @memberof StarknetFees
+     */
+    fiatPrice?: Price;
+    /**
+     * 
+     * @type {PricedAsset}
+     * @memberof StarknetFees
+     */
+    pricedAsset: PricedAsset;
 }
 
 /**
  * Check if a given object implements the StarknetFees interface.
  */
-export function instanceOfStarknetFees(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "feePayed" in value;
-
-    return isInstance;
+export function instanceOfStarknetFees(value: object): value is StarknetFees {
+    if (!('feePayed' in value) || value['feePayed'] === undefined) return false;
+    if (!('pricedAsset' in value) || value['pricedAsset'] === undefined) return false;
+    return true;
 }
 
 export function StarknetFeesFromJSON(json: any): StarknetFees {
@@ -42,25 +68,31 @@ export function StarknetFeesFromJSON(json: any): StarknetFees {
 }
 
 export function StarknetFeesFromJSONTyped(json: any, ignoreDiscriminator: boolean): StarknetFees {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'feePayed': json['fee_payed'],
+        'fiatPrice': json['fiat_price'] == null ? undefined : PriceFromJSON(json['fiat_price']),
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }
 
-export function StarknetFeesToJSON(value?: StarknetFees | null): any {
-    if (value === undefined) {
-        return undefined;
+export function StarknetFeesToJSON(json: any): StarknetFees {
+    return StarknetFeesToJSONTyped(json, false);
+}
+
+export function StarknetFeesToJSONTyped(value?: StarknetFees | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'fee_payed': value.feePayed,
+        'fee_payed': value['feePayed'],
+        'fiat_price': PriceToJSON(value['fiatPrice']),
+        'priced_asset': PricedAssetToJSON(value['pricedAsset']),
     };
 }
 

@@ -23,6 +23,17 @@ export const CreateTransactionsPolicyProposalErrorType = {
 export type CreateTransactionsPolicyProposalErrorType = typeof CreateTransactionsPolicyProposalErrorType[keyof typeof CreateTransactionsPolicyProposalErrorType];
 
 
+export function instanceOfCreateTransactionsPolicyProposalErrorType(value: any): boolean {
+    for (const key in CreateTransactionsPolicyProposalErrorType) {
+        if (Object.prototype.hasOwnProperty.call(CreateTransactionsPolicyProposalErrorType, key)) {
+            if (CreateTransactionsPolicyProposalErrorType[key as keyof typeof CreateTransactionsPolicyProposalErrorType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function CreateTransactionsPolicyProposalErrorTypeFromJSON(json: any): CreateTransactionsPolicyProposalErrorType {
     return CreateTransactionsPolicyProposalErrorTypeFromJSONTyped(json, false);
 }
@@ -33,5 +44,9 @@ export function CreateTransactionsPolicyProposalErrorTypeFromJSONTyped(json: any
 
 export function CreateTransactionsPolicyProposalErrorTypeToJSON(value?: CreateTransactionsPolicyProposalErrorType | null): any {
     return value as any;
+}
+
+export function CreateTransactionsPolicyProposalErrorTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): CreateTransactionsPolicyProposalErrorType {
+    return value as CreateTransactionsPolicyProposalErrorType;
 }
 

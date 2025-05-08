@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EvmChain } from './EvmChain';
 import {
     EvmChainFromJSON,
     EvmChainFromJSONTyped,
     EvmChainToJSON,
+    EvmChainToJSONTyped,
 } from './EvmChain';
 
 /**
@@ -43,12 +44,10 @@ export interface EvmAddress {
 /**
  * Check if a given object implements the EvmAddress interface.
  */
-export function instanceOfEvmAddress(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "hexRepr" in value;
-
-    return isInstance;
+export function instanceOfEvmAddress(value: object): value is EvmAddress {
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('hexRepr' in value) || value['hexRepr'] === undefined) return false;
+    return true;
 }
 
 export function EvmAddressFromJSON(json: any): EvmAddress {
@@ -56,7 +55,7 @@ export function EvmAddressFromJSON(json: any): EvmAddress {
 }
 
 export function EvmAddressFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmAddress {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -66,17 +65,19 @@ export function EvmAddressFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     };
 }
 
-export function EvmAddressToJSON(value?: EvmAddress | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EvmAddressToJSON(json: any): EvmAddress {
+    return EvmAddressToJSONTyped(json, false);
+}
+
+export function EvmAddressToJSONTyped(value?: EvmAddress | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain': EvmChainToJSON(value.chain),
-        'hex_repr': value.hexRepr,
+        'chain': EvmChainToJSON(value['chain']),
+        'hex_repr': value['hexRepr'],
     };
 }
 

@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EvmAddressRequest } from './EvmAddressRequest';
 import {
     EvmAddressRequestFromJSON,
     EvmAddressRequestFromJSONTyped,
     EvmAddressRequestToJSON,
+    EvmAddressRequestToJSONTyped,
 } from './EvmAddressRequest';
 
 /**
@@ -43,11 +44,9 @@ export interface UpdateContractRequest {
 /**
  * Check if a given object implements the UpdateContractRequest interface.
  */
-export function instanceOfUpdateContractRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "contract" in value;
-
-    return isInstance;
+export function instanceOfUpdateContractRequest(value: object): value is UpdateContractRequest {
+    if (!('contract' in value) || value['contract'] === undefined) return false;
+    return true;
 }
 
 export function UpdateContractRequestFromJSON(json: any): UpdateContractRequest {
@@ -55,27 +54,29 @@ export function UpdateContractRequestFromJSON(json: any): UpdateContractRequest 
 }
 
 export function UpdateContractRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): UpdateContractRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'contract': EvmAddressRequestFromJSON(json['contract']),
-        'dappName': !exists(json, 'dapp_name') ? undefined : json['dapp_name'],
+        'dappName': json['dapp_name'] == null ? undefined : json['dapp_name'],
     };
 }
 
-export function UpdateContractRequestToJSON(value?: UpdateContractRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UpdateContractRequestToJSON(json: any): UpdateContractRequest {
+    return UpdateContractRequestToJSONTyped(json, false);
+}
+
+export function UpdateContractRequestToJSONTyped(value?: UpdateContractRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'contract': EvmAddressRequestToJSON(value.contract),
-        'dapp_name': value.dappName,
+        'contract': EvmAddressRequestToJSON(value['contract']),
+        'dapp_name': value['dappName'],
     };
 }
 

@@ -26,6 +26,17 @@ export const CreateUserGroupErrorType = {
 export type CreateUserGroupErrorType = typeof CreateUserGroupErrorType[keyof typeof CreateUserGroupErrorType];
 
 
+export function instanceOfCreateUserGroupErrorType(value: any): boolean {
+    for (const key in CreateUserGroupErrorType) {
+        if (Object.prototype.hasOwnProperty.call(CreateUserGroupErrorType, key)) {
+            if (CreateUserGroupErrorType[key as keyof typeof CreateUserGroupErrorType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function CreateUserGroupErrorTypeFromJSON(json: any): CreateUserGroupErrorType {
     return CreateUserGroupErrorTypeFromJSONTyped(json, false);
 }
@@ -36,5 +47,9 @@ export function CreateUserGroupErrorTypeFromJSONTyped(json: any, ignoreDiscrimin
 
 export function CreateUserGroupErrorTypeToJSON(value?: CreateUserGroupErrorType | null): any {
     return value as any;
+}
+
+export function CreateUserGroupErrorTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): CreateUserGroupErrorType {
+    return value as CreateUserGroupErrorType;
 }
 

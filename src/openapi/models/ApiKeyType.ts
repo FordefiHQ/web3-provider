@@ -24,6 +24,17 @@ export const ApiKeyType = {
 export type ApiKeyType = typeof ApiKeyType[keyof typeof ApiKeyType];
 
 
+export function instanceOfApiKeyType(value: any): boolean {
+    for (const key in ApiKeyType) {
+        if (Object.prototype.hasOwnProperty.call(ApiKeyType, key)) {
+            if (ApiKeyType[key as keyof typeof ApiKeyType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function ApiKeyTypeFromJSON(json: any): ApiKeyType {
     return ApiKeyTypeFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function ApiKeyTypeFromJSONTyped(json: any, ignoreDiscriminator: boolean)
 
 export function ApiKeyTypeToJSON(value?: ApiKeyType | null): any {
     return value as any;
+}
+
+export function ApiKeyTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): ApiKeyType {
+    return value as ApiKeyType;
 }
 

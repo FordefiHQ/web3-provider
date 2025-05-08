@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type SuiPureByteArrayInputTypeEnum = typeof SuiPureByteArrayInputTypeEnum
 /**
  * Check if a given object implements the SuiPureByteArrayInput interface.
  */
-export function instanceOfSuiPureByteArrayInput(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "value" in value;
-
-    return isInstance;
+export function instanceOfSuiPureByteArrayInput(value: object): value is SuiPureByteArrayInput {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('value' in value) || value['value'] === undefined) return false;
+    return true;
 }
 
 export function SuiPureByteArrayInputFromJSON(json: any): SuiPureByteArrayInput {
@@ -59,7 +57,7 @@ export function SuiPureByteArrayInputFromJSON(json: any): SuiPureByteArrayInput 
 }
 
 export function SuiPureByteArrayInputFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiPureByteArrayInput {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function SuiPureByteArrayInputFromJSONTyped(json: any, ignoreDiscriminato
     };
 }
 
-export function SuiPureByteArrayInputToJSON(value?: SuiPureByteArrayInput | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiPureByteArrayInputToJSON(json: any): SuiPureByteArrayInput {
+    return SuiPureByteArrayInputToJSONTyped(json, false);
+}
+
+export function SuiPureByteArrayInputToJSONTyped(value?: SuiPureByteArrayInput | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'value': value.value,
+        'type': value['type'],
+        'value': value['value'],
     };
 }
 

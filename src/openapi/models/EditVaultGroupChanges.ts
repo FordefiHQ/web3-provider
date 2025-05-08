@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { VaultRef } from './VaultRef';
 import {
     VaultRefFromJSON,
     VaultRefFromJSONTyped,
     VaultRefToJSON,
+    VaultRefToJSONTyped,
 } from './VaultRef';
 
 /**
@@ -71,14 +72,12 @@ export type EditVaultGroupChangesTypeEnum = typeof EditVaultGroupChangesTypeEnum
 /**
  * Check if a given object implements the EditVaultGroupChanges interface.
  */
-export function instanceOfEditVaultGroupChanges(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "changeRequestId" in value;
-    isInstance = isInstance && "addedVaults" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "removedVaults" in value;
-
-    return isInstance;
+export function instanceOfEditVaultGroupChanges(value: object): value is EditVaultGroupChanges {
+    if (!('changeRequestId' in value) || value['changeRequestId'] === undefined) return false;
+    if (!('addedVaults' in value) || value['addedVaults'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('removedVaults' in value) || value['removedVaults'] === undefined) return false;
+    return true;
 }
 
 export function EditVaultGroupChangesFromJSON(json: any): EditVaultGroupChanges {
@@ -86,7 +85,7 @@ export function EditVaultGroupChangesFromJSON(json: any): EditVaultGroupChanges 
 }
 
 export function EditVaultGroupChangesFromJSONTyped(json: any, ignoreDiscriminator: boolean): EditVaultGroupChanges {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -95,24 +94,26 @@ export function EditVaultGroupChangesFromJSONTyped(json: any, ignoreDiscriminato
         'addedVaults': ((json['added_vaults'] as Array<any>).map(VaultRefFromJSON)),
         'type': json['type'],
         'removedVaults': ((json['removed_vaults'] as Array<any>).map(VaultRefFromJSON)),
-        'newName': !exists(json, 'new_name') ? undefined : json['new_name'],
+        'newName': json['new_name'] == null ? undefined : json['new_name'],
     };
 }
 
-export function EditVaultGroupChangesToJSON(value?: EditVaultGroupChanges | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EditVaultGroupChangesToJSON(json: any): EditVaultGroupChanges {
+    return EditVaultGroupChangesToJSONTyped(json, false);
+}
+
+export function EditVaultGroupChangesToJSONTyped(value?: EditVaultGroupChanges | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'change_request_id': value.changeRequestId,
-        'added_vaults': ((value.addedVaults as Array<any>).map(VaultRefToJSON)),
-        'type': value.type,
-        'removed_vaults': ((value.removedVaults as Array<any>).map(VaultRefToJSON)),
-        'new_name': value.newName,
+        'change_request_id': value['changeRequestId'],
+        'added_vaults': ((value['addedVaults'] as Array<any>).map(VaultRefToJSON)),
+        'type': value['type'],
+        'removed_vaults': ((value['removedVaults'] as Array<any>).map(VaultRefToJSON)),
+        'new_name': value['newName'],
     };
 }
 

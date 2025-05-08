@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type ProverErrorTypeTypeEnum = typeof ProverErrorTypeTypeEnum[keyof typeo
 /**
  * Check if a given object implements the ProverErrorType interface.
  */
-export function instanceOfProverErrorType(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "proverError" in value;
-
-    return isInstance;
+export function instanceOfProverErrorType(value: object): value is ProverErrorType {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('proverError' in value) || value['proverError'] === undefined) return false;
+    return true;
 }
 
 export function ProverErrorTypeFromJSON(json: any): ProverErrorType {
@@ -59,7 +57,7 @@ export function ProverErrorTypeFromJSON(json: any): ProverErrorType {
 }
 
 export function ProverErrorTypeFromJSONTyped(json: any, ignoreDiscriminator: boolean): ProverErrorType {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function ProverErrorTypeFromJSONTyped(json: any, ignoreDiscriminator: boo
     };
 }
 
-export function ProverErrorTypeToJSON(value?: ProverErrorType | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ProverErrorTypeToJSON(json: any): ProverErrorType {
+    return ProverErrorTypeToJSONTyped(json, false);
+}
+
+export function ProverErrorTypeToJSONTyped(value?: ProverErrorType | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'prover_error': value.proverError,
+        'type': value['type'],
+        'prover_error': value['proverError'],
     };
 }
 

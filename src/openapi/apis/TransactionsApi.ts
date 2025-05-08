@@ -26,33 +26,38 @@ import type {
   DefinedPreconditionErrorPredictTransactionErrorType,
   DefinedPreconditionErrorReleaseTransactionErrorType,
   DefinedPreconditionErrorSignTransactionErrorType,
-  GetNextApiSignerTransactionResponse,
-  GetNextApiSignerTransactionResponseV2,
+  Export,
   GetTransactionResponse,
   ListTransactionResponse,
   NextApiSignerTransactionRequestV3,
+  NextApiSignerTransactionRequestV4,
   NextApiSignerTransactionResponseV3,
+  NextApiSignerTransactionResponseV4,
+  PageResponseType,
   PreconditionFailedError,
   PredictTransactionRequest,
   PredictTransactionResponse,
+  PushTransactionByDataRequest,
+  PushTransactionByDataResponse,
   PushTransactionRequest,
   PushTransactionResponse,
+  RefreshTransactionResponse,
   RegisterTransactionSignSessionRequest,
   RegisterTransactionSignSessionResponse,
-  ReleaseEvmTransactionRequest,
+  ReleaseTransactionRequest,
   ReleaseTransactionResponse,
   ResourceError,
   SignerType,
+  StatesInner,
   TransactionDirection,
   TransactionSortableFields,
-  TransactionState,
   TransactionSubType,
   TransactionType,
   TriggerAutoProtectionRequest,
   UpdateTransactionForSigningResponse,
   UpdateTransactionSpamStateRequest,
   ValidationError,
-} from '../models';
+} from '../models/index';
 import {
     BaseErrorFromJSON,
     BaseErrorToJSON,
@@ -76,46 +81,56 @@ import {
     DefinedPreconditionErrorReleaseTransactionErrorTypeToJSON,
     DefinedPreconditionErrorSignTransactionErrorTypeFromJSON,
     DefinedPreconditionErrorSignTransactionErrorTypeToJSON,
-    GetNextApiSignerTransactionResponseFromJSON,
-    GetNextApiSignerTransactionResponseToJSON,
-    GetNextApiSignerTransactionResponseV2FromJSON,
-    GetNextApiSignerTransactionResponseV2ToJSON,
+    ExportFromJSON,
+    ExportToJSON,
     GetTransactionResponseFromJSON,
     GetTransactionResponseToJSON,
     ListTransactionResponseFromJSON,
     ListTransactionResponseToJSON,
     NextApiSignerTransactionRequestV3FromJSON,
     NextApiSignerTransactionRequestV3ToJSON,
+    NextApiSignerTransactionRequestV4FromJSON,
+    NextApiSignerTransactionRequestV4ToJSON,
     NextApiSignerTransactionResponseV3FromJSON,
     NextApiSignerTransactionResponseV3ToJSON,
+    NextApiSignerTransactionResponseV4FromJSON,
+    NextApiSignerTransactionResponseV4ToJSON,
+    PageResponseTypeFromJSON,
+    PageResponseTypeToJSON,
     PreconditionFailedErrorFromJSON,
     PreconditionFailedErrorToJSON,
     PredictTransactionRequestFromJSON,
     PredictTransactionRequestToJSON,
     PredictTransactionResponseFromJSON,
     PredictTransactionResponseToJSON,
+    PushTransactionByDataRequestFromJSON,
+    PushTransactionByDataRequestToJSON,
+    PushTransactionByDataResponseFromJSON,
+    PushTransactionByDataResponseToJSON,
     PushTransactionRequestFromJSON,
     PushTransactionRequestToJSON,
     PushTransactionResponseFromJSON,
     PushTransactionResponseToJSON,
+    RefreshTransactionResponseFromJSON,
+    RefreshTransactionResponseToJSON,
     RegisterTransactionSignSessionRequestFromJSON,
     RegisterTransactionSignSessionRequestToJSON,
     RegisterTransactionSignSessionResponseFromJSON,
     RegisterTransactionSignSessionResponseToJSON,
-    ReleaseEvmTransactionRequestFromJSON,
-    ReleaseEvmTransactionRequestToJSON,
+    ReleaseTransactionRequestFromJSON,
+    ReleaseTransactionRequestToJSON,
     ReleaseTransactionResponseFromJSON,
     ReleaseTransactionResponseToJSON,
     ResourceErrorFromJSON,
     ResourceErrorToJSON,
     SignerTypeFromJSON,
     SignerTypeToJSON,
+    StatesInnerFromJSON,
+    StatesInnerToJSON,
     TransactionDirectionFromJSON,
     TransactionDirectionToJSON,
     TransactionSortableFieldsFromJSON,
     TransactionSortableFieldsToJSON,
-    TransactionStateFromJSON,
-    TransactionStateToJSON,
     TransactionSubTypeFromJSON,
     TransactionSubTypeToJSON,
     TransactionTypeFromJSON,
@@ -128,7 +143,7 @@ import {
     UpdateTransactionSpamStateRequestToJSON,
     ValidationErrorFromJSON,
     ValidationErrorToJSON,
-} from '../models';
+} from '../models/index';
 
 export interface AbortTransactionApiV1TransactionsIdAbortPostRequest {
     id: string;
@@ -165,7 +180,10 @@ export interface ExportTransactionsApiV1TransactionsExportGetRequest {
     signerTypes?: Array<SignerType>;
     transactionIds?: Array<string>;
     endUserIds?: Array<string>;
+    assetIds?: Array<string>;
     direction?: TransactionDirection;
+    transactionHashes?: Array<string>;
+    search?: string;
 }
 
 export interface GetTransactionApiV1TransactionsIdGetRequest {
@@ -175,6 +193,7 @@ export interface GetTransactionApiV1TransactionsIdGetRequest {
 export interface ListTransactionsApiV1TransactionsGetRequest {
     page?: number;
     size?: number;
+    responseType?: PageResponseType;
     createdBefore?: Date;
     createdAfter?: Date;
     modifiedAfter?: Date;
@@ -186,11 +205,15 @@ export interface ListTransactionsApiV1TransactionsGetRequest {
     signerTypes?: Array<SignerType>;
     transactionIds?: Array<string>;
     endUserIds?: Array<string>;
+    assetIds?: Array<string>;
     direction?: TransactionDirection;
-    states?: Array<TransactionState>;
+    transactionHashes?: Array<string>;
+    search?: string;
+    states?: Array<StatesInner>;
     isHidden?: boolean;
     includeFullResponse?: boolean;
     batchIds?: Array<string>;
+    includeBlackbox?: boolean;
     sortBy?: Array<TransactionSortableFields>;
 }
 
@@ -202,9 +225,21 @@ export interface ProcessNextApiSignerTransactionV3ApiV1TransactionsNextApiSigner
     nextApiSignerTransactionRequestV3: NextApiSignerTransactionRequestV3;
 }
 
+export interface ProcessNextApiSignerTransactionV4ApiV1TransactionsNextApiSignerTransactionV4PostRequest {
+    nextApiSignerTransactionRequestV4: NextApiSignerTransactionRequestV4;
+}
+
 export interface PushTransactionApiV1TransactionsIdPushPostRequest {
     id: string;
     pushTransactionRequest: PushTransactionRequest;
+}
+
+export interface PushTransactionByDataApiV1TransactionsPushByDataPostRequest {
+    pushTransactionByDataRequest: PushTransactionByDataRequest;
+}
+
+export interface RefreshTransactionApiV1TransactionsIdRefreshPostRequest {
+    id: string;
 }
 
 export interface RegisterTransactionSignSessionApiV1TransactionsIdRegisterSignSessionPostRequest {
@@ -214,9 +249,14 @@ export interface RegisterTransactionSignSessionApiV1TransactionsIdRegisterSignSe
 
 export interface ReleaseTransactionApiV1TransactionsIdReleasePostRequest {
     id: string;
-    body: ReleaseEvmTransactionRequest;
+    releaseTransactionRequest: ReleaseTransactionRequest;
     xSignature?: string;
     xTimestamp?: number;
+}
+
+export interface SubmitToExchangeApiV1TransactionsIdSubmitToExchangePostRequest {
+    id: string;
+    body: object;
 }
 
 export interface SubmitTransactionSignatureApiV1TransactionsIdSubmitSignaturePostRequest {
@@ -252,8 +292,11 @@ export class TransactionsApi extends runtime.BaseAPI {
      * Abort Transaction
      */
     async abortTransactionApiV1TransactionsIdAbortPostRaw(requestParameters: AbortTransactionApiV1TransactionsIdAbortPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling abortTransactionApiV1TransactionsIdAbortPost.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling abortTransactionApiV1TransactionsIdAbortPost().'
+            );
         }
 
         const queryParameters: any = {};
@@ -269,7 +312,7 @@ export class TransactionsApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/v1/transactions/{id}/abort`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/v1/transactions/{id}/abort`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -291,8 +334,11 @@ export class TransactionsApi extends runtime.BaseAPI {
      * Approve Transaction
      */
     async approveTransactionApiV1TransactionsIdApprovePostRaw(requestParameters: ApproveTransactionApiV1TransactionsIdApprovePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling approveTransactionApiV1TransactionsIdApprovePost.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling approveTransactionApiV1TransactionsIdApprovePost().'
+            );
         }
 
         const queryParameters: any = {};
@@ -308,7 +354,7 @@ export class TransactionsApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/v1/transactions/{id}/approve`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/v1/transactions/{id}/approve`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -330,8 +376,11 @@ export class TransactionsApi extends runtime.BaseAPI {
      * Create Transaction And Wait
      */
     async createTransactionAndWaitApiV1TransactionsCreateAndWaitPostRaw(requestParameters: CreateTransactionAndWaitApiV1TransactionsCreateAndWaitPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateTransactionWithWaitResponse>> {
-        if (requestParameters.createTransactionWithWaitRequest === null || requestParameters.createTransactionWithWaitRequest === undefined) {
-            throw new runtime.RequiredError('createTransactionWithWaitRequest','Required parameter requestParameters.createTransactionWithWaitRequest was null or undefined when calling createTransactionAndWaitApiV1TransactionsCreateAndWaitPost.');
+        if (requestParameters['createTransactionWithWaitRequest'] == null) {
+            throw new runtime.RequiredError(
+                'createTransactionWithWaitRequest',
+                'Required parameter "createTransactionWithWaitRequest" was null or undefined when calling createTransactionAndWaitApiV1TransactionsCreateAndWaitPost().'
+            );
         }
 
         const queryParameters: any = {};
@@ -340,16 +389,16 @@ export class TransactionsApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (requestParameters.xSignature !== undefined && requestParameters.xSignature !== null) {
-            headerParameters['x-signature'] = String(requestParameters.xSignature);
+        if (requestParameters['xSignature'] != null) {
+            headerParameters['x-signature'] = String(requestParameters['xSignature']);
         }
 
-        if (requestParameters.xTimestamp !== undefined && requestParameters.xTimestamp !== null) {
-            headerParameters['x-timestamp'] = String(requestParameters.xTimestamp);
+        if (requestParameters['xTimestamp'] != null) {
+            headerParameters['x-timestamp'] = String(requestParameters['xTimestamp']);
         }
 
-        if (requestParameters.xIdempotenceId !== undefined && requestParameters.xIdempotenceId !== null) {
-            headerParameters['x-idempotence-id'] = String(requestParameters.xIdempotenceId);
+        if (requestParameters['xIdempotenceId'] != null) {
+            headerParameters['x-idempotence-id'] = String(requestParameters['xIdempotenceId']);
         }
 
         if (this.configuration && this.configuration.accessToken) {
@@ -365,7 +414,7 @@ export class TransactionsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: CreateTransactionWithWaitRequestToJSON(requestParameters.createTransactionWithWaitRequest),
+            body: CreateTransactionWithWaitRequestToJSON(requestParameters['createTransactionWithWaitRequest']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => CreateTransactionWithWaitResponseFromJSON(jsonValue));
@@ -385,8 +434,11 @@ export class TransactionsApi extends runtime.BaseAPI {
      * Create Transaction
      */
     async createTransactionApiV1TransactionsPostRaw(requestParameters: CreateTransactionApiV1TransactionsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateTransactionResponse>> {
-        if (requestParameters.createTransactionRequest === null || requestParameters.createTransactionRequest === undefined) {
-            throw new runtime.RequiredError('createTransactionRequest','Required parameter requestParameters.createTransactionRequest was null or undefined when calling createTransactionApiV1TransactionsPost.');
+        if (requestParameters['createTransactionRequest'] == null) {
+            throw new runtime.RequiredError(
+                'createTransactionRequest',
+                'Required parameter "createTransactionRequest" was null or undefined when calling createTransactionApiV1TransactionsPost().'
+            );
         }
 
         const queryParameters: any = {};
@@ -395,16 +447,16 @@ export class TransactionsApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (requestParameters.xSignature !== undefined && requestParameters.xSignature !== null) {
-            headerParameters['x-signature'] = String(requestParameters.xSignature);
+        if (requestParameters['xSignature'] != null) {
+            headerParameters['x-signature'] = String(requestParameters['xSignature']);
         }
 
-        if (requestParameters.xTimestamp !== undefined && requestParameters.xTimestamp !== null) {
-            headerParameters['x-timestamp'] = String(requestParameters.xTimestamp);
+        if (requestParameters['xTimestamp'] != null) {
+            headerParameters['x-timestamp'] = String(requestParameters['xTimestamp']);
         }
 
-        if (requestParameters.xIdempotenceId !== undefined && requestParameters.xIdempotenceId !== null) {
-            headerParameters['x-idempotence-id'] = String(requestParameters.xIdempotenceId);
+        if (requestParameters['xIdempotenceId'] != null) {
+            headerParameters['x-idempotence-id'] = String(requestParameters['xIdempotenceId']);
         }
 
         if (this.configuration && this.configuration.accessToken) {
@@ -420,7 +472,7 @@ export class TransactionsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: CreateTransactionRequestToJSON(requestParameters.createTransactionRequest),
+            body: CreateTransactionRequestToJSON(requestParameters['createTransactionRequest']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => CreateTransactionResponseFromJSON(jsonValue));
@@ -436,62 +488,74 @@ export class TransactionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get a CSV-format list of transactions.
+     * Start the export process for filtered transactions
      * Export Transactions
      */
-    async exportTransactionsApiV1TransactionsExportGetRaw(requestParameters: ExportTransactionsApiV1TransactionsExportGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
+    async exportTransactionsApiV1TransactionsExportGetRaw(requestParameters: ExportTransactionsApiV1TransactionsExportGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Export>> {
         const queryParameters: any = {};
 
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
         }
 
-        if (requestParameters.createdBefore !== undefined) {
-            queryParameters['created_before'] = (requestParameters.createdBefore as any).toISOString();
+        if (requestParameters['createdBefore'] != null) {
+            queryParameters['created_before'] = (requestParameters['createdBefore'] as any).toISOString();
         }
 
-        if (requestParameters.createdAfter !== undefined) {
-            queryParameters['created_after'] = (requestParameters.createdAfter as any).toISOString();
+        if (requestParameters['createdAfter'] != null) {
+            queryParameters['created_after'] = (requestParameters['createdAfter'] as any).toISOString();
         }
 
-        if (requestParameters.modifiedAfter !== undefined) {
-            queryParameters['modified_after'] = (requestParameters.modifiedAfter as any).toISOString();
+        if (requestParameters['modifiedAfter'] != null) {
+            queryParameters['modified_after'] = (requestParameters['modifiedAfter'] as any).toISOString();
         }
 
-        if (requestParameters.vaultIds) {
-            queryParameters['vault_ids'] = requestParameters.vaultIds;
+        if (requestParameters['vaultIds'] != null) {
+            queryParameters['vault_ids'] = requestParameters['vaultIds'];
         }
 
-        if (requestParameters.chains) {
-            queryParameters['chains'] = requestParameters.chains;
+        if (requestParameters['chains'] != null) {
+            queryParameters['chains'] = requestParameters['chains'];
         }
 
-        if (requestParameters.initiatorIds) {
-            queryParameters['initiator_ids'] = requestParameters.initiatorIds;
+        if (requestParameters['initiatorIds'] != null) {
+            queryParameters['initiator_ids'] = requestParameters['initiatorIds'];
         }
 
-        if (requestParameters.types) {
-            queryParameters['types'] = requestParameters.types;
+        if (requestParameters['types'] != null) {
+            queryParameters['types'] = requestParameters['types'];
         }
 
-        if (requestParameters.subTypes) {
-            queryParameters['sub_types'] = requestParameters.subTypes;
+        if (requestParameters['subTypes'] != null) {
+            queryParameters['sub_types'] = requestParameters['subTypes'];
         }
 
-        if (requestParameters.signerTypes) {
-            queryParameters['signer_types'] = requestParameters.signerTypes;
+        if (requestParameters['signerTypes'] != null) {
+            queryParameters['signer_types'] = requestParameters['signerTypes'];
         }
 
-        if (requestParameters.transactionIds) {
-            queryParameters['transaction_ids'] = requestParameters.transactionIds;
+        if (requestParameters['transactionIds'] != null) {
+            queryParameters['transaction_ids'] = requestParameters['transactionIds'];
         }
 
-        if (requestParameters.endUserIds) {
-            queryParameters['end_user_ids'] = requestParameters.endUserIds;
+        if (requestParameters['endUserIds'] != null) {
+            queryParameters['end_user_ids'] = requestParameters['endUserIds'];
         }
 
-        if (requestParameters.direction !== undefined) {
-            queryParameters['direction'] = requestParameters.direction;
+        if (requestParameters['assetIds'] != null) {
+            queryParameters['asset_ids'] = requestParameters['assetIds'];
+        }
+
+        if (requestParameters['direction'] != null) {
+            queryParameters['direction'] = requestParameters['direction'];
+        }
+
+        if (requestParameters['transactionHashes'] != null) {
+            queryParameters['transaction_hashes'] = requestParameters['transactionHashes'];
+        }
+
+        if (requestParameters['search'] != null) {
+            queryParameters['search'] = requestParameters['search'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -511,88 +575,23 @@ export class TransactionsApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.TextApiResponse(response) as any;
+        return new runtime.JSONApiResponse(response, (jsonValue) => ExportFromJSON(jsonValue));
     }
 
     /**
-     * Get a CSV-format list of transactions.
+     * Start the export process for filtered transactions
      * Export Transactions
      */
-    async exportTransactionsApiV1TransactionsExportGet(requestParameters: ExportTransactionsApiV1TransactionsExportGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<string> {
+    async exportTransactionsApiV1TransactionsExportGet(requestParameters: ExportTransactionsApiV1TransactionsExportGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Export | null | undefined > {
         const response = await this.exportTransactionsApiV1TransactionsExportGetRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Get the first transaction ready for signing by api-signer.
-     * Get Next Api Signer Transaction
-     */
-    async getNextApiSignerTransactionApiV1TransactionsNextApiSignerTransactionGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetNextApiSignerTransactionResponse>> {
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
+        switch (response.raw.status) {
+            case 200:
+                return await response.value();
+            case 204:
+                return null;
+            default:
+                return await response.value();
         }
-        const response = await this.request({
-            path: `/api/v1/transactions/next_api_signer_transaction`,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => GetNextApiSignerTransactionResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Get the first transaction ready for signing by api-signer.
-     * Get Next Api Signer Transaction
-     */
-    async getNextApiSignerTransactionApiV1TransactionsNextApiSignerTransactionGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetNextApiSignerTransactionResponse> {
-        const response = await this.getNextApiSignerTransactionApiV1TransactionsNextApiSignerTransactionGetRaw(initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Get the first transaction ready for signing by api-signer.
-     * Get Next Api Signer Transaction V2
-     */
-    async getNextApiSignerTransactionV2ApiV1TransactionsNextApiSignerTransactionV2GetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetNextApiSignerTransactionResponseV2>> {
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/api/v1/transactions/next_api_signer_transaction_v2`,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => GetNextApiSignerTransactionResponseV2FromJSON(jsonValue));
-    }
-
-    /**
-     * Get the first transaction ready for signing by api-signer.
-     * Get Next Api Signer Transaction V2
-     */
-    async getNextApiSignerTransactionV2ApiV1TransactionsNextApiSignerTransactionV2Get(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetNextApiSignerTransactionResponseV2> {
-        const response = await this.getNextApiSignerTransactionV2ApiV1TransactionsNextApiSignerTransactionV2GetRaw(initOverrides);
-        return await response.value();
     }
 
     /**
@@ -600,8 +599,11 @@ export class TransactionsApi extends runtime.BaseAPI {
      * Get Transaction
      */
     async getTransactionApiV1TransactionsIdGetRaw(requestParameters: GetTransactionApiV1TransactionsIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetTransactionResponse>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getTransactionApiV1TransactionsIdGet.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getTransactionApiV1TransactionsIdGet().'
+            );
         }
 
         const queryParameters: any = {};
@@ -617,7 +619,7 @@ export class TransactionsApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/v1/transactions/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/v1/transactions/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -642,80 +644,100 @@ export class TransactionsApi extends runtime.BaseAPI {
     async listTransactionsApiV1TransactionsGetRaw(requestParameters: ListTransactionsApiV1TransactionsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListTransactionResponse>> {
         const queryParameters: any = {};
 
-        if (requestParameters.page !== undefined) {
-            queryParameters['page'] = requestParameters.page;
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
         }
 
-        if (requestParameters.size !== undefined) {
-            queryParameters['size'] = requestParameters.size;
+        if (requestParameters['size'] != null) {
+            queryParameters['size'] = requestParameters['size'];
         }
 
-        if (requestParameters.createdBefore !== undefined) {
-            queryParameters['created_before'] = (requestParameters.createdBefore as any).toISOString();
+        if (requestParameters['responseType'] != null) {
+            queryParameters['response_type'] = requestParameters['responseType'];
         }
 
-        if (requestParameters.createdAfter !== undefined) {
-            queryParameters['created_after'] = (requestParameters.createdAfter as any).toISOString();
+        if (requestParameters['createdBefore'] != null) {
+            queryParameters['created_before'] = (requestParameters['createdBefore'] as any).toISOString();
         }
 
-        if (requestParameters.modifiedAfter !== undefined) {
-            queryParameters['modified_after'] = (requestParameters.modifiedAfter as any).toISOString();
+        if (requestParameters['createdAfter'] != null) {
+            queryParameters['created_after'] = (requestParameters['createdAfter'] as any).toISOString();
         }
 
-        if (requestParameters.vaultIds) {
-            queryParameters['vault_ids'] = requestParameters.vaultIds;
+        if (requestParameters['modifiedAfter'] != null) {
+            queryParameters['modified_after'] = (requestParameters['modifiedAfter'] as any).toISOString();
         }
 
-        if (requestParameters.chains) {
-            queryParameters['chains'] = requestParameters.chains;
+        if (requestParameters['vaultIds'] != null) {
+            queryParameters['vault_ids'] = requestParameters['vaultIds'];
         }
 
-        if (requestParameters.initiatorIds) {
-            queryParameters['initiator_ids'] = requestParameters.initiatorIds;
+        if (requestParameters['chains'] != null) {
+            queryParameters['chains'] = requestParameters['chains'];
         }
 
-        if (requestParameters.types) {
-            queryParameters['types'] = requestParameters.types;
+        if (requestParameters['initiatorIds'] != null) {
+            queryParameters['initiator_ids'] = requestParameters['initiatorIds'];
         }
 
-        if (requestParameters.subTypes) {
-            queryParameters['sub_types'] = requestParameters.subTypes;
+        if (requestParameters['types'] != null) {
+            queryParameters['types'] = requestParameters['types'];
         }
 
-        if (requestParameters.signerTypes) {
-            queryParameters['signer_types'] = requestParameters.signerTypes;
+        if (requestParameters['subTypes'] != null) {
+            queryParameters['sub_types'] = requestParameters['subTypes'];
         }
 
-        if (requestParameters.transactionIds) {
-            queryParameters['transaction_ids'] = requestParameters.transactionIds;
+        if (requestParameters['signerTypes'] != null) {
+            queryParameters['signer_types'] = requestParameters['signerTypes'];
         }
 
-        if (requestParameters.endUserIds) {
-            queryParameters['end_user_ids'] = requestParameters.endUserIds;
+        if (requestParameters['transactionIds'] != null) {
+            queryParameters['transaction_ids'] = requestParameters['transactionIds'];
         }
 
-        if (requestParameters.direction !== undefined) {
-            queryParameters['direction'] = requestParameters.direction;
+        if (requestParameters['endUserIds'] != null) {
+            queryParameters['end_user_ids'] = requestParameters['endUserIds'];
         }
 
-        if (requestParameters.states) {
-            queryParameters['states'] = requestParameters.states;
+        if (requestParameters['assetIds'] != null) {
+            queryParameters['asset_ids'] = requestParameters['assetIds'];
         }
 
-        if (requestParameters.isHidden !== undefined) {
-            queryParameters['is_hidden'] = requestParameters.isHidden;
+        if (requestParameters['direction'] != null) {
+            queryParameters['direction'] = requestParameters['direction'];
         }
 
-        if (requestParameters.includeFullResponse !== undefined) {
-            queryParameters['include_full_response'] = requestParameters.includeFullResponse;
+        if (requestParameters['transactionHashes'] != null) {
+            queryParameters['transaction_hashes'] = requestParameters['transactionHashes'];
         }
 
-        if (requestParameters.batchIds) {
-            queryParameters['batch_ids'] = requestParameters.batchIds;
+        if (requestParameters['search'] != null) {
+            queryParameters['search'] = requestParameters['search'];
         }
 
-        if (requestParameters.sortBy) {
-            queryParameters['sort_by'] = requestParameters.sortBy;
+        if (requestParameters['states'] != null) {
+            queryParameters['states'] = requestParameters['states'];
+        }
+
+        if (requestParameters['isHidden'] != null) {
+            queryParameters['is_hidden'] = requestParameters['isHidden'];
+        }
+
+        if (requestParameters['includeFullResponse'] != null) {
+            queryParameters['include_full_response'] = requestParameters['includeFullResponse'];
+        }
+
+        if (requestParameters['batchIds'] != null) {
+            queryParameters['batch_ids'] = requestParameters['batchIds'];
+        }
+
+        if (requestParameters['includeBlackbox'] != null) {
+            queryParameters['include_blackbox'] = requestParameters['includeBlackbox'];
+        }
+
+        if (requestParameters['sortBy'] != null) {
+            queryParameters['sort_by'] = requestParameters['sortBy'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -752,8 +774,11 @@ export class TransactionsApi extends runtime.BaseAPI {
      * Predict Transaction
      */
     async predictTransactionApiV1TransactionsPredictPostRaw(requestParameters: PredictTransactionApiV1TransactionsPredictPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PredictTransactionResponse>> {
-        if (requestParameters.predictTransactionRequest === null || requestParameters.predictTransactionRequest === undefined) {
-            throw new runtime.RequiredError('predictTransactionRequest','Required parameter requestParameters.predictTransactionRequest was null or undefined when calling predictTransactionApiV1TransactionsPredictPost.');
+        if (requestParameters['predictTransactionRequest'] == null) {
+            throw new runtime.RequiredError(
+                'predictTransactionRequest',
+                'Required parameter "predictTransactionRequest" was null or undefined when calling predictTransactionApiV1TransactionsPredictPost().'
+            );
         }
 
         const queryParameters: any = {};
@@ -775,7 +800,7 @@ export class TransactionsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: PredictTransactionRequestToJSON(requestParameters.predictTransactionRequest),
+            body: PredictTransactionRequestToJSON(requestParameters['predictTransactionRequest']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => PredictTransactionResponseFromJSON(jsonValue));
@@ -795,8 +820,11 @@ export class TransactionsApi extends runtime.BaseAPI {
      * Process Next Api Signer Transaction V3
      */
     async processNextApiSignerTransactionV3ApiV1TransactionsNextApiSignerTransactionV3PostRaw(requestParameters: ProcessNextApiSignerTransactionV3ApiV1TransactionsNextApiSignerTransactionV3PostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NextApiSignerTransactionResponseV3>> {
-        if (requestParameters.nextApiSignerTransactionRequestV3 === null || requestParameters.nextApiSignerTransactionRequestV3 === undefined) {
-            throw new runtime.RequiredError('nextApiSignerTransactionRequestV3','Required parameter requestParameters.nextApiSignerTransactionRequestV3 was null or undefined when calling processNextApiSignerTransactionV3ApiV1TransactionsNextApiSignerTransactionV3Post.');
+        if (requestParameters['nextApiSignerTransactionRequestV3'] == null) {
+            throw new runtime.RequiredError(
+                'nextApiSignerTransactionRequestV3',
+                'Required parameter "nextApiSignerTransactionRequestV3" was null or undefined when calling processNextApiSignerTransactionV3ApiV1TransactionsNextApiSignerTransactionV3Post().'
+            );
         }
 
         const queryParameters: any = {};
@@ -818,7 +846,7 @@ export class TransactionsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: NextApiSignerTransactionRequestV3ToJSON(requestParameters.nextApiSignerTransactionRequestV3),
+            body: NextApiSignerTransactionRequestV3ToJSON(requestParameters['nextApiSignerTransactionRequestV3']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => NextApiSignerTransactionResponseV3FromJSON(jsonValue));
@@ -834,16 +862,15 @@ export class TransactionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Push a transaction to the chain.
-     * Push Transaction
+     * Get the first transaction ready for signing by api-signer while it already registered for signing.
+     * Process Next Api Signer Transaction V4
      */
-    async pushTransactionApiV1TransactionsIdPushPostRaw(requestParameters: PushTransactionApiV1TransactionsIdPushPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PushTransactionResponse>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling pushTransactionApiV1TransactionsIdPushPost.');
-        }
-
-        if (requestParameters.pushTransactionRequest === null || requestParameters.pushTransactionRequest === undefined) {
-            throw new runtime.RequiredError('pushTransactionRequest','Required parameter requestParameters.pushTransactionRequest was null or undefined when calling pushTransactionApiV1TransactionsIdPushPost.');
+    async processNextApiSignerTransactionV4ApiV1TransactionsNextApiSignerTransactionV4PostRaw(requestParameters: ProcessNextApiSignerTransactionV4ApiV1TransactionsNextApiSignerTransactionV4PostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NextApiSignerTransactionResponseV4>> {
+        if (requestParameters['nextApiSignerTransactionRequestV4'] == null) {
+            throw new runtime.RequiredError(
+                'nextApiSignerTransactionRequestV4',
+                'Required parameter "nextApiSignerTransactionRequestV4" was null or undefined when calling processNextApiSignerTransactionV4ApiV1TransactionsNextApiSignerTransactionV4Post().'
+            );
         }
 
         const queryParameters: any = {};
@@ -861,18 +888,71 @@ export class TransactionsApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/v1/transactions/{id}/push`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/v1/transactions/next_api_signer_transaction_v4`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: PushTransactionRequestToJSON(requestParameters.pushTransactionRequest),
+            body: NextApiSignerTransactionRequestV4ToJSON(requestParameters['nextApiSignerTransactionRequestV4']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => NextApiSignerTransactionResponseV4FromJSON(jsonValue));
+    }
+
+    /**
+     * Get the first transaction ready for signing by api-signer while it already registered for signing.
+     * Process Next Api Signer Transaction V4
+     */
+    async processNextApiSignerTransactionV4ApiV1TransactionsNextApiSignerTransactionV4Post(requestParameters: ProcessNextApiSignerTransactionV4ApiV1TransactionsNextApiSignerTransactionV4PostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NextApiSignerTransactionResponseV4> {
+        const response = await this.processNextApiSignerTransactionV4ApiV1TransactionsNextApiSignerTransactionV4PostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Push an existing signed transaction to the chain. The transaction must have been previously created with a `push_mode: manual` flag and must now be in state `signed`.
+     * Push Transaction
+     */
+    async pushTransactionApiV1TransactionsIdPushPostRaw(requestParameters: PushTransactionApiV1TransactionsIdPushPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PushTransactionResponse>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling pushTransactionApiV1TransactionsIdPushPost().'
+            );
+        }
+
+        if (requestParameters['pushTransactionRequest'] == null) {
+            throw new runtime.RequiredError(
+                'pushTransactionRequest',
+                'Required parameter "pushTransactionRequest" was null or undefined when calling pushTransactionApiV1TransactionsIdPushPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/v1/transactions/{id}/push`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PushTransactionRequestToJSON(requestParameters['pushTransactionRequest']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => PushTransactionResponseFromJSON(jsonValue));
     }
 
     /**
-     * Push a transaction to the chain.
+     * Push an existing signed transaction to the chain. The transaction must have been previously created with a `push_mode: manual` flag and must now be in state `signed`.
      * Push Transaction
      */
     async pushTransactionApiV1TransactionsIdPushPost(requestParameters: PushTransactionApiV1TransactionsIdPushPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PushTransactionResponse> {
@@ -881,16 +961,15 @@ export class TransactionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Register a sign-session for a transaction.
-     * Register Transaction Sign Session
+     * Push a transaction to the chain, the transaction is identified by its data.
+     * Push Transaction By Data
      */
-    async registerTransactionSignSessionApiV1TransactionsIdRegisterSignSessionPostRaw(requestParameters: RegisterTransactionSignSessionApiV1TransactionsIdRegisterSignSessionPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RegisterTransactionSignSessionResponse>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling registerTransactionSignSessionApiV1TransactionsIdRegisterSignSessionPost.');
-        }
-
-        if (requestParameters.registerTransactionSignSessionRequest === null || requestParameters.registerTransactionSignSessionRequest === undefined) {
-            throw new runtime.RequiredError('registerTransactionSignSessionRequest','Required parameter requestParameters.registerTransactionSignSessionRequest was null or undefined when calling registerTransactionSignSessionApiV1TransactionsIdRegisterSignSessionPost.');
+    async pushTransactionByDataApiV1TransactionsPushByDataPostRaw(requestParameters: PushTransactionByDataApiV1TransactionsPushByDataPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PushTransactionByDataResponse>> {
+        if (requestParameters['pushTransactionByDataRequest'] == null) {
+            throw new runtime.RequiredError(
+                'pushTransactionByDataRequest',
+                'Required parameter "pushTransactionByDataRequest" was null or undefined when calling pushTransactionByDataApiV1TransactionsPushByDataPost().'
+            );
         }
 
         const queryParameters: any = {};
@@ -908,11 +987,107 @@ export class TransactionsApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/v1/transactions/{id}/register-sign-session`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/v1/transactions/push-by-data`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: RegisterTransactionSignSessionRequestToJSON(requestParameters.registerTransactionSignSessionRequest),
+            body: PushTransactionByDataRequestToJSON(requestParameters['pushTransactionByDataRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PushTransactionByDataResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Push a transaction to the chain, the transaction is identified by its data.
+     * Push Transaction By Data
+     */
+    async pushTransactionByDataApiV1TransactionsPushByDataPost(requestParameters: PushTransactionByDataApiV1TransactionsPushByDataPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PushTransactionByDataResponse> {
+        const response = await this.pushTransactionByDataApiV1TransactionsPushByDataPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Refresh a transaction.
+     * Refresh Transaction
+     */
+    async refreshTransactionApiV1TransactionsIdRefreshPostRaw(requestParameters: RefreshTransactionApiV1TransactionsIdRefreshPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RefreshTransactionResponse>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling refreshTransactionApiV1TransactionsIdRefreshPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/v1/transactions/{id}/refresh`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => RefreshTransactionResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Refresh a transaction.
+     * Refresh Transaction
+     */
+    async refreshTransactionApiV1TransactionsIdRefreshPost(requestParameters: RefreshTransactionApiV1TransactionsIdRefreshPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RefreshTransactionResponse> {
+        const response = await this.refreshTransactionApiV1TransactionsIdRefreshPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Register a sign-session for a transaction.
+     * Register Transaction Sign Session
+     */
+    async registerTransactionSignSessionApiV1TransactionsIdRegisterSignSessionPostRaw(requestParameters: RegisterTransactionSignSessionApiV1TransactionsIdRegisterSignSessionPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RegisterTransactionSignSessionResponse>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling registerTransactionSignSessionApiV1TransactionsIdRegisterSignSessionPost().'
+            );
+        }
+
+        if (requestParameters['registerTransactionSignSessionRequest'] == null) {
+            throw new runtime.RequiredError(
+                'registerTransactionSignSessionRequest',
+                'Required parameter "registerTransactionSignSessionRequest" was null or undefined when calling registerTransactionSignSessionApiV1TransactionsIdRegisterSignSessionPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/v1/transactions/{id}/register-sign-session`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: RegisterTransactionSignSessionRequestToJSON(requestParameters['registerTransactionSignSessionRequest']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => RegisterTransactionSignSessionResponseFromJSON(jsonValue));
@@ -932,12 +1107,18 @@ export class TransactionsApi extends runtime.BaseAPI {
      * Release Transaction
      */
     async releaseTransactionApiV1TransactionsIdReleasePostRaw(requestParameters: ReleaseTransactionApiV1TransactionsIdReleasePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ReleaseTransactionResponse>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling releaseTransactionApiV1TransactionsIdReleasePost.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling releaseTransactionApiV1TransactionsIdReleasePost().'
+            );
         }
 
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling releaseTransactionApiV1TransactionsIdReleasePost.');
+        if (requestParameters['releaseTransactionRequest'] == null) {
+            throw new runtime.RequiredError(
+                'releaseTransactionRequest',
+                'Required parameter "releaseTransactionRequest" was null or undefined when calling releaseTransactionApiV1TransactionsIdReleasePost().'
+            );
         }
 
         const queryParameters: any = {};
@@ -946,12 +1127,12 @@ export class TransactionsApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (requestParameters.xSignature !== undefined && requestParameters.xSignature !== null) {
-            headerParameters['x-signature'] = String(requestParameters.xSignature);
+        if (requestParameters['xSignature'] != null) {
+            headerParameters['x-signature'] = String(requestParameters['xSignature']);
         }
 
-        if (requestParameters.xTimestamp !== undefined && requestParameters.xTimestamp !== null) {
-            headerParameters['x-timestamp'] = String(requestParameters.xTimestamp);
+        if (requestParameters['xTimestamp'] != null) {
+            headerParameters['x-timestamp'] = String(requestParameters['xTimestamp']);
         }
 
         if (this.configuration && this.configuration.accessToken) {
@@ -963,11 +1144,11 @@ export class TransactionsApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/v1/transactions/{id}/release`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/v1/transactions/{id}/release`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: ReleaseEvmTransactionRequestToJSON(requestParameters.body),
+            body: ReleaseTransactionRequestToJSON(requestParameters['releaseTransactionRequest']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => ReleaseTransactionResponseFromJSON(jsonValue));
@@ -983,16 +1164,22 @@ export class TransactionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Submit a signature for a transaction.
-     * Submit Transaction Signature
+     * Submit transaction to exchange.
+     * Submit To Exchange
      */
-    async submitTransactionSignatureApiV1TransactionsIdSubmitSignaturePostRaw(requestParameters: SubmitTransactionSignatureApiV1TransactionsIdSubmitSignaturePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling submitTransactionSignatureApiV1TransactionsIdSubmitSignaturePost.');
+    async submitToExchangeApiV1TransactionsIdSubmitToExchangePostRaw(requestParameters: SubmitToExchangeApiV1TransactionsIdSubmitToExchangePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling submitToExchangeApiV1TransactionsIdSubmitToExchangePost().'
+            );
         }
 
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling submitTransactionSignatureApiV1TransactionsIdSubmitSignaturePost.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling submitToExchangeApiV1TransactionsIdSubmitToExchangePost().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1010,14 +1197,75 @@ export class TransactionsApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/v1/transactions/{id}/submit-signature`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/v1/transactions/{id}/submit-to-exchange`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body as any,
+            body: requestParameters['body'] as any,
         }, initOverrides);
 
-        return new runtime.TextApiResponse(response) as any;
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Submit transaction to exchange.
+     * Submit To Exchange
+     */
+    async submitToExchangeApiV1TransactionsIdSubmitToExchangePost(requestParameters: SubmitToExchangeApiV1TransactionsIdSubmitToExchangePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.submitToExchangeApiV1TransactionsIdSubmitToExchangePostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Submit a signature for a transaction.
+     * Submit Transaction Signature
+     */
+    async submitTransactionSignatureApiV1TransactionsIdSubmitSignaturePostRaw(requestParameters: SubmitTransactionSignatureApiV1TransactionsIdSubmitSignaturePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling submitTransactionSignatureApiV1TransactionsIdSubmitSignaturePost().'
+            );
+        }
+
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling submitTransactionSignatureApiV1TransactionsIdSubmitSignaturePost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/v1/transactions/{id}/submit-signature`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters['body'] as any,
+        }, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
     }
 
     /**
@@ -1034,8 +1282,11 @@ export class TransactionsApi extends runtime.BaseAPI {
      * Trigger Auto Revoke Protection
      */
     async triggerAutoRevokeProtectionApiV1TransactionsTriggerAutoRevokeProtectionPostRaw(requestParameters: TriggerAutoRevokeProtectionApiV1TransactionsTriggerAutoRevokeProtectionPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.triggerAutoProtectionRequest === null || requestParameters.triggerAutoProtectionRequest === undefined) {
-            throw new runtime.RequiredError('triggerAutoProtectionRequest','Required parameter requestParameters.triggerAutoProtectionRequest was null or undefined when calling triggerAutoRevokeProtectionApiV1TransactionsTriggerAutoRevokeProtectionPost.');
+        if (requestParameters['triggerAutoProtectionRequest'] == null) {
+            throw new runtime.RequiredError(
+                'triggerAutoProtectionRequest',
+                'Required parameter "triggerAutoProtectionRequest" was null or undefined when calling triggerAutoRevokeProtectionApiV1TransactionsTriggerAutoRevokeProtectionPost().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1057,7 +1308,7 @@ export class TransactionsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: TriggerAutoProtectionRequestToJSON(requestParameters.triggerAutoProtectionRequest),
+            body: TriggerAutoProtectionRequestToJSON(requestParameters['triggerAutoProtectionRequest']),
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -1076,8 +1327,11 @@ export class TransactionsApi extends runtime.BaseAPI {
      * Trigger Transaction Signing
      */
     async triggerTransactionSigningApiV1TransactionsIdTriggerSigningPostRaw(requestParameters: TriggerTransactionSigningApiV1TransactionsIdTriggerSigningPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling triggerTransactionSigningApiV1TransactionsIdTriggerSigningPost.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling triggerTransactionSigningApiV1TransactionsIdTriggerSigningPost().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1093,7 +1347,7 @@ export class TransactionsApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/v1/transactions/{id}/trigger-signing`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/v1/transactions/{id}/trigger-signing`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -1115,12 +1369,18 @@ export class TransactionsApi extends runtime.BaseAPI {
      * Update Transaction For Signing
      */
     async updateTransactionForSigningApiV1TransactionsIdUpdateForSigningPostRaw(requestParameters: UpdateTransactionForSigningApiV1TransactionsIdUpdateForSigningPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UpdateTransactionForSigningResponse>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateTransactionForSigningApiV1TransactionsIdUpdateForSigningPost.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling updateTransactionForSigningApiV1TransactionsIdUpdateForSigningPost().'
+            );
         }
 
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling updateTransactionForSigningApiV1TransactionsIdUpdateForSigningPost.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling updateTransactionForSigningApiV1TransactionsIdUpdateForSigningPost().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1138,11 +1398,11 @@ export class TransactionsApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/v1/transactions/{id}/update-for-signing`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/v1/transactions/{id}/update-for-signing`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body as any,
+            body: requestParameters['body'] as any,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => UpdateTransactionForSigningResponseFromJSON(jsonValue));
@@ -1162,12 +1422,18 @@ export class TransactionsApi extends runtime.BaseAPI {
      * Update Transaction Spam State
      */
     async updateTransactionSpamStateApiV1TransactionsIdUpdateSpamStatePutRaw(requestParameters: UpdateTransactionSpamStateApiV1TransactionsIdUpdateSpamStatePutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateTransactionSpamStateApiV1TransactionsIdUpdateSpamStatePut.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling updateTransactionSpamStateApiV1TransactionsIdUpdateSpamStatePut().'
+            );
         }
 
-        if (requestParameters.updateTransactionSpamStateRequest === null || requestParameters.updateTransactionSpamStateRequest === undefined) {
-            throw new runtime.RequiredError('updateTransactionSpamStateRequest','Required parameter requestParameters.updateTransactionSpamStateRequest was null or undefined when calling updateTransactionSpamStateApiV1TransactionsIdUpdateSpamStatePut.');
+        if (requestParameters['updateTransactionSpamStateRequest'] == null) {
+            throw new runtime.RequiredError(
+                'updateTransactionSpamStateRequest',
+                'Required parameter "updateTransactionSpamStateRequest" was null or undefined when calling updateTransactionSpamStateApiV1TransactionsIdUpdateSpamStatePut().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1185,11 +1451,11 @@ export class TransactionsApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/v1/transactions/{id}/update-spam-state`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/v1/transactions/{id}/update-spam-state`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: UpdateTransactionSpamStateRequestToJSON(requestParameters.updateTransactionSpamStateRequest),
+            body: UpdateTransactionSpamStateRequestToJSON(requestParameters['updateTransactionSpamStateRequest']),
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -1204,190 +1470,3 @@ export class TransactionsApi extends runtime.BaseAPI {
     }
 
 }
-
-/**
- * @export
- */
-export const ExportTransactionsApiV1TransactionsExportGetChainsEnum = {
-    aptosMainnet: 'aptos_mainnet',
-    aptosTestnet: 'aptos_testnet',
-    cosmosAgoric3: 'cosmos_agoric-3',
-    cosmosAkashnet2: 'cosmos_akashnet-2',
-    cosmosArchway1: 'cosmos_archway-1',
-    cosmosAxelarDojo1: 'cosmos_axelar-dojo-1',
-    cosmosCelestia: 'cosmos_celestia',
-    cosmosCosmoshub4: 'cosmos_cosmoshub-4',
-    cosmosDydxMainnet1: 'cosmos_dydx-mainnet-1',
-    cosmosDydxTestnet4: 'cosmos_dydx-testnet-4',
-    cosmosDymension11001: 'cosmos_dymension_1100-1',
-    cosmosNeutron1: 'cosmos_neutron-1',
-    cosmosNoble1: 'cosmos_noble-1',
-    cosmosOsmosis1: 'cosmos_osmosis-1',
-    cosmosPacific1: 'cosmos_pacific-1',
-    cosmosStride1: 'cosmos_stride-1',
-    evm1: 'evm_1',
-    evm5: 'evm_5',
-    evm10: 'evm_10',
-    evm16: 'evm_16',
-    evm56: 'evm_56',
-    evm100: 'evm_100',
-    evm137: 'evm_137',
-    evm169: 'evm_169',
-    evm250: 'evm_250',
-    evm324: 'evm_324',
-    evm1030: 'evm_1030',
-    evm1100: 'evm_1100',
-    evm1101: 'evm_1101',
-    evm1329: 'evm_1329',
-    evm1729: 'evm_1729',
-    evm2222: 'evm_2222',
-    evm4200: 'evm_4200',
-    evm5000: 'evm_5000',
-    evm7000: 'evm_7000',
-    evm7700: 'evm_7700',
-    evm8453: 'evm_8453',
-    evm17000: 'evm_17000',
-    evm80001: 'evm_80001',
-    evm42161: 'evm_42161',
-    evm43114: 'evm_43114',
-    evm59144: 'evm_59144',
-    evm81457: 'evm_81457',
-    evm421614: 'evm_421614',
-    evm534352: 'evm_534352',
-    evm660279: 'evm_660279',
-    evm810180: 'evm_810180',
-    evm11155111: 'evm_11155111',
-    evmEthereumMainnet: 'evm_ethereum_mainnet',
-    evmEthereumGoerli: 'evm_ethereum_goerli',
-    evmOptimismMainnet: 'evm_optimism_mainnet',
-    evmFlareTestnet: 'evm_flare_testnet',
-    evmBscMainnet: 'evm_bsc_mainnet',
-    evmGnosisMainnet: 'evm_gnosis_mainnet',
-    evmPolygonMainnet: 'evm_polygon_mainnet',
-    evmMantaPacificMainnet: 'evm_manta_pacific_mainnet',
-    evmFantomMainnet: 'evm_fantom_mainnet',
-    evmZksyncEraMainnet: 'evm_zksync_era_mainnet',
-    evmConfluxMainnet: 'evm_conflux_mainnet',
-    evmDymensionMainnet: 'evm_dymension_mainnet',
-    evmPolygonZkevmMainnet: 'evm_polygon_zkevm_mainnet',
-    evmSeiMainnet: 'evm_sei_mainnet',
-    evmReyaMainnet: 'evm_reya_mainnet',
-    evmKavaMainnet: 'evm_kava_mainnet',
-    evmMerlinMainnet: 'evm_merlin_mainnet',
-    evmMantleMainnet: 'evm_mantle_mainnet',
-    evmZetaMainnet: 'evm_zeta_mainnet',
-    evmCantoMainnet: 'evm_canto_mainnet',
-    evmBaseMainnet: 'evm_base_mainnet',
-    evmEthereumHolesky: 'evm_ethereum_holesky',
-    evmPolygonMumbai: 'evm_polygon_mumbai',
-    evmArbitrumMainnet: 'evm_arbitrum_mainnet',
-    evmAvalancheChain: 'evm_avalanche_chain',
-    evmLineaMainnet: 'evm_linea_mainnet',
-    evmBlastMainnet: 'evm_blast_mainnet',
-    evmArbitrumSepolia: 'evm_arbitrum_sepolia',
-    evmScrollMainnet: 'evm_scroll_mainnet',
-    evmXaiMainnet: 'evm_xai_mainnet',
-    evmZklinkNovaMainnet: 'evm_zklink_nova_mainnet',
-    evmEthereumSepolia: 'evm_ethereum_sepolia',
-    solanaMainnet: 'solana_mainnet',
-    solanaDevnet: 'solana_devnet',
-    suiMainnet: 'sui_mainnet',
-    suiTestnet: 'sui_testnet',
-    tonMainnet: 'ton_mainnet',
-    bitcoinMainnet: 'bitcoin_mainnet',
-    bitcoinTestnet: 'bitcoin_testnet'
-} as const;
-export type ExportTransactionsApiV1TransactionsExportGetChainsEnum = typeof ExportTransactionsApiV1TransactionsExportGetChainsEnum[keyof typeof ExportTransactionsApiV1TransactionsExportGetChainsEnum];
-/**
- * @export
- */
-export const ListTransactionsApiV1TransactionsGetChainsEnum = {
-    aptosMainnet: 'aptos_mainnet',
-    aptosTestnet: 'aptos_testnet',
-    cosmosAgoric3: 'cosmos_agoric-3',
-    cosmosAkashnet2: 'cosmos_akashnet-2',
-    cosmosArchway1: 'cosmos_archway-1',
-    cosmosAxelarDojo1: 'cosmos_axelar-dojo-1',
-    cosmosCelestia: 'cosmos_celestia',
-    cosmosCosmoshub4: 'cosmos_cosmoshub-4',
-    cosmosDydxMainnet1: 'cosmos_dydx-mainnet-1',
-    cosmosDydxTestnet4: 'cosmos_dydx-testnet-4',
-    cosmosDymension11001: 'cosmos_dymension_1100-1',
-    cosmosNeutron1: 'cosmos_neutron-1',
-    cosmosNoble1: 'cosmos_noble-1',
-    cosmosOsmosis1: 'cosmos_osmosis-1',
-    cosmosPacific1: 'cosmos_pacific-1',
-    cosmosStride1: 'cosmos_stride-1',
-    evm1: 'evm_1',
-    evm5: 'evm_5',
-    evm10: 'evm_10',
-    evm16: 'evm_16',
-    evm56: 'evm_56',
-    evm100: 'evm_100',
-    evm137: 'evm_137',
-    evm169: 'evm_169',
-    evm250: 'evm_250',
-    evm324: 'evm_324',
-    evm1030: 'evm_1030',
-    evm1100: 'evm_1100',
-    evm1101: 'evm_1101',
-    evm1329: 'evm_1329',
-    evm1729: 'evm_1729',
-    evm2222: 'evm_2222',
-    evm4200: 'evm_4200',
-    evm5000: 'evm_5000',
-    evm7000: 'evm_7000',
-    evm7700: 'evm_7700',
-    evm8453: 'evm_8453',
-    evm17000: 'evm_17000',
-    evm80001: 'evm_80001',
-    evm42161: 'evm_42161',
-    evm43114: 'evm_43114',
-    evm59144: 'evm_59144',
-    evm81457: 'evm_81457',
-    evm421614: 'evm_421614',
-    evm534352: 'evm_534352',
-    evm660279: 'evm_660279',
-    evm810180: 'evm_810180',
-    evm11155111: 'evm_11155111',
-    evmEthereumMainnet: 'evm_ethereum_mainnet',
-    evmEthereumGoerli: 'evm_ethereum_goerli',
-    evmOptimismMainnet: 'evm_optimism_mainnet',
-    evmFlareTestnet: 'evm_flare_testnet',
-    evmBscMainnet: 'evm_bsc_mainnet',
-    evmGnosisMainnet: 'evm_gnosis_mainnet',
-    evmPolygonMainnet: 'evm_polygon_mainnet',
-    evmMantaPacificMainnet: 'evm_manta_pacific_mainnet',
-    evmFantomMainnet: 'evm_fantom_mainnet',
-    evmZksyncEraMainnet: 'evm_zksync_era_mainnet',
-    evmConfluxMainnet: 'evm_conflux_mainnet',
-    evmDymensionMainnet: 'evm_dymension_mainnet',
-    evmPolygonZkevmMainnet: 'evm_polygon_zkevm_mainnet',
-    evmSeiMainnet: 'evm_sei_mainnet',
-    evmReyaMainnet: 'evm_reya_mainnet',
-    evmKavaMainnet: 'evm_kava_mainnet',
-    evmMerlinMainnet: 'evm_merlin_mainnet',
-    evmMantleMainnet: 'evm_mantle_mainnet',
-    evmZetaMainnet: 'evm_zeta_mainnet',
-    evmCantoMainnet: 'evm_canto_mainnet',
-    evmBaseMainnet: 'evm_base_mainnet',
-    evmEthereumHolesky: 'evm_ethereum_holesky',
-    evmPolygonMumbai: 'evm_polygon_mumbai',
-    evmArbitrumMainnet: 'evm_arbitrum_mainnet',
-    evmAvalancheChain: 'evm_avalanche_chain',
-    evmLineaMainnet: 'evm_linea_mainnet',
-    evmBlastMainnet: 'evm_blast_mainnet',
-    evmArbitrumSepolia: 'evm_arbitrum_sepolia',
-    evmScrollMainnet: 'evm_scroll_mainnet',
-    evmXaiMainnet: 'evm_xai_mainnet',
-    evmZklinkNovaMainnet: 'evm_zklink_nova_mainnet',
-    evmEthereumSepolia: 'evm_ethereum_sepolia',
-    solanaMainnet: 'solana_mainnet',
-    solanaDevnet: 'solana_devnet',
-    suiMainnet: 'sui_mainnet',
-    suiTestnet: 'sui_testnet',
-    tonMainnet: 'ton_mainnet',
-    bitcoinMainnet: 'bitcoin_mainnet',
-    bitcoinTestnet: 'bitcoin_testnet'
-} as const;
-export type ListTransactionsApiV1TransactionsGetChainsEnum = typeof ListTransactionsApiV1TransactionsGetChainsEnum[keyof typeof ListTransactionsApiV1TransactionsGetChainsEnum];

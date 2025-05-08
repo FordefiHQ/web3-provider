@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { AptosEntryFunctionPayload } from './AptosEntryFunctionPayload';
 import {
-    AptosEntryFunctionPayload,
     instanceOfAptosEntryFunctionPayload,
     AptosEntryFunctionPayloadFromJSON,
     AptosEntryFunctionPayloadFromJSONTyped,
     AptosEntryFunctionPayloadToJSON,
 } from './AptosEntryFunctionPayload';
+import type { ScriptPayload } from './ScriptPayload';
 import {
-    ScriptPayload,
     instanceOfScriptPayload,
     ScriptPayloadFromJSON,
     ScriptPayloadFromJSONTyped,
@@ -39,31 +39,32 @@ export function AptosTransactionPayloadFromJSON(json: any): AptosTransactionPayl
 }
 
 export function AptosTransactionPayloadFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosTransactionPayload {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'entry_point':
-            return {...AptosEntryFunctionPayloadFromJSONTyped(json, true), type: 'entry_point'};
+            return Object.assign({}, AptosEntryFunctionPayloadFromJSONTyped(json, true), { type: 'entry_point' } as const);
         case 'script':
-            return {...ScriptPayloadFromJSONTyped(json, true), type: 'script'};
+            return Object.assign({}, ScriptPayloadFromJSONTyped(json, true), { type: 'script' } as const);
         default:
             throw new Error(`No variant of AptosTransactionPayload exists with 'type=${json['type']}'`);
     }
 }
 
-export function AptosTransactionPayloadToJSON(value?: AptosTransactionPayload | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function AptosTransactionPayloadToJSON(json: any): any {
+    return AptosTransactionPayloadToJSONTyped(json, false);
+}
+
+export function AptosTransactionPayloadToJSONTyped(value?: AptosTransactionPayload | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'entry_point':
-            return AptosEntryFunctionPayloadToJSON(value);
+            return Object.assign({}, AptosEntryFunctionPayloadToJSON(value), { type: 'entry_point' } as const);
         case 'script':
-            return ScriptPayloadToJSON(value);
+            return Object.assign({}, ScriptPayloadToJSON(value), { type: 'script' } as const);
         default:
             throw new Error(`No variant of AptosTransactionPayload exists with 'type=${value['type']}'`);
     }

@@ -27,6 +27,17 @@ export const OnboardingType = {
 export type OnboardingType = typeof OnboardingType[keyof typeof OnboardingType];
 
 
+export function instanceOfOnboardingType(value: any): boolean {
+    for (const key in OnboardingType) {
+        if (Object.prototype.hasOwnProperty.call(OnboardingType, key)) {
+            if (OnboardingType[key as keyof typeof OnboardingType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function OnboardingTypeFromJSON(json: any): OnboardingType {
     return OnboardingTypeFromJSONTyped(json, false);
 }
@@ -37,5 +48,9 @@ export function OnboardingTypeFromJSONTyped(json: any, ignoreDiscriminator: bool
 
 export function OnboardingTypeToJSON(value?: OnboardingType | null): any {
     return value as any;
+}
+
+export function OnboardingTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): OnboardingType {
+    return value as OnboardingType;
 }
 

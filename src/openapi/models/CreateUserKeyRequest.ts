@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { KeyType } from './KeyType';
 import {
     KeyTypeFromJSON,
     KeyTypeFromJSONTyped,
     KeyTypeToJSON,
+    KeyTypeToJSONTyped,
 } from './KeyType';
 
 /**
@@ -46,15 +47,15 @@ export interface CreateUserKeyRequest {
     authPublicKey?: string;
 }
 
+
+
 /**
  * Check if a given object implements the CreateUserKeyRequest interface.
  */
-export function instanceOfCreateUserKeyRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "keysetId" in value;
-    isInstance = isInstance && "keyType" in value;
-
-    return isInstance;
+export function instanceOfCreateUserKeyRequest(value: object): value is CreateUserKeyRequest {
+    if (!('keysetId' in value) || value['keysetId'] === undefined) return false;
+    if (!('keyType' in value) || value['keyType'] === undefined) return false;
+    return true;
 }
 
 export function CreateUserKeyRequestFromJSON(json: any): CreateUserKeyRequest {
@@ -62,29 +63,31 @@ export function CreateUserKeyRequestFromJSON(json: any): CreateUserKeyRequest {
 }
 
 export function CreateUserKeyRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateUserKeyRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'keysetId': json['keyset_id'],
         'keyType': KeyTypeFromJSON(json['key_type']),
-        'authPublicKey': !exists(json, 'auth_public_key') ? undefined : json['auth_public_key'],
+        'authPublicKey': json['auth_public_key'] == null ? undefined : json['auth_public_key'],
     };
 }
 
-export function CreateUserKeyRequestToJSON(value?: CreateUserKeyRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateUserKeyRequestToJSON(json: any): CreateUserKeyRequest {
+    return CreateUserKeyRequestToJSONTyped(json, false);
+}
+
+export function CreateUserKeyRequestToJSONTyped(value?: CreateUserKeyRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'keyset_id': value.keysetId,
-        'key_type': KeyTypeToJSON(value.keyType),
-        'auth_public_key': value.authPublicKey,
+        'keyset_id': value['keysetId'],
+        'key_type': KeyTypeToJSON(value['keyType']),
+        'auth_public_key': value['authPublicKey'],
     };
 }
 

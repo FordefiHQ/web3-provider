@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { Dapp } from './Dapp';
-import {
-    DappFromJSON,
-    DappFromJSONTyped,
-    DappToJSON,
-} from './Dapp';
+import { mapValues } from '../runtime';
 import type { Erc721 } from './Erc721';
 import {
     Erc721FromJSON,
     Erc721FromJSONTyped,
     Erc721ToJSON,
+    Erc721ToJSONTyped,
 } from './Erc721';
+import type { Dapp } from './Dapp';
+import {
+    DappFromJSON,
+    DappFromJSONTyped,
+    DappToJSON,
+    DappToJSONTyped,
+} from './Dapp';
 
 /**
  * 
@@ -61,12 +63,10 @@ export interface Erc721Contract {
 /**
  * Check if a given object implements the Erc721Contract interface.
  */
-export function instanceOfErc721Contract(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "isVerified" in value;
-    isInstance = isInstance && "token" in value;
-
-    return isInstance;
+export function instanceOfErc721Contract(value: object): value is Erc721Contract {
+    if (!('isVerified' in value) || value['isVerified'] === undefined) return false;
+    if (!('token' in value) || value['token'] === undefined) return false;
+    return true;
 }
 
 export function Erc721ContractFromJSON(json: any): Erc721Contract {
@@ -74,31 +74,33 @@ export function Erc721ContractFromJSON(json: any): Erc721Contract {
 }
 
 export function Erc721ContractFromJSONTyped(json: any, ignoreDiscriminator: boolean): Erc721Contract {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'dapp': !exists(json, 'dapp') ? undefined : DappFromJSON(json['dapp']),
+        'name': json['name'] == null ? undefined : json['name'],
+        'dapp': json['dapp'] == null ? undefined : DappFromJSON(json['dapp']),
         'isVerified': json['is_verified'],
         'token': Erc721FromJSON(json['token']),
     };
 }
 
-export function Erc721ContractToJSON(value?: Erc721Contract | null): any {
-    if (value === undefined) {
-        return undefined;
+export function Erc721ContractToJSON(json: any): Erc721Contract {
+    return Erc721ContractToJSONTyped(json, false);
+}
+
+export function Erc721ContractToJSONTyped(value?: Erc721Contract | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'dapp': DappToJSON(value.dapp),
-        'is_verified': value.isVerified,
-        'token': Erc721ToJSON(value.token),
+        'name': value['name'],
+        'dapp': DappToJSON(value['dapp']),
+        'is_verified': value['isVerified'],
+        'token': Erc721ToJSON(value['token']),
     };
 }
 

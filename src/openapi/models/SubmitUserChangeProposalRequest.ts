@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -41,11 +41,9 @@ export type SubmitUserChangeProposalRequestNewRoleEnum = typeof SubmitUserChange
 /**
  * Check if a given object implements the SubmitUserChangeProposalRequest interface.
  */
-export function instanceOfSubmitUserChangeProposalRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "newRole" in value;
-
-    return isInstance;
+export function instanceOfSubmitUserChangeProposalRequest(value: object): value is SubmitUserChangeProposalRequest {
+    if (!('newRole' in value) || value['newRole'] === undefined) return false;
+    return true;
 }
 
 export function SubmitUserChangeProposalRequestFromJSON(json: any): SubmitUserChangeProposalRequest {
@@ -53,7 +51,7 @@ export function SubmitUserChangeProposalRequestFromJSON(json: any): SubmitUserCh
 }
 
 export function SubmitUserChangeProposalRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): SubmitUserChangeProposalRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -62,16 +60,18 @@ export function SubmitUserChangeProposalRequestFromJSONTyped(json: any, ignoreDi
     };
 }
 
-export function SubmitUserChangeProposalRequestToJSON(value?: SubmitUserChangeProposalRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SubmitUserChangeProposalRequestToJSON(json: any): SubmitUserChangeProposalRequest {
+    return SubmitUserChangeProposalRequestToJSONTyped(json, false);
+}
+
+export function SubmitUserChangeProposalRequestToJSONTyped(value?: SubmitUserChangeProposalRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'new_role': value.newRole,
+        'new_role': value['newRole'],
     };
 }
 

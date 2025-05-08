@@ -12,36 +12,41 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { AptosAssetIdentifierRequest } from './AptosAssetIdentifierRequest';
-import {
-    AptosAssetIdentifierRequestFromJSON,
-    AptosAssetIdentifierRequestFromJSONTyped,
-    AptosAssetIdentifierRequestToJSON,
-} from './AptosAssetIdentifierRequest';
+import { mapValues } from '../runtime';
 import type { AptosGasConfigRequest } from './AptosGasConfigRequest';
 import {
     AptosGasConfigRequestFromJSON,
     AptosGasConfigRequestFromJSONTyped,
     AptosGasConfigRequestToJSON,
+    AptosGasConfigRequestToJSONTyped,
 } from './AptosGasConfigRequest';
 import type { CreateAptosTransferRequestTo } from './CreateAptosTransferRequestTo';
 import {
     CreateAptosTransferRequestToFromJSON,
     CreateAptosTransferRequestToFromJSONTyped,
     CreateAptosTransferRequestToToJSON,
+    CreateAptosTransferRequestToToJSONTyped,
 } from './CreateAptosTransferRequestTo';
 import type { CreateAptosTransferRequestValue } from './CreateAptosTransferRequestValue';
 import {
     CreateAptosTransferRequestValueFromJSON,
     CreateAptosTransferRequestValueFromJSONTyped,
     CreateAptosTransferRequestValueToJSON,
+    CreateAptosTransferRequestValueToJSONTyped,
 } from './CreateAptosTransferRequestValue';
+import type { AptosAssetIdentifierRequest } from './AptosAssetIdentifierRequest';
+import {
+    AptosAssetIdentifierRequestFromJSON,
+    AptosAssetIdentifierRequestFromJSONTyped,
+    AptosAssetIdentifierRequestToJSON,
+    AptosAssetIdentifierRequestToJSONTyped,
+} from './AptosAssetIdentifierRequest';
 import type { PushMode } from './PushMode';
 import {
     PushModeFromJSON,
     PushModeFromJSONTyped,
     PushModeToJSON,
+    PushModeToJSONTyped,
 } from './PushMode';
 
 /**
@@ -67,7 +72,7 @@ export interface CreateAptosTransferRequest {
      * @type {AptosGasConfigRequest}
      * @memberof CreateAptosTransferRequest
      */
-    gasConfig: AptosGasConfigRequest;
+    gasConfig?: AptosGasConfigRequest;
     /**
      * 
      * @type {CreateAptosTransferRequestTo}
@@ -113,15 +118,12 @@ export type CreateAptosTransferRequestTypeEnum = typeof CreateAptosTransferReque
 /**
  * Check if a given object implements the CreateAptosTransferRequest interface.
  */
-export function instanceOfCreateAptosTransferRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "gasConfig" in value;
-    isInstance = isInstance && "to" in value;
-    isInstance = isInstance && "value" in value;
-    isInstance = isInstance && "assetIdentifier" in value;
-
-    return isInstance;
+export function instanceOfCreateAptosTransferRequest(value: object): value is CreateAptosTransferRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('to' in value) || value['to'] === undefined) return false;
+    if (!('value' in value) || value['value'] === undefined) return false;
+    if (!('assetIdentifier' in value) || value['assetIdentifier'] === undefined) return false;
+    return true;
 }
 
 export function CreateAptosTransferRequestFromJSON(json: any): CreateAptosTransferRequest {
@@ -129,39 +131,41 @@ export function CreateAptosTransferRequestFromJSON(json: any): CreateAptosTransf
 }
 
 export function CreateAptosTransferRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateAptosTransferRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
-        'failOnPredictionFailure': !exists(json, 'fail_on_prediction_failure') ? undefined : json['fail_on_prediction_failure'],
-        'gasConfig': AptosGasConfigRequestFromJSON(json['gas_config']),
+        'failOnPredictionFailure': json['fail_on_prediction_failure'] == null ? undefined : json['fail_on_prediction_failure'],
+        'gasConfig': json['gas_config'] == null ? undefined : AptosGasConfigRequestFromJSON(json['gas_config']),
         'to': CreateAptosTransferRequestToFromJSON(json['to']),
         'value': CreateAptosTransferRequestValueFromJSON(json['value']),
         'assetIdentifier': AptosAssetIdentifierRequestFromJSON(json['asset_identifier']),
-        'skipPrediction': !exists(json, 'skip_prediction') ? undefined : json['skip_prediction'],
-        'pushMode': !exists(json, 'push_mode') ? undefined : PushModeFromJSON(json['push_mode']),
+        'skipPrediction': json['skip_prediction'] == null ? undefined : json['skip_prediction'],
+        'pushMode': json['push_mode'] == null ? undefined : PushModeFromJSON(json['push_mode']),
     };
 }
 
-export function CreateAptosTransferRequestToJSON(value?: CreateAptosTransferRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateAptosTransferRequestToJSON(json: any): CreateAptosTransferRequest {
+    return CreateAptosTransferRequestToJSONTyped(json, false);
+}
+
+export function CreateAptosTransferRequestToJSONTyped(value?: CreateAptosTransferRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'fail_on_prediction_failure': value.failOnPredictionFailure,
-        'gas_config': AptosGasConfigRequestToJSON(value.gasConfig),
-        'to': CreateAptosTransferRequestToToJSON(value.to),
-        'value': CreateAptosTransferRequestValueToJSON(value.value),
-        'asset_identifier': AptosAssetIdentifierRequestToJSON(value.assetIdentifier),
-        'skip_prediction': value.skipPrediction,
-        'push_mode': PushModeToJSON(value.pushMode),
+        'type': value['type'],
+        'fail_on_prediction_failure': value['failOnPredictionFailure'],
+        'gas_config': AptosGasConfigRequestToJSON(value['gasConfig']),
+        'to': CreateAptosTransferRequestToToJSON(value['to']),
+        'value': CreateAptosTransferRequestValueToJSON(value['value']),
+        'asset_identifier': AptosAssetIdentifierRequestToJSON(value['assetIdentifier']),
+        'skip_prediction': value['skipPrediction'],
+        'push_mode': PushModeToJSON(value['pushMode']),
     };
 }
 

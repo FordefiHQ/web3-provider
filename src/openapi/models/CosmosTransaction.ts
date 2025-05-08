@@ -12,79 +12,105 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { CosmosTransactionResult } from './CosmosTransactionResult';
-import {
-    CosmosTransactionResultFromJSON,
-    CosmosTransactionResultFromJSONTyped,
-    CosmosTransactionResultToJSON,
-} from './CosmosTransactionResult';
-import type { CosmosTransactionState } from './CosmosTransactionState';
-import {
-    CosmosTransactionStateFromJSON,
-    CosmosTransactionStateFromJSONTyped,
-    CosmosTransactionStateToJSON,
-} from './CosmosTransactionState';
-import type { CosmosTransactionStateChange } from './CosmosTransactionStateChange';
-import {
-    CosmosTransactionStateChangeFromJSON,
-    CosmosTransactionStateChangeFromJSONTyped,
-    CosmosTransactionStateChangeToJSON,
-} from './CosmosTransactionStateChange';
-import type { CosmosTransactionTypeDetails } from './CosmosTransactionTypeDetails';
-import {
-    CosmosTransactionTypeDetailsFromJSON,
-    CosmosTransactionTypeDetailsFromJSONTyped,
-    CosmosTransactionTypeDetailsToJSON,
-} from './CosmosTransactionTypeDetails';
+import { mapValues } from '../runtime';
 import type { EnrichedCosmosBechAddress } from './EnrichedCosmosBechAddress';
 import {
     EnrichedCosmosBechAddressFromJSON,
     EnrichedCosmosBechAddressFromJSONTyped,
     EnrichedCosmosBechAddressToJSON,
+    EnrichedCosmosBechAddressToJSONTyped,
 } from './EnrichedCosmosBechAddress';
-import type { EnrichedCosmosChain } from './EnrichedCosmosChain';
-import {
-    EnrichedCosmosChainFromJSON,
-    EnrichedCosmosChainFromJSONTyped,
-    EnrichedCosmosChainToJSON,
-} from './EnrichedCosmosChain';
 import type { ManagedTransactionData } from './ManagedTransactionData';
 import {
     ManagedTransactionDataFromJSON,
     ManagedTransactionDataFromJSONTyped,
     ManagedTransactionDataToJSON,
+    ManagedTransactionDataToJSONTyped,
 } from './ManagedTransactionData';
+import type { PushableTransactionStateChange } from './PushableTransactionStateChange';
+import {
+    PushableTransactionStateChangeFromJSON,
+    PushableTransactionStateChangeFromJSONTyped,
+    PushableTransactionStateChangeToJSON,
+    PushableTransactionStateChangeToJSONTyped,
+} from './PushableTransactionStateChange';
+import type { CosmosTransactionResult } from './CosmosTransactionResult';
+import {
+    CosmosTransactionResultFromJSON,
+    CosmosTransactionResultFromJSONTyped,
+    CosmosTransactionResultToJSON,
+    CosmosTransactionResultToJSONTyped,
+} from './CosmosTransactionResult';
+import type { PushableTransactionState } from './PushableTransactionState';
+import {
+    PushableTransactionStateFromJSON,
+    PushableTransactionStateFromJSONTyped,
+    PushableTransactionStateToJSON,
+    PushableTransactionStateToJSONTyped,
+} from './PushableTransactionState';
 import type { SignDoc } from './SignDoc';
 import {
     SignDocFromJSON,
     SignDocFromJSONTyped,
     SignDocToJSON,
+    SignDocToJSONTyped,
 } from './SignDoc';
-import type { Signature } from './Signature';
+import type { CosmosTransactionTypeDetails } from './CosmosTransactionTypeDetails';
 import {
-    SignatureFromJSON,
-    SignatureFromJSONTyped,
-    SignatureToJSON,
-} from './Signature';
+    CosmosTransactionTypeDetailsFromJSON,
+    CosmosTransactionTypeDetailsFromJSONTyped,
+    CosmosTransactionTypeDetailsToJSON,
+    CosmosTransactionTypeDetailsToJSONTyped,
+} from './CosmosTransactionTypeDetails';
+import type { AmlPolicyMatchIncoming } from './AmlPolicyMatchIncoming';
+import {
+    AmlPolicyMatchIncomingFromJSON,
+    AmlPolicyMatchIncomingFromJSONTyped,
+    AmlPolicyMatchIncomingToJSON,
+    AmlPolicyMatchIncomingToJSONTyped,
+} from './AmlPolicyMatchIncoming';
+import type { EnrichedCosmosChain } from './EnrichedCosmosChain';
+import {
+    EnrichedCosmosChainFromJSON,
+    EnrichedCosmosChainFromJSONTyped,
+    EnrichedCosmosChainToJSON,
+    EnrichedCosmosChainToJSONTyped,
+} from './EnrichedCosmosChain';
 import type { SignerInfo } from './SignerInfo';
 import {
     SignerInfoFromJSON,
     SignerInfoFromJSONTyped,
     SignerInfoToJSON,
+    SignerInfoToJSONTyped,
 } from './SignerInfo';
-import type { TransactionDirection } from './TransactionDirection';
-import {
-    TransactionDirectionFromJSON,
-    TransactionDirectionFromJSONTyped,
-    TransactionDirectionToJSON,
-} from './TransactionDirection';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
     TransactionSpamStateFromJSONTyped,
     TransactionSpamStateToJSON,
+    TransactionSpamStateToJSONTyped,
 } from './TransactionSpamState';
+import type { TransactionDirection } from './TransactionDirection';
+import {
+    TransactionDirectionFromJSON,
+    TransactionDirectionFromJSONTyped,
+    TransactionDirectionToJSON,
+    TransactionDirectionToJSONTyped,
+} from './TransactionDirection';
+import type { Signature } from './Signature';
+import {
+    SignatureFromJSON,
+    SignatureFromJSONTyped,
+    SignatureToJSON,
+    SignatureToJSONTyped,
+} from './Signature';
+import type { AmlResults } from './AmlResults';
+import {
+    AmlResultsFromJSON,
+    AmlResultsFromJSONTyped,
+    AmlResultsToJSON,
+    AmlResultsToJSONTyped,
+} from './AmlResults';
 
 /**
  * 
@@ -142,6 +168,36 @@ export interface CosmosTransaction {
     direction: TransactionDirection;
     /**
      * 
+     * @type {boolean}
+     * @memberof CosmosTransaction
+     */
+    signedExternally?: boolean;
+    /**
+     * 
+     * @type {PushableTransactionState}
+     * @memberof CosmosTransaction
+     */
+    state: PushableTransactionState;
+    /**
+     * 
+     * @type {Array<PushableTransactionStateChange>}
+     * @memberof CosmosTransaction
+     */
+    stateChanges: Array<PushableTransactionStateChange>;
+    /**
+     * 
+     * @type {AmlResults}
+     * @memberof CosmosTransaction
+     */
+    amlResults?: AmlResults;
+    /**
+     * 
+     * @type {AmlPolicyMatchIncoming}
+     * @memberof CosmosTransaction
+     */
+    incomingAmlPolicyMatch?: AmlPolicyMatchIncoming;
+    /**
+     * 
      * @type {CosmosTransactionTypeDetails}
      * @memberof CosmosTransaction
      */
@@ -190,18 +246,6 @@ export interface CosmosTransaction {
     explorerUrl?: string;
     /**
      * 
-     * @type {CosmosTransactionState}
-     * @memberof CosmosTransaction
-     */
-    state: CosmosTransactionState;
-    /**
-     * 
-     * @type {Array<CosmosTransactionStateChange>}
-     * @memberof CosmosTransaction
-     */
-    stateChanges: Array<CosmosTransactionStateChange>;
-    /**
-     * 
      * @type {Array<SignerInfo>}
      * @memberof CosmosTransaction
      */
@@ -239,23 +283,21 @@ export type CosmosTransactionTypeEnum = typeof CosmosTransactionTypeEnum[keyof t
 /**
  * Check if a given object implements the CosmosTransaction interface.
  */
-export function instanceOfCosmosTransaction(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "signatures" in value;
-    isInstance = isInstance && "direction" in value;
-    isInstance = isInstance && "cosmosTransactionTypeDetails" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "from" in value;
-    isInstance = isInstance && "sender" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "stateChanges" in value;
-    isInstance = isInstance && "signersInfo" in value;
-
-    return isInstance;
+export function instanceOfCosmosTransaction(value: object): value is CosmosTransaction {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('signatures' in value) || value['signatures'] === undefined) return false;
+    if (!('direction' in value) || value['direction'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('stateChanges' in value) || value['stateChanges'] === undefined) return false;
+    if (!('cosmosTransactionTypeDetails' in value) || value['cosmosTransactionTypeDetails'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('from' in value) || value['from'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('signersInfo' in value) || value['signersInfo'] === undefined) return false;
+    return true;
 }
 
 export function CosmosTransactionFromJSON(json: any): CosmosTransaction {
@@ -263,7 +305,7 @@ export function CosmosTransactionFromJSON(json: any): CosmosTransaction {
 }
 
 export function CosmosTransactionFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosTransaction {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -271,59 +313,67 @@ export function CosmosTransactionFromJSONTyped(json: any, ignoreDiscriminator: b
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
-        'managedTransactionData': !exists(json, 'managed_transaction_data') ? undefined : ManagedTransactionDataFromJSON(json['managed_transaction_data']),
+        'managedTransactionData': json['managed_transaction_data'] == null ? undefined : ManagedTransactionDataFromJSON(json['managed_transaction_data']),
         'signatures': ((json['signatures'] as Array<any>).map(SignatureFromJSON)),
-        'note': !exists(json, 'note') ? undefined : json['note'],
-        'spamState': !exists(json, 'spam_state') ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
+        'note': json['note'] == null ? undefined : json['note'],
+        'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
+        'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'state': PushableTransactionStateFromJSON(json['state']),
+        'stateChanges': ((json['state_changes'] as Array<any>).map(PushableTransactionStateChangeFromJSON)),
+        'amlResults': json['aml_results'] == null ? undefined : AmlResultsFromJSON(json['aml_results']),
+        'incomingAmlPolicyMatch': json['incoming_aml_policy_match'] == null ? undefined : AmlPolicyMatchIncomingFromJSON(json['incoming_aml_policy_match']),
         'cosmosTransactionTypeDetails': CosmosTransactionTypeDetailsFromJSON(json['cosmos_transaction_type_details']),
-        'memo': !exists(json, 'memo') ? undefined : json['memo'],
+        'memo': json['memo'] == null ? undefined : json['memo'],
         'chain': EnrichedCosmosChainFromJSON(json['chain']),
         'from': EnrichedCosmosBechAddressFromJSON(json['from']),
         'sender': EnrichedCosmosBechAddressFromJSON(json['sender']),
         'type': json['type'],
-        'hash': !exists(json, 'hash') ? undefined : json['hash'],
-        'explorerUrl': !exists(json, 'explorer_url') ? undefined : json['explorer_url'],
-        'state': CosmosTransactionStateFromJSON(json['state']),
-        'stateChanges': ((json['state_changes'] as Array<any>).map(CosmosTransactionStateChangeFromJSON)),
+        'hash': json['hash'] == null ? undefined : json['hash'],
+        'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
         'signersInfo': ((json['signers_info'] as Array<any>).map(SignerInfoFromJSON)),
-        'expectedResult': !exists(json, 'expected_result') ? undefined : CosmosTransactionResultFromJSON(json['expected_result']),
-        'minedResult': !exists(json, 'mined_result') ? undefined : CosmosTransactionResultFromJSON(json['mined_result']),
-        'signDoc': !exists(json, 'sign_doc') ? undefined : SignDocFromJSON(json['sign_doc']),
+        'expectedResult': json['expected_result'] == null ? undefined : CosmosTransactionResultFromJSON(json['expected_result']),
+        'minedResult': json['mined_result'] == null ? undefined : CosmosTransactionResultFromJSON(json['mined_result']),
+        'signDoc': json['sign_doc'] == null ? undefined : SignDocFromJSON(json['sign_doc']),
     };
 }
 
-export function CosmosTransactionToJSON(value?: CosmosTransaction | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosTransactionToJSON(json: any): CosmosTransaction {
+    return CosmosTransactionToJSONTyped(json, false);
+}
+
+export function CosmosTransactionToJSONTyped(value?: CosmosTransaction | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'managed_transaction_data': ManagedTransactionDataToJSON(value.managedTransactionData),
-        'signatures': ((value.signatures as Array<any>).map(SignatureToJSON)),
-        'note': value.note,
-        'spam_state': TransactionSpamStateToJSON(value.spamState),
-        'direction': TransactionDirectionToJSON(value.direction),
-        'cosmos_transaction_type_details': CosmosTransactionTypeDetailsToJSON(value.cosmosTransactionTypeDetails),
-        'memo': value.memo,
-        'chain': EnrichedCosmosChainToJSON(value.chain),
-        'from': EnrichedCosmosBechAddressToJSON(value.from),
-        'sender': EnrichedCosmosBechAddressToJSON(value.sender),
-        'type': value.type,
-        'hash': value.hash,
-        'explorer_url': value.explorerUrl,
-        'state': CosmosTransactionStateToJSON(value.state),
-        'state_changes': ((value.stateChanges as Array<any>).map(CosmosTransactionStateChangeToJSON)),
-        'signers_info': ((value.signersInfo as Array<any>).map(SignerInfoToJSON)),
-        'expected_result': CosmosTransactionResultToJSON(value.expectedResult),
-        'mined_result': CosmosTransactionResultToJSON(value.minedResult),
-        'sign_doc': SignDocToJSON(value.signDoc),
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'managed_transaction_data': ManagedTransactionDataToJSON(value['managedTransactionData']),
+        'signatures': ((value['signatures'] as Array<any>).map(SignatureToJSON)),
+        'note': value['note'],
+        'spam_state': TransactionSpamStateToJSON(value['spamState']),
+        'direction': TransactionDirectionToJSON(value['direction']),
+        'signed_externally': value['signedExternally'],
+        'state': PushableTransactionStateToJSON(value['state']),
+        'state_changes': ((value['stateChanges'] as Array<any>).map(PushableTransactionStateChangeToJSON)),
+        'aml_results': AmlResultsToJSON(value['amlResults']),
+        'incoming_aml_policy_match': AmlPolicyMatchIncomingToJSON(value['incomingAmlPolicyMatch']),
+        'cosmos_transaction_type_details': CosmosTransactionTypeDetailsToJSON(value['cosmosTransactionTypeDetails']),
+        'memo': value['memo'],
+        'chain': EnrichedCosmosChainToJSON(value['chain']),
+        'from': EnrichedCosmosBechAddressToJSON(value['from']),
+        'sender': EnrichedCosmosBechAddressToJSON(value['sender']),
+        'type': value['type'],
+        'hash': value['hash'],
+        'explorer_url': value['explorerUrl'],
+        'signers_info': ((value['signersInfo'] as Array<any>).map(SignerInfoToJSON)),
+        'expected_result': CosmosTransactionResultToJSON(value['expectedResult']),
+        'mined_result': CosmosTransactionResultToJSON(value['minedResult']),
+        'sign_doc': SignDocToJSON(value['signDoc']),
     };
 }
 

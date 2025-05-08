@@ -12,25 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { SolanaSplTokenAsset } from './SolanaSplTokenAsset';
+import {
+    SolanaSplTokenAssetFromJSON,
+    SolanaSplTokenAssetFromJSONTyped,
+    SolanaSplTokenAssetToJSON,
+    SolanaSplTokenAssetToJSONTyped,
+} from './SolanaSplTokenAsset';
 import type { EnrichedSolanaChain } from './EnrichedSolanaChain';
 import {
     EnrichedSolanaChainFromJSON,
     EnrichedSolanaChainFromJSONTyped,
     EnrichedSolanaChainToJSON,
+    EnrichedSolanaChainToJSONTyped,
 } from './EnrichedSolanaChain';
 import type { SolanaNativeAsset } from './SolanaNativeAsset';
 import {
     SolanaNativeAssetFromJSON,
     SolanaNativeAssetFromJSONTyped,
     SolanaNativeAssetToJSON,
+    SolanaNativeAssetToJSONTyped,
 } from './SolanaNativeAsset';
-import type { SolanaSplTokenAsset } from './SolanaSplTokenAsset';
-import {
-    SolanaSplTokenAssetFromJSON,
-    SolanaSplTokenAssetFromJSONTyped,
-    SolanaSplTokenAssetToJSON,
-} from './SolanaSplTokenAsset';
 
 /**
  * 
@@ -57,7 +60,8 @@ export interface SolanaAssetDetails {
  * @export
  */
 export const SolanaAssetDetailsTypeEnum = {
-    solanaSplTokenAsset: 'solana_spl_token_asset'
+    nativeAsset: 'solana_native_asset',
+    splTokenAsset: 'solana_spl_token_asset'
 } as const;
 export type SolanaAssetDetailsTypeEnum = typeof SolanaAssetDetailsTypeEnum[keyof typeof SolanaAssetDetailsTypeEnum];
 
@@ -65,12 +69,10 @@ export type SolanaAssetDetailsTypeEnum = typeof SolanaAssetDetailsTypeEnum[keyof
 /**
  * Check if a given object implements the SolanaAssetDetails interface.
  */
-export function instanceOfSolanaAssetDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfSolanaAssetDetails(value: object): value is SolanaAssetDetails {
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function SolanaAssetDetailsFromJSON(json: any): SolanaAssetDetails {
@@ -78,7 +80,7 @@ export function SolanaAssetDetailsFromJSON(json: any): SolanaAssetDetails {
 }
 
 export function SolanaAssetDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): SolanaAssetDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -88,17 +90,19 @@ export function SolanaAssetDetailsFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-export function SolanaAssetDetailsToJSON(value?: SolanaAssetDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SolanaAssetDetailsToJSON(json: any): SolanaAssetDetails {
+    return SolanaAssetDetailsToJSONTyped(json, false);
+}
+
+export function SolanaAssetDetailsToJSONTyped(value?: SolanaAssetDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain': EnrichedSolanaChainToJSON(value.chain),
-        'type': value.type,
+        'chain': EnrichedSolanaChainToJSON(value['chain']),
+        'type': value['type'],
     };
 }
 

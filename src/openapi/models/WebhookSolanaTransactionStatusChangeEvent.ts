@@ -12,37 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { SolanaChain } from './SolanaChain';
-import {
-    SolanaChainFromJSON,
-    SolanaChainFromJSONTyped,
-    SolanaChainToJSON,
-} from './SolanaChain';
-import type { SolanaTransactionState } from './SolanaTransactionState';
-import {
-    SolanaTransactionStateFromJSON,
-    SolanaTransactionStateFromJSONTyped,
-    SolanaTransactionStateToJSON,
-} from './SolanaTransactionState';
-import type { SolanaTransactionType } from './SolanaTransactionType';
-import {
-    SolanaTransactionTypeFromJSON,
-    SolanaTransactionTypeFromJSONTyped,
-    SolanaTransactionTypeToJSON,
-} from './SolanaTransactionType';
-import type { TransactionDirection } from './TransactionDirection';
-import {
-    TransactionDirectionFromJSON,
-    TransactionDirectionFromJSONTyped,
-    TransactionDirectionToJSON,
-} from './TransactionDirection';
+import { mapValues } from '../runtime';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
     TransactionSpamStateFromJSONTyped,
     TransactionSpamStateToJSON,
+    TransactionSpamStateToJSONTyped,
 } from './TransactionSpamState';
+import type { TransactionDirection } from './TransactionDirection';
+import {
+    TransactionDirectionFromJSON,
+    TransactionDirectionFromJSONTyped,
+    TransactionDirectionToJSON,
+    TransactionDirectionToJSONTyped,
+} from './TransactionDirection';
+import type { PushableTransactionState } from './PushableTransactionState';
+import {
+    PushableTransactionStateFromJSON,
+    PushableTransactionStateFromJSONTyped,
+    PushableTransactionStateToJSON,
+    PushableTransactionStateToJSONTyped,
+} from './PushableTransactionState';
+import type { SolanaTransactionType } from './SolanaTransactionType';
+import {
+    SolanaTransactionTypeFromJSON,
+    SolanaTransactionTypeFromJSONTyped,
+    SolanaTransactionTypeToJSON,
+    SolanaTransactionTypeToJSONTyped,
+} from './SolanaTransactionType';
+import type { SolanaChain } from './SolanaChain';
+import {
+    SolanaChainFromJSON,
+    SolanaChainFromJSONTyped,
+    SolanaChainToJSON,
+    SolanaChainToJSONTyped,
+} from './SolanaChain';
 
 /**
  * 
@@ -83,6 +88,12 @@ export interface WebhookSolanaTransactionStatusChangeEvent {
     spamState: TransactionSpamState;
     /**
      * 
+     * @type {PushableTransactionState}
+     * @memberof WebhookSolanaTransactionStatusChangeEvent
+     */
+    state: PushableTransactionState;
+    /**
+     * 
      * @type {string}
      * @memberof WebhookSolanaTransactionStatusChangeEvent
      */
@@ -93,12 +104,6 @@ export interface WebhookSolanaTransactionStatusChangeEvent {
      * @memberof WebhookSolanaTransactionStatusChangeEvent
      */
     solanaTransactionType: SolanaTransactionType;
-    /**
-     * 
-     * @type {SolanaTransactionState}
-     * @memberof WebhookSolanaTransactionStatusChangeEvent
-     */
-    state: SolanaTransactionState;
     /**
      * 
      * @type {string}
@@ -132,18 +137,16 @@ export type WebhookSolanaTransactionStatusChangeEventTypeEnum = typeof WebhookSo
 /**
  * Check if a given object implements the WebhookSolanaTransactionStatusChangeEvent interface.
  */
-export function instanceOfWebhookSolanaTransactionStatusChangeEvent(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "transactionId" in value;
-    isInstance = isInstance && "isManagedTransaction" in value;
-    isInstance = isInstance && "direction" in value;
-    isInstance = isInstance && "spamState" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "solanaTransactionType" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfWebhookSolanaTransactionStatusChangeEvent(value: object): value is WebhookSolanaTransactionStatusChangeEvent {
+    if (!('transactionId' in value) || value['transactionId'] === undefined) return false;
+    if (!('isManagedTransaction' in value) || value['isManagedTransaction'] === undefined) return false;
+    if (!('direction' in value) || value['direction'] === undefined) return false;
+    if (!('spamState' in value) || value['spamState'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('solanaTransactionType' in value) || value['solanaTransactionType'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function WebhookSolanaTransactionStatusChangeEventFromJSON(json: any): WebhookSolanaTransactionStatusChangeEvent {
@@ -151,7 +154,7 @@ export function WebhookSolanaTransactionStatusChangeEventFromJSON(json: any): We
 }
 
 export function WebhookSolanaTransactionStatusChangeEventFromJSONTyped(json: any, ignoreDiscriminator: boolean): WebhookSolanaTransactionStatusChangeEvent {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -159,37 +162,39 @@ export function WebhookSolanaTransactionStatusChangeEventFromJSONTyped(json: any
         'transactionId': json['transaction_id'],
         'isManagedTransaction': json['is_managed_transaction'],
         'direction': TransactionDirectionFromJSON(json['direction']),
-        'note': !exists(json, 'note') ? undefined : json['note'],
+        'note': json['note'] == null ? undefined : json['note'],
         'spamState': TransactionSpamStateFromJSON(json['spam_state']),
+        'state': PushableTransactionStateFromJSON(json['state']),
         'type': json['type'],
         'solanaTransactionType': SolanaTransactionTypeFromJSON(json['solana_transaction_type']),
-        'state': SolanaTransactionStateFromJSON(json['state']),
-        'hash': !exists(json, 'hash') ? undefined : json['hash'],
-        'rawTransaction': !exists(json, 'raw_transaction') ? undefined : json['raw_transaction'],
+        'hash': json['hash'] == null ? undefined : json['hash'],
+        'rawTransaction': json['raw_transaction'] == null ? undefined : json['raw_transaction'],
         'chain': SolanaChainFromJSON(json['chain']),
     };
 }
 
-export function WebhookSolanaTransactionStatusChangeEventToJSON(value?: WebhookSolanaTransactionStatusChangeEvent | null): any {
-    if (value === undefined) {
-        return undefined;
+export function WebhookSolanaTransactionStatusChangeEventToJSON(json: any): WebhookSolanaTransactionStatusChangeEvent {
+    return WebhookSolanaTransactionStatusChangeEventToJSONTyped(json, false);
+}
+
+export function WebhookSolanaTransactionStatusChangeEventToJSONTyped(value?: WebhookSolanaTransactionStatusChangeEvent | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'transaction_id': value.transactionId,
-        'is_managed_transaction': value.isManagedTransaction,
-        'direction': TransactionDirectionToJSON(value.direction),
-        'note': value.note,
-        'spam_state': TransactionSpamStateToJSON(value.spamState),
-        'type': value.type,
-        'solana_transaction_type': SolanaTransactionTypeToJSON(value.solanaTransactionType),
-        'state': SolanaTransactionStateToJSON(value.state),
-        'hash': value.hash,
-        'raw_transaction': value.rawTransaction,
-        'chain': SolanaChainToJSON(value.chain),
+        'transaction_id': value['transactionId'],
+        'is_managed_transaction': value['isManagedTransaction'],
+        'direction': TransactionDirectionToJSON(value['direction']),
+        'note': value['note'],
+        'spam_state': TransactionSpamStateToJSON(value['spamState']),
+        'state': PushableTransactionStateToJSON(value['state']),
+        'type': value['type'],
+        'solana_transaction_type': SolanaTransactionTypeToJSON(value['solanaTransactionType']),
+        'hash': value['hash'],
+        'raw_transaction': value['rawTransaction'],
+        'chain': SolanaChainToJSON(value['chain']),
     };
 }
 

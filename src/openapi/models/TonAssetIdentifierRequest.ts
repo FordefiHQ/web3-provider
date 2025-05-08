@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { TonAssetIdentifierDetails } from './TonAssetIdentifierDetails';
 import {
     TonAssetIdentifierDetailsFromJSON,
     TonAssetIdentifierDetailsFromJSONTyped,
     TonAssetIdentifierDetailsToJSON,
+    TonAssetIdentifierDetailsToJSONTyped,
 } from './TonAssetIdentifierDetails';
 
 /**
@@ -53,12 +54,10 @@ export type TonAssetIdentifierRequestTypeEnum = typeof TonAssetIdentifierRequest
 /**
  * Check if a given object implements the TonAssetIdentifierRequest interface.
  */
-export function instanceOfTonAssetIdentifierRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "details" in value;
-
-    return isInstance;
+export function instanceOfTonAssetIdentifierRequest(value: object): value is TonAssetIdentifierRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    return true;
 }
 
 export function TonAssetIdentifierRequestFromJSON(json: any): TonAssetIdentifierRequest {
@@ -66,7 +65,7 @@ export function TonAssetIdentifierRequestFromJSON(json: any): TonAssetIdentifier
 }
 
 export function TonAssetIdentifierRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): TonAssetIdentifierRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function TonAssetIdentifierRequestFromJSONTyped(json: any, ignoreDiscrimi
     };
 }
 
-export function TonAssetIdentifierRequestToJSON(value?: TonAssetIdentifierRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TonAssetIdentifierRequestToJSON(json: any): TonAssetIdentifierRequest {
+    return TonAssetIdentifierRequestToJSONTyped(json, false);
+}
+
+export function TonAssetIdentifierRequestToJSONTyped(value?: TonAssetIdentifierRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'details': TonAssetIdentifierDetailsToJSON(value.details),
+        'type': value['type'],
+        'details': TonAssetIdentifierDetailsToJSON(value['details']),
     };
 }
 

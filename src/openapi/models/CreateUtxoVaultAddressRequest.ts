@@ -12,12 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { ImportVaultAddressOptions } from './ImportVaultAddressOptions';
+import {
+    ImportVaultAddressOptionsFromJSON,
+    ImportVaultAddressOptionsFromJSONTyped,
+    ImportVaultAddressOptionsToJSON,
+    ImportVaultAddressOptionsToJSONTyped,
+} from './ImportVaultAddressOptions';
 import type { BitcoinVaultCreateAddressType } from './BitcoinVaultCreateAddressType';
 import {
     BitcoinVaultCreateAddressTypeFromJSON,
     BitcoinVaultCreateAddressTypeFromJSONTyped,
     BitcoinVaultCreateAddressTypeToJSON,
+    BitcoinVaultCreateAddressTypeToJSONTyped,
 } from './BitcoinVaultCreateAddressType';
 
 /**
@@ -38,15 +46,21 @@ export interface CreateUtxoVaultAddressRequest {
      * @memberof CreateUtxoVaultAddressRequest
      */
     addressType?: BitcoinVaultCreateAddressType;
+    /**
+     * 
+     * @type {ImportVaultAddressOptions}
+     * @memberof CreateUtxoVaultAddressRequest
+     */
+    importAddress?: ImportVaultAddressOptions;
 }
+
+
 
 /**
  * Check if a given object implements the CreateUtxoVaultAddressRequest interface.
  */
-export function instanceOfCreateUtxoVaultAddressRequest(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfCreateUtxoVaultAddressRequest(value: object): value is CreateUtxoVaultAddressRequest {
+    return true;
 }
 
 export function CreateUtxoVaultAddressRequestFromJSON(json: any): CreateUtxoVaultAddressRequest {
@@ -54,27 +68,31 @@ export function CreateUtxoVaultAddressRequestFromJSON(json: any): CreateUtxoVaul
 }
 
 export function CreateUtxoVaultAddressRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateUtxoVaultAddressRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'addressType': !exists(json, 'address_type') ? undefined : BitcoinVaultCreateAddressTypeFromJSON(json['address_type']),
+        'name': json['name'] == null ? undefined : json['name'],
+        'addressType': json['address_type'] == null ? undefined : BitcoinVaultCreateAddressTypeFromJSON(json['address_type']),
+        'importAddress': json['import_address'] == null ? undefined : ImportVaultAddressOptionsFromJSON(json['import_address']),
     };
 }
 
-export function CreateUtxoVaultAddressRequestToJSON(value?: CreateUtxoVaultAddressRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateUtxoVaultAddressRequestToJSON(json: any): CreateUtxoVaultAddressRequest {
+    return CreateUtxoVaultAddressRequestToJSONTyped(json, false);
+}
+
+export function CreateUtxoVaultAddressRequestToJSONTyped(value?: CreateUtxoVaultAddressRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'address_type': BitcoinVaultCreateAddressTypeToJSON(value.addressType),
+        'name': value['name'],
+        'address_type': BitcoinVaultCreateAddressTypeToJSON(value['addressType']),
+        'import_address': ImportVaultAddressOptionsToJSON(value['importAddress']),
     };
 }
 

@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AptosReversionState } from './AptosReversionState';
 import {
     AptosReversionStateFromJSON,
     AptosReversionStateFromJSONTyped,
     AptosReversionStateToJSON,
+    AptosReversionStateToJSONTyped,
 } from './AptosReversionState';
 
 /**
@@ -40,14 +41,14 @@ export interface AptosReversion {
     reason?: string;
 }
 
+
+
 /**
  * Check if a given object implements the AptosReversion interface.
  */
-export function instanceOfAptosReversion(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "state" in value;
-
-    return isInstance;
+export function instanceOfAptosReversion(value: object): value is AptosReversion {
+    if (!('state' in value) || value['state'] === undefined) return false;
+    return true;
 }
 
 export function AptosReversionFromJSON(json: any): AptosReversion {
@@ -55,27 +56,29 @@ export function AptosReversionFromJSON(json: any): AptosReversion {
 }
 
 export function AptosReversionFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosReversion {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'state': AptosReversionStateFromJSON(json['state']),
-        'reason': !exists(json, 'reason') ? undefined : json['reason'],
+        'reason': json['reason'] == null ? undefined : json['reason'],
     };
 }
 
-export function AptosReversionToJSON(value?: AptosReversion | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AptosReversionToJSON(json: any): AptosReversion {
+    return AptosReversionToJSONTyped(json, false);
+}
+
+export function AptosReversionToJSONTyped(value?: AptosReversion | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'state': AptosReversionStateToJSON(value.state),
-        'reason': value.reason,
+        'state': AptosReversionStateToJSON(value['state']),
+        'reason': value['reason'],
     };
 }
 

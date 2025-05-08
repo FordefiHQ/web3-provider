@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -30,11 +30,9 @@ export interface CountUsersResponse {
 /**
  * Check if a given object implements the CountUsersResponse interface.
  */
-export function instanceOfCountUsersResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "count" in value;
-
-    return isInstance;
+export function instanceOfCountUsersResponse(value: object): value is CountUsersResponse {
+    if (!('count' in value) || value['count'] === undefined) return false;
+    return true;
 }
 
 export function CountUsersResponseFromJSON(json: any): CountUsersResponse {
@@ -42,7 +40,7 @@ export function CountUsersResponseFromJSON(json: any): CountUsersResponse {
 }
 
 export function CountUsersResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): CountUsersResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -51,16 +49,18 @@ export function CountUsersResponseFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-export function CountUsersResponseToJSON(value?: CountUsersResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CountUsersResponseToJSON(json: any): CountUsersResponse {
+    return CountUsersResponseToJSONTyped(json, false);
+}
+
+export function CountUsersResponseToJSONTyped(value?: CountUsersResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'count': value.count,
+        'count': value['count'],
     };
 }
 

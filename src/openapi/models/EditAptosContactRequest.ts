@@ -12,12 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { AptosAssetIdentifierRequest } from './AptosAssetIdentifierRequest';
+import {
+    AptosAssetIdentifierRequestFromJSON,
+    AptosAssetIdentifierRequestFromJSONTyped,
+    AptosAssetIdentifierRequestToJSON,
+    AptosAssetIdentifierRequestToJSONTyped,
+} from './AptosAssetIdentifierRequest';
 import type { AptosChainUniqueId } from './AptosChainUniqueId';
 import {
     AptosChainUniqueIdFromJSON,
     AptosChainUniqueIdFromJSONTyped,
     AptosChainUniqueIdToJSON,
+    AptosChainUniqueIdToJSONTyped,
 } from './AptosChainUniqueId';
 
 /**
@@ -44,6 +52,12 @@ export interface EditAptosContactRequest {
      * @memberof EditAptosContactRequest
      */
     chains: Array<AptosChainUniqueId>;
+    /**
+     * 
+     * @type {Array<AptosAssetIdentifierRequest>}
+     * @memberof EditAptosContactRequest
+     */
+    assetsIdentifiers?: Array<AptosAssetIdentifierRequest>;
 }
 
 
@@ -59,13 +73,11 @@ export type EditAptosContactRequestTypeEnum = typeof EditAptosContactRequestType
 /**
  * Check if a given object implements the EditAptosContactRequest interface.
  */
-export function instanceOfEditAptosContactRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chains" in value;
-
-    return isInstance;
+export function instanceOfEditAptosContactRequest(value: object): value is EditAptosContactRequest {
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chains' in value) || value['chains'] === undefined) return false;
+    return true;
 }
 
 export function EditAptosContactRequestFromJSON(json: any): EditAptosContactRequest {
@@ -73,7 +85,7 @@ export function EditAptosContactRequestFromJSON(json: any): EditAptosContactRequ
 }
 
 export function EditAptosContactRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): EditAptosContactRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -81,21 +93,25 @@ export function EditAptosContactRequestFromJSONTyped(json: any, ignoreDiscrimina
         'name': json['name'],
         'type': json['type'],
         'chains': ((json['chains'] as Array<any>).map(AptosChainUniqueIdFromJSON)),
+        'assetsIdentifiers': json['assets_identifiers'] == null ? undefined : ((json['assets_identifiers'] as Array<any>).map(AptosAssetIdentifierRequestFromJSON)),
     };
 }
 
-export function EditAptosContactRequestToJSON(value?: EditAptosContactRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EditAptosContactRequestToJSON(json: any): EditAptosContactRequest {
+    return EditAptosContactRequestToJSONTyped(json, false);
+}
+
+export function EditAptosContactRequestToJSONTyped(value?: EditAptosContactRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'type': value.type,
-        'chains': ((value.chains as Array<any>).map(AptosChainUniqueIdToJSON)),
+        'name': value['name'],
+        'type': value['type'],
+        'chains': ((value['chains'] as Array<any>).map(AptosChainUniqueIdToJSON)),
+        'assets_identifiers': value['assetsIdentifiers'] == null ? undefined : ((value['assetsIdentifiers'] as Array<any>).map(AptosAssetIdentifierRequestToJSON)),
     };
 }
 

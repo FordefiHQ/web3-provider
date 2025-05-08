@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EvmAddress } from './EvmAddress';
 import {
     EvmAddressFromJSON,
     EvmAddressFromJSONTyped,
     EvmAddressToJSON,
+    EvmAddressToJSONTyped,
 } from './EvmAddress';
 
 /**
@@ -77,15 +78,13 @@ export type Erc20TypeEnum = typeof Erc20TypeEnum[keyof typeof Erc20TypeEnum];
 /**
  * Check if a given object implements the Erc20 interface.
  */
-export function instanceOfErc20(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "symbol" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "decimals" in value;
-
-    return isInstance;
+export function instanceOfErc20(value: object): value is Erc20 {
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('symbol' in value) || value['symbol'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('decimals' in value) || value['decimals'] === undefined) return false;
+    return true;
 }
 
 export function Erc20FromJSON(json: any): Erc20 {
@@ -93,7 +92,7 @@ export function Erc20FromJSON(json: any): Erc20 {
 }
 
 export function Erc20FromJSONTyped(json: any, ignoreDiscriminator: boolean): Erc20 {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -103,25 +102,27 @@ export function Erc20FromJSONTyped(json: any, ignoreDiscriminator: boolean): Erc
         'symbol': json['symbol'],
         'type': json['type'],
         'decimals': json['decimals'],
-        'logoUrl': !exists(json, 'logo_url') ? undefined : json['logo_url'],
+        'logoUrl': json['logo_url'] == null ? undefined : json['logo_url'],
     };
 }
 
-export function Erc20ToJSON(value?: Erc20 | null): any {
-    if (value === undefined) {
-        return undefined;
+export function Erc20ToJSON(json: any): Erc20 {
+    return Erc20ToJSONTyped(json, false);
+}
+
+export function Erc20ToJSONTyped(value?: Erc20 | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'address': EvmAddressToJSON(value.address),
-        'name': value.name,
-        'symbol': value.symbol,
-        'type': value.type,
-        'decimals': value.decimals,
-        'logo_url': value.logoUrl,
+        'address': EvmAddressToJSON(value['address']),
+        'name': value['name'],
+        'symbol': value['symbol'],
+        'type': value['type'],
+        'decimals': value['decimals'],
+        'logo_url': value['logoUrl'],
     };
 }
 

@@ -12,18 +12,27 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { ReleaseType } from './ReleaseType';
 import {
     ReleaseTypeFromJSON,
     ReleaseTypeFromJSONTyped,
     ReleaseTypeToJSON,
+    ReleaseTypeToJSONTyped,
 } from './ReleaseType';
+import type { ReleaseEvmTransactionRequestGas } from './ReleaseEvmTransactionRequestGas';
+import {
+    ReleaseEvmTransactionRequestGasFromJSON,
+    ReleaseEvmTransactionRequestGasFromJSONTyped,
+    ReleaseEvmTransactionRequestGasToJSON,
+    ReleaseEvmTransactionRequestGasToJSONTyped,
+} from './ReleaseEvmTransactionRequestGas';
 import type { SignerType } from './SignerType';
 import {
     SignerTypeFromJSON,
     SignerTypeFromJSONTyped,
     SignerTypeToJSON,
+    SignerTypeToJSONTyped,
 } from './SignerType';
 
 /**
@@ -62,6 +71,12 @@ export interface ReleaseEvmTransactionRequest {
      * @memberof ReleaseEvmTransactionRequest
      */
     note?: string;
+    /**
+     * 
+     * @type {ReleaseEvmTransactionRequestGas}
+     * @memberof ReleaseEvmTransactionRequest
+     */
+    gas?: ReleaseEvmTransactionRequestGas;
 }
 
 
@@ -77,12 +92,10 @@ export type ReleaseEvmTransactionRequestTypeEnum = typeof ReleaseEvmTransactionR
 /**
  * Check if a given object implements the ReleaseEvmTransactionRequest interface.
  */
-export function instanceOfReleaseEvmTransactionRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "releaseType" in value;
-
-    return isInstance;
+export function instanceOfReleaseEvmTransactionRequest(value: object): value is ReleaseEvmTransactionRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('releaseType' in value) || value['releaseType'] === undefined) return false;
+    return true;
 }
 
 export function ReleaseEvmTransactionRequestFromJSON(json: any): ReleaseEvmTransactionRequest {
@@ -90,33 +103,37 @@ export function ReleaseEvmTransactionRequestFromJSON(json: any): ReleaseEvmTrans
 }
 
 export function ReleaseEvmTransactionRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): ReleaseEvmTransactionRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
         'releaseType': ReleaseTypeFromJSON(json['release_type']),
-        'signerType': !exists(json, 'signer_type') ? undefined : SignerTypeFromJSON(json['signer_type']),
-        'failOnPredictionFailure': !exists(json, 'fail_on_prediction_failure') ? undefined : json['fail_on_prediction_failure'],
-        'note': !exists(json, 'note') ? undefined : json['note'],
+        'signerType': json['signer_type'] == null ? undefined : SignerTypeFromJSON(json['signer_type']),
+        'failOnPredictionFailure': json['fail_on_prediction_failure'] == null ? undefined : json['fail_on_prediction_failure'],
+        'note': json['note'] == null ? undefined : json['note'],
+        'gas': json['gas'] == null ? undefined : ReleaseEvmTransactionRequestGasFromJSON(json['gas']),
     };
 }
 
-export function ReleaseEvmTransactionRequestToJSON(value?: ReleaseEvmTransactionRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ReleaseEvmTransactionRequestToJSON(json: any): ReleaseEvmTransactionRequest {
+    return ReleaseEvmTransactionRequestToJSONTyped(json, false);
+}
+
+export function ReleaseEvmTransactionRequestToJSONTyped(value?: ReleaseEvmTransactionRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'release_type': ReleaseTypeToJSON(value.releaseType),
-        'signer_type': SignerTypeToJSON(value.signerType),
-        'fail_on_prediction_failure': value.failOnPredictionFailure,
-        'note': value.note,
+        'type': value['type'],
+        'release_type': ReleaseTypeToJSON(value['releaseType']),
+        'signer_type': SignerTypeToJSON(value['signerType']),
+        'fail_on_prediction_failure': value['failOnPredictionFailure'],
+        'note': value['note'],
+        'gas': ReleaseEvmTransactionRequestGasToJSON(value['gas']),
     };
 }
 

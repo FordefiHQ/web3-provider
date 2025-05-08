@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EncryptionData } from './EncryptionData';
 import {
     EncryptionDataFromJSON,
     EncryptionDataFromJSONTyped,
     EncryptionDataToJSON,
+    EncryptionDataToJSONTyped,
 } from './EncryptionData';
 
 /**
@@ -49,13 +50,11 @@ export interface EncryptedBackupShareByDevice {
 /**
  * Check if a given object implements the EncryptedBackupShareByDevice interface.
  */
-export function instanceOfEncryptedBackupShareByDevice(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "deviceId" in value;
-    isInstance = isInstance && "encryptedShare" in value;
-    isInstance = isInstance && "hmacForPublicRsaKeys" in value;
-
-    return isInstance;
+export function instanceOfEncryptedBackupShareByDevice(value: object): value is EncryptedBackupShareByDevice {
+    if (!('deviceId' in value) || value['deviceId'] === undefined) return false;
+    if (!('encryptedShare' in value) || value['encryptedShare'] === undefined) return false;
+    if (!('hmacForPublicRsaKeys' in value) || value['hmacForPublicRsaKeys'] === undefined) return false;
+    return true;
 }
 
 export function EncryptedBackupShareByDeviceFromJSON(json: any): EncryptedBackupShareByDevice {
@@ -63,7 +62,7 @@ export function EncryptedBackupShareByDeviceFromJSON(json: any): EncryptedBackup
 }
 
 export function EncryptedBackupShareByDeviceFromJSONTyped(json: any, ignoreDiscriminator: boolean): EncryptedBackupShareByDevice {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -74,18 +73,20 @@ export function EncryptedBackupShareByDeviceFromJSONTyped(json: any, ignoreDiscr
     };
 }
 
-export function EncryptedBackupShareByDeviceToJSON(value?: EncryptedBackupShareByDevice | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EncryptedBackupShareByDeviceToJSON(json: any): EncryptedBackupShareByDevice {
+    return EncryptedBackupShareByDeviceToJSONTyped(json, false);
+}
+
+export function EncryptedBackupShareByDeviceToJSONTyped(value?: EncryptedBackupShareByDevice | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'device_id': value.deviceId,
-        'encrypted_share': EncryptionDataToJSON(value.encryptedShare),
-        'hmac_for_public_rsa_keys': value.hmacForPublicRsaKeys,
+        'device_id': value['deviceId'],
+        'encrypted_share': EncryptionDataToJSON(value['encryptedShare']),
+        'hmac_for_public_rsa_keys': value['hmacForPublicRsaKeys'],
     };
 }
 

@@ -23,6 +23,17 @@ export const CompleteDeviceOnboardingErrorType = {
 export type CompleteDeviceOnboardingErrorType = typeof CompleteDeviceOnboardingErrorType[keyof typeof CompleteDeviceOnboardingErrorType];
 
 
+export function instanceOfCompleteDeviceOnboardingErrorType(value: any): boolean {
+    for (const key in CompleteDeviceOnboardingErrorType) {
+        if (Object.prototype.hasOwnProperty.call(CompleteDeviceOnboardingErrorType, key)) {
+            if (CompleteDeviceOnboardingErrorType[key as keyof typeof CompleteDeviceOnboardingErrorType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function CompleteDeviceOnboardingErrorTypeFromJSON(json: any): CompleteDeviceOnboardingErrorType {
     return CompleteDeviceOnboardingErrorTypeFromJSONTyped(json, false);
 }
@@ -33,5 +44,9 @@ export function CompleteDeviceOnboardingErrorTypeFromJSONTyped(json: any, ignore
 
 export function CompleteDeviceOnboardingErrorTypeToJSON(value?: CompleteDeviceOnboardingErrorType | null): any {
     return value as any;
+}
+
+export function CompleteDeviceOnboardingErrorTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): CompleteDeviceOnboardingErrorType {
+    return value as CompleteDeviceOnboardingErrorType;
 }
 

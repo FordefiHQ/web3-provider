@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { VaultGroupPermissionsRequest } from './VaultGroupPermissionsRequest';
 import {
     VaultGroupPermissionsRequestFromJSON,
     VaultGroupPermissionsRequestFromJSONTyped,
     VaultGroupPermissionsRequestToJSON,
+    VaultGroupPermissionsRequestToJSONTyped,
 } from './VaultGroupPermissionsRequest';
 
 /**
@@ -37,11 +38,9 @@ export interface UpdateVaultGroupPermissionsRequest {
 /**
  * Check if a given object implements the UpdateVaultGroupPermissionsRequest interface.
  */
-export function instanceOfUpdateVaultGroupPermissionsRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "permissions" in value;
-
-    return isInstance;
+export function instanceOfUpdateVaultGroupPermissionsRequest(value: object): value is UpdateVaultGroupPermissionsRequest {
+    if (!('permissions' in value) || value['permissions'] === undefined) return false;
+    return true;
 }
 
 export function UpdateVaultGroupPermissionsRequestFromJSON(json: any): UpdateVaultGroupPermissionsRequest {
@@ -49,7 +48,7 @@ export function UpdateVaultGroupPermissionsRequestFromJSON(json: any): UpdateVau
 }
 
 export function UpdateVaultGroupPermissionsRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): UpdateVaultGroupPermissionsRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -58,16 +57,18 @@ export function UpdateVaultGroupPermissionsRequestFromJSONTyped(json: any, ignor
     };
 }
 
-export function UpdateVaultGroupPermissionsRequestToJSON(value?: UpdateVaultGroupPermissionsRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UpdateVaultGroupPermissionsRequestToJSON(json: any): UpdateVaultGroupPermissionsRequest {
+    return UpdateVaultGroupPermissionsRequestToJSONTyped(json, false);
+}
+
+export function UpdateVaultGroupPermissionsRequestToJSONTyped(value?: UpdateVaultGroupPermissionsRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'permissions': VaultGroupPermissionsRequestToJSON(value.permissions),
+        'permissions': VaultGroupPermissionsRequestToJSON(value['permissions']),
     };
 }
 

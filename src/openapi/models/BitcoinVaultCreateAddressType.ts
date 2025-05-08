@@ -25,6 +25,17 @@ export const BitcoinVaultCreateAddressType = {
 export type BitcoinVaultCreateAddressType = typeof BitcoinVaultCreateAddressType[keyof typeof BitcoinVaultCreateAddressType];
 
 
+export function instanceOfBitcoinVaultCreateAddressType(value: any): boolean {
+    for (const key in BitcoinVaultCreateAddressType) {
+        if (Object.prototype.hasOwnProperty.call(BitcoinVaultCreateAddressType, key)) {
+            if (BitcoinVaultCreateAddressType[key as keyof typeof BitcoinVaultCreateAddressType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function BitcoinVaultCreateAddressTypeFromJSON(json: any): BitcoinVaultCreateAddressType {
     return BitcoinVaultCreateAddressTypeFromJSONTyped(json, false);
 }
@@ -35,5 +46,9 @@ export function BitcoinVaultCreateAddressTypeFromJSONTyped(json: any, ignoreDisc
 
 export function BitcoinVaultCreateAddressTypeToJSON(value?: BitcoinVaultCreateAddressType | null): any {
     return value as any;
+}
+
+export function BitcoinVaultCreateAddressTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): BitcoinVaultCreateAddressType {
+    return value as BitcoinVaultCreateAddressType;
 }
 

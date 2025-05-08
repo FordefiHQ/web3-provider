@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { SolanaAddress } from './SolanaAddress';
 import {
     SolanaAddressFromJSON,
     SolanaAddressFromJSONTyped,
     SolanaAddressToJSON,
+    SolanaAddressToJSONTyped,
 } from './SolanaAddress';
 
 /**
@@ -77,15 +78,13 @@ export type SplTokenTypeEnum = typeof SplTokenTypeEnum[keyof typeof SplTokenType
 /**
  * Check if a given object implements the SplToken interface.
  */
-export function instanceOfSplToken(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "symbol" in value;
-    isInstance = isInstance && "decimals" in value;
-
-    return isInstance;
+export function instanceOfSplToken(value: object): value is SplToken {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('symbol' in value) || value['symbol'] === undefined) return false;
+    if (!('decimals' in value) || value['decimals'] === undefined) return false;
+    return true;
 }
 
 export function SplTokenFromJSON(json: any): SplToken {
@@ -93,7 +92,7 @@ export function SplTokenFromJSON(json: any): SplToken {
 }
 
 export function SplTokenFromJSONTyped(json: any, ignoreDiscriminator: boolean): SplToken {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -103,25 +102,27 @@ export function SplTokenFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'name': json['name'],
         'symbol': json['symbol'],
         'decimals': json['decimals'],
-        'logoUrl': !exists(json, 'logo_url') ? undefined : json['logo_url'],
+        'logoUrl': json['logo_url'] == null ? undefined : json['logo_url'],
     };
 }
 
-export function SplTokenToJSON(value?: SplToken | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SplTokenToJSON(json: any): SplToken {
+    return SplTokenToJSONTyped(json, false);
+}
+
+export function SplTokenToJSONTyped(value?: SplToken | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'address': SolanaAddressToJSON(value.address),
-        'name': value.name,
-        'symbol': value.symbol,
-        'decimals': value.decimals,
-        'logo_url': value.logoUrl,
+        'type': value['type'],
+        'address': SolanaAddressToJSON(value['address']),
+        'name': value['name'],
+        'symbol': value['symbol'],
+        'decimals': value['decimals'],
+        'logo_url': value['logoUrl'],
     };
 }
 

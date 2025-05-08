@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { EnrichedSolanaNativeAssetIdentifier } from './EnrichedSolanaNativeAssetIdentifier';
 import {
-    EnrichedSolanaNativeAssetIdentifier,
     instanceOfEnrichedSolanaNativeAssetIdentifier,
     EnrichedSolanaNativeAssetIdentifierFromJSON,
     EnrichedSolanaNativeAssetIdentifierFromJSONTyped,
     EnrichedSolanaNativeAssetIdentifierToJSON,
 } from './EnrichedSolanaNativeAssetIdentifier';
+import type { EnrichedSolanaSplTokenAssetIdentifier } from './EnrichedSolanaSplTokenAssetIdentifier';
 import {
-    EnrichedSolanaSplTokenAssetIdentifier,
     instanceOfEnrichedSolanaSplTokenAssetIdentifier,
     EnrichedSolanaSplTokenAssetIdentifierFromJSON,
     EnrichedSolanaSplTokenAssetIdentifierFromJSONTyped,
@@ -39,31 +39,32 @@ export function EnrichedSolanaAssetIdentifierDetailsFromJSON(json: any): Enriche
 }
 
 export function EnrichedSolanaAssetIdentifierDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): EnrichedSolanaAssetIdentifierDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'native':
-            return {...EnrichedSolanaNativeAssetIdentifierFromJSONTyped(json, true), type: 'native'};
+            return Object.assign({}, EnrichedSolanaNativeAssetIdentifierFromJSONTyped(json, true), { type: 'native' } as const);
         case 'spl_token':
-            return {...EnrichedSolanaSplTokenAssetIdentifierFromJSONTyped(json, true), type: 'spl_token'};
+            return Object.assign({}, EnrichedSolanaSplTokenAssetIdentifierFromJSONTyped(json, true), { type: 'spl_token' } as const);
         default:
             throw new Error(`No variant of EnrichedSolanaAssetIdentifierDetails exists with 'type=${json['type']}'`);
     }
 }
 
-export function EnrichedSolanaAssetIdentifierDetailsToJSON(value?: EnrichedSolanaAssetIdentifierDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function EnrichedSolanaAssetIdentifierDetailsToJSON(json: any): any {
+    return EnrichedSolanaAssetIdentifierDetailsToJSONTyped(json, false);
+}
+
+export function EnrichedSolanaAssetIdentifierDetailsToJSONTyped(value?: EnrichedSolanaAssetIdentifierDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'native':
-            return EnrichedSolanaNativeAssetIdentifierToJSON(value);
+            return Object.assign({}, EnrichedSolanaNativeAssetIdentifierToJSON(value), { type: 'native' } as const);
         case 'spl_token':
-            return EnrichedSolanaSplTokenAssetIdentifierToJSON(value);
+            return Object.assign({}, EnrichedSolanaSplTokenAssetIdentifierToJSON(value), { type: 'spl_token' } as const);
         default:
             throw new Error(`No variant of EnrichedSolanaAssetIdentifierDetails exists with 'type=${value['type']}'`);
     }

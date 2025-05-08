@@ -22,10 +22,22 @@ export const OrganizationType = {
     customer: 'customer',
     internal: 'internal',
     trial: 'trial',
-    e2e: 'e2e'
+    e2e: 'e2e',
+    partner: 'partner'
 } as const;
 export type OrganizationType = typeof OrganizationType[keyof typeof OrganizationType];
 
+
+export function instanceOfOrganizationType(value: any): boolean {
+    for (const key in OrganizationType) {
+        if (Object.prototype.hasOwnProperty.call(OrganizationType, key)) {
+            if (OrganizationType[key as keyof typeof OrganizationType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 export function OrganizationTypeFromJSON(json: any): OrganizationType {
     return OrganizationTypeFromJSONTyped(json, false);
@@ -37,5 +49,9 @@ export function OrganizationTypeFromJSONTyped(json: any, ignoreDiscriminator: bo
 
 export function OrganizationTypeToJSON(value?: OrganizationType | null): any {
     return value as any;
+}
+
+export function OrganizationTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): OrganizationType {
+    return value as OrganizationType;
 }
 

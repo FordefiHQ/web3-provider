@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { EnrichedSolanaChain } from './EnrichedSolanaChain';
-import {
-    EnrichedSolanaChainFromJSON,
-    EnrichedSolanaChainFromJSONTyped,
-    EnrichedSolanaChainToJSON,
-} from './EnrichedSolanaChain';
+import { mapValues } from '../runtime';
 import type { SolanaAssetIdentifierDetails } from './SolanaAssetIdentifierDetails';
 import {
     SolanaAssetIdentifierDetailsFromJSON,
     SolanaAssetIdentifierDetailsFromJSONTyped,
     SolanaAssetIdentifierDetailsToJSON,
+    SolanaAssetIdentifierDetailsToJSONTyped,
 } from './SolanaAssetIdentifierDetails';
+import type { EnrichedSolanaChain } from './EnrichedSolanaChain';
+import {
+    EnrichedSolanaChainFromJSON,
+    EnrichedSolanaChainFromJSONTyped,
+    EnrichedSolanaChainToJSON,
+    EnrichedSolanaChainToJSONTyped,
+} from './EnrichedSolanaChain';
 
 /**
  * 
@@ -65,13 +67,11 @@ export type SolanaAssetIdentifierTypeEnum = typeof SolanaAssetIdentifierTypeEnum
 /**
  * Check if a given object implements the SolanaAssetIdentifier interface.
  */
-export function instanceOfSolanaAssetIdentifier(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "details" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfSolanaAssetIdentifier(value: object): value is SolanaAssetIdentifier {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function SolanaAssetIdentifierFromJSON(json: any): SolanaAssetIdentifier {
@@ -79,7 +79,7 @@ export function SolanaAssetIdentifierFromJSON(json: any): SolanaAssetIdentifier 
 }
 
 export function SolanaAssetIdentifierFromJSONTyped(json: any, ignoreDiscriminator: boolean): SolanaAssetIdentifier {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -90,18 +90,20 @@ export function SolanaAssetIdentifierFromJSONTyped(json: any, ignoreDiscriminato
     };
 }
 
-export function SolanaAssetIdentifierToJSON(value?: SolanaAssetIdentifier | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SolanaAssetIdentifierToJSON(json: any): SolanaAssetIdentifier {
+    return SolanaAssetIdentifierToJSONTyped(json, false);
+}
+
+export function SolanaAssetIdentifierToJSONTyped(value?: SolanaAssetIdentifier | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'details': SolanaAssetIdentifierDetailsToJSON(value.details),
-        'chain': EnrichedSolanaChainToJSON(value.chain),
+        'type': value['type'],
+        'details': SolanaAssetIdentifierDetailsToJSON(value['details']),
+        'chain': EnrichedSolanaChainToJSON(value['chain']),
     };
 }
 

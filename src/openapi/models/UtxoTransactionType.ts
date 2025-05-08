@@ -24,6 +24,17 @@ export const UtxoTransactionType = {
 export type UtxoTransactionType = typeof UtxoTransactionType[keyof typeof UtxoTransactionType];
 
 
+export function instanceOfUtxoTransactionType(value: any): boolean {
+    for (const key in UtxoTransactionType) {
+        if (Object.prototype.hasOwnProperty.call(UtxoTransactionType, key)) {
+            if (UtxoTransactionType[key as keyof typeof UtxoTransactionType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function UtxoTransactionTypeFromJSON(json: any): UtxoTransactionType {
     return UtxoTransactionTypeFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function UtxoTransactionTypeFromJSONTyped(json: any, ignoreDiscriminator:
 
 export function UtxoTransactionTypeToJSON(value?: UtxoTransactionType | null): any {
     return value as any;
+}
+
+export function UtxoTransactionTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): UtxoTransactionType {
+    return value as UtxoTransactionType;
 }
 

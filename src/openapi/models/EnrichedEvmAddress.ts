@@ -12,25 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { ContactRef } from './ContactRef';
-import {
-    ContactRefFromJSON,
-    ContactRefFromJSONTyped,
-    ContactRefToJSON,
-} from './ContactRef';
-import type { EvmContractMetadata } from './EvmContractMetadata';
-import {
-    EvmContractMetadataFromJSON,
-    EvmContractMetadataFromJSONTyped,
-    EvmContractMetadataToJSON,
-} from './EvmContractMetadata';
+import { mapValues } from '../runtime';
 import type { VaultRef } from './VaultRef';
 import {
     VaultRefFromJSON,
     VaultRefFromJSONTyped,
     VaultRefToJSON,
+    VaultRefToJSONTyped,
 } from './VaultRef';
+import type { EvmContractMetadata } from './EvmContractMetadata';
+import {
+    EvmContractMetadataFromJSON,
+    EvmContractMetadataFromJSONTyped,
+    EvmContractMetadataToJSON,
+    EvmContractMetadataToJSONTyped,
+} from './EvmContractMetadata';
+import type { ContactRef } from './ContactRef';
+import {
+    ContactRefFromJSON,
+    ContactRefFromJSONTyped,
+    ContactRefToJSON,
+    ContactRefToJSONTyped,
+} from './ContactRef';
 
 /**
  * 
@@ -89,12 +92,10 @@ export type EnrichedEvmAddressTypeEnum = typeof EnrichedEvmAddressTypeEnum[keyof
 /**
  * Check if a given object implements the EnrichedEvmAddress interface.
  */
-export function instanceOfEnrichedEvmAddress(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "address" in value;
-
-    return isInstance;
+export function instanceOfEnrichedEvmAddress(value: object): value is EnrichedEvmAddress {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    return true;
 }
 
 export function EnrichedEvmAddressFromJSON(json: any): EnrichedEvmAddress {
@@ -102,35 +103,37 @@ export function EnrichedEvmAddressFromJSON(json: any): EnrichedEvmAddress {
 }
 
 export function EnrichedEvmAddressFromJSONTyped(json: any, ignoreDiscriminator: boolean): EnrichedEvmAddress {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'vault': !exists(json, 'vault') ? undefined : VaultRefFromJSON(json['vault']),
-        'explorerUrl': !exists(json, 'explorer_url') ? undefined : json['explorer_url'],
-        'contact': !exists(json, 'contact') ? undefined : ContactRefFromJSON(json['contact']),
+        'vault': json['vault'] == null ? undefined : VaultRefFromJSON(json['vault']),
+        'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
+        'contact': json['contact'] == null ? undefined : ContactRefFromJSON(json['contact']),
         'type': json['type'],
         'address': json['address'],
-        'contract': !exists(json, 'contract') ? undefined : EvmContractMetadataFromJSON(json['contract']),
+        'contract': json['contract'] == null ? undefined : EvmContractMetadataFromJSON(json['contract']),
     };
 }
 
-export function EnrichedEvmAddressToJSON(value?: EnrichedEvmAddress | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EnrichedEvmAddressToJSON(json: any): EnrichedEvmAddress {
+    return EnrichedEvmAddressToJSONTyped(json, false);
+}
+
+export function EnrichedEvmAddressToJSONTyped(value?: EnrichedEvmAddress | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'vault': VaultRefToJSON(value.vault),
-        'explorer_url': value.explorerUrl,
-        'contact': ContactRefToJSON(value.contact),
-        'type': value.type,
-        'address': value.address,
-        'contract': EvmContractMetadataToJSON(value.contract),
+        'vault': VaultRefToJSON(value['vault']),
+        'explorer_url': value['explorerUrl'],
+        'contact': ContactRefToJSON(value['contact']),
+        'type': value['type'],
+        'address': value['address'],
+        'contract': EvmContractMetadataToJSON(value['contract']),
     };
 }
 

@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -30,10 +30,8 @@ export interface SolanaTransactionSignaturesRequest {
 /**
  * Check if a given object implements the SolanaTransactionSignaturesRequest interface.
  */
-export function instanceOfSolanaTransactionSignaturesRequest(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfSolanaTransactionSignaturesRequest(value: object): value is SolanaTransactionSignaturesRequest {
+    return true;
 }
 
 export function SolanaTransactionSignaturesRequestFromJSON(json: any): SolanaTransactionSignaturesRequest {
@@ -41,25 +39,27 @@ export function SolanaTransactionSignaturesRequestFromJSON(json: any): SolanaTra
 }
 
 export function SolanaTransactionSignaturesRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): SolanaTransactionSignaturesRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'data': !exists(json, 'data') ? undefined : json['data'],
+        'data': json['data'] == null ? undefined : json['data'],
     };
 }
 
-export function SolanaTransactionSignaturesRequestToJSON(value?: SolanaTransactionSignaturesRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SolanaTransactionSignaturesRequestToJSON(json: any): SolanaTransactionSignaturesRequest {
+    return SolanaTransactionSignaturesRequestToJSONTyped(json, false);
+}
+
+export function SolanaTransactionSignaturesRequestToJSONTyped(value?: SolanaTransactionSignaturesRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'data': value.data,
+        'data': value['data'],
     };
 }
 

@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
+import type { CreateBatchSolanaTransactionRequest } from './CreateBatchSolanaTransactionRequest';
 import {
-    CreateBatchSolanaTransactionRequest,
     instanceOfCreateBatchSolanaTransactionRequest,
     CreateBatchSolanaTransactionRequestFromJSON,
     CreateBatchSolanaTransactionRequestFromJSONTyped,
@@ -32,27 +32,28 @@ export function CreateBatchTransactionRequestFromJSON(json: any): CreateBatchTra
 }
 
 export function CreateBatchTransactionRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateBatchTransactionRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'solana_transaction':
-            return {...CreateBatchSolanaTransactionRequestFromJSONTyped(json, true), type: 'solana_transaction'};
+            return Object.assign({}, CreateBatchSolanaTransactionRequestFromJSONTyped(json, true), { type: 'solana_transaction' } as const);
         default:
             throw new Error(`No variant of CreateBatchTransactionRequest exists with 'type=${json['type']}'`);
     }
 }
 
-export function CreateBatchTransactionRequestToJSON(value?: CreateBatchTransactionRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function CreateBatchTransactionRequestToJSON(json: any): any {
+    return CreateBatchTransactionRequestToJSONTyped(json, false);
+}
+
+export function CreateBatchTransactionRequestToJSONTyped(value?: CreateBatchTransactionRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'solana_transaction':
-            return CreateBatchSolanaTransactionRequestToJSON(value);
+            return Object.assign({}, CreateBatchSolanaTransactionRequestToJSON(value), { type: 'solana_transaction' } as const);
         default:
             throw new Error(`No variant of CreateBatchTransactionRequest exists with 'type=${value['type']}'`);
     }

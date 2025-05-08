@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { PsbtSignerIdentityAddress } from './PsbtSignerIdentityAddress';
 import {
-    PsbtSignerIdentityAddress,
     instanceOfPsbtSignerIdentityAddress,
     PsbtSignerIdentityAddressFromJSON,
     PsbtSignerIdentityAddressFromJSONTyped,
     PsbtSignerIdentityAddressToJSON,
 } from './PsbtSignerIdentityAddress';
+import type { PsbtSignerIdentityPublicKey } from './PsbtSignerIdentityPublicKey';
 import {
-    PsbtSignerIdentityPublicKey,
     instanceOfPsbtSignerIdentityPublicKey,
     PsbtSignerIdentityPublicKeyFromJSON,
     PsbtSignerIdentityPublicKeyFromJSONTyped,
@@ -39,31 +39,32 @@ export function PsbtInputSignerIdentityFromJSON(json: any): PsbtInputSignerIdent
 }
 
 export function PsbtInputSignerIdentityFromJSONTyped(json: any, ignoreDiscriminator: boolean): PsbtInputSignerIdentity {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'address':
-            return {...PsbtSignerIdentityAddressFromJSONTyped(json, true), type: 'address'};
+            return Object.assign({}, PsbtSignerIdentityAddressFromJSONTyped(json, true), { type: 'address' } as const);
         case 'public_key':
-            return {...PsbtSignerIdentityPublicKeyFromJSONTyped(json, true), type: 'public_key'};
+            return Object.assign({}, PsbtSignerIdentityPublicKeyFromJSONTyped(json, true), { type: 'public_key' } as const);
         default:
             throw new Error(`No variant of PsbtInputSignerIdentity exists with 'type=${json['type']}'`);
     }
 }
 
-export function PsbtInputSignerIdentityToJSON(value?: PsbtInputSignerIdentity | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function PsbtInputSignerIdentityToJSON(json: any): any {
+    return PsbtInputSignerIdentityToJSONTyped(json, false);
+}
+
+export function PsbtInputSignerIdentityToJSONTyped(value?: PsbtInputSignerIdentity | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'address':
-            return PsbtSignerIdentityAddressToJSON(value);
+            return Object.assign({}, PsbtSignerIdentityAddressToJSON(value), { type: 'address' } as const);
         case 'public_key':
-            return PsbtSignerIdentityPublicKeyToJSON(value);
+            return Object.assign({}, PsbtSignerIdentityPublicKeyToJSON(value), { type: 'public_key' } as const);
         default:
             throw new Error(`No variant of PsbtInputSignerIdentity exists with 'type=${value['type']}'`);
     }

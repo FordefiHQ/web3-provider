@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { BaseSuiPureInput } from './BaseSuiPureInput';
 import {
     BaseSuiPureInputFromJSON,
     BaseSuiPureInputFromJSONTyped,
     BaseSuiPureInputToJSON,
+    BaseSuiPureInputToJSONTyped,
 } from './BaseSuiPureInput';
 
 /**
@@ -53,12 +54,10 @@ export type SuiPureInputArgumentTypeEnum = typeof SuiPureInputArgumentTypeEnum[k
 /**
  * Check if a given object implements the SuiPureInputArgument interface.
  */
-export function instanceOfSuiPureInputArgument(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "details" in value;
-
-    return isInstance;
+export function instanceOfSuiPureInputArgument(value: object): value is SuiPureInputArgument {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    return true;
 }
 
 export function SuiPureInputArgumentFromJSON(json: any): SuiPureInputArgument {
@@ -66,7 +65,7 @@ export function SuiPureInputArgumentFromJSON(json: any): SuiPureInputArgument {
 }
 
 export function SuiPureInputArgumentFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiPureInputArgument {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function SuiPureInputArgumentFromJSONTyped(json: any, ignoreDiscriminator
     };
 }
 
-export function SuiPureInputArgumentToJSON(value?: SuiPureInputArgument | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiPureInputArgumentToJSON(json: any): SuiPureInputArgument {
+    return SuiPureInputArgumentToJSONTyped(json, false);
+}
+
+export function SuiPureInputArgumentToJSONTyped(value?: SuiPureInputArgument | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'details': BaseSuiPureInputToJSON(value.details),
+        'type': value['type'],
+        'details': BaseSuiPureInputToJSON(value['details']),
     };
 }
 

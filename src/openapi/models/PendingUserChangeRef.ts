@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -47,12 +47,10 @@ export type PendingUserChangeRefNewRoleEnum = typeof PendingUserChangeRefNewRole
 /**
  * Check if a given object implements the PendingUserChangeRef interface.
  */
-export function instanceOfPendingUserChangeRef(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "newRole" in value;
-    isInstance = isInstance && "changeRequestId" in value;
-
-    return isInstance;
+export function instanceOfPendingUserChangeRef(value: object): value is PendingUserChangeRef {
+    if (!('newRole' in value) || value['newRole'] === undefined) return false;
+    if (!('changeRequestId' in value) || value['changeRequestId'] === undefined) return false;
+    return true;
 }
 
 export function PendingUserChangeRefFromJSON(json: any): PendingUserChangeRef {
@@ -60,7 +58,7 @@ export function PendingUserChangeRefFromJSON(json: any): PendingUserChangeRef {
 }
 
 export function PendingUserChangeRefFromJSONTyped(json: any, ignoreDiscriminator: boolean): PendingUserChangeRef {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -70,17 +68,19 @@ export function PendingUserChangeRefFromJSONTyped(json: any, ignoreDiscriminator
     };
 }
 
-export function PendingUserChangeRefToJSON(value?: PendingUserChangeRef | null): any {
-    if (value === undefined) {
-        return undefined;
+export function PendingUserChangeRefToJSON(json: any): PendingUserChangeRef {
+    return PendingUserChangeRefToJSONTyped(json, false);
+}
+
+export function PendingUserChangeRefToJSONTyped(value?: PendingUserChangeRef | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'new_role': value.newRole,
-        'change_request_id': value.changeRequestId,
+        'new_role': value['newRole'],
+        'change_request_id': value['changeRequestId'],
     };
 }
 

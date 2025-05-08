@@ -12,106 +12,141 @@
  * Do not edit the class manually.
  */
 
+import type { WebhookAptosMessageStatusChangeEvent } from './WebhookAptosMessageStatusChangeEvent';
 import {
-    WebhookAptosMessageStatusChangeEvent,
     instanceOfWebhookAptosMessageStatusChangeEvent,
     WebhookAptosMessageStatusChangeEventFromJSON,
     WebhookAptosMessageStatusChangeEventFromJSONTyped,
     WebhookAptosMessageStatusChangeEventToJSON,
 } from './WebhookAptosMessageStatusChangeEvent';
+import type { WebhookAptosTransactionStatusChangeEvent } from './WebhookAptosTransactionStatusChangeEvent';
 import {
-    WebhookAptosTransactionStatusChangeEvent,
     instanceOfWebhookAptosTransactionStatusChangeEvent,
     WebhookAptosTransactionStatusChangeEventFromJSON,
     WebhookAptosTransactionStatusChangeEventFromJSONTyped,
     WebhookAptosTransactionStatusChangeEventToJSON,
 } from './WebhookAptosTransactionStatusChangeEvent';
+import type { WebhookBlackBoxSignatureStatusChangeEvent } from './WebhookBlackBoxSignatureStatusChangeEvent';
 import {
-    WebhookBlackBoxSignatureStatusChangeEvent,
     instanceOfWebhookBlackBoxSignatureStatusChangeEvent,
     WebhookBlackBoxSignatureStatusChangeEventFromJSON,
     WebhookBlackBoxSignatureStatusChangeEventFromJSONTyped,
     WebhookBlackBoxSignatureStatusChangeEventToJSON,
 } from './WebhookBlackBoxSignatureStatusChangeEvent';
+import type { WebhookCosmosMessageStatusChangeEvent } from './WebhookCosmosMessageStatusChangeEvent';
 import {
-    WebhookCosmosMessageStatusChangeEvent,
     instanceOfWebhookCosmosMessageStatusChangeEvent,
     WebhookCosmosMessageStatusChangeEventFromJSON,
     WebhookCosmosMessageStatusChangeEventFromJSONTyped,
     WebhookCosmosMessageStatusChangeEventToJSON,
 } from './WebhookCosmosMessageStatusChangeEvent';
+import type { WebhookCosmosTransactionStatusChangeEvent } from './WebhookCosmosTransactionStatusChangeEvent';
 import {
-    WebhookCosmosTransactionStatusChangeEvent,
     instanceOfWebhookCosmosTransactionStatusChangeEvent,
     WebhookCosmosTransactionStatusChangeEventFromJSON,
     WebhookCosmosTransactionStatusChangeEventFromJSONTyped,
     WebhookCosmosTransactionStatusChangeEventToJSON,
 } from './WebhookCosmosTransactionStatusChangeEvent';
+import type { WebhookEvmMessageStatusChangeEvent } from './WebhookEvmMessageStatusChangeEvent';
 import {
-    WebhookEvmMessageStatusChangeEvent,
     instanceOfWebhookEvmMessageStatusChangeEvent,
     WebhookEvmMessageStatusChangeEventFromJSON,
     WebhookEvmMessageStatusChangeEventFromJSONTyped,
     WebhookEvmMessageStatusChangeEventToJSON,
 } from './WebhookEvmMessageStatusChangeEvent';
+import type { WebhookEvmTransactionStatusChangeEvent } from './WebhookEvmTransactionStatusChangeEvent';
 import {
-    WebhookEvmTransactionStatusChangeEvent,
     instanceOfWebhookEvmTransactionStatusChangeEvent,
     WebhookEvmTransactionStatusChangeEventFromJSON,
     WebhookEvmTransactionStatusChangeEventFromJSONTyped,
     WebhookEvmTransactionStatusChangeEventToJSON,
 } from './WebhookEvmTransactionStatusChangeEvent';
+import type { WebhookExchangeTransactionStatusChangeEvent } from './WebhookExchangeTransactionStatusChangeEvent';
 import {
-    WebhookSolanaMessageStatusChangeEvent,
+    instanceOfWebhookExchangeTransactionStatusChangeEvent,
+    WebhookExchangeTransactionStatusChangeEventFromJSON,
+    WebhookExchangeTransactionStatusChangeEventFromJSONTyped,
+    WebhookExchangeTransactionStatusChangeEventToJSON,
+} from './WebhookExchangeTransactionStatusChangeEvent';
+import type { WebhookSolanaMessageStatusChangeEvent } from './WebhookSolanaMessageStatusChangeEvent';
+import {
     instanceOfWebhookSolanaMessageStatusChangeEvent,
     WebhookSolanaMessageStatusChangeEventFromJSON,
     WebhookSolanaMessageStatusChangeEventFromJSONTyped,
     WebhookSolanaMessageStatusChangeEventToJSON,
 } from './WebhookSolanaMessageStatusChangeEvent';
+import type { WebhookSolanaTransactionStatusChangeEvent } from './WebhookSolanaTransactionStatusChangeEvent';
 import {
-    WebhookSolanaTransactionStatusChangeEvent,
     instanceOfWebhookSolanaTransactionStatusChangeEvent,
     WebhookSolanaTransactionStatusChangeEventFromJSON,
     WebhookSolanaTransactionStatusChangeEventFromJSONTyped,
     WebhookSolanaTransactionStatusChangeEventToJSON,
 } from './WebhookSolanaTransactionStatusChangeEvent';
+import type { WebhookStacksTransactionStatusChangeEvent } from './WebhookStacksTransactionStatusChangeEvent';
 import {
-    WebhookSuiMessageStatusChangeEvent,
+    instanceOfWebhookStacksTransactionStatusChangeEvent,
+    WebhookStacksTransactionStatusChangeEventFromJSON,
+    WebhookStacksTransactionStatusChangeEventFromJSONTyped,
+    WebhookStacksTransactionStatusChangeEventToJSON,
+} from './WebhookStacksTransactionStatusChangeEvent';
+import type { WebhookStarknetMessageStatusChangeEvent } from './WebhookStarknetMessageStatusChangeEvent';
+import {
+    instanceOfWebhookStarknetMessageStatusChangeEvent,
+    WebhookStarknetMessageStatusChangeEventFromJSON,
+    WebhookStarknetMessageStatusChangeEventFromJSONTyped,
+    WebhookStarknetMessageStatusChangeEventToJSON,
+} from './WebhookStarknetMessageStatusChangeEvent';
+import type { WebhookStarknetTransactionStatusChangeEvent } from './WebhookStarknetTransactionStatusChangeEvent';
+import {
+    instanceOfWebhookStarknetTransactionStatusChangeEvent,
+    WebhookStarknetTransactionStatusChangeEventFromJSON,
+    WebhookStarknetTransactionStatusChangeEventFromJSONTyped,
+    WebhookStarknetTransactionStatusChangeEventToJSON,
+} from './WebhookStarknetTransactionStatusChangeEvent';
+import type { WebhookSuiMessageStatusChangeEvent } from './WebhookSuiMessageStatusChangeEvent';
+import {
     instanceOfWebhookSuiMessageStatusChangeEvent,
     WebhookSuiMessageStatusChangeEventFromJSON,
     WebhookSuiMessageStatusChangeEventFromJSONTyped,
     WebhookSuiMessageStatusChangeEventToJSON,
 } from './WebhookSuiMessageStatusChangeEvent';
+import type { WebhookSuiTransactionStatusChangeEvent } from './WebhookSuiTransactionStatusChangeEvent';
 import {
-    WebhookSuiTransactionStatusChangeEvent,
     instanceOfWebhookSuiTransactionStatusChangeEvent,
     WebhookSuiTransactionStatusChangeEventFromJSON,
     WebhookSuiTransactionStatusChangeEventFromJSONTyped,
     WebhookSuiTransactionStatusChangeEventToJSON,
 } from './WebhookSuiTransactionStatusChangeEvent';
+import type { WebhookTonMessageStatusChangeEvent } from './WebhookTonMessageStatusChangeEvent';
 import {
-    WebhookTonMessageStatusChangeEvent,
     instanceOfWebhookTonMessageStatusChangeEvent,
     WebhookTonMessageStatusChangeEventFromJSON,
     WebhookTonMessageStatusChangeEventFromJSONTyped,
     WebhookTonMessageStatusChangeEventToJSON,
 } from './WebhookTonMessageStatusChangeEvent';
+import type { WebhookTonTransactionStatusChangeEvent } from './WebhookTonTransactionStatusChangeEvent';
 import {
-    WebhookTonTransactionStatusChangeEvent,
     instanceOfWebhookTonTransactionStatusChangeEvent,
     WebhookTonTransactionStatusChangeEventFromJSON,
     WebhookTonTransactionStatusChangeEventFromJSONTyped,
     WebhookTonTransactionStatusChangeEventToJSON,
 } from './WebhookTonTransactionStatusChangeEvent';
+import type { WebhookTronTransactionStatusChangeEvent } from './WebhookTronTransactionStatusChangeEvent';
 import {
-    WebhookUtxoMessageStatusChangeEvent,
+    instanceOfWebhookTronTransactionStatusChangeEvent,
+    WebhookTronTransactionStatusChangeEventFromJSON,
+    WebhookTronTransactionStatusChangeEventFromJSONTyped,
+    WebhookTronTransactionStatusChangeEventToJSON,
+} from './WebhookTronTransactionStatusChangeEvent';
+import type { WebhookUtxoMessageStatusChangeEvent } from './WebhookUtxoMessageStatusChangeEvent';
+import {
     instanceOfWebhookUtxoMessageStatusChangeEvent,
     WebhookUtxoMessageStatusChangeEventFromJSON,
     WebhookUtxoMessageStatusChangeEventFromJSONTyped,
     WebhookUtxoMessageStatusChangeEventToJSON,
 } from './WebhookUtxoMessageStatusChangeEvent';
+import type { WebhookUtxoTransactionStatusChangeEvent } from './WebhookUtxoTransactionStatusChangeEvent';
 import {
-    WebhookUtxoTransactionStatusChangeEvent,
     instanceOfWebhookUtxoTransactionStatusChangeEvent,
     WebhookUtxoTransactionStatusChangeEventFromJSON,
     WebhookUtxoTransactionStatusChangeEventFromJSONTyped,
@@ -123,90 +158,111 @@ import {
  * 
  * @export
  */
-export type WebhookTransactionStatusChangeEventEvent = { type: 'aptos_message' } & WebhookAptosMessageStatusChangeEvent | { type: 'aptos_transaction' } & WebhookAptosTransactionStatusChangeEvent | { type: 'black_box_signature' } & WebhookBlackBoxSignatureStatusChangeEvent | { type: 'cosmos_message' } & WebhookCosmosMessageStatusChangeEvent | { type: 'cosmos_transaction' } & WebhookCosmosTransactionStatusChangeEvent | { type: 'evm_message' } & WebhookEvmMessageStatusChangeEvent | { type: 'evm_transaction' } & WebhookEvmTransactionStatusChangeEvent | { type: 'solana_message' } & WebhookSolanaMessageStatusChangeEvent | { type: 'solana_transaction' } & WebhookSolanaTransactionStatusChangeEvent | { type: 'sui_message' } & WebhookSuiMessageStatusChangeEvent | { type: 'sui_transaction' } & WebhookSuiTransactionStatusChangeEvent | { type: 'ton_message' } & WebhookTonMessageStatusChangeEvent | { type: 'ton_transaction' } & WebhookTonTransactionStatusChangeEvent | { type: 'utxo_message' } & WebhookUtxoMessageStatusChangeEvent | { type: 'utxo_transaction' } & WebhookUtxoTransactionStatusChangeEvent;
+export type WebhookTransactionStatusChangeEventEvent = { type: 'aptos_message' } & WebhookAptosMessageStatusChangeEvent | { type: 'aptos_transaction' } & WebhookAptosTransactionStatusChangeEvent | { type: 'black_box_signature' } & WebhookBlackBoxSignatureStatusChangeEvent | { type: 'cosmos_message' } & WebhookCosmosMessageStatusChangeEvent | { type: 'cosmos_transaction' } & WebhookCosmosTransactionStatusChangeEvent | { type: 'evm_message' } & WebhookEvmMessageStatusChangeEvent | { type: 'evm_transaction' } & WebhookEvmTransactionStatusChangeEvent | { type: 'exchange_transaction' } & WebhookExchangeTransactionStatusChangeEvent | { type: 'solana_message' } & WebhookSolanaMessageStatusChangeEvent | { type: 'solana_transaction' } & WebhookSolanaTransactionStatusChangeEvent | { type: 'stacks_transaction' } & WebhookStacksTransactionStatusChangeEvent | { type: 'starknet_message' } & WebhookStarknetMessageStatusChangeEvent | { type: 'starknet_transaction' } & WebhookStarknetTransactionStatusChangeEvent | { type: 'sui_message' } & WebhookSuiMessageStatusChangeEvent | { type: 'sui_transaction' } & WebhookSuiTransactionStatusChangeEvent | { type: 'ton_message' } & WebhookTonMessageStatusChangeEvent | { type: 'ton_transaction' } & WebhookTonTransactionStatusChangeEvent | { type: 'tron_transaction' } & WebhookTronTransactionStatusChangeEvent | { type: 'utxo_message' } & WebhookUtxoMessageStatusChangeEvent | { type: 'utxo_transaction' } & WebhookUtxoTransactionStatusChangeEvent;
 
 export function WebhookTransactionStatusChangeEventEventFromJSON(json: any): WebhookTransactionStatusChangeEventEvent {
     return WebhookTransactionStatusChangeEventEventFromJSONTyped(json, false);
 }
 
 export function WebhookTransactionStatusChangeEventEventFromJSONTyped(json: any, ignoreDiscriminator: boolean): WebhookTransactionStatusChangeEventEvent {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'aptos_message':
-            return {...WebhookAptosMessageStatusChangeEventFromJSONTyped(json, true), type: 'aptos_message'};
+            return Object.assign({}, WebhookAptosMessageStatusChangeEventFromJSONTyped(json, true), { type: 'aptos_message' } as const);
         case 'aptos_transaction':
-            return {...WebhookAptosTransactionStatusChangeEventFromJSONTyped(json, true), type: 'aptos_transaction'};
+            return Object.assign({}, WebhookAptosTransactionStatusChangeEventFromJSONTyped(json, true), { type: 'aptos_transaction' } as const);
         case 'black_box_signature':
-            return {...WebhookBlackBoxSignatureStatusChangeEventFromJSONTyped(json, true), type: 'black_box_signature'};
+            return Object.assign({}, WebhookBlackBoxSignatureStatusChangeEventFromJSONTyped(json, true), { type: 'black_box_signature' } as const);
         case 'cosmos_message':
-            return {...WebhookCosmosMessageStatusChangeEventFromJSONTyped(json, true), type: 'cosmos_message'};
+            return Object.assign({}, WebhookCosmosMessageStatusChangeEventFromJSONTyped(json, true), { type: 'cosmos_message' } as const);
         case 'cosmos_transaction':
-            return {...WebhookCosmosTransactionStatusChangeEventFromJSONTyped(json, true), type: 'cosmos_transaction'};
+            return Object.assign({}, WebhookCosmosTransactionStatusChangeEventFromJSONTyped(json, true), { type: 'cosmos_transaction' } as const);
         case 'evm_message':
-            return {...WebhookEvmMessageStatusChangeEventFromJSONTyped(json, true), type: 'evm_message'};
+            return Object.assign({}, WebhookEvmMessageStatusChangeEventFromJSONTyped(json, true), { type: 'evm_message' } as const);
         case 'evm_transaction':
-            return {...WebhookEvmTransactionStatusChangeEventFromJSONTyped(json, true), type: 'evm_transaction'};
+            return Object.assign({}, WebhookEvmTransactionStatusChangeEventFromJSONTyped(json, true), { type: 'evm_transaction' } as const);
+        case 'exchange_transaction':
+            return Object.assign({}, WebhookExchangeTransactionStatusChangeEventFromJSONTyped(json, true), { type: 'exchange_transaction' } as const);
         case 'solana_message':
-            return {...WebhookSolanaMessageStatusChangeEventFromJSONTyped(json, true), type: 'solana_message'};
+            return Object.assign({}, WebhookSolanaMessageStatusChangeEventFromJSONTyped(json, true), { type: 'solana_message' } as const);
         case 'solana_transaction':
-            return {...WebhookSolanaTransactionStatusChangeEventFromJSONTyped(json, true), type: 'solana_transaction'};
+            return Object.assign({}, WebhookSolanaTransactionStatusChangeEventFromJSONTyped(json, true), { type: 'solana_transaction' } as const);
+        case 'stacks_transaction':
+            return Object.assign({}, WebhookStacksTransactionStatusChangeEventFromJSONTyped(json, true), { type: 'stacks_transaction' } as const);
+        case 'starknet_message':
+            return Object.assign({}, WebhookStarknetMessageStatusChangeEventFromJSONTyped(json, true), { type: 'starknet_message' } as const);
+        case 'starknet_transaction':
+            return Object.assign({}, WebhookStarknetTransactionStatusChangeEventFromJSONTyped(json, true), { type: 'starknet_transaction' } as const);
         case 'sui_message':
-            return {...WebhookSuiMessageStatusChangeEventFromJSONTyped(json, true), type: 'sui_message'};
+            return Object.assign({}, WebhookSuiMessageStatusChangeEventFromJSONTyped(json, true), { type: 'sui_message' } as const);
         case 'sui_transaction':
-            return {...WebhookSuiTransactionStatusChangeEventFromJSONTyped(json, true), type: 'sui_transaction'};
+            return Object.assign({}, WebhookSuiTransactionStatusChangeEventFromJSONTyped(json, true), { type: 'sui_transaction' } as const);
         case 'ton_message':
-            return {...WebhookTonMessageStatusChangeEventFromJSONTyped(json, true), type: 'ton_message'};
+            return Object.assign({}, WebhookTonMessageStatusChangeEventFromJSONTyped(json, true), { type: 'ton_message' } as const);
         case 'ton_transaction':
-            return {...WebhookTonTransactionStatusChangeEventFromJSONTyped(json, true), type: 'ton_transaction'};
+            return Object.assign({}, WebhookTonTransactionStatusChangeEventFromJSONTyped(json, true), { type: 'ton_transaction' } as const);
+        case 'tron_transaction':
+            return Object.assign({}, WebhookTronTransactionStatusChangeEventFromJSONTyped(json, true), { type: 'tron_transaction' } as const);
         case 'utxo_message':
-            return {...WebhookUtxoMessageStatusChangeEventFromJSONTyped(json, true), type: 'utxo_message'};
+            return Object.assign({}, WebhookUtxoMessageStatusChangeEventFromJSONTyped(json, true), { type: 'utxo_message' } as const);
         case 'utxo_transaction':
-            return {...WebhookUtxoTransactionStatusChangeEventFromJSONTyped(json, true), type: 'utxo_transaction'};
+            return Object.assign({}, WebhookUtxoTransactionStatusChangeEventFromJSONTyped(json, true), { type: 'utxo_transaction' } as const);
         default:
             throw new Error(`No variant of WebhookTransactionStatusChangeEventEvent exists with 'type=${json['type']}'`);
     }
 }
 
-export function WebhookTransactionStatusChangeEventEventToJSON(value?: WebhookTransactionStatusChangeEventEvent | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function WebhookTransactionStatusChangeEventEventToJSON(json: any): any {
+    return WebhookTransactionStatusChangeEventEventToJSONTyped(json, false);
+}
+
+export function WebhookTransactionStatusChangeEventEventToJSONTyped(value?: WebhookTransactionStatusChangeEventEvent | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'aptos_message':
-            return WebhookAptosMessageStatusChangeEventToJSON(value);
+            return Object.assign({}, WebhookAptosMessageStatusChangeEventToJSON(value), { type: 'aptos_message' } as const);
         case 'aptos_transaction':
-            return WebhookAptosTransactionStatusChangeEventToJSON(value);
+            return Object.assign({}, WebhookAptosTransactionStatusChangeEventToJSON(value), { type: 'aptos_transaction' } as const);
         case 'black_box_signature':
-            return WebhookBlackBoxSignatureStatusChangeEventToJSON(value);
+            return Object.assign({}, WebhookBlackBoxSignatureStatusChangeEventToJSON(value), { type: 'black_box_signature' } as const);
         case 'cosmos_message':
-            return WebhookCosmosMessageStatusChangeEventToJSON(value);
+            return Object.assign({}, WebhookCosmosMessageStatusChangeEventToJSON(value), { type: 'cosmos_message' } as const);
         case 'cosmos_transaction':
-            return WebhookCosmosTransactionStatusChangeEventToJSON(value);
+            return Object.assign({}, WebhookCosmosTransactionStatusChangeEventToJSON(value), { type: 'cosmos_transaction' } as const);
         case 'evm_message':
-            return WebhookEvmMessageStatusChangeEventToJSON(value);
+            return Object.assign({}, WebhookEvmMessageStatusChangeEventToJSON(value), { type: 'evm_message' } as const);
         case 'evm_transaction':
-            return WebhookEvmTransactionStatusChangeEventToJSON(value);
+            return Object.assign({}, WebhookEvmTransactionStatusChangeEventToJSON(value), { type: 'evm_transaction' } as const);
+        case 'exchange_transaction':
+            return Object.assign({}, WebhookExchangeTransactionStatusChangeEventToJSON(value), { type: 'exchange_transaction' } as const);
         case 'solana_message':
-            return WebhookSolanaMessageStatusChangeEventToJSON(value);
+            return Object.assign({}, WebhookSolanaMessageStatusChangeEventToJSON(value), { type: 'solana_message' } as const);
         case 'solana_transaction':
-            return WebhookSolanaTransactionStatusChangeEventToJSON(value);
+            return Object.assign({}, WebhookSolanaTransactionStatusChangeEventToJSON(value), { type: 'solana_transaction' } as const);
+        case 'stacks_transaction':
+            return Object.assign({}, WebhookStacksTransactionStatusChangeEventToJSON(value), { type: 'stacks_transaction' } as const);
+        case 'starknet_message':
+            return Object.assign({}, WebhookStarknetMessageStatusChangeEventToJSON(value), { type: 'starknet_message' } as const);
+        case 'starknet_transaction':
+            return Object.assign({}, WebhookStarknetTransactionStatusChangeEventToJSON(value), { type: 'starknet_transaction' } as const);
         case 'sui_message':
-            return WebhookSuiMessageStatusChangeEventToJSON(value);
+            return Object.assign({}, WebhookSuiMessageStatusChangeEventToJSON(value), { type: 'sui_message' } as const);
         case 'sui_transaction':
-            return WebhookSuiTransactionStatusChangeEventToJSON(value);
+            return Object.assign({}, WebhookSuiTransactionStatusChangeEventToJSON(value), { type: 'sui_transaction' } as const);
         case 'ton_message':
-            return WebhookTonMessageStatusChangeEventToJSON(value);
+            return Object.assign({}, WebhookTonMessageStatusChangeEventToJSON(value), { type: 'ton_message' } as const);
         case 'ton_transaction':
-            return WebhookTonTransactionStatusChangeEventToJSON(value);
+            return Object.assign({}, WebhookTonTransactionStatusChangeEventToJSON(value), { type: 'ton_transaction' } as const);
+        case 'tron_transaction':
+            return Object.assign({}, WebhookTronTransactionStatusChangeEventToJSON(value), { type: 'tron_transaction' } as const);
         case 'utxo_message':
-            return WebhookUtxoMessageStatusChangeEventToJSON(value);
+            return Object.assign({}, WebhookUtxoMessageStatusChangeEventToJSON(value), { type: 'utxo_message' } as const);
         case 'utxo_transaction':
-            return WebhookUtxoTransactionStatusChangeEventToJSON(value);
+            return Object.assign({}, WebhookUtxoTransactionStatusChangeEventToJSON(value), { type: 'utxo_transaction' } as const);
         default:
             throw new Error(`No variant of WebhookTransactionStatusChangeEventEvent exists with 'type=${value['type']}'`);
     }

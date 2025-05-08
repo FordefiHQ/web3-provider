@@ -12,30 +12,41 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { CreateEvmTransactionRequestDetails } from './CreateEvmTransactionRequestDetails';
 import {
     CreateEvmTransactionRequestDetailsFromJSON,
     CreateEvmTransactionRequestDetailsFromJSONTyped,
     CreateEvmTransactionRequestDetailsToJSON,
+    CreateEvmTransactionRequestDetailsToJSONTyped,
 } from './CreateEvmTransactionRequestDetails';
-import type { EvmTransactionState } from './EvmTransactionState';
+import type { DappInfo } from './DappInfo';
 import {
-    EvmTransactionStateFromJSON,
-    EvmTransactionStateFromJSONTyped,
-    EvmTransactionStateToJSON,
-} from './EvmTransactionState';
+    DappInfoFromJSON,
+    DappInfoFromJSONTyped,
+    DappInfoToJSON,
+    DappInfoToJSONTyped,
+} from './DappInfo';
 import type { SignMode } from './SignMode';
 import {
     SignModeFromJSON,
     SignModeFromJSONTyped,
     SignModeToJSON,
+    SignModeToJSONTyped,
 } from './SignMode';
+import type { PushableTransactionState } from './PushableTransactionState';
+import {
+    PushableTransactionStateFromJSON,
+    PushableTransactionStateFromJSONTyped,
+    PushableTransactionStateToJSON,
+    PushableTransactionStateToJSONTyped,
+} from './PushableTransactionState';
 import type { SignerType } from './SignerType';
 import {
     SignerTypeFromJSON,
     SignerTypeFromJSONTyped,
     SignerTypeToJSON,
+    SignerTypeToJSONTyped,
 } from './SignerType';
 
 /**
@@ -70,6 +81,12 @@ export interface CreateEvmTransactionWithWaitRequest {
     signMode?: SignMode;
     /**
      * 
+     * @type {DappInfo}
+     * @memberof CreateEvmTransactionWithWaitRequest
+     */
+    dappInfo?: DappInfo;
+    /**
+     * 
      * @type {string}
      * @memberof CreateEvmTransactionWithWaitRequest
      */
@@ -88,10 +105,10 @@ export interface CreateEvmTransactionWithWaitRequest {
     timeout?: number;
     /**
      * 
-     * @type {EvmTransactionState}
+     * @type {PushableTransactionState}
      * @memberof CreateEvmTransactionWithWaitRequest
      */
-    waitForState: EvmTransactionState;
+    waitForState: PushableTransactionState;
 }
 
 
@@ -107,14 +124,12 @@ export type CreateEvmTransactionWithWaitRequestTypeEnum = typeof CreateEvmTransa
 /**
  * Check if a given object implements the CreateEvmTransactionWithWaitRequest interface.
  */
-export function instanceOfCreateEvmTransactionWithWaitRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "vaultId" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "details" in value;
-    isInstance = isInstance && "waitForState" in value;
-
-    return isInstance;
+export function instanceOfCreateEvmTransactionWithWaitRequest(value: object): value is CreateEvmTransactionWithWaitRequest {
+    if (!('vaultId' in value) || value['vaultId'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    if (!('waitForState' in value) || value['waitForState'] === undefined) return false;
+    return true;
 }
 
 export function CreateEvmTransactionWithWaitRequestFromJSON(json: any): CreateEvmTransactionWithWaitRequest {
@@ -122,39 +137,43 @@ export function CreateEvmTransactionWithWaitRequestFromJSON(json: any): CreateEv
 }
 
 export function CreateEvmTransactionWithWaitRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateEvmTransactionWithWaitRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'vaultId': json['vault_id'],
-        'note': !exists(json, 'note') ? undefined : json['note'],
-        'signerType': !exists(json, 'signer_type') ? undefined : SignerTypeFromJSON(json['signer_type']),
-        'signMode': !exists(json, 'sign_mode') ? undefined : SignModeFromJSON(json['sign_mode']),
+        'note': json['note'] == null ? undefined : json['note'],
+        'signerType': json['signer_type'] == null ? undefined : SignerTypeFromJSON(json['signer_type']),
+        'signMode': json['sign_mode'] == null ? undefined : SignModeFromJSON(json['sign_mode']),
+        'dappInfo': json['dapp_info'] == null ? undefined : DappInfoFromJSON(json['dapp_info']),
         'type': json['type'],
         'details': CreateEvmTransactionRequestDetailsFromJSON(json['details']),
-        'timeout': !exists(json, 'timeout') ? undefined : json['timeout'],
-        'waitForState': EvmTransactionStateFromJSON(json['wait_for_state']),
+        'timeout': json['timeout'] == null ? undefined : json['timeout'],
+        'waitForState': PushableTransactionStateFromJSON(json['wait_for_state']),
     };
 }
 
-export function CreateEvmTransactionWithWaitRequestToJSON(value?: CreateEvmTransactionWithWaitRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateEvmTransactionWithWaitRequestToJSON(json: any): CreateEvmTransactionWithWaitRequest {
+    return CreateEvmTransactionWithWaitRequestToJSONTyped(json, false);
+}
+
+export function CreateEvmTransactionWithWaitRequestToJSONTyped(value?: CreateEvmTransactionWithWaitRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'vault_id': value.vaultId,
-        'note': value.note,
-        'signer_type': SignerTypeToJSON(value.signerType),
-        'sign_mode': SignModeToJSON(value.signMode),
-        'type': value.type,
-        'details': CreateEvmTransactionRequestDetailsToJSON(value.details),
-        'timeout': value.timeout,
-        'wait_for_state': EvmTransactionStateToJSON(value.waitForState),
+        'vault_id': value['vaultId'],
+        'note': value['note'],
+        'signer_type': SignerTypeToJSON(value['signerType']),
+        'sign_mode': SignModeToJSON(value['signMode']),
+        'dapp_info': DappInfoToJSON(value['dappInfo']),
+        'type': value['type'],
+        'details': CreateEvmTransactionRequestDetailsToJSON(value['details']),
+        'timeout': value['timeout'],
+        'wait_for_state': PushableTransactionStateToJSON(value['waitForState']),
     };
 }
 

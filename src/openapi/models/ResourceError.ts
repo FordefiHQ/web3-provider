@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { Resource } from './Resource';
 import {
     ResourceFromJSON,
     ResourceFromJSONTyped,
     ResourceToJSON,
+    ResourceToJSONTyped,
 } from './Resource';
 
 /**
@@ -52,15 +53,15 @@ export interface ResourceError {
     resource?: Resource;
 }
 
+
+
 /**
  * Check if a given object implements the ResourceError interface.
  */
-export function instanceOfResourceError(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "title" in value;
-    isInstance = isInstance && "detail" in value;
-
-    return isInstance;
+export function instanceOfResourceError(value: object): value is ResourceError {
+    if (!('title' in value) || value['title'] === undefined) return false;
+    if (!('detail' in value) || value['detail'] === undefined) return false;
+    return true;
 }
 
 export function ResourceErrorFromJSON(json: any): ResourceError {
@@ -68,31 +69,33 @@ export function ResourceErrorFromJSON(json: any): ResourceError {
 }
 
 export function ResourceErrorFromJSONTyped(json: any, ignoreDiscriminator: boolean): ResourceError {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'title': json['title'],
         'detail': json['detail'],
-        'requestId': !exists(json, 'request_id') ? undefined : json['request_id'],
-        'resource': !exists(json, 'resource') ? undefined : ResourceFromJSON(json['resource']),
+        'requestId': json['request_id'] == null ? undefined : json['request_id'],
+        'resource': json['resource'] == null ? undefined : ResourceFromJSON(json['resource']),
     };
 }
 
-export function ResourceErrorToJSON(value?: ResourceError | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ResourceErrorToJSON(json: any): ResourceError {
+    return ResourceErrorToJSONTyped(json, false);
+}
+
+export function ResourceErrorToJSONTyped(value?: ResourceError | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'title': value.title,
-        'detail': value.detail,
-        'request_id': value.requestId,
-        'resource': ResourceToJSON(value.resource),
+        'title': value['title'],
+        'detail': value['detail'],
+        'request_id': value['requestId'],
+        'resource': ResourceToJSON(value['resource']),
     };
 }
 

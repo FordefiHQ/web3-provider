@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { CosmosChainUniqueId } from './CosmosChainUniqueId';
 import {
     CosmosChainUniqueIdFromJSON,
     CosmosChainUniqueIdFromJSONTyped,
     CosmosChainUniqueIdToJSON,
+    CosmosChainUniqueIdToJSONTyped,
 } from './CosmosChainUniqueId';
 
 /**
@@ -53,12 +54,10 @@ export type CosmosChainChainTypeEnum = typeof CosmosChainChainTypeEnum[keyof typ
 /**
  * Check if a given object implements the CosmosChain interface.
  */
-export function instanceOfCosmosChain(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chainType" in value;
-    isInstance = isInstance && "uniqueId" in value;
-
-    return isInstance;
+export function instanceOfCosmosChain(value: object): value is CosmosChain {
+    if (!('chainType' in value) || value['chainType'] === undefined) return false;
+    if (!('uniqueId' in value) || value['uniqueId'] === undefined) return false;
+    return true;
 }
 
 export function CosmosChainFromJSON(json: any): CosmosChain {
@@ -66,7 +65,7 @@ export function CosmosChainFromJSON(json: any): CosmosChain {
 }
 
 export function CosmosChainFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosChain {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function CosmosChainFromJSONTyped(json: any, ignoreDiscriminator: boolean
     };
 }
 
-export function CosmosChainToJSON(value?: CosmosChain | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosChainToJSON(json: any): CosmosChain {
+    return CosmosChainToJSONTyped(json, false);
+}
+
+export function CosmosChainToJSONTyped(value?: CosmosChain | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain_type': value.chainType,
-        'unique_id': CosmosChainUniqueIdToJSON(value.uniqueId),
+        'chain_type': value['chainType'],
+        'unique_id': CosmosChainUniqueIdToJSON(value['uniqueId']),
     };
 }
 

@@ -23,13 +23,27 @@ export const VaultType = {
     cosmos: 'cosmos',
     evm: 'evm',
     solana: 'solana',
+    stacks: 'stacks',
+    starknet: 'starknet',
     sui: 'sui',
     ton: 'ton',
+    tron: 'tron',
     utxo: 'utxo',
     exchange: 'exchange'
 } as const;
 export type VaultType = typeof VaultType[keyof typeof VaultType];
 
+
+export function instanceOfVaultType(value: any): boolean {
+    for (const key in VaultType) {
+        if (Object.prototype.hasOwnProperty.call(VaultType, key)) {
+            if (VaultType[key as keyof typeof VaultType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 export function VaultTypeFromJSON(json: any): VaultType {
     return VaultTypeFromJSONTyped(json, false);
@@ -41,5 +55,9 @@ export function VaultTypeFromJSONTyped(json: any, ignoreDiscriminator: boolean):
 
 export function VaultTypeToJSON(value?: VaultType | null): any {
     return value as any;
+}
+
+export function VaultTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): VaultType {
+    return value as VaultType;
 }
 

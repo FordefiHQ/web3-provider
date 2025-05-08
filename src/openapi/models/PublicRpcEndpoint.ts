@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -40,11 +40,9 @@ export type PublicRpcEndpointTypeEnum = typeof PublicRpcEndpointTypeEnum[keyof t
 /**
  * Check if a given object implements the PublicRpcEndpoint interface.
  */
-export function instanceOfPublicRpcEndpoint(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfPublicRpcEndpoint(value: object): value is PublicRpcEndpoint {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function PublicRpcEndpointFromJSON(json: any): PublicRpcEndpoint {
@@ -52,7 +50,7 @@ export function PublicRpcEndpointFromJSON(json: any): PublicRpcEndpoint {
 }
 
 export function PublicRpcEndpointFromJSONTyped(json: any, ignoreDiscriminator: boolean): PublicRpcEndpoint {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -61,16 +59,18 @@ export function PublicRpcEndpointFromJSONTyped(json: any, ignoreDiscriminator: b
     };
 }
 
-export function PublicRpcEndpointToJSON(value?: PublicRpcEndpoint | null): any {
-    if (value === undefined) {
-        return undefined;
+export function PublicRpcEndpointToJSON(json: any): PublicRpcEndpoint {
+    return PublicRpcEndpointToJSONTyped(json, false);
+}
+
+export function PublicRpcEndpointToJSONTyped(value?: PublicRpcEndpoint | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
+        'type': value['type'],
     };
 }
 

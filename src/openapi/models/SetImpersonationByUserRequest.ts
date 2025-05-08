@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -30,11 +30,9 @@ export interface SetImpersonationByUserRequest {
 /**
  * Check if a given object implements the SetImpersonationByUserRequest interface.
  */
-export function instanceOfSetImpersonationByUserRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "impersonatedUserEmail" in value;
-
-    return isInstance;
+export function instanceOfSetImpersonationByUserRequest(value: object): value is SetImpersonationByUserRequest {
+    if (!('impersonatedUserEmail' in value) || value['impersonatedUserEmail'] === undefined) return false;
+    return true;
 }
 
 export function SetImpersonationByUserRequestFromJSON(json: any): SetImpersonationByUserRequest {
@@ -42,7 +40,7 @@ export function SetImpersonationByUserRequestFromJSON(json: any): SetImpersonati
 }
 
 export function SetImpersonationByUserRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): SetImpersonationByUserRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -51,16 +49,18 @@ export function SetImpersonationByUserRequestFromJSONTyped(json: any, ignoreDisc
     };
 }
 
-export function SetImpersonationByUserRequestToJSON(value?: SetImpersonationByUserRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SetImpersonationByUserRequestToJSON(json: any): SetImpersonationByUserRequest {
+    return SetImpersonationByUserRequestToJSONTyped(json, false);
+}
+
+export function SetImpersonationByUserRequestToJSONTyped(value?: SetImpersonationByUserRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'impersonated_user_email': value.impersonatedUserEmail,
+        'impersonated_user_email': value['impersonatedUserEmail'],
     };
 }
 

@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { GroupUserRef } from './GroupUserRef';
 import {
     GroupUserRefFromJSON,
     GroupUserRefFromJSONTyped,
     GroupUserRefToJSON,
+    GroupUserRefToJSONTyped,
 } from './GroupUserRef';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
     UserRefFromJSONTyped,
     UserRefToJSON,
+    UserRefToJSONTyped,
 } from './UserRef';
 
 /**
@@ -73,13 +75,11 @@ export interface UserGroupChangeRequest {
 /**
  * Check if a given object implements the UserGroupChangeRequest interface.
  */
-export function instanceOfUserGroupChangeRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "createdBy" in value;
-
-    return isInstance;
+export function instanceOfUserGroupChangeRequest(value: object): value is UserGroupChangeRequest {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('createdBy' in value) || value['createdBy'] === undefined) return false;
+    return true;
 }
 
 export function UserGroupChangeRequestFromJSON(json: any): UserGroupChangeRequest {
@@ -87,7 +87,7 @@ export function UserGroupChangeRequestFromJSON(json: any): UserGroupChangeReques
 }
 
 export function UserGroupChangeRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): UserGroupChangeRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -95,27 +95,29 @@ export function UserGroupChangeRequestFromJSONTyped(json: any, ignoreDiscriminat
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'createdBy': UserRefFromJSON(json['created_by']),
-        'newName': !exists(json, 'new_name') ? undefined : json['new_name'],
-        'addedUsers': !exists(json, 'added_users') ? undefined : ((json['added_users'] as Array<any>).map(GroupUserRefFromJSON)),
-        'removedUsers': !exists(json, 'removed_users') ? undefined : ((json['removed_users'] as Array<any>).map(GroupUserRefFromJSON)),
+        'newName': json['new_name'] == null ? undefined : json['new_name'],
+        'addedUsers': json['added_users'] == null ? undefined : ((json['added_users'] as Array<any>).map(GroupUserRefFromJSON)),
+        'removedUsers': json['removed_users'] == null ? undefined : ((json['removed_users'] as Array<any>).map(GroupUserRefFromJSON)),
     };
 }
 
-export function UserGroupChangeRequestToJSON(value?: UserGroupChangeRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UserGroupChangeRequestToJSON(json: any): UserGroupChangeRequest {
+    return UserGroupChangeRequestToJSONTyped(json, false);
+}
+
+export function UserGroupChangeRequestToJSONTyped(value?: UserGroupChangeRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'created_by': UserRefToJSON(value.createdBy),
-        'new_name': value.newName,
-        'added_users': value.addedUsers === undefined ? undefined : ((value.addedUsers as Array<any>).map(GroupUserRefToJSON)),
-        'removed_users': value.removedUsers === undefined ? undefined : ((value.removedUsers as Array<any>).map(GroupUserRefToJSON)),
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'created_by': UserRefToJSON(value['createdBy']),
+        'new_name': value['newName'],
+        'added_users': value['addedUsers'] == null ? undefined : ((value['addedUsers'] as Array<any>).map(GroupUserRefToJSON)),
+        'removed_users': value['removedUsers'] == null ? undefined : ((value['removedUsers'] as Array<any>).map(GroupUserRefToJSON)),
     };
 }
 

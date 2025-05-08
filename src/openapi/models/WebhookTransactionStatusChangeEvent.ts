@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { WebhookTransactionStatusChangeEventEvent } from './WebhookTransactionStatusChangeEventEvent';
 import {
     WebhookTransactionStatusChangeEventEventFromJSON,
     WebhookTransactionStatusChangeEventEventFromJSONTyped,
     WebhookTransactionStatusChangeEventEventToJSON,
+    WebhookTransactionStatusChangeEventEventToJSONTyped,
 } from './WebhookTransactionStatusChangeEventEvent';
 
 /**
@@ -83,17 +84,15 @@ export type WebhookTransactionStatusChangeEventEventTypeEnum = typeof WebhookTra
 /**
  * Check if a given object implements the WebhookTransactionStatusChangeEvent interface.
  */
-export function instanceOfWebhookTransactionStatusChangeEvent(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "webhookId" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "eventId" in value;
-    isInstance = isInstance && "attempt" in value;
-    isInstance = isInstance && "sentAt" in value;
-    isInstance = isInstance && "event" in value;
-    isInstance = isInstance && "eventType" in value;
-
-    return isInstance;
+export function instanceOfWebhookTransactionStatusChangeEvent(value: object): value is WebhookTransactionStatusChangeEvent {
+    if (!('webhookId' in value) || value['webhookId'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('eventId' in value) || value['eventId'] === undefined) return false;
+    if (!('attempt' in value) || value['attempt'] === undefined) return false;
+    if (!('sentAt' in value) || value['sentAt'] === undefined) return false;
+    if (!('event' in value) || value['event'] === undefined) return false;
+    if (!('eventType' in value) || value['eventType'] === undefined) return false;
+    return true;
 }
 
 export function WebhookTransactionStatusChangeEventFromJSON(json: any): WebhookTransactionStatusChangeEvent {
@@ -101,7 +100,7 @@ export function WebhookTransactionStatusChangeEventFromJSON(json: any): WebhookT
 }
 
 export function WebhookTransactionStatusChangeEventFromJSONTyped(json: any, ignoreDiscriminator: boolean): WebhookTransactionStatusChangeEvent {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -116,22 +115,24 @@ export function WebhookTransactionStatusChangeEventFromJSONTyped(json: any, igno
     };
 }
 
-export function WebhookTransactionStatusChangeEventToJSON(value?: WebhookTransactionStatusChangeEvent | null): any {
-    if (value === undefined) {
-        return undefined;
+export function WebhookTransactionStatusChangeEventToJSON(json: any): WebhookTransactionStatusChangeEvent {
+    return WebhookTransactionStatusChangeEventToJSONTyped(json, false);
+}
+
+export function WebhookTransactionStatusChangeEventToJSONTyped(value?: WebhookTransactionStatusChangeEvent | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'webhook_id': value.webhookId,
-        'created_at': (value.createdAt.toISOString()),
-        'event_id': value.eventId,
-        'attempt': value.attempt,
-        'sent_at': (value.sentAt.toISOString()),
-        'event': WebhookTransactionStatusChangeEventEventToJSON(value.event),
-        'event_type': value.eventType,
+        'webhook_id': value['webhookId'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'event_id': value['eventId'],
+        'attempt': value['attempt'],
+        'sent_at': ((value['sentAt']).toISOString()),
+        'event': WebhookTransactionStatusChangeEventEventToJSON(value['event']),
+        'event_type': value['eventType'],
     };
 }
 

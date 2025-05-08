@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -90,11 +90,9 @@ export interface UploadKeysetEncryptedDeviceSharesRequest {
 /**
  * Check if a given object implements the UploadKeysetEncryptedDeviceSharesRequest interface.
  */
-export function instanceOfUploadKeysetEncryptedDeviceSharesRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "backupId" in value;
-
-    return isInstance;
+export function instanceOfUploadKeysetEncryptedDeviceSharesRequest(value: object): value is UploadKeysetEncryptedDeviceSharesRequest {
+    if (!('backupId' in value) || value['backupId'] === undefined) return false;
+    return true;
 }
 
 export function UploadKeysetEncryptedDeviceSharesRequestFromJSON(json: any): UploadKeysetEncryptedDeviceSharesRequest {
@@ -102,45 +100,47 @@ export function UploadKeysetEncryptedDeviceSharesRequestFromJSON(json: any): Upl
 }
 
 export function UploadKeysetEncryptedDeviceSharesRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): UploadKeysetEncryptedDeviceSharesRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'backupId': json['backup_id'],
-        'ecdsa': !exists(json, 'ecdsa') ? undefined : json['ecdsa'],
-        'ecdsaPublic': !exists(json, 'ecdsa_public') ? undefined : json['ecdsa_public'],
-        'eddsa': !exists(json, 'eddsa') ? undefined : json['eddsa'],
-        'eddsaPublic': !exists(json, 'eddsa_public') ? undefined : json['eddsa_public'],
-        'ecdsaStark': !exists(json, 'ecdsa_stark') ? undefined : json['ecdsa_stark'],
-        'ecdsaStarkPublic': !exists(json, 'ecdsa_stark_public') ? undefined : json['ecdsa_stark_public'],
-        'schnorrSecp256k1': !exists(json, 'schnorr_secp256k1') ? undefined : json['schnorr_secp256k1'],
-        'schnorrSecp256k1Public': !exists(json, 'schnorr_secp256k1_public') ? undefined : json['schnorr_secp256k1_public'],
-        'authKey': !exists(json, 'auth_key') ? undefined : json['auth_key'],
-        'authPublicKey': !exists(json, 'auth_public_key') ? undefined : json['auth_public_key'],
+        'ecdsa': json['ecdsa'] == null ? undefined : json['ecdsa'],
+        'ecdsaPublic': json['ecdsa_public'] == null ? undefined : json['ecdsa_public'],
+        'eddsa': json['eddsa'] == null ? undefined : json['eddsa'],
+        'eddsaPublic': json['eddsa_public'] == null ? undefined : json['eddsa_public'],
+        'ecdsaStark': json['ecdsa_stark'] == null ? undefined : json['ecdsa_stark'],
+        'ecdsaStarkPublic': json['ecdsa_stark_public'] == null ? undefined : json['ecdsa_stark_public'],
+        'schnorrSecp256k1': json['schnorr_secp256k1'] == null ? undefined : json['schnorr_secp256k1'],
+        'schnorrSecp256k1Public': json['schnorr_secp256k1_public'] == null ? undefined : json['schnorr_secp256k1_public'],
+        'authKey': json['auth_key'] == null ? undefined : json['auth_key'],
+        'authPublicKey': json['auth_public_key'] == null ? undefined : json['auth_public_key'],
     };
 }
 
-export function UploadKeysetEncryptedDeviceSharesRequestToJSON(value?: UploadKeysetEncryptedDeviceSharesRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UploadKeysetEncryptedDeviceSharesRequestToJSON(json: any): UploadKeysetEncryptedDeviceSharesRequest {
+    return UploadKeysetEncryptedDeviceSharesRequestToJSONTyped(json, false);
+}
+
+export function UploadKeysetEncryptedDeviceSharesRequestToJSONTyped(value?: UploadKeysetEncryptedDeviceSharesRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'backup_id': value.backupId,
-        'ecdsa': value.ecdsa,
-        'ecdsa_public': value.ecdsaPublic,
-        'eddsa': value.eddsa,
-        'eddsa_public': value.eddsaPublic,
-        'ecdsa_stark': value.ecdsaStark,
-        'ecdsa_stark_public': value.ecdsaStarkPublic,
-        'schnorr_secp256k1': value.schnorrSecp256k1,
-        'schnorr_secp256k1_public': value.schnorrSecp256k1Public,
-        'auth_key': value.authKey,
-        'auth_public_key': value.authPublicKey,
+        'backup_id': value['backupId'],
+        'ecdsa': value['ecdsa'],
+        'ecdsa_public': value['ecdsaPublic'],
+        'eddsa': value['eddsa'],
+        'eddsa_public': value['eddsaPublic'],
+        'ecdsa_stark': value['ecdsaStark'],
+        'ecdsa_stark_public': value['ecdsaStarkPublic'],
+        'schnorr_secp256k1': value['schnorrSecp256k1'],
+        'schnorr_secp256k1_public': value['schnorrSecp256k1Public'],
+        'auth_key': value['authKey'],
+        'auth_public_key': value['authPublicKey'],
     };
 }
 

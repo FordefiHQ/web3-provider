@@ -12,36 +12,41 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { CreateSuiTransferRequestTo } from './CreateSuiTransferRequestTo';
-import {
-    CreateSuiTransferRequestToFromJSON,
-    CreateSuiTransferRequestToFromJSONTyped,
-    CreateSuiTransferRequestToToJSON,
-} from './CreateSuiTransferRequestTo';
-import type { CreateSuiTransferRequestValue } from './CreateSuiTransferRequestValue';
-import {
-    CreateSuiTransferRequestValueFromJSON,
-    CreateSuiTransferRequestValueFromJSONTyped,
-    CreateSuiTransferRequestValueToJSON,
-} from './CreateSuiTransferRequestValue';
-import type { PushMode } from './PushMode';
-import {
-    PushModeFromJSON,
-    PushModeFromJSONTyped,
-    PushModeToJSON,
-} from './PushMode';
+import { mapValues } from '../runtime';
 import type { SuiAssetIdentifierRequest } from './SuiAssetIdentifierRequest';
 import {
     SuiAssetIdentifierRequestFromJSON,
     SuiAssetIdentifierRequestFromJSONTyped,
     SuiAssetIdentifierRequestToJSON,
+    SuiAssetIdentifierRequestToJSONTyped,
 } from './SuiAssetIdentifierRequest';
+import type { CreateAptosTransferRequestValue } from './CreateAptosTransferRequestValue';
+import {
+    CreateAptosTransferRequestValueFromJSON,
+    CreateAptosTransferRequestValueFromJSONTyped,
+    CreateAptosTransferRequestValueToJSON,
+    CreateAptosTransferRequestValueToJSONTyped,
+} from './CreateAptosTransferRequestValue';
+import type { CreateSuiTransferRequestTo } from './CreateSuiTransferRequestTo';
+import {
+    CreateSuiTransferRequestToFromJSON,
+    CreateSuiTransferRequestToFromJSONTyped,
+    CreateSuiTransferRequestToToJSON,
+    CreateSuiTransferRequestToToJSONTyped,
+} from './CreateSuiTransferRequestTo';
+import type { PushMode } from './PushMode';
+import {
+    PushModeFromJSON,
+    PushModeFromJSONTyped,
+    PushModeToJSON,
+    PushModeToJSONTyped,
+} from './PushMode';
 import type { SuiGasConfig } from './SuiGasConfig';
 import {
     SuiGasConfigFromJSON,
     SuiGasConfigFromJSONTyped,
     SuiGasConfigToJSON,
+    SuiGasConfigToJSONTyped,
 } from './SuiGasConfig';
 
 /**
@@ -85,13 +90,13 @@ export interface CreateSuiTransferRequest {
      * @type {SuiGasConfig}
      * @memberof CreateSuiTransferRequest
      */
-    gasConfig: SuiGasConfig;
+    gasConfig?: SuiGasConfig;
     /**
      * 
-     * @type {CreateSuiTransferRequestValue}
+     * @type {CreateAptosTransferRequestValue}
      * @memberof CreateSuiTransferRequest
      */
-    value: CreateSuiTransferRequestValue;
+    value: CreateAptosTransferRequestValue;
     /**
      * 
      * @type {SuiAssetIdentifierRequest}
@@ -113,15 +118,12 @@ export type CreateSuiTransferRequestTypeEnum = typeof CreateSuiTransferRequestTy
 /**
  * Check if a given object implements the CreateSuiTransferRequest interface.
  */
-export function instanceOfCreateSuiTransferRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "to" in value;
-    isInstance = isInstance && "gasConfig" in value;
-    isInstance = isInstance && "value" in value;
-    isInstance = isInstance && "assetIdentifier" in value;
-
-    return isInstance;
+export function instanceOfCreateSuiTransferRequest(value: object): value is CreateSuiTransferRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('to' in value) || value['to'] === undefined) return false;
+    if (!('value' in value) || value['value'] === undefined) return false;
+    if (!('assetIdentifier' in value) || value['assetIdentifier'] === undefined) return false;
+    return true;
 }
 
 export function CreateSuiTransferRequestFromJSON(json: any): CreateSuiTransferRequest {
@@ -129,39 +131,41 @@ export function CreateSuiTransferRequestFromJSON(json: any): CreateSuiTransferRe
 }
 
 export function CreateSuiTransferRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateSuiTransferRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
-        'failOnPredictionFailure': !exists(json, 'fail_on_prediction_failure') ? undefined : json['fail_on_prediction_failure'],
-        'pushMode': !exists(json, 'push_mode') ? undefined : PushModeFromJSON(json['push_mode']),
-        'skipPrediction': !exists(json, 'skip_prediction') ? undefined : json['skip_prediction'],
+        'failOnPredictionFailure': json['fail_on_prediction_failure'] == null ? undefined : json['fail_on_prediction_failure'],
+        'pushMode': json['push_mode'] == null ? undefined : PushModeFromJSON(json['push_mode']),
+        'skipPrediction': json['skip_prediction'] == null ? undefined : json['skip_prediction'],
         'to': CreateSuiTransferRequestToFromJSON(json['to']),
-        'gasConfig': SuiGasConfigFromJSON(json['gas_config']),
-        'value': CreateSuiTransferRequestValueFromJSON(json['value']),
+        'gasConfig': json['gas_config'] == null ? undefined : SuiGasConfigFromJSON(json['gas_config']),
+        'value': CreateAptosTransferRequestValueFromJSON(json['value']),
         'assetIdentifier': SuiAssetIdentifierRequestFromJSON(json['asset_identifier']),
     };
 }
 
-export function CreateSuiTransferRequestToJSON(value?: CreateSuiTransferRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateSuiTransferRequestToJSON(json: any): CreateSuiTransferRequest {
+    return CreateSuiTransferRequestToJSONTyped(json, false);
+}
+
+export function CreateSuiTransferRequestToJSONTyped(value?: CreateSuiTransferRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'fail_on_prediction_failure': value.failOnPredictionFailure,
-        'push_mode': PushModeToJSON(value.pushMode),
-        'skip_prediction': value.skipPrediction,
-        'to': CreateSuiTransferRequestToToJSON(value.to),
-        'gas_config': SuiGasConfigToJSON(value.gasConfig),
-        'value': CreateSuiTransferRequestValueToJSON(value.value),
-        'asset_identifier': SuiAssetIdentifierRequestToJSON(value.assetIdentifier),
+        'type': value['type'],
+        'fail_on_prediction_failure': value['failOnPredictionFailure'],
+        'push_mode': PushModeToJSON(value['pushMode']),
+        'skip_prediction': value['skipPrediction'],
+        'to': CreateSuiTransferRequestToToJSON(value['to']),
+        'gas_config': SuiGasConfigToJSON(value['gasConfig']),
+        'value': CreateAptosTransferRequestValueToJSON(value['value']),
+        'asset_identifier': SuiAssetIdentifierRequestToJSON(value['assetIdentifier']),
     };
 }
 

@@ -12,13 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { FeePriority } from './FeePriority';
+import { mapValues } from '../runtime';
+import type { FeePriorityLevelRequest } from './FeePriorityLevelRequest';
 import {
-    FeePriorityFromJSON,
-    FeePriorityFromJSONTyped,
-    FeePriorityToJSON,
-} from './FeePriority';
+    FeePriorityLevelRequestFromJSON,
+    FeePriorityLevelRequestFromJSONTyped,
+    FeePriorityLevelRequestToJSON,
+    FeePriorityLevelRequestToJSONTyped,
+} from './FeePriorityLevelRequest';
 
 /**
  * 
@@ -34,10 +35,10 @@ export interface AptosPriorityGasPriceRequest {
     type: AptosPriorityGasPriceRequestTypeEnum;
     /**
      * 
-     * @type {FeePriority}
+     * @type {FeePriorityLevelRequest}
      * @memberof AptosPriorityGasPriceRequest
      */
-    priority: FeePriority;
+    priority: FeePriorityLevelRequest;
 }
 
 
@@ -53,12 +54,10 @@ export type AptosPriorityGasPriceRequestTypeEnum = typeof AptosPriorityGasPriceR
 /**
  * Check if a given object implements the AptosPriorityGasPriceRequest interface.
  */
-export function instanceOfAptosPriorityGasPriceRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "priority" in value;
-
-    return isInstance;
+export function instanceOfAptosPriorityGasPriceRequest(value: object): value is AptosPriorityGasPriceRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('priority' in value) || value['priority'] === undefined) return false;
+    return true;
 }
 
 export function AptosPriorityGasPriceRequestFromJSON(json: any): AptosPriorityGasPriceRequest {
@@ -66,27 +65,29 @@ export function AptosPriorityGasPriceRequestFromJSON(json: any): AptosPriorityGa
 }
 
 export function AptosPriorityGasPriceRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosPriorityGasPriceRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
-        'priority': FeePriorityFromJSON(json['priority']),
+        'priority': FeePriorityLevelRequestFromJSON(json['priority']),
     };
 }
 
-export function AptosPriorityGasPriceRequestToJSON(value?: AptosPriorityGasPriceRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AptosPriorityGasPriceRequestToJSON(json: any): AptosPriorityGasPriceRequest {
+    return AptosPriorityGasPriceRequestToJSONTyped(json, false);
+}
+
+export function AptosPriorityGasPriceRequestToJSONTyped(value?: AptosPriorityGasPriceRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'priority': FeePriorityToJSON(value.priority),
+        'type': value['type'],
+        'priority': FeePriorityLevelRequestToJSON(value['priority']),
     };
 }
 

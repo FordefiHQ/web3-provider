@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AptosChainUniqueId } from './AptosChainUniqueId';
 import {
     AptosChainUniqueIdFromJSON,
     AptosChainUniqueIdFromJSONTyped,
     AptosChainUniqueIdToJSON,
+    AptosChainUniqueIdToJSONTyped,
 } from './AptosChainUniqueId';
 
 /**
@@ -89,18 +90,16 @@ export type AptosPersonalMessageRequestTypeEnum = typeof AptosPersonalMessageReq
 /**
  * Check if a given object implements the AptosPersonalMessageRequest interface.
  */
-export function instanceOfAptosPersonalMessageRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "shouldIncludeAddress" in value;
-    isInstance = isInstance && "application" in value;
-    isInstance = isInstance && "shouldIncludeApplication" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "shouldIncludeChain" in value;
-    isInstance = isInstance && "messageToSign" in value;
-    isInstance = isInstance && "nonce" in value;
-
-    return isInstance;
+export function instanceOfAptosPersonalMessageRequest(value: object): value is AptosPersonalMessageRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('shouldIncludeAddress' in value) || value['shouldIncludeAddress'] === undefined) return false;
+    if (!('application' in value) || value['application'] === undefined) return false;
+    if (!('shouldIncludeApplication' in value) || value['shouldIncludeApplication'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('shouldIncludeChain' in value) || value['shouldIncludeChain'] === undefined) return false;
+    if (!('messageToSign' in value) || value['messageToSign'] === undefined) return false;
+    if (!('nonce' in value) || value['nonce'] === undefined) return false;
+    return true;
 }
 
 export function AptosPersonalMessageRequestFromJSON(json: any): AptosPersonalMessageRequest {
@@ -108,7 +107,7 @@ export function AptosPersonalMessageRequestFromJSON(json: any): AptosPersonalMes
 }
 
 export function AptosPersonalMessageRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosPersonalMessageRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -124,23 +123,25 @@ export function AptosPersonalMessageRequestFromJSONTyped(json: any, ignoreDiscri
     };
 }
 
-export function AptosPersonalMessageRequestToJSON(value?: AptosPersonalMessageRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AptosPersonalMessageRequestToJSON(json: any): AptosPersonalMessageRequest {
+    return AptosPersonalMessageRequestToJSONTyped(json, false);
+}
+
+export function AptosPersonalMessageRequestToJSONTyped(value?: AptosPersonalMessageRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'should_include_address': value.shouldIncludeAddress,
-        'application': value.application,
-        'should_include_application': value.shouldIncludeApplication,
-        'chain': AptosChainUniqueIdToJSON(value.chain),
-        'should_include_chain': value.shouldIncludeChain,
-        'message_to_sign': value.messageToSign,
-        'nonce': value.nonce,
+        'type': value['type'],
+        'should_include_address': value['shouldIncludeAddress'],
+        'application': value['application'],
+        'should_include_application': value['shouldIncludeApplication'],
+        'chain': AptosChainUniqueIdToJSON(value['chain']),
+        'should_include_chain': value['shouldIncludeChain'],
+        'message_to_sign': value['messageToSign'],
+        'nonce': value['nonce'],
     };
 }
 

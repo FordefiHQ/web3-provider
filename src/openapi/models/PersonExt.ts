@@ -12,31 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { UserState } from './UserState';
+import {
+    UserStateFromJSON,
+    UserStateFromJSONTyped,
+    UserStateToJSON,
+    UserStateToJSONTyped,
+} from './UserState';
+import type { DeviceBackupInfoExt } from './DeviceBackupInfoExt';
+import {
+    DeviceBackupInfoExtFromJSON,
+    DeviceBackupInfoExtFromJSONTyped,
+    DeviceBackupInfoExtToJSON,
+    DeviceBackupInfoExtToJSONTyped,
+} from './DeviceBackupInfoExt';
+import type { UserRole } from './UserRole';
+import {
+    UserRoleFromJSON,
+    UserRoleFromJSONTyped,
+    UserRoleToJSON,
+    UserRoleToJSONTyped,
+} from './UserRole';
 import type { PendingUserChangeRef } from './PendingUserChangeRef';
 import {
     PendingUserChangeRefFromJSON,
     PendingUserChangeRefFromJSONTyped,
     PendingUserChangeRefToJSON,
+    PendingUserChangeRefToJSONTyped,
 } from './PendingUserChangeRef';
 import type { UserGroupRef } from './UserGroupRef';
 import {
     UserGroupRefFromJSON,
     UserGroupRefFromJSONTyped,
     UserGroupRefToJSON,
+    UserGroupRefToJSONTyped,
 } from './UserGroupRef';
-import type { UserRole } from './UserRole';
-import {
-    UserRoleFromJSON,
-    UserRoleFromJSONTyped,
-    UserRoleToJSON,
-} from './UserRole';
-import type { UserState } from './UserState';
-import {
-    UserStateFromJSON,
-    UserStateFromJSONTyped,
-    UserStateToJSON,
-} from './UserState';
 
 /**
  * 
@@ -128,6 +139,12 @@ export interface PersonExt {
      * @memberof PersonExt
      */
     pendingChange?: PendingUserChangeRef;
+    /**
+     * 
+     * @type {DeviceBackupInfoExt}
+     * @memberof PersonExt
+     */
+    deviceBackupInfo?: DeviceBackupInfoExt;
 }
 
 
@@ -143,19 +160,17 @@ export type PersonExtUserTypeEnum = typeof PersonExtUserTypeEnum[keyof typeof Pe
 /**
  * Check if a given object implements the PersonExt interface.
  */
-export function instanceOfPersonExt(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "userType" in value;
-    isInstance = isInstance && "email" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "isNewDeviceProvisioning" in value;
-    isInstance = isInstance && "welcomeMessageAcknowledgedAt" in value;
-    isInstance = isInstance && "role" in value;
-
-    return isInstance;
+export function instanceOfPersonExt(value: object): value is PersonExt {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('userType' in value) || value['userType'] === undefined) return false;
+    if (!('email' in value) || value['email'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('isNewDeviceProvisioning' in value) || value['isNewDeviceProvisioning'] === undefined) return false;
+    if (!('welcomeMessageAcknowledgedAt' in value) || value['welcomeMessageAcknowledgedAt'] === undefined) return false;
+    if (!('role' in value) || value['role'] === undefined) return false;
+    return true;
 }
 
 export function PersonExtFromJSON(json: any): PersonExt {
@@ -163,7 +178,7 @@ export function PersonExtFromJSON(json: any): PersonExt {
 }
 
 export function PersonExtFromJSONTyped(json: any, ignoreDiscriminator: boolean): PersonExt {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -172,42 +187,46 @@ export function PersonExtFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
         'userType': json['user_type'],
-        'name': !exists(json, 'name') ? undefined : json['name'],
+        'name': json['name'] == null ? undefined : json['name'],
         'email': json['email'],
         'state': UserStateFromJSON(json['state']),
         'isNewDeviceProvisioning': json['is_new_device_provisioning'],
         'welcomeMessageAcknowledgedAt': (new Date(json['welcome_message_acknowledged_at'])),
         'role': UserRoleFromJSON(json['role']),
-        'userGroups': !exists(json, 'user_groups') ? undefined : ((json['user_groups'] as Array<any>).map(UserGroupRefFromJSON)),
-        'pendingAdditionToUserGroups': !exists(json, 'pending_addition_to_user_groups') ? undefined : ((json['pending_addition_to_user_groups'] as Array<any>).map(UserGroupRefFromJSON)),
-        'pendingRemovalFromUserGroups': !exists(json, 'pending_removal_from_user_groups') ? undefined : ((json['pending_removal_from_user_groups'] as Array<any>).map(UserGroupRefFromJSON)),
-        'pendingChange': !exists(json, 'pending_change') ? undefined : PendingUserChangeRefFromJSON(json['pending_change']),
+        'userGroups': json['user_groups'] == null ? undefined : ((json['user_groups'] as Array<any>).map(UserGroupRefFromJSON)),
+        'pendingAdditionToUserGroups': json['pending_addition_to_user_groups'] == null ? undefined : ((json['pending_addition_to_user_groups'] as Array<any>).map(UserGroupRefFromJSON)),
+        'pendingRemovalFromUserGroups': json['pending_removal_from_user_groups'] == null ? undefined : ((json['pending_removal_from_user_groups'] as Array<any>).map(UserGroupRefFromJSON)),
+        'pendingChange': json['pending_change'] == null ? undefined : PendingUserChangeRefFromJSON(json['pending_change']),
+        'deviceBackupInfo': json['device_backup_info'] == null ? undefined : DeviceBackupInfoExtFromJSON(json['device_backup_info']),
     };
 }
 
-export function PersonExtToJSON(value?: PersonExt | null): any {
-    if (value === undefined) {
-        return undefined;
+export function PersonExtToJSON(json: any): PersonExt {
+    return PersonExtToJSONTyped(json, false);
+}
+
+export function PersonExtToJSONTyped(value?: PersonExt | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'user_type': value.userType,
-        'name': value.name,
-        'email': value.email,
-        'state': UserStateToJSON(value.state),
-        'is_new_device_provisioning': value.isNewDeviceProvisioning,
-        'welcome_message_acknowledged_at': (value.welcomeMessageAcknowledgedAt.toISOString()),
-        'role': UserRoleToJSON(value.role),
-        'user_groups': value.userGroups === undefined ? undefined : ((value.userGroups as Array<any>).map(UserGroupRefToJSON)),
-        'pending_addition_to_user_groups': value.pendingAdditionToUserGroups === undefined ? undefined : ((value.pendingAdditionToUserGroups as Array<any>).map(UserGroupRefToJSON)),
-        'pending_removal_from_user_groups': value.pendingRemovalFromUserGroups === undefined ? undefined : ((value.pendingRemovalFromUserGroups as Array<any>).map(UserGroupRefToJSON)),
-        'pending_change': PendingUserChangeRefToJSON(value.pendingChange),
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'user_type': value['userType'],
+        'name': value['name'],
+        'email': value['email'],
+        'state': UserStateToJSON(value['state']),
+        'is_new_device_provisioning': value['isNewDeviceProvisioning'],
+        'welcome_message_acknowledged_at': ((value['welcomeMessageAcknowledgedAt']).toISOString()),
+        'role': UserRoleToJSON(value['role']),
+        'user_groups': value['userGroups'] == null ? undefined : ((value['userGroups'] as Array<any>).map(UserGroupRefToJSON)),
+        'pending_addition_to_user_groups': value['pendingAdditionToUserGroups'] == null ? undefined : ((value['pendingAdditionToUserGroups'] as Array<any>).map(UserGroupRefToJSON)),
+        'pending_removal_from_user_groups': value['pendingRemovalFromUserGroups'] == null ? undefined : ((value['pendingRemovalFromUserGroups'] as Array<any>).map(UserGroupRefToJSON)),
+        'pending_change': PendingUserChangeRefToJSON(value['pendingChange']),
+        'device_backup_info': DeviceBackupInfoExtToJSON(value['deviceBackupInfo']),
     };
 }
 

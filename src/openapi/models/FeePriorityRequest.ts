@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { FeePriorityLevelRequest } from './FeePriorityLevelRequest';
 import {
     FeePriorityLevelRequestFromJSON,
     FeePriorityLevelRequestFromJSONTyped,
     FeePriorityLevelRequestToJSON,
+    FeePriorityLevelRequestToJSONTyped,
 } from './FeePriorityLevelRequest';
 
 /**
@@ -53,12 +54,10 @@ export type FeePriorityRequestTypeEnum = typeof FeePriorityRequestTypeEnum[keyof
 /**
  * Check if a given object implements the FeePriorityRequest interface.
  */
-export function instanceOfFeePriorityRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "priorityLevel" in value;
-
-    return isInstance;
+export function instanceOfFeePriorityRequest(value: object): value is FeePriorityRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('priorityLevel' in value) || value['priorityLevel'] === undefined) return false;
+    return true;
 }
 
 export function FeePriorityRequestFromJSON(json: any): FeePriorityRequest {
@@ -66,7 +65,7 @@ export function FeePriorityRequestFromJSON(json: any): FeePriorityRequest {
 }
 
 export function FeePriorityRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): FeePriorityRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function FeePriorityRequestFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-export function FeePriorityRequestToJSON(value?: FeePriorityRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function FeePriorityRequestToJSON(json: any): FeePriorityRequest {
+    return FeePriorityRequestToJSONTyped(json, false);
+}
+
+export function FeePriorityRequestToJSONTyped(value?: FeePriorityRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'priority_level': FeePriorityLevelRequestToJSON(value.priorityLevel),
+        'type': value['type'],
+        'priority_level': FeePriorityLevelRequestToJSON(value['priorityLevel']),
     };
 }
 

@@ -12,25 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { EnrichedAssetIdentifier } from './EnrichedAssetIdentifier';
-import {
-    EnrichedAssetIdentifierFromJSON,
-    EnrichedAssetIdentifierFromJSONTyped,
-    EnrichedAssetIdentifierToJSON,
-} from './EnrichedAssetIdentifier';
-import type { EvmAssetDetails } from './EvmAssetDetails';
-import {
-    EvmAssetDetailsFromJSON,
-    EvmAssetDetailsFromJSONTyped,
-    EvmAssetDetailsToJSON,
-} from './EvmAssetDetails';
+import { mapValues } from '../runtime';
 import type { Price } from './Price';
 import {
     PriceFromJSON,
     PriceFromJSONTyped,
     PriceToJSON,
+    PriceToJSONTyped,
 } from './Price';
+import type { EvmAssetDetails } from './EvmAssetDetails';
+import {
+    EvmAssetDetailsFromJSON,
+    EvmAssetDetailsFromJSONTyped,
+    EvmAssetDetailsToJSON,
+    EvmAssetDetailsToJSONTyped,
+} from './EvmAssetDetails';
+import type { EnrichedAssetIdentifier } from './EnrichedAssetIdentifier';
+import {
+    EnrichedAssetIdentifierFromJSON,
+    EnrichedAssetIdentifierFromJSONTyped,
+    EnrichedAssetIdentifierToJSON,
+    EnrichedAssetIdentifierToJSONTyped,
+} from './EnrichedAssetIdentifier';
 
 /**
  * 
@@ -121,19 +124,17 @@ export type EvmAssetTypeEnum = typeof EvmAssetTypeEnum[keyof typeof EvmAssetType
 /**
  * Check if a given object implements the EvmAsset interface.
  */
-export function instanceOfEvmAsset(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "decimals" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "symbol" in value;
-    isInstance = isInstance && "hidden" in value;
-    isInstance = isInstance && "verified" in value;
-    isInstance = isInstance && "assetIdentifier" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "details" in value;
-
-    return isInstance;
+export function instanceOfEvmAsset(value: object): value is EvmAsset {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('decimals' in value) || value['decimals'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('symbol' in value) || value['symbol'] === undefined) return false;
+    if (!('hidden' in value) || value['hidden'] === undefined) return false;
+    if (!('verified' in value) || value['verified'] === undefined) return false;
+    if (!('assetIdentifier' in value) || value['assetIdentifier'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    return true;
 }
 
 export function EvmAssetFromJSON(json: any): EvmAsset {
@@ -141,45 +142,47 @@ export function EvmAssetFromJSON(json: any): EvmAsset {
 }
 
 export function EvmAssetFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmAsset {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'id': json['id'],
         'decimals': json['decimals'],
-        'price': !exists(json, 'price') ? undefined : PriceFromJSON(json['price']),
+        'price': json['price'] == null ? undefined : PriceFromJSON(json['price']),
         'name': json['name'],
         'symbol': json['symbol'],
         'hidden': json['hidden'],
         'verified': json['verified'],
         'assetIdentifier': EnrichedAssetIdentifierFromJSON(json['asset_identifier']),
-        'metadataUri': !exists(json, 'metadata_uri') ? undefined : json['metadata_uri'],
+        'metadataUri': json['metadata_uri'] == null ? undefined : json['metadata_uri'],
         'type': json['type'],
         'details': EvmAssetDetailsFromJSON(json['details']),
     };
 }
 
-export function EvmAssetToJSON(value?: EvmAsset | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EvmAssetToJSON(json: any): EvmAsset {
+    return EvmAssetToJSONTyped(json, false);
+}
+
+export function EvmAssetToJSONTyped(value?: EvmAsset | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'decimals': value.decimals,
-        'price': PriceToJSON(value.price),
-        'name': value.name,
-        'symbol': value.symbol,
-        'hidden': value.hidden,
-        'verified': value.verified,
-        'asset_identifier': EnrichedAssetIdentifierToJSON(value.assetIdentifier),
-        'metadata_uri': value.metadataUri,
-        'type': value.type,
-        'details': EvmAssetDetailsToJSON(value.details),
+        'id': value['id'],
+        'decimals': value['decimals'],
+        'price': PriceToJSON(value['price']),
+        'name': value['name'],
+        'symbol': value['symbol'],
+        'hidden': value['hidden'],
+        'verified': value['verified'],
+        'asset_identifier': EnrichedAssetIdentifierToJSON(value['assetIdentifier']),
+        'metadata_uri': value['metadataUri'],
+        'type': value['type'],
+        'details': EvmAssetDetailsToJSON(value['details']),
     };
 }
 

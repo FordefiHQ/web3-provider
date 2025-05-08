@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EvmChainRequest } from './EvmChainRequest';
 import {
     EvmChainRequestFromJSON,
     EvmChainRequestFromJSONTyped,
     EvmChainRequestToJSON,
+    EvmChainRequestToJSONTyped,
 } from './EvmChainRequest';
 
 /**
@@ -59,13 +60,11 @@ export type TransactionDetailsEvmPersonalMessageRequestTypeEnum = typeof Transac
 /**
  * Check if a given object implements the TransactionDetailsEvmPersonalMessageRequest interface.
  */
-export function instanceOfTransactionDetailsEvmPersonalMessageRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "rawData" in value;
-
-    return isInstance;
+export function instanceOfTransactionDetailsEvmPersonalMessageRequest(value: object): value is TransactionDetailsEvmPersonalMessageRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('rawData' in value) || value['rawData'] === undefined) return false;
+    return true;
 }
 
 export function TransactionDetailsEvmPersonalMessageRequestFromJSON(json: any): TransactionDetailsEvmPersonalMessageRequest {
@@ -73,7 +72,7 @@ export function TransactionDetailsEvmPersonalMessageRequestFromJSON(json: any): 
 }
 
 export function TransactionDetailsEvmPersonalMessageRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): TransactionDetailsEvmPersonalMessageRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -84,18 +83,20 @@ export function TransactionDetailsEvmPersonalMessageRequestFromJSONTyped(json: a
     };
 }
 
-export function TransactionDetailsEvmPersonalMessageRequestToJSON(value?: TransactionDetailsEvmPersonalMessageRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TransactionDetailsEvmPersonalMessageRequestToJSON(json: any): TransactionDetailsEvmPersonalMessageRequest {
+    return TransactionDetailsEvmPersonalMessageRequestToJSONTyped(json, false);
+}
+
+export function TransactionDetailsEvmPersonalMessageRequestToJSONTyped(value?: TransactionDetailsEvmPersonalMessageRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'chain': EvmChainRequestToJSON(value.chain),
-        'raw_data': value.rawData,
+        'type': value['type'],
+        'chain': EvmChainRequestToJSON(value['chain']),
+        'raw_data': value['rawData'],
     };
 }
 

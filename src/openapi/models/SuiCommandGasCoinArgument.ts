@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -40,11 +40,9 @@ export type SuiCommandGasCoinArgumentTypeEnum = typeof SuiCommandGasCoinArgument
 /**
  * Check if a given object implements the SuiCommandGasCoinArgument interface.
  */
-export function instanceOfSuiCommandGasCoinArgument(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfSuiCommandGasCoinArgument(value: object): value is SuiCommandGasCoinArgument {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function SuiCommandGasCoinArgumentFromJSON(json: any): SuiCommandGasCoinArgument {
@@ -52,7 +50,7 @@ export function SuiCommandGasCoinArgumentFromJSON(json: any): SuiCommandGasCoinA
 }
 
 export function SuiCommandGasCoinArgumentFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiCommandGasCoinArgument {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -61,16 +59,18 @@ export function SuiCommandGasCoinArgumentFromJSONTyped(json: any, ignoreDiscrimi
     };
 }
 
-export function SuiCommandGasCoinArgumentToJSON(value?: SuiCommandGasCoinArgument | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiCommandGasCoinArgumentToJSON(json: any): SuiCommandGasCoinArgument {
+    return SuiCommandGasCoinArgumentToJSONTyped(json, false);
+}
+
+export function SuiCommandGasCoinArgumentToJSONTyped(value?: SuiCommandGasCoinArgument | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
+        'type': value['type'],
     };
 }
 

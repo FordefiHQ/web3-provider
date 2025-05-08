@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { CosmosNativeCoin } from './CosmosNativeCoin';
 import {
     CosmosNativeCoinFromJSON,
     CosmosNativeCoinFromJSONTyped,
     CosmosNativeCoinToJSON,
+    CosmosNativeCoinToJSONTyped,
 } from './CosmosNativeCoin';
 
 /**
@@ -43,12 +44,10 @@ export interface CosmosNativeCoinInfo {
 /**
  * Check if a given object implements the CosmosNativeCoinInfo interface.
  */
-export function instanceOfCosmosNativeCoinInfo(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "isVerified" in value;
-    isInstance = isInstance && "coin" in value;
-
-    return isInstance;
+export function instanceOfCosmosNativeCoinInfo(value: object): value is CosmosNativeCoinInfo {
+    if (!('isVerified' in value) || value['isVerified'] === undefined) return false;
+    if (!('coin' in value) || value['coin'] === undefined) return false;
+    return true;
 }
 
 export function CosmosNativeCoinInfoFromJSON(json: any): CosmosNativeCoinInfo {
@@ -56,7 +55,7 @@ export function CosmosNativeCoinInfoFromJSON(json: any): CosmosNativeCoinInfo {
 }
 
 export function CosmosNativeCoinInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosNativeCoinInfo {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -66,17 +65,19 @@ export function CosmosNativeCoinInfoFromJSONTyped(json: any, ignoreDiscriminator
     };
 }
 
-export function CosmosNativeCoinInfoToJSON(value?: CosmosNativeCoinInfo | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosNativeCoinInfoToJSON(json: any): CosmosNativeCoinInfo {
+    return CosmosNativeCoinInfoToJSONTyped(json, false);
+}
+
+export function CosmosNativeCoinInfoToJSONTyped(value?: CosmosNativeCoinInfo | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'is_verified': value.isVerified,
-        'coin': CosmosNativeCoinToJSON(value.coin),
+        'is_verified': value['isVerified'],
+        'coin': CosmosNativeCoinToJSON(value['coin']),
     };
 }
 

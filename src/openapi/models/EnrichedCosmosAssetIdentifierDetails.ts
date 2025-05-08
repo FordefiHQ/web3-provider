@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { EnrichedCosmosNativeAssetIdentifier } from './EnrichedCosmosNativeAssetIdentifier';
 import {
-    EnrichedCosmosNativeAssetIdentifier,
     instanceOfEnrichedCosmosNativeAssetIdentifier,
     EnrichedCosmosNativeAssetIdentifierFromJSON,
     EnrichedCosmosNativeAssetIdentifierFromJSONTyped,
     EnrichedCosmosNativeAssetIdentifierToJSON,
 } from './EnrichedCosmosNativeAssetIdentifier';
+import type { EnrichedCosmosTokenAssetIdentifier } from './EnrichedCosmosTokenAssetIdentifier';
 import {
-    EnrichedCosmosTokenAssetIdentifier,
     instanceOfEnrichedCosmosTokenAssetIdentifier,
     EnrichedCosmosTokenAssetIdentifierFromJSON,
     EnrichedCosmosTokenAssetIdentifierFromJSONTyped,
@@ -39,31 +39,32 @@ export function EnrichedCosmosAssetIdentifierDetailsFromJSON(json: any): Enriche
 }
 
 export function EnrichedCosmosAssetIdentifierDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): EnrichedCosmosAssetIdentifierDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'native':
-            return {...EnrichedCosmosNativeAssetIdentifierFromJSONTyped(json, true), type: 'native'};
+            return Object.assign({}, EnrichedCosmosNativeAssetIdentifierFromJSONTyped(json, true), { type: 'native' } as const);
         case 'token':
-            return {...EnrichedCosmosTokenAssetIdentifierFromJSONTyped(json, true), type: 'token'};
+            return Object.assign({}, EnrichedCosmosTokenAssetIdentifierFromJSONTyped(json, true), { type: 'token' } as const);
         default:
             throw new Error(`No variant of EnrichedCosmosAssetIdentifierDetails exists with 'type=${json['type']}'`);
     }
 }
 
-export function EnrichedCosmosAssetIdentifierDetailsToJSON(value?: EnrichedCosmosAssetIdentifierDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function EnrichedCosmosAssetIdentifierDetailsToJSON(json: any): any {
+    return EnrichedCosmosAssetIdentifierDetailsToJSONTyped(json, false);
+}
+
+export function EnrichedCosmosAssetIdentifierDetailsToJSONTyped(value?: EnrichedCosmosAssetIdentifierDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'native':
-            return EnrichedCosmosNativeAssetIdentifierToJSON(value);
+            return Object.assign({}, EnrichedCosmosNativeAssetIdentifierToJSON(value), { type: 'native' } as const);
         case 'token':
-            return EnrichedCosmosTokenAssetIdentifierToJSON(value);
+            return Object.assign({}, EnrichedCosmosTokenAssetIdentifierToJSON(value), { type: 'token' } as const);
         default:
             throw new Error(`No variant of EnrichedCosmosAssetIdentifierDetails exists with 'type=${value['type']}'`);
     }

@@ -23,6 +23,17 @@ export const StarknetChainUniqueId = {
 export type StarknetChainUniqueId = typeof StarknetChainUniqueId[keyof typeof StarknetChainUniqueId];
 
 
+export function instanceOfStarknetChainUniqueId(value: any): boolean {
+    for (const key in StarknetChainUniqueId) {
+        if (Object.prototype.hasOwnProperty.call(StarknetChainUniqueId, key)) {
+            if (StarknetChainUniqueId[key as keyof typeof StarknetChainUniqueId] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function StarknetChainUniqueIdFromJSON(json: any): StarknetChainUniqueId {
     return StarknetChainUniqueIdFromJSONTyped(json, false);
 }
@@ -33,5 +44,9 @@ export function StarknetChainUniqueIdFromJSONTyped(json: any, ignoreDiscriminato
 
 export function StarknetChainUniqueIdToJSON(value?: StarknetChainUniqueId | null): any {
     return value as any;
+}
+
+export function StarknetChainUniqueIdToJSONTyped(value: any, ignoreDiscriminator: boolean): StarknetChainUniqueId {
+    return value as StarknetChainUniqueId;
 }
 

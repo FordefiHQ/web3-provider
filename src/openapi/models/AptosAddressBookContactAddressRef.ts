@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AptosChain } from './AptosChain';
 import {
     AptosChainFromJSON,
     AptosChainFromJSONTyped,
     AptosChainToJSON,
+    AptosChainToJSONTyped,
 } from './AptosChain';
 
 /**
@@ -59,13 +60,11 @@ export type AptosAddressBookContactAddressRefChainTypeEnum = typeof AptosAddress
 /**
  * Check if a given object implements the AptosAddressBookContactAddressRef interface.
  */
-export function instanceOfAptosAddressBookContactAddressRef(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chainType" in value;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "chains" in value;
-
-    return isInstance;
+export function instanceOfAptosAddressBookContactAddressRef(value: object): value is AptosAddressBookContactAddressRef {
+    if (!('chainType' in value) || value['chainType'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('chains' in value) || value['chains'] === undefined) return false;
+    return true;
 }
 
 export function AptosAddressBookContactAddressRefFromJSON(json: any): AptosAddressBookContactAddressRef {
@@ -73,7 +72,7 @@ export function AptosAddressBookContactAddressRefFromJSON(json: any): AptosAddre
 }
 
 export function AptosAddressBookContactAddressRefFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosAddressBookContactAddressRef {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -84,18 +83,20 @@ export function AptosAddressBookContactAddressRefFromJSONTyped(json: any, ignore
     };
 }
 
-export function AptosAddressBookContactAddressRefToJSON(value?: AptosAddressBookContactAddressRef | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AptosAddressBookContactAddressRefToJSON(json: any): AptosAddressBookContactAddressRef {
+    return AptosAddressBookContactAddressRefToJSONTyped(json, false);
+}
+
+export function AptosAddressBookContactAddressRefToJSONTyped(value?: AptosAddressBookContactAddressRef | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain_type': value.chainType,
-        'address': value.address,
-        'chains': ((value.chains as Array<any>).map(AptosChainToJSON)),
+        'chain_type': value['chainType'],
+        'address': value['address'],
+        'chains': ((value['chains'] as Array<any>).map(AptosChainToJSON)),
     };
 }
 

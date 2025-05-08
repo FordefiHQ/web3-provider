@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { PricedAssetResponse } from './PricedAssetResponse';
 import {
     PricedAssetResponseFromJSON,
     PricedAssetResponseFromJSONTyped,
     PricedAssetResponseToJSON,
+    PricedAssetResponseToJSONTyped,
 } from './PricedAssetResponse';
 
 /**
@@ -37,11 +38,9 @@ export interface FetchAssetPricesResponse {
 /**
  * Check if a given object implements the FetchAssetPricesResponse interface.
  */
-export function instanceOfFetchAssetPricesResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "pricedAssets" in value;
-
-    return isInstance;
+export function instanceOfFetchAssetPricesResponse(value: object): value is FetchAssetPricesResponse {
+    if (!('pricedAssets' in value) || value['pricedAssets'] === undefined) return false;
+    return true;
 }
 
 export function FetchAssetPricesResponseFromJSON(json: any): FetchAssetPricesResponse {
@@ -49,7 +48,7 @@ export function FetchAssetPricesResponseFromJSON(json: any): FetchAssetPricesRes
 }
 
 export function FetchAssetPricesResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): FetchAssetPricesResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -58,16 +57,18 @@ export function FetchAssetPricesResponseFromJSONTyped(json: any, ignoreDiscrimin
     };
 }
 
-export function FetchAssetPricesResponseToJSON(value?: FetchAssetPricesResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function FetchAssetPricesResponseToJSON(json: any): FetchAssetPricesResponse {
+    return FetchAssetPricesResponseToJSONTyped(json, false);
+}
+
+export function FetchAssetPricesResponseToJSONTyped(value?: FetchAssetPricesResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'priced_assets': ((value.pricedAssets as Array<any>).map(PricedAssetResponseToJSON)),
+        'priced_assets': ((value['pricedAssets'] as Array<any>).map(PricedAssetResponseToJSON)),
     };
 }
 

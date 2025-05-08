@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EvmChainRequest } from './EvmChainRequest';
 import {
     EvmChainRequestFromJSON,
     EvmChainRequestFromJSONTyped,
     EvmChainRequestToJSON,
+    EvmChainRequestToJSONTyped,
 } from './EvmChainRequest';
 
 /**
@@ -59,13 +60,11 @@ export type CreateEvmPersonalMessageRequestTypeEnum = typeof CreateEvmPersonalMe
 /**
  * Check if a given object implements the CreateEvmPersonalMessageRequest interface.
  */
-export function instanceOfCreateEvmPersonalMessageRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "rawData" in value;
-
-    return isInstance;
+export function instanceOfCreateEvmPersonalMessageRequest(value: object): value is CreateEvmPersonalMessageRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('rawData' in value) || value['rawData'] === undefined) return false;
+    return true;
 }
 
 export function CreateEvmPersonalMessageRequestFromJSON(json: any): CreateEvmPersonalMessageRequest {
@@ -73,7 +72,7 @@ export function CreateEvmPersonalMessageRequestFromJSON(json: any): CreateEvmPer
 }
 
 export function CreateEvmPersonalMessageRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateEvmPersonalMessageRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -84,18 +83,20 @@ export function CreateEvmPersonalMessageRequestFromJSONTyped(json: any, ignoreDi
     };
 }
 
-export function CreateEvmPersonalMessageRequestToJSON(value?: CreateEvmPersonalMessageRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateEvmPersonalMessageRequestToJSON(json: any): CreateEvmPersonalMessageRequest {
+    return CreateEvmPersonalMessageRequestToJSONTyped(json, false);
+}
+
+export function CreateEvmPersonalMessageRequestToJSONTyped(value?: CreateEvmPersonalMessageRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'chain': EvmChainRequestToJSON(value.chain),
-        'raw_data': value.rawData,
+        'type': value['type'],
+        'chain': EvmChainRequestToJSON(value['chain']),
+        'raw_data': value['rawData'],
     };
 }
 

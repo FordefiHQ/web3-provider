@@ -12,37 +12,49 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AddressBookContactChanges } from './AddressBookContactChanges';
 import {
     AddressBookContactChangesFromJSON,
     AddressBookContactChangesFromJSONTyped,
     AddressBookContactChangesToJSON,
+    AddressBookContactChangesToJSONTyped,
 } from './AddressBookContactChanges';
-import type { AddressBookContactState } from './AddressBookContactState';
-import {
-    AddressBookContactStateFromJSON,
-    AddressBookContactStateFromJSONTyped,
-    AddressBookContactStateToJSON,
-} from './AddressBookContactState';
 import type { EnrichedSolanaChain } from './EnrichedSolanaChain';
 import {
     EnrichedSolanaChainFromJSON,
     EnrichedSolanaChainFromJSONTyped,
     EnrichedSolanaChainToJSON,
+    EnrichedSolanaChainToJSONTyped,
 } from './EnrichedSolanaChain';
-import type { GroupRef } from './GroupRef';
-import {
-    GroupRefFromJSON,
-    GroupRefFromJSONTyped,
-    GroupRefToJSON,
-} from './GroupRef';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
     UserRefFromJSONTyped,
     UserRefToJSON,
+    UserRefToJSONTyped,
 } from './UserRef';
+import type { AssetInfo } from './AssetInfo';
+import {
+    AssetInfoFromJSON,
+    AssetInfoFromJSONTyped,
+    AssetInfoToJSON,
+    AssetInfoToJSONTyped,
+} from './AssetInfo';
+import type { GroupRef } from './GroupRef';
+import {
+    GroupRefFromJSON,
+    GroupRefFromJSONTyped,
+    GroupRefToJSON,
+    GroupRefToJSONTyped,
+} from './GroupRef';
+import type { AddressBookContactState } from './AddressBookContactState';
+import {
+    AddressBookContactStateFromJSON,
+    AddressBookContactStateFromJSONTyped,
+    AddressBookContactStateToJSON,
+    AddressBookContactStateToJSONTyped,
+} from './AddressBookContactState';
 
 /**
  * 
@@ -100,6 +112,12 @@ export interface SolanaAddressBookContact {
     pendingChanges?: AddressBookContactChanges;
     /**
      * 
+     * @type {Array<AssetInfo>}
+     * @memberof SolanaAddressBookContact
+     */
+    assetInfos: Array<AssetInfo>;
+    /**
+     * 
      * @type {string}
      * @memberof SolanaAddressBookContact
      */
@@ -131,20 +149,19 @@ export type SolanaAddressBookContactChainTypeEnum = typeof SolanaAddressBookCont
 /**
  * Check if a given object implements the SolanaAddressBookContact interface.
  */
-export function instanceOfSolanaAddressBookContact(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "modifiedBy" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "groups" in value;
-    isInstance = isInstance && "chainType" in value;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "chains" in value;
-
-    return isInstance;
+export function instanceOfSolanaAddressBookContact(value: object): value is SolanaAddressBookContact {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('modifiedBy' in value) || value['modifiedBy'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('groups' in value) || value['groups'] === undefined) return false;
+    if (!('assetInfos' in value) || value['assetInfos'] === undefined) return false;
+    if (!('chainType' in value) || value['chainType'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('chains' in value) || value['chains'] === undefined) return false;
+    return true;
 }
 
 export function SolanaAddressBookContactFromJSON(json: any): SolanaAddressBookContact {
@@ -152,7 +169,7 @@ export function SolanaAddressBookContactFromJSON(json: any): SolanaAddressBookCo
 }
 
 export function SolanaAddressBookContactFromJSONTyped(json: any, ignoreDiscriminator: boolean): SolanaAddressBookContact {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -164,33 +181,37 @@ export function SolanaAddressBookContactFromJSONTyped(json: any, ignoreDiscrimin
         'modifiedBy': UserRefFromJSON(json['modified_by']),
         'state': AddressBookContactStateFromJSON(json['state']),
         'groups': ((json['groups'] as Array<any>).map(GroupRefFromJSON)),
-        'pendingChanges': !exists(json, 'pending_changes') ? undefined : AddressBookContactChangesFromJSON(json['pending_changes']),
+        'pendingChanges': json['pending_changes'] == null ? undefined : AddressBookContactChangesFromJSON(json['pending_changes']),
+        'assetInfos': ((json['asset_infos'] as Array<any>).map(AssetInfoFromJSON)),
         'chainType': json['chain_type'],
         'address': json['address'],
         'chains': ((json['chains'] as Array<any>).map(EnrichedSolanaChainFromJSON)),
     };
 }
 
-export function SolanaAddressBookContactToJSON(value?: SolanaAddressBookContact | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SolanaAddressBookContactToJSON(json: any): SolanaAddressBookContact {
+    return SolanaAddressBookContactToJSONTyped(json, false);
+}
+
+export function SolanaAddressBookContactToJSONTyped(value?: SolanaAddressBookContact | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'name': value.name,
-        'modified_by': UserRefToJSON(value.modifiedBy),
-        'state': AddressBookContactStateToJSON(value.state),
-        'groups': ((value.groups as Array<any>).map(GroupRefToJSON)),
-        'pending_changes': AddressBookContactChangesToJSON(value.pendingChanges),
-        'chain_type': value.chainType,
-        'address': value.address,
-        'chains': ((value.chains as Array<any>).map(EnrichedSolanaChainToJSON)),
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'name': value['name'],
+        'modified_by': UserRefToJSON(value['modifiedBy']),
+        'state': AddressBookContactStateToJSON(value['state']),
+        'groups': ((value['groups'] as Array<any>).map(GroupRefToJSON)),
+        'pending_changes': AddressBookContactChangesToJSON(value['pendingChanges']),
+        'asset_infos': ((value['assetInfos'] as Array<any>).map(AssetInfoToJSON)),
+        'chain_type': value['chainType'],
+        'address': value['address'],
+        'chains': ((value['chains'] as Array<any>).map(EnrichedSolanaChainToJSON)),
     };
 }
 

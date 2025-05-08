@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type BinaryHashPayloadFormatEnum = typeof BinaryHashPayloadFormatEnum[key
 /**
  * Check if a given object implements the BinaryHashPayload interface.
  */
-export function instanceOfBinaryHashPayload(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "format" in value;
-    isInstance = isInstance && "hashBinary" in value;
-
-    return isInstance;
+export function instanceOfBinaryHashPayload(value: object): value is BinaryHashPayload {
+    if (!('format' in value) || value['format'] === undefined) return false;
+    if (!('hashBinary' in value) || value['hashBinary'] === undefined) return false;
+    return true;
 }
 
 export function BinaryHashPayloadFromJSON(json: any): BinaryHashPayload {
@@ -59,7 +57,7 @@ export function BinaryHashPayloadFromJSON(json: any): BinaryHashPayload {
 }
 
 export function BinaryHashPayloadFromJSONTyped(json: any, ignoreDiscriminator: boolean): BinaryHashPayload {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function BinaryHashPayloadFromJSONTyped(json: any, ignoreDiscriminator: b
     };
 }
 
-export function BinaryHashPayloadToJSON(value?: BinaryHashPayload | null): any {
-    if (value === undefined) {
-        return undefined;
+export function BinaryHashPayloadToJSON(json: any): BinaryHashPayload {
+    return BinaryHashPayloadToJSONTyped(json, false);
+}
+
+export function BinaryHashPayloadToJSONTyped(value?: BinaryHashPayload | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'format': value.format,
-        'hash_binary': value.hashBinary,
+        'format': value['format'],
+        'hash_binary': value['hashBinary'],
     };
 }
 

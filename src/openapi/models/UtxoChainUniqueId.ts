@@ -24,6 +24,17 @@ export const UtxoChainUniqueId = {
 export type UtxoChainUniqueId = typeof UtxoChainUniqueId[keyof typeof UtxoChainUniqueId];
 
 
+export function instanceOfUtxoChainUniqueId(value: any): boolean {
+    for (const key in UtxoChainUniqueId) {
+        if (Object.prototype.hasOwnProperty.call(UtxoChainUniqueId, key)) {
+            if (UtxoChainUniqueId[key as keyof typeof UtxoChainUniqueId] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function UtxoChainUniqueIdFromJSON(json: any): UtxoChainUniqueId {
     return UtxoChainUniqueIdFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function UtxoChainUniqueIdFromJSONTyped(json: any, ignoreDiscriminator: b
 
 export function UtxoChainUniqueIdToJSON(value?: UtxoChainUniqueId | null): any {
     return value as any;
+}
+
+export function UtxoChainUniqueIdToJSONTyped(value: any, ignoreDiscriminator: boolean): UtxoChainUniqueId {
+    return value as UtxoChainUniqueId;
 }
 

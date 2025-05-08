@@ -23,6 +23,17 @@ export const RemoveUserKeyErrorType = {
 export type RemoveUserKeyErrorType = typeof RemoveUserKeyErrorType[keyof typeof RemoveUserKeyErrorType];
 
 
+export function instanceOfRemoveUserKeyErrorType(value: any): boolean {
+    for (const key in RemoveUserKeyErrorType) {
+        if (Object.prototype.hasOwnProperty.call(RemoveUserKeyErrorType, key)) {
+            if (RemoveUserKeyErrorType[key as keyof typeof RemoveUserKeyErrorType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function RemoveUserKeyErrorTypeFromJSON(json: any): RemoveUserKeyErrorType {
     return RemoveUserKeyErrorTypeFromJSONTyped(json, false);
 }
@@ -33,5 +44,9 @@ export function RemoveUserKeyErrorTypeFromJSONTyped(json: any, ignoreDiscriminat
 
 export function RemoveUserKeyErrorTypeToJSON(value?: RemoveUserKeyErrorType | null): any {
     return value as any;
+}
+
+export function RemoveUserKeyErrorTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): RemoveUserKeyErrorType {
+    return value as RemoveUserKeyErrorType;
 }
 

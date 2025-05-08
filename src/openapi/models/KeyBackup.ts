@@ -12,25 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { VaultBackup } from './VaultBackup';
+import {
+    VaultBackupFromJSON,
+    VaultBackupFromJSONTyped,
+    VaultBackupToJSON,
+    VaultBackupToJSONTyped,
+} from './VaultBackup';
 import type { KeyType } from './KeyType';
 import {
     KeyTypeFromJSON,
     KeyTypeFromJSONTyped,
     KeyTypeToJSON,
+    KeyTypeToJSONTyped,
 } from './KeyType';
 import type { MpcShare } from './MpcShare';
 import {
     MpcShareFromJSON,
     MpcShareFromJSONTyped,
     MpcShareToJSON,
+    MpcShareToJSONTyped,
 } from './MpcShare';
-import type { VaultBackup } from './VaultBackup';
-import {
-    VaultBackupFromJSON,
-    VaultBackupFromJSONTyped,
-    VaultBackupToJSON,
-} from './VaultBackup';
 
 /**
  * 
@@ -70,18 +73,18 @@ export interface KeyBackup {
     vaults: Array<VaultBackup>;
 }
 
+
+
 /**
  * Check if a given object implements the KeyBackup interface.
  */
-export function instanceOfKeyBackup(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "keyId" in value;
-    isInstance = isInstance && "keyType" in value;
-    isInstance = isInstance && "chainCode" in value;
-    isInstance = isInstance && "mpcShares" in value;
-    isInstance = isInstance && "vaults" in value;
-
-    return isInstance;
+export function instanceOfKeyBackup(value: object): value is KeyBackup {
+    if (!('keyId' in value) || value['keyId'] === undefined) return false;
+    if (!('keyType' in value) || value['keyType'] === undefined) return false;
+    if (!('chainCode' in value) || value['chainCode'] === undefined) return false;
+    if (!('mpcShares' in value) || value['mpcShares'] === undefined) return false;
+    if (!('vaults' in value) || value['vaults'] === undefined) return false;
+    return true;
 }
 
 export function KeyBackupFromJSON(json: any): KeyBackup {
@@ -89,7 +92,7 @@ export function KeyBackupFromJSON(json: any): KeyBackup {
 }
 
 export function KeyBackupFromJSONTyped(json: any, ignoreDiscriminator: boolean): KeyBackup {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -102,20 +105,22 @@ export function KeyBackupFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     };
 }
 
-export function KeyBackupToJSON(value?: KeyBackup | null): any {
-    if (value === undefined) {
-        return undefined;
+export function KeyBackupToJSON(json: any): KeyBackup {
+    return KeyBackupToJSONTyped(json, false);
+}
+
+export function KeyBackupToJSONTyped(value?: KeyBackup | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'key_id': value.keyId,
-        'key_type': KeyTypeToJSON(value.keyType),
-        'chain_code': value.chainCode,
-        'mpc_shares': ((value.mpcShares as Array<any>).map(MpcShareToJSON)),
-        'vaults': ((value.vaults as Array<any>).map(VaultBackupToJSON)),
+        'key_id': value['keyId'],
+        'key_type': KeyTypeToJSON(value['keyType']),
+        'chain_code': value['chainCode'],
+        'mpc_shares': ((value['mpcShares'] as Array<any>).map(MpcShareToJSON)),
+        'vaults': ((value['vaults'] as Array<any>).map(VaultBackupToJSON)),
     };
 }
 

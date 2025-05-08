@@ -12,29 +12,29 @@
  * Do not edit the class manually.
  */
 
+import type { StarknetContractCreationDetails } from './StarknetContractCreationDetails';
 import {
-    StarknetContractCreationDetails,
     instanceOfStarknetContractCreationDetails,
     StarknetContractCreationDetailsFromJSON,
     StarknetContractCreationDetailsFromJSONTyped,
     StarknetContractCreationDetailsToJSON,
 } from './StarknetContractCreationDetails';
+import type { StarknetErc20TransferDetails } from './StarknetErc20TransferDetails';
 import {
-    StarknetErc20TransferDetails,
     instanceOfStarknetErc20TransferDetails,
     StarknetErc20TransferDetailsFromJSON,
     StarknetErc20TransferDetailsFromJSONTyped,
     StarknetErc20TransferDetailsToJSON,
 } from './StarknetErc20TransferDetails';
+import type { StarknetNativeTransferDetails } from './StarknetNativeTransferDetails';
 import {
-    StarknetNativeTransferDetails,
     instanceOfStarknetNativeTransferDetails,
     StarknetNativeTransferDetailsFromJSON,
     StarknetNativeTransferDetailsFromJSONTyped,
     StarknetNativeTransferDetailsToJSON,
 } from './StarknetNativeTransferDetails';
+import type { StarknetRawTransactionDetails } from './StarknetRawTransactionDetails';
 import {
-    StarknetRawTransactionDetails,
     instanceOfStarknetRawTransactionDetails,
     StarknetRawTransactionDetailsFromJSON,
     StarknetRawTransactionDetailsFromJSONTyped,
@@ -53,39 +53,40 @@ export function PredictedStarknetTransactionStarknetTransactionTypeDetailsFromJS
 }
 
 export function PredictedStarknetTransactionStarknetTransactionTypeDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): PredictedStarknetTransactionStarknetTransactionTypeDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'contract_deployment':
-            return {...StarknetContractCreationDetailsFromJSONTyped(json, true), type: 'contract_deployment'};
+            return Object.assign({}, StarknetContractCreationDetailsFromJSONTyped(json, true), { type: 'contract_deployment' } as const);
         case 'erc20_transfer':
-            return {...StarknetErc20TransferDetailsFromJSONTyped(json, true), type: 'erc20_transfer'};
+            return Object.assign({}, StarknetErc20TransferDetailsFromJSONTyped(json, true), { type: 'erc20_transfer' } as const);
         case 'native_transfer':
-            return {...StarknetNativeTransferDetailsFromJSONTyped(json, true), type: 'native_transfer'};
+            return Object.assign({}, StarknetNativeTransferDetailsFromJSONTyped(json, true), { type: 'native_transfer' } as const);
         case 'raw_transaction':
-            return {...StarknetRawTransactionDetailsFromJSONTyped(json, true), type: 'raw_transaction'};
+            return Object.assign({}, StarknetRawTransactionDetailsFromJSONTyped(json, true), { type: 'raw_transaction' } as const);
         default:
             throw new Error(`No variant of PredictedStarknetTransactionStarknetTransactionTypeDetails exists with 'type=${json['type']}'`);
     }
 }
 
-export function PredictedStarknetTransactionStarknetTransactionTypeDetailsToJSON(value?: PredictedStarknetTransactionStarknetTransactionTypeDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function PredictedStarknetTransactionStarknetTransactionTypeDetailsToJSON(json: any): any {
+    return PredictedStarknetTransactionStarknetTransactionTypeDetailsToJSONTyped(json, false);
+}
+
+export function PredictedStarknetTransactionStarknetTransactionTypeDetailsToJSONTyped(value?: PredictedStarknetTransactionStarknetTransactionTypeDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'contract_deployment':
-            return StarknetContractCreationDetailsToJSON(value);
+            return Object.assign({}, StarknetContractCreationDetailsToJSON(value), { type: 'contract_deployment' } as const);
         case 'erc20_transfer':
-            return StarknetErc20TransferDetailsToJSON(value);
+            return Object.assign({}, StarknetErc20TransferDetailsToJSON(value), { type: 'erc20_transfer' } as const);
         case 'native_transfer':
-            return StarknetNativeTransferDetailsToJSON(value);
+            return Object.assign({}, StarknetNativeTransferDetailsToJSON(value), { type: 'native_transfer' } as const);
         case 'raw_transaction':
-            return StarknetRawTransactionDetailsToJSON(value);
+            return Object.assign({}, StarknetRawTransactionDetailsToJSON(value), { type: 'raw_transaction' } as const);
         default:
             throw new Error(`No variant of PredictedStarknetTransactionStarknetTransactionTypeDetails exists with 'type=${value['type']}'`);
     }

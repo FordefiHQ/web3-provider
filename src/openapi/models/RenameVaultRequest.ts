@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -30,11 +30,9 @@ export interface RenameVaultRequest {
 /**
  * Check if a given object implements the RenameVaultRequest interface.
  */
-export function instanceOfRenameVaultRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "name" in value;
-
-    return isInstance;
+export function instanceOfRenameVaultRequest(value: object): value is RenameVaultRequest {
+    if (!('name' in value) || value['name'] === undefined) return false;
+    return true;
 }
 
 export function RenameVaultRequestFromJSON(json: any): RenameVaultRequest {
@@ -42,7 +40,7 @@ export function RenameVaultRequestFromJSON(json: any): RenameVaultRequest {
 }
 
 export function RenameVaultRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): RenameVaultRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -51,16 +49,18 @@ export function RenameVaultRequestFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-export function RenameVaultRequestToJSON(value?: RenameVaultRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function RenameVaultRequestToJSON(json: any): RenameVaultRequest {
+    return RenameVaultRequestToJSONTyped(json, false);
+}
+
+export function RenameVaultRequestToJSONTyped(value?: RenameVaultRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
+        'name': value['name'],
     };
 }
 

@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -42,13 +42,11 @@ export interface SolanaBlockData {
 /**
  * Check if a given object implements the SolanaBlockData interface.
  */
-export function instanceOfSolanaBlockData(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "slot" in value;
-    isInstance = isInstance && "hash" in value;
-    isInstance = isInstance && "minedAt" in value;
-
-    return isInstance;
+export function instanceOfSolanaBlockData(value: object): value is SolanaBlockData {
+    if (!('slot' in value) || value['slot'] === undefined) return false;
+    if (!('hash' in value) || value['hash'] === undefined) return false;
+    if (!('minedAt' in value) || value['minedAt'] === undefined) return false;
+    return true;
 }
 
 export function SolanaBlockDataFromJSON(json: any): SolanaBlockData {
@@ -56,7 +54,7 @@ export function SolanaBlockDataFromJSON(json: any): SolanaBlockData {
 }
 
 export function SolanaBlockDataFromJSONTyped(json: any, ignoreDiscriminator: boolean): SolanaBlockData {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -67,18 +65,20 @@ export function SolanaBlockDataFromJSONTyped(json: any, ignoreDiscriminator: boo
     };
 }
 
-export function SolanaBlockDataToJSON(value?: SolanaBlockData | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SolanaBlockDataToJSON(json: any): SolanaBlockData {
+    return SolanaBlockDataToJSONTyped(json, false);
+}
+
+export function SolanaBlockDataToJSONTyped(value?: SolanaBlockData | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'slot': value.slot,
-        'hash': value.hash,
-        'mined_at': (value.minedAt.toISOString()),
+        'slot': value['slot'],
+        'hash': value['hash'],
+        'mined_at': ((value['minedAt']).toISOString()),
     };
 }
 

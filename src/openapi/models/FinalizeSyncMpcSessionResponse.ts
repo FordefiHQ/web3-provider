@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { FinalizeSyncMpcSessionResponseSessionCallback } from './FinalizeSyncMpcSessionResponseSessionCallback';
 import {
     FinalizeSyncMpcSessionResponseSessionCallbackFromJSON,
     FinalizeSyncMpcSessionResponseSessionCallbackFromJSONTyped,
     FinalizeSyncMpcSessionResponseSessionCallbackToJSON,
+    FinalizeSyncMpcSessionResponseSessionCallbackToJSONTyped,
 } from './FinalizeSyncMpcSessionResponseSessionCallback';
 
 /**
@@ -37,11 +38,9 @@ export interface FinalizeSyncMpcSessionResponse {
 /**
  * Check if a given object implements the FinalizeSyncMpcSessionResponse interface.
  */
-export function instanceOfFinalizeSyncMpcSessionResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "sessionCallback" in value;
-
-    return isInstance;
+export function instanceOfFinalizeSyncMpcSessionResponse(value: object): value is FinalizeSyncMpcSessionResponse {
+    if (!('sessionCallback' in value) || value['sessionCallback'] === undefined) return false;
+    return true;
 }
 
 export function FinalizeSyncMpcSessionResponseFromJSON(json: any): FinalizeSyncMpcSessionResponse {
@@ -49,7 +48,7 @@ export function FinalizeSyncMpcSessionResponseFromJSON(json: any): FinalizeSyncM
 }
 
 export function FinalizeSyncMpcSessionResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): FinalizeSyncMpcSessionResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -58,16 +57,18 @@ export function FinalizeSyncMpcSessionResponseFromJSONTyped(json: any, ignoreDis
     };
 }
 
-export function FinalizeSyncMpcSessionResponseToJSON(value?: FinalizeSyncMpcSessionResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function FinalizeSyncMpcSessionResponseToJSON(json: any): FinalizeSyncMpcSessionResponse {
+    return FinalizeSyncMpcSessionResponseToJSONTyped(json, false);
+}
+
+export function FinalizeSyncMpcSessionResponseToJSONTyped(value?: FinalizeSyncMpcSessionResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'session_callback': FinalizeSyncMpcSessionResponseSessionCallbackToJSON(value.sessionCallback),
+        'session_callback': FinalizeSyncMpcSessionResponseSessionCallbackToJSON(value['sessionCallback']),
     };
 }
 

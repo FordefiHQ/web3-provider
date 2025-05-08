@@ -23,6 +23,17 @@ export const IssueEndUserAuthTokenErrorType = {
 export type IssueEndUserAuthTokenErrorType = typeof IssueEndUserAuthTokenErrorType[keyof typeof IssueEndUserAuthTokenErrorType];
 
 
+export function instanceOfIssueEndUserAuthTokenErrorType(value: any): boolean {
+    for (const key in IssueEndUserAuthTokenErrorType) {
+        if (Object.prototype.hasOwnProperty.call(IssueEndUserAuthTokenErrorType, key)) {
+            if (IssueEndUserAuthTokenErrorType[key as keyof typeof IssueEndUserAuthTokenErrorType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function IssueEndUserAuthTokenErrorTypeFromJSON(json: any): IssueEndUserAuthTokenErrorType {
     return IssueEndUserAuthTokenErrorTypeFromJSONTyped(json, false);
 }
@@ -33,5 +44,9 @@ export function IssueEndUserAuthTokenErrorTypeFromJSONTyped(json: any, ignoreDis
 
 export function IssueEndUserAuthTokenErrorTypeToJSON(value?: IssueEndUserAuthTokenErrorType | null): any {
     return value as any;
+}
+
+export function IssueEndUserAuthTokenErrorTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): IssueEndUserAuthTokenErrorType {
+    return value as IssueEndUserAuthTokenErrorType;
 }
 

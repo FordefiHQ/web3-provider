@@ -12,43 +12,56 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { AptosVaultMetadataValue } from './AptosVaultMetadataValue';
-import {
-    AptosVaultMetadataValueFromJSON,
-    AptosVaultMetadataValueFromJSONTyped,
-    AptosVaultMetadataValueToJSON,
-} from './AptosVaultMetadataValue';
+import { mapValues } from '../runtime';
 import type { AptosVaultPendingVaultGroupAction } from './AptosVaultPendingVaultGroupAction';
 import {
     AptosVaultPendingVaultGroupActionFromJSON,
     AptosVaultPendingVaultGroupActionFromJSONTyped,
     AptosVaultPendingVaultGroupActionToJSON,
+    AptosVaultPendingVaultGroupActionToJSONTyped,
 } from './AptosVaultPendingVaultGroupAction';
-import type { ExchangeType } from './ExchangeType';
-import {
-    ExchangeTypeFromJSON,
-    ExchangeTypeFromJSONTyped,
-    ExchangeTypeToJSON,
-} from './ExchangeType';
-import type { UserRef } from './UserRef';
-import {
-    UserRefFromJSON,
-    UserRefFromJSONTyped,
-    UserRefToJSON,
-} from './UserRef';
-import type { VaultGroupRef } from './VaultGroupRef';
-import {
-    VaultGroupRefFromJSON,
-    VaultGroupRefFromJSONTyped,
-    VaultGroupRefToJSON,
-} from './VaultGroupRef';
 import type { VaultState } from './VaultState';
 import {
     VaultStateFromJSON,
     VaultStateFromJSONTyped,
     VaultStateToJSON,
+    VaultStateToJSONTyped,
 } from './VaultState';
+import type { AptosVaultMetadataValue } from './AptosVaultMetadataValue';
+import {
+    AptosVaultMetadataValueFromJSON,
+    AptosVaultMetadataValueFromJSONTyped,
+    AptosVaultMetadataValueToJSON,
+    AptosVaultMetadataValueToJSONTyped,
+} from './AptosVaultMetadataValue';
+import type { VaultGroupRef } from './VaultGroupRef';
+import {
+    VaultGroupRefFromJSON,
+    VaultGroupRefFromJSONTyped,
+    VaultGroupRefToJSON,
+    VaultGroupRefToJSONTyped,
+} from './VaultGroupRef';
+import type { ExchangeAccount } from './ExchangeAccount';
+import {
+    ExchangeAccountFromJSON,
+    ExchangeAccountFromJSONTyped,
+    ExchangeAccountToJSON,
+    ExchangeAccountToJSONTyped,
+} from './ExchangeAccount';
+import type { UserRef } from './UserRef';
+import {
+    UserRefFromJSON,
+    UserRefFromJSONTyped,
+    UserRefToJSON,
+    UserRefToJSONTyped,
+} from './UserRef';
+import type { ExchangeType } from './ExchangeType';
+import {
+    ExchangeTypeFromJSON,
+    ExchangeTypeFromJSONTyped,
+    ExchangeTypeToJSON,
+    ExchangeTypeToJSONTyped,
+} from './ExchangeType';
 
 /**
  * 
@@ -112,6 +125,12 @@ export interface ExchangeVault {
     state: VaultState;
     /**
      * 
+     * @type {boolean}
+     * @memberof ExchangeVault
+     */
+    areAllChainsDisabled: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof ExchangeVault
      */
@@ -128,6 +147,24 @@ export interface ExchangeVault {
      * @memberof ExchangeVault
      */
     apiKey: string;
+    /**
+     * 
+     * @type {ExchangeAccount}
+     * @memberof ExchangeVault
+     */
+    activeAccount?: ExchangeAccount;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExchangeVault
+     */
+    logoUrl: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ExchangeVault
+     */
+    isBalanceDataOutdated: boolean;
 }
 
 
@@ -143,20 +180,21 @@ export type ExchangeVaultTypeEnum = typeof ExchangeVaultTypeEnum[keyof typeof Ex
 /**
  * Check if a given object implements the ExchangeVault interface.
  */
-export function instanceOfExchangeVault(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "createdBy" in value;
-    isInstance = isInstance && "vaultGroup" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "exchangeType" in value;
-    isInstance = isInstance && "apiKey" in value;
-
-    return isInstance;
+export function instanceOfExchangeVault(value: object): value is ExchangeVault {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('createdBy' in value) || value['createdBy'] === undefined) return false;
+    if (!('vaultGroup' in value) || value['vaultGroup'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('areAllChainsDisabled' in value) || value['areAllChainsDisabled'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('exchangeType' in value) || value['exchangeType'] === undefined) return false;
+    if (!('apiKey' in value) || value['apiKey'] === undefined) return false;
+    if (!('logoUrl' in value) || value['logoUrl'] === undefined) return false;
+    if (!('isBalanceDataOutdated' in value) || value['isBalanceDataOutdated'] === undefined) return false;
+    return true;
 }
 
 export function ExchangeVaultFromJSON(json: any): ExchangeVault {
@@ -164,7 +202,7 @@ export function ExchangeVaultFromJSON(json: any): ExchangeVault {
 }
 
 export function ExchangeVaultFromJSONTyped(json: any, ignoreDiscriminator: boolean): ExchangeVault {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -172,39 +210,49 @@ export function ExchangeVaultFromJSONTyped(json: any, ignoreDiscriminator: boole
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
-        'metadata': !exists(json, 'metadata') ? undefined : (mapValues(json['metadata'], AptosVaultMetadataValueFromJSON)),
+        'metadata': json['metadata'] == null ? undefined : (mapValues(json['metadata'], AptosVaultMetadataValueFromJSON)),
         'name': json['name'],
         'createdBy': UserRefFromJSON(json['created_by']),
         'vaultGroup': VaultGroupRefFromJSON(json['vault_group']),
-        'pendingVaultGroupAction': !exists(json, 'pending_vault_group_action') ? undefined : AptosVaultPendingVaultGroupActionFromJSON(json['pending_vault_group_action']),
+        'pendingVaultGroupAction': json['pending_vault_group_action'] == null ? undefined : AptosVaultPendingVaultGroupActionFromJSON(json['pending_vault_group_action']),
         'state': VaultStateFromJSON(json['state']),
+        'areAllChainsDisabled': json['are_all_chains_disabled'],
         'type': json['type'],
         'exchangeType': ExchangeTypeFromJSON(json['exchange_type']),
         'apiKey': json['api_key'],
+        'activeAccount': json['active_account'] == null ? undefined : ExchangeAccountFromJSON(json['active_account']),
+        'logoUrl': json['logo_url'],
+        'isBalanceDataOutdated': json['is_balance_data_outdated'],
     };
 }
 
-export function ExchangeVaultToJSON(value?: ExchangeVault | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ExchangeVaultToJSON(json: any): ExchangeVault {
+    return ExchangeVaultToJSONTyped(json, false);
+}
+
+export function ExchangeVaultToJSONTyped(value?: ExchangeVault | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'metadata': value.metadata === undefined ? undefined : (mapValues(value.metadata, AptosVaultMetadataValueToJSON)),
-        'name': value.name,
-        'created_by': UserRefToJSON(value.createdBy),
-        'vault_group': VaultGroupRefToJSON(value.vaultGroup),
-        'pending_vault_group_action': AptosVaultPendingVaultGroupActionToJSON(value.pendingVaultGroupAction),
-        'state': VaultStateToJSON(value.state),
-        'type': value.type,
-        'exchange_type': ExchangeTypeToJSON(value.exchangeType),
-        'api_key': value.apiKey,
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'metadata': value['metadata'] == null ? undefined : (mapValues(value['metadata'], AptosVaultMetadataValueToJSON)),
+        'name': value['name'],
+        'created_by': UserRefToJSON(value['createdBy']),
+        'vault_group': VaultGroupRefToJSON(value['vaultGroup']),
+        'pending_vault_group_action': AptosVaultPendingVaultGroupActionToJSON(value['pendingVaultGroupAction']),
+        'state': VaultStateToJSON(value['state']),
+        'are_all_chains_disabled': value['areAllChainsDisabled'],
+        'type': value['type'],
+        'exchange_type': ExchangeTypeToJSON(value['exchangeType']),
+        'api_key': value['apiKey'],
+        'active_account': ExchangeAccountToJSON(value['activeAccount']),
+        'logo_url': value['logoUrl'],
+        'is_balance_data_outdated': value['isBalanceDataOutdated'],
     };
 }
 

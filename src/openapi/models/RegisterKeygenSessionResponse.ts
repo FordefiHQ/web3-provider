@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { MpcMessage } from './MpcMessage';
 import {
     MpcMessageFromJSON,
     MpcMessageFromJSONTyped,
     MpcMessageToJSON,
+    MpcMessageToJSONTyped,
 } from './MpcMessage';
 
 /**
@@ -43,11 +44,9 @@ export interface RegisterKeygenSessionResponse {
 /**
  * Check if a given object implements the RegisterKeygenSessionResponse interface.
  */
-export function instanceOfRegisterKeygenSessionResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "sessionId" in value;
-
-    return isInstance;
+export function instanceOfRegisterKeygenSessionResponse(value: object): value is RegisterKeygenSessionResponse {
+    if (!('sessionId' in value) || value['sessionId'] === undefined) return false;
+    return true;
 }
 
 export function RegisterKeygenSessionResponseFromJSON(json: any): RegisterKeygenSessionResponse {
@@ -55,27 +54,29 @@ export function RegisterKeygenSessionResponseFromJSON(json: any): RegisterKeygen
 }
 
 export function RegisterKeygenSessionResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): RegisterKeygenSessionResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'sessionId': json['session_id'],
-        'secondMpcProtocolMessage': !exists(json, 'second_mpc_protocol_message') ? undefined : MpcMessageFromJSON(json['second_mpc_protocol_message']),
+        'secondMpcProtocolMessage': json['second_mpc_protocol_message'] == null ? undefined : MpcMessageFromJSON(json['second_mpc_protocol_message']),
     };
 }
 
-export function RegisterKeygenSessionResponseToJSON(value?: RegisterKeygenSessionResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function RegisterKeygenSessionResponseToJSON(json: any): RegisterKeygenSessionResponse {
+    return RegisterKeygenSessionResponseToJSONTyped(json, false);
+}
+
+export function RegisterKeygenSessionResponseToJSONTyped(value?: RegisterKeygenSessionResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'session_id': value.sessionId,
-        'second_mpc_protocol_message': MpcMessageToJSON(value.secondMpcProtocolMessage),
+        'session_id': value['sessionId'],
+        'second_mpc_protocol_message': MpcMessageToJSON(value['secondMpcProtocolMessage']),
     };
 }
 

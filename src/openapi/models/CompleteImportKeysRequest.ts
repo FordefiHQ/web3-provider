@@ -12,7 +12,15 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { EncryptedImportedShare } from './EncryptedImportedShare';
+import {
+    EncryptedImportedShareFromJSON,
+    EncryptedImportedShareFromJSONTyped,
+    EncryptedImportedShareToJSON,
+    EncryptedImportedShareToJSONTyped,
+} from './EncryptedImportedShare';
+
 /**
  * 
  * @export
@@ -21,37 +29,18 @@ import { exists, mapValues } from '../runtime';
 export interface CompleteImportKeysRequest {
     /**
      * 
-     * @type {string}
+     * @type {Array<EncryptedImportedShare>}
      * @memberof CompleteImportKeysRequest
      */
-    encryptedShareEcdsa?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CompleteImportKeysRequest
-     */
-    encryptedShareEddsa?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CompleteImportKeysRequest
-     */
-    encryptedShareEcdsaStark?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CompleteImportKeysRequest
-     */
-    encryptedShareSchnorrSecp256k1?: string;
+    encryptedShares: Array<EncryptedImportedShare>;
 }
 
 /**
  * Check if a given object implements the CompleteImportKeysRequest interface.
  */
-export function instanceOfCompleteImportKeysRequest(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfCompleteImportKeysRequest(value: object): value is CompleteImportKeysRequest {
+    if (!('encryptedShares' in value) || value['encryptedShares'] === undefined) return false;
+    return true;
 }
 
 export function CompleteImportKeysRequestFromJSON(json: any): CompleteImportKeysRequest {
@@ -59,31 +48,27 @@ export function CompleteImportKeysRequestFromJSON(json: any): CompleteImportKeys
 }
 
 export function CompleteImportKeysRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CompleteImportKeysRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'encryptedShareEcdsa': !exists(json, 'encrypted_share_ecdsa') ? undefined : json['encrypted_share_ecdsa'],
-        'encryptedShareEddsa': !exists(json, 'encrypted_share_eddsa') ? undefined : json['encrypted_share_eddsa'],
-        'encryptedShareEcdsaStark': !exists(json, 'encrypted_share_ecdsa_stark') ? undefined : json['encrypted_share_ecdsa_stark'],
-        'encryptedShareSchnorrSecp256k1': !exists(json, 'encrypted_share_schnorr_secp256k1') ? undefined : json['encrypted_share_schnorr_secp256k1'],
+        'encryptedShares': ((json['encrypted_shares'] as Array<any>).map(EncryptedImportedShareFromJSON)),
     };
 }
 
-export function CompleteImportKeysRequestToJSON(value?: CompleteImportKeysRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CompleteImportKeysRequestToJSON(json: any): CompleteImportKeysRequest {
+    return CompleteImportKeysRequestToJSONTyped(json, false);
+}
+
+export function CompleteImportKeysRequestToJSONTyped(value?: CompleteImportKeysRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'encrypted_share_ecdsa': value.encryptedShareEcdsa,
-        'encrypted_share_eddsa': value.encryptedShareEddsa,
-        'encrypted_share_ecdsa_stark': value.encryptedShareEcdsaStark,
-        'encrypted_share_schnorr_secp256k1': value.encryptedShareSchnorrSecp256k1,
+        'encrypted_shares': ((value['encryptedShares'] as Array<any>).map(EncryptedImportedShareToJSON)),
     };
 }
 

@@ -12,61 +12,77 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { AptosVaultMetadataValue } from './AptosVaultMetadataValue';
-import {
-    AptosVaultMetadataValueFromJSON,
-    AptosVaultMetadataValueFromJSONTyped,
-    AptosVaultMetadataValueToJSON,
-} from './AptosVaultMetadataValue';
+import { mapValues } from '../runtime';
 import type { AptosVaultPendingVaultGroupAction } from './AptosVaultPendingVaultGroupAction';
 import {
     AptosVaultPendingVaultGroupActionFromJSON,
     AptosVaultPendingVaultGroupActionFromJSONTyped,
     AptosVaultPendingVaultGroupActionToJSON,
+    AptosVaultPendingVaultGroupActionToJSONTyped,
 } from './AptosVaultPendingVaultGroupAction';
 import type { EndUserRef } from './EndUserRef';
 import {
     EndUserRefFromJSON,
     EndUserRefFromJSONTyped,
     EndUserRefToJSON,
+    EndUserRefToJSONTyped,
 } from './EndUserRef';
-import type { KeysetRef } from './KeysetRef';
+import type { VaultState } from './VaultState';
 import {
-    KeysetRefFromJSON,
-    KeysetRefFromJSONTyped,
-    KeysetRefToJSON,
-} from './KeysetRef';
+    VaultStateFromJSON,
+    VaultStateFromJSONTyped,
+    VaultStateToJSON,
+    VaultStateToJSONTyped,
+} from './VaultState';
+import type { AptosVaultMetadataValue } from './AptosVaultMetadataValue';
+import {
+    AptosVaultMetadataValueFromJSON,
+    AptosVaultMetadataValueFromJSONTyped,
+    AptosVaultMetadataValueToJSON,
+    AptosVaultMetadataValueToJSONTyped,
+} from './AptosVaultMetadataValue';
+import type { VaultOriginType } from './VaultOriginType';
+import {
+    VaultOriginTypeFromJSON,
+    VaultOriginTypeFromJSONTyped,
+    VaultOriginTypeToJSON,
+    VaultOriginTypeToJSONTyped,
+} from './VaultOriginType';
 import type { StarknetVaultState } from './StarknetVaultState';
 import {
     StarknetVaultStateFromJSON,
     StarknetVaultStateFromJSONTyped,
     StarknetVaultStateToJSON,
+    StarknetVaultStateToJSONTyped,
 } from './StarknetVaultState';
+import type { VaultGroupRef } from './VaultGroupRef';
+import {
+    VaultGroupRefFromJSON,
+    VaultGroupRefFromJSONTyped,
+    VaultGroupRefToJSON,
+    VaultGroupRefToJSONTyped,
+} from './VaultGroupRef';
+import type { KeysetRef } from './KeysetRef';
+import {
+    KeysetRefFromJSON,
+    KeysetRefFromJSONTyped,
+    KeysetRefToJSON,
+    KeysetRefToJSONTyped,
+} from './KeysetRef';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
     UserRefFromJSONTyped,
     UserRefToJSON,
+    UserRefToJSONTyped,
 } from './UserRef';
 import type { VaultDerivationInfo } from './VaultDerivationInfo';
 import {
     VaultDerivationInfoFromJSON,
     VaultDerivationInfoFromJSONTyped,
     VaultDerivationInfoToJSON,
+    VaultDerivationInfoToJSONTyped,
 } from './VaultDerivationInfo';
-import type { VaultGroupRef } from './VaultGroupRef';
-import {
-    VaultGroupRefFromJSON,
-    VaultGroupRefFromJSONTyped,
-    VaultGroupRefToJSON,
-} from './VaultGroupRef';
-import type { VaultState } from './VaultState';
-import {
-    VaultStateFromJSON,
-    VaultStateFromJSONTyped,
-    VaultStateToJSON,
-} from './VaultState';
 
 /**
  * 
@@ -130,6 +146,12 @@ export interface StarknetVault {
     state: VaultState;
     /**
      * 
+     * @type {boolean}
+     * @memberof StarknetVault
+     */
+    areAllChainsDisabled: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof StarknetVault
      * @deprecated
@@ -161,6 +183,12 @@ export interface StarknetVault {
     keyHolder?: EndUserRef;
     /**
      * 
+     * @type {VaultOriginType}
+     * @memberof StarknetVault
+     */
+    originType: VaultOriginType;
+    /**
+     * 
      * @type {string}
      * @memberof StarknetVault
      */
@@ -177,6 +205,12 @@ export interface StarknetVault {
      * @memberof StarknetVault
      */
     activationState: StarknetVaultState;
+    /**
+     * 
+     * @type {string}
+     * @memberof StarknetVault
+     */
+    activatingTransactionId?: string;
 }
 
 
@@ -192,24 +226,24 @@ export type StarknetVaultTypeEnum = typeof StarknetVaultTypeEnum[keyof typeof St
 /**
  * Check if a given object implements the StarknetVault interface.
  */
-export function instanceOfStarknetVault(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "createdBy" in value;
-    isInstance = isInstance && "vaultGroup" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "derivationPath" in value;
-    isInstance = isInstance && "publicKeyCompressed" in value;
-    isInstance = isInstance && "derivationInfo" in value;
-    isInstance = isInstance && "keyset" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "activationState" in value;
-
-    return isInstance;
+export function instanceOfStarknetVault(value: object): value is StarknetVault {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('createdBy' in value) || value['createdBy'] === undefined) return false;
+    if (!('vaultGroup' in value) || value['vaultGroup'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('areAllChainsDisabled' in value) || value['areAllChainsDisabled'] === undefined) return false;
+    if (!('derivationPath' in value) || value['derivationPath'] === undefined) return false;
+    if (!('publicKeyCompressed' in value) || value['publicKeyCompressed'] === undefined) return false;
+    if (!('derivationInfo' in value) || value['derivationInfo'] === undefined) return false;
+    if (!('keyset' in value) || value['keyset'] === undefined) return false;
+    if (!('originType' in value) || value['originType'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('activationState' in value) || value['activationState'] === undefined) return false;
+    return true;
 }
 
 export function StarknetVaultFromJSON(json: any): StarknetVault {
@@ -217,7 +251,7 @@ export function StarknetVaultFromJSON(json: any): StarknetVault {
 }
 
 export function StarknetVaultFromJSONTyped(json: any, ignoreDiscriminator: boolean): StarknetVault {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -225,49 +259,57 @@ export function StarknetVaultFromJSONTyped(json: any, ignoreDiscriminator: boole
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
-        'metadata': !exists(json, 'metadata') ? undefined : (mapValues(json['metadata'], AptosVaultMetadataValueFromJSON)),
+        'metadata': json['metadata'] == null ? undefined : (mapValues(json['metadata'], AptosVaultMetadataValueFromJSON)),
         'name': json['name'],
         'createdBy': UserRefFromJSON(json['created_by']),
         'vaultGroup': VaultGroupRefFromJSON(json['vault_group']),
-        'pendingVaultGroupAction': !exists(json, 'pending_vault_group_action') ? undefined : AptosVaultPendingVaultGroupActionFromJSON(json['pending_vault_group_action']),
+        'pendingVaultGroupAction': json['pending_vault_group_action'] == null ? undefined : AptosVaultPendingVaultGroupActionFromJSON(json['pending_vault_group_action']),
         'state': VaultStateFromJSON(json['state']),
+        'areAllChainsDisabled': json['are_all_chains_disabled'],
         'derivationPath': json['derivation_path'],
         'publicKeyCompressed': json['public_key_compressed'],
         'derivationInfo': VaultDerivationInfoFromJSON(json['derivation_info']),
         'keyset': KeysetRefFromJSON(json['keyset']),
-        'keyHolder': !exists(json, 'key_holder') ? undefined : EndUserRefFromJSON(json['key_holder']),
+        'keyHolder': json['key_holder'] == null ? undefined : EndUserRefFromJSON(json['key_holder']),
+        'originType': VaultOriginTypeFromJSON(json['origin_type']),
         'type': json['type'],
         'address': json['address'],
         'activationState': StarknetVaultStateFromJSON(json['activation_state']),
+        'activatingTransactionId': json['activating_transaction_id'] == null ? undefined : json['activating_transaction_id'],
     };
 }
 
-export function StarknetVaultToJSON(value?: StarknetVault | null): any {
-    if (value === undefined) {
-        return undefined;
+export function StarknetVaultToJSON(json: any): StarknetVault {
+    return StarknetVaultToJSONTyped(json, false);
+}
+
+export function StarknetVaultToJSONTyped(value?: StarknetVault | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'metadata': value.metadata === undefined ? undefined : (mapValues(value.metadata, AptosVaultMetadataValueToJSON)),
-        'name': value.name,
-        'created_by': UserRefToJSON(value.createdBy),
-        'vault_group': VaultGroupRefToJSON(value.vaultGroup),
-        'pending_vault_group_action': AptosVaultPendingVaultGroupActionToJSON(value.pendingVaultGroupAction),
-        'state': VaultStateToJSON(value.state),
-        'derivation_path': value.derivationPath,
-        'public_key_compressed': value.publicKeyCompressed,
-        'derivation_info': VaultDerivationInfoToJSON(value.derivationInfo),
-        'keyset': KeysetRefToJSON(value.keyset),
-        'key_holder': EndUserRefToJSON(value.keyHolder),
-        'type': value.type,
-        'address': value.address,
-        'activation_state': StarknetVaultStateToJSON(value.activationState),
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'metadata': value['metadata'] == null ? undefined : (mapValues(value['metadata'], AptosVaultMetadataValueToJSON)),
+        'name': value['name'],
+        'created_by': UserRefToJSON(value['createdBy']),
+        'vault_group': VaultGroupRefToJSON(value['vaultGroup']),
+        'pending_vault_group_action': AptosVaultPendingVaultGroupActionToJSON(value['pendingVaultGroupAction']),
+        'state': VaultStateToJSON(value['state']),
+        'are_all_chains_disabled': value['areAllChainsDisabled'],
+        'derivation_path': value['derivationPath'],
+        'public_key_compressed': value['publicKeyCompressed'],
+        'derivation_info': VaultDerivationInfoToJSON(value['derivationInfo']),
+        'keyset': KeysetRefToJSON(value['keyset']),
+        'key_holder': EndUserRefToJSON(value['keyHolder']),
+        'origin_type': VaultOriginTypeToJSON(value['originType']),
+        'type': value['type'],
+        'address': value['address'],
+        'activation_state': StarknetVaultStateToJSON(value['activationState']),
+        'activating_transaction_id': value['activatingTransactionId'],
     };
 }
 

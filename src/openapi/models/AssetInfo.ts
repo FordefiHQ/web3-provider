@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AssetIdentifier } from './AssetIdentifier';
 import {
     AssetIdentifierFromJSON,
     AssetIdentifierFromJSONTyped,
     AssetIdentifierToJSON,
+    AssetIdentifierToJSONTyped,
 } from './AssetIdentifier';
 
 /**
@@ -80,22 +81,26 @@ export interface AssetInfo {
      * @memberof AssetInfo
      */
     logoUrl?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AssetInfo
+     */
+    explorerUrl?: string;
 }
 
 /**
  * Check if a given object implements the AssetInfo interface.
  */
-export function instanceOfAssetInfo(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "assetIdentifier" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "symbol" in value;
-    isInstance = isInstance && "decimals" in value;
-    isInstance = isInstance && "verified" in value;
-    isInstance = isInstance && "isSpam" in value;
-
-    return isInstance;
+export function instanceOfAssetInfo(value: object): value is AssetInfo {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('assetIdentifier' in value) || value['assetIdentifier'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('symbol' in value) || value['symbol'] === undefined) return false;
+    if (!('decimals' in value) || value['decimals'] === undefined) return false;
+    if (!('verified' in value) || value['verified'] === undefined) return false;
+    if (!('isSpam' in value) || value['isSpam'] === undefined) return false;
+    return true;
 }
 
 export function AssetInfoFromJSON(json: any): AssetInfo {
@@ -103,7 +108,7 @@ export function AssetInfoFromJSON(json: any): AssetInfo {
 }
 
 export function AssetInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean): AssetInfo {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -114,30 +119,34 @@ export function AssetInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         'symbol': json['symbol'],
         'decimals': json['decimals'],
         'verified': json['verified'],
-        'metadataUri': !exists(json, 'metadata_uri') ? undefined : json['metadata_uri'],
+        'metadataUri': json['metadata_uri'] == null ? undefined : json['metadata_uri'],
         'isSpam': json['is_spam'],
-        'logoUrl': !exists(json, 'logo_url') ? undefined : json['logo_url'],
+        'logoUrl': json['logo_url'] == null ? undefined : json['logo_url'],
+        'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
     };
 }
 
-export function AssetInfoToJSON(value?: AssetInfo | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AssetInfoToJSON(json: any): AssetInfo {
+    return AssetInfoToJSONTyped(json, false);
+}
+
+export function AssetInfoToJSONTyped(value?: AssetInfo | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'asset_identifier': AssetIdentifierToJSON(value.assetIdentifier),
-        'name': value.name,
-        'symbol': value.symbol,
-        'decimals': value.decimals,
-        'verified': value.verified,
-        'metadata_uri': value.metadataUri,
-        'is_spam': value.isSpam,
-        'logo_url': value.logoUrl,
+        'id': value['id'],
+        'asset_identifier': AssetIdentifierToJSON(value['assetIdentifier']),
+        'name': value['name'],
+        'symbol': value['symbol'],
+        'decimals': value['decimals'],
+        'verified': value['verified'],
+        'metadata_uri': value['metadataUri'],
+        'is_spam': value['isSpam'],
+        'logo_url': value['logoUrl'],
+        'explorer_url': value['explorerUrl'],
     };
 }
 

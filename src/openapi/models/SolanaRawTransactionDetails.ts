@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedSolanaAddress } from './EnrichedSolanaAddress';
 import {
     EnrichedSolanaAddressFromJSON,
     EnrichedSolanaAddressFromJSONTyped,
     EnrichedSolanaAddressToJSON,
+    EnrichedSolanaAddressToJSONTyped,
 } from './EnrichedSolanaAddress';
 
 /**
@@ -53,12 +54,10 @@ export type SolanaRawTransactionDetailsTypeEnum = typeof SolanaRawTransactionDet
 /**
  * Check if a given object implements the SolanaRawTransactionDetails interface.
  */
-export function instanceOfSolanaRawTransactionDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "recipients" in value;
-
-    return isInstance;
+export function instanceOfSolanaRawTransactionDetails(value: object): value is SolanaRawTransactionDetails {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('recipients' in value) || value['recipients'] === undefined) return false;
+    return true;
 }
 
 export function SolanaRawTransactionDetailsFromJSON(json: any): SolanaRawTransactionDetails {
@@ -66,7 +65,7 @@ export function SolanaRawTransactionDetailsFromJSON(json: any): SolanaRawTransac
 }
 
 export function SolanaRawTransactionDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): SolanaRawTransactionDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function SolanaRawTransactionDetailsFromJSONTyped(json: any, ignoreDiscri
     };
 }
 
-export function SolanaRawTransactionDetailsToJSON(value?: SolanaRawTransactionDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SolanaRawTransactionDetailsToJSON(json: any): SolanaRawTransactionDetails {
+    return SolanaRawTransactionDetailsToJSONTyped(json, false);
+}
+
+export function SolanaRawTransactionDetailsToJSONTyped(value?: SolanaRawTransactionDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'recipients': ((value.recipients as Array<any>).map(EnrichedSolanaAddressToJSON)),
+        'type': value['type'],
+        'recipients': ((value['recipients'] as Array<any>).map(EnrichedSolanaAddressToJSON)),
     };
 }
 

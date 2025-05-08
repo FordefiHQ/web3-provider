@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { MasterPublicKey } from './MasterPublicKey';
 import {
     MasterPublicKeyFromJSON,
     MasterPublicKeyFromJSONTyped,
     MasterPublicKeyToJSON,
+    MasterPublicKeyToJSONTyped,
 } from './MasterPublicKey';
 
 /**
@@ -43,12 +44,10 @@ export interface VaultDerivationInfo {
 /**
  * Check if a given object implements the VaultDerivationInfo interface.
  */
-export function instanceOfVaultDerivationInfo(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "derivationPath" in value;
-    isInstance = isInstance && "masterPublicKey" in value;
-
-    return isInstance;
+export function instanceOfVaultDerivationInfo(value: object): value is VaultDerivationInfo {
+    if (!('derivationPath' in value) || value['derivationPath'] === undefined) return false;
+    if (!('masterPublicKey' in value) || value['masterPublicKey'] === undefined) return false;
+    return true;
 }
 
 export function VaultDerivationInfoFromJSON(json: any): VaultDerivationInfo {
@@ -56,7 +55,7 @@ export function VaultDerivationInfoFromJSON(json: any): VaultDerivationInfo {
 }
 
 export function VaultDerivationInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean): VaultDerivationInfo {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -66,17 +65,19 @@ export function VaultDerivationInfoFromJSONTyped(json: any, ignoreDiscriminator:
     };
 }
 
-export function VaultDerivationInfoToJSON(value?: VaultDerivationInfo | null): any {
-    if (value === undefined) {
-        return undefined;
+export function VaultDerivationInfoToJSON(json: any): VaultDerivationInfo {
+    return VaultDerivationInfoToJSONTyped(json, false);
+}
+
+export function VaultDerivationInfoToJSONTyped(value?: VaultDerivationInfo | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'derivation_path': value.derivationPath,
-        'master_public_key': MasterPublicKeyToJSON(value.masterPublicKey),
+        'derivation_path': value['derivationPath'],
+        'master_public_key': MasterPublicKeyToJSON(value['masterPublicKey']),
     };
 }
 

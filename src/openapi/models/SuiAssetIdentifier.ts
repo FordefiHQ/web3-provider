@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { EnrichedSuiChain } from './EnrichedSuiChain';
-import {
-    EnrichedSuiChainFromJSON,
-    EnrichedSuiChainFromJSONTyped,
-    EnrichedSuiChainToJSON,
-} from './EnrichedSuiChain';
+import { mapValues } from '../runtime';
 import type { SuiAssetIdentifierDetails } from './SuiAssetIdentifierDetails';
 import {
     SuiAssetIdentifierDetailsFromJSON,
     SuiAssetIdentifierDetailsFromJSONTyped,
     SuiAssetIdentifierDetailsToJSON,
+    SuiAssetIdentifierDetailsToJSONTyped,
 } from './SuiAssetIdentifierDetails';
+import type { EnrichedSuiChain } from './EnrichedSuiChain';
+import {
+    EnrichedSuiChainFromJSON,
+    EnrichedSuiChainFromJSONTyped,
+    EnrichedSuiChainToJSON,
+    EnrichedSuiChainToJSONTyped,
+} from './EnrichedSuiChain';
 
 /**
  * 
@@ -65,13 +67,11 @@ export type SuiAssetIdentifierTypeEnum = typeof SuiAssetIdentifierTypeEnum[keyof
 /**
  * Check if a given object implements the SuiAssetIdentifier interface.
  */
-export function instanceOfSuiAssetIdentifier(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "details" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfSuiAssetIdentifier(value: object): value is SuiAssetIdentifier {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function SuiAssetIdentifierFromJSON(json: any): SuiAssetIdentifier {
@@ -79,7 +79,7 @@ export function SuiAssetIdentifierFromJSON(json: any): SuiAssetIdentifier {
 }
 
 export function SuiAssetIdentifierFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiAssetIdentifier {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -90,18 +90,20 @@ export function SuiAssetIdentifierFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-export function SuiAssetIdentifierToJSON(value?: SuiAssetIdentifier | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiAssetIdentifierToJSON(json: any): SuiAssetIdentifier {
+    return SuiAssetIdentifierToJSONTyped(json, false);
+}
+
+export function SuiAssetIdentifierToJSONTyped(value?: SuiAssetIdentifier | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'details': SuiAssetIdentifierDetailsToJSON(value.details),
-        'chain': EnrichedSuiChainToJSON(value.chain),
+        'type': value['type'],
+        'details': SuiAssetIdentifierDetailsToJSON(value['details']),
+        'chain': EnrichedSuiChainToJSON(value['chain']),
     };
 }
 

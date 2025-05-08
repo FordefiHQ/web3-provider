@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EvmAssetIdentifierDetails } from './EvmAssetIdentifierDetails';
 import {
     EvmAssetIdentifierDetailsFromJSON,
     EvmAssetIdentifierDetailsFromJSONTyped,
     EvmAssetIdentifierDetailsToJSON,
+    EvmAssetIdentifierDetailsToJSONTyped,
 } from './EvmAssetIdentifierDetails';
 
 /**
@@ -53,12 +54,10 @@ export type EvmAssetIdentifierRequestTypeEnum = typeof EvmAssetIdentifierRequest
 /**
  * Check if a given object implements the EvmAssetIdentifierRequest interface.
  */
-export function instanceOfEvmAssetIdentifierRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "details" in value;
-
-    return isInstance;
+export function instanceOfEvmAssetIdentifierRequest(value: object): value is EvmAssetIdentifierRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    return true;
 }
 
 export function EvmAssetIdentifierRequestFromJSON(json: any): EvmAssetIdentifierRequest {
@@ -66,7 +65,7 @@ export function EvmAssetIdentifierRequestFromJSON(json: any): EvmAssetIdentifier
 }
 
 export function EvmAssetIdentifierRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmAssetIdentifierRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function EvmAssetIdentifierRequestFromJSONTyped(json: any, ignoreDiscrimi
     };
 }
 
-export function EvmAssetIdentifierRequestToJSON(value?: EvmAssetIdentifierRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EvmAssetIdentifierRequestToJSON(json: any): EvmAssetIdentifierRequest {
+    return EvmAssetIdentifierRequestToJSONTyped(json, false);
+}
+
+export function EvmAssetIdentifierRequestToJSONTyped(value?: EvmAssetIdentifierRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'details': EvmAssetIdentifierDetailsToJSON(value.details),
+        'type': value['type'],
+        'details': EvmAssetIdentifierDetailsToJSON(value['details']),
     };
 }
 

@@ -30,6 +30,17 @@ export const SuiReversionState = {
 export type SuiReversionState = typeof SuiReversionState[keyof typeof SuiReversionState];
 
 
+export function instanceOfSuiReversionState(value: any): boolean {
+    for (const key in SuiReversionState) {
+        if (Object.prototype.hasOwnProperty.call(SuiReversionState, key)) {
+            if (SuiReversionState[key as keyof typeof SuiReversionState] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function SuiReversionStateFromJSON(json: any): SuiReversionState {
     return SuiReversionStateFromJSONTyped(json, false);
 }
@@ -40,5 +51,9 @@ export function SuiReversionStateFromJSONTyped(json: any, ignoreDiscriminator: b
 
 export function SuiReversionStateToJSON(value?: SuiReversionState | null): any {
     return value as any;
+}
+
+export function SuiReversionStateToJSONTyped(value: any, ignoreDiscriminator: boolean): SuiReversionState {
+    return value as SuiReversionState;
 }
 

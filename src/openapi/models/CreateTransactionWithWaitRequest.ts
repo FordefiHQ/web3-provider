@@ -12,106 +12,134 @@
  * Do not edit the class manually.
  */
 
+import type { CreateAptosMessageWithWaitRequest } from './CreateAptosMessageWithWaitRequest';
 import {
-    CreateAptosMessageWithWaitRequest,
     instanceOfCreateAptosMessageWithWaitRequest,
     CreateAptosMessageWithWaitRequestFromJSON,
     CreateAptosMessageWithWaitRequestFromJSONTyped,
     CreateAptosMessageWithWaitRequestToJSON,
 } from './CreateAptosMessageWithWaitRequest';
+import type { CreateAptosTransactionWithWaitRequest } from './CreateAptosTransactionWithWaitRequest';
 import {
-    CreateAptosTransactionWithWaitRequest,
     instanceOfCreateAptosTransactionWithWaitRequest,
     CreateAptosTransactionWithWaitRequestFromJSON,
     CreateAptosTransactionWithWaitRequestFromJSONTyped,
     CreateAptosTransactionWithWaitRequestToJSON,
 } from './CreateAptosTransactionWithWaitRequest';
+import type { CreateBlackBoxSignatureWithWaitRequest } from './CreateBlackBoxSignatureWithWaitRequest';
 import {
-    CreateBlackBoxSignatureWithWaitRequest,
     instanceOfCreateBlackBoxSignatureWithWaitRequest,
     CreateBlackBoxSignatureWithWaitRequestFromJSON,
     CreateBlackBoxSignatureWithWaitRequestFromJSONTyped,
     CreateBlackBoxSignatureWithWaitRequestToJSON,
 } from './CreateBlackBoxSignatureWithWaitRequest';
+import type { CreateCosmosMessageWithWaitRequest } from './CreateCosmosMessageWithWaitRequest';
 import {
-    CreateCosmosMessageWithWaitRequest,
     instanceOfCreateCosmosMessageWithWaitRequest,
     CreateCosmosMessageWithWaitRequestFromJSON,
     CreateCosmosMessageWithWaitRequestFromJSONTyped,
     CreateCosmosMessageWithWaitRequestToJSON,
 } from './CreateCosmosMessageWithWaitRequest';
+import type { CreateCosmosTransactionWithWaitRequest } from './CreateCosmosTransactionWithWaitRequest';
 import {
-    CreateCosmosTransactionWithWaitRequest,
     instanceOfCreateCosmosTransactionWithWaitRequest,
     CreateCosmosTransactionWithWaitRequestFromJSON,
     CreateCosmosTransactionWithWaitRequestFromJSONTyped,
     CreateCosmosTransactionWithWaitRequestToJSON,
 } from './CreateCosmosTransactionWithWaitRequest';
+import type { CreateEvmMessageWithWaitRequest } from './CreateEvmMessageWithWaitRequest';
 import {
-    CreateEvmMessageWithWaitRequest,
     instanceOfCreateEvmMessageWithWaitRequest,
     CreateEvmMessageWithWaitRequestFromJSON,
     CreateEvmMessageWithWaitRequestFromJSONTyped,
     CreateEvmMessageWithWaitRequestToJSON,
 } from './CreateEvmMessageWithWaitRequest';
+import type { CreateEvmTransactionWithWaitRequest } from './CreateEvmTransactionWithWaitRequest';
 import {
-    CreateEvmTransactionWithWaitRequest,
     instanceOfCreateEvmTransactionWithWaitRequest,
     CreateEvmTransactionWithWaitRequestFromJSON,
     CreateEvmTransactionWithWaitRequestFromJSONTyped,
     CreateEvmTransactionWithWaitRequestToJSON,
 } from './CreateEvmTransactionWithWaitRequest';
+import type { CreateSolanaMessageWithWaitRequest } from './CreateSolanaMessageWithWaitRequest';
 import {
-    CreateSolanaMessageWithWaitRequest,
     instanceOfCreateSolanaMessageWithWaitRequest,
     CreateSolanaMessageWithWaitRequestFromJSON,
     CreateSolanaMessageWithWaitRequestFromJSONTyped,
     CreateSolanaMessageWithWaitRequestToJSON,
 } from './CreateSolanaMessageWithWaitRequest';
+import type { CreateSolanaTransactionWithWaitRequest } from './CreateSolanaTransactionWithWaitRequest';
 import {
-    CreateSolanaTransactionWithWaitRequest,
     instanceOfCreateSolanaTransactionWithWaitRequest,
     CreateSolanaTransactionWithWaitRequestFromJSON,
     CreateSolanaTransactionWithWaitRequestFromJSONTyped,
     CreateSolanaTransactionWithWaitRequestToJSON,
 } from './CreateSolanaTransactionWithWaitRequest';
+import type { CreateStacksTransactionWithWaitRequest } from './CreateStacksTransactionWithWaitRequest';
 import {
-    CreateSuiMessageWithWaitRequest,
+    instanceOfCreateStacksTransactionWithWaitRequest,
+    CreateStacksTransactionWithWaitRequestFromJSON,
+    CreateStacksTransactionWithWaitRequestFromJSONTyped,
+    CreateStacksTransactionWithWaitRequestToJSON,
+} from './CreateStacksTransactionWithWaitRequest';
+import type { CreateStarknetMessageWithWaitRequest } from './CreateStarknetMessageWithWaitRequest';
+import {
+    instanceOfCreateStarknetMessageWithWaitRequest,
+    CreateStarknetMessageWithWaitRequestFromJSON,
+    CreateStarknetMessageWithWaitRequestFromJSONTyped,
+    CreateStarknetMessageWithWaitRequestToJSON,
+} from './CreateStarknetMessageWithWaitRequest';
+import type { CreateStarknetTransactionWithWaitRequest } from './CreateStarknetTransactionWithWaitRequest';
+import {
+    instanceOfCreateStarknetTransactionWithWaitRequest,
+    CreateStarknetTransactionWithWaitRequestFromJSON,
+    CreateStarknetTransactionWithWaitRequestFromJSONTyped,
+    CreateStarknetTransactionWithWaitRequestToJSON,
+} from './CreateStarknetTransactionWithWaitRequest';
+import type { CreateSuiMessageWithWaitRequest } from './CreateSuiMessageWithWaitRequest';
+import {
     instanceOfCreateSuiMessageWithWaitRequest,
     CreateSuiMessageWithWaitRequestFromJSON,
     CreateSuiMessageWithWaitRequestFromJSONTyped,
     CreateSuiMessageWithWaitRequestToJSON,
 } from './CreateSuiMessageWithWaitRequest';
+import type { CreateSuiTransactionWithWaitRequest } from './CreateSuiTransactionWithWaitRequest';
 import {
-    CreateSuiTransactionWithWaitRequest,
     instanceOfCreateSuiTransactionWithWaitRequest,
     CreateSuiTransactionWithWaitRequestFromJSON,
     CreateSuiTransactionWithWaitRequestFromJSONTyped,
     CreateSuiTransactionWithWaitRequestToJSON,
 } from './CreateSuiTransactionWithWaitRequest';
+import type { CreateTonMessageWithWaitRequest } from './CreateTonMessageWithWaitRequest';
 import {
-    CreateTonMessageWithWaitRequest,
     instanceOfCreateTonMessageWithWaitRequest,
     CreateTonMessageWithWaitRequestFromJSON,
     CreateTonMessageWithWaitRequestFromJSONTyped,
     CreateTonMessageWithWaitRequestToJSON,
 } from './CreateTonMessageWithWaitRequest';
+import type { CreateTonTransactionWithWaitRequest } from './CreateTonTransactionWithWaitRequest';
 import {
-    CreateTonTransactionWithWaitRequest,
     instanceOfCreateTonTransactionWithWaitRequest,
     CreateTonTransactionWithWaitRequestFromJSON,
     CreateTonTransactionWithWaitRequestFromJSONTyped,
     CreateTonTransactionWithWaitRequestToJSON,
 } from './CreateTonTransactionWithWaitRequest';
+import type { CreateTronTransactionWithWaitRequest } from './CreateTronTransactionWithWaitRequest';
 import {
-    CreateUtxoMessageWithWaitRequest,
+    instanceOfCreateTronTransactionWithWaitRequest,
+    CreateTronTransactionWithWaitRequestFromJSON,
+    CreateTronTransactionWithWaitRequestFromJSONTyped,
+    CreateTronTransactionWithWaitRequestToJSON,
+} from './CreateTronTransactionWithWaitRequest';
+import type { CreateUtxoMessageWithWaitRequest } from './CreateUtxoMessageWithWaitRequest';
+import {
     instanceOfCreateUtxoMessageWithWaitRequest,
     CreateUtxoMessageWithWaitRequestFromJSON,
     CreateUtxoMessageWithWaitRequestFromJSONTyped,
     CreateUtxoMessageWithWaitRequestToJSON,
 } from './CreateUtxoMessageWithWaitRequest';
+import type { CreateUtxoTransactionWithWaitRequest } from './CreateUtxoTransactionWithWaitRequest';
 import {
-    CreateUtxoTransactionWithWaitRequest,
     instanceOfCreateUtxoTransactionWithWaitRequest,
     CreateUtxoTransactionWithWaitRequestFromJSON,
     CreateUtxoTransactionWithWaitRequestFromJSONTyped,
@@ -123,90 +151,107 @@ import {
  * 
  * @export
  */
-export type CreateTransactionWithWaitRequest = { type: 'aptos_message' } & CreateAptosMessageWithWaitRequest | { type: 'aptos_transaction' } & CreateAptosTransactionWithWaitRequest | { type: 'black_box_signature' } & CreateBlackBoxSignatureWithWaitRequest | { type: 'cosmos_message' } & CreateCosmosMessageWithWaitRequest | { type: 'cosmos_transaction' } & CreateCosmosTransactionWithWaitRequest | { type: 'evm_message' } & CreateEvmMessageWithWaitRequest | { type: 'evm_transaction' } & CreateEvmTransactionWithWaitRequest | { type: 'solana_message' } & CreateSolanaMessageWithWaitRequest | { type: 'solana_transaction' } & CreateSolanaTransactionWithWaitRequest | { type: 'sui_message' } & CreateSuiMessageWithWaitRequest | { type: 'sui_transaction' } & CreateSuiTransactionWithWaitRequest | { type: 'ton_message' } & CreateTonMessageWithWaitRequest | { type: 'ton_transaction' } & CreateTonTransactionWithWaitRequest | { type: 'utxo_message' } & CreateUtxoMessageWithWaitRequest | { type: 'utxo_transaction' } & CreateUtxoTransactionWithWaitRequest;
+export type CreateTransactionWithWaitRequest = { type: 'aptos_message' } & CreateAptosMessageWithWaitRequest | { type: 'aptos_transaction' } & CreateAptosTransactionWithWaitRequest | { type: 'black_box_signature' } & CreateBlackBoxSignatureWithWaitRequest | { type: 'cosmos_message' } & CreateCosmosMessageWithWaitRequest | { type: 'cosmos_transaction' } & CreateCosmosTransactionWithWaitRequest | { type: 'evm_message' } & CreateEvmMessageWithWaitRequest | { type: 'evm_transaction' } & CreateEvmTransactionWithWaitRequest | { type: 'solana_message' } & CreateSolanaMessageWithWaitRequest | { type: 'solana_transaction' } & CreateSolanaTransactionWithWaitRequest | { type: 'stacks_transaction' } & CreateStacksTransactionWithWaitRequest | { type: 'starknet_message' } & CreateStarknetMessageWithWaitRequest | { type: 'starknet_transaction' } & CreateStarknetTransactionWithWaitRequest | { type: 'sui_message' } & CreateSuiMessageWithWaitRequest | { type: 'sui_transaction' } & CreateSuiTransactionWithWaitRequest | { type: 'ton_message' } & CreateTonMessageWithWaitRequest | { type: 'ton_transaction' } & CreateTonTransactionWithWaitRequest | { type: 'tron_transaction' } & CreateTronTransactionWithWaitRequest | { type: 'utxo_message' } & CreateUtxoMessageWithWaitRequest | { type: 'utxo_transaction' } & CreateUtxoTransactionWithWaitRequest;
 
 export function CreateTransactionWithWaitRequestFromJSON(json: any): CreateTransactionWithWaitRequest {
     return CreateTransactionWithWaitRequestFromJSONTyped(json, false);
 }
 
 export function CreateTransactionWithWaitRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateTransactionWithWaitRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'aptos_message':
-            return {...CreateAptosMessageWithWaitRequestFromJSONTyped(json, true), type: 'aptos_message'};
+            return Object.assign({}, CreateAptosMessageWithWaitRequestFromJSONTyped(json, true), { type: 'aptos_message' } as const);
         case 'aptos_transaction':
-            return {...CreateAptosTransactionWithWaitRequestFromJSONTyped(json, true), type: 'aptos_transaction'};
+            return Object.assign({}, CreateAptosTransactionWithWaitRequestFromJSONTyped(json, true), { type: 'aptos_transaction' } as const);
         case 'black_box_signature':
-            return {...CreateBlackBoxSignatureWithWaitRequestFromJSONTyped(json, true), type: 'black_box_signature'};
+            return Object.assign({}, CreateBlackBoxSignatureWithWaitRequestFromJSONTyped(json, true), { type: 'black_box_signature' } as const);
         case 'cosmos_message':
-            return {...CreateCosmosMessageWithWaitRequestFromJSONTyped(json, true), type: 'cosmos_message'};
+            return Object.assign({}, CreateCosmosMessageWithWaitRequestFromJSONTyped(json, true), { type: 'cosmos_message' } as const);
         case 'cosmos_transaction':
-            return {...CreateCosmosTransactionWithWaitRequestFromJSONTyped(json, true), type: 'cosmos_transaction'};
+            return Object.assign({}, CreateCosmosTransactionWithWaitRequestFromJSONTyped(json, true), { type: 'cosmos_transaction' } as const);
         case 'evm_message':
-            return {...CreateEvmMessageWithWaitRequestFromJSONTyped(json, true), type: 'evm_message'};
+            return Object.assign({}, CreateEvmMessageWithWaitRequestFromJSONTyped(json, true), { type: 'evm_message' } as const);
         case 'evm_transaction':
-            return {...CreateEvmTransactionWithWaitRequestFromJSONTyped(json, true), type: 'evm_transaction'};
+            return Object.assign({}, CreateEvmTransactionWithWaitRequestFromJSONTyped(json, true), { type: 'evm_transaction' } as const);
         case 'solana_message':
-            return {...CreateSolanaMessageWithWaitRequestFromJSONTyped(json, true), type: 'solana_message'};
+            return Object.assign({}, CreateSolanaMessageWithWaitRequestFromJSONTyped(json, true), { type: 'solana_message' } as const);
         case 'solana_transaction':
-            return {...CreateSolanaTransactionWithWaitRequestFromJSONTyped(json, true), type: 'solana_transaction'};
+            return Object.assign({}, CreateSolanaTransactionWithWaitRequestFromJSONTyped(json, true), { type: 'solana_transaction' } as const);
+        case 'stacks_transaction':
+            return Object.assign({}, CreateStacksTransactionWithWaitRequestFromJSONTyped(json, true), { type: 'stacks_transaction' } as const);
+        case 'starknet_message':
+            return Object.assign({}, CreateStarknetMessageWithWaitRequestFromJSONTyped(json, true), { type: 'starknet_message' } as const);
+        case 'starknet_transaction':
+            return Object.assign({}, CreateStarknetTransactionWithWaitRequestFromJSONTyped(json, true), { type: 'starknet_transaction' } as const);
         case 'sui_message':
-            return {...CreateSuiMessageWithWaitRequestFromJSONTyped(json, true), type: 'sui_message'};
+            return Object.assign({}, CreateSuiMessageWithWaitRequestFromJSONTyped(json, true), { type: 'sui_message' } as const);
         case 'sui_transaction':
-            return {...CreateSuiTransactionWithWaitRequestFromJSONTyped(json, true), type: 'sui_transaction'};
+            return Object.assign({}, CreateSuiTransactionWithWaitRequestFromJSONTyped(json, true), { type: 'sui_transaction' } as const);
         case 'ton_message':
-            return {...CreateTonMessageWithWaitRequestFromJSONTyped(json, true), type: 'ton_message'};
+            return Object.assign({}, CreateTonMessageWithWaitRequestFromJSONTyped(json, true), { type: 'ton_message' } as const);
         case 'ton_transaction':
-            return {...CreateTonTransactionWithWaitRequestFromJSONTyped(json, true), type: 'ton_transaction'};
+            return Object.assign({}, CreateTonTransactionWithWaitRequestFromJSONTyped(json, true), { type: 'ton_transaction' } as const);
+        case 'tron_transaction':
+            return Object.assign({}, CreateTronTransactionWithWaitRequestFromJSONTyped(json, true), { type: 'tron_transaction' } as const);
         case 'utxo_message':
-            return {...CreateUtxoMessageWithWaitRequestFromJSONTyped(json, true), type: 'utxo_message'};
+            return Object.assign({}, CreateUtxoMessageWithWaitRequestFromJSONTyped(json, true), { type: 'utxo_message' } as const);
         case 'utxo_transaction':
-            return {...CreateUtxoTransactionWithWaitRequestFromJSONTyped(json, true), type: 'utxo_transaction'};
+            return Object.assign({}, CreateUtxoTransactionWithWaitRequestFromJSONTyped(json, true), { type: 'utxo_transaction' } as const);
         default:
             throw new Error(`No variant of CreateTransactionWithWaitRequest exists with 'type=${json['type']}'`);
     }
 }
 
-export function CreateTransactionWithWaitRequestToJSON(value?: CreateTransactionWithWaitRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function CreateTransactionWithWaitRequestToJSON(json: any): any {
+    return CreateTransactionWithWaitRequestToJSONTyped(json, false);
+}
+
+export function CreateTransactionWithWaitRequestToJSONTyped(value?: CreateTransactionWithWaitRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'aptos_message':
-            return CreateAptosMessageWithWaitRequestToJSON(value);
+            return Object.assign({}, CreateAptosMessageWithWaitRequestToJSON(value), { type: 'aptos_message' } as const);
         case 'aptos_transaction':
-            return CreateAptosTransactionWithWaitRequestToJSON(value);
+            return Object.assign({}, CreateAptosTransactionWithWaitRequestToJSON(value), { type: 'aptos_transaction' } as const);
         case 'black_box_signature':
-            return CreateBlackBoxSignatureWithWaitRequestToJSON(value);
+            return Object.assign({}, CreateBlackBoxSignatureWithWaitRequestToJSON(value), { type: 'black_box_signature' } as const);
         case 'cosmos_message':
-            return CreateCosmosMessageWithWaitRequestToJSON(value);
+            return Object.assign({}, CreateCosmosMessageWithWaitRequestToJSON(value), { type: 'cosmos_message' } as const);
         case 'cosmos_transaction':
-            return CreateCosmosTransactionWithWaitRequestToJSON(value);
+            return Object.assign({}, CreateCosmosTransactionWithWaitRequestToJSON(value), { type: 'cosmos_transaction' } as const);
         case 'evm_message':
-            return CreateEvmMessageWithWaitRequestToJSON(value);
+            return Object.assign({}, CreateEvmMessageWithWaitRequestToJSON(value), { type: 'evm_message' } as const);
         case 'evm_transaction':
-            return CreateEvmTransactionWithWaitRequestToJSON(value);
+            return Object.assign({}, CreateEvmTransactionWithWaitRequestToJSON(value), { type: 'evm_transaction' } as const);
         case 'solana_message':
-            return CreateSolanaMessageWithWaitRequestToJSON(value);
+            return Object.assign({}, CreateSolanaMessageWithWaitRequestToJSON(value), { type: 'solana_message' } as const);
         case 'solana_transaction':
-            return CreateSolanaTransactionWithWaitRequestToJSON(value);
+            return Object.assign({}, CreateSolanaTransactionWithWaitRequestToJSON(value), { type: 'solana_transaction' } as const);
+        case 'stacks_transaction':
+            return Object.assign({}, CreateStacksTransactionWithWaitRequestToJSON(value), { type: 'stacks_transaction' } as const);
+        case 'starknet_message':
+            return Object.assign({}, CreateStarknetMessageWithWaitRequestToJSON(value), { type: 'starknet_message' } as const);
+        case 'starknet_transaction':
+            return Object.assign({}, CreateStarknetTransactionWithWaitRequestToJSON(value), { type: 'starknet_transaction' } as const);
         case 'sui_message':
-            return CreateSuiMessageWithWaitRequestToJSON(value);
+            return Object.assign({}, CreateSuiMessageWithWaitRequestToJSON(value), { type: 'sui_message' } as const);
         case 'sui_transaction':
-            return CreateSuiTransactionWithWaitRequestToJSON(value);
+            return Object.assign({}, CreateSuiTransactionWithWaitRequestToJSON(value), { type: 'sui_transaction' } as const);
         case 'ton_message':
-            return CreateTonMessageWithWaitRequestToJSON(value);
+            return Object.assign({}, CreateTonMessageWithWaitRequestToJSON(value), { type: 'ton_message' } as const);
         case 'ton_transaction':
-            return CreateTonTransactionWithWaitRequestToJSON(value);
+            return Object.assign({}, CreateTonTransactionWithWaitRequestToJSON(value), { type: 'ton_transaction' } as const);
+        case 'tron_transaction':
+            return Object.assign({}, CreateTronTransactionWithWaitRequestToJSON(value), { type: 'tron_transaction' } as const);
         case 'utxo_message':
-            return CreateUtxoMessageWithWaitRequestToJSON(value);
+            return Object.assign({}, CreateUtxoMessageWithWaitRequestToJSON(value), { type: 'utxo_message' } as const);
         case 'utxo_transaction':
-            return CreateUtxoTransactionWithWaitRequestToJSON(value);
+            return Object.assign({}, CreateUtxoTransactionWithWaitRequestToJSON(value), { type: 'utxo_transaction' } as const);
         default:
             throw new Error(`No variant of CreateTransactionWithWaitRequest exists with 'type=${value['type']}'`);
     }

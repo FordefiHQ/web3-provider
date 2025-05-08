@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { DirectMessage } from './DirectMessage';
 import {
     DirectMessageFromJSON,
     DirectMessageFromJSONTyped,
     DirectMessageToJSON,
+    DirectMessageToJSONTyped,
 } from './DirectMessage';
 
 /**
@@ -53,12 +54,10 @@ export type DirectMessagesListFormatEnum = typeof DirectMessagesListFormatEnum[k
 /**
  * Check if a given object implements the DirectMessagesList interface.
  */
-export function instanceOfDirectMessagesList(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "format" in value;
-    isInstance = isInstance && "messages" in value;
-
-    return isInstance;
+export function instanceOfDirectMessagesList(value: object): value is DirectMessagesList {
+    if (!('format' in value) || value['format'] === undefined) return false;
+    if (!('messages' in value) || value['messages'] === undefined) return false;
+    return true;
 }
 
 export function DirectMessagesListFromJSON(json: any): DirectMessagesList {
@@ -66,7 +65,7 @@ export function DirectMessagesListFromJSON(json: any): DirectMessagesList {
 }
 
 export function DirectMessagesListFromJSONTyped(json: any, ignoreDiscriminator: boolean): DirectMessagesList {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function DirectMessagesListFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-export function DirectMessagesListToJSON(value?: DirectMessagesList | null): any {
-    if (value === undefined) {
-        return undefined;
+export function DirectMessagesListToJSON(json: any): DirectMessagesList {
+    return DirectMessagesListToJSONTyped(json, false);
+}
+
+export function DirectMessagesListToJSONTyped(value?: DirectMessagesList | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'format': value.format,
-        'messages': ((value.messages as Array<any>).map(DirectMessageToJSON)),
+        'format': value['format'],
+        'messages': ((value['messages'] as Array<any>).map(DirectMessageToJSON)),
     };
 }
 

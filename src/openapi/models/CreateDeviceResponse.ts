@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -30,11 +30,9 @@ export interface CreateDeviceResponse {
 /**
  * Check if a given object implements the CreateDeviceResponse interface.
  */
-export function instanceOfCreateDeviceResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "deviceId" in value;
-
-    return isInstance;
+export function instanceOfCreateDeviceResponse(value: object): value is CreateDeviceResponse {
+    if (!('deviceId' in value) || value['deviceId'] === undefined) return false;
+    return true;
 }
 
 export function CreateDeviceResponseFromJSON(json: any): CreateDeviceResponse {
@@ -42,7 +40,7 @@ export function CreateDeviceResponseFromJSON(json: any): CreateDeviceResponse {
 }
 
 export function CreateDeviceResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateDeviceResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -51,16 +49,18 @@ export function CreateDeviceResponseFromJSONTyped(json: any, ignoreDiscriminator
     };
 }
 
-export function CreateDeviceResponseToJSON(value?: CreateDeviceResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateDeviceResponseToJSON(json: any): CreateDeviceResponse {
+    return CreateDeviceResponseToJSONTyped(json, false);
+}
+
+export function CreateDeviceResponseToJSONTyped(value?: CreateDeviceResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'device_id': value.deviceId,
+        'device_id': value['deviceId'],
     };
 }
 

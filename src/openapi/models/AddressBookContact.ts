@@ -12,50 +12,71 @@
  * Do not edit the class manually.
  */
 
+import type { AptosAddressBookContact } from './AptosAddressBookContact';
 import {
-    AptosAddressBookContact,
     instanceOfAptosAddressBookContact,
     AptosAddressBookContactFromJSON,
     AptosAddressBookContactFromJSONTyped,
     AptosAddressBookContactToJSON,
 } from './AptosAddressBookContact';
+import type { CosmosAddressBookContact } from './CosmosAddressBookContact';
 import {
-    CosmosAddressBookContact,
     instanceOfCosmosAddressBookContact,
     CosmosAddressBookContactFromJSON,
     CosmosAddressBookContactFromJSONTyped,
     CosmosAddressBookContactToJSON,
 } from './CosmosAddressBookContact';
+import type { EVMAddressBookContact } from './EVMAddressBookContact';
 import {
-    EVMAddressBookContact,
     instanceOfEVMAddressBookContact,
     EVMAddressBookContactFromJSON,
     EVMAddressBookContactFromJSONTyped,
     EVMAddressBookContactToJSON,
 } from './EVMAddressBookContact';
+import type { SolanaAddressBookContact } from './SolanaAddressBookContact';
 import {
-    SolanaAddressBookContact,
     instanceOfSolanaAddressBookContact,
     SolanaAddressBookContactFromJSON,
     SolanaAddressBookContactFromJSONTyped,
     SolanaAddressBookContactToJSON,
 } from './SolanaAddressBookContact';
+import type { StacksAddressBookContact } from './StacksAddressBookContact';
 import {
-    SuiAddressBookContact,
+    instanceOfStacksAddressBookContact,
+    StacksAddressBookContactFromJSON,
+    StacksAddressBookContactFromJSONTyped,
+    StacksAddressBookContactToJSON,
+} from './StacksAddressBookContact';
+import type { StarknetAddressBookContact } from './StarknetAddressBookContact';
+import {
+    instanceOfStarknetAddressBookContact,
+    StarknetAddressBookContactFromJSON,
+    StarknetAddressBookContactFromJSONTyped,
+    StarknetAddressBookContactToJSON,
+} from './StarknetAddressBookContact';
+import type { SuiAddressBookContact } from './SuiAddressBookContact';
+import {
     instanceOfSuiAddressBookContact,
     SuiAddressBookContactFromJSON,
     SuiAddressBookContactFromJSONTyped,
     SuiAddressBookContactToJSON,
 } from './SuiAddressBookContact';
+import type { TonAddressBookContact } from './TonAddressBookContact';
 import {
-    TonAddressBookContact,
     instanceOfTonAddressBookContact,
     TonAddressBookContactFromJSON,
     TonAddressBookContactFromJSONTyped,
     TonAddressBookContactToJSON,
 } from './TonAddressBookContact';
+import type { TronAddressBookContact } from './TronAddressBookContact';
 import {
-    UtxoAddressBookContact,
+    instanceOfTronAddressBookContact,
+    TronAddressBookContactFromJSON,
+    TronAddressBookContactFromJSONTyped,
+    TronAddressBookContactToJSON,
+} from './TronAddressBookContact';
+import type { UtxoAddressBookContact } from './UtxoAddressBookContact';
+import {
     instanceOfUtxoAddressBookContact,
     UtxoAddressBookContactFromJSON,
     UtxoAddressBookContactFromJSONTyped,
@@ -67,58 +88,71 @@ import {
  * 
  * @export
  */
-export type AddressBookContact = { chainType: 'aptos' } & AptosAddressBookContact | { chainType: 'cosmos' } & CosmosAddressBookContact | { chainType: 'evm' } & EVMAddressBookContact | { chainType: 'solana' } & SolanaAddressBookContact | { chainType: 'sui' } & SuiAddressBookContact | { chainType: 'ton' } & TonAddressBookContact | { chainType: 'utxo' } & UtxoAddressBookContact;
+export type AddressBookContact = { chainType: 'aptos' } & AptosAddressBookContact | { chainType: 'cosmos' } & CosmosAddressBookContact | { chainType: 'evm' } & EVMAddressBookContact | { chainType: 'solana' } & SolanaAddressBookContact | { chainType: 'stacks' } & StacksAddressBookContact | { chainType: 'starknet' } & StarknetAddressBookContact | { chainType: 'sui' } & SuiAddressBookContact | { chainType: 'ton' } & TonAddressBookContact | { chainType: 'tron' } & TronAddressBookContact | { chainType: 'utxo' } & UtxoAddressBookContact;
 
 export function AddressBookContactFromJSON(json: any): AddressBookContact {
     return AddressBookContactFromJSONTyped(json, false);
 }
 
 export function AddressBookContactFromJSONTyped(json: any, ignoreDiscriminator: boolean): AddressBookContact {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['chain_type']) {
         case 'aptos':
-            return {...AptosAddressBookContactFromJSONTyped(json, true), chainType: 'aptos'};
+            return Object.assign({}, AptosAddressBookContactFromJSONTyped(json, true), { chainType: 'aptos' } as const);
         case 'cosmos':
-            return {...CosmosAddressBookContactFromJSONTyped(json, true), chainType: 'cosmos'};
+            return Object.assign({}, CosmosAddressBookContactFromJSONTyped(json, true), { chainType: 'cosmos' } as const);
         case 'evm':
-            return {...EVMAddressBookContactFromJSONTyped(json, true), chainType: 'evm'};
+            return Object.assign({}, EVMAddressBookContactFromJSONTyped(json, true), { chainType: 'evm' } as const);
         case 'solana':
-            return {...SolanaAddressBookContactFromJSONTyped(json, true), chainType: 'solana'};
+            return Object.assign({}, SolanaAddressBookContactFromJSONTyped(json, true), { chainType: 'solana' } as const);
+        case 'stacks':
+            return Object.assign({}, StacksAddressBookContactFromJSONTyped(json, true), { chainType: 'stacks' } as const);
+        case 'starknet':
+            return Object.assign({}, StarknetAddressBookContactFromJSONTyped(json, true), { chainType: 'starknet' } as const);
         case 'sui':
-            return {...SuiAddressBookContactFromJSONTyped(json, true), chainType: 'sui'};
+            return Object.assign({}, SuiAddressBookContactFromJSONTyped(json, true), { chainType: 'sui' } as const);
         case 'ton':
-            return {...TonAddressBookContactFromJSONTyped(json, true), chainType: 'ton'};
+            return Object.assign({}, TonAddressBookContactFromJSONTyped(json, true), { chainType: 'ton' } as const);
+        case 'tron':
+            return Object.assign({}, TronAddressBookContactFromJSONTyped(json, true), { chainType: 'tron' } as const);
         case 'utxo':
-            return {...UtxoAddressBookContactFromJSONTyped(json, true), chainType: 'utxo'};
+            return Object.assign({}, UtxoAddressBookContactFromJSONTyped(json, true), { chainType: 'utxo' } as const);
         default:
             throw new Error(`No variant of AddressBookContact exists with 'chainType=${json['chainType']}'`);
     }
 }
 
-export function AddressBookContactToJSON(value?: AddressBookContact | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function AddressBookContactToJSON(json: any): any {
+    return AddressBookContactToJSONTyped(json, false);
+}
+
+export function AddressBookContactToJSONTyped(value?: AddressBookContact | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['chainType']) {
         case 'aptos':
-            return AptosAddressBookContactToJSON(value);
+            return Object.assign({}, AptosAddressBookContactToJSON(value), { chainType: 'aptos' } as const);
         case 'cosmos':
-            return CosmosAddressBookContactToJSON(value);
+            return Object.assign({}, CosmosAddressBookContactToJSON(value), { chainType: 'cosmos' } as const);
         case 'evm':
-            return EVMAddressBookContactToJSON(value);
+            return Object.assign({}, EVMAddressBookContactToJSON(value), { chainType: 'evm' } as const);
         case 'solana':
-            return SolanaAddressBookContactToJSON(value);
+            return Object.assign({}, SolanaAddressBookContactToJSON(value), { chainType: 'solana' } as const);
+        case 'stacks':
+            return Object.assign({}, StacksAddressBookContactToJSON(value), { chainType: 'stacks' } as const);
+        case 'starknet':
+            return Object.assign({}, StarknetAddressBookContactToJSON(value), { chainType: 'starknet' } as const);
         case 'sui':
-            return SuiAddressBookContactToJSON(value);
+            return Object.assign({}, SuiAddressBookContactToJSON(value), { chainType: 'sui' } as const);
         case 'ton':
-            return TonAddressBookContactToJSON(value);
+            return Object.assign({}, TonAddressBookContactToJSON(value), { chainType: 'ton' } as const);
+        case 'tron':
+            return Object.assign({}, TronAddressBookContactToJSON(value), { chainType: 'tron' } as const);
         case 'utxo':
-            return UtxoAddressBookContactToJSON(value);
+            return Object.assign({}, UtxoAddressBookContactToJSON(value), { chainType: 'utxo' } as const);
         default:
             throw new Error(`No variant of AddressBookContact exists with 'chainType=${value['chainType']}'`);
     }

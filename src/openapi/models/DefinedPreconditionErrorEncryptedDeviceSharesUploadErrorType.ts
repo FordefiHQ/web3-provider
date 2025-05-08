@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EncryptedDeviceSharesUploadErrorType } from './EncryptedDeviceSharesUploadErrorType';
 import {
     EncryptedDeviceSharesUploadErrorTypeFromJSON,
     EncryptedDeviceSharesUploadErrorTypeFromJSONTyped,
     EncryptedDeviceSharesUploadErrorTypeToJSON,
+    EncryptedDeviceSharesUploadErrorTypeToJSONTyped,
 } from './EncryptedDeviceSharesUploadErrorType';
 
 /**
@@ -58,15 +59,15 @@ export interface DefinedPreconditionErrorEncryptedDeviceSharesUploadErrorType {
     errorType?: EncryptedDeviceSharesUploadErrorType;
 }
 
+
+
 /**
  * Check if a given object implements the DefinedPreconditionErrorEncryptedDeviceSharesUploadErrorType interface.
  */
-export function instanceOfDefinedPreconditionErrorEncryptedDeviceSharesUploadErrorType(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "title" in value;
-    isInstance = isInstance && "detail" in value;
-
-    return isInstance;
+export function instanceOfDefinedPreconditionErrorEncryptedDeviceSharesUploadErrorType(value: object): value is DefinedPreconditionErrorEncryptedDeviceSharesUploadErrorType {
+    if (!('title' in value) || value['title'] === undefined) return false;
+    if (!('detail' in value) || value['detail'] === undefined) return false;
+    return true;
 }
 
 export function DefinedPreconditionErrorEncryptedDeviceSharesUploadErrorTypeFromJSON(json: any): DefinedPreconditionErrorEncryptedDeviceSharesUploadErrorType {
@@ -74,33 +75,35 @@ export function DefinedPreconditionErrorEncryptedDeviceSharesUploadErrorTypeFrom
 }
 
 export function DefinedPreconditionErrorEncryptedDeviceSharesUploadErrorTypeFromJSONTyped(json: any, ignoreDiscriminator: boolean): DefinedPreconditionErrorEncryptedDeviceSharesUploadErrorType {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'title': json['title'],
         'detail': json['detail'],
-        'requestId': !exists(json, 'request_id') ? undefined : json['request_id'],
-        'systemErrorCode': !exists(json, 'system_error_code') ? undefined : json['system_error_code'],
-        'errorType': !exists(json, 'error_type') ? undefined : EncryptedDeviceSharesUploadErrorTypeFromJSON(json['error_type']),
+        'requestId': json['request_id'] == null ? undefined : json['request_id'],
+        'systemErrorCode': json['system_error_code'] == null ? undefined : json['system_error_code'],
+        'errorType': json['error_type'] == null ? undefined : EncryptedDeviceSharesUploadErrorTypeFromJSON(json['error_type']),
     };
 }
 
-export function DefinedPreconditionErrorEncryptedDeviceSharesUploadErrorTypeToJSON(value?: DefinedPreconditionErrorEncryptedDeviceSharesUploadErrorType | null): any {
-    if (value === undefined) {
-        return undefined;
+export function DefinedPreconditionErrorEncryptedDeviceSharesUploadErrorTypeToJSON(json: any): DefinedPreconditionErrorEncryptedDeviceSharesUploadErrorType {
+    return DefinedPreconditionErrorEncryptedDeviceSharesUploadErrorTypeToJSONTyped(json, false);
+}
+
+export function DefinedPreconditionErrorEncryptedDeviceSharesUploadErrorTypeToJSONTyped(value?: DefinedPreconditionErrorEncryptedDeviceSharesUploadErrorType | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'title': value.title,
-        'detail': value.detail,
-        'request_id': value.requestId,
-        'system_error_code': value.systemErrorCode,
-        'error_type': EncryptedDeviceSharesUploadErrorTypeToJSON(value.errorType),
+        'title': value['title'],
+        'detail': value['detail'],
+        'request_id': value['requestId'],
+        'system_error_code': value['systemErrorCode'],
+        'error_type': EncryptedDeviceSharesUploadErrorTypeToJSON(value['errorType']),
     };
 }
 

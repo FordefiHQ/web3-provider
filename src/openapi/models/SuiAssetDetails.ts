@@ -12,25 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { SuiNativeAsset } from './SuiNativeAsset';
+import {
+    SuiNativeAssetFromJSON,
+    SuiNativeAssetFromJSONTyped,
+    SuiNativeAssetToJSON,
+    SuiNativeAssetToJSONTyped,
+} from './SuiNativeAsset';
 import type { EnrichedSuiChain } from './EnrichedSuiChain';
 import {
     EnrichedSuiChainFromJSON,
     EnrichedSuiChainFromJSONTyped,
     EnrichedSuiChainToJSON,
+    EnrichedSuiChainToJSONTyped,
 } from './EnrichedSuiChain';
 import type { SuiCoinAsset } from './SuiCoinAsset';
 import {
     SuiCoinAssetFromJSON,
     SuiCoinAssetFromJSONTyped,
     SuiCoinAssetToJSON,
+    SuiCoinAssetToJSONTyped,
 } from './SuiCoinAsset';
-import type { SuiNativeAsset } from './SuiNativeAsset';
-import {
-    SuiNativeAssetFromJSON,
-    SuiNativeAssetFromJSONTyped,
-    SuiNativeAssetToJSON,
-} from './SuiNativeAsset';
 
 /**
  * 
@@ -57,7 +60,8 @@ export interface SuiAssetDetails {
  * @export
  */
 export const SuiAssetDetailsTypeEnum = {
-    suiCoinAsset: 'sui_coin_asset'
+    nativeAsset: 'sui_native_asset',
+    coinAsset: 'sui_coin_asset'
 } as const;
 export type SuiAssetDetailsTypeEnum = typeof SuiAssetDetailsTypeEnum[keyof typeof SuiAssetDetailsTypeEnum];
 
@@ -65,12 +69,10 @@ export type SuiAssetDetailsTypeEnum = typeof SuiAssetDetailsTypeEnum[keyof typeo
 /**
  * Check if a given object implements the SuiAssetDetails interface.
  */
-export function instanceOfSuiAssetDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfSuiAssetDetails(value: object): value is SuiAssetDetails {
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function SuiAssetDetailsFromJSON(json: any): SuiAssetDetails {
@@ -78,7 +80,7 @@ export function SuiAssetDetailsFromJSON(json: any): SuiAssetDetails {
 }
 
 export function SuiAssetDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiAssetDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -88,17 +90,19 @@ export function SuiAssetDetailsFromJSONTyped(json: any, ignoreDiscriminator: boo
     };
 }
 
-export function SuiAssetDetailsToJSON(value?: SuiAssetDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiAssetDetailsToJSON(json: any): SuiAssetDetails {
+    return SuiAssetDetailsToJSONTyped(json, false);
+}
+
+export function SuiAssetDetailsToJSONTyped(value?: SuiAssetDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain': EnrichedSuiChainToJSON(value.chain),
-        'type': value.type,
+        'chain': EnrichedSuiChainToJSON(value['chain']),
+        'type': value['type'],
     };
 }
 

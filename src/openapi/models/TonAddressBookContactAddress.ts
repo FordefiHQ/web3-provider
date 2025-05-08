@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedTonChain } from './EnrichedTonChain';
 import {
     EnrichedTonChainFromJSON,
     EnrichedTonChainFromJSONTyped,
     EnrichedTonChainToJSON,
+    EnrichedTonChainToJSONTyped,
 } from './EnrichedTonChain';
 
 /**
@@ -44,6 +45,12 @@ export interface TonAddressBookContactAddress {
      * @memberof TonAddressBookContactAddress
      */
     chains: Array<EnrichedTonChain>;
+    /**
+     * 
+     * @type {string}
+     * @memberof TonAddressBookContactAddress
+     */
+    comment?: string;
 }
 
 
@@ -59,13 +66,11 @@ export type TonAddressBookContactAddressChainTypeEnum = typeof TonAddressBookCon
 /**
  * Check if a given object implements the TonAddressBookContactAddress interface.
  */
-export function instanceOfTonAddressBookContactAddress(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chainType" in value;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "chains" in value;
-
-    return isInstance;
+export function instanceOfTonAddressBookContactAddress(value: object): value is TonAddressBookContactAddress {
+    if (!('chainType' in value) || value['chainType'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('chains' in value) || value['chains'] === undefined) return false;
+    return true;
 }
 
 export function TonAddressBookContactAddressFromJSON(json: any): TonAddressBookContactAddress {
@@ -73,7 +78,7 @@ export function TonAddressBookContactAddressFromJSON(json: any): TonAddressBookC
 }
 
 export function TonAddressBookContactAddressFromJSONTyped(json: any, ignoreDiscriminator: boolean): TonAddressBookContactAddress {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -81,21 +86,25 @@ export function TonAddressBookContactAddressFromJSONTyped(json: any, ignoreDiscr
         'chainType': json['chain_type'],
         'address': json['address'],
         'chains': ((json['chains'] as Array<any>).map(EnrichedTonChainFromJSON)),
+        'comment': json['comment'] == null ? undefined : json['comment'],
     };
 }
 
-export function TonAddressBookContactAddressToJSON(value?: TonAddressBookContactAddress | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TonAddressBookContactAddressToJSON(json: any): TonAddressBookContactAddress {
+    return TonAddressBookContactAddressToJSONTyped(json, false);
+}
+
+export function TonAddressBookContactAddressToJSONTyped(value?: TonAddressBookContactAddress | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain_type': value.chainType,
-        'address': value.address,
-        'chains': ((value.chains as Array<any>).map(EnrichedTonChainToJSON)),
+        'chain_type': value['chainType'],
+        'address': value['address'],
+        'chains': ((value['chains'] as Array<any>).map(EnrichedTonChainToJSON)),
+        'comment': value['comment'],
     };
 }
 

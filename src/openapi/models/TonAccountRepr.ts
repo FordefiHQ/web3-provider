@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type TonAccountReprChainTypeEnum = typeof TonAccountReprChainTypeEnum[key
 /**
  * Check if a given object implements the TonAccountRepr interface.
  */
-export function instanceOfTonAccountRepr(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chainType" in value;
-    isInstance = isInstance && "address" in value;
-
-    return isInstance;
+export function instanceOfTonAccountRepr(value: object): value is TonAccountRepr {
+    if (!('chainType' in value) || value['chainType'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    return true;
 }
 
 export function TonAccountReprFromJSON(json: any): TonAccountRepr {
@@ -59,7 +57,7 @@ export function TonAccountReprFromJSON(json: any): TonAccountRepr {
 }
 
 export function TonAccountReprFromJSONTyped(json: any, ignoreDiscriminator: boolean): TonAccountRepr {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function TonAccountReprFromJSONTyped(json: any, ignoreDiscriminator: bool
     };
 }
 
-export function TonAccountReprToJSON(value?: TonAccountRepr | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TonAccountReprToJSON(json: any): TonAccountRepr {
+    return TonAccountReprToJSONTyped(json, false);
+}
+
+export function TonAccountReprToJSONTyped(value?: TonAccountRepr | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain_type': value.chainType,
-        'address': value.address,
+        'chain_type': value['chainType'],
+        'address': value['address'],
     };
 }
 

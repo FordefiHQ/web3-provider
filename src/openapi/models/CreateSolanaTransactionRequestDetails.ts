@@ -12,22 +12,29 @@
  * Do not edit the class manually.
  */
 
+import type { CreateSolanaRawTransactionRequest } from './CreateSolanaRawTransactionRequest';
 import {
-    CreateSolanaRawTransactionRequest,
     instanceOfCreateSolanaRawTransactionRequest,
     CreateSolanaRawTransactionRequestFromJSON,
     CreateSolanaRawTransactionRequestFromJSONTyped,
     CreateSolanaRawTransactionRequestToJSON,
 } from './CreateSolanaRawTransactionRequest';
+import type { CreateSolanaSerializedTransactionMessageRequest } from './CreateSolanaSerializedTransactionMessageRequest';
 import {
-    CreateSolanaSerializedTransactionMessageRequest,
     instanceOfCreateSolanaSerializedTransactionMessageRequest,
     CreateSolanaSerializedTransactionMessageRequestFromJSON,
     CreateSolanaSerializedTransactionMessageRequestFromJSONTyped,
     CreateSolanaSerializedTransactionMessageRequestToJSON,
 } from './CreateSolanaSerializedTransactionMessageRequest';
+import type { CreateSolanaSpotSwapRequest } from './CreateSolanaSpotSwapRequest';
 import {
-    CreateSolanaTransferRequest,
+    instanceOfCreateSolanaSpotSwapRequest,
+    CreateSolanaSpotSwapRequestFromJSON,
+    CreateSolanaSpotSwapRequestFromJSONTyped,
+    CreateSolanaSpotSwapRequestToJSON,
+} from './CreateSolanaSpotSwapRequest';
+import type { CreateSolanaTransferRequest } from './CreateSolanaTransferRequest';
+import {
     instanceOfCreateSolanaTransferRequest,
     CreateSolanaTransferRequestFromJSON,
     CreateSolanaTransferRequestFromJSONTyped,
@@ -39,42 +46,47 @@ import {
  * 
  * @export
  */
-export type CreateSolanaTransactionRequestDetails = { type: 'solana_raw_transaction' } & CreateSolanaRawTransactionRequest | { type: 'solana_serialized_transaction_message' } & CreateSolanaSerializedTransactionMessageRequest | { type: 'solana_transfer' } & CreateSolanaTransferRequest;
+export type CreateSolanaTransactionRequestDetails = { type: 'solana_raw_transaction' } & CreateSolanaRawTransactionRequest | { type: 'solana_serialized_transaction_message' } & CreateSolanaSerializedTransactionMessageRequest | { type: 'solana_spot_swap' } & CreateSolanaSpotSwapRequest | { type: 'solana_transfer' } & CreateSolanaTransferRequest;
 
 export function CreateSolanaTransactionRequestDetailsFromJSON(json: any): CreateSolanaTransactionRequestDetails {
     return CreateSolanaTransactionRequestDetailsFromJSONTyped(json, false);
 }
 
 export function CreateSolanaTransactionRequestDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateSolanaTransactionRequestDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'solana_raw_transaction':
-            return {...CreateSolanaRawTransactionRequestFromJSONTyped(json, true), type: 'solana_raw_transaction'};
+            return Object.assign({}, CreateSolanaRawTransactionRequestFromJSONTyped(json, true), { type: 'solana_raw_transaction' } as const);
         case 'solana_serialized_transaction_message':
-            return {...CreateSolanaSerializedTransactionMessageRequestFromJSONTyped(json, true), type: 'solana_serialized_transaction_message'};
+            return Object.assign({}, CreateSolanaSerializedTransactionMessageRequestFromJSONTyped(json, true), { type: 'solana_serialized_transaction_message' } as const);
+        case 'solana_spot_swap':
+            return Object.assign({}, CreateSolanaSpotSwapRequestFromJSONTyped(json, true), { type: 'solana_spot_swap' } as const);
         case 'solana_transfer':
-            return {...CreateSolanaTransferRequestFromJSONTyped(json, true), type: 'solana_transfer'};
+            return Object.assign({}, CreateSolanaTransferRequestFromJSONTyped(json, true), { type: 'solana_transfer' } as const);
         default:
             throw new Error(`No variant of CreateSolanaTransactionRequestDetails exists with 'type=${json['type']}'`);
     }
 }
 
-export function CreateSolanaTransactionRequestDetailsToJSON(value?: CreateSolanaTransactionRequestDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function CreateSolanaTransactionRequestDetailsToJSON(json: any): any {
+    return CreateSolanaTransactionRequestDetailsToJSONTyped(json, false);
+}
+
+export function CreateSolanaTransactionRequestDetailsToJSONTyped(value?: CreateSolanaTransactionRequestDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'solana_raw_transaction':
-            return CreateSolanaRawTransactionRequestToJSON(value);
+            return Object.assign({}, CreateSolanaRawTransactionRequestToJSON(value), { type: 'solana_raw_transaction' } as const);
         case 'solana_serialized_transaction_message':
-            return CreateSolanaSerializedTransactionMessageRequestToJSON(value);
+            return Object.assign({}, CreateSolanaSerializedTransactionMessageRequestToJSON(value), { type: 'solana_serialized_transaction_message' } as const);
+        case 'solana_spot_swap':
+            return Object.assign({}, CreateSolanaSpotSwapRequestToJSON(value), { type: 'solana_spot_swap' } as const);
         case 'solana_transfer':
-            return CreateSolanaTransferRequestToJSON(value);
+            return Object.assign({}, CreateSolanaTransferRequestToJSON(value), { type: 'solana_transfer' } as const);
         default:
             throw new Error(`No variant of CreateSolanaTransactionRequestDetails exists with 'type=${value['type']}'`);
     }

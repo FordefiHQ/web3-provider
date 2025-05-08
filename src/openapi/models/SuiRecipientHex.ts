@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type SuiRecipientHexTypeEnum = typeof SuiRecipientHexTypeEnum[keyof typeo
 /**
  * Check if a given object implements the SuiRecipientHex interface.
  */
-export function instanceOfSuiRecipientHex(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "address" in value;
-
-    return isInstance;
+export function instanceOfSuiRecipientHex(value: object): value is SuiRecipientHex {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    return true;
 }
 
 export function SuiRecipientHexFromJSON(json: any): SuiRecipientHex {
@@ -59,7 +57,7 @@ export function SuiRecipientHexFromJSON(json: any): SuiRecipientHex {
 }
 
 export function SuiRecipientHexFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiRecipientHex {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function SuiRecipientHexFromJSONTyped(json: any, ignoreDiscriminator: boo
     };
 }
 
-export function SuiRecipientHexToJSON(value?: SuiRecipientHex | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiRecipientHexToJSON(json: any): SuiRecipientHex {
+    return SuiRecipientHexToJSONTyped(json, false);
+}
+
+export function SuiRecipientHexToJSONTyped(value?: SuiRecipientHex | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'address': value.address,
+        'type': value['type'],
+        'address': value['address'],
     };
 }
 

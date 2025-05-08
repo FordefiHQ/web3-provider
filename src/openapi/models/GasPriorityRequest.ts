@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { GasPriorityLevelRequest } from './GasPriorityLevelRequest';
 import {
     GasPriorityLevelRequestFromJSON,
     GasPriorityLevelRequestFromJSONTyped,
     GasPriorityLevelRequestToJSON,
+    GasPriorityLevelRequestToJSONTyped,
 } from './GasPriorityLevelRequest';
 
 /**
@@ -59,12 +60,10 @@ export type GasPriorityRequestTypeEnum = typeof GasPriorityRequestTypeEnum[keyof
 /**
  * Check if a given object implements the GasPriorityRequest interface.
  */
-export function instanceOfGasPriorityRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "priorityLevel" in value;
-
-    return isInstance;
+export function instanceOfGasPriorityRequest(value: object): value is GasPriorityRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('priorityLevel' in value) || value['priorityLevel'] === undefined) return false;
+    return true;
 }
 
 export function GasPriorityRequestFromJSON(json: any): GasPriorityRequest {
@@ -72,29 +71,31 @@ export function GasPriorityRequestFromJSON(json: any): GasPriorityRequest {
 }
 
 export function GasPriorityRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): GasPriorityRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'gasLimit': !exists(json, 'gas_limit') ? undefined : json['gas_limit'],
+        'gasLimit': json['gas_limit'] == null ? undefined : json['gas_limit'],
         'type': json['type'],
         'priorityLevel': GasPriorityLevelRequestFromJSON(json['priority_level']),
     };
 }
 
-export function GasPriorityRequestToJSON(value?: GasPriorityRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function GasPriorityRequestToJSON(json: any): GasPriorityRequest {
+    return GasPriorityRequestToJSONTyped(json, false);
+}
+
+export function GasPriorityRequestToJSONTyped(value?: GasPriorityRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'gas_limit': value.gasLimit,
-        'type': value.type,
-        'priority_level': GasPriorityLevelRequestToJSON(value.priorityLevel),
+        'gas_limit': value['gasLimit'],
+        'type': value['type'],
+        'priority_level': GasPriorityLevelRequestToJSON(value['priorityLevel']),
     };
 }
 

@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
-import {
-    EnrichedEvmAddressFromJSON,
-    EnrichedEvmAddressFromJSONTyped,
-    EnrichedEvmAddressToJSON,
-} from './EnrichedEvmAddress';
+import { mapValues } from '../runtime';
 import type { EnrichedEvmChain } from './EnrichedEvmChain';
 import {
     EnrichedEvmChainFromJSON,
     EnrichedEvmChainFromJSONTyped,
     EnrichedEvmChainToJSON,
+    EnrichedEvmChainToJSONTyped,
 } from './EnrichedEvmChain';
+import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
+import {
+    EnrichedEvmAddressFromJSON,
+    EnrichedEvmAddressFromJSONTyped,
+    EnrichedEvmAddressToJSON,
+    EnrichedEvmAddressToJSONTyped,
+} from './EnrichedEvmAddress';
 
 /**
  * 
@@ -65,13 +67,11 @@ export type EvmBridgeEffectKnownDestinationTypeEnum = typeof EvmBridgeEffectKnow
 /**
  * Check if a given object implements the EvmBridgeEffectKnownDestination interface.
  */
-export function instanceOfEvmBridgeEffectKnownDestination(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "destAddress" in value;
-    isInstance = isInstance && "destChain" in value;
-
-    return isInstance;
+export function instanceOfEvmBridgeEffectKnownDestination(value: object): value is EvmBridgeEffectKnownDestination {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('destAddress' in value) || value['destAddress'] === undefined) return false;
+    if (!('destChain' in value) || value['destChain'] === undefined) return false;
+    return true;
 }
 
 export function EvmBridgeEffectKnownDestinationFromJSON(json: any): EvmBridgeEffectKnownDestination {
@@ -79,7 +79,7 @@ export function EvmBridgeEffectKnownDestinationFromJSON(json: any): EvmBridgeEff
 }
 
 export function EvmBridgeEffectKnownDestinationFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmBridgeEffectKnownDestination {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -90,18 +90,20 @@ export function EvmBridgeEffectKnownDestinationFromJSONTyped(json: any, ignoreDi
     };
 }
 
-export function EvmBridgeEffectKnownDestinationToJSON(value?: EvmBridgeEffectKnownDestination | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EvmBridgeEffectKnownDestinationToJSON(json: any): EvmBridgeEffectKnownDestination {
+    return EvmBridgeEffectKnownDestinationToJSONTyped(json, false);
+}
+
+export function EvmBridgeEffectKnownDestinationToJSONTyped(value?: EvmBridgeEffectKnownDestination | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'dest_address': EnrichedEvmAddressToJSON(value.destAddress),
-        'dest_chain': EnrichedEvmChainToJSON(value.destChain),
+        'type': value['type'],
+        'dest_address': EnrichedEvmAddressToJSON(value['destAddress']),
+        'dest_chain': EnrichedEvmChainToJSON(value['destChain']),
     };
 }
 

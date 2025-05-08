@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -40,11 +40,9 @@ export type RuleActionBlockTypeEnum = typeof RuleActionBlockTypeEnum[keyof typeo
 /**
  * Check if a given object implements the RuleActionBlock interface.
  */
-export function instanceOfRuleActionBlock(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfRuleActionBlock(value: object): value is RuleActionBlock {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function RuleActionBlockFromJSON(json: any): RuleActionBlock {
@@ -52,7 +50,7 @@ export function RuleActionBlockFromJSON(json: any): RuleActionBlock {
 }
 
 export function RuleActionBlockFromJSONTyped(json: any, ignoreDiscriminator: boolean): RuleActionBlock {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -61,16 +59,18 @@ export function RuleActionBlockFromJSONTyped(json: any, ignoreDiscriminator: boo
     };
 }
 
-export function RuleActionBlockToJSON(value?: RuleActionBlock | null): any {
-    if (value === undefined) {
-        return undefined;
+export function RuleActionBlockToJSON(json: any): RuleActionBlock {
+    return RuleActionBlockToJSONTyped(json, false);
+}
+
+export function RuleActionBlockToJSONTyped(value?: RuleActionBlock | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
+        'type': value['type'],
     };
 }
 

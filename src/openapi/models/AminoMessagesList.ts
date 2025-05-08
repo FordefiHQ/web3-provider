@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AminoMessage } from './AminoMessage';
 import {
     AminoMessageFromJSON,
     AminoMessageFromJSONTyped,
     AminoMessageToJSON,
+    AminoMessageToJSONTyped,
 } from './AminoMessage';
 
 /**
@@ -53,12 +54,10 @@ export type AminoMessagesListFormatEnum = typeof AminoMessagesListFormatEnum[key
 /**
  * Check if a given object implements the AminoMessagesList interface.
  */
-export function instanceOfAminoMessagesList(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "format" in value;
-    isInstance = isInstance && "messages" in value;
-
-    return isInstance;
+export function instanceOfAminoMessagesList(value: object): value is AminoMessagesList {
+    if (!('format' in value) || value['format'] === undefined) return false;
+    if (!('messages' in value) || value['messages'] === undefined) return false;
+    return true;
 }
 
 export function AminoMessagesListFromJSON(json: any): AminoMessagesList {
@@ -66,7 +65,7 @@ export function AminoMessagesListFromJSON(json: any): AminoMessagesList {
 }
 
 export function AminoMessagesListFromJSONTyped(json: any, ignoreDiscriminator: boolean): AminoMessagesList {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function AminoMessagesListFromJSONTyped(json: any, ignoreDiscriminator: b
     };
 }
 
-export function AminoMessagesListToJSON(value?: AminoMessagesList | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AminoMessagesListToJSON(json: any): AminoMessagesList {
+    return AminoMessagesListToJSONTyped(json, false);
+}
+
+export function AminoMessagesListToJSONTyped(value?: AminoMessagesList | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'format': value.format,
-        'messages': ((value.messages as Array<any>).map(AminoMessageToJSON)),
+        'format': value['format'],
+        'messages': ((value['messages'] as Array<any>).map(AminoMessageToJSON)),
     };
 }
 

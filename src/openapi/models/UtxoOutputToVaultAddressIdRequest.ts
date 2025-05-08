@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type UtxoOutputToVaultAddressIdRequestTypeEnum = typeof UtxoOutputToVault
 /**
  * Check if a given object implements the UtxoOutputToVaultAddressIdRequest interface.
  */
-export function instanceOfUtxoOutputToVaultAddressIdRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "vaultAddressId" in value;
-
-    return isInstance;
+export function instanceOfUtxoOutputToVaultAddressIdRequest(value: object): value is UtxoOutputToVaultAddressIdRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('vaultAddressId' in value) || value['vaultAddressId'] === undefined) return false;
+    return true;
 }
 
 export function UtxoOutputToVaultAddressIdRequestFromJSON(json: any): UtxoOutputToVaultAddressIdRequest {
@@ -59,7 +57,7 @@ export function UtxoOutputToVaultAddressIdRequestFromJSON(json: any): UtxoOutput
 }
 
 export function UtxoOutputToVaultAddressIdRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): UtxoOutputToVaultAddressIdRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function UtxoOutputToVaultAddressIdRequestFromJSONTyped(json: any, ignore
     };
 }
 
-export function UtxoOutputToVaultAddressIdRequestToJSON(value?: UtxoOutputToVaultAddressIdRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UtxoOutputToVaultAddressIdRequestToJSON(json: any): UtxoOutputToVaultAddressIdRequest {
+    return UtxoOutputToVaultAddressIdRequestToJSONTyped(json, false);
+}
+
+export function UtxoOutputToVaultAddressIdRequestToJSONTyped(value?: UtxoOutputToVaultAddressIdRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'vault_address_id': value.vaultAddressId,
+        'type': value['type'],
+        'vault_address_id': value['vaultAddressId'],
     };
 }
 

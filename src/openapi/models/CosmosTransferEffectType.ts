@@ -24,6 +24,17 @@ export const CosmosTransferEffectType = {
 export type CosmosTransferEffectType = typeof CosmosTransferEffectType[keyof typeof CosmosTransferEffectType];
 
 
+export function instanceOfCosmosTransferEffectType(value: any): boolean {
+    for (const key in CosmosTransferEffectType) {
+        if (Object.prototype.hasOwnProperty.call(CosmosTransferEffectType, key)) {
+            if (CosmosTransferEffectType[key as keyof typeof CosmosTransferEffectType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function CosmosTransferEffectTypeFromJSON(json: any): CosmosTransferEffectType {
     return CosmosTransferEffectTypeFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function CosmosTransferEffectTypeFromJSONTyped(json: any, ignoreDiscrimin
 
 export function CosmosTransferEffectTypeToJSON(value?: CosmosTransferEffectType | null): any {
     return value as any;
+}
+
+export function CosmosTransferEffectTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): CosmosTransferEffectType {
+    return value as CosmosTransferEffectType;
 }
 

@@ -25,6 +25,17 @@ export const TransactionSpamState = {
 export type TransactionSpamState = typeof TransactionSpamState[keyof typeof TransactionSpamState];
 
 
+export function instanceOfTransactionSpamState(value: any): boolean {
+    for (const key in TransactionSpamState) {
+        if (Object.prototype.hasOwnProperty.call(TransactionSpamState, key)) {
+            if (TransactionSpamState[key as keyof typeof TransactionSpamState] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function TransactionSpamStateFromJSON(json: any): TransactionSpamState {
     return TransactionSpamStateFromJSONTyped(json, false);
 }
@@ -35,5 +46,9 @@ export function TransactionSpamStateFromJSONTyped(json: any, ignoreDiscriminator
 
 export function TransactionSpamStateToJSON(value?: TransactionSpamState | null): any {
     return value as any;
+}
+
+export function TransactionSpamStateToJSONTyped(value: any, ignoreDiscriminator: boolean): TransactionSpamState {
+    return value as TransactionSpamState;
 }
 

@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -30,11 +30,9 @@ export interface SetExportEndUserKeysPermissionsRequest {
 /**
  * Check if a given object implements the SetExportEndUserKeysPermissionsRequest interface.
  */
-export function instanceOfSetExportEndUserKeysPermissionsRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "allow" in value;
-
-    return isInstance;
+export function instanceOfSetExportEndUserKeysPermissionsRequest(value: object): value is SetExportEndUserKeysPermissionsRequest {
+    if (!('allow' in value) || value['allow'] === undefined) return false;
+    return true;
 }
 
 export function SetExportEndUserKeysPermissionsRequestFromJSON(json: any): SetExportEndUserKeysPermissionsRequest {
@@ -42,7 +40,7 @@ export function SetExportEndUserKeysPermissionsRequestFromJSON(json: any): SetEx
 }
 
 export function SetExportEndUserKeysPermissionsRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): SetExportEndUserKeysPermissionsRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -51,16 +49,18 @@ export function SetExportEndUserKeysPermissionsRequestFromJSONTyped(json: any, i
     };
 }
 
-export function SetExportEndUserKeysPermissionsRequestToJSON(value?: SetExportEndUserKeysPermissionsRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SetExportEndUserKeysPermissionsRequestToJSON(json: any): SetExportEndUserKeysPermissionsRequest {
+    return SetExportEndUserKeysPermissionsRequestToJSONTyped(json, false);
+}
+
+export function SetExportEndUserKeysPermissionsRequestToJSONTyped(value?: SetExportEndUserKeysPermissionsRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'allow': value.allow,
+        'allow': value['allow'],
     };
 }
 

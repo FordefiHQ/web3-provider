@@ -26,6 +26,17 @@ export const ApprovalState = {
 export type ApprovalState = typeof ApprovalState[keyof typeof ApprovalState];
 
 
+export function instanceOfApprovalState(value: any): boolean {
+    for (const key in ApprovalState) {
+        if (Object.prototype.hasOwnProperty.call(ApprovalState, key)) {
+            if (ApprovalState[key as keyof typeof ApprovalState] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function ApprovalStateFromJSON(json: any): ApprovalState {
     return ApprovalStateFromJSONTyped(json, false);
 }
@@ -36,5 +47,9 @@ export function ApprovalStateFromJSONTyped(json: any, ignoreDiscriminator: boole
 
 export function ApprovalStateToJSON(value?: ApprovalState | null): any {
     return value as any;
+}
+
+export function ApprovalStateToJSONTyped(value: any, ignoreDiscriminator: boolean): ApprovalState {
+    return value as ApprovalState;
 }
 

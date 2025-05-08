@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { StarknetChainUniqueId } from './StarknetChainUniqueId';
 import {
     StarknetChainUniqueIdFromJSON,
     StarknetChainUniqueIdFromJSONTyped,
     StarknetChainUniqueIdToJSON,
+    StarknetChainUniqueIdToJSONTyped,
 } from './StarknetChainUniqueId';
 
 /**
@@ -53,12 +54,10 @@ export type StarknetChainChainTypeEnum = typeof StarknetChainChainTypeEnum[keyof
 /**
  * Check if a given object implements the StarknetChain interface.
  */
-export function instanceOfStarknetChain(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chainType" in value;
-    isInstance = isInstance && "uniqueId" in value;
-
-    return isInstance;
+export function instanceOfStarknetChain(value: object): value is StarknetChain {
+    if (!('chainType' in value) || value['chainType'] === undefined) return false;
+    if (!('uniqueId' in value) || value['uniqueId'] === undefined) return false;
+    return true;
 }
 
 export function StarknetChainFromJSON(json: any): StarknetChain {
@@ -66,7 +65,7 @@ export function StarknetChainFromJSON(json: any): StarknetChain {
 }
 
 export function StarknetChainFromJSONTyped(json: any, ignoreDiscriminator: boolean): StarknetChain {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function StarknetChainFromJSONTyped(json: any, ignoreDiscriminator: boole
     };
 }
 
-export function StarknetChainToJSON(value?: StarknetChain | null): any {
-    if (value === undefined) {
-        return undefined;
+export function StarknetChainToJSON(json: any): StarknetChain {
+    return StarknetChainToJSONTyped(json, false);
+}
+
+export function StarknetChainToJSONTyped(value?: StarknetChain | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain_type': value.chainType,
-        'unique_id': StarknetChainUniqueIdToJSON(value.uniqueId),
+        'chain_type': value['chainType'],
+        'unique_id': StarknetChainUniqueIdToJSON(value['uniqueId']),
     };
 }
 

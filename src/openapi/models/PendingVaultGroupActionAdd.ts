@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -52,13 +52,11 @@ export type PendingVaultGroupActionAddTypeEnum = typeof PendingVaultGroupActionA
 /**
  * Check if a given object implements the PendingVaultGroupActionAdd interface.
  */
-export function instanceOfPendingVaultGroupActionAdd(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "vaultGroupId" in value;
-    isInstance = isInstance && "vaultGroupName" in value;
-
-    return isInstance;
+export function instanceOfPendingVaultGroupActionAdd(value: object): value is PendingVaultGroupActionAdd {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('vaultGroupId' in value) || value['vaultGroupId'] === undefined) return false;
+    if (!('vaultGroupName' in value) || value['vaultGroupName'] === undefined) return false;
+    return true;
 }
 
 export function PendingVaultGroupActionAddFromJSON(json: any): PendingVaultGroupActionAdd {
@@ -66,7 +64,7 @@ export function PendingVaultGroupActionAddFromJSON(json: any): PendingVaultGroup
 }
 
 export function PendingVaultGroupActionAddFromJSONTyped(json: any, ignoreDiscriminator: boolean): PendingVaultGroupActionAdd {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -77,18 +75,20 @@ export function PendingVaultGroupActionAddFromJSONTyped(json: any, ignoreDiscrim
     };
 }
 
-export function PendingVaultGroupActionAddToJSON(value?: PendingVaultGroupActionAdd | null): any {
-    if (value === undefined) {
-        return undefined;
+export function PendingVaultGroupActionAddToJSON(json: any): PendingVaultGroupActionAdd {
+    return PendingVaultGroupActionAddToJSONTyped(json, false);
+}
+
+export function PendingVaultGroupActionAddToJSONTyped(value?: PendingVaultGroupActionAdd | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'vault_group_id': value.vaultGroupId,
-        'vault_group_name': value.vaultGroupName,
+        'type': value['type'],
+        'vault_group_id': value['vaultGroupId'],
+        'vault_group_name': value['vaultGroupName'],
     };
 }
 

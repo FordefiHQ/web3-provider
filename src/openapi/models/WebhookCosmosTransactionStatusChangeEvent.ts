@@ -12,37 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { CosmosChain } from './CosmosChain';
-import {
-    CosmosChainFromJSON,
-    CosmosChainFromJSONTyped,
-    CosmosChainToJSON,
-} from './CosmosChain';
-import type { CosmosTransactionState } from './CosmosTransactionState';
-import {
-    CosmosTransactionStateFromJSON,
-    CosmosTransactionStateFromJSONTyped,
-    CosmosTransactionStateToJSON,
-} from './CosmosTransactionState';
-import type { CosmosTransactionType } from './CosmosTransactionType';
-import {
-    CosmosTransactionTypeFromJSON,
-    CosmosTransactionTypeFromJSONTyped,
-    CosmosTransactionTypeToJSON,
-} from './CosmosTransactionType';
-import type { TransactionDirection } from './TransactionDirection';
-import {
-    TransactionDirectionFromJSON,
-    TransactionDirectionFromJSONTyped,
-    TransactionDirectionToJSON,
-} from './TransactionDirection';
+import { mapValues } from '../runtime';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
     TransactionSpamStateFromJSONTyped,
     TransactionSpamStateToJSON,
+    TransactionSpamStateToJSONTyped,
 } from './TransactionSpamState';
+import type { TransactionDirection } from './TransactionDirection';
+import {
+    TransactionDirectionFromJSON,
+    TransactionDirectionFromJSONTyped,
+    TransactionDirectionToJSON,
+    TransactionDirectionToJSONTyped,
+} from './TransactionDirection';
+import type { CosmosChain } from './CosmosChain';
+import {
+    CosmosChainFromJSON,
+    CosmosChainFromJSONTyped,
+    CosmosChainToJSON,
+    CosmosChainToJSONTyped,
+} from './CosmosChain';
+import type { CosmosTransactionType } from './CosmosTransactionType';
+import {
+    CosmosTransactionTypeFromJSON,
+    CosmosTransactionTypeFromJSONTyped,
+    CosmosTransactionTypeToJSON,
+    CosmosTransactionTypeToJSONTyped,
+} from './CosmosTransactionType';
+import type { PushableTransactionState } from './PushableTransactionState';
+import {
+    PushableTransactionStateFromJSON,
+    PushableTransactionStateFromJSONTyped,
+    PushableTransactionStateToJSON,
+    PushableTransactionStateToJSONTyped,
+} from './PushableTransactionState';
 
 /**
  * 
@@ -83,6 +88,12 @@ export interface WebhookCosmosTransactionStatusChangeEvent {
     spamState: TransactionSpamState;
     /**
      * 
+     * @type {PushableTransactionState}
+     * @memberof WebhookCosmosTransactionStatusChangeEvent
+     */
+    state: PushableTransactionState;
+    /**
+     * 
      * @type {string}
      * @memberof WebhookCosmosTransactionStatusChangeEvent
      */
@@ -93,12 +104,6 @@ export interface WebhookCosmosTransactionStatusChangeEvent {
      * @memberof WebhookCosmosTransactionStatusChangeEvent
      */
     cosmosTransactionType: CosmosTransactionType;
-    /**
-     * 
-     * @type {CosmosTransactionState}
-     * @memberof WebhookCosmosTransactionStatusChangeEvent
-     */
-    state: CosmosTransactionState;
     /**
      * 
      * @type {string}
@@ -126,18 +131,16 @@ export type WebhookCosmosTransactionStatusChangeEventTypeEnum = typeof WebhookCo
 /**
  * Check if a given object implements the WebhookCosmosTransactionStatusChangeEvent interface.
  */
-export function instanceOfWebhookCosmosTransactionStatusChangeEvent(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "transactionId" in value;
-    isInstance = isInstance && "isManagedTransaction" in value;
-    isInstance = isInstance && "direction" in value;
-    isInstance = isInstance && "spamState" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "cosmosTransactionType" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfWebhookCosmosTransactionStatusChangeEvent(value: object): value is WebhookCosmosTransactionStatusChangeEvent {
+    if (!('transactionId' in value) || value['transactionId'] === undefined) return false;
+    if (!('isManagedTransaction' in value) || value['isManagedTransaction'] === undefined) return false;
+    if (!('direction' in value) || value['direction'] === undefined) return false;
+    if (!('spamState' in value) || value['spamState'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('cosmosTransactionType' in value) || value['cosmosTransactionType'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function WebhookCosmosTransactionStatusChangeEventFromJSON(json: any): WebhookCosmosTransactionStatusChangeEvent {
@@ -145,7 +148,7 @@ export function WebhookCosmosTransactionStatusChangeEventFromJSON(json: any): We
 }
 
 export function WebhookCosmosTransactionStatusChangeEventFromJSONTyped(json: any, ignoreDiscriminator: boolean): WebhookCosmosTransactionStatusChangeEvent {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -153,35 +156,37 @@ export function WebhookCosmosTransactionStatusChangeEventFromJSONTyped(json: any
         'transactionId': json['transaction_id'],
         'isManagedTransaction': json['is_managed_transaction'],
         'direction': TransactionDirectionFromJSON(json['direction']),
-        'note': !exists(json, 'note') ? undefined : json['note'],
+        'note': json['note'] == null ? undefined : json['note'],
         'spamState': TransactionSpamStateFromJSON(json['spam_state']),
+        'state': PushableTransactionStateFromJSON(json['state']),
         'type': json['type'],
         'cosmosTransactionType': CosmosTransactionTypeFromJSON(json['cosmos_transaction_type']),
-        'state': CosmosTransactionStateFromJSON(json['state']),
-        'hash': !exists(json, 'hash') ? undefined : json['hash'],
+        'hash': json['hash'] == null ? undefined : json['hash'],
         'chain': CosmosChainFromJSON(json['chain']),
     };
 }
 
-export function WebhookCosmosTransactionStatusChangeEventToJSON(value?: WebhookCosmosTransactionStatusChangeEvent | null): any {
-    if (value === undefined) {
-        return undefined;
+export function WebhookCosmosTransactionStatusChangeEventToJSON(json: any): WebhookCosmosTransactionStatusChangeEvent {
+    return WebhookCosmosTransactionStatusChangeEventToJSONTyped(json, false);
+}
+
+export function WebhookCosmosTransactionStatusChangeEventToJSONTyped(value?: WebhookCosmosTransactionStatusChangeEvent | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'transaction_id': value.transactionId,
-        'is_managed_transaction': value.isManagedTransaction,
-        'direction': TransactionDirectionToJSON(value.direction),
-        'note': value.note,
-        'spam_state': TransactionSpamStateToJSON(value.spamState),
-        'type': value.type,
-        'cosmos_transaction_type': CosmosTransactionTypeToJSON(value.cosmosTransactionType),
-        'state': CosmosTransactionStateToJSON(value.state),
-        'hash': value.hash,
-        'chain': CosmosChainToJSON(value.chain),
+        'transaction_id': value['transactionId'],
+        'is_managed_transaction': value['isManagedTransaction'],
+        'direction': TransactionDirectionToJSON(value['direction']),
+        'note': value['note'],
+        'spam_state': TransactionSpamStateToJSON(value['spamState']),
+        'state': PushableTransactionStateToJSON(value['state']),
+        'type': value['type'],
+        'cosmos_transaction_type': CosmosTransactionTypeToJSON(value['cosmosTransactionType']),
+        'hash': value['hash'],
+        'chain': CosmosChainToJSON(value['chain']),
     };
 }
 

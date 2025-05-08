@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -60,57 +60,16 @@ export const UpdateEvmChainRequestChainTypeEnum = {
 } as const;
 export type UpdateEvmChainRequestChainTypeEnum = typeof UpdateEvmChainRequestChainTypeEnum[keyof typeof UpdateEvmChainRequestChainTypeEnum];
 
-/**
- * @export
- */
-export const UpdateEvmChainRequestChainIdEnum = {
-    NUMBER_1: 1,
-    NUMBER_5: 5,
-    NUMBER_10: 10,
-    NUMBER_16: 16,
-    NUMBER_56: 56,
-    NUMBER_100: 100,
-    NUMBER_137: 137,
-    NUMBER_169: 169,
-    NUMBER_250: 250,
-    NUMBER_324: 324,
-    NUMBER_1030: 1030,
-    NUMBER_1100: 1100,
-    NUMBER_1101: 1101,
-    NUMBER_1329: 1329,
-    NUMBER_1729: 1729,
-    NUMBER_2222: 2222,
-    NUMBER_4200: 4200,
-    NUMBER_5000: 5000,
-    NUMBER_7000: 7000,
-    NUMBER_7700: 7700,
-    NUMBER_8453: 8453,
-    NUMBER_17000: 17000,
-    NUMBER_80001: 80001,
-    NUMBER_42161: 42161,
-    NUMBER_43114: 43114,
-    NUMBER_59144: 59144,
-    NUMBER_81457: 81457,
-    NUMBER_421614: 421614,
-    NUMBER_534352: 534352,
-    NUMBER_660279: 660279,
-    NUMBER_810180: 810180,
-    NUMBER_11155111: 11155111
-} as const;
-export type UpdateEvmChainRequestChainIdEnum = typeof UpdateEvmChainRequestChainIdEnum[keyof typeof UpdateEvmChainRequestChainIdEnum];
-
 
 /**
  * Check if a given object implements the UpdateEvmChainRequest interface.
  */
-export function instanceOfUpdateEvmChainRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chainType" in value;
-    isInstance = isInstance && "chainId" in value;
-    isInstance = isInstance && "chainName" in value;
-    isInstance = isInstance && "rpcUrl" in value;
-
-    return isInstance;
+export function instanceOfUpdateEvmChainRequest(value: object): value is UpdateEvmChainRequest {
+    if (!('chainType' in value) || value['chainType'] === undefined) return false;
+    if (!('chainId' in value) || value['chainId'] === undefined) return false;
+    if (!('chainName' in value) || value['chainName'] === undefined) return false;
+    if (!('rpcUrl' in value) || value['rpcUrl'] === undefined) return false;
+    return true;
 }
 
 export function UpdateEvmChainRequestFromJSON(json: any): UpdateEvmChainRequest {
@@ -118,7 +77,7 @@ export function UpdateEvmChainRequestFromJSON(json: any): UpdateEvmChainRequest 
 }
 
 export function UpdateEvmChainRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): UpdateEvmChainRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -127,24 +86,26 @@ export function UpdateEvmChainRequestFromJSONTyped(json: any, ignoreDiscriminato
         'chainId': json['chain_id'],
         'chainName': json['chain_name'],
         'rpcUrl': json['rpc_url'],
-        'blockchainExplorerUrl': !exists(json, 'blockchain_explorer_url') ? undefined : json['blockchain_explorer_url'],
+        'blockchainExplorerUrl': json['blockchain_explorer_url'] == null ? undefined : json['blockchain_explorer_url'],
     };
 }
 
-export function UpdateEvmChainRequestToJSON(value?: UpdateEvmChainRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UpdateEvmChainRequestToJSON(json: any): UpdateEvmChainRequest {
+    return UpdateEvmChainRequestToJSONTyped(json, false);
+}
+
+export function UpdateEvmChainRequestToJSONTyped(value?: UpdateEvmChainRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain_type': value.chainType,
-        'chain_id': value.chainId,
-        'chain_name': value.chainName,
-        'rpc_url': value.rpcUrl,
-        'blockchain_explorer_url': value.blockchainExplorerUrl,
+        'chain_type': value['chainType'],
+        'chain_id': value['chainId'],
+        'chain_name': value['chainName'],
+        'rpc_url': value['rpcUrl'],
+        'blockchain_explorer_url': value['blockchainExplorerUrl'],
     };
 }
 

@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -42,13 +42,11 @@ export interface EncryptionData {
 /**
  * Check if a given object implements the EncryptionData interface.
  */
-export function instanceOfEncryptionData(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "encryptedSessionKey" in value;
-    isInstance = isInstance && "nonce" in value;
-    isInstance = isInstance && "ciphertext" in value;
-
-    return isInstance;
+export function instanceOfEncryptionData(value: object): value is EncryptionData {
+    if (!('encryptedSessionKey' in value) || value['encryptedSessionKey'] === undefined) return false;
+    if (!('nonce' in value) || value['nonce'] === undefined) return false;
+    if (!('ciphertext' in value) || value['ciphertext'] === undefined) return false;
+    return true;
 }
 
 export function EncryptionDataFromJSON(json: any): EncryptionData {
@@ -56,7 +54,7 @@ export function EncryptionDataFromJSON(json: any): EncryptionData {
 }
 
 export function EncryptionDataFromJSONTyped(json: any, ignoreDiscriminator: boolean): EncryptionData {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -67,18 +65,20 @@ export function EncryptionDataFromJSONTyped(json: any, ignoreDiscriminator: bool
     };
 }
 
-export function EncryptionDataToJSON(value?: EncryptionData | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EncryptionDataToJSON(json: any): EncryptionData {
+    return EncryptionDataToJSONTyped(json, false);
+}
+
+export function EncryptionDataToJSONTyped(value?: EncryptionData | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'encrypted_session_key': value.encryptedSessionKey,
-        'nonce': value.nonce,
-        'ciphertext': value.ciphertext,
+        'encrypted_session_key': value['encryptedSessionKey'],
+        'nonce': value['nonce'],
+        'ciphertext': value['ciphertext'],
     };
 }
 

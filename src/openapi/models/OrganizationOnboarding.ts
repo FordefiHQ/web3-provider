@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { OnboardingType } from './OnboardingType';
 import {
     OnboardingTypeFromJSON,
     OnboardingTypeFromJSONTyped,
     OnboardingTypeToJSON,
+    OnboardingTypeToJSONTyped,
 } from './OnboardingType';
 
 /**
@@ -58,18 +59,18 @@ export interface OrganizationOnboarding {
     invitedToOrganizationAt: Date;
 }
 
+
+
 /**
  * Check if a given object implements the OrganizationOnboarding interface.
  */
-export function instanceOfOrganizationOnboarding(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "organizationId" in value;
-    isInstance = isInstance && "organizationName" in value;
-    isInstance = isInstance && "deviceId" in value;
-    isInstance = isInstance && "onboardingType" in value;
-    isInstance = isInstance && "invitedToOrganizationAt" in value;
-
-    return isInstance;
+export function instanceOfOrganizationOnboarding(value: object): value is OrganizationOnboarding {
+    if (!('organizationId' in value) || value['organizationId'] === undefined) return false;
+    if (!('organizationName' in value) || value['organizationName'] === undefined) return false;
+    if (!('deviceId' in value) || value['deviceId'] === undefined) return false;
+    if (!('onboardingType' in value) || value['onboardingType'] === undefined) return false;
+    if (!('invitedToOrganizationAt' in value) || value['invitedToOrganizationAt'] === undefined) return false;
+    return true;
 }
 
 export function OrganizationOnboardingFromJSON(json: any): OrganizationOnboarding {
@@ -77,7 +78,7 @@ export function OrganizationOnboardingFromJSON(json: any): OrganizationOnboardin
 }
 
 export function OrganizationOnboardingFromJSONTyped(json: any, ignoreDiscriminator: boolean): OrganizationOnboarding {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -90,20 +91,22 @@ export function OrganizationOnboardingFromJSONTyped(json: any, ignoreDiscriminat
     };
 }
 
-export function OrganizationOnboardingToJSON(value?: OrganizationOnboarding | null): any {
-    if (value === undefined) {
-        return undefined;
+export function OrganizationOnboardingToJSON(json: any): OrganizationOnboarding {
+    return OrganizationOnboardingToJSONTyped(json, false);
+}
+
+export function OrganizationOnboardingToJSONTyped(value?: OrganizationOnboarding | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'organization_id': value.organizationId,
-        'organization_name': value.organizationName,
-        'device_id': value.deviceId,
-        'onboarding_type': OnboardingTypeToJSON(value.onboardingType),
-        'invited_to_organization_at': (value.invitedToOrganizationAt.toISOString()),
+        'organization_id': value['organizationId'],
+        'organization_name': value['organizationName'],
+        'device_id': value['deviceId'],
+        'onboarding_type': OnboardingTypeToJSON(value['onboardingType']),
+        'invited_to_organization_at': ((value['invitedToOrganizationAt']).toISOString()),
     };
 }
 

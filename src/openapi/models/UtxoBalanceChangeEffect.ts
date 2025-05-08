@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { PricedAsset } from './PricedAsset';
-import {
-    PricedAssetFromJSON,
-    PricedAssetFromJSONTyped,
-    PricedAssetToJSON,
-} from './PricedAsset';
+import { mapValues } from '../runtime';
 import type { VaultRef } from './VaultRef';
 import {
     VaultRefFromJSON,
     VaultRefFromJSONTyped,
     VaultRefToJSON,
+    VaultRefToJSONTyped,
 } from './VaultRef';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+    PricedAssetToJSONTyped,
+} from './PricedAsset';
 
 /**
  * 
@@ -71,14 +73,12 @@ export type UtxoBalanceChangeEffectTypeEnum = typeof UtxoBalanceChangeEffectType
 /**
  * Check if a given object implements the UtxoBalanceChangeEffect interface.
  */
-export function instanceOfUtxoBalanceChangeEffect(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "vault" in value;
-    isInstance = isInstance && "diff" in value;
-    isInstance = isInstance && "pricedAsset" in value;
-
-    return isInstance;
+export function instanceOfUtxoBalanceChangeEffect(value: object): value is UtxoBalanceChangeEffect {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('vault' in value) || value['vault'] === undefined) return false;
+    if (!('diff' in value) || value['diff'] === undefined) return false;
+    if (!('pricedAsset' in value) || value['pricedAsset'] === undefined) return false;
+    return true;
 }
 
 export function UtxoBalanceChangeEffectFromJSON(json: any): UtxoBalanceChangeEffect {
@@ -86,7 +86,7 @@ export function UtxoBalanceChangeEffectFromJSON(json: any): UtxoBalanceChangeEff
 }
 
 export function UtxoBalanceChangeEffectFromJSONTyped(json: any, ignoreDiscriminator: boolean): UtxoBalanceChangeEffect {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -98,19 +98,21 @@ export function UtxoBalanceChangeEffectFromJSONTyped(json: any, ignoreDiscrimina
     };
 }
 
-export function UtxoBalanceChangeEffectToJSON(value?: UtxoBalanceChangeEffect | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UtxoBalanceChangeEffectToJSON(json: any): UtxoBalanceChangeEffect {
+    return UtxoBalanceChangeEffectToJSONTyped(json, false);
+}
+
+export function UtxoBalanceChangeEffectToJSONTyped(value?: UtxoBalanceChangeEffect | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'vault': VaultRefToJSON(value.vault),
-        'diff': value.diff,
-        'priced_asset': PricedAssetToJSON(value.pricedAsset),
+        'type': value['type'],
+        'vault': VaultRefToJSON(value['vault']),
+        'diff': value['diff'],
+        'priced_asset': PricedAssetToJSON(value['pricedAsset']),
     };
 }
 

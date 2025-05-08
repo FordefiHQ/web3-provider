@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { EvmBridgeEffectDestination } from './EvmBridgeEffectDestination';
-import {
-    EvmBridgeEffectDestinationFromJSON,
-    EvmBridgeEffectDestinationFromJSONTyped,
-    EvmBridgeEffectDestinationToJSON,
-} from './EvmBridgeEffectDestination';
+import { mapValues } from '../runtime';
 import type { EvmBridgeEffectSource } from './EvmBridgeEffectSource';
 import {
     EvmBridgeEffectSourceFromJSON,
     EvmBridgeEffectSourceFromJSONTyped,
     EvmBridgeEffectSourceToJSON,
+    EvmBridgeEffectSourceToJSONTyped,
 } from './EvmBridgeEffectSource';
+import type { EvmBridgeEffectDestination } from './EvmBridgeEffectDestination';
+import {
+    EvmBridgeEffectDestinationFromJSON,
+    EvmBridgeEffectDestinationFromJSONTyped,
+    EvmBridgeEffectDestinationToJSON,
+    EvmBridgeEffectDestinationToJSONTyped,
+} from './EvmBridgeEffectDestination';
 
 /**
  * 
@@ -61,13 +63,11 @@ export interface EvmBridgeEffect {
 /**
  * Check if a given object implements the EvmBridgeEffect interface.
  */
-export function instanceOfEvmBridgeEffect(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "bridgeName" in value;
-    isInstance = isInstance && "destination" in value;
-    isInstance = isInstance && "amount" in value;
-
-    return isInstance;
+export function instanceOfEvmBridgeEffect(value: object): value is EvmBridgeEffect {
+    if (!('bridgeName' in value) || value['bridgeName'] === undefined) return false;
+    if (!('destination' in value) || value['destination'] === undefined) return false;
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    return true;
 }
 
 export function EvmBridgeEffectFromJSON(json: any): EvmBridgeEffect {
@@ -75,31 +75,33 @@ export function EvmBridgeEffectFromJSON(json: any): EvmBridgeEffect {
 }
 
 export function EvmBridgeEffectFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmBridgeEffect {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'bridgeName': json['bridge_name'],
-        'source': !exists(json, 'source') ? undefined : EvmBridgeEffectSourceFromJSON(json['source']),
+        'source': json['source'] == null ? undefined : EvmBridgeEffectSourceFromJSON(json['source']),
         'destination': EvmBridgeEffectDestinationFromJSON(json['destination']),
         'amount': json['amount'],
     };
 }
 
-export function EvmBridgeEffectToJSON(value?: EvmBridgeEffect | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EvmBridgeEffectToJSON(json: any): EvmBridgeEffect {
+    return EvmBridgeEffectToJSONTyped(json, false);
+}
+
+export function EvmBridgeEffectToJSONTyped(value?: EvmBridgeEffect | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'bridge_name': value.bridgeName,
-        'source': EvmBridgeEffectSourceToJSON(value.source),
-        'destination': EvmBridgeEffectDestinationToJSON(value.destination),
-        'amount': value.amount,
+        'bridge_name': value['bridgeName'],
+        'source': EvmBridgeEffectSourceToJSON(value['source']),
+        'destination': EvmBridgeEffectDestinationToJSON(value['destination']),
+        'amount': value['amount'],
     };
 }
 

@@ -12,12 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { AdminQuorum } from './AdminQuorum';
+import {
+    AdminQuorumFromJSON,
+    AdminQuorumFromJSONTyped,
+    AdminQuorumToJSON,
+    AdminQuorumToJSONTyped,
+} from './AdminQuorum';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
     UserRefFromJSONTyped,
     UserRefToJSON,
+    UserRefToJSONTyped,
 } from './UserRef';
 
 /**
@@ -34,10 +42,10 @@ export interface AdminQuorumProposal {
     createdBy: UserRef;
     /**
      * 
-     * @type {number}
+     * @type {AdminQuorum}
      * @memberof AdminQuorumProposal
      */
-    quorumSize: number;
+    quorum: AdminQuorum;
     /**
      * 
      * @type {Date}
@@ -49,13 +57,11 @@ export interface AdminQuorumProposal {
 /**
  * Check if a given object implements the AdminQuorumProposal interface.
  */
-export function instanceOfAdminQuorumProposal(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "createdBy" in value;
-    isInstance = isInstance && "quorumSize" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-
-    return isInstance;
+export function instanceOfAdminQuorumProposal(value: object): value is AdminQuorumProposal {
+    if (!('createdBy' in value) || value['createdBy'] === undefined) return false;
+    if (!('quorum' in value) || value['quorum'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    return true;
 }
 
 export function AdminQuorumProposalFromJSON(json: any): AdminQuorumProposal {
@@ -63,29 +69,31 @@ export function AdminQuorumProposalFromJSON(json: any): AdminQuorumProposal {
 }
 
 export function AdminQuorumProposalFromJSONTyped(json: any, ignoreDiscriminator: boolean): AdminQuorumProposal {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'createdBy': UserRefFromJSON(json['created_by']),
-        'quorumSize': json['quorum_size'],
+        'quorum': AdminQuorumFromJSON(json['quorum']),
         'modifiedAt': (new Date(json['modified_at'])),
     };
 }
 
-export function AdminQuorumProposalToJSON(value?: AdminQuorumProposal | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AdminQuorumProposalToJSON(json: any): AdminQuorumProposal {
+    return AdminQuorumProposalToJSONTyped(json, false);
+}
+
+export function AdminQuorumProposalToJSONTyped(value?: AdminQuorumProposal | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'created_by': UserRefToJSON(value.createdBy),
-        'quorum_size': value.quorumSize,
-        'modified_at': (value.modifiedAt.toISOString()),
+        'created_by': UserRefToJSON(value['createdBy']),
+        'quorum': AdminQuorumToJSON(value['quorum']),
+        'modified_at': ((value['modifiedAt']).toISOString()),
     };
 }
 

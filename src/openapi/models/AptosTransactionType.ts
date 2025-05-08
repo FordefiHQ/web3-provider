@@ -26,6 +26,17 @@ export const AptosTransactionType = {
 export type AptosTransactionType = typeof AptosTransactionType[keyof typeof AptosTransactionType];
 
 
+export function instanceOfAptosTransactionType(value: any): boolean {
+    for (const key in AptosTransactionType) {
+        if (Object.prototype.hasOwnProperty.call(AptosTransactionType, key)) {
+            if (AptosTransactionType[key as keyof typeof AptosTransactionType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function AptosTransactionTypeFromJSON(json: any): AptosTransactionType {
     return AptosTransactionTypeFromJSONTyped(json, false);
 }
@@ -36,5 +47,9 @@ export function AptosTransactionTypeFromJSONTyped(json: any, ignoreDiscriminator
 
 export function AptosTransactionTypeToJSON(value?: AptosTransactionType | null): any {
     return value as any;
+}
+
+export function AptosTransactionTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): AptosTransactionType {
+    return value as AptosTransactionType;
 }
 

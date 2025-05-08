@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AddressLookupTableState } from './AddressLookupTableState';
 import {
     AddressLookupTableStateFromJSON,
     AddressLookupTableStateFromJSONTyped,
     AddressLookupTableStateToJSON,
+    AddressLookupTableStateToJSONTyped,
 } from './AddressLookupTableState';
 import type { SolanaAddress } from './SolanaAddress';
 import {
     SolanaAddressFromJSON,
     SolanaAddressFromJSONTyped,
     SolanaAddressToJSON,
+    SolanaAddressToJSONTyped,
 } from './SolanaAddress';
 
 /**
@@ -61,14 +63,12 @@ export interface SolanaEnrichedMessageAddressTableLookup {
 /**
  * Check if a given object implements the SolanaEnrichedMessageAddressTableLookup interface.
  */
-export function instanceOfSolanaEnrichedMessageAddressTableLookup(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "accountKey" in value;
-    isInstance = isInstance && "writableIndexes" in value;
-    isInstance = isInstance && "readonlyIndexes" in value;
-    isInstance = isInstance && "state" in value;
-
-    return isInstance;
+export function instanceOfSolanaEnrichedMessageAddressTableLookup(value: object): value is SolanaEnrichedMessageAddressTableLookup {
+    if (!('accountKey' in value) || value['accountKey'] === undefined) return false;
+    if (!('writableIndexes' in value) || value['writableIndexes'] === undefined) return false;
+    if (!('readonlyIndexes' in value) || value['readonlyIndexes'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    return true;
 }
 
 export function SolanaEnrichedMessageAddressTableLookupFromJSON(json: any): SolanaEnrichedMessageAddressTableLookup {
@@ -76,7 +76,7 @@ export function SolanaEnrichedMessageAddressTableLookupFromJSON(json: any): Sola
 }
 
 export function SolanaEnrichedMessageAddressTableLookupFromJSONTyped(json: any, ignoreDiscriminator: boolean): SolanaEnrichedMessageAddressTableLookup {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -88,19 +88,21 @@ export function SolanaEnrichedMessageAddressTableLookupFromJSONTyped(json: any, 
     };
 }
 
-export function SolanaEnrichedMessageAddressTableLookupToJSON(value?: SolanaEnrichedMessageAddressTableLookup | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SolanaEnrichedMessageAddressTableLookupToJSON(json: any): SolanaEnrichedMessageAddressTableLookup {
+    return SolanaEnrichedMessageAddressTableLookupToJSONTyped(json, false);
+}
+
+export function SolanaEnrichedMessageAddressTableLookupToJSONTyped(value?: SolanaEnrichedMessageAddressTableLookup | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'account_key': SolanaAddressToJSON(value.accountKey),
-        'writable_indexes': value.writableIndexes,
-        'readonly_indexes': value.readonlyIndexes,
-        'state': AddressLookupTableStateToJSON(value.state),
+        'account_key': SolanaAddressToJSON(value['accountKey']),
+        'writable_indexes': value['writableIndexes'],
+        'readonly_indexes': value['readonlyIndexes'],
+        'state': AddressLookupTableStateToJSON(value['state']),
     };
 }
 

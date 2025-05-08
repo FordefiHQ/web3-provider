@@ -12,29 +12,29 @@
  * Do not edit the class manually.
  */
 
+import type { SuiImmOrOwnedObjectRefInputArgument } from './SuiImmOrOwnedObjectRefInputArgument';
 import {
-    SuiImmOrOwnedObjectRefInputArgument,
     instanceOfSuiImmOrOwnedObjectRefInputArgument,
     SuiImmOrOwnedObjectRefInputArgumentFromJSON,
     SuiImmOrOwnedObjectRefInputArgumentFromJSONTyped,
     SuiImmOrOwnedObjectRefInputArgumentToJSON,
 } from './SuiImmOrOwnedObjectRefInputArgument';
+import type { SuiPartialObjectRefInputArgument } from './SuiPartialObjectRefInputArgument';
 import {
-    SuiPartialObjectRefInputArgument,
     instanceOfSuiPartialObjectRefInputArgument,
     SuiPartialObjectRefInputArgumentFromJSON,
     SuiPartialObjectRefInputArgumentFromJSONTyped,
     SuiPartialObjectRefInputArgumentToJSON,
 } from './SuiPartialObjectRefInputArgument';
+import type { SuiReceivingObjectRefInputArgument } from './SuiReceivingObjectRefInputArgument';
 import {
-    SuiReceivingObjectRefInputArgument,
     instanceOfSuiReceivingObjectRefInputArgument,
     SuiReceivingObjectRefInputArgumentFromJSON,
     SuiReceivingObjectRefInputArgumentFromJSONTyped,
     SuiReceivingObjectRefInputArgumentToJSON,
 } from './SuiReceivingObjectRefInputArgument';
+import type { SuiSharedObjectRefInputArgument } from './SuiSharedObjectRefInputArgument';
 import {
-    SuiSharedObjectRefInputArgument,
     instanceOfSuiSharedObjectRefInputArgument,
     SuiSharedObjectRefInputArgumentFromJSON,
     SuiSharedObjectRefInputArgumentFromJSONTyped,
@@ -53,39 +53,40 @@ export function SuiObjectInputArgumentDetailsFromJSON(json: any): SuiObjectInput
 }
 
 export function SuiObjectInputArgumentDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiObjectInputArgumentDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'imm_or_owned':
-            return {...SuiImmOrOwnedObjectRefInputArgumentFromJSONTyped(json, true), type: 'imm_or_owned'};
+            return Object.assign({}, SuiImmOrOwnedObjectRefInputArgumentFromJSONTyped(json, true), { type: 'imm_or_owned' } as const);
         case 'partial':
-            return {...SuiPartialObjectRefInputArgumentFromJSONTyped(json, true), type: 'partial'};
+            return Object.assign({}, SuiPartialObjectRefInputArgumentFromJSONTyped(json, true), { type: 'partial' } as const);
         case 'receiving':
-            return {...SuiReceivingObjectRefInputArgumentFromJSONTyped(json, true), type: 'receiving'};
+            return Object.assign({}, SuiReceivingObjectRefInputArgumentFromJSONTyped(json, true), { type: 'receiving' } as const);
         case 'shared':
-            return {...SuiSharedObjectRefInputArgumentFromJSONTyped(json, true), type: 'shared'};
+            return Object.assign({}, SuiSharedObjectRefInputArgumentFromJSONTyped(json, true), { type: 'shared' } as const);
         default:
             throw new Error(`No variant of SuiObjectInputArgumentDetails exists with 'type=${json['type']}'`);
     }
 }
 
-export function SuiObjectInputArgumentDetailsToJSON(value?: SuiObjectInputArgumentDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function SuiObjectInputArgumentDetailsToJSON(json: any): any {
+    return SuiObjectInputArgumentDetailsToJSONTyped(json, false);
+}
+
+export function SuiObjectInputArgumentDetailsToJSONTyped(value?: SuiObjectInputArgumentDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'imm_or_owned':
-            return SuiImmOrOwnedObjectRefInputArgumentToJSON(value);
+            return Object.assign({}, SuiImmOrOwnedObjectRefInputArgumentToJSON(value), { type: 'imm_or_owned' } as const);
         case 'partial':
-            return SuiPartialObjectRefInputArgumentToJSON(value);
+            return Object.assign({}, SuiPartialObjectRefInputArgumentToJSON(value), { type: 'partial' } as const);
         case 'receiving':
-            return SuiReceivingObjectRefInputArgumentToJSON(value);
+            return Object.assign({}, SuiReceivingObjectRefInputArgumentToJSON(value), { type: 'receiving' } as const);
         case 'shared':
-            return SuiSharedObjectRefInputArgumentToJSON(value);
+            return Object.assign({}, SuiSharedObjectRefInputArgumentToJSON(value), { type: 'shared' } as const);
         default:
             throw new Error(`No variant of SuiObjectInputArgumentDetails exists with 'type=${value['type']}'`);
     }

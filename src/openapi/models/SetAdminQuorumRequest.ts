@@ -12,7 +12,15 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { AdminQuorumRequest } from './AdminQuorumRequest';
+import {
+    AdminQuorumRequestFromJSON,
+    AdminQuorumRequestFromJSONTyped,
+    AdminQuorumRequestToJSON,
+    AdminQuorumRequestToJSONTyped,
+} from './AdminQuorumRequest';
+
 /**
  * 
  * @export
@@ -21,20 +29,18 @@ import { exists, mapValues } from '../runtime';
 export interface SetAdminQuorumRequest {
     /**
      * 
-     * @type {number}
+     * @type {AdminQuorumRequest}
      * @memberof SetAdminQuorumRequest
      */
-    quorumSize: number;
+    quorum: AdminQuorumRequest;
 }
 
 /**
  * Check if a given object implements the SetAdminQuorumRequest interface.
  */
-export function instanceOfSetAdminQuorumRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "quorumSize" in value;
-
-    return isInstance;
+export function instanceOfSetAdminQuorumRequest(value: object): value is SetAdminQuorumRequest {
+    if (!('quorum' in value) || value['quorum'] === undefined) return false;
+    return true;
 }
 
 export function SetAdminQuorumRequestFromJSON(json: any): SetAdminQuorumRequest {
@@ -42,25 +48,27 @@ export function SetAdminQuorumRequestFromJSON(json: any): SetAdminQuorumRequest 
 }
 
 export function SetAdminQuorumRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): SetAdminQuorumRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'quorumSize': json['quorum_size'],
+        'quorum': AdminQuorumRequestFromJSON(json['quorum']),
     };
 }
 
-export function SetAdminQuorumRequestToJSON(value?: SetAdminQuorumRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SetAdminQuorumRequestToJSON(json: any): SetAdminQuorumRequest {
+    return SetAdminQuorumRequestToJSONTyped(json, false);
+}
+
+export function SetAdminQuorumRequestToJSONTyped(value?: SetAdminQuorumRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'quorum_size': value.quorumSize,
+        'quorum': AdminQuorumRequestToJSON(value['quorum']),
     };
 }
 

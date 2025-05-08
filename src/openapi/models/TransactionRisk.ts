@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { TransactionRiskSeverity } from './TransactionRiskSeverity';
-import {
-    TransactionRiskSeverityFromJSON,
-    TransactionRiskSeverityFromJSONTyped,
-    TransactionRiskSeverityToJSON,
-} from './TransactionRiskSeverity';
+import { mapValues } from '../runtime';
 import type { TransactionRiskType } from './TransactionRiskType';
 import {
     TransactionRiskTypeFromJSON,
     TransactionRiskTypeFromJSONTyped,
     TransactionRiskTypeToJSON,
+    TransactionRiskTypeToJSONTyped,
 } from './TransactionRiskType';
+import type { TransactionRiskSeverity } from './TransactionRiskSeverity';
+import {
+    TransactionRiskSeverityFromJSON,
+    TransactionRiskSeverityFromJSONTyped,
+    TransactionRiskSeverityToJSON,
+    TransactionRiskSeverityToJSONTyped,
+} from './TransactionRiskSeverity';
 
 /**
  * 
@@ -58,17 +60,17 @@ export interface TransactionRisk {
     description: string;
 }
 
+
+
 /**
  * Check if a given object implements the TransactionRisk interface.
  */
-export function instanceOfTransactionRisk(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "severity" in value;
-    isInstance = isInstance && "title" in value;
-    isInstance = isInstance && "description" in value;
-
-    return isInstance;
+export function instanceOfTransactionRisk(value: object): value is TransactionRisk {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('severity' in value) || value['severity'] === undefined) return false;
+    if (!('title' in value) || value['title'] === undefined) return false;
+    if (!('description' in value) || value['description'] === undefined) return false;
+    return true;
 }
 
 export function TransactionRiskFromJSON(json: any): TransactionRisk {
@@ -76,7 +78,7 @@ export function TransactionRiskFromJSON(json: any): TransactionRisk {
 }
 
 export function TransactionRiskFromJSONTyped(json: any, ignoreDiscriminator: boolean): TransactionRisk {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -88,19 +90,21 @@ export function TransactionRiskFromJSONTyped(json: any, ignoreDiscriminator: boo
     };
 }
 
-export function TransactionRiskToJSON(value?: TransactionRisk | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TransactionRiskToJSON(json: any): TransactionRisk {
+    return TransactionRiskToJSONTyped(json, false);
+}
+
+export function TransactionRiskToJSONTyped(value?: TransactionRisk | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': TransactionRiskTypeToJSON(value.type),
-        'severity': TransactionRiskSeverityToJSON(value.severity),
-        'title': value.title,
-        'description': value.description,
+        'type': TransactionRiskTypeToJSON(value['type']),
+        'severity': TransactionRiskSeverityToJSON(value['severity']),
+        'title': value['title'],
+        'description': value['description'],
     };
 }
 

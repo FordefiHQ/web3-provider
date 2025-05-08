@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
     UserRefFromJSONTyped,
     UserRefToJSON,
+    UserRefToJSONTyped,
 } from './UserRef';
 
 /**
@@ -61,15 +62,13 @@ export interface BackupEmailChageState {
 /**
  * Check if a given object implements the BackupEmailChageState interface.
  */
-export function instanceOfBackupEmailChageState(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "newEmail" in value;
-    isInstance = isInstance && "initiatedBy" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "requestId" in value;
-
-    return isInstance;
+export function instanceOfBackupEmailChageState(value: object): value is BackupEmailChageState {
+    if (!('newEmail' in value) || value['newEmail'] === undefined) return false;
+    if (!('initiatedBy' in value) || value['initiatedBy'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('requestId' in value) || value['requestId'] === undefined) return false;
+    return true;
 }
 
 export function BackupEmailChageStateFromJSON(json: any): BackupEmailChageState {
@@ -77,7 +76,7 @@ export function BackupEmailChageStateFromJSON(json: any): BackupEmailChageState 
 }
 
 export function BackupEmailChageStateFromJSONTyped(json: any, ignoreDiscriminator: boolean): BackupEmailChageState {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -90,20 +89,22 @@ export function BackupEmailChageStateFromJSONTyped(json: any, ignoreDiscriminato
     };
 }
 
-export function BackupEmailChageStateToJSON(value?: BackupEmailChageState | null): any {
-    if (value === undefined) {
-        return undefined;
+export function BackupEmailChageStateToJSON(json: any): BackupEmailChageState {
+    return BackupEmailChageStateToJSONTyped(json, false);
+}
+
+export function BackupEmailChageStateToJSONTyped(value?: BackupEmailChageState | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'new_email': value.newEmail,
-        'initiated_by': UserRefToJSON(value.initiatedBy),
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'request_id': value.requestId,
+        'new_email': value['newEmail'],
+        'initiated_by': UserRefToJSON(value['initiatedBy']),
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'request_id': value['requestId'],
     };
 }
 

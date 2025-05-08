@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { TonBalanceChangeEffect } from './TonBalanceChangeEffect';
 import {
     TonBalanceChangeEffectFromJSON,
     TonBalanceChangeEffectFromJSONTyped,
     TonBalanceChangeEffectToJSON,
+    TonBalanceChangeEffectToJSONTyped,
 } from './TonBalanceChangeEffect';
 import type { TonTransferEffect } from './TonTransferEffect';
 import {
     TonTransferEffectFromJSON,
     TonTransferEffectFromJSONTyped,
     TonTransferEffectToJSON,
+    TonTransferEffectToJSONTyped,
 } from './TonTransferEffect';
 
 /**
@@ -49,12 +51,10 @@ export interface TonEffects {
 /**
  * Check if a given object implements the TonEffects interface.
  */
-export function instanceOfTonEffects(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "balanceChanges" in value;
-    isInstance = isInstance && "transfers" in value;
-
-    return isInstance;
+export function instanceOfTonEffects(value: object): value is TonEffects {
+    if (!('balanceChanges' in value) || value['balanceChanges'] === undefined) return false;
+    if (!('transfers' in value) || value['transfers'] === undefined) return false;
+    return true;
 }
 
 export function TonEffectsFromJSON(json: any): TonEffects {
@@ -62,7 +62,7 @@ export function TonEffectsFromJSON(json: any): TonEffects {
 }
 
 export function TonEffectsFromJSONTyped(json: any, ignoreDiscriminator: boolean): TonEffects {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -72,17 +72,19 @@ export function TonEffectsFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     };
 }
 
-export function TonEffectsToJSON(value?: TonEffects | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TonEffectsToJSON(json: any): TonEffects {
+    return TonEffectsToJSONTyped(json, false);
+}
+
+export function TonEffectsToJSONTyped(value?: TonEffects | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'balance_changes': ((value.balanceChanges as Array<any>).map(TonBalanceChangeEffectToJSON)),
-        'transfers': ((value.transfers as Array<any>).map(TonTransferEffectToJSON)),
+        'balance_changes': ((value['balanceChanges'] as Array<any>).map(TonBalanceChangeEffectToJSON)),
+        'transfers': ((value['transfers'] as Array<any>).map(TonTransferEffectToJSON)),
     };
 }
 

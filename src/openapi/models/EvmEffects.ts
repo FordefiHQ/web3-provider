@@ -12,37 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { AllowanceEffect } from './AllowanceEffect';
-import {
-    AllowanceEffectFromJSON,
-    AllowanceEffectFromJSONTyped,
-    AllowanceEffectToJSON,
-} from './AllowanceEffect';
+import { mapValues } from '../runtime';
 import type { EvmBalanceChangeEffect } from './EvmBalanceChangeEffect';
 import {
     EvmBalanceChangeEffectFromJSON,
     EvmBalanceChangeEffectFromJSONTyped,
     EvmBalanceChangeEffectToJSON,
+    EvmBalanceChangeEffectToJSONTyped,
 } from './EvmBalanceChangeEffect';
 import type { EvmBridgeEffect } from './EvmBridgeEffect';
 import {
     EvmBridgeEffectFromJSON,
     EvmBridgeEffectFromJSONTyped,
     EvmBridgeEffectToJSON,
+    EvmBridgeEffectToJSONTyped,
 } from './EvmBridgeEffect';
-import type { EvmContractDeploymentEffect } from './EvmContractDeploymentEffect';
-import {
-    EvmContractDeploymentEffectFromJSON,
-    EvmContractDeploymentEffectFromJSONTyped,
-    EvmContractDeploymentEffectToJSON,
-} from './EvmContractDeploymentEffect';
 import type { EvmTransferEffect } from './EvmTransferEffect';
 import {
     EvmTransferEffectFromJSON,
     EvmTransferEffectFromJSONTyped,
     EvmTransferEffectToJSON,
+    EvmTransferEffectToJSONTyped,
 } from './EvmTransferEffect';
+import type { EvmContractDeploymentEffect } from './EvmContractDeploymentEffect';
+import {
+    EvmContractDeploymentEffectFromJSON,
+    EvmContractDeploymentEffectFromJSONTyped,
+    EvmContractDeploymentEffectToJSON,
+    EvmContractDeploymentEffectToJSONTyped,
+} from './EvmContractDeploymentEffect';
+import type { AllowanceEffect } from './AllowanceEffect';
+import {
+    AllowanceEffectFromJSON,
+    AllowanceEffectFromJSONTyped,
+    AllowanceEffectToJSON,
+    AllowanceEffectToJSONTyped,
+} from './AllowanceEffect';
 
 /**
  * 
@@ -85,15 +90,13 @@ export interface EvmEffects {
 /**
  * Check if a given object implements the EvmEffects interface.
  */
-export function instanceOfEvmEffects(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "balanceChanges" in value;
-    isInstance = isInstance && "transfers" in value;
-    isInstance = isInstance && "allowances" in value;
-    isInstance = isInstance && "bridge" in value;
-    isInstance = isInstance && "contractDeployments" in value;
-
-    return isInstance;
+export function instanceOfEvmEffects(value: object): value is EvmEffects {
+    if (!('balanceChanges' in value) || value['balanceChanges'] === undefined) return false;
+    if (!('transfers' in value) || value['transfers'] === undefined) return false;
+    if (!('allowances' in value) || value['allowances'] === undefined) return false;
+    if (!('bridge' in value) || value['bridge'] === undefined) return false;
+    if (!('contractDeployments' in value) || value['contractDeployments'] === undefined) return false;
+    return true;
 }
 
 export function EvmEffectsFromJSON(json: any): EvmEffects {
@@ -101,7 +104,7 @@ export function EvmEffectsFromJSON(json: any): EvmEffects {
 }
 
 export function EvmEffectsFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmEffects {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -114,20 +117,22 @@ export function EvmEffectsFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     };
 }
 
-export function EvmEffectsToJSON(value?: EvmEffects | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EvmEffectsToJSON(json: any): EvmEffects {
+    return EvmEffectsToJSONTyped(json, false);
+}
+
+export function EvmEffectsToJSONTyped(value?: EvmEffects | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'balance_changes': ((value.balanceChanges as Array<any>).map(EvmBalanceChangeEffectToJSON)),
-        'transfers': ((value.transfers as Array<any>).map(EvmTransferEffectToJSON)),
-        'allowances': ((value.allowances as Array<any>).map(AllowanceEffectToJSON)),
-        'bridge': ((value.bridge as Array<any>).map(EvmBridgeEffectToJSON)),
-        'contract_deployments': ((value.contractDeployments as Array<any>).map(EvmContractDeploymentEffectToJSON)),
+        'balance_changes': ((value['balanceChanges'] as Array<any>).map(EvmBalanceChangeEffectToJSON)),
+        'transfers': ((value['transfers'] as Array<any>).map(EvmTransferEffectToJSON)),
+        'allowances': ((value['allowances'] as Array<any>).map(AllowanceEffectToJSON)),
+        'bridge': ((value['bridge'] as Array<any>).map(EvmBridgeEffectToJSON)),
+        'contract_deployments': ((value['contractDeployments'] as Array<any>).map(EvmContractDeploymentEffectToJSON)),
     };
 }
 

@@ -26,6 +26,17 @@ export const VaultAddressSortableFields = {
 export type VaultAddressSortableFields = typeof VaultAddressSortableFields[keyof typeof VaultAddressSortableFields];
 
 
+export function instanceOfVaultAddressSortableFields(value: any): boolean {
+    for (const key in VaultAddressSortableFields) {
+        if (Object.prototype.hasOwnProperty.call(VaultAddressSortableFields, key)) {
+            if (VaultAddressSortableFields[key as keyof typeof VaultAddressSortableFields] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function VaultAddressSortableFieldsFromJSON(json: any): VaultAddressSortableFields {
     return VaultAddressSortableFieldsFromJSONTyped(json, false);
 }
@@ -36,5 +47,9 @@ export function VaultAddressSortableFieldsFromJSONTyped(json: any, ignoreDiscrim
 
 export function VaultAddressSortableFieldsToJSON(value?: VaultAddressSortableFields | null): any {
     return value as any;
+}
+
+export function VaultAddressSortableFieldsToJSONTyped(value: any, ignoreDiscriminator: boolean): VaultAddressSortableFields {
+    return value as VaultAddressSortableFields;
 }
 

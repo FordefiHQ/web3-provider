@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type CosmosMessageBase64DataTypeEnum = typeof CosmosMessageBase64DataType
 /**
  * Check if a given object implements the CosmosMessageBase64Data interface.
  */
-export function instanceOfCosmosMessageBase64Data(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "data" in value;
-
-    return isInstance;
+export function instanceOfCosmosMessageBase64Data(value: object): value is CosmosMessageBase64Data {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('data' in value) || value['data'] === undefined) return false;
+    return true;
 }
 
 export function CosmosMessageBase64DataFromJSON(json: any): CosmosMessageBase64Data {
@@ -59,7 +57,7 @@ export function CosmosMessageBase64DataFromJSON(json: any): CosmosMessageBase64D
 }
 
 export function CosmosMessageBase64DataFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosMessageBase64Data {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function CosmosMessageBase64DataFromJSONTyped(json: any, ignoreDiscrimina
     };
 }
 
-export function CosmosMessageBase64DataToJSON(value?: CosmosMessageBase64Data | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosMessageBase64DataToJSON(json: any): CosmosMessageBase64Data {
+    return CosmosMessageBase64DataToJSONTyped(json, false);
+}
+
+export function CosmosMessageBase64DataToJSONTyped(value?: CosmosMessageBase64Data | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'data': value.data,
+        'type': value['type'],
+        'data': value['data'],
     };
 }
 

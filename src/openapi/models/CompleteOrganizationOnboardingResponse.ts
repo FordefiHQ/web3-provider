@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { TimestampedSignature } from './TimestampedSignature';
-import {
-    TimestampedSignatureFromJSON,
-    TimestampedSignatureFromJSONTyped,
-    TimestampedSignatureToJSON,
-} from './TimestampedSignature';
+import { mapValues } from '../runtime';
 import type { UserWithOrganization } from './UserWithOrganization';
 import {
     UserWithOrganizationFromJSON,
     UserWithOrganizationFromJSONTyped,
     UserWithOrganizationToJSON,
+    UserWithOrganizationToJSONTyped,
 } from './UserWithOrganization';
+import type { TimestampedSignature } from './TimestampedSignature';
+import {
+    TimestampedSignatureFromJSON,
+    TimestampedSignatureFromJSONTyped,
+    TimestampedSignatureToJSON,
+    TimestampedSignatureToJSONTyped,
+} from './TimestampedSignature';
 
 /**
  * 
@@ -55,13 +57,11 @@ export interface CompleteOrganizationOnboardingResponse {
 /**
  * Check if a given object implements the CompleteOrganizationOnboardingResponse interface.
  */
-export function instanceOfCompleteOrganizationOnboardingResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "userInfo" in value;
-    isInstance = isInstance && "deviceId" in value;
-    isInstance = isInstance && "timestampedSignature" in value;
-
-    return isInstance;
+export function instanceOfCompleteOrganizationOnboardingResponse(value: object): value is CompleteOrganizationOnboardingResponse {
+    if (!('userInfo' in value) || value['userInfo'] === undefined) return false;
+    if (!('deviceId' in value) || value['deviceId'] === undefined) return false;
+    if (!('timestampedSignature' in value) || value['timestampedSignature'] === undefined) return false;
+    return true;
 }
 
 export function CompleteOrganizationOnboardingResponseFromJSON(json: any): CompleteOrganizationOnboardingResponse {
@@ -69,7 +69,7 @@ export function CompleteOrganizationOnboardingResponseFromJSON(json: any): Compl
 }
 
 export function CompleteOrganizationOnboardingResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): CompleteOrganizationOnboardingResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -80,18 +80,20 @@ export function CompleteOrganizationOnboardingResponseFromJSONTyped(json: any, i
     };
 }
 
-export function CompleteOrganizationOnboardingResponseToJSON(value?: CompleteOrganizationOnboardingResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CompleteOrganizationOnboardingResponseToJSON(json: any): CompleteOrganizationOnboardingResponse {
+    return CompleteOrganizationOnboardingResponseToJSONTyped(json, false);
+}
+
+export function CompleteOrganizationOnboardingResponseToJSONTyped(value?: CompleteOrganizationOnboardingResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'user_info': UserWithOrganizationToJSON(value.userInfo),
-        'device_id': value.deviceId,
-        'timestamped_signature': TimestampedSignatureToJSON(value.timestampedSignature),
+        'user_info': UserWithOrganizationToJSON(value['userInfo']),
+        'device_id': value['deviceId'],
+        'timestamped_signature': TimestampedSignatureToJSON(value['timestampedSignature']),
     };
 }
 

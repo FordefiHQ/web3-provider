@@ -25,6 +25,17 @@ export const UserRole = {
 export type UserRole = typeof UserRole[keyof typeof UserRole];
 
 
+export function instanceOfUserRole(value: any): boolean {
+    for (const key in UserRole) {
+        if (Object.prototype.hasOwnProperty.call(UserRole, key)) {
+            if (UserRole[key as keyof typeof UserRole] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function UserRoleFromJSON(json: any): UserRole {
     return UserRoleFromJSONTyped(json, false);
 }
@@ -35,5 +46,9 @@ export function UserRoleFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
 
 export function UserRoleToJSON(value?: UserRole | null): any {
     return value as any;
+}
+
+export function UserRoleToJSONTyped(value: any, ignoreDiscriminator: boolean): UserRole {
+    return value as UserRole;
 }
 

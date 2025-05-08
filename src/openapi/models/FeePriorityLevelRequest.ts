@@ -25,6 +25,17 @@ export const FeePriorityLevelRequest = {
 export type FeePriorityLevelRequest = typeof FeePriorityLevelRequest[keyof typeof FeePriorityLevelRequest];
 
 
+export function instanceOfFeePriorityLevelRequest(value: any): boolean {
+    for (const key in FeePriorityLevelRequest) {
+        if (Object.prototype.hasOwnProperty.call(FeePriorityLevelRequest, key)) {
+            if (FeePriorityLevelRequest[key as keyof typeof FeePriorityLevelRequest] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function FeePriorityLevelRequestFromJSON(json: any): FeePriorityLevelRequest {
     return FeePriorityLevelRequestFromJSONTyped(json, false);
 }
@@ -35,5 +46,9 @@ export function FeePriorityLevelRequestFromJSONTyped(json: any, ignoreDiscrimina
 
 export function FeePriorityLevelRequestToJSON(value?: FeePriorityLevelRequest | null): any {
     return value as any;
+}
+
+export function FeePriorityLevelRequestToJSONTyped(value: any, ignoreDiscriminator: boolean): FeePriorityLevelRequest {
+    return value as FeePriorityLevelRequest;
 }
 

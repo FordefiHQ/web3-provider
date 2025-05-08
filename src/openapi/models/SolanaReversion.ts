@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { SolanaReversionState } from './SolanaReversionState';
 import {
     SolanaReversionStateFromJSON,
     SolanaReversionStateFromJSONTyped,
     SolanaReversionStateToJSON,
+    SolanaReversionStateToJSONTyped,
 } from './SolanaReversionState';
 
 /**
@@ -40,14 +41,14 @@ export interface SolanaReversion {
     reason?: string;
 }
 
+
+
 /**
  * Check if a given object implements the SolanaReversion interface.
  */
-export function instanceOfSolanaReversion(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "state" in value;
-
-    return isInstance;
+export function instanceOfSolanaReversion(value: object): value is SolanaReversion {
+    if (!('state' in value) || value['state'] === undefined) return false;
+    return true;
 }
 
 export function SolanaReversionFromJSON(json: any): SolanaReversion {
@@ -55,27 +56,29 @@ export function SolanaReversionFromJSON(json: any): SolanaReversion {
 }
 
 export function SolanaReversionFromJSONTyped(json: any, ignoreDiscriminator: boolean): SolanaReversion {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'state': SolanaReversionStateFromJSON(json['state']),
-        'reason': !exists(json, 'reason') ? undefined : json['reason'],
+        'reason': json['reason'] == null ? undefined : json['reason'],
     };
 }
 
-export function SolanaReversionToJSON(value?: SolanaReversion | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SolanaReversionToJSON(json: any): SolanaReversion {
+    return SolanaReversionToJSONTyped(json, false);
+}
+
+export function SolanaReversionToJSONTyped(value?: SolanaReversion | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'state': SolanaReversionStateToJSON(value.state),
-        'reason': value.reason,
+        'state': SolanaReversionStateToJSON(value['state']),
+        'reason': value['reason'],
     };
 }
 

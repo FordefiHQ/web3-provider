@@ -12,36 +12,41 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { ActionSigningRequest } from './ActionSigningRequest';
 import {
     ActionSigningRequestFromJSON,
     ActionSigningRequestFromJSONTyped,
     ActionSigningRequestToJSON,
+    ActionSigningRequestToJSONTyped,
 } from './ActionSigningRequest';
 import type { ApprovalRequest } from './ApprovalRequest';
 import {
     ApprovalRequestFromJSON,
     ApprovalRequestFromJSONTyped,
     ApprovalRequestToJSON,
+    ApprovalRequestToJSONTyped,
 } from './ApprovalRequest';
 import type { BackupPublicKey } from './BackupPublicKey';
 import {
     BackupPublicKeyFromJSON,
     BackupPublicKeyFromJSONTyped,
     BackupPublicKeyToJSON,
+    BackupPublicKeyToJSONTyped,
 } from './BackupPublicKey';
 import type { BackupType } from './BackupType';
 import {
     BackupTypeFromJSON,
     BackupTypeFromJSONTyped,
     BackupTypeToJSON,
+    BackupTypeToJSONTyped,
 } from './BackupType';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
     UserRefFromJSONTyped,
     UserRefToJSON,
+    UserRefToJSONTyped,
 } from './UserRef';
 
 /**
@@ -70,16 +75,16 @@ export interface CreateBackupAction {
     modifiedAt: Date;
     /**
      * 
-     * @type {string}
-     * @memberof CreateBackupAction
-     */
-    type: CreateBackupActionTypeEnum;
-    /**
-     * 
      * @type {boolean}
      * @memberof CreateBackupAction
      */
     isPending: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateBackupAction
+     */
+    type: CreateBackupActionTypeEnum;
     /**
      * 
      * @type {UserRef}
@@ -160,21 +165,19 @@ export type CreateBackupActionStateEnum = typeof CreateBackupActionStateEnum[key
 /**
  * Check if a given object implements the CreateBackupAction interface.
  */
-export function instanceOfCreateBackupAction(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "isPending" in value;
-    isInstance = isInstance && "createdBy" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "requestId" in value;
-    isInstance = isInstance && "email" in value;
-    isInstance = isInstance && "backupType" in value;
-    isInstance = isInstance && "signingRequest" in value;
-
-    return isInstance;
+export function instanceOfCreateBackupAction(value: object): value is CreateBackupAction {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('isPending' in value) || value['isPending'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('createdBy' in value) || value['createdBy'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('requestId' in value) || value['requestId'] === undefined) return false;
+    if (!('email' in value) || value['email'] === undefined) return false;
+    if (!('backupType' in value) || value['backupType'] === undefined) return false;
+    if (!('signingRequest' in value) || value['signingRequest'] === undefined) return false;
+    return true;
 }
 
 export function CreateBackupActionFromJSON(json: any): CreateBackupAction {
@@ -182,7 +185,7 @@ export function CreateBackupActionFromJSON(json: any): CreateBackupAction {
 }
 
 export function CreateBackupActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateBackupAction {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -190,43 +193,45 @@ export function CreateBackupActionFromJSONTyped(json: any, ignoreDiscriminator: 
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
-        'type': json['type'],
         'isPending': json['is_pending'],
+        'type': json['type'],
         'createdBy': UserRefFromJSON(json['created_by']),
-        'abortedBy': !exists(json, 'aborted_by') ? undefined : UserRefFromJSON(json['aborted_by']),
+        'abortedBy': json['aborted_by'] == null ? undefined : UserRefFromJSON(json['aborted_by']),
         'state': json['state'],
         'requestId': json['request_id'],
         'email': json['email'],
         'backupType': BackupTypeFromJSON(json['backup_type']),
-        'publicKey': !exists(json, 'public_key') ? undefined : BackupPublicKeyFromJSON(json['public_key']),
-        'approvalRequest': !exists(json, 'approval_request') ? undefined : ApprovalRequestFromJSON(json['approval_request']),
+        'publicKey': json['public_key'] == null ? undefined : BackupPublicKeyFromJSON(json['public_key']),
+        'approvalRequest': json['approval_request'] == null ? undefined : ApprovalRequestFromJSON(json['approval_request']),
         'signingRequest': ActionSigningRequestFromJSON(json['signing_request']),
     };
 }
 
-export function CreateBackupActionToJSON(value?: CreateBackupAction | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateBackupActionToJSON(json: any): CreateBackupAction {
+    return CreateBackupActionToJSONTyped(json, false);
+}
+
+export function CreateBackupActionToJSONTyped(value?: CreateBackupAction | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'type': value.type,
-        'is_pending': value.isPending,
-        'created_by': UserRefToJSON(value.createdBy),
-        'aborted_by': UserRefToJSON(value.abortedBy),
-        'state': value.state,
-        'request_id': value.requestId,
-        'email': value.email,
-        'backup_type': BackupTypeToJSON(value.backupType),
-        'public_key': BackupPublicKeyToJSON(value.publicKey),
-        'approval_request': ApprovalRequestToJSON(value.approvalRequest),
-        'signing_request': ActionSigningRequestToJSON(value.signingRequest),
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'is_pending': value['isPending'],
+        'type': value['type'],
+        'created_by': UserRefToJSON(value['createdBy']),
+        'aborted_by': UserRefToJSON(value['abortedBy']),
+        'state': value['state'],
+        'request_id': value['requestId'],
+        'email': value['email'],
+        'backup_type': BackupTypeToJSON(value['backupType']),
+        'public_key': BackupPublicKeyToJSON(value['publicKey']),
+        'approval_request': ApprovalRequestToJSON(value['approvalRequest']),
+        'signing_request': ActionSigningRequestToJSON(value['signingRequest']),
     };
 }
 

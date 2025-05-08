@@ -12,24 +12,27 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { ApiKey } from './ApiKey';
-import {
-    ApiKeyFromJSON,
-    ApiKeyFromJSONTyped,
-    ApiKeyToJSON,
-} from './ApiKey';
+import { mapValues } from '../runtime';
 import type { ApiKeyType } from './ApiKeyType';
 import {
     ApiKeyTypeFromJSON,
     ApiKeyTypeFromJSONTyped,
     ApiKeyTypeToJSON,
+    ApiKeyTypeToJSONTyped,
 } from './ApiKeyType';
+import type { ApiKey } from './ApiKey';
+import {
+    ApiKeyFromJSON,
+    ApiKeyFromJSONTyped,
+    ApiKeyToJSON,
+    ApiKeyToJSONTyped,
+} from './ApiKey';
 import type { ExchangeType } from './ExchangeType';
 import {
     ExchangeTypeFromJSON,
     ExchangeTypeFromJSONTyped,
     ExchangeTypeToJSON,
+    ExchangeTypeToJSONTyped,
 } from './ExchangeType';
 
 /**
@@ -68,18 +71,24 @@ export interface CreateExchangeVaultRequest {
      * @memberof CreateExchangeVaultRequest
      */
     vaultGroupId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateExchangeVaultRequest
+     */
+    accountId?: string;
 }
+
+
 
 /**
  * Check if a given object implements the CreateExchangeVaultRequest interface.
  */
-export function instanceOfCreateExchangeVaultRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "exchangeType" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "apiKey" in value;
-
-    return isInstance;
+export function instanceOfCreateExchangeVaultRequest(value: object): value is CreateExchangeVaultRequest {
+    if (!('exchangeType' in value) || value['exchangeType'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('apiKey' in value) || value['apiKey'] === undefined) return false;
+    return true;
 }
 
 export function CreateExchangeVaultRequestFromJSON(json: any): CreateExchangeVaultRequest {
@@ -87,7 +96,7 @@ export function CreateExchangeVaultRequestFromJSON(json: any): CreateExchangeVau
 }
 
 export function CreateExchangeVaultRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateExchangeVaultRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -95,25 +104,29 @@ export function CreateExchangeVaultRequestFromJSONTyped(json: any, ignoreDiscrim
         'exchangeType': ExchangeTypeFromJSON(json['exchange_type']),
         'name': json['name'],
         'apiKey': ApiKeyFromJSON(json['api_key']),
-        'apiKeyType': !exists(json, 'api_key_type') ? undefined : ApiKeyTypeFromJSON(json['api_key_type']),
-        'vaultGroupId': !exists(json, 'vault_group_id') ? undefined : json['vault_group_id'],
+        'apiKeyType': json['api_key_type'] == null ? undefined : ApiKeyTypeFromJSON(json['api_key_type']),
+        'vaultGroupId': json['vault_group_id'] == null ? undefined : json['vault_group_id'],
+        'accountId': json['account_id'] == null ? undefined : json['account_id'],
     };
 }
 
-export function CreateExchangeVaultRequestToJSON(value?: CreateExchangeVaultRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateExchangeVaultRequestToJSON(json: any): CreateExchangeVaultRequest {
+    return CreateExchangeVaultRequestToJSONTyped(json, false);
+}
+
+export function CreateExchangeVaultRequestToJSONTyped(value?: CreateExchangeVaultRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'exchange_type': ExchangeTypeToJSON(value.exchangeType),
-        'name': value.name,
-        'api_key': ApiKeyToJSON(value.apiKey),
-        'api_key_type': ApiKeyTypeToJSON(value.apiKeyType),
-        'vault_group_id': value.vaultGroupId,
+        'exchange_type': ExchangeTypeToJSON(value['exchangeType']),
+        'name': value['name'],
+        'api_key': ApiKeyToJSON(value['apiKey']),
+        'api_key_type': ApiKeyTypeToJSON(value['apiKeyType']),
+        'vault_group_id': value['vaultGroupId'],
+        'account_id': value['accountId'],
     };
 }
 

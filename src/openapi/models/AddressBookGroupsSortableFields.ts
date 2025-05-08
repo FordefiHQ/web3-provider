@@ -28,6 +28,17 @@ export const AddressBookGroupsSortableFields = {
 export type AddressBookGroupsSortableFields = typeof AddressBookGroupsSortableFields[keyof typeof AddressBookGroupsSortableFields];
 
 
+export function instanceOfAddressBookGroupsSortableFields(value: any): boolean {
+    for (const key in AddressBookGroupsSortableFields) {
+        if (Object.prototype.hasOwnProperty.call(AddressBookGroupsSortableFields, key)) {
+            if (AddressBookGroupsSortableFields[key as keyof typeof AddressBookGroupsSortableFields] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function AddressBookGroupsSortableFieldsFromJSON(json: any): AddressBookGroupsSortableFields {
     return AddressBookGroupsSortableFieldsFromJSONTyped(json, false);
 }
@@ -38,5 +49,9 @@ export function AddressBookGroupsSortableFieldsFromJSONTyped(json: any, ignoreDi
 
 export function AddressBookGroupsSortableFieldsToJSON(value?: AddressBookGroupsSortableFields | null): any {
     return value as any;
+}
+
+export function AddressBookGroupsSortableFieldsToJSONTyped(value: any, ignoreDiscriminator: boolean): AddressBookGroupsSortableFields {
+    return value as AddressBookGroupsSortableFields;
 }
 

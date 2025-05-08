@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { PushMode } from './PushMode';
-import {
-    PushModeFromJSON,
-    PushModeFromJSONTyped,
-    PushModeToJSON,
-} from './PushMode';
+import { mapValues } from '../runtime';
 import type { SuiChainUniqueId } from './SuiChainUniqueId';
 import {
     SuiChainUniqueIdFromJSON,
     SuiChainUniqueIdFromJSONTyped,
     SuiChainUniqueIdToJSON,
+    SuiChainUniqueIdToJSONTyped,
 } from './SuiChainUniqueId';
+import type { PushMode } from './PushMode';
+import {
+    PushModeFromJSON,
+    PushModeFromJSONTyped,
+    PushModeToJSON,
+    PushModeToJSONTyped,
+} from './PushMode';
 
 /**
  * 
@@ -83,13 +85,11 @@ export type CreateSuiSerializedTransactionDataRequestTypeEnum = typeof CreateSui
 /**
  * Check if a given object implements the CreateSuiSerializedTransactionDataRequest interface.
  */
-export function instanceOfCreateSuiSerializedTransactionDataRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "data" in value;
-
-    return isInstance;
+export function instanceOfCreateSuiSerializedTransactionDataRequest(value: object): value is CreateSuiSerializedTransactionDataRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('data' in value) || value['data'] === undefined) return false;
+    return true;
 }
 
 export function CreateSuiSerializedTransactionDataRequestFromJSON(json: any): CreateSuiSerializedTransactionDataRequest {
@@ -97,35 +97,37 @@ export function CreateSuiSerializedTransactionDataRequestFromJSON(json: any): Cr
 }
 
 export function CreateSuiSerializedTransactionDataRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateSuiSerializedTransactionDataRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
-        'failOnPredictionFailure': !exists(json, 'fail_on_prediction_failure') ? undefined : json['fail_on_prediction_failure'],
-        'pushMode': !exists(json, 'push_mode') ? undefined : PushModeFromJSON(json['push_mode']),
-        'skipPrediction': !exists(json, 'skip_prediction') ? undefined : json['skip_prediction'],
+        'failOnPredictionFailure': json['fail_on_prediction_failure'] == null ? undefined : json['fail_on_prediction_failure'],
+        'pushMode': json['push_mode'] == null ? undefined : PushModeFromJSON(json['push_mode']),
+        'skipPrediction': json['skip_prediction'] == null ? undefined : json['skip_prediction'],
         'chain': SuiChainUniqueIdFromJSON(json['chain']),
         'data': json['data'],
     };
 }
 
-export function CreateSuiSerializedTransactionDataRequestToJSON(value?: CreateSuiSerializedTransactionDataRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateSuiSerializedTransactionDataRequestToJSON(json: any): CreateSuiSerializedTransactionDataRequest {
+    return CreateSuiSerializedTransactionDataRequestToJSONTyped(json, false);
+}
+
+export function CreateSuiSerializedTransactionDataRequestToJSONTyped(value?: CreateSuiSerializedTransactionDataRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'fail_on_prediction_failure': value.failOnPredictionFailure,
-        'push_mode': PushModeToJSON(value.pushMode),
-        'skip_prediction': value.skipPrediction,
-        'chain': SuiChainUniqueIdToJSON(value.chain),
-        'data': value.data,
+        'type': value['type'],
+        'fail_on_prediction_failure': value['failOnPredictionFailure'],
+        'push_mode': PushModeToJSON(value['pushMode']),
+        'skip_prediction': value['skipPrediction'],
+        'chain': SuiChainUniqueIdToJSON(value['chain']),
+        'data': value['data'],
     };
 }
 

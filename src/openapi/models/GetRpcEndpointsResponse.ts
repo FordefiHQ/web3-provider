@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { RpcEndpoint } from './RpcEndpoint';
 import {
     RpcEndpointFromJSON,
     RpcEndpointFromJSONTyped,
     RpcEndpointToJSON,
+    RpcEndpointToJSONTyped,
 } from './RpcEndpoint';
 
 /**
@@ -37,11 +38,9 @@ export interface GetRpcEndpointsResponse {
 /**
  * Check if a given object implements the GetRpcEndpointsResponse interface.
  */
-export function instanceOfGetRpcEndpointsResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "endpointsByChain" in value;
-
-    return isInstance;
+export function instanceOfGetRpcEndpointsResponse(value: object): value is GetRpcEndpointsResponse {
+    if (!('endpointsByChain' in value) || value['endpointsByChain'] === undefined) return false;
+    return true;
 }
 
 export function GetRpcEndpointsResponseFromJSON(json: any): GetRpcEndpointsResponse {
@@ -49,7 +48,7 @@ export function GetRpcEndpointsResponseFromJSON(json: any): GetRpcEndpointsRespo
 }
 
 export function GetRpcEndpointsResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetRpcEndpointsResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -58,16 +57,18 @@ export function GetRpcEndpointsResponseFromJSONTyped(json: any, ignoreDiscrimina
     };
 }
 
-export function GetRpcEndpointsResponseToJSON(value?: GetRpcEndpointsResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function GetRpcEndpointsResponseToJSON(json: any): GetRpcEndpointsResponse {
+    return GetRpcEndpointsResponseToJSONTyped(json, false);
+}
+
+export function GetRpcEndpointsResponseToJSONTyped(value?: GetRpcEndpointsResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'endpoints_by_chain': value.endpointsByChain,
+        'endpoints_by_chain': value['endpointsByChain'],
     };
 }
 

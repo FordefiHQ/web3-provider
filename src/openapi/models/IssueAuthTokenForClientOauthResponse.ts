@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -42,13 +42,11 @@ export interface IssueAuthTokenForClientOauthResponse {
 /**
  * Check if a given object implements the IssueAuthTokenForClientOauthResponse interface.
  */
-export function instanceOfIssueAuthTokenForClientOauthResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "accessToken" in value;
-    isInstance = isInstance && "tokenType" in value;
-    isInstance = isInstance && "expiresIn" in value;
-
-    return isInstance;
+export function instanceOfIssueAuthTokenForClientOauthResponse(value: object): value is IssueAuthTokenForClientOauthResponse {
+    if (!('accessToken' in value) || value['accessToken'] === undefined) return false;
+    if (!('tokenType' in value) || value['tokenType'] === undefined) return false;
+    if (!('expiresIn' in value) || value['expiresIn'] === undefined) return false;
+    return true;
 }
 
 export function IssueAuthTokenForClientOauthResponseFromJSON(json: any): IssueAuthTokenForClientOauthResponse {
@@ -56,7 +54,7 @@ export function IssueAuthTokenForClientOauthResponseFromJSON(json: any): IssueAu
 }
 
 export function IssueAuthTokenForClientOauthResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): IssueAuthTokenForClientOauthResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -67,18 +65,20 @@ export function IssueAuthTokenForClientOauthResponseFromJSONTyped(json: any, ign
     };
 }
 
-export function IssueAuthTokenForClientOauthResponseToJSON(value?: IssueAuthTokenForClientOauthResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function IssueAuthTokenForClientOauthResponseToJSON(json: any): IssueAuthTokenForClientOauthResponse {
+    return IssueAuthTokenForClientOauthResponseToJSONTyped(json, false);
+}
+
+export function IssueAuthTokenForClientOauthResponseToJSONTyped(value?: IssueAuthTokenForClientOauthResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'access_token': value.accessToken,
-        'token_type': value.tokenType,
-        'expires_in': value.expiresIn,
+        'access_token': value['accessToken'],
+        'token_type': value['tokenType'],
+        'expires_in': value['expiresIn'],
     };
 }
 

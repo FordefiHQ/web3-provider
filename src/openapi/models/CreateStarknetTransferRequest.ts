@@ -12,31 +12,35 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { CreateStarknetTransferRequestTo } from './CreateStarknetTransferRequestTo';
-import {
-    CreateStarknetTransferRequestToFromJSON,
-    CreateStarknetTransferRequestToFromJSONTyped,
-    CreateStarknetTransferRequestToToJSON,
-} from './CreateStarknetTransferRequestTo';
-import type { CreateStarknetTransferRequestValue } from './CreateStarknetTransferRequestValue';
-import {
-    CreateStarknetTransferRequestValueFromJSON,
-    CreateStarknetTransferRequestValueFromJSONTyped,
-    CreateStarknetTransferRequestValueToJSON,
-} from './CreateStarknetTransferRequestValue';
-import type { PushMode } from './PushMode';
-import {
-    PushModeFromJSON,
-    PushModeFromJSONTyped,
-    PushModeToJSON,
-} from './PushMode';
+import { mapValues } from '../runtime';
 import type { StarknetAssetIdentifierRequest } from './StarknetAssetIdentifierRequest';
 import {
     StarknetAssetIdentifierRequestFromJSON,
     StarknetAssetIdentifierRequestFromJSONTyped,
     StarknetAssetIdentifierRequestToJSON,
+    StarknetAssetIdentifierRequestToJSONTyped,
 } from './StarknetAssetIdentifierRequest';
+import type { CreateAptosTransferRequestValue } from './CreateAptosTransferRequestValue';
+import {
+    CreateAptosTransferRequestValueFromJSON,
+    CreateAptosTransferRequestValueFromJSONTyped,
+    CreateAptosTransferRequestValueToJSON,
+    CreateAptosTransferRequestValueToJSONTyped,
+} from './CreateAptosTransferRequestValue';
+import type { CreateStarknetTransferRequestTo } from './CreateStarknetTransferRequestTo';
+import {
+    CreateStarknetTransferRequestToFromJSON,
+    CreateStarknetTransferRequestToFromJSONTyped,
+    CreateStarknetTransferRequestToToJSON,
+    CreateStarknetTransferRequestToToJSONTyped,
+} from './CreateStarknetTransferRequestTo';
+import type { PushMode } from './PushMode';
+import {
+    PushModeFromJSON,
+    PushModeFromJSONTyped,
+    PushModeToJSON,
+    PushModeToJSONTyped,
+} from './PushMode';
 
 /**
  * 
@@ -76,10 +80,10 @@ export interface CreateStarknetTransferRequest {
     to: CreateStarknetTransferRequestTo;
     /**
      * 
-     * @type {CreateStarknetTransferRequestValue}
+     * @type {CreateAptosTransferRequestValue}
      * @memberof CreateStarknetTransferRequest
      */
-    value: CreateStarknetTransferRequestValue;
+    value: CreateAptosTransferRequestValue;
     /**
      * 
      * @type {StarknetAssetIdentifierRequest}
@@ -101,14 +105,12 @@ export type CreateStarknetTransferRequestTypeEnum = typeof CreateStarknetTransfe
 /**
  * Check if a given object implements the CreateStarknetTransferRequest interface.
  */
-export function instanceOfCreateStarknetTransferRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "to" in value;
-    isInstance = isInstance && "value" in value;
-    isInstance = isInstance && "assetIdentifier" in value;
-
-    return isInstance;
+export function instanceOfCreateStarknetTransferRequest(value: object): value is CreateStarknetTransferRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('to' in value) || value['to'] === undefined) return false;
+    if (!('value' in value) || value['value'] === undefined) return false;
+    if (!('assetIdentifier' in value) || value['assetIdentifier'] === undefined) return false;
+    return true;
 }
 
 export function CreateStarknetTransferRequestFromJSON(json: any): CreateStarknetTransferRequest {
@@ -116,37 +118,39 @@ export function CreateStarknetTransferRequestFromJSON(json: any): CreateStarknet
 }
 
 export function CreateStarknetTransferRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateStarknetTransferRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
-        'failOnPredictionFailure': !exists(json, 'fail_on_prediction_failure') ? undefined : json['fail_on_prediction_failure'],
-        'skipPrediction': !exists(json, 'skip_prediction') ? undefined : json['skip_prediction'],
-        'pushMode': !exists(json, 'push_mode') ? undefined : PushModeFromJSON(json['push_mode']),
+        'failOnPredictionFailure': json['fail_on_prediction_failure'] == null ? undefined : json['fail_on_prediction_failure'],
+        'skipPrediction': json['skip_prediction'] == null ? undefined : json['skip_prediction'],
+        'pushMode': json['push_mode'] == null ? undefined : PushModeFromJSON(json['push_mode']),
         'to': CreateStarknetTransferRequestToFromJSON(json['to']),
-        'value': CreateStarknetTransferRequestValueFromJSON(json['value']),
+        'value': CreateAptosTransferRequestValueFromJSON(json['value']),
         'assetIdentifier': StarknetAssetIdentifierRequestFromJSON(json['asset_identifier']),
     };
 }
 
-export function CreateStarknetTransferRequestToJSON(value?: CreateStarknetTransferRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateStarknetTransferRequestToJSON(json: any): CreateStarknetTransferRequest {
+    return CreateStarknetTransferRequestToJSONTyped(json, false);
+}
+
+export function CreateStarknetTransferRequestToJSONTyped(value?: CreateStarknetTransferRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'fail_on_prediction_failure': value.failOnPredictionFailure,
-        'skip_prediction': value.skipPrediction,
-        'push_mode': PushModeToJSON(value.pushMode),
-        'to': CreateStarknetTransferRequestToToJSON(value.to),
-        'value': CreateStarknetTransferRequestValueToJSON(value.value),
-        'asset_identifier': StarknetAssetIdentifierRequestToJSON(value.assetIdentifier),
+        'type': value['type'],
+        'fail_on_prediction_failure': value['failOnPredictionFailure'],
+        'skip_prediction': value['skipPrediction'],
+        'push_mode': PushModeToJSON(value['pushMode']),
+        'to': CreateStarknetTransferRequestToToJSON(value['to']),
+        'value': CreateAptosTransferRequestValueToJSON(value['value']),
+        'asset_identifier': StarknetAssetIdentifierRequestToJSON(value['assetIdentifier']),
     };
 }
 

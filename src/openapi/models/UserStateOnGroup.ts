@@ -25,6 +25,17 @@ export const UserStateOnGroup = {
 export type UserStateOnGroup = typeof UserStateOnGroup[keyof typeof UserStateOnGroup];
 
 
+export function instanceOfUserStateOnGroup(value: any): boolean {
+    for (const key in UserStateOnGroup) {
+        if (Object.prototype.hasOwnProperty.call(UserStateOnGroup, key)) {
+            if (UserStateOnGroup[key as keyof typeof UserStateOnGroup] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function UserStateOnGroupFromJSON(json: any): UserStateOnGroup {
     return UserStateOnGroupFromJSONTyped(json, false);
 }
@@ -35,5 +46,9 @@ export function UserStateOnGroupFromJSONTyped(json: any, ignoreDiscriminator: bo
 
 export function UserStateOnGroupToJSON(value?: UserStateOnGroup | null): any {
     return value as any;
+}
+
+export function UserStateOnGroupToJSONTyped(value: any, ignoreDiscriminator: boolean): UserStateOnGroup {
+    return value as UserStateOnGroup;
 }
 

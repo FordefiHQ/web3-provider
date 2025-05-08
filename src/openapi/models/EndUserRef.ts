@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -67,14 +67,12 @@ export type EndUserRefStateEnum = typeof EndUserRefStateEnum[keyof typeof EndUse
 /**
  * Check if a given object implements the EndUserRef interface.
  */
-export function instanceOfEndUserRef(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "userType" in value;
-    isInstance = isInstance && "externalId" in value;
-    isInstance = isInstance && "state" in value;
-
-    return isInstance;
+export function instanceOfEndUserRef(value: object): value is EndUserRef {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('userType' in value) || value['userType'] === undefined) return false;
+    if (!('externalId' in value) || value['externalId'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    return true;
 }
 
 export function EndUserRefFromJSON(json: any): EndUserRef {
@@ -82,7 +80,7 @@ export function EndUserRefFromJSON(json: any): EndUserRef {
 }
 
 export function EndUserRefFromJSONTyped(json: any, ignoreDiscriminator: boolean): EndUserRef {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -94,19 +92,21 @@ export function EndUserRefFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     };
 }
 
-export function EndUserRefToJSON(value?: EndUserRef | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EndUserRefToJSON(json: any): EndUserRef {
+    return EndUserRefToJSONTyped(json, false);
+}
+
+export function EndUserRefToJSONTyped(value?: EndUserRef | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'user_type': value.userType,
-        'external_id': value.externalId,
-        'state': value.state,
+        'id': value['id'],
+        'user_type': value['userType'],
+        'external_id': value['externalId'],
+        'state': value['state'],
     };
 }
 

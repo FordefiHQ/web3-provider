@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EncryptionData } from './EncryptionData';
 import {
     EncryptionDataFromJSON,
     EncryptionDataFromJSONTyped,
     EncryptionDataToJSON,
+    EncryptionDataToJSONTyped,
 } from './EncryptionData';
 
 /**
@@ -49,12 +50,10 @@ export interface ApiKey {
 /**
  * Check if a given object implements the ApiKey interface.
  */
-export function instanceOfApiKey(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "key" in value;
-    isInstance = isInstance && "encryptedSecret" in value;
-
-    return isInstance;
+export function instanceOfApiKey(value: object): value is ApiKey {
+    if (!('key' in value) || value['key'] === undefined) return false;
+    if (!('encryptedSecret' in value) || value['encryptedSecret'] === undefined) return false;
+    return true;
 }
 
 export function ApiKeyFromJSON(json: any): ApiKey {
@@ -62,29 +61,31 @@ export function ApiKeyFromJSON(json: any): ApiKey {
 }
 
 export function ApiKeyFromJSONTyped(json: any, ignoreDiscriminator: boolean): ApiKey {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'key': json['key'],
         'encryptedSecret': EncryptionDataFromJSON(json['encrypted_secret']),
-        'encryptedPassphrase': !exists(json, 'encrypted_passphrase') ? undefined : EncryptionDataFromJSON(json['encrypted_passphrase']),
+        'encryptedPassphrase': json['encrypted_passphrase'] == null ? undefined : EncryptionDataFromJSON(json['encrypted_passphrase']),
     };
 }
 
-export function ApiKeyToJSON(value?: ApiKey | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ApiKeyToJSON(json: any): ApiKey {
+    return ApiKeyToJSONTyped(json, false);
+}
+
+export function ApiKeyToJSONTyped(value?: ApiKey | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'key': value.key,
-        'encrypted_secret': EncryptionDataToJSON(value.encryptedSecret),
-        'encrypted_passphrase': EncryptionDataToJSON(value.encryptedPassphrase),
+        'key': value['key'],
+        'encrypted_secret': EncryptionDataToJSON(value['encryptedSecret']),
+        'encrypted_passphrase': EncryptionDataToJSON(value['encryptedPassphrase']),
     };
 }
 

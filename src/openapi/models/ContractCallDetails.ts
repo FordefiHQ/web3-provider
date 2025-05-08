@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -40,11 +40,9 @@ export type ContractCallDetailsTypeEnum = typeof ContractCallDetailsTypeEnum[key
 /**
  * Check if a given object implements the ContractCallDetails interface.
  */
-export function instanceOfContractCallDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfContractCallDetails(value: object): value is ContractCallDetails {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function ContractCallDetailsFromJSON(json: any): ContractCallDetails {
@@ -52,7 +50,7 @@ export function ContractCallDetailsFromJSON(json: any): ContractCallDetails {
 }
 
 export function ContractCallDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): ContractCallDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -61,16 +59,18 @@ export function ContractCallDetailsFromJSONTyped(json: any, ignoreDiscriminator:
     };
 }
 
-export function ContractCallDetailsToJSON(value?: ContractCallDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ContractCallDetailsToJSON(json: any): ContractCallDetails {
+    return ContractCallDetailsToJSONTyped(json, false);
+}
+
+export function ContractCallDetailsToJSONTyped(value?: ContractCallDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
+        'type': value['type'],
     };
 }
 

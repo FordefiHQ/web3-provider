@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { FordefiRpcEndpoint } from './FordefiRpcEndpoint';
 import {
-    FordefiRpcEndpoint,
     instanceOfFordefiRpcEndpoint,
     FordefiRpcEndpointFromJSON,
     FordefiRpcEndpointFromJSONTyped,
     FordefiRpcEndpointToJSON,
 } from './FordefiRpcEndpoint';
+import type { PublicRpcEndpoint } from './PublicRpcEndpoint';
 import {
-    PublicRpcEndpoint,
     instanceOfPublicRpcEndpoint,
     PublicRpcEndpointFromJSON,
     PublicRpcEndpointFromJSONTyped,
@@ -39,31 +39,32 @@ export function RpcEndpointDetailsFromJSON(json: any): RpcEndpointDetails {
 }
 
 export function RpcEndpointDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): RpcEndpointDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'fordefi_suggested':
-            return {...FordefiRpcEndpointFromJSONTyped(json, true), type: 'fordefi_suggested'};
+            return Object.assign({}, FordefiRpcEndpointFromJSONTyped(json, true), { type: 'fordefi_suggested' } as const);
         case 'public':
-            return {...PublicRpcEndpointFromJSONTyped(json, true), type: 'public'};
+            return Object.assign({}, PublicRpcEndpointFromJSONTyped(json, true), { type: 'public' } as const);
         default:
             throw new Error(`No variant of RpcEndpointDetails exists with 'type=${json['type']}'`);
     }
 }
 
-export function RpcEndpointDetailsToJSON(value?: RpcEndpointDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function RpcEndpointDetailsToJSON(json: any): any {
+    return RpcEndpointDetailsToJSONTyped(json, false);
+}
+
+export function RpcEndpointDetailsToJSONTyped(value?: RpcEndpointDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'fordefi_suggested':
-            return FordefiRpcEndpointToJSON(value);
+            return Object.assign({}, FordefiRpcEndpointToJSON(value), { type: 'fordefi_suggested' } as const);
         case 'public':
-            return PublicRpcEndpointToJSON(value);
+            return Object.assign({}, PublicRpcEndpointToJSON(value), { type: 'public' } as const);
         default:
             throw new Error(`No variant of RpcEndpointDetails exists with 'type=${value['type']}'`);
     }

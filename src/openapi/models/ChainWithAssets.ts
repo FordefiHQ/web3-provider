@@ -12,24 +12,27 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { EnrichedChain } from './EnrichedChain';
-import {
-    EnrichedChainFromJSON,
-    EnrichedChainFromJSONTyped,
-    EnrichedChainToJSON,
-} from './EnrichedChain';
+import { mapValues } from '../runtime';
 import type { FiatValue } from './FiatValue';
 import {
     FiatValueFromJSON,
     FiatValueFromJSONTyped,
     FiatValueToJSON,
+    FiatValueToJSONTyped,
 } from './FiatValue';
+import type { EnrichedChain } from './EnrichedChain';
+import {
+    EnrichedChainFromJSON,
+    EnrichedChainFromJSONTyped,
+    EnrichedChainToJSON,
+    EnrichedChainToJSONTyped,
+} from './EnrichedChain';
 import type { OwnedAsset } from './OwnedAsset';
 import {
     OwnedAssetFromJSON,
     OwnedAssetFromJSONTyped,
     OwnedAssetToJSON,
+    OwnedAssetToJSONTyped,
 } from './OwnedAsset';
 
 /**
@@ -61,13 +64,11 @@ export interface ChainWithAssets {
 /**
  * Check if a given object implements the ChainWithAssets interface.
  */
-export function instanceOfChainWithAssets(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "nativeAsset" in value;
-    isInstance = isInstance && "totalValue" in value;
-
-    return isInstance;
+export function instanceOfChainWithAssets(value: object): value is ChainWithAssets {
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('nativeAsset' in value) || value['nativeAsset'] === undefined) return false;
+    if (!('totalValue' in value) || value['totalValue'] === undefined) return false;
+    return true;
 }
 
 export function ChainWithAssetsFromJSON(json: any): ChainWithAssets {
@@ -75,7 +76,7 @@ export function ChainWithAssetsFromJSON(json: any): ChainWithAssets {
 }
 
 export function ChainWithAssetsFromJSONTyped(json: any, ignoreDiscriminator: boolean): ChainWithAssets {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -86,18 +87,20 @@ export function ChainWithAssetsFromJSONTyped(json: any, ignoreDiscriminator: boo
     };
 }
 
-export function ChainWithAssetsToJSON(value?: ChainWithAssets | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ChainWithAssetsToJSON(json: any): ChainWithAssets {
+    return ChainWithAssetsToJSONTyped(json, false);
+}
+
+export function ChainWithAssetsToJSONTyped(value?: ChainWithAssets | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain': EnrichedChainToJSON(value.chain),
-        'native_asset': OwnedAssetToJSON(value.nativeAsset),
-        'total_value': FiatValueToJSON(value.totalValue),
+        'chain': EnrichedChainToJSON(value['chain']),
+        'native_asset': OwnedAssetToJSON(value['nativeAsset']),
+        'total_value': FiatValueToJSON(value['totalValue']),
     };
 }
 

@@ -24,6 +24,17 @@ export const SignMode = {
 export type SignMode = typeof SignMode[keyof typeof SignMode];
 
 
+export function instanceOfSignMode(value: any): boolean {
+    for (const key in SignMode) {
+        if (Object.prototype.hasOwnProperty.call(SignMode, key)) {
+            if (SignMode[key as keyof typeof SignMode] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function SignModeFromJSON(json: any): SignMode {
     return SignModeFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function SignModeFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
 
 export function SignModeToJSON(value?: SignMode | null): any {
     return value as any;
+}
+
+export function SignModeToJSONTyped(value: any, ignoreDiscriminator: boolean): SignMode {
+    return value as SignMode;
 }
 

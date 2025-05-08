@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type CosmosMessageStrDataTypeEnum = typeof CosmosMessageStrDataTypeEnum[k
 /**
  * Check if a given object implements the CosmosMessageStrData interface.
  */
-export function instanceOfCosmosMessageStrData(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "data" in value;
-
-    return isInstance;
+export function instanceOfCosmosMessageStrData(value: object): value is CosmosMessageStrData {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('data' in value) || value['data'] === undefined) return false;
+    return true;
 }
 
 export function CosmosMessageStrDataFromJSON(json: any): CosmosMessageStrData {
@@ -59,7 +57,7 @@ export function CosmosMessageStrDataFromJSON(json: any): CosmosMessageStrData {
 }
 
 export function CosmosMessageStrDataFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosMessageStrData {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function CosmosMessageStrDataFromJSONTyped(json: any, ignoreDiscriminator
     };
 }
 
-export function CosmosMessageStrDataToJSON(value?: CosmosMessageStrData | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosMessageStrDataToJSON(json: any): CosmosMessageStrData {
+    return CosmosMessageStrDataToJSONTyped(json, false);
+}
+
+export function CosmosMessageStrDataToJSONTyped(value?: CosmosMessageStrData | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'data': value.data,
+        'type': value['type'],
+        'data': value['data'],
     };
 }
 

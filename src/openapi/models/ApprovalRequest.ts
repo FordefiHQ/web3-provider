@@ -12,24 +12,27 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { ApprovalRequestGroup } from './ApprovalRequestGroup';
 import {
     ApprovalRequestGroupFromJSON,
     ApprovalRequestGroupFromJSONTyped,
     ApprovalRequestGroupToJSON,
+    ApprovalRequestGroupToJSONTyped,
 } from './ApprovalRequestGroup';
 import type { ApprovalRequestState } from './ApprovalRequestState';
 import {
     ApprovalRequestStateFromJSON,
     ApprovalRequestStateFromJSONTyped,
     ApprovalRequestStateToJSON,
+    ApprovalRequestStateToJSONTyped,
 } from './ApprovalRequestState';
 import type { RequestApprover } from './RequestApprover';
 import {
     RequestApproverFromJSON,
     RequestApproverFromJSONTyped,
     RequestApproverToJSON,
+    RequestApproverToJSONTyped,
 } from './RequestApprover';
 
 /**
@@ -48,20 +51,28 @@ export interface ApprovalRequest {
      * 
      * @type {number}
      * @memberof ApprovalRequest
+     * @deprecated
      */
-    quorumSize: number;
+    quorumSize?: number;
     /**
      * 
      * @type {Array<RequestApprover>}
      * @memberof ApprovalRequest
+     * @deprecated
      */
-    approvers: Array<RequestApprover>;
+    approvers?: Array<RequestApprover>;
+    /**
+     * 
+     * @type {number}
+     * @memberof ApprovalRequest
+     */
+    requiredGroups: number;
     /**
      * 
      * @type {Array<ApprovalRequestGroup>}
      * @memberof ApprovalRequest
      */
-    approvalGroups?: Array<ApprovalRequestGroup>;
+    approvalGroups: Array<ApprovalRequestGroup>;
     /**
      * 
      * @type {string}
@@ -70,16 +81,16 @@ export interface ApprovalRequest {
     errorMessage?: string;
 }
 
+
+
 /**
  * Check if a given object implements the ApprovalRequest interface.
  */
-export function instanceOfApprovalRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "quorumSize" in value;
-    isInstance = isInstance && "approvers" in value;
-
-    return isInstance;
+export function instanceOfApprovalRequest(value: object): value is ApprovalRequest {
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('requiredGroups' in value) || value['requiredGroups'] === undefined) return false;
+    if (!('approvalGroups' in value) || value['approvalGroups'] === undefined) return false;
+    return true;
 }
 
 export function ApprovalRequestFromJSON(json: any): ApprovalRequest {
@@ -87,33 +98,37 @@ export function ApprovalRequestFromJSON(json: any): ApprovalRequest {
 }
 
 export function ApprovalRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): ApprovalRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'state': ApprovalRequestStateFromJSON(json['state']),
-        'quorumSize': json['quorum_size'],
-        'approvers': ((json['approvers'] as Array<any>).map(RequestApproverFromJSON)),
-        'approvalGroups': !exists(json, 'approval_groups') ? undefined : ((json['approval_groups'] as Array<any>).map(ApprovalRequestGroupFromJSON)),
-        'errorMessage': !exists(json, 'error_message') ? undefined : json['error_message'],
+        'quorumSize': json['quorum_size'] == null ? undefined : json['quorum_size'],
+        'approvers': json['approvers'] == null ? undefined : ((json['approvers'] as Array<any>).map(RequestApproverFromJSON)),
+        'requiredGroups': json['required_groups'],
+        'approvalGroups': ((json['approval_groups'] as Array<any>).map(ApprovalRequestGroupFromJSON)),
+        'errorMessage': json['error_message'] == null ? undefined : json['error_message'],
     };
 }
 
-export function ApprovalRequestToJSON(value?: ApprovalRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ApprovalRequestToJSON(json: any): ApprovalRequest {
+    return ApprovalRequestToJSONTyped(json, false);
+}
+
+export function ApprovalRequestToJSONTyped(value?: ApprovalRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'state': ApprovalRequestStateToJSON(value.state),
-        'quorum_size': value.quorumSize,
-        'approvers': ((value.approvers as Array<any>).map(RequestApproverToJSON)),
-        'approval_groups': value.approvalGroups === undefined ? undefined : ((value.approvalGroups as Array<any>).map(ApprovalRequestGroupToJSON)),
-        'error_message': value.errorMessage,
+        'state': ApprovalRequestStateToJSON(value['state']),
+        'quorum_size': value['quorumSize'],
+        'approvers': value['approvers'] == null ? undefined : ((value['approvers'] as Array<any>).map(RequestApproverToJSON)),
+        'required_groups': value['requiredGroups'],
+        'approval_groups': ((value['approvalGroups'] as Array<any>).map(ApprovalRequestGroupToJSON)),
+        'error_message': value['errorMessage'],
     };
 }
 

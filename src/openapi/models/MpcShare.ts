@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EncryptionData } from './EncryptionData';
 import {
     EncryptionDataFromJSON,
     EncryptionDataFromJSONTyped,
     EncryptionDataToJSON,
+    EncryptionDataToJSONTyped,
 } from './EncryptionData';
 
 /**
@@ -37,11 +38,9 @@ export interface MpcShare {
 /**
  * Check if a given object implements the MpcShare interface.
  */
-export function instanceOfMpcShare(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "encryptedUserShares" in value;
-
-    return isInstance;
+export function instanceOfMpcShare(value: object): value is MpcShare {
+    if (!('encryptedUserShares' in value) || value['encryptedUserShares'] === undefined) return false;
+    return true;
 }
 
 export function MpcShareFromJSON(json: any): MpcShare {
@@ -49,7 +48,7 @@ export function MpcShareFromJSON(json: any): MpcShare {
 }
 
 export function MpcShareFromJSONTyped(json: any, ignoreDiscriminator: boolean): MpcShare {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -58,16 +57,18 @@ export function MpcShareFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     };
 }
 
-export function MpcShareToJSON(value?: MpcShare | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MpcShareToJSON(json: any): MpcShare {
+    return MpcShareToJSONTyped(json, false);
+}
+
+export function MpcShareToJSONTyped(value?: MpcShare | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'encrypted_user_shares': ((value.encryptedUserShares as Array<any>).map(EncryptionDataToJSON)),
+        'encrypted_user_shares': ((value['encryptedUserShares'] as Array<any>).map(EncryptionDataToJSON)),
     };
 }
 

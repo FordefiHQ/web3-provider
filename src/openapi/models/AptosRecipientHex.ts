@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type AptosRecipientHexTypeEnum = typeof AptosRecipientHexTypeEnum[keyof t
 /**
  * Check if a given object implements the AptosRecipientHex interface.
  */
-export function instanceOfAptosRecipientHex(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "address" in value;
-
-    return isInstance;
+export function instanceOfAptosRecipientHex(value: object): value is AptosRecipientHex {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    return true;
 }
 
 export function AptosRecipientHexFromJSON(json: any): AptosRecipientHex {
@@ -59,7 +57,7 @@ export function AptosRecipientHexFromJSON(json: any): AptosRecipientHex {
 }
 
 export function AptosRecipientHexFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosRecipientHex {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function AptosRecipientHexFromJSONTyped(json: any, ignoreDiscriminator: b
     };
 }
 
-export function AptosRecipientHexToJSON(value?: AptosRecipientHex | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AptosRecipientHexToJSON(json: any): AptosRecipientHex {
+    return AptosRecipientHexToJSONTyped(json, false);
+}
+
+export function AptosRecipientHexToJSONTyped(value?: AptosRecipientHex | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'address': value.address,
+        'type': value['type'],
+        'address': value['address'],
     };
 }
 

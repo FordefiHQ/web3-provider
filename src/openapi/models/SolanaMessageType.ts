@@ -23,6 +23,17 @@ export const SolanaMessageType = {
 export type SolanaMessageType = typeof SolanaMessageType[keyof typeof SolanaMessageType];
 
 
+export function instanceOfSolanaMessageType(value: any): boolean {
+    for (const key in SolanaMessageType) {
+        if (Object.prototype.hasOwnProperty.call(SolanaMessageType, key)) {
+            if (SolanaMessageType[key as keyof typeof SolanaMessageType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function SolanaMessageTypeFromJSON(json: any): SolanaMessageType {
     return SolanaMessageTypeFromJSONTyped(json, false);
 }
@@ -33,5 +44,9 @@ export function SolanaMessageTypeFromJSONTyped(json: any, ignoreDiscriminator: b
 
 export function SolanaMessageTypeToJSON(value?: SolanaMessageType | null): any {
     return value as any;
+}
+
+export function SolanaMessageTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): SolanaMessageType {
+    return value as SolanaMessageType;
 }
 

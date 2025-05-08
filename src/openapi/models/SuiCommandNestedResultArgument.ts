@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -52,13 +52,11 @@ export type SuiCommandNestedResultArgumentTypeEnum = typeof SuiCommandNestedResu
 /**
  * Check if a given object implements the SuiCommandNestedResultArgument interface.
  */
-export function instanceOfSuiCommandNestedResultArgument(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "index" in value;
-    isInstance = isInstance && "resultIndex" in value;
-
-    return isInstance;
+export function instanceOfSuiCommandNestedResultArgument(value: object): value is SuiCommandNestedResultArgument {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('index' in value) || value['index'] === undefined) return false;
+    if (!('resultIndex' in value) || value['resultIndex'] === undefined) return false;
+    return true;
 }
 
 export function SuiCommandNestedResultArgumentFromJSON(json: any): SuiCommandNestedResultArgument {
@@ -66,7 +64,7 @@ export function SuiCommandNestedResultArgumentFromJSON(json: any): SuiCommandNes
 }
 
 export function SuiCommandNestedResultArgumentFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiCommandNestedResultArgument {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -77,18 +75,20 @@ export function SuiCommandNestedResultArgumentFromJSONTyped(json: any, ignoreDis
     };
 }
 
-export function SuiCommandNestedResultArgumentToJSON(value?: SuiCommandNestedResultArgument | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiCommandNestedResultArgumentToJSON(json: any): SuiCommandNestedResultArgument {
+    return SuiCommandNestedResultArgumentToJSONTyped(json, false);
+}
+
+export function SuiCommandNestedResultArgumentToJSONTyped(value?: SuiCommandNestedResultArgument | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'index': value.index,
-        'result_index': value.resultIndex,
+        'type': value['type'],
+        'index': value['index'],
+        'result_index': value['resultIndex'],
     };
 }
 

@@ -24,6 +24,17 @@ export const GasType = {
 export type GasType = typeof GasType[keyof typeof GasType];
 
 
+export function instanceOfGasType(value: any): boolean {
+    for (const key in GasType) {
+        if (Object.prototype.hasOwnProperty.call(GasType, key)) {
+            if (GasType[key as keyof typeof GasType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function GasTypeFromJSON(json: any): GasType {
     return GasTypeFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function GasTypeFromJSONTyped(json: any, ignoreDiscriminator: boolean): G
 
 export function GasTypeToJSON(value?: GasType | null): any {
     return value as any;
+}
+
+export function GasTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): GasType {
+    return value as GasType;
 }
 

@@ -24,6 +24,17 @@ export const CreateKeysetErrorType = {
 export type CreateKeysetErrorType = typeof CreateKeysetErrorType[keyof typeof CreateKeysetErrorType];
 
 
+export function instanceOfCreateKeysetErrorType(value: any): boolean {
+    for (const key in CreateKeysetErrorType) {
+        if (Object.prototype.hasOwnProperty.call(CreateKeysetErrorType, key)) {
+            if (CreateKeysetErrorType[key as keyof typeof CreateKeysetErrorType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function CreateKeysetErrorTypeFromJSON(json: any): CreateKeysetErrorType {
     return CreateKeysetErrorTypeFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function CreateKeysetErrorTypeFromJSONTyped(json: any, ignoreDiscriminato
 
 export function CreateKeysetErrorTypeToJSON(value?: CreateKeysetErrorType | null): any {
     return value as any;
+}
+
+export function CreateKeysetErrorTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): CreateKeysetErrorType {
+    return value as CreateKeysetErrorType;
 }
 

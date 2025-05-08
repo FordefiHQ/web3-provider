@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -48,14 +48,12 @@ export interface VaultGroupRef {
 /**
  * Check if a given object implements the VaultGroupRef interface.
  */
-export function instanceOfVaultGroupRef(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "vaultCount" in value;
-    isInstance = isInstance && "canCurrentUserCreateOrEditVaults" in value;
-
-    return isInstance;
+export function instanceOfVaultGroupRef(value: object): value is VaultGroupRef {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('vaultCount' in value) || value['vaultCount'] === undefined) return false;
+    if (!('canCurrentUserCreateOrEditVaults' in value) || value['canCurrentUserCreateOrEditVaults'] === undefined) return false;
+    return true;
 }
 
 export function VaultGroupRefFromJSON(json: any): VaultGroupRef {
@@ -63,7 +61,7 @@ export function VaultGroupRefFromJSON(json: any): VaultGroupRef {
 }
 
 export function VaultGroupRefFromJSONTyped(json: any, ignoreDiscriminator: boolean): VaultGroupRef {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -75,19 +73,21 @@ export function VaultGroupRefFromJSONTyped(json: any, ignoreDiscriminator: boole
     };
 }
 
-export function VaultGroupRefToJSON(value?: VaultGroupRef | null): any {
-    if (value === undefined) {
-        return undefined;
+export function VaultGroupRefToJSON(json: any): VaultGroupRef {
+    return VaultGroupRefToJSONTyped(json, false);
+}
+
+export function VaultGroupRefToJSONTyped(value?: VaultGroupRef | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'name': value.name,
-        'vault_count': value.vaultCount,
-        'can_current_user_create_or_edit_vaults': value.canCurrentUserCreateOrEditVaults,
+        'id': value['id'],
+        'name': value['name'],
+        'vault_count': value['vaultCount'],
+        'can_current_user_create_or_edit_vaults': value['canCurrentUserCreateOrEditVaults'],
     };
 }
 

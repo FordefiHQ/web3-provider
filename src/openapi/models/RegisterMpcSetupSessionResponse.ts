@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { MpcMessage } from './MpcMessage';
 import {
     MpcMessageFromJSON,
     MpcMessageFromJSONTyped,
     MpcMessageToJSON,
+    MpcMessageToJSONTyped,
 } from './MpcMessage';
 
 /**
@@ -37,11 +38,9 @@ export interface RegisterMpcSetupSessionResponse {
 /**
  * Check if a given object implements the RegisterMpcSetupSessionResponse interface.
  */
-export function instanceOfRegisterMpcSetupSessionResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "secondMpcProtocolMessage" in value;
-
-    return isInstance;
+export function instanceOfRegisterMpcSetupSessionResponse(value: object): value is RegisterMpcSetupSessionResponse {
+    if (!('secondMpcProtocolMessage' in value) || value['secondMpcProtocolMessage'] === undefined) return false;
+    return true;
 }
 
 export function RegisterMpcSetupSessionResponseFromJSON(json: any): RegisterMpcSetupSessionResponse {
@@ -49,7 +48,7 @@ export function RegisterMpcSetupSessionResponseFromJSON(json: any): RegisterMpcS
 }
 
 export function RegisterMpcSetupSessionResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): RegisterMpcSetupSessionResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -58,16 +57,18 @@ export function RegisterMpcSetupSessionResponseFromJSONTyped(json: any, ignoreDi
     };
 }
 
-export function RegisterMpcSetupSessionResponseToJSON(value?: RegisterMpcSetupSessionResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function RegisterMpcSetupSessionResponseToJSON(json: any): RegisterMpcSetupSessionResponse {
+    return RegisterMpcSetupSessionResponseToJSONTyped(json, false);
+}
+
+export function RegisterMpcSetupSessionResponseToJSONTyped(value?: RegisterMpcSetupSessionResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'second_mpc_protocol_message': MpcMessageToJSON(value.secondMpcProtocolMessage),
+        'second_mpc_protocol_message': MpcMessageToJSON(value['secondMpcProtocolMessage']),
     };
 }
 

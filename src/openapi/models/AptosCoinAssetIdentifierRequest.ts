@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AptosCoinTypeRequest } from './AptosCoinTypeRequest';
 import {
     AptosCoinTypeRequestFromJSON,
     AptosCoinTypeRequestFromJSONTyped,
     AptosCoinTypeRequestToJSON,
+    AptosCoinTypeRequestToJSONTyped,
 } from './AptosCoinTypeRequest';
 
 /**
@@ -53,12 +54,10 @@ export type AptosCoinAssetIdentifierRequestTypeEnum = typeof AptosCoinAssetIdent
 /**
  * Check if a given object implements the AptosCoinAssetIdentifierRequest interface.
  */
-export function instanceOfAptosCoinAssetIdentifierRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "coinType" in value;
-
-    return isInstance;
+export function instanceOfAptosCoinAssetIdentifierRequest(value: object): value is AptosCoinAssetIdentifierRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('coinType' in value) || value['coinType'] === undefined) return false;
+    return true;
 }
 
 export function AptosCoinAssetIdentifierRequestFromJSON(json: any): AptosCoinAssetIdentifierRequest {
@@ -66,7 +65,7 @@ export function AptosCoinAssetIdentifierRequestFromJSON(json: any): AptosCoinAss
 }
 
 export function AptosCoinAssetIdentifierRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosCoinAssetIdentifierRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function AptosCoinAssetIdentifierRequestFromJSONTyped(json: any, ignoreDi
     };
 }
 
-export function AptosCoinAssetIdentifierRequestToJSON(value?: AptosCoinAssetIdentifierRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AptosCoinAssetIdentifierRequestToJSON(json: any): AptosCoinAssetIdentifierRequest {
+    return AptosCoinAssetIdentifierRequestToJSONTyped(json, false);
+}
+
+export function AptosCoinAssetIdentifierRequestToJSONTyped(value?: AptosCoinAssetIdentifierRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'coin_type': AptosCoinTypeRequestToJSON(value.coinType),
+        'type': value['type'],
+        'coin_type': AptosCoinTypeRequestToJSON(value['coinType']),
     };
 }
 

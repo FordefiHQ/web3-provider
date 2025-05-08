@@ -24,6 +24,17 @@ export const UpdateVaultGroupPermissionsErrorType = {
 export type UpdateVaultGroupPermissionsErrorType = typeof UpdateVaultGroupPermissionsErrorType[keyof typeof UpdateVaultGroupPermissionsErrorType];
 
 
+export function instanceOfUpdateVaultGroupPermissionsErrorType(value: any): boolean {
+    for (const key in UpdateVaultGroupPermissionsErrorType) {
+        if (Object.prototype.hasOwnProperty.call(UpdateVaultGroupPermissionsErrorType, key)) {
+            if (UpdateVaultGroupPermissionsErrorType[key as keyof typeof UpdateVaultGroupPermissionsErrorType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function UpdateVaultGroupPermissionsErrorTypeFromJSON(json: any): UpdateVaultGroupPermissionsErrorType {
     return UpdateVaultGroupPermissionsErrorTypeFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function UpdateVaultGroupPermissionsErrorTypeFromJSONTyped(json: any, ign
 
 export function UpdateVaultGroupPermissionsErrorTypeToJSON(value?: UpdateVaultGroupPermissionsErrorType | null): any {
     return value as any;
+}
+
+export function UpdateVaultGroupPermissionsErrorTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): UpdateVaultGroupPermissionsErrorType {
+    return value as UpdateVaultGroupPermissionsErrorType;
 }
 

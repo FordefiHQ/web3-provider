@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { DeleteContactPrerequisiteType } from './DeleteContactPrerequisiteType';
 import {
     DeleteContactPrerequisiteTypeFromJSON,
     DeleteContactPrerequisiteTypeFromJSONTyped,
     DeleteContactPrerequisiteTypeToJSON,
+    DeleteContactPrerequisiteTypeToJSONTyped,
 } from './DeleteContactPrerequisiteType';
 import type { DeletePrerequisiteSeverity } from './DeletePrerequisiteSeverity';
 import {
     DeletePrerequisiteSeverityFromJSON,
     DeletePrerequisiteSeverityFromJSONTyped,
     DeletePrerequisiteSeverityToJSON,
+    DeletePrerequisiteSeverityToJSONTyped,
 } from './DeletePrerequisiteSeverity';
 
 /**
@@ -46,15 +48,15 @@ export interface DeleteContactPrerequisite {
     severity: DeletePrerequisiteSeverity;
 }
 
+
+
 /**
  * Check if a given object implements the DeleteContactPrerequisite interface.
  */
-export function instanceOfDeleteContactPrerequisite(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "severity" in value;
-
-    return isInstance;
+export function instanceOfDeleteContactPrerequisite(value: object): value is DeleteContactPrerequisite {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('severity' in value) || value['severity'] === undefined) return false;
+    return true;
 }
 
 export function DeleteContactPrerequisiteFromJSON(json: any): DeleteContactPrerequisite {
@@ -62,7 +64,7 @@ export function DeleteContactPrerequisiteFromJSON(json: any): DeleteContactPrere
 }
 
 export function DeleteContactPrerequisiteFromJSONTyped(json: any, ignoreDiscriminator: boolean): DeleteContactPrerequisite {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -72,17 +74,19 @@ export function DeleteContactPrerequisiteFromJSONTyped(json: any, ignoreDiscrimi
     };
 }
 
-export function DeleteContactPrerequisiteToJSON(value?: DeleteContactPrerequisite | null): any {
-    if (value === undefined) {
-        return undefined;
+export function DeleteContactPrerequisiteToJSON(json: any): DeleteContactPrerequisite {
+    return DeleteContactPrerequisiteToJSONTyped(json, false);
+}
+
+export function DeleteContactPrerequisiteToJSONTyped(value?: DeleteContactPrerequisite | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': DeleteContactPrerequisiteTypeToJSON(value.type),
-        'severity': DeletePrerequisiteSeverityToJSON(value.severity),
+        'type': DeleteContactPrerequisiteTypeToJSON(value['type']),
+        'severity': DeletePrerequisiteSeverityToJSON(value['severity']),
     };
 }
 

@@ -12,25 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { EvmChainId } from './EvmChainId';
-import {
-    EvmChainIdFromJSON,
-    EvmChainIdFromJSONTyped,
-    EvmChainIdToJSON,
-} from './EvmChainId';
+import { mapValues } from '../runtime';
 import type { EvmChainName } from './EvmChainName';
 import {
     EvmChainNameFromJSON,
     EvmChainNameFromJSONTyped,
     EvmChainNameToJSON,
+    EvmChainNameToJSONTyped,
 } from './EvmChainName';
-import type { EvmChainUniqueId } from './EvmChainUniqueId';
-import {
-    EvmChainUniqueIdFromJSON,
-    EvmChainUniqueIdFromJSONTyped,
-    EvmChainUniqueIdToJSON,
-} from './EvmChainUniqueId';
 
 /**
  * 
@@ -43,10 +32,8 @@ export interface EvmChainRequest {
 /**
  * Check if a given object implements the EvmChainRequest interface.
  */
-export function instanceOfEvmChainRequest(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfEvmChainRequest(value: object): value is EvmChainRequest {
+    return true;
 }
 
 export function EvmChainRequestFromJSON(json: any): EvmChainRequest {
@@ -57,7 +44,11 @@ export function EvmChainRequestFromJSONTyped(json: any, ignoreDiscriminator: boo
     return json;
 }
 
-export function EvmChainRequestToJSON(value?: EvmChainRequest | null): any {
+export function EvmChainRequestToJSON(json: any): EvmChainRequest {
+    return EvmChainRequestToJSONTyped(json, false);
+}
+
+export function EvmChainRequestToJSONTyped(value?: EvmChainRequest | null, ignoreDiscriminator: boolean = false): any {
     return value;
 }
 

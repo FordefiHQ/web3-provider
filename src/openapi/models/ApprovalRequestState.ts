@@ -27,6 +27,17 @@ export const ApprovalRequestState = {
 export type ApprovalRequestState = typeof ApprovalRequestState[keyof typeof ApprovalRequestState];
 
 
+export function instanceOfApprovalRequestState(value: any): boolean {
+    for (const key in ApprovalRequestState) {
+        if (Object.prototype.hasOwnProperty.call(ApprovalRequestState, key)) {
+            if (ApprovalRequestState[key as keyof typeof ApprovalRequestState] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function ApprovalRequestStateFromJSON(json: any): ApprovalRequestState {
     return ApprovalRequestStateFromJSONTyped(json, false);
 }
@@ -37,5 +48,9 @@ export function ApprovalRequestStateFromJSONTyped(json: any, ignoreDiscriminator
 
 export function ApprovalRequestStateToJSON(value?: ApprovalRequestState | null): any {
     return value as any;
+}
+
+export function ApprovalRequestStateToJSONTyped(value: any, ignoreDiscriminator: boolean): ApprovalRequestState {
+    return value as ApprovalRequestState;
 }
 

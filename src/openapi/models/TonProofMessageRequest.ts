@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { TonChainUniqueId } from './TonChainUniqueId';
 import {
     TonChainUniqueIdFromJSON,
     TonChainUniqueIdFromJSONTyped,
     TonChainUniqueIdToJSON,
+    TonChainUniqueIdToJSONTyped,
 } from './TonChainUniqueId';
 
 /**
@@ -37,7 +38,7 @@ export interface TonProofMessageRequest {
      * @type {string}
      * @memberof TonProofMessageRequest
      */
-    domain: string;
+    manifestUrl: string;
     /**
      * 
      * @type {TonChainUniqueId}
@@ -65,14 +66,12 @@ export type TonProofMessageRequestTypeEnum = typeof TonProofMessageRequestTypeEn
 /**
  * Check if a given object implements the TonProofMessageRequest interface.
  */
-export function instanceOfTonProofMessageRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "domain" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "messageToSign" in value;
-
-    return isInstance;
+export function instanceOfTonProofMessageRequest(value: object): value is TonProofMessageRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('manifestUrl' in value) || value['manifestUrl'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('messageToSign' in value) || value['messageToSign'] === undefined) return false;
+    return true;
 }
 
 export function TonProofMessageRequestFromJSON(json: any): TonProofMessageRequest {
@@ -80,31 +79,33 @@ export function TonProofMessageRequestFromJSON(json: any): TonProofMessageReques
 }
 
 export function TonProofMessageRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): TonProofMessageRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
-        'domain': json['domain'],
+        'manifestUrl': json['manifest_url'],
         'chain': TonChainUniqueIdFromJSON(json['chain']),
         'messageToSign': json['message_to_sign'],
     };
 }
 
-export function TonProofMessageRequestToJSON(value?: TonProofMessageRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TonProofMessageRequestToJSON(json: any): TonProofMessageRequest {
+    return TonProofMessageRequestToJSONTyped(json, false);
+}
+
+export function TonProofMessageRequestToJSONTyped(value?: TonProofMessageRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'domain': value.domain,
-        'chain': TonChainUniqueIdToJSON(value.chain),
-        'message_to_sign': value.messageToSign,
+        'type': value['type'],
+        'manifest_url': value['manifestUrl'],
+        'chain': TonChainUniqueIdToJSON(value['chain']),
+        'message_to_sign': value['messageToSign'],
     };
 }
 

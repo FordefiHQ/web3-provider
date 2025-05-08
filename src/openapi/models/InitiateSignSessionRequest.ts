@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { MpcMessage } from './MpcMessage';
 import {
     MpcMessageFromJSON,
     MpcMessageFromJSONTyped,
     MpcMessageToJSON,
+    MpcMessageToJSONTyped,
 } from './MpcMessage';
 
 /**
@@ -49,10 +50,8 @@ export interface InitiateSignSessionRequest {
 /**
  * Check if a given object implements the InitiateSignSessionRequest interface.
  */
-export function instanceOfInitiateSignSessionRequest(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfInitiateSignSessionRequest(value: object): value is InitiateSignSessionRequest {
+    return true;
 }
 
 export function InitiateSignSessionRequestFromJSON(json: any): InitiateSignSessionRequest {
@@ -60,29 +59,31 @@ export function InitiateSignSessionRequestFromJSON(json: any): InitiateSignSessi
 }
 
 export function InitiateSignSessionRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): InitiateSignSessionRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'signature': !exists(json, 'signature') ? undefined : json['signature'],
-        'mpcSetupId': !exists(json, 'mpc_setup_id') ? undefined : json['mpc_setup_id'],
-        'firstMpcProtocolMessage': !exists(json, 'first_mpc_protocol_message') ? undefined : MpcMessageFromJSON(json['first_mpc_protocol_message']),
+        'signature': json['signature'] == null ? undefined : json['signature'],
+        'mpcSetupId': json['mpc_setup_id'] == null ? undefined : json['mpc_setup_id'],
+        'firstMpcProtocolMessage': json['first_mpc_protocol_message'] == null ? undefined : MpcMessageFromJSON(json['first_mpc_protocol_message']),
     };
 }
 
-export function InitiateSignSessionRequestToJSON(value?: InitiateSignSessionRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function InitiateSignSessionRequestToJSON(json: any): InitiateSignSessionRequest {
+    return InitiateSignSessionRequestToJSONTyped(json, false);
+}
+
+export function InitiateSignSessionRequestToJSONTyped(value?: InitiateSignSessionRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'signature': value.signature,
-        'mpc_setup_id': value.mpcSetupId,
-        'first_mpc_protocol_message': MpcMessageToJSON(value.firstMpcProtocolMessage),
+        'signature': value['signature'],
+        'mpc_setup_id': value['mpcSetupId'],
+        'first_mpc_protocol_message': MpcMessageToJSON(value['firstMpcProtocolMessage']),
     };
 }
 

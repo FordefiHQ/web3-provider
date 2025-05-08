@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { PersonOnboardingState } from './PersonOnboardingState';
 import {
     PersonOnboardingStateFromJSON,
     PersonOnboardingStateFromJSONTyped,
     PersonOnboardingStateToJSON,
+    PersonOnboardingStateToJSONTyped,
 } from './PersonOnboardingState';
 
 /**
@@ -34,14 +35,14 @@ export interface PersonOnboardingStateResponse {
     state: PersonOnboardingState;
 }
 
+
+
 /**
  * Check if a given object implements the PersonOnboardingStateResponse interface.
  */
-export function instanceOfPersonOnboardingStateResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "state" in value;
-
-    return isInstance;
+export function instanceOfPersonOnboardingStateResponse(value: object): value is PersonOnboardingStateResponse {
+    if (!('state' in value) || value['state'] === undefined) return false;
+    return true;
 }
 
 export function PersonOnboardingStateResponseFromJSON(json: any): PersonOnboardingStateResponse {
@@ -49,7 +50,7 @@ export function PersonOnboardingStateResponseFromJSON(json: any): PersonOnboardi
 }
 
 export function PersonOnboardingStateResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): PersonOnboardingStateResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -58,16 +59,18 @@ export function PersonOnboardingStateResponseFromJSONTyped(json: any, ignoreDisc
     };
 }
 
-export function PersonOnboardingStateResponseToJSON(value?: PersonOnboardingStateResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function PersonOnboardingStateResponseToJSON(json: any): PersonOnboardingStateResponse {
+    return PersonOnboardingStateResponseToJSONTyped(json, false);
+}
+
+export function PersonOnboardingStateResponseToJSONTyped(value?: PersonOnboardingStateResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'state': PersonOnboardingStateToJSON(value.state),
+        'state': PersonOnboardingStateToJSON(value['state']),
     };
 }
 

@@ -12,25 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { PushMode } from './PushMode';
-import {
-    PushModeFromJSON,
-    PushModeFromJSONTyped,
-    PushModeToJSON,
-} from './PushMode';
+import { mapValues } from '../runtime';
 import type { TonChainUniqueId } from './TonChainUniqueId';
 import {
     TonChainUniqueIdFromJSON,
     TonChainUniqueIdFromJSONTyped,
     TonChainUniqueIdToJSON,
+    TonChainUniqueIdToJSONTyped,
 } from './TonChainUniqueId';
 import type { TonTransactionPayload } from './TonTransactionPayload';
 import {
     TonTransactionPayloadFromJSON,
     TonTransactionPayloadFromJSONTyped,
     TonTransactionPayloadToJSON,
+    TonTransactionPayloadToJSONTyped,
 } from './TonTransactionPayload';
+import type { PushMode } from './PushMode';
+import {
+    PushModeFromJSON,
+    PushModeFromJSONTyped,
+    PushModeToJSON,
+    PushModeToJSONTyped,
+} from './PushMode';
 
 /**
  * 
@@ -81,7 +84,7 @@ export interface CreateTonSerializedRawTransactionRequest {
  * @export
  */
 export const CreateTonSerializedRawTransactionRequestTypeEnum = {
-    tonContractCallPayload: 'ton_contract_call_payload'
+    tonRawTransaction: 'ton_raw_transaction'
 } as const;
 export type CreateTonSerializedRawTransactionRequestTypeEnum = typeof CreateTonSerializedRawTransactionRequestTypeEnum[keyof typeof CreateTonSerializedRawTransactionRequestTypeEnum];
 
@@ -89,13 +92,11 @@ export type CreateTonSerializedRawTransactionRequestTypeEnum = typeof CreateTonS
 /**
  * Check if a given object implements the CreateTonSerializedRawTransactionRequest interface.
  */
-export function instanceOfCreateTonSerializedRawTransactionRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "transactionPayload" in value;
-
-    return isInstance;
+export function instanceOfCreateTonSerializedRawTransactionRequest(value: object): value is CreateTonSerializedRawTransactionRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('transactionPayload' in value) || value['transactionPayload'] === undefined) return false;
+    return true;
 }
 
 export function CreateTonSerializedRawTransactionRequestFromJSON(json: any): CreateTonSerializedRawTransactionRequest {
@@ -103,35 +104,37 @@ export function CreateTonSerializedRawTransactionRequestFromJSON(json: any): Cre
 }
 
 export function CreateTonSerializedRawTransactionRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateTonSerializedRawTransactionRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
-        'failOnPredictionFailure': !exists(json, 'fail_on_prediction_failure') ? undefined : json['fail_on_prediction_failure'],
-        'pushMode': !exists(json, 'push_mode') ? undefined : PushModeFromJSON(json['push_mode']),
+        'failOnPredictionFailure': json['fail_on_prediction_failure'] == null ? undefined : json['fail_on_prediction_failure'],
+        'pushMode': json['push_mode'] == null ? undefined : PushModeFromJSON(json['push_mode']),
         'chain': TonChainUniqueIdFromJSON(json['chain']),
         'transactionPayload': TonTransactionPayloadFromJSON(json['transaction_payload']),
-        'skipPrediction': !exists(json, 'skip_prediction') ? undefined : json['skip_prediction'],
+        'skipPrediction': json['skip_prediction'] == null ? undefined : json['skip_prediction'],
     };
 }
 
-export function CreateTonSerializedRawTransactionRequestToJSON(value?: CreateTonSerializedRawTransactionRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateTonSerializedRawTransactionRequestToJSON(json: any): CreateTonSerializedRawTransactionRequest {
+    return CreateTonSerializedRawTransactionRequestToJSONTyped(json, false);
+}
+
+export function CreateTonSerializedRawTransactionRequestToJSONTyped(value?: CreateTonSerializedRawTransactionRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'fail_on_prediction_failure': value.failOnPredictionFailure,
-        'push_mode': PushModeToJSON(value.pushMode),
-        'chain': TonChainUniqueIdToJSON(value.chain),
-        'transaction_payload': TonTransactionPayloadToJSON(value.transactionPayload),
-        'skip_prediction': value.skipPrediction,
+        'type': value['type'],
+        'fail_on_prediction_failure': value['failOnPredictionFailure'],
+        'push_mode': PushModeToJSON(value['pushMode']),
+        'chain': TonChainUniqueIdToJSON(value['chain']),
+        'transaction_payload': TonTransactionPayloadToJSON(value['transactionPayload']),
+        'skip_prediction': value['skipPrediction'],
     };
 }
 

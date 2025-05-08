@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { ActionSigner } from './ActionSigner';
 import {
     ActionSignerFromJSON,
     ActionSignerFromJSONTyped,
     ActionSignerToJSON,
+    ActionSignerToJSONTyped,
 } from './ActionSigner';
 
 /**
@@ -37,11 +38,9 @@ export interface ActionSigningRequest {
 /**
  * Check if a given object implements the ActionSigningRequest interface.
  */
-export function instanceOfActionSigningRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "signers" in value;
-
-    return isInstance;
+export function instanceOfActionSigningRequest(value: object): value is ActionSigningRequest {
+    if (!('signers' in value) || value['signers'] === undefined) return false;
+    return true;
 }
 
 export function ActionSigningRequestFromJSON(json: any): ActionSigningRequest {
@@ -49,7 +48,7 @@ export function ActionSigningRequestFromJSON(json: any): ActionSigningRequest {
 }
 
 export function ActionSigningRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): ActionSigningRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -58,16 +57,18 @@ export function ActionSigningRequestFromJSONTyped(json: any, ignoreDiscriminator
     };
 }
 
-export function ActionSigningRequestToJSON(value?: ActionSigningRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ActionSigningRequestToJSON(json: any): ActionSigningRequest {
+    return ActionSigningRequestToJSONTyped(json, false);
+}
+
+export function ActionSigningRequestToJSONTyped(value?: ActionSigningRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'signers': ((value.signers as Array<any>).map(ActionSignerToJSON)),
+        'signers': ((value['signers'] as Array<any>).map(ActionSignerToJSON)),
     };
 }
 

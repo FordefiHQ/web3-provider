@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -42,13 +42,11 @@ export interface GroupRef {
 /**
  * Check if a given object implements the GroupRef interface.
  */
-export function instanceOfGroupRef(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "contactsCount" in value;
-
-    return isInstance;
+export function instanceOfGroupRef(value: object): value is GroupRef {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('contactsCount' in value) || value['contactsCount'] === undefined) return false;
+    return true;
 }
 
 export function GroupRefFromJSON(json: any): GroupRef {
@@ -56,7 +54,7 @@ export function GroupRefFromJSON(json: any): GroupRef {
 }
 
 export function GroupRefFromJSONTyped(json: any, ignoreDiscriminator: boolean): GroupRef {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -67,18 +65,20 @@ export function GroupRefFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     };
 }
 
-export function GroupRefToJSON(value?: GroupRef | null): any {
-    if (value === undefined) {
-        return undefined;
+export function GroupRefToJSON(json: any): GroupRef {
+    return GroupRefToJSONTyped(json, false);
+}
+
+export function GroupRefToJSONTyped(value?: GroupRef | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'name': value.name,
-        'contacts_count': value.contactsCount,
+        'id': value['id'],
+        'name': value['name'],
+        'contacts_count': value['contactsCount'],
     };
 }
 

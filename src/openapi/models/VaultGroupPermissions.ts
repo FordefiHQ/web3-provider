@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { VaultGroupAccessPermissions } from './VaultGroupAccessPermissions';
 import {
     VaultGroupAccessPermissionsFromJSON,
     VaultGroupAccessPermissionsFromJSONTyped,
     VaultGroupAccessPermissionsToJSON,
+    VaultGroupAccessPermissionsToJSONTyped,
 } from './VaultGroupAccessPermissions';
 
 /**
@@ -49,13 +50,11 @@ export interface VaultGroupPermissions {
 /**
  * Check if a given object implements the VaultGroupPermissions interface.
  */
-export function instanceOfVaultGroupPermissions(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "accessPermissions" in value;
-    isInstance = isInstance && "canNonAdminsCreateOrEditVaults" in value;
-    isInstance = isInstance && "canCurrentUserCreateOrEditVaults" in value;
-
-    return isInstance;
+export function instanceOfVaultGroupPermissions(value: object): value is VaultGroupPermissions {
+    if (!('accessPermissions' in value) || value['accessPermissions'] === undefined) return false;
+    if (!('canNonAdminsCreateOrEditVaults' in value) || value['canNonAdminsCreateOrEditVaults'] === undefined) return false;
+    if (!('canCurrentUserCreateOrEditVaults' in value) || value['canCurrentUserCreateOrEditVaults'] === undefined) return false;
+    return true;
 }
 
 export function VaultGroupPermissionsFromJSON(json: any): VaultGroupPermissions {
@@ -63,7 +62,7 @@ export function VaultGroupPermissionsFromJSON(json: any): VaultGroupPermissions 
 }
 
 export function VaultGroupPermissionsFromJSONTyped(json: any, ignoreDiscriminator: boolean): VaultGroupPermissions {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -74,18 +73,20 @@ export function VaultGroupPermissionsFromJSONTyped(json: any, ignoreDiscriminato
     };
 }
 
-export function VaultGroupPermissionsToJSON(value?: VaultGroupPermissions | null): any {
-    if (value === undefined) {
-        return undefined;
+export function VaultGroupPermissionsToJSON(json: any): VaultGroupPermissions {
+    return VaultGroupPermissionsToJSONTyped(json, false);
+}
+
+export function VaultGroupPermissionsToJSONTyped(value?: VaultGroupPermissions | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'access_permissions': VaultGroupAccessPermissionsToJSON(value.accessPermissions),
-        'can_non_admins_create_or_edit_vaults': value.canNonAdminsCreateOrEditVaults,
-        'can_current_user_create_or_edit_vaults': value.canCurrentUserCreateOrEditVaults,
+        'access_permissions': VaultGroupAccessPermissionsToJSON(value['accessPermissions']),
+        'can_non_admins_create_or_edit_vaults': value['canNonAdminsCreateOrEditVaults'],
+        'can_current_user_create_or_edit_vaults': value['canCurrentUserCreateOrEditVaults'],
     };
 }
 

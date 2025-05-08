@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { StarknetBalanceChangeEffect } from './StarknetBalanceChangeEffect';
 import {
     StarknetBalanceChangeEffectFromJSON,
     StarknetBalanceChangeEffectFromJSONTyped,
     StarknetBalanceChangeEffectToJSON,
+    StarknetBalanceChangeEffectToJSONTyped,
 } from './StarknetBalanceChangeEffect';
 import type { StarknetTransferEffect } from './StarknetTransferEffect';
 import {
     StarknetTransferEffectFromJSON,
     StarknetTransferEffectFromJSONTyped,
     StarknetTransferEffectToJSON,
+    StarknetTransferEffectToJSONTyped,
 } from './StarknetTransferEffect';
 
 /**
@@ -49,12 +51,10 @@ export interface StarknetEffects {
 /**
  * Check if a given object implements the StarknetEffects interface.
  */
-export function instanceOfStarknetEffects(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "balanceChanges" in value;
-    isInstance = isInstance && "transfers" in value;
-
-    return isInstance;
+export function instanceOfStarknetEffects(value: object): value is StarknetEffects {
+    if (!('balanceChanges' in value) || value['balanceChanges'] === undefined) return false;
+    if (!('transfers' in value) || value['transfers'] === undefined) return false;
+    return true;
 }
 
 export function StarknetEffectsFromJSON(json: any): StarknetEffects {
@@ -62,7 +62,7 @@ export function StarknetEffectsFromJSON(json: any): StarknetEffects {
 }
 
 export function StarknetEffectsFromJSONTyped(json: any, ignoreDiscriminator: boolean): StarknetEffects {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -72,17 +72,19 @@ export function StarknetEffectsFromJSONTyped(json: any, ignoreDiscriminator: boo
     };
 }
 
-export function StarknetEffectsToJSON(value?: StarknetEffects | null): any {
-    if (value === undefined) {
-        return undefined;
+export function StarknetEffectsToJSON(json: any): StarknetEffects {
+    return StarknetEffectsToJSONTyped(json, false);
+}
+
+export function StarknetEffectsToJSONTyped(value?: StarknetEffects | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'balance_changes': ((value.balanceChanges as Array<any>).map(StarknetBalanceChangeEffectToJSON)),
-        'transfers': ((value.transfers as Array<any>).map(StarknetTransferEffectToJSON)),
+        'balance_changes': ((value['balanceChanges'] as Array<any>).map(StarknetBalanceChangeEffectToJSON)),
+        'transfers': ((value['transfers'] as Array<any>).map(StarknetTransferEffectToJSON)),
     };
 }
 

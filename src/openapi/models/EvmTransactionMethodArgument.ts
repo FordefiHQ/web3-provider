@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
 import {
     EnrichedEvmAddressFromJSON,
     EnrichedEvmAddressFromJSONTyped,
     EnrichedEvmAddressToJSON,
+    EnrichedEvmAddressToJSONTyped,
 } from './EnrichedEvmAddress';
 
 /**
@@ -55,13 +56,11 @@ export interface EvmTransactionMethodArgument {
 /**
  * Check if a given object implements the EvmTransactionMethodArgument interface.
  */
-export function instanceOfEvmTransactionMethodArgument(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "value" in value;
-
-    return isInstance;
+export function instanceOfEvmTransactionMethodArgument(value: object): value is EvmTransactionMethodArgument {
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('value' in value) || value['value'] === undefined) return false;
+    return true;
 }
 
 export function EvmTransactionMethodArgumentFromJSON(json: any): EvmTransactionMethodArgument {
@@ -69,7 +68,7 @@ export function EvmTransactionMethodArgumentFromJSON(json: any): EvmTransactionM
 }
 
 export function EvmTransactionMethodArgumentFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmTransactionMethodArgument {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -77,23 +76,25 @@ export function EvmTransactionMethodArgumentFromJSONTyped(json: any, ignoreDiscr
         'name': json['name'],
         'type': json['type'],
         'value': json['value'],
-        'enrichedAddress': !exists(json, 'enriched_address') ? undefined : EnrichedEvmAddressFromJSON(json['enriched_address']),
+        'enrichedAddress': json['enriched_address'] == null ? undefined : EnrichedEvmAddressFromJSON(json['enriched_address']),
     };
 }
 
-export function EvmTransactionMethodArgumentToJSON(value?: EvmTransactionMethodArgument | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EvmTransactionMethodArgumentToJSON(json: any): EvmTransactionMethodArgument {
+    return EvmTransactionMethodArgumentToJSONTyped(json, false);
+}
+
+export function EvmTransactionMethodArgumentToJSONTyped(value?: EvmTransactionMethodArgument | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'type': value.type,
-        'value': value.value,
-        'enriched_address': EnrichedEvmAddressToJSON(value.enrichedAddress),
+        'name': value['name'],
+        'type': value['type'],
+        'value': value['value'],
+        'enriched_address': EnrichedEvmAddressToJSON(value['enrichedAddress']),
     };
 }
 

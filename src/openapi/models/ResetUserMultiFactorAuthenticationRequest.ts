@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -30,11 +30,9 @@ export interface ResetUserMultiFactorAuthenticationRequest {
 /**
  * Check if a given object implements the ResetUserMultiFactorAuthenticationRequest interface.
  */
-export function instanceOfResetUserMultiFactorAuthenticationRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "email" in value;
-
-    return isInstance;
+export function instanceOfResetUserMultiFactorAuthenticationRequest(value: object): value is ResetUserMultiFactorAuthenticationRequest {
+    if (!('email' in value) || value['email'] === undefined) return false;
+    return true;
 }
 
 export function ResetUserMultiFactorAuthenticationRequestFromJSON(json: any): ResetUserMultiFactorAuthenticationRequest {
@@ -42,7 +40,7 @@ export function ResetUserMultiFactorAuthenticationRequestFromJSON(json: any): Re
 }
 
 export function ResetUserMultiFactorAuthenticationRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): ResetUserMultiFactorAuthenticationRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -51,16 +49,18 @@ export function ResetUserMultiFactorAuthenticationRequestFromJSONTyped(json: any
     };
 }
 
-export function ResetUserMultiFactorAuthenticationRequestToJSON(value?: ResetUserMultiFactorAuthenticationRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ResetUserMultiFactorAuthenticationRequestToJSON(json: any): ResetUserMultiFactorAuthenticationRequest {
+    return ResetUserMultiFactorAuthenticationRequestToJSONTyped(json, false);
+}
+
+export function ResetUserMultiFactorAuthenticationRequestToJSONTyped(value?: ResetUserMultiFactorAuthenticationRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'email': value.email,
+        'email': value['email'],
     };
 }
 

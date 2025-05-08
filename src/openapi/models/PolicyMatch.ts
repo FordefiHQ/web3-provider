@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { TransactionPolicyMatchActionType } from './TransactionPolicyMatchActionType';
 import {
     TransactionPolicyMatchActionTypeFromJSON,
     TransactionPolicyMatchActionTypeFromJSONTyped,
     TransactionPolicyMatchActionTypeToJSON,
+    TransactionPolicyMatchActionTypeToJSONTyped,
 } from './TransactionPolicyMatchActionType';
 
 /**
@@ -52,17 +53,17 @@ export interface PolicyMatch {
     actionType: TransactionPolicyMatchActionType;
 }
 
+
+
 /**
  * Check if a given object implements the PolicyMatch interface.
  */
-export function instanceOfPolicyMatch(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "isDefault" in value;
-    isInstance = isInstance && "ruleId" in value;
-    isInstance = isInstance && "ruleName" in value;
-    isInstance = isInstance && "actionType" in value;
-
-    return isInstance;
+export function instanceOfPolicyMatch(value: object): value is PolicyMatch {
+    if (!('isDefault' in value) || value['isDefault'] === undefined) return false;
+    if (!('ruleId' in value) || value['ruleId'] === undefined) return false;
+    if (!('ruleName' in value) || value['ruleName'] === undefined) return false;
+    if (!('actionType' in value) || value['actionType'] === undefined) return false;
+    return true;
 }
 
 export function PolicyMatchFromJSON(json: any): PolicyMatch {
@@ -70,7 +71,7 @@ export function PolicyMatchFromJSON(json: any): PolicyMatch {
 }
 
 export function PolicyMatchFromJSONTyped(json: any, ignoreDiscriminator: boolean): PolicyMatch {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -82,19 +83,21 @@ export function PolicyMatchFromJSONTyped(json: any, ignoreDiscriminator: boolean
     };
 }
 
-export function PolicyMatchToJSON(value?: PolicyMatch | null): any {
-    if (value === undefined) {
-        return undefined;
+export function PolicyMatchToJSON(json: any): PolicyMatch {
+    return PolicyMatchToJSONTyped(json, false);
+}
+
+export function PolicyMatchToJSONTyped(value?: PolicyMatch | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'is_default': value.isDefault,
-        'rule_id': value.ruleId,
-        'rule_name': value.ruleName,
-        'action_type': TransactionPolicyMatchActionTypeToJSON(value.actionType),
+        'is_default': value['isDefault'],
+        'rule_id': value['ruleId'],
+        'rule_name': value['ruleName'],
+        'action_type': TransactionPolicyMatchActionTypeToJSON(value['actionType']),
     };
 }
 

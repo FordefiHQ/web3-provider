@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
     UserRefFromJSONTyped,
     UserRefToJSON,
+    UserRefToJSONTyped,
 } from './UserRef';
 
 /**
@@ -46,16 +47,16 @@ export interface BackupEmailChangeAction {
     modifiedAt: Date;
     /**
      * 
-     * @type {string}
-     * @memberof BackupEmailChangeAction
-     */
-    type: BackupEmailChangeActionTypeEnum;
-    /**
-     * 
      * @type {boolean}
      * @memberof BackupEmailChangeAction
      */
     isPending: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof BackupEmailChangeAction
+     */
+    type: BackupEmailChangeActionTypeEnum;
     /**
      * 
      * @type {UserRef}
@@ -107,6 +108,8 @@ export type BackupEmailChangeActionTypeEnum = typeof BackupEmailChangeActionType
  * @export
  */
 export const BackupEmailChangeActionStateEnum = {
+    pendingVerification: 'pending_verification',
+    pendingApproval: 'pending_approval',
     created: 'created',
     completed: 'completed',
     aborted: 'aborted',
@@ -118,20 +121,18 @@ export type BackupEmailChangeActionStateEnum = typeof BackupEmailChangeActionSta
 /**
  * Check if a given object implements the BackupEmailChangeAction interface.
  */
-export function instanceOfBackupEmailChangeAction(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "isPending" in value;
-    isInstance = isInstance && "createdBy" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "requestId" in value;
-    isInstance = isInstance && "currentEmail" in value;
-    isInstance = isInstance && "newEmail" in value;
-
-    return isInstance;
+export function instanceOfBackupEmailChangeAction(value: object): value is BackupEmailChangeAction {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('isPending' in value) || value['isPending'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('createdBy' in value) || value['createdBy'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('requestId' in value) || value['requestId'] === undefined) return false;
+    if (!('currentEmail' in value) || value['currentEmail'] === undefined) return false;
+    if (!('newEmail' in value) || value['newEmail'] === undefined) return false;
+    return true;
 }
 
 export function BackupEmailChangeActionFromJSON(json: any): BackupEmailChangeAction {
@@ -139,7 +140,7 @@ export function BackupEmailChangeActionFromJSON(json: any): BackupEmailChangeAct
 }
 
 export function BackupEmailChangeActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): BackupEmailChangeAction {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -147,10 +148,10 @@ export function BackupEmailChangeActionFromJSONTyped(json: any, ignoreDiscrimina
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
-        'type': json['type'],
         'isPending': json['is_pending'],
+        'type': json['type'],
         'createdBy': UserRefFromJSON(json['created_by']),
-        'abortedBy': !exists(json, 'aborted_by') ? undefined : UserRefFromJSON(json['aborted_by']),
+        'abortedBy': json['aborted_by'] == null ? undefined : UserRefFromJSON(json['aborted_by']),
         'state': json['state'],
         'requestId': json['request_id'],
         'currentEmail': json['current_email'],
@@ -158,26 +159,28 @@ export function BackupEmailChangeActionFromJSONTyped(json: any, ignoreDiscrimina
     };
 }
 
-export function BackupEmailChangeActionToJSON(value?: BackupEmailChangeAction | null): any {
-    if (value === undefined) {
-        return undefined;
+export function BackupEmailChangeActionToJSON(json: any): BackupEmailChangeAction {
+    return BackupEmailChangeActionToJSONTyped(json, false);
+}
+
+export function BackupEmailChangeActionToJSONTyped(value?: BackupEmailChangeAction | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'type': value.type,
-        'is_pending': value.isPending,
-        'created_by': UserRefToJSON(value.createdBy),
-        'aborted_by': UserRefToJSON(value.abortedBy),
-        'state': value.state,
-        'request_id': value.requestId,
-        'current_email': value.currentEmail,
-        'new_email': value.newEmail,
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'is_pending': value['isPending'],
+        'type': value['type'],
+        'created_by': UserRefToJSON(value['createdBy']),
+        'aborted_by': UserRefToJSON(value['abortedBy']),
+        'state': value['state'],
+        'request_id': value['requestId'],
+        'current_email': value['currentEmail'],
+        'new_email': value['newEmail'],
     };
 }
 

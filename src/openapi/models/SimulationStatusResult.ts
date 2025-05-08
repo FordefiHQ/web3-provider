@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { SimulationStatus } from './SimulationStatus';
 import {
     SimulationStatusFromJSON,
     SimulationStatusFromJSONTyped,
     SimulationStatusToJSON,
+    SimulationStatusToJSONTyped,
 } from './SimulationStatus';
 
 /**
@@ -40,14 +41,14 @@ export interface SimulationStatusResult {
     details: string;
 }
 
+
+
 /**
  * Check if a given object implements the SimulationStatusResult interface.
  */
-export function instanceOfSimulationStatusResult(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "details" in value;
-
-    return isInstance;
+export function instanceOfSimulationStatusResult(value: object): value is SimulationStatusResult {
+    if (!('details' in value) || value['details'] === undefined) return false;
+    return true;
 }
 
 export function SimulationStatusResultFromJSON(json: any): SimulationStatusResult {
@@ -55,27 +56,29 @@ export function SimulationStatusResultFromJSON(json: any): SimulationStatusResul
 }
 
 export function SimulationStatusResultFromJSONTyped(json: any, ignoreDiscriminator: boolean): SimulationStatusResult {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'simulationStatus': !exists(json, 'simulation_status') ? undefined : SimulationStatusFromJSON(json['simulation_status']),
+        'simulationStatus': json['simulation_status'] == null ? undefined : SimulationStatusFromJSON(json['simulation_status']),
         'details': json['details'],
     };
 }
 
-export function SimulationStatusResultToJSON(value?: SimulationStatusResult | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SimulationStatusResultToJSON(json: any): SimulationStatusResult {
+    return SimulationStatusResultToJSONTyped(json, false);
+}
+
+export function SimulationStatusResultToJSONTyped(value?: SimulationStatusResult | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'simulation_status': SimulationStatusToJSON(value.simulationStatus),
-        'details': value.details,
+        'simulation_status': SimulationStatusToJSON(value['simulationStatus']),
+        'details': value['details'],
     };
 }
 

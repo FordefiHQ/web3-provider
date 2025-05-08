@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedSolanaAddress } from './EnrichedSolanaAddress';
 import {
     EnrichedSolanaAddressFromJSON,
     EnrichedSolanaAddressFromJSONTyped,
     EnrichedSolanaAddressToJSON,
+    EnrichedSolanaAddressToJSONTyped,
 } from './EnrichedSolanaAddress';
 
 /**
@@ -61,14 +62,12 @@ export interface AddressLookupTableState {
 /**
  * Check if a given object implements the AddressLookupTableState interface.
  */
-export function instanceOfAddressLookupTableState(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "addresses" in value;
-    isInstance = isInstance && "deactivationSlot" in value;
-    isInstance = isInstance && "lastExtendedSlot" in value;
-    isInstance = isInstance && "lastExtendedSlotStartIndex" in value;
-
-    return isInstance;
+export function instanceOfAddressLookupTableState(value: object): value is AddressLookupTableState {
+    if (!('addresses' in value) || value['addresses'] === undefined) return false;
+    if (!('deactivationSlot' in value) || value['deactivationSlot'] === undefined) return false;
+    if (!('lastExtendedSlot' in value) || value['lastExtendedSlot'] === undefined) return false;
+    if (!('lastExtendedSlotStartIndex' in value) || value['lastExtendedSlotStartIndex'] === undefined) return false;
+    return true;
 }
 
 export function AddressLookupTableStateFromJSON(json: any): AddressLookupTableState {
@@ -76,33 +75,35 @@ export function AddressLookupTableStateFromJSON(json: any): AddressLookupTableSt
 }
 
 export function AddressLookupTableStateFromJSONTyped(json: any, ignoreDiscriminator: boolean): AddressLookupTableState {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'addresses': ((json['addresses'] as Array<any>).map(EnrichedSolanaAddressFromJSON)),
-        'authority': !exists(json, 'authority') ? undefined : EnrichedSolanaAddressFromJSON(json['authority']),
+        'authority': json['authority'] == null ? undefined : EnrichedSolanaAddressFromJSON(json['authority']),
         'deactivationSlot': json['deactivation_slot'],
         'lastExtendedSlot': json['last_extended_slot'],
         'lastExtendedSlotStartIndex': json['last_extended_slot_start_index'],
     };
 }
 
-export function AddressLookupTableStateToJSON(value?: AddressLookupTableState | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AddressLookupTableStateToJSON(json: any): AddressLookupTableState {
+    return AddressLookupTableStateToJSONTyped(json, false);
+}
+
+export function AddressLookupTableStateToJSONTyped(value?: AddressLookupTableState | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'addresses': ((value.addresses as Array<any>).map(EnrichedSolanaAddressToJSON)),
-        'authority': EnrichedSolanaAddressToJSON(value.authority),
-        'deactivation_slot': value.deactivationSlot,
-        'last_extended_slot': value.lastExtendedSlot,
-        'last_extended_slot_start_index': value.lastExtendedSlotStartIndex,
+        'addresses': ((value['addresses'] as Array<any>).map(EnrichedSolanaAddressToJSON)),
+        'authority': EnrichedSolanaAddressToJSON(value['authority']),
+        'deactivation_slot': value['deactivationSlot'],
+        'last_extended_slot': value['lastExtendedSlot'],
+        'last_extended_slot_start_index': value['lastExtendedSlotStartIndex'],
     };
 }
 

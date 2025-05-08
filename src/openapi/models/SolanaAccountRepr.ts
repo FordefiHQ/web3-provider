@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type SolanaAccountReprChainTypeEnum = typeof SolanaAccountReprChainTypeEn
 /**
  * Check if a given object implements the SolanaAccountRepr interface.
  */
-export function instanceOfSolanaAccountRepr(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chainType" in value;
-    isInstance = isInstance && "base58Repr" in value;
-
-    return isInstance;
+export function instanceOfSolanaAccountRepr(value: object): value is SolanaAccountRepr {
+    if (!('chainType' in value) || value['chainType'] === undefined) return false;
+    if (!('base58Repr' in value) || value['base58Repr'] === undefined) return false;
+    return true;
 }
 
 export function SolanaAccountReprFromJSON(json: any): SolanaAccountRepr {
@@ -59,7 +57,7 @@ export function SolanaAccountReprFromJSON(json: any): SolanaAccountRepr {
 }
 
 export function SolanaAccountReprFromJSONTyped(json: any, ignoreDiscriminator: boolean): SolanaAccountRepr {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function SolanaAccountReprFromJSONTyped(json: any, ignoreDiscriminator: b
     };
 }
 
-export function SolanaAccountReprToJSON(value?: SolanaAccountRepr | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SolanaAccountReprToJSON(json: any): SolanaAccountRepr {
+    return SolanaAccountReprToJSONTyped(json, false);
+}
+
+export function SolanaAccountReprToJSONTyped(value?: SolanaAccountRepr | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain_type': value.chainType,
-        'base58_repr': value.base58Repr,
+        'chain_type': value['chainType'],
+        'base58_repr': value['base58Repr'],
     };
 }
 

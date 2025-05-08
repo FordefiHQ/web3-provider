@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { TonAccountRepr } from './TonAccountRepr';
 import {
     TonAccountReprFromJSON,
     TonAccountReprFromJSONTyped,
     TonAccountReprToJSON,
+    TonAccountReprToJSONTyped,
 } from './TonAccountRepr';
 
 /**
@@ -50,17 +51,21 @@ export interface TonTransactionMessage {
      * @memberof TonTransactionMessage
      */
     stateInit?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TonTransactionMessage
+     */
+    comment?: string;
 }
 
 /**
  * Check if a given object implements the TonTransactionMessage interface.
  */
-export function instanceOfTonTransactionMessage(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "amount" in value;
-
-    return isInstance;
+export function instanceOfTonTransactionMessage(value: object): value is TonTransactionMessage {
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    return true;
 }
 
 export function TonTransactionMessageFromJSON(json: any): TonTransactionMessage {
@@ -68,31 +73,35 @@ export function TonTransactionMessageFromJSON(json: any): TonTransactionMessage 
 }
 
 export function TonTransactionMessageFromJSONTyped(json: any, ignoreDiscriminator: boolean): TonTransactionMessage {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'address': TonAccountReprFromJSON(json['address']),
         'amount': json['amount'],
-        'payload': !exists(json, 'payload') ? undefined : json['payload'],
-        'stateInit': !exists(json, 'state_init') ? undefined : json['state_init'],
+        'payload': json['payload'] == null ? undefined : json['payload'],
+        'stateInit': json['state_init'] == null ? undefined : json['state_init'],
+        'comment': json['comment'] == null ? undefined : json['comment'],
     };
 }
 
-export function TonTransactionMessageToJSON(value?: TonTransactionMessage | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TonTransactionMessageToJSON(json: any): TonTransactionMessage {
+    return TonTransactionMessageToJSONTyped(json, false);
+}
+
+export function TonTransactionMessageToJSONTyped(value?: TonTransactionMessage | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'address': TonAccountReprToJSON(value.address),
-        'amount': value.amount,
-        'payload': value.payload,
-        'state_init': value.stateInit,
+        'address': TonAccountReprToJSON(value['address']),
+        'amount': value['amount'],
+        'payload': value['payload'],
+        'state_init': value['stateInit'],
+        'comment': value['comment'],
     };
 }
 

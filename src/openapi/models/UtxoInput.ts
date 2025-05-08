@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedUtxoAddress } from './EnrichedUtxoAddress';
 import {
     EnrichedUtxoAddressFromJSON,
     EnrichedUtxoAddressFromJSONTyped,
     EnrichedUtxoAddressToJSON,
+    EnrichedUtxoAddressToJSONTyped,
 } from './EnrichedUtxoAddress';
 
 /**
@@ -49,12 +50,10 @@ export interface UtxoInput {
 /**
  * Check if a given object implements the UtxoInput interface.
  */
-export function instanceOfUtxoInput(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "value" in value;
-
-    return isInstance;
+export function instanceOfUtxoInput(value: object): value is UtxoInput {
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('value' in value) || value['value'] === undefined) return false;
+    return true;
 }
 
 export function UtxoInputFromJSON(json: any): UtxoInput {
@@ -62,29 +61,31 @@ export function UtxoInputFromJSON(json: any): UtxoInput {
 }
 
 export function UtxoInputFromJSONTyped(json: any, ignoreDiscriminator: boolean): UtxoInput {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'address': EnrichedUtxoAddressFromJSON(json['address']),
         'value': json['value'],
-        'shouldSign': !exists(json, 'should_sign') ? undefined : json['should_sign'],
+        'shouldSign': json['should_sign'] == null ? undefined : json['should_sign'],
     };
 }
 
-export function UtxoInputToJSON(value?: UtxoInput | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UtxoInputToJSON(json: any): UtxoInput {
+    return UtxoInputToJSONTyped(json, false);
+}
+
+export function UtxoInputToJSONTyped(value?: UtxoInput | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'address': EnrichedUtxoAddressToJSON(value.address),
-        'value': value.value,
-        'should_sign': value.shouldSign,
+        'address': EnrichedUtxoAddressToJSON(value['address']),
+        'value': value['value'],
+        'should_sign': value['shouldSign'],
     };
 }
 

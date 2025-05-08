@@ -12,25 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { ContactRef } from './ContactRef';
-import {
-    ContactRefFromJSON,
-    ContactRefFromJSONTyped,
-    ContactRefToJSON,
-} from './ContactRef';
-import type { SolanaContractMetadata } from './SolanaContractMetadata';
-import {
-    SolanaContractMetadataFromJSON,
-    SolanaContractMetadataFromJSONTyped,
-    SolanaContractMetadataToJSON,
-} from './SolanaContractMetadata';
+import { mapValues } from '../runtime';
 import type { VaultRef } from './VaultRef';
 import {
     VaultRefFromJSON,
     VaultRefFromJSONTyped,
     VaultRefToJSON,
+    VaultRefToJSONTyped,
 } from './VaultRef';
+import type { SolanaContractMetadata } from './SolanaContractMetadata';
+import {
+    SolanaContractMetadataFromJSON,
+    SolanaContractMetadataFromJSONTyped,
+    SolanaContractMetadataToJSON,
+    SolanaContractMetadataToJSONTyped,
+} from './SolanaContractMetadata';
+import type { ContactRef } from './ContactRef';
+import {
+    ContactRefFromJSON,
+    ContactRefFromJSONTyped,
+    ContactRefToJSON,
+    ContactRefToJSONTyped,
+} from './ContactRef';
 
 /**
  * 
@@ -89,12 +92,10 @@ export type EnrichedSolanaAddressTypeEnum = typeof EnrichedSolanaAddressTypeEnum
 /**
  * Check if a given object implements the EnrichedSolanaAddress interface.
  */
-export function instanceOfEnrichedSolanaAddress(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "address" in value;
-
-    return isInstance;
+export function instanceOfEnrichedSolanaAddress(value: object): value is EnrichedSolanaAddress {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    return true;
 }
 
 export function EnrichedSolanaAddressFromJSON(json: any): EnrichedSolanaAddress {
@@ -102,35 +103,37 @@ export function EnrichedSolanaAddressFromJSON(json: any): EnrichedSolanaAddress 
 }
 
 export function EnrichedSolanaAddressFromJSONTyped(json: any, ignoreDiscriminator: boolean): EnrichedSolanaAddress {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'vault': !exists(json, 'vault') ? undefined : VaultRefFromJSON(json['vault']),
-        'explorerUrl': !exists(json, 'explorer_url') ? undefined : json['explorer_url'],
-        'contact': !exists(json, 'contact') ? undefined : ContactRefFromJSON(json['contact']),
+        'vault': json['vault'] == null ? undefined : VaultRefFromJSON(json['vault']),
+        'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
+        'contact': json['contact'] == null ? undefined : ContactRefFromJSON(json['contact']),
         'type': json['type'],
         'address': json['address'],
-        'contract': !exists(json, 'contract') ? undefined : SolanaContractMetadataFromJSON(json['contract']),
+        'contract': json['contract'] == null ? undefined : SolanaContractMetadataFromJSON(json['contract']),
     };
 }
 
-export function EnrichedSolanaAddressToJSON(value?: EnrichedSolanaAddress | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EnrichedSolanaAddressToJSON(json: any): EnrichedSolanaAddress {
+    return EnrichedSolanaAddressToJSONTyped(json, false);
+}
+
+export function EnrichedSolanaAddressToJSONTyped(value?: EnrichedSolanaAddress | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'vault': VaultRefToJSON(value.vault),
-        'explorer_url': value.explorerUrl,
-        'contact': ContactRefToJSON(value.contact),
-        'type': value.type,
-        'address': value.address,
-        'contract': SolanaContractMetadataToJSON(value.contract),
+        'vault': VaultRefToJSON(value['vault']),
+        'explorer_url': value['explorerUrl'],
+        'contact': ContactRefToJSON(value['contact']),
+        'type': value['type'],
+        'address': value['address'],
+        'contract': SolanaContractMetadataToJSON(value['contract']),
     };
 }
 

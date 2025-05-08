@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EvmReversionState } from './EvmReversionState';
 import {
     EvmReversionStateFromJSON,
     EvmReversionStateFromJSONTyped,
     EvmReversionStateToJSON,
+    EvmReversionStateToJSONTyped,
 } from './EvmReversionState';
 
 /**
@@ -40,14 +41,14 @@ export interface EvmReversion {
     reason?: string;
 }
 
+
+
 /**
  * Check if a given object implements the EvmReversion interface.
  */
-export function instanceOfEvmReversion(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "state" in value;
-
-    return isInstance;
+export function instanceOfEvmReversion(value: object): value is EvmReversion {
+    if (!('state' in value) || value['state'] === undefined) return false;
+    return true;
 }
 
 export function EvmReversionFromJSON(json: any): EvmReversion {
@@ -55,27 +56,29 @@ export function EvmReversionFromJSON(json: any): EvmReversion {
 }
 
 export function EvmReversionFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmReversion {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'state': EvmReversionStateFromJSON(json['state']),
-        'reason': !exists(json, 'reason') ? undefined : json['reason'],
+        'reason': json['reason'] == null ? undefined : json['reason'],
     };
 }
 
-export function EvmReversionToJSON(value?: EvmReversion | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EvmReversionToJSON(json: any): EvmReversion {
+    return EvmReversionToJSONTyped(json, false);
+}
+
+export function EvmReversionToJSONTyped(value?: EvmReversion | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'state': EvmReversionStateToJSON(value.state),
-        'reason': value.reason,
+        'state': EvmReversionStateToJSON(value['state']),
+        'reason': value['reason'],
     };
 }
 

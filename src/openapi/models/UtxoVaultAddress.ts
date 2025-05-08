@@ -12,25 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { Balances } from './Balances';
-import {
-    BalancesFromJSON,
-    BalancesFromJSONTyped,
-    BalancesToJSON,
-} from './Balances';
-import type { UtxoAddress } from './UtxoAddress';
-import {
-    UtxoAddressFromJSON,
-    UtxoAddressFromJSONTyped,
-    UtxoAddressToJSON,
-} from './UtxoAddress';
+import { mapValues } from '../runtime';
 import type { VaultRef } from './VaultRef';
 import {
     VaultRefFromJSON,
     VaultRefFromJSONTyped,
     VaultRefToJSON,
+    VaultRefToJSONTyped,
 } from './VaultRef';
+import type { UtxoAddress } from './UtxoAddress';
+import {
+    UtxoAddressFromJSON,
+    UtxoAddressFromJSONTyped,
+    UtxoAddressToJSON,
+    UtxoAddressToJSONTyped,
+} from './UtxoAddress';
+import type { Balances } from './Balances';
+import {
+    BalancesFromJSON,
+    BalancesFromJSONTyped,
+    BalancesToJSON,
+    BalancesToJSONTyped,
+} from './Balances';
 
 /**
  * 
@@ -80,13 +83,19 @@ export interface UtxoVaultAddress {
      * @type {Balances}
      * @memberof UtxoVaultAddress
      */
-    balances: Balances;
+    balances?: Balances;
     /**
      * 
      * @type {string}
      * @memberof UtxoVaultAddress
      */
     publicKeyCompressed: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UtxoVaultAddress
+     */
+    derivationPath: string;
     /**
      * 
      * @type {string}
@@ -114,19 +123,17 @@ export type UtxoVaultAddressTypeEnum = typeof UtxoVaultAddressTypeEnum[keyof typ
 /**
  * Check if a given object implements the UtxoVaultAddress interface.
  */
-export function instanceOfUtxoVaultAddress(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "vault" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "balances" in value;
-    isInstance = isInstance && "publicKeyCompressed" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "address" in value;
-
-    return isInstance;
+export function instanceOfUtxoVaultAddress(value: object): value is UtxoVaultAddress {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('vault' in value) || value['vault'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('publicKeyCompressed' in value) || value['publicKeyCompressed'] === undefined) return false;
+    if (!('derivationPath' in value) || value['derivationPath'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    return true;
 }
 
 export function UtxoVaultAddressFromJSON(json: any): UtxoVaultAddress {
@@ -134,7 +141,7 @@ export function UtxoVaultAddressFromJSON(json: any): UtxoVaultAddress {
 }
 
 export function UtxoVaultAddressFromJSONTyped(json: any, ignoreDiscriminator: boolean): UtxoVaultAddress {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -144,33 +151,37 @@ export function UtxoVaultAddressFromJSONTyped(json: any, ignoreDiscriminator: bo
         'modifiedAt': (new Date(json['modified_at'])),
         'vault': VaultRefFromJSON(json['vault']),
         'name': json['name'],
-        'balance': !exists(json, 'balance') ? undefined : json['balance'],
-        'balances': BalancesFromJSON(json['balances']),
+        'balance': json['balance'] == null ? undefined : json['balance'],
+        'balances': json['balances'] == null ? undefined : BalancesFromJSON(json['balances']),
         'publicKeyCompressed': json['public_key_compressed'],
+        'derivationPath': json['derivation_path'],
         'type': json['type'],
         'address': UtxoAddressFromJSON(json['address']),
     };
 }
 
-export function UtxoVaultAddressToJSON(value?: UtxoVaultAddress | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UtxoVaultAddressToJSON(json: any): UtxoVaultAddress {
+    return UtxoVaultAddressToJSONTyped(json, false);
+}
+
+export function UtxoVaultAddressToJSONTyped(value?: UtxoVaultAddress | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'vault': VaultRefToJSON(value.vault),
-        'name': value.name,
-        'balance': value.balance,
-        'balances': BalancesToJSON(value.balances),
-        'public_key_compressed': value.publicKeyCompressed,
-        'type': value.type,
-        'address': UtxoAddressToJSON(value.address),
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'vault': VaultRefToJSON(value['vault']),
+        'name': value['name'],
+        'balance': value['balance'],
+        'balances': BalancesToJSON(value['balances']),
+        'public_key_compressed': value['publicKeyCompressed'],
+        'derivation_path': value['derivationPath'],
+        'type': value['type'],
+        'address': UtxoAddressToJSON(value['address']),
     };
 }
 

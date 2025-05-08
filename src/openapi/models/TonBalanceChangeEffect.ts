@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedTonAddress } from './EnrichedTonAddress';
 import {
     EnrichedTonAddressFromJSON,
     EnrichedTonAddressFromJSONTyped,
     EnrichedTonAddressToJSON,
+    EnrichedTonAddressToJSONTyped,
 } from './EnrichedTonAddress';
 import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
     PricedAssetFromJSONTyped,
     PricedAssetToJSON,
+    PricedAssetToJSONTyped,
 } from './PricedAsset';
 
 /**
@@ -55,13 +57,11 @@ export interface TonBalanceChangeEffect {
 /**
  * Check if a given object implements the TonBalanceChangeEffect interface.
  */
-export function instanceOfTonBalanceChangeEffect(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "pricedAsset" in value;
-    isInstance = isInstance && "diff" in value;
-    isInstance = isInstance && "address" in value;
-
-    return isInstance;
+export function instanceOfTonBalanceChangeEffect(value: object): value is TonBalanceChangeEffect {
+    if (!('pricedAsset' in value) || value['pricedAsset'] === undefined) return false;
+    if (!('diff' in value) || value['diff'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    return true;
 }
 
 export function TonBalanceChangeEffectFromJSON(json: any): TonBalanceChangeEffect {
@@ -69,7 +69,7 @@ export function TonBalanceChangeEffectFromJSON(json: any): TonBalanceChangeEffec
 }
 
 export function TonBalanceChangeEffectFromJSONTyped(json: any, ignoreDiscriminator: boolean): TonBalanceChangeEffect {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -80,18 +80,20 @@ export function TonBalanceChangeEffectFromJSONTyped(json: any, ignoreDiscriminat
     };
 }
 
-export function TonBalanceChangeEffectToJSON(value?: TonBalanceChangeEffect | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TonBalanceChangeEffectToJSON(json: any): TonBalanceChangeEffect {
+    return TonBalanceChangeEffectToJSONTyped(json, false);
+}
+
+export function TonBalanceChangeEffectToJSONTyped(value?: TonBalanceChangeEffect | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'priced_asset': PricedAssetToJSON(value.pricedAsset),
-        'diff': value.diff,
-        'address': EnrichedTonAddressToJSON(value.address),
+        'priced_asset': PricedAssetToJSON(value['pricedAsset']),
+        'diff': value['diff'],
+        'address': EnrichedTonAddressToJSON(value['address']),
     };
 }
 

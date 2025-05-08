@@ -12,22 +12,22 @@
  * Do not edit the class manually.
  */
 
+import type { RuleActionAllow } from './RuleActionAllow';
 import {
-    RuleActionAllow,
     instanceOfRuleActionAllow,
     RuleActionAllowFromJSON,
     RuleActionAllowFromJSONTyped,
     RuleActionAllowToJSON,
 } from './RuleActionAllow';
+import type { RuleActionBlock } from './RuleActionBlock';
 import {
-    RuleActionBlock,
     instanceOfRuleActionBlock,
     RuleActionBlockFromJSON,
     RuleActionBlockFromJSONTyped,
     RuleActionBlockToJSON,
 } from './RuleActionBlock';
+import type { RuleActionRequireApprovalRequest } from './RuleActionRequireApprovalRequest';
 import {
-    RuleActionRequireApprovalRequest,
     instanceOfRuleActionRequireApprovalRequest,
     RuleActionRequireApprovalRequestFromJSON,
     RuleActionRequireApprovalRequestFromJSONTyped,
@@ -46,35 +46,36 @@ export function RuleActionRequestFromJSON(json: any): RuleActionRequest {
 }
 
 export function RuleActionRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): RuleActionRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'allow':
-            return {...RuleActionAllowFromJSONTyped(json, true), type: 'allow'};
+            return Object.assign({}, RuleActionAllowFromJSONTyped(json, true), { type: 'allow' } as const);
         case 'block':
-            return {...RuleActionBlockFromJSONTyped(json, true), type: 'block'};
+            return Object.assign({}, RuleActionBlockFromJSONTyped(json, true), { type: 'block' } as const);
         case 'require_approval':
-            return {...RuleActionRequireApprovalRequestFromJSONTyped(json, true), type: 'require_approval'};
+            return Object.assign({}, RuleActionRequireApprovalRequestFromJSONTyped(json, true), { type: 'require_approval' } as const);
         default:
             throw new Error(`No variant of RuleActionRequest exists with 'type=${json['type']}'`);
     }
 }
 
-export function RuleActionRequestToJSON(value?: RuleActionRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function RuleActionRequestToJSON(json: any): any {
+    return RuleActionRequestToJSONTyped(json, false);
+}
+
+export function RuleActionRequestToJSONTyped(value?: RuleActionRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'allow':
-            return RuleActionAllowToJSON(value);
+            return Object.assign({}, RuleActionAllowToJSON(value), { type: 'allow' } as const);
         case 'block':
-            return RuleActionBlockToJSON(value);
+            return Object.assign({}, RuleActionBlockToJSON(value), { type: 'block' } as const);
         case 'require_approval':
-            return RuleActionRequireApprovalRequestToJSON(value);
+            return Object.assign({}, RuleActionRequireApprovalRequestToJSON(value), { type: 'require_approval' } as const);
         default:
             throw new Error(`No variant of RuleActionRequest exists with 'type=${value['type']}'`);
     }

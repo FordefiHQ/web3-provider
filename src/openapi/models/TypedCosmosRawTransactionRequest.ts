@@ -12,25 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { CosmosChainUniqueId } from './CosmosChainUniqueId';
 import {
     CosmosChainUniqueIdFromJSON,
     CosmosChainUniqueIdFromJSONTyped,
     CosmosChainUniqueIdToJSON,
+    CosmosChainUniqueIdToJSONTyped,
 } from './CosmosChainUniqueId';
-import type { PushMode } from './PushMode';
-import {
-    PushModeFromJSON,
-    PushModeFromJSONTyped,
-    PushModeToJSON,
-} from './PushMode';
 import type { TypedCosmosRawTransactionRequestRequestData } from './TypedCosmosRawTransactionRequestRequestData';
 import {
     TypedCosmosRawTransactionRequestRequestDataFromJSON,
     TypedCosmosRawTransactionRequestRequestDataFromJSONTyped,
     TypedCosmosRawTransactionRequestRequestDataToJSON,
+    TypedCosmosRawTransactionRequestRequestDataToJSONTyped,
 } from './TypedCosmosRawTransactionRequestRequestData';
+import type { PushMode } from './PushMode';
+import {
+    PushModeFromJSON,
+    PushModeFromJSONTyped,
+    PushModeToJSON,
+    PushModeToJSONTyped,
+} from './PushMode';
 
 /**
  * 
@@ -77,13 +80,11 @@ export type TypedCosmosRawTransactionRequestTypeEnum = typeof TypedCosmosRawTran
 /**
  * Check if a given object implements the TypedCosmosRawTransactionRequest interface.
  */
-export function instanceOfTypedCosmosRawTransactionRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "requestData" in value;
-
-    return isInstance;
+export function instanceOfTypedCosmosRawTransactionRequest(value: object): value is TypedCosmosRawTransactionRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('requestData' in value) || value['requestData'] === undefined) return false;
+    return true;
 }
 
 export function TypedCosmosRawTransactionRequestFromJSON(json: any): TypedCosmosRawTransactionRequest {
@@ -91,31 +92,33 @@ export function TypedCosmosRawTransactionRequestFromJSON(json: any): TypedCosmos
 }
 
 export function TypedCosmosRawTransactionRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): TypedCosmosRawTransactionRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
-        'pushMode': !exists(json, 'push_mode') ? undefined : PushModeFromJSON(json['push_mode']),
+        'pushMode': json['push_mode'] == null ? undefined : PushModeFromJSON(json['push_mode']),
         'chain': CosmosChainUniqueIdFromJSON(json['chain']),
         'requestData': TypedCosmosRawTransactionRequestRequestDataFromJSON(json['request_data']),
     };
 }
 
-export function TypedCosmosRawTransactionRequestToJSON(value?: TypedCosmosRawTransactionRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TypedCosmosRawTransactionRequestToJSON(json: any): TypedCosmosRawTransactionRequest {
+    return TypedCosmosRawTransactionRequestToJSONTyped(json, false);
+}
+
+export function TypedCosmosRawTransactionRequestToJSONTyped(value?: TypedCosmosRawTransactionRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'push_mode': PushModeToJSON(value.pushMode),
-        'chain': CosmosChainUniqueIdToJSON(value.chain),
-        'request_data': TypedCosmosRawTransactionRequestRequestDataToJSON(value.requestData),
+        'type': value['type'],
+        'push_mode': PushModeToJSON(value['pushMode']),
+        'chain': CosmosChainUniqueIdToJSON(value['chain']),
+        'request_data': TypedCosmosRawTransactionRequestRequestDataToJSON(value['requestData']),
     };
 }
 

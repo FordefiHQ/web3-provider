@@ -12,31 +12,35 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { CreateTonTransferRequestTo } from './CreateTonTransferRequestTo';
 import {
     CreateTonTransferRequestToFromJSON,
     CreateTonTransferRequestToFromJSONTyped,
     CreateTonTransferRequestToToJSON,
+    CreateTonTransferRequestToToJSONTyped,
 } from './CreateTonTransferRequestTo';
-import type { CreateTonTransferRequestValue } from './CreateTonTransferRequestValue';
+import type { CreateAptosTransferRequestValue } from './CreateAptosTransferRequestValue';
 import {
-    CreateTonTransferRequestValueFromJSON,
-    CreateTonTransferRequestValueFromJSONTyped,
-    CreateTonTransferRequestValueToJSON,
-} from './CreateTonTransferRequestValue';
-import type { PushMode } from './PushMode';
-import {
-    PushModeFromJSON,
-    PushModeFromJSONTyped,
-    PushModeToJSON,
-} from './PushMode';
+    CreateAptosTransferRequestValueFromJSON,
+    CreateAptosTransferRequestValueFromJSONTyped,
+    CreateAptosTransferRequestValueToJSON,
+    CreateAptosTransferRequestValueToJSONTyped,
+} from './CreateAptosTransferRequestValue';
 import type { TonAssetIdentifierRequest } from './TonAssetIdentifierRequest';
 import {
     TonAssetIdentifierRequestFromJSON,
     TonAssetIdentifierRequestFromJSONTyped,
     TonAssetIdentifierRequestToJSON,
+    TonAssetIdentifierRequestToJSONTyped,
 } from './TonAssetIdentifierRequest';
+import type { PushMode } from './PushMode';
+import {
+    PushModeFromJSON,
+    PushModeFromJSONTyped,
+    PushModeToJSON,
+    PushModeToJSONTyped,
+} from './PushMode';
 
 /**
  * 
@@ -70,16 +74,22 @@ export interface CreateTonTransferRequest {
     to: CreateTonTransferRequestTo;
     /**
      * 
-     * @type {CreateTonTransferRequestValue}
+     * @type {CreateAptosTransferRequestValue}
      * @memberof CreateTonTransferRequest
      */
-    value: CreateTonTransferRequestValue;
+    value: CreateAptosTransferRequestValue;
     /**
      * 
      * @type {TonAssetIdentifierRequest}
      * @memberof CreateTonTransferRequest
      */
     assetIdentifier: TonAssetIdentifierRequest;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateTonTransferRequest
+     */
+    comment?: string;
     /**
      * 
      * @type {boolean}
@@ -101,14 +111,12 @@ export type CreateTonTransferRequestTypeEnum = typeof CreateTonTransferRequestTy
 /**
  * Check if a given object implements the CreateTonTransferRequest interface.
  */
-export function instanceOfCreateTonTransferRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "to" in value;
-    isInstance = isInstance && "value" in value;
-    isInstance = isInstance && "assetIdentifier" in value;
-
-    return isInstance;
+export function instanceOfCreateTonTransferRequest(value: object): value is CreateTonTransferRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('to' in value) || value['to'] === undefined) return false;
+    if (!('value' in value) || value['value'] === undefined) return false;
+    if (!('assetIdentifier' in value) || value['assetIdentifier'] === undefined) return false;
+    return true;
 }
 
 export function CreateTonTransferRequestFromJSON(json: any): CreateTonTransferRequest {
@@ -116,37 +124,41 @@ export function CreateTonTransferRequestFromJSON(json: any): CreateTonTransferRe
 }
 
 export function CreateTonTransferRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateTonTransferRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
-        'failOnPredictionFailure': !exists(json, 'fail_on_prediction_failure') ? undefined : json['fail_on_prediction_failure'],
-        'pushMode': !exists(json, 'push_mode') ? undefined : PushModeFromJSON(json['push_mode']),
+        'failOnPredictionFailure': json['fail_on_prediction_failure'] == null ? undefined : json['fail_on_prediction_failure'],
+        'pushMode': json['push_mode'] == null ? undefined : PushModeFromJSON(json['push_mode']),
         'to': CreateTonTransferRequestToFromJSON(json['to']),
-        'value': CreateTonTransferRequestValueFromJSON(json['value']),
+        'value': CreateAptosTransferRequestValueFromJSON(json['value']),
         'assetIdentifier': TonAssetIdentifierRequestFromJSON(json['asset_identifier']),
-        'skipPrediction': !exists(json, 'skip_prediction') ? undefined : json['skip_prediction'],
+        'comment': json['comment'] == null ? undefined : json['comment'],
+        'skipPrediction': json['skip_prediction'] == null ? undefined : json['skip_prediction'],
     };
 }
 
-export function CreateTonTransferRequestToJSON(value?: CreateTonTransferRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateTonTransferRequestToJSON(json: any): CreateTonTransferRequest {
+    return CreateTonTransferRequestToJSONTyped(json, false);
+}
+
+export function CreateTonTransferRequestToJSONTyped(value?: CreateTonTransferRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'fail_on_prediction_failure': value.failOnPredictionFailure,
-        'push_mode': PushModeToJSON(value.pushMode),
-        'to': CreateTonTransferRequestToToJSON(value.to),
-        'value': CreateTonTransferRequestValueToJSON(value.value),
-        'asset_identifier': TonAssetIdentifierRequestToJSON(value.assetIdentifier),
-        'skip_prediction': value.skipPrediction,
+        'type': value['type'],
+        'fail_on_prediction_failure': value['failOnPredictionFailure'],
+        'push_mode': PushModeToJSON(value['pushMode']),
+        'to': CreateTonTransferRequestToToJSON(value['to']),
+        'value': CreateAptosTransferRequestValueToJSON(value['value']),
+        'asset_identifier': TonAssetIdentifierRequestToJSON(value['assetIdentifier']),
+        'comment': value['comment'],
+        'skip_prediction': value['skipPrediction'],
     };
 }
 

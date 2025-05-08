@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { CosmosCoinWithAmountCoinWithAmount } from './CosmosCoinWithAmountCoinWithAmount';
 import {
     CosmosCoinWithAmountCoinWithAmountFromJSON,
     CosmosCoinWithAmountCoinWithAmountFromJSONTyped,
     CosmosCoinWithAmountCoinWithAmountToJSON,
+    CosmosCoinWithAmountCoinWithAmountToJSONTyped,
 } from './CosmosCoinWithAmountCoinWithAmount';
 
 /**
@@ -37,11 +38,9 @@ export interface CosmosCoinWithAmount {
 /**
  * Check if a given object implements the CosmosCoinWithAmount interface.
  */
-export function instanceOfCosmosCoinWithAmount(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "coinWithAmount" in value;
-
-    return isInstance;
+export function instanceOfCosmosCoinWithAmount(value: object): value is CosmosCoinWithAmount {
+    if (!('coinWithAmount' in value) || value['coinWithAmount'] === undefined) return false;
+    return true;
 }
 
 export function CosmosCoinWithAmountFromJSON(json: any): CosmosCoinWithAmount {
@@ -49,7 +48,7 @@ export function CosmosCoinWithAmountFromJSON(json: any): CosmosCoinWithAmount {
 }
 
 export function CosmosCoinWithAmountFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosCoinWithAmount {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -58,16 +57,18 @@ export function CosmosCoinWithAmountFromJSONTyped(json: any, ignoreDiscriminator
     };
 }
 
-export function CosmosCoinWithAmountToJSON(value?: CosmosCoinWithAmount | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosCoinWithAmountToJSON(json: any): CosmosCoinWithAmount {
+    return CosmosCoinWithAmountToJSONTyped(json, false);
+}
+
+export function CosmosCoinWithAmountToJSONTyped(value?: CosmosCoinWithAmount | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'coin_with_amount': CosmosCoinWithAmountCoinWithAmountToJSON(value.coinWithAmount),
+        'coin_with_amount': CosmosCoinWithAmountCoinWithAmountToJSON(value['coinWithAmount']),
     };
 }
 

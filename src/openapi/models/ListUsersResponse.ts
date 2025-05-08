@@ -12,13 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { User } from './User';
 import {
     UserFromJSON,
     UserFromJSONTyped,
     UserToJSON,
+    UserToJSONTyped,
 } from './User';
+import type { PartialErrorResponse } from './PartialErrorResponse';
+import {
+    PartialErrorResponseFromJSON,
+    PartialErrorResponseFromJSONTyped,
+    PartialErrorResponseToJSON,
+    PartialErrorResponseToJSONTyped,
+} from './PartialErrorResponse';
 
 /**
  * 
@@ -26,6 +34,12 @@ import {
  * @interface ListUsersResponse
  */
 export interface ListUsersResponse {
+    /**
+     * 
+     * @type {PartialErrorResponse}
+     * @memberof ListUsersResponse
+     */
+    partialError?: PartialErrorResponse;
     /**
      * 
      * @type {number}
@@ -55,14 +69,12 @@ export interface ListUsersResponse {
 /**
  * Check if a given object implements the ListUsersResponse interface.
  */
-export function instanceOfListUsersResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "total" in value;
-    isInstance = isInstance && "page" in value;
-    isInstance = isInstance && "size" in value;
-    isInstance = isInstance && "users" in value;
-
-    return isInstance;
+export function instanceOfListUsersResponse(value: object): value is ListUsersResponse {
+    if (!('total' in value) || value['total'] === undefined) return false;
+    if (!('page' in value) || value['page'] === undefined) return false;
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('users' in value) || value['users'] === undefined) return false;
+    return true;
 }
 
 export function ListUsersResponseFromJSON(json: any): ListUsersResponse {
@@ -70,11 +82,12 @@ export function ListUsersResponseFromJSON(json: any): ListUsersResponse {
 }
 
 export function ListUsersResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): ListUsersResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
+        'partialError': json['partial_error'] == null ? undefined : PartialErrorResponseFromJSON(json['partial_error']),
         'total': json['total'],
         'page': json['page'],
         'size': json['size'],
@@ -82,19 +95,22 @@ export function ListUsersResponseFromJSONTyped(json: any, ignoreDiscriminator: b
     };
 }
 
-export function ListUsersResponseToJSON(value?: ListUsersResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ListUsersResponseToJSON(json: any): ListUsersResponse {
+    return ListUsersResponseToJSONTyped(json, false);
+}
+
+export function ListUsersResponseToJSONTyped(value?: ListUsersResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'total': value.total,
-        'page': value.page,
-        'size': value.size,
-        'users': ((value.users as Array<any>).map(UserToJSON)),
+        'partial_error': PartialErrorResponseToJSON(value['partialError']),
+        'total': value['total'],
+        'page': value['page'],
+        'size': value['size'],
+        'users': ((value['users'] as Array<any>).map(UserToJSON)),
     };
 }
 

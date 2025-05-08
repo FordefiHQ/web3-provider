@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -33,10 +33,10 @@ export interface EvmDataRequestFullDetails {
     methodName: string;
     /**
      * 
-     * @type {object}
+     * @type {{ [key: string]: any | undefined; }}
      * @memberof EvmDataRequestFullDetails
      */
-    methodArguments: object;
+    methodArguments: { [key: string]: any | undefined; };
 }
 
 
@@ -52,13 +52,11 @@ export type EvmDataRequestFullDetailsTypeEnum = typeof EvmDataRequestFullDetails
 /**
  * Check if a given object implements the EvmDataRequestFullDetails interface.
  */
-export function instanceOfEvmDataRequestFullDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "methodName" in value;
-    isInstance = isInstance && "methodArguments" in value;
-
-    return isInstance;
+export function instanceOfEvmDataRequestFullDetails(value: object): value is EvmDataRequestFullDetails {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('methodName' in value) || value['methodName'] === undefined) return false;
+    if (!('methodArguments' in value) || value['methodArguments'] === undefined) return false;
+    return true;
 }
 
 export function EvmDataRequestFullDetailsFromJSON(json: any): EvmDataRequestFullDetails {
@@ -66,7 +64,7 @@ export function EvmDataRequestFullDetailsFromJSON(json: any): EvmDataRequestFull
 }
 
 export function EvmDataRequestFullDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmDataRequestFullDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -77,18 +75,20 @@ export function EvmDataRequestFullDetailsFromJSONTyped(json: any, ignoreDiscrimi
     };
 }
 
-export function EvmDataRequestFullDetailsToJSON(value?: EvmDataRequestFullDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EvmDataRequestFullDetailsToJSON(json: any): EvmDataRequestFullDetails {
+    return EvmDataRequestFullDetailsToJSONTyped(json, false);
+}
+
+export function EvmDataRequestFullDetailsToJSONTyped(value?: EvmDataRequestFullDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'method_name': value.methodName,
-        'method_arguments': value.methodArguments,
+        'type': value['type'],
+        'method_name': value['methodName'],
+        'method_arguments': value['methodArguments'],
     };
 }
 

@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type CosmosAccountReprChainTypeEnum = typeof CosmosAccountReprChainTypeEn
 /**
  * Check if a given object implements the CosmosAccountRepr interface.
  */
-export function instanceOfCosmosAccountRepr(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chainType" in value;
-    isInstance = isInstance && "bech32Repr" in value;
-
-    return isInstance;
+export function instanceOfCosmosAccountRepr(value: object): value is CosmosAccountRepr {
+    if (!('chainType' in value) || value['chainType'] === undefined) return false;
+    if (!('bech32Repr' in value) || value['bech32Repr'] === undefined) return false;
+    return true;
 }
 
 export function CosmosAccountReprFromJSON(json: any): CosmosAccountRepr {
@@ -59,7 +57,7 @@ export function CosmosAccountReprFromJSON(json: any): CosmosAccountRepr {
 }
 
 export function CosmosAccountReprFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosAccountRepr {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function CosmosAccountReprFromJSONTyped(json: any, ignoreDiscriminator: b
     };
 }
 
-export function CosmosAccountReprToJSON(value?: CosmosAccountRepr | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosAccountReprToJSON(json: any): CosmosAccountRepr {
+    return CosmosAccountReprToJSONTyped(json, false);
+}
+
+export function CosmosAccountReprToJSONTyped(value?: CosmosAccountRepr | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain_type': value.chainType,
-        'bech32_repr': value.bech32Repr,
+        'chain_type': value['chainType'],
+        'bech32_repr': value['bech32Repr'],
     };
 }
 

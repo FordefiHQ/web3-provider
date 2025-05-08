@@ -12,31 +12,35 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { CosmosAssetIdentifierRequest } from './CosmosAssetIdentifierRequest';
 import {
     CosmosAssetIdentifierRequestFromJSON,
     CosmosAssetIdentifierRequestFromJSONTyped,
     CosmosAssetIdentifierRequestToJSON,
+    CosmosAssetIdentifierRequestToJSONTyped,
 } from './CosmosAssetIdentifierRequest';
-import type { PushMode } from './PushMode';
+import type { CreateAptosTransferRequestValue } from './CreateAptosTransferRequestValue';
 import {
-    PushModeFromJSON,
-    PushModeFromJSONTyped,
-    PushModeToJSON,
-} from './PushMode';
+    CreateAptosTransferRequestValueFromJSON,
+    CreateAptosTransferRequestValueFromJSONTyped,
+    CreateAptosTransferRequestValueToJSON,
+    CreateAptosTransferRequestValueToJSONTyped,
+} from './CreateAptosTransferRequestValue';
 import type { TypedCosmosTransferRequestTo } from './TypedCosmosTransferRequestTo';
 import {
     TypedCosmosTransferRequestToFromJSON,
     TypedCosmosTransferRequestToFromJSONTyped,
     TypedCosmosTransferRequestToToJSON,
+    TypedCosmosTransferRequestToToJSONTyped,
 } from './TypedCosmosTransferRequestTo';
-import type { TypedCosmosTransferRequestValue } from './TypedCosmosTransferRequestValue';
+import type { PushMode } from './PushMode';
 import {
-    TypedCosmosTransferRequestValueFromJSON,
-    TypedCosmosTransferRequestValueFromJSONTyped,
-    TypedCosmosTransferRequestValueToJSON,
-} from './TypedCosmosTransferRequestValue';
+    PushModeFromJSON,
+    PushModeFromJSONTyped,
+    PushModeToJSON,
+    PushModeToJSONTyped,
+} from './PushMode';
 
 /**
  * 
@@ -70,10 +74,10 @@ export interface TypedCosmosTransferRequest {
     assetIdentifier: CosmosAssetIdentifierRequest;
     /**
      * 
-     * @type {TypedCosmosTransferRequestValue}
+     * @type {CreateAptosTransferRequestValue}
      * @memberof TypedCosmosTransferRequest
      */
-    value: TypedCosmosTransferRequestValue;
+    value: CreateAptosTransferRequestValue;
     /**
      * 
      * @type {string}
@@ -95,14 +99,12 @@ export type TypedCosmosTransferRequestTypeEnum = typeof TypedCosmosTransferReque
 /**
  * Check if a given object implements the TypedCosmosTransferRequest interface.
  */
-export function instanceOfTypedCosmosTransferRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "to" in value;
-    isInstance = isInstance && "assetIdentifier" in value;
-    isInstance = isInstance && "value" in value;
-
-    return isInstance;
+export function instanceOfTypedCosmosTransferRequest(value: object): value is TypedCosmosTransferRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('to' in value) || value['to'] === undefined) return false;
+    if (!('assetIdentifier' in value) || value['assetIdentifier'] === undefined) return false;
+    if (!('value' in value) || value['value'] === undefined) return false;
+    return true;
 }
 
 export function TypedCosmosTransferRequestFromJSON(json: any): TypedCosmosTransferRequest {
@@ -110,35 +112,37 @@ export function TypedCosmosTransferRequestFromJSON(json: any): TypedCosmosTransf
 }
 
 export function TypedCosmosTransferRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): TypedCosmosTransferRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
-        'pushMode': !exists(json, 'push_mode') ? undefined : PushModeFromJSON(json['push_mode']),
+        'pushMode': json['push_mode'] == null ? undefined : PushModeFromJSON(json['push_mode']),
         'to': TypedCosmosTransferRequestToFromJSON(json['to']),
         'assetIdentifier': CosmosAssetIdentifierRequestFromJSON(json['asset_identifier']),
-        'value': TypedCosmosTransferRequestValueFromJSON(json['value']),
-        'memo': !exists(json, 'memo') ? undefined : json['memo'],
+        'value': CreateAptosTransferRequestValueFromJSON(json['value']),
+        'memo': json['memo'] == null ? undefined : json['memo'],
     };
 }
 
-export function TypedCosmosTransferRequestToJSON(value?: TypedCosmosTransferRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TypedCosmosTransferRequestToJSON(json: any): TypedCosmosTransferRequest {
+    return TypedCosmosTransferRequestToJSONTyped(json, false);
+}
+
+export function TypedCosmosTransferRequestToJSONTyped(value?: TypedCosmosTransferRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'push_mode': PushModeToJSON(value.pushMode),
-        'to': TypedCosmosTransferRequestToToJSON(value.to),
-        'asset_identifier': CosmosAssetIdentifierRequestToJSON(value.assetIdentifier),
-        'value': TypedCosmosTransferRequestValueToJSON(value.value),
-        'memo': value.memo,
+        'type': value['type'],
+        'push_mode': PushModeToJSON(value['pushMode']),
+        'to': TypedCosmosTransferRequestToToJSON(value['to']),
+        'asset_identifier': CosmosAssetIdentifierRequestToJSON(value['assetIdentifier']),
+        'value': CreateAptosTransferRequestValueToJSON(value['value']),
+        'memo': value['memo'],
     };
 }
 

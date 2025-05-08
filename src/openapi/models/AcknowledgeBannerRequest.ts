@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { BannerType } from './BannerType';
 import {
     BannerTypeFromJSON,
     BannerTypeFromJSONTyped,
     BannerTypeToJSON,
+    BannerTypeToJSONTyped,
 } from './BannerType';
 
 /**
@@ -34,14 +35,14 @@ export interface AcknowledgeBannerRequest {
     bannerType: BannerType;
 }
 
+
+
 /**
  * Check if a given object implements the AcknowledgeBannerRequest interface.
  */
-export function instanceOfAcknowledgeBannerRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "bannerType" in value;
-
-    return isInstance;
+export function instanceOfAcknowledgeBannerRequest(value: object): value is AcknowledgeBannerRequest {
+    if (!('bannerType' in value) || value['bannerType'] === undefined) return false;
+    return true;
 }
 
 export function AcknowledgeBannerRequestFromJSON(json: any): AcknowledgeBannerRequest {
@@ -49,7 +50,7 @@ export function AcknowledgeBannerRequestFromJSON(json: any): AcknowledgeBannerRe
 }
 
 export function AcknowledgeBannerRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): AcknowledgeBannerRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -58,16 +59,18 @@ export function AcknowledgeBannerRequestFromJSONTyped(json: any, ignoreDiscrimin
     };
 }
 
-export function AcknowledgeBannerRequestToJSON(value?: AcknowledgeBannerRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AcknowledgeBannerRequestToJSON(json: any): AcknowledgeBannerRequest {
+    return AcknowledgeBannerRequestToJSONTyped(json, false);
+}
+
+export function AcknowledgeBannerRequestToJSONTyped(value?: AcknowledgeBannerRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'banner_type': BannerTypeToJSON(value.bannerType),
+        'banner_type': BannerTypeToJSON(value['bannerType']),
     };
 }
 

@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { PushMode } from './PushMode';
-import {
-    PushModeFromJSON,
-    PushModeFromJSONTyped,
-    PushModeToJSON,
-} from './PushMode';
+import { mapValues } from '../runtime';
 import type { StarknetChainUniqueId } from './StarknetChainUniqueId';
 import {
     StarknetChainUniqueIdFromJSON,
     StarknetChainUniqueIdFromJSONTyped,
     StarknetChainUniqueIdToJSON,
+    StarknetChainUniqueIdToJSONTyped,
 } from './StarknetChainUniqueId';
+import type { PushMode } from './PushMode';
+import {
+    PushModeFromJSON,
+    PushModeFromJSONTyped,
+    PushModeToJSON,
+    PushModeToJSONTyped,
+} from './PushMode';
 
 /**
  * 
@@ -77,12 +79,10 @@ export type CreateStarknetContractDeploymentRequestTypeEnum = typeof CreateStark
 /**
  * Check if a given object implements the CreateStarknetContractDeploymentRequest interface.
  */
-export function instanceOfCreateStarknetContractDeploymentRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfCreateStarknetContractDeploymentRequest(value: object): value is CreateStarknetContractDeploymentRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function CreateStarknetContractDeploymentRequestFromJSON(json: any): CreateStarknetContractDeploymentRequest {
@@ -90,33 +90,35 @@ export function CreateStarknetContractDeploymentRequestFromJSON(json: any): Crea
 }
 
 export function CreateStarknetContractDeploymentRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateStarknetContractDeploymentRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
-        'failOnPredictionFailure': !exists(json, 'fail_on_prediction_failure') ? undefined : json['fail_on_prediction_failure'],
-        'skipPrediction': !exists(json, 'skip_prediction') ? undefined : json['skip_prediction'],
-        'pushMode': !exists(json, 'push_mode') ? undefined : PushModeFromJSON(json['push_mode']),
+        'failOnPredictionFailure': json['fail_on_prediction_failure'] == null ? undefined : json['fail_on_prediction_failure'],
+        'skipPrediction': json['skip_prediction'] == null ? undefined : json['skip_prediction'],
+        'pushMode': json['push_mode'] == null ? undefined : PushModeFromJSON(json['push_mode']),
         'chain': StarknetChainUniqueIdFromJSON(json['chain']),
     };
 }
 
-export function CreateStarknetContractDeploymentRequestToJSON(value?: CreateStarknetContractDeploymentRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateStarknetContractDeploymentRequestToJSON(json: any): CreateStarknetContractDeploymentRequest {
+    return CreateStarknetContractDeploymentRequestToJSONTyped(json, false);
+}
+
+export function CreateStarknetContractDeploymentRequestToJSONTyped(value?: CreateStarknetContractDeploymentRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'fail_on_prediction_failure': value.failOnPredictionFailure,
-        'skip_prediction': value.skipPrediction,
-        'push_mode': PushModeToJSON(value.pushMode),
-        'chain': StarknetChainUniqueIdToJSON(value.chain),
+        'type': value['type'],
+        'fail_on_prediction_failure': value['failOnPredictionFailure'],
+        'skip_prediction': value['skipPrediction'],
+        'push_mode': PushModeToJSON(value['pushMode']),
+        'chain': StarknetChainUniqueIdToJSON(value['chain']),
     };
 }
 

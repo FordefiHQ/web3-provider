@@ -12,43 +12,56 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { ApprovalRequest } from './ApprovalRequest';
-import {
-    ApprovalRequestFromJSON,
-    ApprovalRequestFromJSONTyped,
-    ApprovalRequestToJSON,
-} from './ApprovalRequest';
+import { mapValues } from '../runtime';
 import type { EnrichedUtxoAddress } from './EnrichedUtxoAddress';
 import {
     EnrichedUtxoAddressFromJSON,
     EnrichedUtxoAddressFromJSONTyped,
     EnrichedUtxoAddressToJSON,
+    EnrichedUtxoAddressToJSONTyped,
 } from './EnrichedUtxoAddress';
+import type { UtxoMessageType } from './UtxoMessageType';
+import {
+    UtxoMessageTypeFromJSON,
+    UtxoMessageTypeFromJSONTyped,
+    UtxoMessageTypeToJSON,
+    UtxoMessageTypeToJSONTyped,
+} from './UtxoMessageType';
+import type { AmlPolicyMatchOutgoing } from './AmlPolicyMatchOutgoing';
+import {
+    AmlPolicyMatchOutgoingFromJSON,
+    AmlPolicyMatchOutgoingFromJSONTyped,
+    AmlPolicyMatchOutgoingToJSON,
+    AmlPolicyMatchOutgoingToJSONTyped,
+} from './AmlPolicyMatchOutgoing';
+import type { TransactionRisk } from './TransactionRisk';
+import {
+    TransactionRiskFromJSON,
+    TransactionRiskFromJSONTyped,
+    TransactionRiskToJSON,
+    TransactionRiskToJSONTyped,
+} from './TransactionRisk';
+import type { ApprovalRequest } from './ApprovalRequest';
+import {
+    ApprovalRequestFromJSON,
+    ApprovalRequestFromJSONTyped,
+    ApprovalRequestToJSON,
+    ApprovalRequestToJSONTyped,
+} from './ApprovalRequest';
 import type { EnrichedUtxoChain } from './EnrichedUtxoChain';
 import {
     EnrichedUtxoChainFromJSON,
     EnrichedUtxoChainFromJSONTyped,
     EnrichedUtxoChainToJSON,
+    EnrichedUtxoChainToJSONTyped,
 } from './EnrichedUtxoChain';
 import type { PolicyMatch } from './PolicyMatch';
 import {
     PolicyMatchFromJSON,
     PolicyMatchFromJSONTyped,
     PolicyMatchToJSON,
+    PolicyMatchToJSONTyped,
 } from './PolicyMatch';
-import type { TransactionRisk } from './TransactionRisk';
-import {
-    TransactionRiskFromJSON,
-    TransactionRiskFromJSONTyped,
-    TransactionRiskToJSON,
-} from './TransactionRisk';
-import type { UtxoMessageType } from './UtxoMessageType';
-import {
-    UtxoMessageTypeFromJSON,
-    UtxoMessageTypeFromJSONTyped,
-    UtxoMessageTypeToJSON,
-} from './UtxoMessageType';
 
 /**
  * 
@@ -56,6 +69,12 @@ import {
  * @interface PredictedUtxoMessage
  */
 export interface PredictedUtxoMessage {
+    /**
+     * 
+     * @type {AmlPolicyMatchOutgoing}
+     * @memberof PredictedUtxoMessage
+     */
+    amlPolicyMatch?: AmlPolicyMatchOutgoing;
     /**
      * 
      * @type {PolicyMatch}
@@ -74,6 +93,12 @@ export interface PredictedUtxoMessage {
      * @memberof PredictedUtxoMessage
      */
     risks: Array<TransactionRisk>;
+    /**
+     * 
+     * @type {string}
+     * @memberof PredictedUtxoMessage
+     */
+    note?: string;
     /**
      * 
      * @type {string}
@@ -119,17 +144,15 @@ export type PredictedUtxoMessageTypeEnum = typeof PredictedUtxoMessageTypeEnum[k
 /**
  * Check if a given object implements the PredictedUtxoMessage interface.
  */
-export function instanceOfPredictedUtxoMessage(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "policyMatch" in value;
-    isInstance = isInstance && "risks" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "sender" in value;
-    isInstance = isInstance && "utxoMessageType" in value;
-    isInstance = isInstance && "messageToDisplay" in value;
-
-    return isInstance;
+export function instanceOfPredictedUtxoMessage(value: object): value is PredictedUtxoMessage {
+    if (!('policyMatch' in value) || value['policyMatch'] === undefined) return false;
+    if (!('risks' in value) || value['risks'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    if (!('utxoMessageType' in value) || value['utxoMessageType'] === undefined) return false;
+    if (!('messageToDisplay' in value) || value['messageToDisplay'] === undefined) return false;
+    return true;
 }
 
 export function PredictedUtxoMessageFromJSON(json: any): PredictedUtxoMessage {
@@ -137,14 +160,16 @@ export function PredictedUtxoMessageFromJSON(json: any): PredictedUtxoMessage {
 }
 
 export function PredictedUtxoMessageFromJSONTyped(json: any, ignoreDiscriminator: boolean): PredictedUtxoMessage {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
+        'amlPolicyMatch': json['aml_policy_match'] == null ? undefined : AmlPolicyMatchOutgoingFromJSON(json['aml_policy_match']),
         'policyMatch': PolicyMatchFromJSON(json['policy_match']),
-        'approvalRequest': !exists(json, 'approval_request') ? undefined : ApprovalRequestFromJSON(json['approval_request']),
+        'approvalRequest': json['approval_request'] == null ? undefined : ApprovalRequestFromJSON(json['approval_request']),
         'risks': ((json['risks'] as Array<any>).map(TransactionRiskFromJSON)),
+        'note': json['note'] == null ? undefined : json['note'],
         'type': json['type'],
         'chain': EnrichedUtxoChainFromJSON(json['chain']),
         'sender': EnrichedUtxoAddressFromJSON(json['sender']),
@@ -153,23 +178,27 @@ export function PredictedUtxoMessageFromJSONTyped(json: any, ignoreDiscriminator
     };
 }
 
-export function PredictedUtxoMessageToJSON(value?: PredictedUtxoMessage | null): any {
-    if (value === undefined) {
-        return undefined;
+export function PredictedUtxoMessageToJSON(json: any): PredictedUtxoMessage {
+    return PredictedUtxoMessageToJSONTyped(json, false);
+}
+
+export function PredictedUtxoMessageToJSONTyped(value?: PredictedUtxoMessage | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'policy_match': PolicyMatchToJSON(value.policyMatch),
-        'approval_request': ApprovalRequestToJSON(value.approvalRequest),
-        'risks': ((value.risks as Array<any>).map(TransactionRiskToJSON)),
-        'type': value.type,
-        'chain': EnrichedUtxoChainToJSON(value.chain),
-        'sender': EnrichedUtxoAddressToJSON(value.sender),
-        'utxo_message_type': UtxoMessageTypeToJSON(value.utxoMessageType),
-        'message_to_display': value.messageToDisplay,
+        'aml_policy_match': AmlPolicyMatchOutgoingToJSON(value['amlPolicyMatch']),
+        'policy_match': PolicyMatchToJSON(value['policyMatch']),
+        'approval_request': ApprovalRequestToJSON(value['approvalRequest']),
+        'risks': ((value['risks'] as Array<any>).map(TransactionRiskToJSON)),
+        'note': value['note'],
+        'type': value['type'],
+        'chain': EnrichedUtxoChainToJSON(value['chain']),
+        'sender': EnrichedUtxoAddressToJSON(value['sender']),
+        'utxo_message_type': UtxoMessageTypeToJSON(value['utxoMessageType']),
+        'message_to_display': value['messageToDisplay'],
     };
 }
 

@@ -28,10 +28,23 @@ export const PredictTransactionErrorType = {
     insecureKeyDerivation: 'insecure_key_derivation',
     missingSecretKeyOrRecentBlockhash: 'missing_secret_key_or_recent_blockhash',
     missingSecretKeyOrSignature: 'missing_secret_key_or_signature',
-    revokeAllowanceGasLimitTooHigh: 'revoke_allowance_gas_limit_too_high'
+    revokeAllowanceGasLimitTooHigh: 'revoke_allowance_gas_limit_too_high',
+    priorityFeeAlreadySet: 'priority_fee_already_set',
+    quoteNotFound: 'quote_not_found'
 } as const;
 export type PredictTransactionErrorType = typeof PredictTransactionErrorType[keyof typeof PredictTransactionErrorType];
 
+
+export function instanceOfPredictTransactionErrorType(value: any): boolean {
+    for (const key in PredictTransactionErrorType) {
+        if (Object.prototype.hasOwnProperty.call(PredictTransactionErrorType, key)) {
+            if (PredictTransactionErrorType[key as keyof typeof PredictTransactionErrorType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 export function PredictTransactionErrorTypeFromJSON(json: any): PredictTransactionErrorType {
     return PredictTransactionErrorTypeFromJSONTyped(json, false);
@@ -43,5 +56,9 @@ export function PredictTransactionErrorTypeFromJSONTyped(json: any, ignoreDiscri
 
 export function PredictTransactionErrorTypeToJSON(value?: PredictTransactionErrorType | null): any {
     return value as any;
+}
+
+export function PredictTransactionErrorTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): PredictTransactionErrorType {
+    return value as PredictTransactionErrorType;
 }
 

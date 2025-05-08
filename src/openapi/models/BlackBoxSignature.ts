@@ -12,55 +12,63 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { BlackBoxSignatureDetails } from './BlackBoxSignatureDetails';
-import {
-    BlackBoxSignatureDetailsFromJSON,
-    BlackBoxSignatureDetailsFromJSONTyped,
-    BlackBoxSignatureDetailsToJSON,
-} from './BlackBoxSignatureDetails';
-import type { BlackBoxSignatureState } from './BlackBoxSignatureState';
-import {
-    BlackBoxSignatureStateFromJSON,
-    BlackBoxSignatureStateFromJSONTyped,
-    BlackBoxSignatureStateToJSON,
-} from './BlackBoxSignatureState';
-import type { BlackBoxSignatureStateChange } from './BlackBoxSignatureStateChange';
-import {
-    BlackBoxSignatureStateChangeFromJSON,
-    BlackBoxSignatureStateChangeFromJSONTyped,
-    BlackBoxSignatureStateChangeToJSON,
-} from './BlackBoxSignatureStateChange';
-import type { ManagedTransactionData } from './ManagedTransactionData';
-import {
-    ManagedTransactionDataFromJSON,
-    ManagedTransactionDataFromJSONTyped,
-    ManagedTransactionDataToJSON,
-} from './ManagedTransactionData';
-import type { Signature } from './Signature';
-import {
-    SignatureFromJSON,
-    SignatureFromJSONTyped,
-    SignatureToJSON,
-} from './Signature';
-import type { TransactionDirection } from './TransactionDirection';
-import {
-    TransactionDirectionFromJSON,
-    TransactionDirectionFromJSONTyped,
-    TransactionDirectionToJSON,
-} from './TransactionDirection';
-import type { TransactionSpamState } from './TransactionSpamState';
-import {
-    TransactionSpamStateFromJSON,
-    TransactionSpamStateFromJSONTyped,
-    TransactionSpamStateToJSON,
-} from './TransactionSpamState';
+import { mapValues } from '../runtime';
 import type { VaultRef } from './VaultRef';
 import {
     VaultRefFromJSON,
     VaultRefFromJSONTyped,
     VaultRefToJSON,
+    VaultRefToJSONTyped,
 } from './VaultRef';
+import type { ManagedTransactionData } from './ManagedTransactionData';
+import {
+    ManagedTransactionDataFromJSON,
+    ManagedTransactionDataFromJSONTyped,
+    ManagedTransactionDataToJSON,
+    ManagedTransactionDataToJSONTyped,
+} from './ManagedTransactionData';
+import type { TransactionSpamState } from './TransactionSpamState';
+import {
+    TransactionSpamStateFromJSON,
+    TransactionSpamStateFromJSONTyped,
+    TransactionSpamStateToJSON,
+    TransactionSpamStateToJSONTyped,
+} from './TransactionSpamState';
+import type { TransactionDirection } from './TransactionDirection';
+import {
+    TransactionDirectionFromJSON,
+    TransactionDirectionFromJSONTyped,
+    TransactionDirectionToJSON,
+    TransactionDirectionToJSONTyped,
+} from './TransactionDirection';
+import type { Signature } from './Signature';
+import {
+    SignatureFromJSON,
+    SignatureFromJSONTyped,
+    SignatureToJSON,
+    SignatureToJSONTyped,
+} from './Signature';
+import type { BlackBoxSignatureDetails } from './BlackBoxSignatureDetails';
+import {
+    BlackBoxSignatureDetailsFromJSON,
+    BlackBoxSignatureDetailsFromJSONTyped,
+    BlackBoxSignatureDetailsToJSON,
+    BlackBoxSignatureDetailsToJSONTyped,
+} from './BlackBoxSignatureDetails';
+import type { NonPushableTransactionStateChange } from './NonPushableTransactionStateChange';
+import {
+    NonPushableTransactionStateChangeFromJSON,
+    NonPushableTransactionStateChangeFromJSONTyped,
+    NonPushableTransactionStateChangeToJSON,
+    NonPushableTransactionStateChangeToJSONTyped,
+} from './NonPushableTransactionStateChange';
+import type { NonPushableTransactionState } from './NonPushableTransactionState';
+import {
+    NonPushableTransactionStateFromJSON,
+    NonPushableTransactionStateFromJSONTyped,
+    NonPushableTransactionStateToJSON,
+    NonPushableTransactionStateToJSONTyped,
+} from './NonPushableTransactionState';
 
 /**
  * 
@@ -118,22 +126,28 @@ export interface BlackBoxSignature {
     direction: TransactionDirection;
     /**
      * 
+     * @type {boolean}
+     * @memberof BlackBoxSignature
+     */
+    signedExternally?: boolean;
+    /**
+     * 
+     * @type {NonPushableTransactionState}
+     * @memberof BlackBoxSignature
+     */
+    state: NonPushableTransactionState;
+    /**
+     * 
+     * @type {Array<NonPushableTransactionStateChange>}
+     * @memberof BlackBoxSignature
+     */
+    stateChanges: Array<NonPushableTransactionStateChange>;
+    /**
+     * 
      * @type {string}
      * @memberof BlackBoxSignature
      */
     type: BlackBoxSignatureTypeEnum;
-    /**
-     * 
-     * @type {BlackBoxSignatureState}
-     * @memberof BlackBoxSignature
-     */
-    state: BlackBoxSignatureState;
-    /**
-     * 
-     * @type {Array<BlackBoxSignatureStateChange>}
-     * @memberof BlackBoxSignature
-     */
-    stateChanges: Array<BlackBoxSignatureStateChange>;
     /**
      * 
      * @type {string}
@@ -168,22 +182,20 @@ export type BlackBoxSignatureTypeEnum = typeof BlackBoxSignatureTypeEnum[keyof t
 /**
  * Check if a given object implements the BlackBoxSignature interface.
  */
-export function instanceOfBlackBoxSignature(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "managedTransactionData" in value;
-    isInstance = isInstance && "signatures" in value;
-    isInstance = isInstance && "direction" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "stateChanges" in value;
-    isInstance = isInstance && "payload" in value;
-    isInstance = isInstance && "vault" in value;
-    isInstance = isInstance && "details" in value;
-
-    return isInstance;
+export function instanceOfBlackBoxSignature(value: object): value is BlackBoxSignature {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('managedTransactionData' in value) || value['managedTransactionData'] === undefined) return false;
+    if (!('signatures' in value) || value['signatures'] === undefined) return false;
+    if (!('direction' in value) || value['direction'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('stateChanges' in value) || value['stateChanges'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('payload' in value) || value['payload'] === undefined) return false;
+    if (!('vault' in value) || value['vault'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    return true;
 }
 
 export function BlackBoxSignatureFromJSON(json: any): BlackBoxSignature {
@@ -191,7 +203,7 @@ export function BlackBoxSignatureFromJSON(json: any): BlackBoxSignature {
 }
 
 export function BlackBoxSignatureFromJSONTyped(json: any, ignoreDiscriminator: boolean): BlackBoxSignature {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -201,41 +213,45 @@ export function BlackBoxSignatureFromJSONTyped(json: any, ignoreDiscriminator: b
         'modifiedAt': (new Date(json['modified_at'])),
         'managedTransactionData': ManagedTransactionDataFromJSON(json['managed_transaction_data']),
         'signatures': ((json['signatures'] as Array<any>).map(SignatureFromJSON)),
-        'note': !exists(json, 'note') ? undefined : json['note'],
-        'spamState': !exists(json, 'spam_state') ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
+        'note': json['note'] == null ? undefined : json['note'],
+        'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
+        'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'state': NonPushableTransactionStateFromJSON(json['state']),
+        'stateChanges': ((json['state_changes'] as Array<any>).map(NonPushableTransactionStateChangeFromJSON)),
         'type': json['type'],
-        'state': BlackBoxSignatureStateFromJSON(json['state']),
-        'stateChanges': ((json['state_changes'] as Array<any>).map(BlackBoxSignatureStateChangeFromJSON)),
         'payload': json['payload'],
         'vault': VaultRefFromJSON(json['vault']),
         'details': BlackBoxSignatureDetailsFromJSON(json['details']),
     };
 }
 
-export function BlackBoxSignatureToJSON(value?: BlackBoxSignature | null): any {
-    if (value === undefined) {
-        return undefined;
+export function BlackBoxSignatureToJSON(json: any): BlackBoxSignature {
+    return BlackBoxSignatureToJSONTyped(json, false);
+}
+
+export function BlackBoxSignatureToJSONTyped(value?: BlackBoxSignature | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'managed_transaction_data': ManagedTransactionDataToJSON(value.managedTransactionData),
-        'signatures': ((value.signatures as Array<any>).map(SignatureToJSON)),
-        'note': value.note,
-        'spam_state': TransactionSpamStateToJSON(value.spamState),
-        'direction': TransactionDirectionToJSON(value.direction),
-        'type': value.type,
-        'state': BlackBoxSignatureStateToJSON(value.state),
-        'state_changes': ((value.stateChanges as Array<any>).map(BlackBoxSignatureStateChangeToJSON)),
-        'payload': value.payload,
-        'vault': VaultRefToJSON(value.vault),
-        'details': BlackBoxSignatureDetailsToJSON(value.details),
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'managed_transaction_data': ManagedTransactionDataToJSON(value['managedTransactionData']),
+        'signatures': ((value['signatures'] as Array<any>).map(SignatureToJSON)),
+        'note': value['note'],
+        'spam_state': TransactionSpamStateToJSON(value['spamState']),
+        'direction': TransactionDirectionToJSON(value['direction']),
+        'signed_externally': value['signedExternally'],
+        'state': NonPushableTransactionStateToJSON(value['state']),
+        'state_changes': ((value['stateChanges'] as Array<any>).map(NonPushableTransactionStateChangeToJSON)),
+        'type': value['type'],
+        'payload': value['payload'],
+        'vault': VaultRefToJSON(value['vault']),
+        'details': BlackBoxSignatureDetailsToJSON(value['details']),
     };
 }
 

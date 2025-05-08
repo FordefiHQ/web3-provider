@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -36,12 +36,10 @@ export interface VaultMetadata {
 /**
  * Check if a given object implements the VaultMetadata interface.
  */
-export function instanceOfVaultMetadata(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "masterKeyId" in value;
-    isInstance = isInstance && "derivationPath" in value;
-
-    return isInstance;
+export function instanceOfVaultMetadata(value: object): value is VaultMetadata {
+    if (!('masterKeyId' in value) || value['masterKeyId'] === undefined) return false;
+    if (!('derivationPath' in value) || value['derivationPath'] === undefined) return false;
+    return true;
 }
 
 export function VaultMetadataFromJSON(json: any): VaultMetadata {
@@ -49,7 +47,7 @@ export function VaultMetadataFromJSON(json: any): VaultMetadata {
 }
 
 export function VaultMetadataFromJSONTyped(json: any, ignoreDiscriminator: boolean): VaultMetadata {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -59,17 +57,19 @@ export function VaultMetadataFromJSONTyped(json: any, ignoreDiscriminator: boole
     };
 }
 
-export function VaultMetadataToJSON(value?: VaultMetadata | null): any {
-    if (value === undefined) {
-        return undefined;
+export function VaultMetadataToJSON(json: any): VaultMetadata {
+    return VaultMetadataToJSONTyped(json, false);
+}
+
+export function VaultMetadataToJSONTyped(value?: VaultMetadata | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'master_key_id': value.masterKeyId,
-        'derivation_path': value.derivationPath,
+        'master_key_id': value['masterKeyId'],
+        'derivation_path': value['derivationPath'],
     };
 }
 

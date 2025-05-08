@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AlertProviderType } from './AlertProviderType';
 import {
     AlertProviderTypeFromJSON,
     AlertProviderTypeFromJSONTyped,
     AlertProviderTypeToJSON,
+    AlertProviderTypeToJSONTyped,
 } from './AlertProviderType';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
     UserRefFromJSONTyped,
     UserRefToJSON,
+    UserRefToJSONTyped,
 } from './UserRef';
 
 /**
@@ -61,14 +63,12 @@ export interface AutoRevokeProtectionSettingsResponse {
 /**
  * Check if a given object implements the AutoRevokeProtectionSettingsResponse interface.
  */
-export function instanceOfAutoRevokeProtectionSettingsResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "isActive" in value;
-    isInstance = isInstance && "shouldSendToApiSigner" in value;
-    isInstance = isInstance && "alertProviders" in value;
-    isInstance = isInstance && "signers" in value;
-
-    return isInstance;
+export function instanceOfAutoRevokeProtectionSettingsResponse(value: object): value is AutoRevokeProtectionSettingsResponse {
+    if (!('isActive' in value) || value['isActive'] === undefined) return false;
+    if (!('shouldSendToApiSigner' in value) || value['shouldSendToApiSigner'] === undefined) return false;
+    if (!('alertProviders' in value) || value['alertProviders'] === undefined) return false;
+    if (!('signers' in value) || value['signers'] === undefined) return false;
+    return true;
 }
 
 export function AutoRevokeProtectionSettingsResponseFromJSON(json: any): AutoRevokeProtectionSettingsResponse {
@@ -76,7 +76,7 @@ export function AutoRevokeProtectionSettingsResponseFromJSON(json: any): AutoRev
 }
 
 export function AutoRevokeProtectionSettingsResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): AutoRevokeProtectionSettingsResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -88,19 +88,21 @@ export function AutoRevokeProtectionSettingsResponseFromJSONTyped(json: any, ign
     };
 }
 
-export function AutoRevokeProtectionSettingsResponseToJSON(value?: AutoRevokeProtectionSettingsResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AutoRevokeProtectionSettingsResponseToJSON(json: any): AutoRevokeProtectionSettingsResponse {
+    return AutoRevokeProtectionSettingsResponseToJSONTyped(json, false);
+}
+
+export function AutoRevokeProtectionSettingsResponseToJSONTyped(value?: AutoRevokeProtectionSettingsResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'is_active': value.isActive,
-        'should_send_to_api_signer': value.shouldSendToApiSigner,
-        'alert_providers': ((value.alertProviders as Array<any>).map(AlertProviderTypeToJSON)),
-        'signers': ((value.signers as Array<any>).map(UserRefToJSON)),
+        'is_active': value['isActive'],
+        'should_send_to_api_signer': value['shouldSendToApiSigner'],
+        'alert_providers': ((value['alertProviders'] as Array<any>).map(AlertProviderTypeToJSON)),
+        'signers': ((value['signers'] as Array<any>).map(UserRefToJSON)),
     };
 }
 

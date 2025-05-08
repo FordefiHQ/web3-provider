@@ -27,6 +27,17 @@ export const TestWebhookErrorType = {
 export type TestWebhookErrorType = typeof TestWebhookErrorType[keyof typeof TestWebhookErrorType];
 
 
+export function instanceOfTestWebhookErrorType(value: any): boolean {
+    for (const key in TestWebhookErrorType) {
+        if (Object.prototype.hasOwnProperty.call(TestWebhookErrorType, key)) {
+            if (TestWebhookErrorType[key as keyof typeof TestWebhookErrorType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function TestWebhookErrorTypeFromJSON(json: any): TestWebhookErrorType {
     return TestWebhookErrorTypeFromJSONTyped(json, false);
 }
@@ -37,5 +48,9 @@ export function TestWebhookErrorTypeFromJSONTyped(json: any, ignoreDiscriminator
 
 export function TestWebhookErrorTypeToJSON(value?: TestWebhookErrorType | null): any {
     return value as any;
+}
+
+export function TestWebhookErrorTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): TestWebhookErrorType {
+    return value as TestWebhookErrorType;
 }
 
