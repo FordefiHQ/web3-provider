@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { SuiBalanceChangeEffect } from './SuiBalanceChangeEffect';
 import {
     SuiBalanceChangeEffectFromJSON,
     SuiBalanceChangeEffectFromJSONTyped,
     SuiBalanceChangeEffectToJSON,
+    SuiBalanceChangeEffectToJSONTyped,
 } from './SuiBalanceChangeEffect';
 import type { SuiTransferEffect } from './SuiTransferEffect';
 import {
     SuiTransferEffectFromJSON,
     SuiTransferEffectFromJSONTyped,
     SuiTransferEffectToJSON,
+    SuiTransferEffectToJSONTyped,
 } from './SuiTransferEffect';
 
 /**
@@ -49,12 +51,10 @@ export interface SuiEffects {
 /**
  * Check if a given object implements the SuiEffects interface.
  */
-export function instanceOfSuiEffects(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "balanceChanges" in value;
-    isInstance = isInstance && "transfers" in value;
-
-    return isInstance;
+export function instanceOfSuiEffects(value: object): value is SuiEffects {
+    if (!('balanceChanges' in value) || value['balanceChanges'] === undefined) return false;
+    if (!('transfers' in value) || value['transfers'] === undefined) return false;
+    return true;
 }
 
 export function SuiEffectsFromJSON(json: any): SuiEffects {
@@ -62,7 +62,7 @@ export function SuiEffectsFromJSON(json: any): SuiEffects {
 }
 
 export function SuiEffectsFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiEffects {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -72,17 +72,19 @@ export function SuiEffectsFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     };
 }
 
-export function SuiEffectsToJSON(value?: SuiEffects | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiEffectsToJSON(json: any): SuiEffects {
+    return SuiEffectsToJSONTyped(json, false);
+}
+
+export function SuiEffectsToJSONTyped(value?: SuiEffects | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'balance_changes': ((value.balanceChanges as Array<any>).map(SuiBalanceChangeEffectToJSON)),
-        'transfers': ((value.transfers as Array<any>).map(SuiTransferEffectToJSON)),
+        'balance_changes': ((value['balanceChanges'] as Array<any>).map(SuiBalanceChangeEffectToJSON)),
+        'transfers': ((value['transfers'] as Array<any>).map(SuiTransferEffectToJSON)),
     };
 }
 

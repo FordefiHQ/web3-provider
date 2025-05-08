@@ -24,6 +24,17 @@ export const AbortOnboardingErrorType = {
 export type AbortOnboardingErrorType = typeof AbortOnboardingErrorType[keyof typeof AbortOnboardingErrorType];
 
 
+export function instanceOfAbortOnboardingErrorType(value: any): boolean {
+    for (const key in AbortOnboardingErrorType) {
+        if (Object.prototype.hasOwnProperty.call(AbortOnboardingErrorType, key)) {
+            if (AbortOnboardingErrorType[key as keyof typeof AbortOnboardingErrorType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function AbortOnboardingErrorTypeFromJSON(json: any): AbortOnboardingErrorType {
     return AbortOnboardingErrorTypeFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function AbortOnboardingErrorTypeFromJSONTyped(json: any, ignoreDiscrimin
 
 export function AbortOnboardingErrorTypeToJSON(value?: AbortOnboardingErrorType | null): any {
     return value as any;
+}
+
+export function AbortOnboardingErrorTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): AbortOnboardingErrorType {
+    return value as AbortOnboardingErrorType;
 }
 

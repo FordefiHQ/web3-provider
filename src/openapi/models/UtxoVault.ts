@@ -12,67 +12,84 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { AptosVaultMetadataValue } from './AptosVaultMetadataValue';
-import {
-    AptosVaultMetadataValueFromJSON,
-    AptosVaultMetadataValueFromJSONTyped,
-    AptosVaultMetadataValueToJSON,
-} from './AptosVaultMetadataValue';
+import { mapValues } from '../runtime';
 import type { AptosVaultPendingVaultGroupAction } from './AptosVaultPendingVaultGroupAction';
 import {
     AptosVaultPendingVaultGroupActionFromJSON,
     AptosVaultPendingVaultGroupActionFromJSONTyped,
     AptosVaultPendingVaultGroupActionToJSON,
+    AptosVaultPendingVaultGroupActionToJSONTyped,
 } from './AptosVaultPendingVaultGroupAction';
 import type { EndUserRef } from './EndUserRef';
 import {
     EndUserRefFromJSON,
     EndUserRefFromJSONTyped,
     EndUserRefToJSON,
+    EndUserRefToJSONTyped,
 } from './EndUserRef';
-import type { EnrichedUtxoChain } from './EnrichedUtxoChain';
-import {
-    EnrichedUtxoChainFromJSON,
-    EnrichedUtxoChainFromJSONTyped,
-    EnrichedUtxoChainToJSON,
-} from './EnrichedUtxoChain';
-import type { KeysetRef } from './KeysetRef';
-import {
-    KeysetRefFromJSON,
-    KeysetRefFromJSONTyped,
-    KeysetRefToJSON,
-} from './KeysetRef';
-import type { UserRef } from './UserRef';
-import {
-    UserRefFromJSON,
-    UserRefFromJSONTyped,
-    UserRefToJSON,
-} from './UserRef';
-import type { UtxoVaultAddress } from './UtxoVaultAddress';
-import {
-    UtxoVaultAddressFromJSON,
-    UtxoVaultAddressFromJSONTyped,
-    UtxoVaultAddressToJSON,
-} from './UtxoVaultAddress';
-import type { VaultDerivationInfo } from './VaultDerivationInfo';
-import {
-    VaultDerivationInfoFromJSON,
-    VaultDerivationInfoFromJSONTyped,
-    VaultDerivationInfoToJSON,
-} from './VaultDerivationInfo';
-import type { VaultGroupRef } from './VaultGroupRef';
-import {
-    VaultGroupRefFromJSON,
-    VaultGroupRefFromJSONTyped,
-    VaultGroupRefToJSON,
-} from './VaultGroupRef';
 import type { VaultState } from './VaultState';
 import {
     VaultStateFromJSON,
     VaultStateFromJSONTyped,
     VaultStateToJSON,
+    VaultStateToJSONTyped,
 } from './VaultState';
+import type { AptosVaultMetadataValue } from './AptosVaultMetadataValue';
+import {
+    AptosVaultMetadataValueFromJSON,
+    AptosVaultMetadataValueFromJSONTyped,
+    AptosVaultMetadataValueToJSON,
+    AptosVaultMetadataValueToJSONTyped,
+} from './AptosVaultMetadataValue';
+import type { VaultOriginType } from './VaultOriginType';
+import {
+    VaultOriginTypeFromJSON,
+    VaultOriginTypeFromJSONTyped,
+    VaultOriginTypeToJSON,
+    VaultOriginTypeToJSONTyped,
+} from './VaultOriginType';
+import type { UtxoVaultAddress } from './UtxoVaultAddress';
+import {
+    UtxoVaultAddressFromJSON,
+    UtxoVaultAddressFromJSONTyped,
+    UtxoVaultAddressToJSON,
+    UtxoVaultAddressToJSONTyped,
+} from './UtxoVaultAddress';
+import type { VaultGroupRef } from './VaultGroupRef';
+import {
+    VaultGroupRefFromJSON,
+    VaultGroupRefFromJSONTyped,
+    VaultGroupRefToJSON,
+    VaultGroupRefToJSONTyped,
+} from './VaultGroupRef';
+import type { KeysetRef } from './KeysetRef';
+import {
+    KeysetRefFromJSON,
+    KeysetRefFromJSONTyped,
+    KeysetRefToJSON,
+    KeysetRefToJSONTyped,
+} from './KeysetRef';
+import type { EnrichedUtxoChain } from './EnrichedUtxoChain';
+import {
+    EnrichedUtxoChainFromJSON,
+    EnrichedUtxoChainFromJSONTyped,
+    EnrichedUtxoChainToJSON,
+    EnrichedUtxoChainToJSONTyped,
+} from './EnrichedUtxoChain';
+import type { UserRef } from './UserRef';
+import {
+    UserRefFromJSON,
+    UserRefFromJSONTyped,
+    UserRefToJSON,
+    UserRefToJSONTyped,
+} from './UserRef';
+import type { VaultDerivationInfo } from './VaultDerivationInfo';
+import {
+    VaultDerivationInfoFromJSON,
+    VaultDerivationInfoFromJSONTyped,
+    VaultDerivationInfoToJSON,
+    VaultDerivationInfoToJSONTyped,
+} from './VaultDerivationInfo';
 
 /**
  * 
@@ -136,6 +153,12 @@ export interface UtxoVault {
     state: VaultState;
     /**
      * 
+     * @type {boolean}
+     * @memberof UtxoVault
+     */
+    areAllChainsDisabled: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof UtxoVault
      * @deprecated
@@ -165,6 +188,12 @@ export interface UtxoVault {
      * @memberof UtxoVault
      */
     keyHolder?: EndUserRef;
+    /**
+     * 
+     * @type {VaultOriginType}
+     * @memberof UtxoVault
+     */
+    originType: VaultOriginType;
     /**
      * 
      * @type {string}
@@ -216,25 +245,25 @@ export type UtxoVaultTypeEnum = typeof UtxoVaultTypeEnum[keyof typeof UtxoVaultT
 /**
  * Check if a given object implements the UtxoVault interface.
  */
-export function instanceOfUtxoVault(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "createdBy" in value;
-    isInstance = isInstance && "vaultGroup" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "derivationPath" in value;
-    isInstance = isInstance && "publicKeyCompressed" in value;
-    isInstance = isInstance && "derivationInfo" in value;
-    isInstance = isInstance && "keyset" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "defaultAddress" in value;
-    isInstance = isInstance && "defaultNextAddressName" in value;
-
-    return isInstance;
+export function instanceOfUtxoVault(value: object): value is UtxoVault {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('createdBy' in value) || value['createdBy'] === undefined) return false;
+    if (!('vaultGroup' in value) || value['vaultGroup'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('areAllChainsDisabled' in value) || value['areAllChainsDisabled'] === undefined) return false;
+    if (!('derivationPath' in value) || value['derivationPath'] === undefined) return false;
+    if (!('publicKeyCompressed' in value) || value['publicKeyCompressed'] === undefined) return false;
+    if (!('derivationInfo' in value) || value['derivationInfo'] === undefined) return false;
+    if (!('keyset' in value) || value['keyset'] === undefined) return false;
+    if (!('originType' in value) || value['originType'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('defaultAddress' in value) || value['defaultAddress'] === undefined) return false;
+    if (!('defaultNextAddressName' in value) || value['defaultNextAddressName'] === undefined) return false;
+    return true;
 }
 
 export function UtxoVaultFromJSON(json: any): UtxoVault {
@@ -242,7 +271,7 @@ export function UtxoVaultFromJSON(json: any): UtxoVault {
 }
 
 export function UtxoVaultFromJSONTyped(json: any, ignoreDiscriminator: boolean): UtxoVault {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -250,55 +279,61 @@ export function UtxoVaultFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
-        'metadata': !exists(json, 'metadata') ? undefined : (mapValues(json['metadata'], AptosVaultMetadataValueFromJSON)),
+        'metadata': json['metadata'] == null ? undefined : (mapValues(json['metadata'], AptosVaultMetadataValueFromJSON)),
         'name': json['name'],
         'createdBy': UserRefFromJSON(json['created_by']),
         'vaultGroup': VaultGroupRefFromJSON(json['vault_group']),
-        'pendingVaultGroupAction': !exists(json, 'pending_vault_group_action') ? undefined : AptosVaultPendingVaultGroupActionFromJSON(json['pending_vault_group_action']),
+        'pendingVaultGroupAction': json['pending_vault_group_action'] == null ? undefined : AptosVaultPendingVaultGroupActionFromJSON(json['pending_vault_group_action']),
         'state': VaultStateFromJSON(json['state']),
+        'areAllChainsDisabled': json['are_all_chains_disabled'],
         'derivationPath': json['derivation_path'],
         'publicKeyCompressed': json['public_key_compressed'],
         'derivationInfo': VaultDerivationInfoFromJSON(json['derivation_info']),
         'keyset': KeysetRefFromJSON(json['keyset']),
-        'keyHolder': !exists(json, 'key_holder') ? undefined : EndUserRefFromJSON(json['key_holder']),
+        'keyHolder': json['key_holder'] == null ? undefined : EndUserRefFromJSON(json['key_holder']),
+        'originType': VaultOriginTypeFromJSON(json['origin_type']),
         'type': json['type'],
         'chain': EnrichedUtxoChainFromJSON(json['chain']),
         'defaultAddress': UtxoVaultAddressFromJSON(json['default_address']),
         'defaultNextAddressName': json['default_next_address_name'],
-        'taprootKeyPublicCompressed': !exists(json, 'taproot_key_public_compressed') ? undefined : json['taproot_key_public_compressed'],
-        'taprootKeyDerivationInfo': !exists(json, 'taproot_key_derivation_info') ? undefined : VaultDerivationInfoFromJSON(json['taproot_key_derivation_info']),
+        'taprootKeyPublicCompressed': json['taproot_key_public_compressed'] == null ? undefined : json['taproot_key_public_compressed'],
+        'taprootKeyDerivationInfo': json['taproot_key_derivation_info'] == null ? undefined : VaultDerivationInfoFromJSON(json['taproot_key_derivation_info']),
     };
 }
 
-export function UtxoVaultToJSON(value?: UtxoVault | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UtxoVaultToJSON(json: any): UtxoVault {
+    return UtxoVaultToJSONTyped(json, false);
+}
+
+export function UtxoVaultToJSONTyped(value?: UtxoVault | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'metadata': value.metadata === undefined ? undefined : (mapValues(value.metadata, AptosVaultMetadataValueToJSON)),
-        'name': value.name,
-        'created_by': UserRefToJSON(value.createdBy),
-        'vault_group': VaultGroupRefToJSON(value.vaultGroup),
-        'pending_vault_group_action': AptosVaultPendingVaultGroupActionToJSON(value.pendingVaultGroupAction),
-        'state': VaultStateToJSON(value.state),
-        'derivation_path': value.derivationPath,
-        'public_key_compressed': value.publicKeyCompressed,
-        'derivation_info': VaultDerivationInfoToJSON(value.derivationInfo),
-        'keyset': KeysetRefToJSON(value.keyset),
-        'key_holder': EndUserRefToJSON(value.keyHolder),
-        'type': value.type,
-        'chain': EnrichedUtxoChainToJSON(value.chain),
-        'default_address': UtxoVaultAddressToJSON(value.defaultAddress),
-        'default_next_address_name': value.defaultNextAddressName,
-        'taproot_key_public_compressed': value.taprootKeyPublicCompressed,
-        'taproot_key_derivation_info': VaultDerivationInfoToJSON(value.taprootKeyDerivationInfo),
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'metadata': value['metadata'] == null ? undefined : (mapValues(value['metadata'], AptosVaultMetadataValueToJSON)),
+        'name': value['name'],
+        'created_by': UserRefToJSON(value['createdBy']),
+        'vault_group': VaultGroupRefToJSON(value['vaultGroup']),
+        'pending_vault_group_action': AptosVaultPendingVaultGroupActionToJSON(value['pendingVaultGroupAction']),
+        'state': VaultStateToJSON(value['state']),
+        'are_all_chains_disabled': value['areAllChainsDisabled'],
+        'derivation_path': value['derivationPath'],
+        'public_key_compressed': value['publicKeyCompressed'],
+        'derivation_info': VaultDerivationInfoToJSON(value['derivationInfo']),
+        'keyset': KeysetRefToJSON(value['keyset']),
+        'key_holder': EndUserRefToJSON(value['keyHolder']),
+        'origin_type': VaultOriginTypeToJSON(value['originType']),
+        'type': value['type'],
+        'chain': EnrichedUtxoChainToJSON(value['chain']),
+        'default_address': UtxoVaultAddressToJSON(value['defaultAddress']),
+        'default_next_address_name': value['defaultNextAddressName'],
+        'taproot_key_public_compressed': value['taprootKeyPublicCompressed'],
+        'taproot_key_derivation_info': VaultDerivationInfoToJSON(value['taprootKeyDerivationInfo']),
     };
 }
 

@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -52,12 +52,10 @@ export type BlackBoxSignatureEddsaEd25519DetailsTypeEnum = typeof BlackBoxSignat
 /**
  * Check if a given object implements the BlackBoxSignatureEddsaEd25519Details interface.
  */
-export function instanceOfBlackBoxSignatureEddsaEd25519Details(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "hashBinary" in value;
-
-    return isInstance;
+export function instanceOfBlackBoxSignatureEddsaEd25519Details(value: object): value is BlackBoxSignatureEddsaEd25519Details {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('hashBinary' in value) || value['hashBinary'] === undefined) return false;
+    return true;
 }
 
 export function BlackBoxSignatureEddsaEd25519DetailsFromJSON(json: any): BlackBoxSignatureEddsaEd25519Details {
@@ -65,29 +63,31 @@ export function BlackBoxSignatureEddsaEd25519DetailsFromJSON(json: any): BlackBo
 }
 
 export function BlackBoxSignatureEddsaEd25519DetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): BlackBoxSignatureEddsaEd25519Details {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
-        'signature': !exists(json, 'signature') ? undefined : json['signature'],
+        'signature': json['signature'] == null ? undefined : json['signature'],
         'hashBinary': json['hash_binary'],
     };
 }
 
-export function BlackBoxSignatureEddsaEd25519DetailsToJSON(value?: BlackBoxSignatureEddsaEd25519Details | null): any {
-    if (value === undefined) {
-        return undefined;
+export function BlackBoxSignatureEddsaEd25519DetailsToJSON(json: any): BlackBoxSignatureEddsaEd25519Details {
+    return BlackBoxSignatureEddsaEd25519DetailsToJSONTyped(json, false);
+}
+
+export function BlackBoxSignatureEddsaEd25519DetailsToJSONTyped(value?: BlackBoxSignatureEddsaEd25519Details | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'signature': value.signature,
-        'hash_binary': value.hashBinary,
+        'type': value['type'],
+        'signature': value['signature'],
+        'hash_binary': value['hashBinary'],
     };
 }
 

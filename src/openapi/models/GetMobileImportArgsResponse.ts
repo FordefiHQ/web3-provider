@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { MobileKeyImportArgs } from './MobileKeyImportArgs';
 import {
     MobileKeyImportArgsFromJSON,
     MobileKeyImportArgsFromJSONTyped,
     MobileKeyImportArgsToJSON,
+    MobileKeyImportArgsToJSONTyped,
 } from './MobileKeyImportArgs';
 
 /**
@@ -34,38 +35,19 @@ export interface GetMobileImportArgsResponse {
     salt: string;
     /**
      * 
-     * @type {MobileKeyImportArgs}
+     * @type {Array<MobileKeyImportArgs>}
      * @memberof GetMobileImportArgsResponse
      */
-    importArgsEcdsa?: MobileKeyImportArgs;
-    /**
-     * 
-     * @type {MobileKeyImportArgs}
-     * @memberof GetMobileImportArgsResponse
-     */
-    importArgsEddsa?: MobileKeyImportArgs;
-    /**
-     * 
-     * @type {MobileKeyImportArgs}
-     * @memberof GetMobileImportArgsResponse
-     */
-    importArgsEcdsaStark?: MobileKeyImportArgs;
-    /**
-     * 
-     * @type {MobileKeyImportArgs}
-     * @memberof GetMobileImportArgsResponse
-     */
-    importArgsSchnorrSecp256k1?: MobileKeyImportArgs;
+    importArgs: Array<MobileKeyImportArgs>;
 }
 
 /**
  * Check if a given object implements the GetMobileImportArgsResponse interface.
  */
-export function instanceOfGetMobileImportArgsResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "salt" in value;
-
-    return isInstance;
+export function instanceOfGetMobileImportArgsResponse(value: object): value is GetMobileImportArgsResponse {
+    if (!('salt' in value) || value['salt'] === undefined) return false;
+    if (!('importArgs' in value) || value['importArgs'] === undefined) return false;
+    return true;
 }
 
 export function GetMobileImportArgsResponseFromJSON(json: any): GetMobileImportArgsResponse {
@@ -73,33 +55,29 @@ export function GetMobileImportArgsResponseFromJSON(json: any): GetMobileImportA
 }
 
 export function GetMobileImportArgsResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetMobileImportArgsResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'salt': json['salt'],
-        'importArgsEcdsa': !exists(json, 'import_args_ecdsa') ? undefined : MobileKeyImportArgsFromJSON(json['import_args_ecdsa']),
-        'importArgsEddsa': !exists(json, 'import_args_eddsa') ? undefined : MobileKeyImportArgsFromJSON(json['import_args_eddsa']),
-        'importArgsEcdsaStark': !exists(json, 'import_args_ecdsa_stark') ? undefined : MobileKeyImportArgsFromJSON(json['import_args_ecdsa_stark']),
-        'importArgsSchnorrSecp256k1': !exists(json, 'import_args_schnorr_secp256k1') ? undefined : MobileKeyImportArgsFromJSON(json['import_args_schnorr_secp256k1']),
+        'importArgs': ((json['import_args'] as Array<any>).map(MobileKeyImportArgsFromJSON)),
     };
 }
 
-export function GetMobileImportArgsResponseToJSON(value?: GetMobileImportArgsResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function GetMobileImportArgsResponseToJSON(json: any): GetMobileImportArgsResponse {
+    return GetMobileImportArgsResponseToJSONTyped(json, false);
+}
+
+export function GetMobileImportArgsResponseToJSONTyped(value?: GetMobileImportArgsResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'salt': value.salt,
-        'import_args_ecdsa': MobileKeyImportArgsToJSON(value.importArgsEcdsa),
-        'import_args_eddsa': MobileKeyImportArgsToJSON(value.importArgsEddsa),
-        'import_args_ecdsa_stark': MobileKeyImportArgsToJSON(value.importArgsEcdsaStark),
-        'import_args_schnorr_secp256k1': MobileKeyImportArgsToJSON(value.importArgsSchnorrSecp256k1),
+        'salt': value['salt'],
+        'import_args': ((value['importArgs'] as Array<any>).map(MobileKeyImportArgsToJSON)),
     };
 }
 

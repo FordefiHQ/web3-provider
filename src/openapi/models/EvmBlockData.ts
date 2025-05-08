@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -42,13 +42,11 @@ export interface EvmBlockData {
 /**
  * Check if a given object implements the EvmBlockData interface.
  */
-export function instanceOfEvmBlockData(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "number" in value;
-    isInstance = isInstance && "hash" in value;
-    isInstance = isInstance && "minedAt" in value;
-
-    return isInstance;
+export function instanceOfEvmBlockData(value: object): value is EvmBlockData {
+    if (!('number' in value) || value['number'] === undefined) return false;
+    if (!('hash' in value) || value['hash'] === undefined) return false;
+    if (!('minedAt' in value) || value['minedAt'] === undefined) return false;
+    return true;
 }
 
 export function EvmBlockDataFromJSON(json: any): EvmBlockData {
@@ -56,7 +54,7 @@ export function EvmBlockDataFromJSON(json: any): EvmBlockData {
 }
 
 export function EvmBlockDataFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmBlockData {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -67,18 +65,20 @@ export function EvmBlockDataFromJSONTyped(json: any, ignoreDiscriminator: boolea
     };
 }
 
-export function EvmBlockDataToJSON(value?: EvmBlockData | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EvmBlockDataToJSON(json: any): EvmBlockData {
+    return EvmBlockDataToJSONTyped(json, false);
+}
+
+export function EvmBlockDataToJSONTyped(value?: EvmBlockData | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'number': value.number,
-        'hash': value.hash,
-        'mined_at': (value.minedAt.toISOString()),
+        'number': value['number'],
+        'hash': value['hash'],
+        'mined_at': ((value['minedAt']).toISOString()),
     };
 }
 

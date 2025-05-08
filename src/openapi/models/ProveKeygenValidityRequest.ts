@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { KeygenValidityProofs } from './KeygenValidityProofs';
 import {
     KeygenValidityProofsFromJSON,
     KeygenValidityProofsFromJSONTyped,
     KeygenValidityProofsToJSON,
+    KeygenValidityProofsToJSONTyped,
 } from './KeygenValidityProofs';
 
 /**
@@ -43,10 +44,8 @@ export interface ProveKeygenValidityRequest {
 /**
  * Check if a given object implements the ProveKeygenValidityRequest interface.
  */
-export function instanceOfProveKeygenValidityRequest(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfProveKeygenValidityRequest(value: object): value is ProveKeygenValidityRequest {
+    return true;
 }
 
 export function ProveKeygenValidityRequestFromJSON(json: any): ProveKeygenValidityRequest {
@@ -54,27 +53,29 @@ export function ProveKeygenValidityRequestFromJSON(json: any): ProveKeygenValidi
 }
 
 export function ProveKeygenValidityRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): ProveKeygenValidityRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'ecdsaProofs': !exists(json, 'ecdsa_proofs') ? undefined : KeygenValidityProofsFromJSON(json['ecdsa_proofs']),
-        'ecdsaStarkProofs': !exists(json, 'ecdsa_stark_proofs') ? undefined : KeygenValidityProofsFromJSON(json['ecdsa_stark_proofs']),
+        'ecdsaProofs': json['ecdsa_proofs'] == null ? undefined : KeygenValidityProofsFromJSON(json['ecdsa_proofs']),
+        'ecdsaStarkProofs': json['ecdsa_stark_proofs'] == null ? undefined : KeygenValidityProofsFromJSON(json['ecdsa_stark_proofs']),
     };
 }
 
-export function ProveKeygenValidityRequestToJSON(value?: ProveKeygenValidityRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ProveKeygenValidityRequestToJSON(json: any): ProveKeygenValidityRequest {
+    return ProveKeygenValidityRequestToJSONTyped(json, false);
+}
+
+export function ProveKeygenValidityRequestToJSONTyped(value?: ProveKeygenValidityRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'ecdsa_proofs': KeygenValidityProofsToJSON(value.ecdsaProofs),
-        'ecdsa_stark_proofs': KeygenValidityProofsToJSON(value.ecdsaStarkProofs),
+        'ecdsa_proofs': KeygenValidityProofsToJSON(value['ecdsaProofs']),
+        'ecdsa_stark_proofs': KeygenValidityProofsToJSON(value['ecdsaStarkProofs']),
     };
 }
 

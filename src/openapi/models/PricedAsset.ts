@@ -12,25 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { AssetInfo } from './AssetInfo';
-import {
-    AssetInfoFromJSON,
-    AssetInfoFromJSONTyped,
-    AssetInfoToJSON,
-} from './AssetInfo';
-import type { EnrichedAssetIdentifier } from './EnrichedAssetIdentifier';
-import {
-    EnrichedAssetIdentifierFromJSON,
-    EnrichedAssetIdentifierFromJSONTyped,
-    EnrichedAssetIdentifierToJSON,
-} from './EnrichedAssetIdentifier';
+import { mapValues } from '../runtime';
 import type { Price } from './Price';
 import {
     PriceFromJSON,
     PriceFromJSONTyped,
     PriceToJSON,
+    PriceToJSONTyped,
 } from './Price';
+import type { EnrichedAssetIdentifier } from './EnrichedAssetIdentifier';
+import {
+    EnrichedAssetIdentifierFromJSON,
+    EnrichedAssetIdentifierFromJSONTyped,
+    EnrichedAssetIdentifierToJSON,
+    EnrichedAssetIdentifierToJSONTyped,
+} from './EnrichedAssetIdentifier';
+import type { AssetInfo } from './AssetInfo';
+import {
+    AssetInfoFromJSON,
+    AssetInfoFromJSONTyped,
+    AssetInfoToJSON,
+    AssetInfoToJSONTyped,
+} from './AssetInfo';
 
 /**
  * 
@@ -77,12 +80,10 @@ export type PricedAssetTypeEnum = typeof PricedAssetTypeEnum[keyof typeof Priced
 /**
  * Check if a given object implements the PricedAsset interface.
  */
-export function instanceOfPricedAsset(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "assetInfo" in value;
-
-    return isInstance;
+export function instanceOfPricedAsset(value: object): value is PricedAsset {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('assetInfo' in value) || value['assetInfo'] === undefined) return false;
+    return true;
 }
 
 export function PricedAssetFromJSON(json: any): PricedAsset {
@@ -90,31 +91,33 @@ export function PricedAssetFromJSON(json: any): PricedAsset {
 }
 
 export function PricedAssetFromJSONTyped(json: any, ignoreDiscriminator: boolean): PricedAsset {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
-        'assetIdentifier': !exists(json, 'asset_identifier') ? undefined : EnrichedAssetIdentifierFromJSON(json['asset_identifier']),
+        'assetIdentifier': json['asset_identifier'] == null ? undefined : EnrichedAssetIdentifierFromJSON(json['asset_identifier']),
         'assetInfo': AssetInfoFromJSON(json['asset_info']),
-        'price': !exists(json, 'price') ? undefined : PriceFromJSON(json['price']),
+        'price': json['price'] == null ? undefined : PriceFromJSON(json['price']),
     };
 }
 
-export function PricedAssetToJSON(value?: PricedAsset | null): any {
-    if (value === undefined) {
-        return undefined;
+export function PricedAssetToJSON(json: any): PricedAsset {
+    return PricedAssetToJSONTyped(json, false);
+}
+
+export function PricedAssetToJSONTyped(value?: PricedAsset | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'asset_identifier': EnrichedAssetIdentifierToJSON(value.assetIdentifier),
-        'asset_info': AssetInfoToJSON(value.assetInfo),
-        'price': PriceToJSON(value.price),
+        'type': value['type'],
+        'asset_identifier': EnrichedAssetIdentifierToJSON(value['assetIdentifier']),
+        'asset_info': AssetInfoToJSON(value['assetInfo']),
+        'price': PriceToJSON(value['price']),
     };
 }
 

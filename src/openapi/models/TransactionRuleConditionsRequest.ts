@@ -12,49 +12,70 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AmountLimitCondition } from './AmountLimitCondition';
 import {
     AmountLimitConditionFromJSON,
     AmountLimitConditionFromJSONTyped,
     AmountLimitConditionToJSON,
+    AmountLimitConditionToJSONTyped,
 } from './AmountLimitCondition';
-import type { AssetIdentifierRequest } from './AssetIdentifierRequest';
+import type { OriginsConditionRequest } from './OriginsConditionRequest';
 import {
-    AssetIdentifierRequestFromJSON,
-    AssetIdentifierRequestFromJSONTyped,
-    AssetIdentifierRequestToJSON,
-} from './AssetIdentifierRequest';
-import type { CosmosRuleConditions } from './CosmosRuleConditions';
-import {
-    CosmosRuleConditionsFromJSON,
-    CosmosRuleConditionsFromJSONTyped,
-    CosmosRuleConditionsToJSON,
-} from './CosmosRuleConditions';
-import type { InitiatorsConditionRequest } from './InitiatorsConditionRequest';
-import {
-    InitiatorsConditionRequestFromJSON,
-    InitiatorsConditionRequestFromJSONTyped,
-    InitiatorsConditionRequestToJSON,
-} from './InitiatorsConditionRequest';
-import type { PeriodicAmountCondition } from './PeriodicAmountCondition';
-import {
-    PeriodicAmountConditionFromJSON,
-    PeriodicAmountConditionFromJSONTyped,
-    PeriodicAmountConditionToJSON,
-} from './PeriodicAmountCondition';
-import type { RecipientsConditionRequest } from './RecipientsConditionRequest';
-import {
-    RecipientsConditionRequestFromJSON,
-    RecipientsConditionRequestFromJSONTyped,
-    RecipientsConditionRequestToJSON,
-} from './RecipientsConditionRequest';
+    OriginsConditionRequestFromJSON,
+    OriginsConditionRequestFromJSONTyped,
+    OriginsConditionRequestToJSON,
+    OriginsConditionRequestToJSONTyped,
+} from './OriginsConditionRequest';
 import type { TransactionTypeCondition } from './TransactionTypeCondition';
 import {
     TransactionTypeConditionFromJSON,
     TransactionTypeConditionFromJSONTyped,
     TransactionTypeConditionToJSON,
+    TransactionTypeConditionToJSONTyped,
 } from './TransactionTypeCondition';
+import type { InitiatorsConditionRequest } from './InitiatorsConditionRequest';
+import {
+    InitiatorsConditionRequestFromJSON,
+    InitiatorsConditionRequestFromJSONTyped,
+    InitiatorsConditionRequestToJSON,
+    InitiatorsConditionRequestToJSONTyped,
+} from './InitiatorsConditionRequest';
+import type { AssetIdentifierRequest } from './AssetIdentifierRequest';
+import {
+    AssetIdentifierRequestFromJSON,
+    AssetIdentifierRequestFromJSONTyped,
+    AssetIdentifierRequestToJSON,
+    AssetIdentifierRequestToJSONTyped,
+} from './AssetIdentifierRequest';
+import type { PeriodicAmountCondition } from './PeriodicAmountCondition';
+import {
+    PeriodicAmountConditionFromJSON,
+    PeriodicAmountConditionFromJSONTyped,
+    PeriodicAmountConditionToJSON,
+    PeriodicAmountConditionToJSONTyped,
+} from './PeriodicAmountCondition';
+import type { CosmosRuleConditions } from './CosmosRuleConditions';
+import {
+    CosmosRuleConditionsFromJSON,
+    CosmosRuleConditionsFromJSONTyped,
+    CosmosRuleConditionsToJSON,
+    CosmosRuleConditionsToJSONTyped,
+} from './CosmosRuleConditions';
+import type { Eip712MessageConditions } from './Eip712MessageConditions';
+import {
+    Eip712MessageConditionsFromJSON,
+    Eip712MessageConditionsFromJSONTyped,
+    Eip712MessageConditionsToJSON,
+    Eip712MessageConditionsToJSONTyped,
+} from './Eip712MessageConditions';
+import type { RecipientsConditionRequest } from './RecipientsConditionRequest';
+import {
+    RecipientsConditionRequestFromJSON,
+    RecipientsConditionRequestFromJSONTyped,
+    RecipientsConditionRequestToJSON,
+    RecipientsConditionRequestToJSONTyped,
+} from './RecipientsConditionRequest';
 
 /**
  * 
@@ -70,16 +91,10 @@ export interface TransactionRuleConditionsRequest {
     initiators?: InitiatorsConditionRequest;
     /**
      * 
-     * @type {Array<string>}
+     * @type {OriginsConditionRequest}
      * @memberof TransactionRuleConditionsRequest
      */
-    originVaultIds?: Array<string>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof TransactionRuleConditionsRequest
-     */
-    originVaultGroupIds?: Array<string>;
+    origins?: OriginsConditionRequest;
     /**
      * 
      * @type {Array<TransactionTypeCondition>}
@@ -122,15 +137,19 @@ export interface TransactionRuleConditionsRequest {
      * @memberof TransactionRuleConditionsRequest
      */
     periodicAmount?: PeriodicAmountCondition;
+    /**
+     * 
+     * @type {Eip712MessageConditions}
+     * @memberof TransactionRuleConditionsRequest
+     */
+    eip712Message?: Eip712MessageConditions;
 }
 
 /**
  * Check if a given object implements the TransactionRuleConditionsRequest interface.
  */
-export function instanceOfTransactionRuleConditionsRequest(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfTransactionRuleConditionsRequest(value: object): value is TransactionRuleConditionsRequest {
+    return true;
 }
 
 export function TransactionRuleConditionsRequestFromJSON(json: any): TransactionRuleConditionsRequest {
@@ -138,43 +157,45 @@ export function TransactionRuleConditionsRequestFromJSON(json: any): Transaction
 }
 
 export function TransactionRuleConditionsRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): TransactionRuleConditionsRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'initiators': !exists(json, 'initiators') ? undefined : InitiatorsConditionRequestFromJSON(json['initiators']),
-        'originVaultIds': !exists(json, 'origin_vault_ids') ? undefined : json['origin_vault_ids'],
-        'originVaultGroupIds': !exists(json, 'origin_vault_group_ids') ? undefined : json['origin_vault_group_ids'],
-        'transactionTypes': !exists(json, 'transaction_types') ? undefined : ((json['transaction_types'] as Array<any>).map(TransactionTypeConditionFromJSON)),
-        'recipients': !exists(json, 'recipients') ? undefined : RecipientsConditionRequestFromJSON(json['recipients']),
-        'abiMethods': !exists(json, 'abi_methods') ? undefined : json['abi_methods'],
-        'assets': !exists(json, 'assets') ? undefined : ((json['assets'] as Array<any>).map(AssetIdentifierRequestFromJSON)),
-        'amountLimit': !exists(json, 'amount_limit') ? undefined : AmountLimitConditionFromJSON(json['amount_limit']),
-        'cosmosConditions': !exists(json, 'cosmos_conditions') ? undefined : CosmosRuleConditionsFromJSON(json['cosmos_conditions']),
-        'periodicAmount': !exists(json, 'periodic_amount') ? undefined : PeriodicAmountConditionFromJSON(json['periodic_amount']),
+        'initiators': json['initiators'] == null ? undefined : InitiatorsConditionRequestFromJSON(json['initiators']),
+        'origins': json['origins'] == null ? undefined : OriginsConditionRequestFromJSON(json['origins']),
+        'transactionTypes': json['transaction_types'] == null ? undefined : ((json['transaction_types'] as Array<any>).map(TransactionTypeConditionFromJSON)),
+        'recipients': json['recipients'] == null ? undefined : RecipientsConditionRequestFromJSON(json['recipients']),
+        'abiMethods': json['abi_methods'] == null ? undefined : json['abi_methods'],
+        'assets': json['assets'] == null ? undefined : ((json['assets'] as Array<any>).map(AssetIdentifierRequestFromJSON)),
+        'amountLimit': json['amount_limit'] == null ? undefined : AmountLimitConditionFromJSON(json['amount_limit']),
+        'cosmosConditions': json['cosmos_conditions'] == null ? undefined : CosmosRuleConditionsFromJSON(json['cosmos_conditions']),
+        'periodicAmount': json['periodic_amount'] == null ? undefined : PeriodicAmountConditionFromJSON(json['periodic_amount']),
+        'eip712Message': json['eip712_message'] == null ? undefined : Eip712MessageConditionsFromJSON(json['eip712_message']),
     };
 }
 
-export function TransactionRuleConditionsRequestToJSON(value?: TransactionRuleConditionsRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TransactionRuleConditionsRequestToJSON(json: any): TransactionRuleConditionsRequest {
+    return TransactionRuleConditionsRequestToJSONTyped(json, false);
+}
+
+export function TransactionRuleConditionsRequestToJSONTyped(value?: TransactionRuleConditionsRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'initiators': InitiatorsConditionRequestToJSON(value.initiators),
-        'origin_vault_ids': value.originVaultIds,
-        'origin_vault_group_ids': value.originVaultGroupIds,
-        'transaction_types': value.transactionTypes === undefined ? undefined : ((value.transactionTypes as Array<any>).map(TransactionTypeConditionToJSON)),
-        'recipients': RecipientsConditionRequestToJSON(value.recipients),
-        'abi_methods': value.abiMethods,
-        'assets': value.assets === undefined ? undefined : ((value.assets as Array<any>).map(AssetIdentifierRequestToJSON)),
-        'amount_limit': AmountLimitConditionToJSON(value.amountLimit),
-        'cosmos_conditions': CosmosRuleConditionsToJSON(value.cosmosConditions),
-        'periodic_amount': PeriodicAmountConditionToJSON(value.periodicAmount),
+        'initiators': InitiatorsConditionRequestToJSON(value['initiators']),
+        'origins': OriginsConditionRequestToJSON(value['origins']),
+        'transaction_types': value['transactionTypes'] == null ? undefined : ((value['transactionTypes'] as Array<any>).map(TransactionTypeConditionToJSON)),
+        'recipients': RecipientsConditionRequestToJSON(value['recipients']),
+        'abi_methods': value['abiMethods'],
+        'assets': value['assets'] == null ? undefined : ((value['assets'] as Array<any>).map(AssetIdentifierRequestToJSON)),
+        'amount_limit': AmountLimitConditionToJSON(value['amountLimit']),
+        'cosmos_conditions': CosmosRuleConditionsToJSON(value['cosmosConditions']),
+        'periodic_amount': PeriodicAmountConditionToJSON(value['periodicAmount']),
+        'eip712_message': Eip712MessageConditionsToJSON(value['eip712Message']),
     };
 }
 

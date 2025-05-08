@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -42,13 +42,11 @@ export interface SuiCheckpointData {
 /**
  * Check if a given object implements the SuiCheckpointData interface.
  */
-export function instanceOfSuiCheckpointData(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "sequenceNumber" in value;
-    isInstance = isInstance && "digest" in value;
-    isInstance = isInstance && "minedAt" in value;
-
-    return isInstance;
+export function instanceOfSuiCheckpointData(value: object): value is SuiCheckpointData {
+    if (!('sequenceNumber' in value) || value['sequenceNumber'] === undefined) return false;
+    if (!('digest' in value) || value['digest'] === undefined) return false;
+    if (!('minedAt' in value) || value['minedAt'] === undefined) return false;
+    return true;
 }
 
 export function SuiCheckpointDataFromJSON(json: any): SuiCheckpointData {
@@ -56,7 +54,7 @@ export function SuiCheckpointDataFromJSON(json: any): SuiCheckpointData {
 }
 
 export function SuiCheckpointDataFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiCheckpointData {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -67,18 +65,20 @@ export function SuiCheckpointDataFromJSONTyped(json: any, ignoreDiscriminator: b
     };
 }
 
-export function SuiCheckpointDataToJSON(value?: SuiCheckpointData | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiCheckpointDataToJSON(json: any): SuiCheckpointData {
+    return SuiCheckpointDataToJSONTyped(json, false);
+}
+
+export function SuiCheckpointDataToJSONTyped(value?: SuiCheckpointData | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'sequence_number': value.sequenceNumber,
-        'digest': value.digest,
-        'mined_at': (value.minedAt.toISOString()),
+        'sequence_number': value['sequenceNumber'],
+        'digest': value['digest'],
+        'mined_at': ((value['minedAt']).toISOString()),
     };
 }
 

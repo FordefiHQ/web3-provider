@@ -28,6 +28,17 @@ export const VaultSortableFields = {
 export type VaultSortableFields = typeof VaultSortableFields[keyof typeof VaultSortableFields];
 
 
+export function instanceOfVaultSortableFields(value: any): boolean {
+    for (const key in VaultSortableFields) {
+        if (Object.prototype.hasOwnProperty.call(VaultSortableFields, key)) {
+            if (VaultSortableFields[key as keyof typeof VaultSortableFields] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function VaultSortableFieldsFromJSON(json: any): VaultSortableFields {
     return VaultSortableFieldsFromJSONTyped(json, false);
 }
@@ -38,5 +49,9 @@ export function VaultSortableFieldsFromJSONTyped(json: any, ignoreDiscriminator:
 
 export function VaultSortableFieldsToJSON(value?: VaultSortableFields | null): any {
     return value as any;
+}
+
+export function VaultSortableFieldsToJSONTyped(value: any, ignoreDiscriminator: boolean): VaultSortableFields {
+    return value as VaultSortableFields;
 }
 

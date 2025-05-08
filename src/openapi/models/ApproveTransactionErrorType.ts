@@ -24,6 +24,17 @@ export const ApproveTransactionErrorType = {
 export type ApproveTransactionErrorType = typeof ApproveTransactionErrorType[keyof typeof ApproveTransactionErrorType];
 
 
+export function instanceOfApproveTransactionErrorType(value: any): boolean {
+    for (const key in ApproveTransactionErrorType) {
+        if (Object.prototype.hasOwnProperty.call(ApproveTransactionErrorType, key)) {
+            if (ApproveTransactionErrorType[key as keyof typeof ApproveTransactionErrorType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function ApproveTransactionErrorTypeFromJSON(json: any): ApproveTransactionErrorType {
     return ApproveTransactionErrorTypeFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function ApproveTransactionErrorTypeFromJSONTyped(json: any, ignoreDiscri
 
 export function ApproveTransactionErrorTypeToJSON(value?: ApproveTransactionErrorType | null): any {
     return value as any;
+}
+
+export function ApproveTransactionErrorTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): ApproveTransactionErrorType {
+    return value as ApproveTransactionErrorType;
 }
 

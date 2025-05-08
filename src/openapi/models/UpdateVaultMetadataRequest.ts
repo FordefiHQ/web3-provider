@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AptosVaultMetadataValue } from './AptosVaultMetadataValue';
 import {
     AptosVaultMetadataValueFromJSON,
     AptosVaultMetadataValueFromJSONTyped,
     AptosVaultMetadataValueToJSON,
+    AptosVaultMetadataValueToJSONTyped,
 } from './AptosVaultMetadataValue';
 
 /**
@@ -37,10 +38,8 @@ export interface UpdateVaultMetadataRequest {
 /**
  * Check if a given object implements the UpdateVaultMetadataRequest interface.
  */
-export function instanceOfUpdateVaultMetadataRequest(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfUpdateVaultMetadataRequest(value: object): value is UpdateVaultMetadataRequest {
+    return true;
 }
 
 export function UpdateVaultMetadataRequestFromJSON(json: any): UpdateVaultMetadataRequest {
@@ -48,25 +47,27 @@ export function UpdateVaultMetadataRequestFromJSON(json: any): UpdateVaultMetada
 }
 
 export function UpdateVaultMetadataRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): UpdateVaultMetadataRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'metadata': !exists(json, 'metadata') ? undefined : (mapValues(json['metadata'], AptosVaultMetadataValueFromJSON)),
+        'metadata': json['metadata'] == null ? undefined : (mapValues(json['metadata'], AptosVaultMetadataValueFromJSON)),
     };
 }
 
-export function UpdateVaultMetadataRequestToJSON(value?: UpdateVaultMetadataRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UpdateVaultMetadataRequestToJSON(json: any): UpdateVaultMetadataRequest {
+    return UpdateVaultMetadataRequestToJSONTyped(json, false);
+}
+
+export function UpdateVaultMetadataRequestToJSONTyped(value?: UpdateVaultMetadataRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'metadata': value.metadata === undefined ? undefined : (mapValues(value.metadata, AptosVaultMetadataValueToJSON)),
+        'metadata': value['metadata'] == null ? undefined : (mapValues(value['metadata'], AptosVaultMetadataValueToJSON)),
     };
 }
 

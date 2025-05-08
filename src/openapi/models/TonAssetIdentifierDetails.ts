@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { TonJettonAssetIdentifierRequest } from './TonJettonAssetIdentifierRequest';
 import {
-    TonJettonAssetIdentifierRequest,
     instanceOfTonJettonAssetIdentifierRequest,
     TonJettonAssetIdentifierRequestFromJSON,
     TonJettonAssetIdentifierRequestFromJSONTyped,
     TonJettonAssetIdentifierRequestToJSON,
 } from './TonJettonAssetIdentifierRequest';
+import type { TonNativeAssetIdentifierRequest } from './TonNativeAssetIdentifierRequest';
 import {
-    TonNativeAssetIdentifierRequest,
     instanceOfTonNativeAssetIdentifierRequest,
     TonNativeAssetIdentifierRequestFromJSON,
     TonNativeAssetIdentifierRequestFromJSONTyped,
@@ -39,31 +39,32 @@ export function TonAssetIdentifierDetailsFromJSON(json: any): TonAssetIdentifier
 }
 
 export function TonAssetIdentifierDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): TonAssetIdentifierDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'jetton':
-            return {...TonJettonAssetIdentifierRequestFromJSONTyped(json, true), type: 'jetton'};
+            return Object.assign({}, TonJettonAssetIdentifierRequestFromJSONTyped(json, true), { type: 'jetton' } as const);
         case 'native':
-            return {...TonNativeAssetIdentifierRequestFromJSONTyped(json, true), type: 'native'};
+            return Object.assign({}, TonNativeAssetIdentifierRequestFromJSONTyped(json, true), { type: 'native' } as const);
         default:
             throw new Error(`No variant of TonAssetIdentifierDetails exists with 'type=${json['type']}'`);
     }
 }
 
-export function TonAssetIdentifierDetailsToJSON(value?: TonAssetIdentifierDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function TonAssetIdentifierDetailsToJSON(json: any): any {
+    return TonAssetIdentifierDetailsToJSONTyped(json, false);
+}
+
+export function TonAssetIdentifierDetailsToJSONTyped(value?: TonAssetIdentifierDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'jetton':
-            return TonJettonAssetIdentifierRequestToJSON(value);
+            return Object.assign({}, TonJettonAssetIdentifierRequestToJSON(value), { type: 'jetton' } as const);
         case 'native':
-            return TonNativeAssetIdentifierRequestToJSON(value);
+            return Object.assign({}, TonNativeAssetIdentifierRequestToJSON(value), { type: 'native' } as const);
         default:
             throw new Error(`No variant of TonAssetIdentifierDetails exists with 'type=${value['type']}'`);
     }

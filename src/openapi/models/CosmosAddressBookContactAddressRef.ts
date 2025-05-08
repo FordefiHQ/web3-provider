@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { CosmosChain } from './CosmosChain';
 import {
     CosmosChainFromJSON,
     CosmosChainFromJSONTyped,
     CosmosChainToJSON,
+    CosmosChainToJSONTyped,
 } from './CosmosChain';
 
 /**
@@ -59,13 +60,11 @@ export type CosmosAddressBookContactAddressRefChainTypeEnum = typeof CosmosAddre
 /**
  * Check if a given object implements the CosmosAddressBookContactAddressRef interface.
  */
-export function instanceOfCosmosAddressBookContactAddressRef(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chainType" in value;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfCosmosAddressBookContactAddressRef(value: object): value is CosmosAddressBookContactAddressRef {
+    if (!('chainType' in value) || value['chainType'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function CosmosAddressBookContactAddressRefFromJSON(json: any): CosmosAddressBookContactAddressRef {
@@ -73,7 +72,7 @@ export function CosmosAddressBookContactAddressRefFromJSON(json: any): CosmosAdd
 }
 
 export function CosmosAddressBookContactAddressRefFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosAddressBookContactAddressRef {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -84,18 +83,20 @@ export function CosmosAddressBookContactAddressRefFromJSONTyped(json: any, ignor
     };
 }
 
-export function CosmosAddressBookContactAddressRefToJSON(value?: CosmosAddressBookContactAddressRef | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosAddressBookContactAddressRefToJSON(json: any): CosmosAddressBookContactAddressRef {
+    return CosmosAddressBookContactAddressRefToJSONTyped(json, false);
+}
+
+export function CosmosAddressBookContactAddressRefToJSONTyped(value?: CosmosAddressBookContactAddressRef | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain_type': value.chainType,
-        'address': value.address,
-        'chain': CosmosChainToJSON(value.chain),
+        'chain_type': value['chainType'],
+        'address': value['address'],
+        'chain': CosmosChainToJSON(value['chain']),
     };
 }
 

@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { SignatureSignedBy } from './SignatureSignedBy';
 import {
     SignatureSignedByFromJSON,
     SignatureSignedByFromJSONTyped,
     SignatureSignedByToJSON,
+    SignatureSignedByToJSONTyped,
 } from './SignatureSignedBy';
 
 /**
@@ -43,11 +44,9 @@ export interface Signature {
 /**
  * Check if a given object implements the Signature interface.
  */
-export function instanceOfSignature(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "data" in value;
-
-    return isInstance;
+export function instanceOfSignature(value: object): value is Signature {
+    if (!('data' in value) || value['data'] === undefined) return false;
+    return true;
 }
 
 export function SignatureFromJSON(json: any): Signature {
@@ -55,27 +54,29 @@ export function SignatureFromJSON(json: any): Signature {
 }
 
 export function SignatureFromJSONTyped(json: any, ignoreDiscriminator: boolean): Signature {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'data': json['data'],
-        'signedBy': !exists(json, 'signed_by') ? undefined : SignatureSignedByFromJSON(json['signed_by']),
+        'signedBy': json['signed_by'] == null ? undefined : SignatureSignedByFromJSON(json['signed_by']),
     };
 }
 
-export function SignatureToJSON(value?: Signature | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SignatureToJSON(json: any): Signature {
+    return SignatureToJSONTyped(json, false);
+}
+
+export function SignatureToJSONTyped(value?: Signature | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'data': value.data,
-        'signed_by': SignatureSignedByToJSON(value.signedBy),
+        'data': value['data'],
+        'signed_by': SignatureSignedByToJSON(value['signedBy']),
     };
 }
 

@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { VaultAddressBackup } from './VaultAddressBackup';
 import {
     VaultAddressBackupFromJSON,
     VaultAddressBackupFromJSONTyped,
     VaultAddressBackupToJSON,
+    VaultAddressBackupToJSONTyped,
 } from './VaultAddressBackup';
 
 /**
@@ -67,16 +68,14 @@ export interface VaultBackup {
 /**
  * Check if a given object implements the VaultBackup interface.
  */
-export function instanceOfVaultBackup(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "vaultId" in value;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "derivationPath" in value;
-    isInstance = isInstance && "vaultType" in value;
-    isInstance = isInstance && "vaultAddresses" in value;
-
-    return isInstance;
+export function instanceOfVaultBackup(value: object): value is VaultBackup {
+    if (!('vaultId' in value) || value['vaultId'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('derivationPath' in value) || value['derivationPath'] === undefined) return false;
+    if (!('vaultType' in value) || value['vaultType'] === undefined) return false;
+    if (!('vaultAddresses' in value) || value['vaultAddresses'] === undefined) return false;
+    return true;
 }
 
 export function VaultBackupFromJSON(json: any): VaultBackup {
@@ -84,7 +83,7 @@ export function VaultBackupFromJSON(json: any): VaultBackup {
 }
 
 export function VaultBackupFromJSONTyped(json: any, ignoreDiscriminator: boolean): VaultBackup {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -98,21 +97,23 @@ export function VaultBackupFromJSONTyped(json: any, ignoreDiscriminator: boolean
     };
 }
 
-export function VaultBackupToJSON(value?: VaultBackup | null): any {
-    if (value === undefined) {
-        return undefined;
+export function VaultBackupToJSON(json: any): VaultBackup {
+    return VaultBackupToJSONTyped(json, false);
+}
+
+export function VaultBackupToJSONTyped(value?: VaultBackup | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'vault_id': value.vaultId,
-        'address': value.address,
-        'name': value.name,
-        'derivation_path': value.derivationPath,
-        'vault_type': value.vaultType,
-        'vault_addresses': ((value.vaultAddresses as Array<any>).map(VaultAddressBackupToJSON)),
+        'vault_id': value['vaultId'],
+        'address': value['address'],
+        'name': value['name'],
+        'derivation_path': value['derivationPath'],
+        'vault_type': value['vaultType'],
+        'vault_addresses': ((value['vaultAddresses'] as Array<any>).map(VaultAddressBackupToJSON)),
     };
 }
 

@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { CosmosToken } from './CosmosToken';
-import {
-    CosmosTokenFromJSON,
-    CosmosTokenFromJSONTyped,
-    CosmosTokenToJSON,
-} from './CosmosToken';
+import { mapValues } from '../runtime';
 import type { EnrichedCosmosChain } from './EnrichedCosmosChain';
 import {
     EnrichedCosmosChainFromJSON,
     EnrichedCosmosChainFromJSONTyped,
     EnrichedCosmosChainToJSON,
+    EnrichedCosmosChainToJSONTyped,
 } from './EnrichedCosmosChain';
+import type { CosmosToken } from './CosmosToken';
+import {
+    CosmosTokenFromJSON,
+    CosmosTokenFromJSONTyped,
+    CosmosTokenToJSON,
+    CosmosTokenToJSONTyped,
+} from './CosmosToken';
 
 /**
  * 
@@ -65,13 +67,11 @@ export type EnrichedCosmosTokenAssetIdentifierTypeEnum = typeof EnrichedCosmosTo
 /**
  * Check if a given object implements the EnrichedCosmosTokenAssetIdentifier interface.
  */
-export function instanceOfEnrichedCosmosTokenAssetIdentifier(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "coin" in value;
-
-    return isInstance;
+export function instanceOfEnrichedCosmosTokenAssetIdentifier(value: object): value is EnrichedCosmosTokenAssetIdentifier {
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('coin' in value) || value['coin'] === undefined) return false;
+    return true;
 }
 
 export function EnrichedCosmosTokenAssetIdentifierFromJSON(json: any): EnrichedCosmosTokenAssetIdentifier {
@@ -79,7 +79,7 @@ export function EnrichedCosmosTokenAssetIdentifierFromJSON(json: any): EnrichedC
 }
 
 export function EnrichedCosmosTokenAssetIdentifierFromJSONTyped(json: any, ignoreDiscriminator: boolean): EnrichedCosmosTokenAssetIdentifier {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -90,18 +90,20 @@ export function EnrichedCosmosTokenAssetIdentifierFromJSONTyped(json: any, ignor
     };
 }
 
-export function EnrichedCosmosTokenAssetIdentifierToJSON(value?: EnrichedCosmosTokenAssetIdentifier | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EnrichedCosmosTokenAssetIdentifierToJSON(json: any): EnrichedCosmosTokenAssetIdentifier {
+    return EnrichedCosmosTokenAssetIdentifierToJSONTyped(json, false);
+}
+
+export function EnrichedCosmosTokenAssetIdentifierToJSONTyped(value?: EnrichedCosmosTokenAssetIdentifier | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain': EnrichedCosmosChainToJSON(value.chain),
-        'type': value.type,
-        'coin': CosmosTokenToJSON(value.coin),
+        'chain': EnrichedCosmosChainToJSON(value['chain']),
+        'type': value['type'],
+        'coin': CosmosTokenToJSON(value['coin']),
     };
 }
 

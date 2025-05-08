@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { ContactRef } from './ContactRef';
-import {
-    ContactRefFromJSON,
-    ContactRefFromJSONTyped,
-    ContactRefToJSON,
-} from './ContactRef';
+import { mapValues } from '../runtime';
 import type { VaultRef } from './VaultRef';
 import {
     VaultRefFromJSON,
     VaultRefFromJSONTyped,
     VaultRefToJSON,
+    VaultRefToJSONTyped,
 } from './VaultRef';
+import type { ContactRef } from './ContactRef';
+import {
+    ContactRefFromJSON,
+    ContactRefFromJSONTyped,
+    ContactRefToJSON,
+    ContactRefToJSONTyped,
+} from './ContactRef';
 
 /**
  * 
@@ -77,12 +79,10 @@ export type EnrichedStarknetAddressTypeEnum = typeof EnrichedStarknetAddressType
 /**
  * Check if a given object implements the EnrichedStarknetAddress interface.
  */
-export function instanceOfEnrichedStarknetAddress(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "address" in value;
-
-    return isInstance;
+export function instanceOfEnrichedStarknetAddress(value: object): value is EnrichedStarknetAddress {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    return true;
 }
 
 export function EnrichedStarknetAddressFromJSON(json: any): EnrichedStarknetAddress {
@@ -90,33 +90,35 @@ export function EnrichedStarknetAddressFromJSON(json: any): EnrichedStarknetAddr
 }
 
 export function EnrichedStarknetAddressFromJSONTyped(json: any, ignoreDiscriminator: boolean): EnrichedStarknetAddress {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'vault': !exists(json, 'vault') ? undefined : VaultRefFromJSON(json['vault']),
-        'explorerUrl': !exists(json, 'explorer_url') ? undefined : json['explorer_url'],
-        'contact': !exists(json, 'contact') ? undefined : ContactRefFromJSON(json['contact']),
+        'vault': json['vault'] == null ? undefined : VaultRefFromJSON(json['vault']),
+        'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
+        'contact': json['contact'] == null ? undefined : ContactRefFromJSON(json['contact']),
         'type': json['type'],
         'address': json['address'],
     };
 }
 
-export function EnrichedStarknetAddressToJSON(value?: EnrichedStarknetAddress | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EnrichedStarknetAddressToJSON(json: any): EnrichedStarknetAddress {
+    return EnrichedStarknetAddressToJSONTyped(json, false);
+}
+
+export function EnrichedStarknetAddressToJSONTyped(value?: EnrichedStarknetAddress | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'vault': VaultRefToJSON(value.vault),
-        'explorer_url': value.explorerUrl,
-        'contact': ContactRefToJSON(value.contact),
-        'type': value.type,
-        'address': value.address,
+        'vault': VaultRefToJSON(value['vault']),
+        'explorer_url': value['explorerUrl'],
+        'contact': ContactRefToJSON(value['contact']),
+        'type': value['type'],
+        'address': value['address'],
     };
 }
 

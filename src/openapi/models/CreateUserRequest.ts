@@ -12,22 +12,22 @@
  * Do not edit the class manually.
  */
 
+import type { CreateApiSignerUserRequest } from './CreateApiSignerUserRequest';
 import {
-    CreateApiSignerUserRequest,
     instanceOfCreateApiSignerUserRequest,
     CreateApiSignerUserRequestFromJSON,
     CreateApiSignerUserRequestFromJSONTyped,
     CreateApiSignerUserRequestToJSON,
 } from './CreateApiSignerUserRequest';
+import type { CreateApiUserRequest } from './CreateApiUserRequest';
 import {
-    CreateApiUserRequest,
     instanceOfCreateApiUserRequest,
     CreateApiUserRequestFromJSON,
     CreateApiUserRequestFromJSONTyped,
     CreateApiUserRequestToJSON,
 } from './CreateApiUserRequest';
+import type { CreatePersonUserRequest } from './CreatePersonUserRequest';
 import {
-    CreatePersonUserRequest,
     instanceOfCreatePersonUserRequest,
     CreatePersonUserRequestFromJSON,
     CreatePersonUserRequestFromJSONTyped,
@@ -46,35 +46,36 @@ export function CreateUserRequestFromJSON(json: any): CreateUserRequest {
 }
 
 export function CreateUserRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateUserRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['user_type']) {
         case 'api_signer':
-            return {...CreateApiSignerUserRequestFromJSONTyped(json, true), userType: 'api_signer'};
+            return Object.assign({}, CreateApiSignerUserRequestFromJSONTyped(json, true), { userType: 'api_signer' } as const);
         case 'api_user':
-            return {...CreateApiUserRequestFromJSONTyped(json, true), userType: 'api_user'};
+            return Object.assign({}, CreateApiUserRequestFromJSONTyped(json, true), { userType: 'api_user' } as const);
         case 'person':
-            return {...CreatePersonUserRequestFromJSONTyped(json, true), userType: 'person'};
+            return Object.assign({}, CreatePersonUserRequestFromJSONTyped(json, true), { userType: 'person' } as const);
         default:
             throw new Error(`No variant of CreateUserRequest exists with 'userType=${json['userType']}'`);
     }
 }
 
-export function CreateUserRequestToJSON(value?: CreateUserRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function CreateUserRequestToJSON(json: any): any {
+    return CreateUserRequestToJSONTyped(json, false);
+}
+
+export function CreateUserRequestToJSONTyped(value?: CreateUserRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['userType']) {
         case 'api_signer':
-            return CreateApiSignerUserRequestToJSON(value);
+            return Object.assign({}, CreateApiSignerUserRequestToJSON(value), { userType: 'api_signer' } as const);
         case 'api_user':
-            return CreateApiUserRequestToJSON(value);
+            return Object.assign({}, CreateApiUserRequestToJSON(value), { userType: 'api_user' } as const);
         case 'person':
-            return CreatePersonUserRequestToJSON(value);
+            return Object.assign({}, CreatePersonUserRequestToJSON(value), { userType: 'person' } as const);
         default:
             throw new Error(`No variant of CreateUserRequest exists with 'userType=${value['userType']}'`);
     }

@@ -12,58 +12,59 @@
  * Do not edit the class manually.
  */
 
+import type { CosmosTransferToAddressRequest } from './CosmosTransferToAddressRequest';
 import {
-    CosmosTransferToAddressRequest,
     instanceOfCosmosTransferToAddressRequest,
     CosmosTransferToAddressRequestFromJSON,
     CosmosTransferToAddressRequestFromJSONTyped,
     CosmosTransferToAddressRequestToJSON,
 } from './CosmosTransferToAddressRequest';
+import type { RecipientVaultId } from './RecipientVaultId';
 import {
-    CosmosTransferToVaultIdRequest,
-    instanceOfCosmosTransferToVaultIdRequest,
-    CosmosTransferToVaultIdRequestFromJSON,
-    CosmosTransferToVaultIdRequestFromJSONTyped,
-    CosmosTransferToVaultIdRequestToJSON,
-} from './CosmosTransferToVaultIdRequest';
+    instanceOfRecipientVaultId,
+    RecipientVaultIdFromJSON,
+    RecipientVaultIdFromJSONTyped,
+    RecipientVaultIdToJSON,
+} from './RecipientVaultId';
 
 /**
  * @type TypedCosmosTransferRequestTo
  * 
  * @export
  */
-export type TypedCosmosTransferRequestTo = { type: 'address' } & CosmosTransferToAddressRequest | { type: 'vault_id' } & CosmosTransferToVaultIdRequest;
+export type TypedCosmosTransferRequestTo = { type: 'address' } & CosmosTransferToAddressRequest | { type: 'vault_id' } & RecipientVaultId;
 
 export function TypedCosmosTransferRequestToFromJSON(json: any): TypedCosmosTransferRequestTo {
     return TypedCosmosTransferRequestToFromJSONTyped(json, false);
 }
 
 export function TypedCosmosTransferRequestToFromJSONTyped(json: any, ignoreDiscriminator: boolean): TypedCosmosTransferRequestTo {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'address':
-            return {...CosmosTransferToAddressRequestFromJSONTyped(json, true), type: 'address'};
+            return Object.assign({}, CosmosTransferToAddressRequestFromJSONTyped(json, true), { type: 'address' } as const);
         case 'vault_id':
-            return {...CosmosTransferToVaultIdRequestFromJSONTyped(json, true), type: 'vault_id'};
+            return Object.assign({}, RecipientVaultIdFromJSONTyped(json, true), { type: 'vault_id' } as const);
         default:
             throw new Error(`No variant of TypedCosmosTransferRequestTo exists with 'type=${json['type']}'`);
     }
 }
 
-export function TypedCosmosTransferRequestToToJSON(value?: TypedCosmosTransferRequestTo | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function TypedCosmosTransferRequestToToJSON(json: any): any {
+    return TypedCosmosTransferRequestToToJSONTyped(json, false);
+}
+
+export function TypedCosmosTransferRequestToToJSONTyped(value?: TypedCosmosTransferRequestTo | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'address':
-            return CosmosTransferToAddressRequestToJSON(value);
+            return Object.assign({}, CosmosTransferToAddressRequestToJSON(value), { type: 'address' } as const);
         case 'vault_id':
-            return CosmosTransferToVaultIdRequestToJSON(value);
+            return Object.assign({}, RecipientVaultIdToJSON(value), { type: 'vault_id' } as const);
         default:
             throw new Error(`No variant of TypedCosmosTransferRequestTo exists with 'type=${value['type']}'`);
     }

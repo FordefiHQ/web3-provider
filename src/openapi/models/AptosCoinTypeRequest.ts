@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AptosChainUniqueId } from './AptosChainUniqueId';
 import {
     AptosChainUniqueIdFromJSON,
     AptosChainUniqueIdFromJSONTyped,
     AptosChainUniqueIdToJSON,
+    AptosChainUniqueIdToJSONTyped,
 } from './AptosChainUniqueId';
 
 /**
@@ -40,15 +41,15 @@ export interface AptosCoinTypeRequest {
     coinTypeStr: string;
 }
 
+
+
 /**
  * Check if a given object implements the AptosCoinTypeRequest interface.
  */
-export function instanceOfAptosCoinTypeRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "coinTypeStr" in value;
-
-    return isInstance;
+export function instanceOfAptosCoinTypeRequest(value: object): value is AptosCoinTypeRequest {
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('coinTypeStr' in value) || value['coinTypeStr'] === undefined) return false;
+    return true;
 }
 
 export function AptosCoinTypeRequestFromJSON(json: any): AptosCoinTypeRequest {
@@ -56,7 +57,7 @@ export function AptosCoinTypeRequestFromJSON(json: any): AptosCoinTypeRequest {
 }
 
 export function AptosCoinTypeRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosCoinTypeRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -66,17 +67,19 @@ export function AptosCoinTypeRequestFromJSONTyped(json: any, ignoreDiscriminator
     };
 }
 
-export function AptosCoinTypeRequestToJSON(value?: AptosCoinTypeRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AptosCoinTypeRequestToJSON(json: any): AptosCoinTypeRequest {
+    return AptosCoinTypeRequestToJSONTyped(json, false);
+}
+
+export function AptosCoinTypeRequestToJSONTyped(value?: AptosCoinTypeRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain': AptosChainUniqueIdToJSON(value.chain),
-        'coin_type_str': value.coinTypeStr,
+        'chain': AptosChainUniqueIdToJSON(value['chain']),
+        'coin_type_str': value['coinTypeStr'],
     };
 }
 

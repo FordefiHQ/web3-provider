@@ -12,12 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+    PricedAssetToJSONTyped,
+} from './PricedAsset';
 import type { Price } from './Price';
 import {
     PriceFromJSON,
     PriceFromJSONTyped,
     PriceToJSON,
+    PriceToJSONTyped,
 } from './Price';
 
 /**
@@ -50,18 +58,23 @@ export interface GasDebit {
      * @memberof GasDebit
      */
     fiatPrice?: Price;
+    /**
+     * 
+     * @type {PricedAsset}
+     * @memberof GasDebit
+     */
+    pricedAsset: PricedAsset;
 }
 
 /**
  * Check if a given object implements the GasDebit interface.
  */
-export function instanceOfGasDebit(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "gasUsed" in value;
-    isInstance = isInstance && "gasPrice" in value;
-    isInstance = isInstance && "totalFee" in value;
-
-    return isInstance;
+export function instanceOfGasDebit(value: object): value is GasDebit {
+    if (!('gasUsed' in value) || value['gasUsed'] === undefined) return false;
+    if (!('gasPrice' in value) || value['gasPrice'] === undefined) return false;
+    if (!('totalFee' in value) || value['totalFee'] === undefined) return false;
+    if (!('pricedAsset' in value) || value['pricedAsset'] === undefined) return false;
+    return true;
 }
 
 export function GasDebitFromJSON(json: any): GasDebit {
@@ -69,7 +82,7 @@ export function GasDebitFromJSON(json: any): GasDebit {
 }
 
 export function GasDebitFromJSONTyped(json: any, ignoreDiscriminator: boolean): GasDebit {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -77,23 +90,27 @@ export function GasDebitFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'gasUsed': json['gas_used'],
         'gasPrice': json['gas_price'],
         'totalFee': json['total_fee'],
-        'fiatPrice': !exists(json, 'fiat_price') ? undefined : PriceFromJSON(json['fiat_price']),
+        'fiatPrice': json['fiat_price'] == null ? undefined : PriceFromJSON(json['fiat_price']),
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }
 
-export function GasDebitToJSON(value?: GasDebit | null): any {
-    if (value === undefined) {
-        return undefined;
+export function GasDebitToJSON(json: any): GasDebit {
+    return GasDebitToJSONTyped(json, false);
+}
+
+export function GasDebitToJSONTyped(value?: GasDebit | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'gas_used': value.gasUsed,
-        'gas_price': value.gasPrice,
-        'total_fee': value.totalFee,
-        'fiat_price': PriceToJSON(value.fiatPrice),
+        'gas_used': value['gasUsed'],
+        'gas_price': value['gasPrice'],
+        'total_fee': value['totalFee'],
+        'fiat_price': PriceToJSON(value['fiatPrice']),
+        'priced_asset': PricedAssetToJSON(value['pricedAsset']),
     };
 }
 

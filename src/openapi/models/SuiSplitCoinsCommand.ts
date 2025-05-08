@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { SuiCommandArgument } from './SuiCommandArgument';
 import {
     SuiCommandArgumentFromJSON,
     SuiCommandArgumentFromJSONTyped,
     SuiCommandArgumentToJSON,
+    SuiCommandArgumentToJSONTyped,
 } from './SuiCommandArgument';
 
 /**
@@ -59,13 +60,11 @@ export type SuiSplitCoinsCommandTypeEnum = typeof SuiSplitCoinsCommandTypeEnum[k
 /**
  * Check if a given object implements the SuiSplitCoinsCommand interface.
  */
-export function instanceOfSuiSplitCoinsCommand(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "coinObject" in value;
-    isInstance = isInstance && "amounts" in value;
-
-    return isInstance;
+export function instanceOfSuiSplitCoinsCommand(value: object): value is SuiSplitCoinsCommand {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('coinObject' in value) || value['coinObject'] === undefined) return false;
+    if (!('amounts' in value) || value['amounts'] === undefined) return false;
+    return true;
 }
 
 export function SuiSplitCoinsCommandFromJSON(json: any): SuiSplitCoinsCommand {
@@ -73,7 +72,7 @@ export function SuiSplitCoinsCommandFromJSON(json: any): SuiSplitCoinsCommand {
 }
 
 export function SuiSplitCoinsCommandFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiSplitCoinsCommand {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -84,18 +83,20 @@ export function SuiSplitCoinsCommandFromJSONTyped(json: any, ignoreDiscriminator
     };
 }
 
-export function SuiSplitCoinsCommandToJSON(value?: SuiSplitCoinsCommand | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiSplitCoinsCommandToJSON(json: any): SuiSplitCoinsCommand {
+    return SuiSplitCoinsCommandToJSONTyped(json, false);
+}
+
+export function SuiSplitCoinsCommandToJSONTyped(value?: SuiSplitCoinsCommand | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'coin_object': SuiCommandArgumentToJSON(value.coinObject),
-        'amounts': ((value.amounts as Array<any>).map(SuiCommandArgumentToJSON)),
+        'type': value['type'],
+        'coin_object': SuiCommandArgumentToJSON(value['coinObject']),
+        'amounts': ((value['amounts'] as Array<any>).map(SuiCommandArgumentToJSON)),
     };
 }
 

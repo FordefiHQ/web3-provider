@@ -24,6 +24,17 @@ export const UtxoVaultSubType = {
 export type UtxoVaultSubType = typeof UtxoVaultSubType[keyof typeof UtxoVaultSubType];
 
 
+export function instanceOfUtxoVaultSubType(value: any): boolean {
+    for (const key in UtxoVaultSubType) {
+        if (Object.prototype.hasOwnProperty.call(UtxoVaultSubType, key)) {
+            if (UtxoVaultSubType[key as keyof typeof UtxoVaultSubType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function UtxoVaultSubTypeFromJSON(json: any): UtxoVaultSubType {
     return UtxoVaultSubTypeFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function UtxoVaultSubTypeFromJSONTyped(json: any, ignoreDiscriminator: bo
 
 export function UtxoVaultSubTypeToJSON(value?: UtxoVaultSubType | null): any {
     return value as any;
+}
+
+export function UtxoVaultSubTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): UtxoVaultSubType {
+    return value as UtxoVaultSubType;
 }
 

@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedStarknetAddress } from './EnrichedStarknetAddress';
 import {
     EnrichedStarknetAddressFromJSON,
     EnrichedStarknetAddressFromJSONTyped,
     EnrichedStarknetAddressToJSON,
+    EnrichedStarknetAddressToJSONTyped,
 } from './EnrichedStarknetAddress';
 
 /**
@@ -65,13 +66,11 @@ export type StarknetErc20TransferDetailsTypeEnum = typeof StarknetErc20TransferD
 /**
  * Check if a given object implements the StarknetErc20TransferDetails interface.
  */
-export function instanceOfStarknetErc20TransferDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "sender" in value;
-    isInstance = isInstance && "recipient" in value;
-
-    return isInstance;
+export function instanceOfStarknetErc20TransferDetails(value: object): value is StarknetErc20TransferDetails {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    if (!('recipient' in value) || value['recipient'] === undefined) return false;
+    return true;
 }
 
 export function StarknetErc20TransferDetailsFromJSON(json: any): StarknetErc20TransferDetails {
@@ -79,7 +78,7 @@ export function StarknetErc20TransferDetailsFromJSON(json: any): StarknetErc20Tr
 }
 
 export function StarknetErc20TransferDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): StarknetErc20TransferDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -87,23 +86,25 @@ export function StarknetErc20TransferDetailsFromJSONTyped(json: any, ignoreDiscr
         'type': json['type'],
         'sender': EnrichedStarknetAddressFromJSON(json['sender']),
         'recipient': EnrichedStarknetAddressFromJSON(json['recipient']),
-        'isInternal': !exists(json, 'is_internal') ? undefined : json['is_internal'],
+        'isInternal': json['is_internal'] == null ? undefined : json['is_internal'],
     };
 }
 
-export function StarknetErc20TransferDetailsToJSON(value?: StarknetErc20TransferDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function StarknetErc20TransferDetailsToJSON(json: any): StarknetErc20TransferDetails {
+    return StarknetErc20TransferDetailsToJSONTyped(json, false);
+}
+
+export function StarknetErc20TransferDetailsToJSONTyped(value?: StarknetErc20TransferDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'sender': EnrichedStarknetAddressToJSON(value.sender),
-        'recipient': EnrichedStarknetAddressToJSON(value.recipient),
-        'is_internal': value.isInternal,
+        'type': value['type'],
+        'sender': EnrichedStarknetAddressToJSON(value['sender']),
+        'recipient': EnrichedStarknetAddressToJSON(value['recipient']),
+        'is_internal': value['isInternal'],
     };
 }
 

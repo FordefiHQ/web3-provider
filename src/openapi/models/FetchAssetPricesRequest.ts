@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AssetIdentifierRequest } from './AssetIdentifierRequest';
 import {
     AssetIdentifierRequestFromJSON,
     AssetIdentifierRequestFromJSONTyped,
     AssetIdentifierRequestToJSON,
+    AssetIdentifierRequestToJSONTyped,
 } from './AssetIdentifierRequest';
 
 /**
@@ -37,11 +38,9 @@ export interface FetchAssetPricesRequest {
 /**
  * Check if a given object implements the FetchAssetPricesRequest interface.
  */
-export function instanceOfFetchAssetPricesRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "assetIdentifiers" in value;
-
-    return isInstance;
+export function instanceOfFetchAssetPricesRequest(value: object): value is FetchAssetPricesRequest {
+    if (!('assetIdentifiers' in value) || value['assetIdentifiers'] === undefined) return false;
+    return true;
 }
 
 export function FetchAssetPricesRequestFromJSON(json: any): FetchAssetPricesRequest {
@@ -49,7 +48,7 @@ export function FetchAssetPricesRequestFromJSON(json: any): FetchAssetPricesRequ
 }
 
 export function FetchAssetPricesRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): FetchAssetPricesRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -58,16 +57,18 @@ export function FetchAssetPricesRequestFromJSONTyped(json: any, ignoreDiscrimina
     };
 }
 
-export function FetchAssetPricesRequestToJSON(value?: FetchAssetPricesRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function FetchAssetPricesRequestToJSON(json: any): FetchAssetPricesRequest {
+    return FetchAssetPricesRequestToJSONTyped(json, false);
+}
+
+export function FetchAssetPricesRequestToJSONTyped(value?: FetchAssetPricesRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'asset_identifiers': ((value.assetIdentifiers as Array<any>).map(AssetIdentifierRequestToJSON)),
+        'asset_identifiers': ((value['assetIdentifiers'] as Array<any>).map(AssetIdentifierRequestToJSON)),
     };
 }
 

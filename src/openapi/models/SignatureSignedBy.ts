@@ -12,22 +12,22 @@
  * Do not edit the class manually.
  */
 
+import type { ApiSignerRef } from './ApiSignerRef';
 import {
-    ApiSignerRef,
     instanceOfApiSignerRef,
     ApiSignerRefFromJSON,
     ApiSignerRefFromJSONTyped,
     ApiSignerRefToJSON,
 } from './ApiSignerRef';
+import type { EndUserRef } from './EndUserRef';
 import {
-    EndUserRef,
     instanceOfEndUserRef,
     EndUserRefFromJSON,
     EndUserRefFromJSONTyped,
     EndUserRefToJSON,
 } from './EndUserRef';
+import type { PersonRef } from './PersonRef';
 import {
-    PersonRef,
     instanceOfPersonRef,
     PersonRefFromJSON,
     PersonRefFromJSONTyped,
@@ -46,35 +46,36 @@ export function SignatureSignedByFromJSON(json: any): SignatureSignedBy {
 }
 
 export function SignatureSignedByFromJSONTyped(json: any, ignoreDiscriminator: boolean): SignatureSignedBy {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['user_type']) {
         case 'api_signer':
-            return {...ApiSignerRefFromJSONTyped(json, true), userType: 'api_signer'};
+            return Object.assign({}, ApiSignerRefFromJSONTyped(json, true), { userType: 'api_signer' } as const);
         case 'end_user':
-            return {...EndUserRefFromJSONTyped(json, true), userType: 'end_user'};
+            return Object.assign({}, EndUserRefFromJSONTyped(json, true), { userType: 'end_user' } as const);
         case 'person':
-            return {...PersonRefFromJSONTyped(json, true), userType: 'person'};
+            return Object.assign({}, PersonRefFromJSONTyped(json, true), { userType: 'person' } as const);
         default:
             throw new Error(`No variant of SignatureSignedBy exists with 'userType=${json['userType']}'`);
     }
 }
 
-export function SignatureSignedByToJSON(value?: SignatureSignedBy | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function SignatureSignedByToJSON(json: any): any {
+    return SignatureSignedByToJSONTyped(json, false);
+}
+
+export function SignatureSignedByToJSONTyped(value?: SignatureSignedBy | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['userType']) {
         case 'api_signer':
-            return ApiSignerRefToJSON(value);
+            return Object.assign({}, ApiSignerRefToJSON(value), { userType: 'api_signer' } as const);
         case 'end_user':
-            return EndUserRefToJSON(value);
+            return Object.assign({}, EndUserRefToJSON(value), { userType: 'end_user' } as const);
         case 'person':
-            return PersonRefToJSON(value);
+            return Object.assign({}, PersonRefToJSON(value), { userType: 'person' } as const);
         default:
             throw new Error(`No variant of SignatureSignedBy exists with 'userType=${value['userType']}'`);
     }

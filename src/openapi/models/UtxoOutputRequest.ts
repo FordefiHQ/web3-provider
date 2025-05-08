@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { UtxoOutputRequestTo } from './UtxoOutputRequestTo';
 import {
     UtxoOutputRequestToFromJSON,
     UtxoOutputRequestToFromJSONTyped,
     UtxoOutputRequestToToJSON,
+    UtxoOutputRequestToToJSONTyped,
 } from './UtxoOutputRequestTo';
 
 /**
@@ -43,12 +44,10 @@ export interface UtxoOutputRequest {
 /**
  * Check if a given object implements the UtxoOutputRequest interface.
  */
-export function instanceOfUtxoOutputRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "to" in value;
-    isInstance = isInstance && "value" in value;
-
-    return isInstance;
+export function instanceOfUtxoOutputRequest(value: object): value is UtxoOutputRequest {
+    if (!('to' in value) || value['to'] === undefined) return false;
+    if (!('value' in value) || value['value'] === undefined) return false;
+    return true;
 }
 
 export function UtxoOutputRequestFromJSON(json: any): UtxoOutputRequest {
@@ -56,7 +55,7 @@ export function UtxoOutputRequestFromJSON(json: any): UtxoOutputRequest {
 }
 
 export function UtxoOutputRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): UtxoOutputRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -66,17 +65,19 @@ export function UtxoOutputRequestFromJSONTyped(json: any, ignoreDiscriminator: b
     };
 }
 
-export function UtxoOutputRequestToJSON(value?: UtxoOutputRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UtxoOutputRequestToJSON(json: any): UtxoOutputRequest {
+    return UtxoOutputRequestToJSONTyped(json, false);
+}
+
+export function UtxoOutputRequestToJSONTyped(value?: UtxoOutputRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'to': UtxoOutputRequestToToJSON(value.to),
-        'value': value.value,
+        'to': UtxoOutputRequestToToJSON(value['to']),
+        'value': value['value'],
     };
 }
 

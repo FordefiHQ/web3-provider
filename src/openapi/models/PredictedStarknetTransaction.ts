@@ -12,67 +12,91 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { ApprovalRequest } from './ApprovalRequest';
-import {
-    ApprovalRequestFromJSON,
-    ApprovalRequestFromJSONTyped,
-    ApprovalRequestToJSON,
-} from './ApprovalRequest';
-import type { EnrichedStarknetAddress } from './EnrichedStarknetAddress';
-import {
-    EnrichedStarknetAddressFromJSON,
-    EnrichedStarknetAddressFromJSONTyped,
-    EnrichedStarknetAddressToJSON,
-} from './EnrichedStarknetAddress';
-import type { EnrichedStarknetChain } from './EnrichedStarknetChain';
-import {
-    EnrichedStarknetChainFromJSON,
-    EnrichedStarknetChainFromJSONTyped,
-    EnrichedStarknetChainToJSON,
-} from './EnrichedStarknetChain';
-import type { PolicyMatch } from './PolicyMatch';
-import {
-    PolicyMatchFromJSON,
-    PolicyMatchFromJSONTyped,
-    PolicyMatchToJSON,
-} from './PolicyMatch';
+import { mapValues } from '../runtime';
 import type { PredictedStarknetTransactionStarknetTransactionTypeDetails } from './PredictedStarknetTransactionStarknetTransactionTypeDetails';
 import {
     PredictedStarknetTransactionStarknetTransactionTypeDetailsFromJSON,
     PredictedStarknetTransactionStarknetTransactionTypeDetailsFromJSONTyped,
     PredictedStarknetTransactionStarknetTransactionTypeDetailsToJSON,
+    PredictedStarknetTransactionStarknetTransactionTypeDetailsToJSONTyped,
 } from './PredictedStarknetTransactionStarknetTransactionTypeDetails';
-import type { SimulationStatusResult } from './SimulationStatusResult';
+import type { AmlPolicyMatchOutgoing } from './AmlPolicyMatchOutgoing';
 import {
-    SimulationStatusResultFromJSON,
-    SimulationStatusResultFromJSONTyped,
-    SimulationStatusResultToJSON,
-} from './SimulationStatusResult';
-import type { StarknetCallData } from './StarknetCallData';
+    AmlPolicyMatchOutgoingFromJSON,
+    AmlPolicyMatchOutgoingFromJSONTyped,
+    AmlPolicyMatchOutgoingToJSON,
+    AmlPolicyMatchOutgoingToJSONTyped,
+} from './AmlPolicyMatchOutgoing';
+import type { EnrichedStarknetChain } from './EnrichedStarknetChain';
 import {
-    StarknetCallDataFromJSON,
-    StarknetCallDataFromJSONTyped,
-    StarknetCallDataToJSON,
-} from './StarknetCallData';
-import type { StarknetSuggestedFees } from './StarknetSuggestedFees';
-import {
-    StarknetSuggestedFeesFromJSON,
-    StarknetSuggestedFeesFromJSONTyped,
-    StarknetSuggestedFeesToJSON,
-} from './StarknetSuggestedFees';
-import type { StarknetTransactionResult } from './StarknetTransactionResult';
-import {
-    StarknetTransactionResultFromJSON,
-    StarknetTransactionResultFromJSONTyped,
-    StarknetTransactionResultToJSON,
-} from './StarknetTransactionResult';
+    EnrichedStarknetChainFromJSON,
+    EnrichedStarknetChainFromJSONTyped,
+    EnrichedStarknetChainToJSON,
+    EnrichedStarknetChainToJSONTyped,
+} from './EnrichedStarknetChain';
 import type { TransactionRisk } from './TransactionRisk';
 import {
     TransactionRiskFromJSON,
     TransactionRiskFromJSONTyped,
     TransactionRiskToJSON,
+    TransactionRiskToJSONTyped,
 } from './TransactionRisk';
+import type { EnrichedStarknetAddress } from './EnrichedStarknetAddress';
+import {
+    EnrichedStarknetAddressFromJSON,
+    EnrichedStarknetAddressFromJSONTyped,
+    EnrichedStarknetAddressToJSON,
+    EnrichedStarknetAddressToJSONTyped,
+} from './EnrichedStarknetAddress';
+import type { ApprovalRequest } from './ApprovalRequest';
+import {
+    ApprovalRequestFromJSON,
+    ApprovalRequestFromJSONTyped,
+    ApprovalRequestToJSON,
+    ApprovalRequestToJSONTyped,
+} from './ApprovalRequest';
+import type { SimulationStatusResult } from './SimulationStatusResult';
+import {
+    SimulationStatusResultFromJSON,
+    SimulationStatusResultFromJSONTyped,
+    SimulationStatusResultToJSON,
+    SimulationStatusResultToJSONTyped,
+} from './SimulationStatusResult';
+import type { PolicyMatch } from './PolicyMatch';
+import {
+    PolicyMatchFromJSON,
+    PolicyMatchFromJSONTyped,
+    PolicyMatchToJSON,
+    PolicyMatchToJSONTyped,
+} from './PolicyMatch';
+import type { StarknetTransactionResult } from './StarknetTransactionResult';
+import {
+    StarknetTransactionResultFromJSON,
+    StarknetTransactionResultFromJSONTyped,
+    StarknetTransactionResultToJSON,
+    StarknetTransactionResultToJSONTyped,
+} from './StarknetTransactionResult';
+import type { AmlResults } from './AmlResults';
+import {
+    AmlResultsFromJSON,
+    AmlResultsFromJSONTyped,
+    AmlResultsToJSON,
+    AmlResultsToJSONTyped,
+} from './AmlResults';
+import type { StarknetSuggestedFees } from './StarknetSuggestedFees';
+import {
+    StarknetSuggestedFeesFromJSON,
+    StarknetSuggestedFeesFromJSONTyped,
+    StarknetSuggestedFeesToJSON,
+    StarknetSuggestedFeesToJSONTyped,
+} from './StarknetSuggestedFees';
+import type { StarknetCallData } from './StarknetCallData';
+import {
+    StarknetCallDataFromJSON,
+    StarknetCallDataFromJSONTyped,
+    StarknetCallDataToJSON,
+    StarknetCallDataToJSONTyped,
+} from './StarknetCallData';
 
 /**
  * 
@@ -80,6 +104,12 @@ import {
  * @interface PredictedStarknetTransaction
  */
 export interface PredictedStarknetTransaction {
+    /**
+     * 
+     * @type {AmlPolicyMatchOutgoing}
+     * @memberof PredictedStarknetTransaction
+     */
+    amlPolicyMatch?: AmlPolicyMatchOutgoing;
     /**
      * 
      * @type {PolicyMatch}
@@ -98,6 +128,18 @@ export interface PredictedStarknetTransaction {
      * @memberof PredictedStarknetTransaction
      */
     risks: Array<TransactionRisk>;
+    /**
+     * 
+     * @type {string}
+     * @memberof PredictedStarknetTransaction
+     */
+    note?: string;
+    /**
+     * 
+     * @type {AmlResults}
+     * @memberof PredictedStarknetTransaction
+     */
+    amlResults?: AmlResults;
     /**
      * 
      * @type {string}
@@ -161,20 +203,18 @@ export type PredictedStarknetTransactionTypeEnum = typeof PredictedStarknetTrans
 /**
  * Check if a given object implements the PredictedStarknetTransaction interface.
  */
-export function instanceOfPredictedStarknetTransaction(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "policyMatch" in value;
-    isInstance = isInstance && "risks" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "expectedResult" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "simulationStatusResult" in value;
-    isInstance = isInstance && "starknetTransactionTypeDetails" in value;
-    isInstance = isInstance && "suggestedFees" in value;
-    isInstance = isInstance && "sender" in value;
-    isInstance = isInstance && "callData" in value;
-
-    return isInstance;
+export function instanceOfPredictedStarknetTransaction(value: object): value is PredictedStarknetTransaction {
+    if (!('policyMatch' in value) || value['policyMatch'] === undefined) return false;
+    if (!('risks' in value) || value['risks'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('expectedResult' in value) || value['expectedResult'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('simulationStatusResult' in value) || value['simulationStatusResult'] === undefined) return false;
+    if (!('starknetTransactionTypeDetails' in value) || value['starknetTransactionTypeDetails'] === undefined) return false;
+    if (!('suggestedFees' in value) || value['suggestedFees'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    if (!('callData' in value) || value['callData'] === undefined) return false;
+    return true;
 }
 
 export function PredictedStarknetTransactionFromJSON(json: any): PredictedStarknetTransaction {
@@ -182,14 +222,17 @@ export function PredictedStarknetTransactionFromJSON(json: any): PredictedStarkn
 }
 
 export function PredictedStarknetTransactionFromJSONTyped(json: any, ignoreDiscriminator: boolean): PredictedStarknetTransaction {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
+        'amlPolicyMatch': json['aml_policy_match'] == null ? undefined : AmlPolicyMatchOutgoingFromJSON(json['aml_policy_match']),
         'policyMatch': PolicyMatchFromJSON(json['policy_match']),
-        'approvalRequest': !exists(json, 'approval_request') ? undefined : ApprovalRequestFromJSON(json['approval_request']),
+        'approvalRequest': json['approval_request'] == null ? undefined : ApprovalRequestFromJSON(json['approval_request']),
         'risks': ((json['risks'] as Array<any>).map(TransactionRiskFromJSON)),
+        'note': json['note'] == null ? undefined : json['note'],
+        'amlResults': json['aml_results'] == null ? undefined : AmlResultsFromJSON(json['aml_results']),
         'type': json['type'],
         'expectedResult': StarknetTransactionResultFromJSON(json['expected_result']),
         'chain': EnrichedStarknetChainFromJSON(json['chain']),
@@ -201,26 +244,31 @@ export function PredictedStarknetTransactionFromJSONTyped(json: any, ignoreDiscr
     };
 }
 
-export function PredictedStarknetTransactionToJSON(value?: PredictedStarknetTransaction | null): any {
-    if (value === undefined) {
-        return undefined;
+export function PredictedStarknetTransactionToJSON(json: any): PredictedStarknetTransaction {
+    return PredictedStarknetTransactionToJSONTyped(json, false);
+}
+
+export function PredictedStarknetTransactionToJSONTyped(value?: PredictedStarknetTransaction | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'policy_match': PolicyMatchToJSON(value.policyMatch),
-        'approval_request': ApprovalRequestToJSON(value.approvalRequest),
-        'risks': ((value.risks as Array<any>).map(TransactionRiskToJSON)),
-        'type': value.type,
-        'expected_result': StarknetTransactionResultToJSON(value.expectedResult),
-        'chain': EnrichedStarknetChainToJSON(value.chain),
-        'simulation_status_result': SimulationStatusResultToJSON(value.simulationStatusResult),
-        'starknet_transaction_type_details': PredictedStarknetTransactionStarknetTransactionTypeDetailsToJSON(value.starknetTransactionTypeDetails),
-        'suggested_fees': StarknetSuggestedFeesToJSON(value.suggestedFees),
-        'sender': EnrichedStarknetAddressToJSON(value.sender),
-        'call_data': ((value.callData as Array<any>).map(StarknetCallDataToJSON)),
+        'aml_policy_match': AmlPolicyMatchOutgoingToJSON(value['amlPolicyMatch']),
+        'policy_match': PolicyMatchToJSON(value['policyMatch']),
+        'approval_request': ApprovalRequestToJSON(value['approvalRequest']),
+        'risks': ((value['risks'] as Array<any>).map(TransactionRiskToJSON)),
+        'note': value['note'],
+        'aml_results': AmlResultsToJSON(value['amlResults']),
+        'type': value['type'],
+        'expected_result': StarknetTransactionResultToJSON(value['expectedResult']),
+        'chain': EnrichedStarknetChainToJSON(value['chain']),
+        'simulation_status_result': SimulationStatusResultToJSON(value['simulationStatusResult']),
+        'starknet_transaction_type_details': PredictedStarknetTransactionStarknetTransactionTypeDetailsToJSON(value['starknetTransactionTypeDetails']),
+        'suggested_fees': StarknetSuggestedFeesToJSON(value['suggestedFees']),
+        'sender': EnrichedStarknetAddressToJSON(value['sender']),
+        'call_data': ((value['callData'] as Array<any>).map(StarknetCallDataToJSON)),
     };
 }
 

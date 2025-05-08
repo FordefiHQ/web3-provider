@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { ValidationErrorDetailLocInner } from './ValidationErrorDetailLocInner';
 import {
     ValidationErrorDetailLocInnerFromJSON,
     ValidationErrorDetailLocInnerFromJSONTyped,
     ValidationErrorDetailLocInnerToJSON,
+    ValidationErrorDetailLocInnerToJSONTyped,
 } from './ValidationErrorDetailLocInner';
 
 /**
@@ -49,13 +50,11 @@ export interface ValidationErrorDetail {
 /**
  * Check if a given object implements the ValidationErrorDetail interface.
  */
-export function instanceOfValidationErrorDetail(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "loc" in value;
-    isInstance = isInstance && "msg" in value;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfValidationErrorDetail(value: object): value is ValidationErrorDetail {
+    if (!('loc' in value) || value['loc'] === undefined) return false;
+    if (!('msg' in value) || value['msg'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function ValidationErrorDetailFromJSON(json: any): ValidationErrorDetail {
@@ -63,7 +62,7 @@ export function ValidationErrorDetailFromJSON(json: any): ValidationErrorDetail 
 }
 
 export function ValidationErrorDetailFromJSONTyped(json: any, ignoreDiscriminator: boolean): ValidationErrorDetail {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -74,18 +73,20 @@ export function ValidationErrorDetailFromJSONTyped(json: any, ignoreDiscriminato
     };
 }
 
-export function ValidationErrorDetailToJSON(value?: ValidationErrorDetail | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ValidationErrorDetailToJSON(json: any): ValidationErrorDetail {
+    return ValidationErrorDetailToJSONTyped(json, false);
+}
+
+export function ValidationErrorDetailToJSONTyped(value?: ValidationErrorDetail | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'loc': ((value.loc as Array<any>).map(ValidationErrorDetailLocInnerToJSON)),
-        'msg': value.msg,
-        'type': value.type,
+        'loc': ((value['loc'] as Array<any>).map(ValidationErrorDetailLocInnerToJSON)),
+        'msg': value['msg'],
+        'type': value['type'],
     };
 }
 

@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
+import type { BatchSolanaTransactionRequestDetails } from './BatchSolanaTransactionRequestDetails';
 import {
-    BatchSolanaTransactionRequestDetails,
     instanceOfBatchSolanaTransactionRequestDetails,
     BatchSolanaTransactionRequestDetailsFromJSON,
     BatchSolanaTransactionRequestDetailsFromJSONTyped,
@@ -32,27 +32,28 @@ export function PredictBatchSolanaTransactionRequestDetailsFromJSON(json: any): 
 }
 
 export function PredictBatchSolanaTransactionRequestDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): PredictBatchSolanaTransactionRequestDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'solana_raw_transaction':
-            return {...BatchSolanaTransactionRequestDetailsFromJSONTyped(json, true), type: 'solana_raw_transaction'};
+            return Object.assign({}, BatchSolanaTransactionRequestDetailsFromJSONTyped(json, true), { type: 'solana_raw_transaction' } as const);
         default:
             throw new Error(`No variant of PredictBatchSolanaTransactionRequestDetails exists with 'type=${json['type']}'`);
     }
 }
 
-export function PredictBatchSolanaTransactionRequestDetailsToJSON(value?: PredictBatchSolanaTransactionRequestDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function PredictBatchSolanaTransactionRequestDetailsToJSON(json: any): any {
+    return PredictBatchSolanaTransactionRequestDetailsToJSONTyped(json, false);
+}
+
+export function PredictBatchSolanaTransactionRequestDetailsToJSONTyped(value?: PredictBatchSolanaTransactionRequestDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'solana_raw_transaction':
-            return BatchSolanaTransactionRequestDetailsToJSON(value);
+            return Object.assign({}, BatchSolanaTransactionRequestDetailsToJSON(value), { type: 'solana_raw_transaction' } as const);
         default:
             throw new Error(`No variant of PredictBatchSolanaTransactionRequestDetails exists with 'type=${value['type']}'`);
     }

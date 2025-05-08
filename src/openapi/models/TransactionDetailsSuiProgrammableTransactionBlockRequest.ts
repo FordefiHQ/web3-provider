@@ -12,31 +12,35 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { SuiChainUniqueId } from './SuiChainUniqueId';
-import {
-    SuiChainUniqueIdFromJSON,
-    SuiChainUniqueIdFromJSONTyped,
-    SuiChainUniqueIdToJSON,
-} from './SuiChainUniqueId';
+import { mapValues } from '../runtime';
 import type { SuiCommand } from './SuiCommand';
 import {
     SuiCommandFromJSON,
     SuiCommandFromJSONTyped,
     SuiCommandToJSON,
+    SuiCommandToJSONTyped,
 } from './SuiCommand';
-import type { SuiGasConfig } from './SuiGasConfig';
+import type { SuiChainUniqueId } from './SuiChainUniqueId';
 import {
-    SuiGasConfigFromJSON,
-    SuiGasConfigFromJSONTyped,
-    SuiGasConfigToJSON,
-} from './SuiGasConfig';
+    SuiChainUniqueIdFromJSON,
+    SuiChainUniqueIdFromJSONTyped,
+    SuiChainUniqueIdToJSON,
+    SuiChainUniqueIdToJSONTyped,
+} from './SuiChainUniqueId';
 import type { SuiInput } from './SuiInput';
 import {
     SuiInputFromJSON,
     SuiInputFromJSONTyped,
     SuiInputToJSON,
+    SuiInputToJSONTyped,
 } from './SuiInput';
+import type { SuiGasConfig } from './SuiGasConfig';
+import {
+    SuiGasConfigFromJSON,
+    SuiGasConfigFromJSONTyped,
+    SuiGasConfigToJSON,
+    SuiGasConfigToJSONTyped,
+} from './SuiGasConfig';
 
 /**
  * 
@@ -73,7 +77,7 @@ export interface TransactionDetailsSuiProgrammableTransactionBlockRequest {
      * @type {SuiGasConfig}
      * @memberof TransactionDetailsSuiProgrammableTransactionBlockRequest
      */
-    gasConfig: SuiGasConfig;
+    gasConfig?: SuiGasConfig;
     /**
      * 
      * @type {Array<SuiInput>}
@@ -101,15 +105,12 @@ export type TransactionDetailsSuiProgrammableTransactionBlockRequestTypeEnum = t
 /**
  * Check if a given object implements the TransactionDetailsSuiProgrammableTransactionBlockRequest interface.
  */
-export function instanceOfTransactionDetailsSuiProgrammableTransactionBlockRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "gasConfig" in value;
-    isInstance = isInstance && "inputs" in value;
-    isInstance = isInstance && "commands" in value;
-
-    return isInstance;
+export function instanceOfTransactionDetailsSuiProgrammableTransactionBlockRequest(value: object): value is TransactionDetailsSuiProgrammableTransactionBlockRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('inputs' in value) || value['inputs'] === undefined) return false;
+    if (!('commands' in value) || value['commands'] === undefined) return false;
+    return true;
 }
 
 export function TransactionDetailsSuiProgrammableTransactionBlockRequestFromJSON(json: any): TransactionDetailsSuiProgrammableTransactionBlockRequest {
@@ -117,37 +118,39 @@ export function TransactionDetailsSuiProgrammableTransactionBlockRequestFromJSON
 }
 
 export function TransactionDetailsSuiProgrammableTransactionBlockRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): TransactionDetailsSuiProgrammableTransactionBlockRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
-        'failOnPredictionFailure': !exists(json, 'fail_on_prediction_failure') ? undefined : json['fail_on_prediction_failure'],
-        'skipSimulation': !exists(json, 'skip_simulation') ? undefined : json['skip_simulation'],
+        'failOnPredictionFailure': json['fail_on_prediction_failure'] == null ? undefined : json['fail_on_prediction_failure'],
+        'skipSimulation': json['skip_simulation'] == null ? undefined : json['skip_simulation'],
         'chain': SuiChainUniqueIdFromJSON(json['chain']),
-        'gasConfig': SuiGasConfigFromJSON(json['gas_config']),
+        'gasConfig': json['gas_config'] == null ? undefined : SuiGasConfigFromJSON(json['gas_config']),
         'inputs': ((json['inputs'] as Array<any>).map(SuiInputFromJSON)),
         'commands': ((json['commands'] as Array<any>).map(SuiCommandFromJSON)),
     };
 }
 
-export function TransactionDetailsSuiProgrammableTransactionBlockRequestToJSON(value?: TransactionDetailsSuiProgrammableTransactionBlockRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TransactionDetailsSuiProgrammableTransactionBlockRequestToJSON(json: any): TransactionDetailsSuiProgrammableTransactionBlockRequest {
+    return TransactionDetailsSuiProgrammableTransactionBlockRequestToJSONTyped(json, false);
+}
+
+export function TransactionDetailsSuiProgrammableTransactionBlockRequestToJSONTyped(value?: TransactionDetailsSuiProgrammableTransactionBlockRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'fail_on_prediction_failure': value.failOnPredictionFailure,
-        'skip_simulation': value.skipSimulation,
-        'chain': SuiChainUniqueIdToJSON(value.chain),
-        'gas_config': SuiGasConfigToJSON(value.gasConfig),
-        'inputs': ((value.inputs as Array<any>).map(SuiInputToJSON)),
-        'commands': ((value.commands as Array<any>).map(SuiCommandToJSON)),
+        'type': value['type'],
+        'fail_on_prediction_failure': value['failOnPredictionFailure'],
+        'skip_simulation': value['skipSimulation'],
+        'chain': SuiChainUniqueIdToJSON(value['chain']),
+        'gas_config': SuiGasConfigToJSON(value['gasConfig']),
+        'inputs': ((value['inputs'] as Array<any>).map(SuiInputToJSON)),
+        'commands': ((value['commands'] as Array<any>).map(SuiCommandToJSON)),
     };
 }
 

@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { CreateStarknetTransactionRequestDetails } from './CreateStarknetTransactionRequestDetails';
 import {
     CreateStarknetTransactionRequestDetailsFromJSON,
     CreateStarknetTransactionRequestDetailsFromJSONTyped,
     CreateStarknetTransactionRequestDetailsToJSON,
+    CreateStarknetTransactionRequestDetailsToJSONTyped,
 } from './CreateStarknetTransactionRequestDetails';
 
 /**
@@ -32,6 +33,12 @@ export interface PredictStarknetTransactionRequest {
      * @memberof PredictStarknetTransactionRequest
      */
     vaultId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PredictStarknetTransactionRequest
+     */
+    note?: string;
     /**
      * 
      * @type {string}
@@ -59,13 +66,11 @@ export type PredictStarknetTransactionRequestTypeEnum = typeof PredictStarknetTr
 /**
  * Check if a given object implements the PredictStarknetTransactionRequest interface.
  */
-export function instanceOfPredictStarknetTransactionRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "vaultId" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "details" in value;
-
-    return isInstance;
+export function instanceOfPredictStarknetTransactionRequest(value: object): value is PredictStarknetTransactionRequest {
+    if (!('vaultId' in value) || value['vaultId'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    return true;
 }
 
 export function PredictStarknetTransactionRequestFromJSON(json: any): PredictStarknetTransactionRequest {
@@ -73,29 +78,33 @@ export function PredictStarknetTransactionRequestFromJSON(json: any): PredictSta
 }
 
 export function PredictStarknetTransactionRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): PredictStarknetTransactionRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'vaultId': json['vault_id'],
+        'note': json['note'] == null ? undefined : json['note'],
         'type': json['type'],
         'details': CreateStarknetTransactionRequestDetailsFromJSON(json['details']),
     };
 }
 
-export function PredictStarknetTransactionRequestToJSON(value?: PredictStarknetTransactionRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function PredictStarknetTransactionRequestToJSON(json: any): PredictStarknetTransactionRequest {
+    return PredictStarknetTransactionRequestToJSONTyped(json, false);
+}
+
+export function PredictStarknetTransactionRequestToJSONTyped(value?: PredictStarknetTransactionRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'vault_id': value.vaultId,
-        'type': value.type,
-        'details': CreateStarknetTransactionRequestDetailsToJSON(value.details),
+        'vault_id': value['vaultId'],
+        'note': value['note'],
+        'type': value['type'],
+        'details': CreateStarknetTransactionRequestDetailsToJSON(value['details']),
     };
 }
 

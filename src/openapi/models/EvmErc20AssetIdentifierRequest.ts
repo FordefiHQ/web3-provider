@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EvmAddressRequest } from './EvmAddressRequest';
 import {
     EvmAddressRequestFromJSON,
     EvmAddressRequestFromJSONTyped,
     EvmAddressRequestToJSON,
+    EvmAddressRequestToJSONTyped,
 } from './EvmAddressRequest';
 
 /**
@@ -53,12 +54,10 @@ export type EvmErc20AssetIdentifierRequestTypeEnum = typeof EvmErc20AssetIdentif
 /**
  * Check if a given object implements the EvmErc20AssetIdentifierRequest interface.
  */
-export function instanceOfEvmErc20AssetIdentifierRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "token" in value;
-
-    return isInstance;
+export function instanceOfEvmErc20AssetIdentifierRequest(value: object): value is EvmErc20AssetIdentifierRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('token' in value) || value['token'] === undefined) return false;
+    return true;
 }
 
 export function EvmErc20AssetIdentifierRequestFromJSON(json: any): EvmErc20AssetIdentifierRequest {
@@ -66,7 +65,7 @@ export function EvmErc20AssetIdentifierRequestFromJSON(json: any): EvmErc20Asset
 }
 
 export function EvmErc20AssetIdentifierRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmErc20AssetIdentifierRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function EvmErc20AssetIdentifierRequestFromJSONTyped(json: any, ignoreDis
     };
 }
 
-export function EvmErc20AssetIdentifierRequestToJSON(value?: EvmErc20AssetIdentifierRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EvmErc20AssetIdentifierRequestToJSON(json: any): EvmErc20AssetIdentifierRequest {
+    return EvmErc20AssetIdentifierRequestToJSONTyped(json, false);
+}
+
+export function EvmErc20AssetIdentifierRequestToJSONTyped(value?: EvmErc20AssetIdentifierRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'token': EvmAddressRequestToJSON(value.token),
+        'type': value['type'],
+        'token': EvmAddressRequestToJSON(value['token']),
     };
 }
 

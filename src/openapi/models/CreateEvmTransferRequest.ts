@@ -12,42 +12,41 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { CreateAptosTransferRequestValue } from './CreateAptosTransferRequestValue';
+import {
+    CreateAptosTransferRequestValueFromJSON,
+    CreateAptosTransferRequestValueFromJSONTyped,
+    CreateAptosTransferRequestValueToJSON,
+    CreateAptosTransferRequestValueToJSONTyped,
+} from './CreateAptosTransferRequestValue';
 import type { CreateEvmRawTransactionRequestGas } from './CreateEvmRawTransactionRequestGas';
 import {
     CreateEvmRawTransactionRequestGasFromJSON,
     CreateEvmRawTransactionRequestGasFromJSONTyped,
     CreateEvmRawTransactionRequestGasToJSON,
+    CreateEvmRawTransactionRequestGasToJSONTyped,
 } from './CreateEvmRawTransactionRequestGas';
 import type { CreateEvmTransferRequestTo } from './CreateEvmTransferRequestTo';
 import {
     CreateEvmTransferRequestToFromJSON,
     CreateEvmTransferRequestToFromJSONTyped,
     CreateEvmTransferRequestToToJSON,
+    CreateEvmTransferRequestToToJSONTyped,
 } from './CreateEvmTransferRequestTo';
-import type { CreateEvmTransferRequestValue } from './CreateEvmTransferRequestValue';
-import {
-    CreateEvmTransferRequestValueFromJSON,
-    CreateEvmTransferRequestValueFromJSONTyped,
-    CreateEvmTransferRequestValueToJSON,
-} from './CreateEvmTransferRequestValue';
 import type { EvmAssetIdentifierRequest } from './EvmAssetIdentifierRequest';
 import {
     EvmAssetIdentifierRequestFromJSON,
     EvmAssetIdentifierRequestFromJSONTyped,
     EvmAssetIdentifierRequestToJSON,
+    EvmAssetIdentifierRequestToJSONTyped,
 } from './EvmAssetIdentifierRequest';
-import type { EvmChainRequest } from './EvmChainRequest';
-import {
-    EvmChainRequestFromJSON,
-    EvmChainRequestFromJSONTyped,
-    EvmChainRequestToJSON,
-} from './EvmChainRequest';
 import type { PushMode } from './PushMode';
 import {
     PushModeFromJSON,
     PushModeFromJSONTyped,
     PushModeToJSON,
+    PushModeToJSONTyped,
 } from './PushMode';
 
 /**
@@ -73,7 +72,7 @@ export interface CreateEvmTransferRequest {
      * @type {CreateEvmRawTransactionRequestGas}
      * @memberof CreateEvmTransferRequest
      */
-    gas: CreateEvmRawTransactionRequestGas;
+    gas?: CreateEvmRawTransactionRequestGas;
     /**
      * 
      * @type {boolean}
@@ -106,29 +105,16 @@ export interface CreateEvmTransferRequest {
     to: CreateEvmTransferRequestTo;
     /**
      * 
-     * @type {EvmChainRequest}
-     * @memberof CreateEvmTransferRequest
-     */
-    chain?: EvmChainRequest;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateEvmTransferRequest
-     * @deprecated
-     */
-    token?: string;
-    /**
-     * 
      * @type {EvmAssetIdentifierRequest}
      * @memberof CreateEvmTransferRequest
      */
-    assetIdentifier?: EvmAssetIdentifierRequest;
+    assetIdentifier: EvmAssetIdentifierRequest;
     /**
      * 
-     * @type {CreateEvmTransferRequestValue}
+     * @type {CreateAptosTransferRequestValue}
      * @memberof CreateEvmTransferRequest
      */
-    value: CreateEvmTransferRequestValue;
+    value: CreateAptosTransferRequestValue;
 }
 
 
@@ -144,14 +130,12 @@ export type CreateEvmTransferRequestTypeEnum = typeof CreateEvmTransferRequestTy
 /**
  * Check if a given object implements the CreateEvmTransferRequest interface.
  */
-export function instanceOfCreateEvmTransferRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "gas" in value;
-    isInstance = isInstance && "to" in value;
-    isInstance = isInstance && "value" in value;
-
-    return isInstance;
+export function instanceOfCreateEvmTransferRequest(value: object): value is CreateEvmTransferRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('to' in value) || value['to'] === undefined) return false;
+    if (!('assetIdentifier' in value) || value['assetIdentifier'] === undefined) return false;
+    if (!('value' in value) || value['value'] === undefined) return false;
+    return true;
 }
 
 export function CreateEvmTransferRequestFromJSON(json: any): CreateEvmTransferRequest {
@@ -159,47 +143,45 @@ export function CreateEvmTransferRequestFromJSON(json: any): CreateEvmTransferRe
 }
 
 export function CreateEvmTransferRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateEvmTransferRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
-        'useSecureNode': !exists(json, 'use_secure_node') ? undefined : json['use_secure_node'],
-        'gas': CreateEvmRawTransactionRequestGasFromJSON(json['gas']),
-        'failOnPredictionFailure': !exists(json, 'fail_on_prediction_failure') ? undefined : json['fail_on_prediction_failure'],
-        'skipPrediction': !exists(json, 'skip_prediction') ? undefined : json['skip_prediction'],
-        'pushMode': !exists(json, 'push_mode') ? undefined : PushModeFromJSON(json['push_mode']),
-        'funder': !exists(json, 'funder') ? undefined : json['funder'],
+        'useSecureNode': json['use_secure_node'] == null ? undefined : json['use_secure_node'],
+        'gas': json['gas'] == null ? undefined : CreateEvmRawTransactionRequestGasFromJSON(json['gas']),
+        'failOnPredictionFailure': json['fail_on_prediction_failure'] == null ? undefined : json['fail_on_prediction_failure'],
+        'skipPrediction': json['skip_prediction'] == null ? undefined : json['skip_prediction'],
+        'pushMode': json['push_mode'] == null ? undefined : PushModeFromJSON(json['push_mode']),
+        'funder': json['funder'] == null ? undefined : json['funder'],
         'to': CreateEvmTransferRequestToFromJSON(json['to']),
-        'chain': !exists(json, 'chain') ? undefined : EvmChainRequestFromJSON(json['chain']),
-        'token': !exists(json, 'token') ? undefined : json['token'],
-        'assetIdentifier': !exists(json, 'asset_identifier') ? undefined : EvmAssetIdentifierRequestFromJSON(json['asset_identifier']),
-        'value': CreateEvmTransferRequestValueFromJSON(json['value']),
+        'assetIdentifier': EvmAssetIdentifierRequestFromJSON(json['asset_identifier']),
+        'value': CreateAptosTransferRequestValueFromJSON(json['value']),
     };
 }
 
-export function CreateEvmTransferRequestToJSON(value?: CreateEvmTransferRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateEvmTransferRequestToJSON(json: any): CreateEvmTransferRequest {
+    return CreateEvmTransferRequestToJSONTyped(json, false);
+}
+
+export function CreateEvmTransferRequestToJSONTyped(value?: CreateEvmTransferRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'use_secure_node': value.useSecureNode,
-        'gas': CreateEvmRawTransactionRequestGasToJSON(value.gas),
-        'fail_on_prediction_failure': value.failOnPredictionFailure,
-        'skip_prediction': value.skipPrediction,
-        'push_mode': PushModeToJSON(value.pushMode),
-        'funder': value.funder,
-        'to': CreateEvmTransferRequestToToJSON(value.to),
-        'chain': EvmChainRequestToJSON(value.chain),
-        'token': value.token,
-        'asset_identifier': EvmAssetIdentifierRequestToJSON(value.assetIdentifier),
-        'value': CreateEvmTransferRequestValueToJSON(value.value),
+        'type': value['type'],
+        'use_secure_node': value['useSecureNode'],
+        'gas': CreateEvmRawTransactionRequestGasToJSON(value['gas']),
+        'fail_on_prediction_failure': value['failOnPredictionFailure'],
+        'skip_prediction': value['skipPrediction'],
+        'push_mode': PushModeToJSON(value['pushMode']),
+        'funder': value['funder'],
+        'to': CreateEvmTransferRequestToToJSON(value['to']),
+        'asset_identifier': EvmAssetIdentifierRequestToJSON(value['assetIdentifier']),
+        'value': CreateAptosTransferRequestValueToJSON(value['value']),
     };
 }
 

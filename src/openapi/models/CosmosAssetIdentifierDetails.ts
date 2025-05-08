@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { CosmosNativeAssetIdentifierRequest } from './CosmosNativeAssetIdentifierRequest';
 import {
-    CosmosNativeAssetIdentifierRequest,
     instanceOfCosmosNativeAssetIdentifierRequest,
     CosmosNativeAssetIdentifierRequestFromJSON,
     CosmosNativeAssetIdentifierRequestFromJSONTyped,
     CosmosNativeAssetIdentifierRequestToJSON,
 } from './CosmosNativeAssetIdentifierRequest';
+import type { CosmosTokenAssetIdentifierRequest } from './CosmosTokenAssetIdentifierRequest';
 import {
-    CosmosTokenAssetIdentifierRequest,
     instanceOfCosmosTokenAssetIdentifierRequest,
     CosmosTokenAssetIdentifierRequestFromJSON,
     CosmosTokenAssetIdentifierRequestFromJSONTyped,
@@ -39,31 +39,32 @@ export function CosmosAssetIdentifierDetailsFromJSON(json: any): CosmosAssetIden
 }
 
 export function CosmosAssetIdentifierDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosAssetIdentifierDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'native':
-            return {...CosmosNativeAssetIdentifierRequestFromJSONTyped(json, true), type: 'native'};
+            return Object.assign({}, CosmosNativeAssetIdentifierRequestFromJSONTyped(json, true), { type: 'native' } as const);
         case 'token':
-            return {...CosmosTokenAssetIdentifierRequestFromJSONTyped(json, true), type: 'token'};
+            return Object.assign({}, CosmosTokenAssetIdentifierRequestFromJSONTyped(json, true), { type: 'token' } as const);
         default:
             throw new Error(`No variant of CosmosAssetIdentifierDetails exists with 'type=${json['type']}'`);
     }
 }
 
-export function CosmosAssetIdentifierDetailsToJSON(value?: CosmosAssetIdentifierDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function CosmosAssetIdentifierDetailsToJSON(json: any): any {
+    return CosmosAssetIdentifierDetailsToJSONTyped(json, false);
+}
+
+export function CosmosAssetIdentifierDetailsToJSONTyped(value?: CosmosAssetIdentifierDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'native':
-            return CosmosNativeAssetIdentifierRequestToJSON(value);
+            return Object.assign({}, CosmosNativeAssetIdentifierRequestToJSON(value), { type: 'native' } as const);
         case 'token':
-            return CosmosTokenAssetIdentifierRequestToJSON(value);
+            return Object.assign({}, CosmosTokenAssetIdentifierRequestToJSON(value), { type: 'token' } as const);
         default:
             throw new Error(`No variant of CosmosAssetIdentifierDetails exists with 'type=${value['type']}'`);
     }

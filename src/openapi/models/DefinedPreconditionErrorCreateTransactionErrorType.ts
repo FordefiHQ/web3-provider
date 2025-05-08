@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { CreateTransactionErrorType } from './CreateTransactionErrorType';
 import {
     CreateTransactionErrorTypeFromJSON,
     CreateTransactionErrorTypeFromJSONTyped,
     CreateTransactionErrorTypeToJSON,
+    CreateTransactionErrorTypeToJSONTyped,
 } from './CreateTransactionErrorType';
 
 /**
@@ -58,15 +59,15 @@ export interface DefinedPreconditionErrorCreateTransactionErrorType {
     errorType?: CreateTransactionErrorType;
 }
 
+
+
 /**
  * Check if a given object implements the DefinedPreconditionErrorCreateTransactionErrorType interface.
  */
-export function instanceOfDefinedPreconditionErrorCreateTransactionErrorType(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "title" in value;
-    isInstance = isInstance && "detail" in value;
-
-    return isInstance;
+export function instanceOfDefinedPreconditionErrorCreateTransactionErrorType(value: object): value is DefinedPreconditionErrorCreateTransactionErrorType {
+    if (!('title' in value) || value['title'] === undefined) return false;
+    if (!('detail' in value) || value['detail'] === undefined) return false;
+    return true;
 }
 
 export function DefinedPreconditionErrorCreateTransactionErrorTypeFromJSON(json: any): DefinedPreconditionErrorCreateTransactionErrorType {
@@ -74,33 +75,35 @@ export function DefinedPreconditionErrorCreateTransactionErrorTypeFromJSON(json:
 }
 
 export function DefinedPreconditionErrorCreateTransactionErrorTypeFromJSONTyped(json: any, ignoreDiscriminator: boolean): DefinedPreconditionErrorCreateTransactionErrorType {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'title': json['title'],
         'detail': json['detail'],
-        'requestId': !exists(json, 'request_id') ? undefined : json['request_id'],
-        'systemErrorCode': !exists(json, 'system_error_code') ? undefined : json['system_error_code'],
-        'errorType': !exists(json, 'error_type') ? undefined : CreateTransactionErrorTypeFromJSON(json['error_type']),
+        'requestId': json['request_id'] == null ? undefined : json['request_id'],
+        'systemErrorCode': json['system_error_code'] == null ? undefined : json['system_error_code'],
+        'errorType': json['error_type'] == null ? undefined : CreateTransactionErrorTypeFromJSON(json['error_type']),
     };
 }
 
-export function DefinedPreconditionErrorCreateTransactionErrorTypeToJSON(value?: DefinedPreconditionErrorCreateTransactionErrorType | null): any {
-    if (value === undefined) {
-        return undefined;
+export function DefinedPreconditionErrorCreateTransactionErrorTypeToJSON(json: any): DefinedPreconditionErrorCreateTransactionErrorType {
+    return DefinedPreconditionErrorCreateTransactionErrorTypeToJSONTyped(json, false);
+}
+
+export function DefinedPreconditionErrorCreateTransactionErrorTypeToJSONTyped(value?: DefinedPreconditionErrorCreateTransactionErrorType | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'title': value.title,
-        'detail': value.detail,
-        'request_id': value.requestId,
-        'system_error_code': value.systemErrorCode,
-        'error_type': CreateTransactionErrorTypeToJSON(value.errorType),
+        'title': value['title'],
+        'detail': value['detail'],
+        'request_id': value['requestId'],
+        'system_error_code': value['systemErrorCode'],
+        'error_type': CreateTransactionErrorTypeToJSON(value['errorType']),
     };
 }
 

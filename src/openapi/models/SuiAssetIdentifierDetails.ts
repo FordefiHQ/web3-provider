@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { SuiCoinAssetIdentifierRequest } from './SuiCoinAssetIdentifierRequest';
 import {
-    SuiCoinAssetIdentifierRequest,
     instanceOfSuiCoinAssetIdentifierRequest,
     SuiCoinAssetIdentifierRequestFromJSON,
     SuiCoinAssetIdentifierRequestFromJSONTyped,
     SuiCoinAssetIdentifierRequestToJSON,
 } from './SuiCoinAssetIdentifierRequest';
+import type { SuiNativeAssetIdentifierRequest } from './SuiNativeAssetIdentifierRequest';
 import {
-    SuiNativeAssetIdentifierRequest,
     instanceOfSuiNativeAssetIdentifierRequest,
     SuiNativeAssetIdentifierRequestFromJSON,
     SuiNativeAssetIdentifierRequestFromJSONTyped,
@@ -39,31 +39,32 @@ export function SuiAssetIdentifierDetailsFromJSON(json: any): SuiAssetIdentifier
 }
 
 export function SuiAssetIdentifierDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiAssetIdentifierDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'coin':
-            return {...SuiCoinAssetIdentifierRequestFromJSONTyped(json, true), type: 'coin'};
+            return Object.assign({}, SuiCoinAssetIdentifierRequestFromJSONTyped(json, true), { type: 'coin' } as const);
         case 'native':
-            return {...SuiNativeAssetIdentifierRequestFromJSONTyped(json, true), type: 'native'};
+            return Object.assign({}, SuiNativeAssetIdentifierRequestFromJSONTyped(json, true), { type: 'native' } as const);
         default:
             throw new Error(`No variant of SuiAssetIdentifierDetails exists with 'type=${json['type']}'`);
     }
 }
 
-export function SuiAssetIdentifierDetailsToJSON(value?: SuiAssetIdentifierDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function SuiAssetIdentifierDetailsToJSON(json: any): any {
+    return SuiAssetIdentifierDetailsToJSONTyped(json, false);
+}
+
+export function SuiAssetIdentifierDetailsToJSONTyped(value?: SuiAssetIdentifierDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'coin':
-            return SuiCoinAssetIdentifierRequestToJSON(value);
+            return Object.assign({}, SuiCoinAssetIdentifierRequestToJSON(value), { type: 'coin' } as const);
         case 'native':
-            return SuiNativeAssetIdentifierRequestToJSON(value);
+            return Object.assign({}, SuiNativeAssetIdentifierRequestToJSON(value), { type: 'native' } as const);
         default:
             throw new Error(`No variant of SuiAssetIdentifierDetails exists with 'type=${value['type']}'`);
     }

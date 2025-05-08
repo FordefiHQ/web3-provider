@@ -23,6 +23,17 @@ export const SuiMessageType = {
 export type SuiMessageType = typeof SuiMessageType[keyof typeof SuiMessageType];
 
 
+export function instanceOfSuiMessageType(value: any): boolean {
+    for (const key in SuiMessageType) {
+        if (Object.prototype.hasOwnProperty.call(SuiMessageType, key)) {
+            if (SuiMessageType[key as keyof typeof SuiMessageType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function SuiMessageTypeFromJSON(json: any): SuiMessageType {
     return SuiMessageTypeFromJSONTyped(json, false);
 }
@@ -33,5 +44,9 @@ export function SuiMessageTypeFromJSONTyped(json: any, ignoreDiscriminator: bool
 
 export function SuiMessageTypeToJSON(value?: SuiMessageType | null): any {
     return value as any;
+}
+
+export function SuiMessageTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): SuiMessageType {
+    return value as SuiMessageType;
 }
 

@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { KeyType } from './KeyType';
 import {
     KeyTypeFromJSON,
     KeyTypeFromJSONTyped,
     KeyTypeToJSON,
+    KeyTypeToJSONTyped,
 } from './KeyType';
 
 /**
@@ -38,27 +39,33 @@ export interface KeyDerivationArgs {
      * @memberof KeyDerivationArgs
      * @deprecated
      */
-    coinType: number;
+    coinType?: number;
     /**
      * 
      * @type {number}
      * @memberof KeyDerivationArgs
      * @deprecated
      */
-    accountId: number;
+    accountId?: number;
     /**
      * 
      * @type {number}
      * @memberof KeyDerivationArgs
      * @deprecated
      */
-    addressIndex: number;
+    addressIndex?: number;
     /**
      * 
      * @type {string}
      * @memberof KeyDerivationArgs
      */
     derivationPath: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KeyDerivationArgs
+     */
+    keyId: string;
     /**
      * 
      * @type {string}
@@ -73,19 +80,17 @@ export interface KeyDerivationArgs {
     adjustScalar?: string;
 }
 
+
+
 /**
  * Check if a given object implements the KeyDerivationArgs interface.
  */
-export function instanceOfKeyDerivationArgs(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "keyType" in value;
-    isInstance = isInstance && "coinType" in value;
-    isInstance = isInstance && "accountId" in value;
-    isInstance = isInstance && "addressIndex" in value;
-    isInstance = isInstance && "derivationPath" in value;
-    isInstance = isInstance && "keysetId" in value;
-
-    return isInstance;
+export function instanceOfKeyDerivationArgs(value: object): value is KeyDerivationArgs {
+    if (!('keyType' in value) || value['keyType'] === undefined) return false;
+    if (!('derivationPath' in value) || value['derivationPath'] === undefined) return false;
+    if (!('keyId' in value) || value['keyId'] === undefined) return false;
+    if (!('keysetId' in value) || value['keysetId'] === undefined) return false;
+    return true;
 }
 
 export function KeyDerivationArgsFromJSON(json: any): KeyDerivationArgs {
@@ -93,37 +98,41 @@ export function KeyDerivationArgsFromJSON(json: any): KeyDerivationArgs {
 }
 
 export function KeyDerivationArgsFromJSONTyped(json: any, ignoreDiscriminator: boolean): KeyDerivationArgs {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'keyType': KeyTypeFromJSON(json['key_type']),
-        'coinType': json['coin_type'],
-        'accountId': json['account_id'],
-        'addressIndex': json['address_index'],
+        'coinType': json['coin_type'] == null ? undefined : json['coin_type'],
+        'accountId': json['account_id'] == null ? undefined : json['account_id'],
+        'addressIndex': json['address_index'] == null ? undefined : json['address_index'],
         'derivationPath': json['derivation_path'],
+        'keyId': json['key_id'],
         'keysetId': json['keyset_id'],
-        'adjustScalar': !exists(json, 'adjust_scalar') ? undefined : json['adjust_scalar'],
+        'adjustScalar': json['adjust_scalar'] == null ? undefined : json['adjust_scalar'],
     };
 }
 
-export function KeyDerivationArgsToJSON(value?: KeyDerivationArgs | null): any {
-    if (value === undefined) {
-        return undefined;
+export function KeyDerivationArgsToJSON(json: any): KeyDerivationArgs {
+    return KeyDerivationArgsToJSONTyped(json, false);
+}
+
+export function KeyDerivationArgsToJSONTyped(value?: KeyDerivationArgs | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'key_type': KeyTypeToJSON(value.keyType),
-        'coin_type': value.coinType,
-        'account_id': value.accountId,
-        'address_index': value.addressIndex,
-        'derivation_path': value.derivationPath,
-        'keyset_id': value.keysetId,
-        'adjust_scalar': value.adjustScalar,
+        'key_type': KeyTypeToJSON(value['keyType']),
+        'coin_type': value['coinType'],
+        'account_id': value['accountId'],
+        'address_index': value['addressIndex'],
+        'derivation_path': value['derivationPath'],
+        'key_id': value['keyId'],
+        'keyset_id': value['keysetId'],
+        'adjust_scalar': value['adjustScalar'],
     };
 }
 

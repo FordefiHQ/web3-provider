@@ -12,24 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { ApprovalDecision } from './ApprovalDecision';
-import {
-    ApprovalDecisionFromJSON,
-    ApprovalDecisionFromJSONTyped,
-    ApprovalDecisionToJSON,
-} from './ApprovalDecision';
+import { mapValues } from '../runtime';
 import type { ApprovalState } from './ApprovalState';
 import {
     ApprovalStateFromJSON,
     ApprovalStateFromJSONTyped,
     ApprovalStateToJSON,
+    ApprovalStateToJSONTyped,
 } from './ApprovalState';
 import type { RequestApproverUser } from './RequestApproverUser';
 import {
     RequestApproverUserFromJSON,
     RequestApproverUserFromJSONTyped,
     RequestApproverUserToJSON,
+    RequestApproverUserToJSONTyped,
 } from './RequestApproverUser';
 
 /**
@@ -52,10 +48,11 @@ export interface RequestApprover {
     modifiedAt: Date;
     /**
      * 
-     * @type {ApprovalDecision}
+     * @type {string}
      * @memberof RequestApprover
+     * @deprecated
      */
-    decision: ApprovalDecision;
+    decision?: string;
     /**
      * 
      * @type {ApprovalState}
@@ -64,17 +61,16 @@ export interface RequestApprover {
     state: ApprovalState;
 }
 
+
+
 /**
  * Check if a given object implements the RequestApprover interface.
  */
-export function instanceOfRequestApprover(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "user" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "decision" in value;
-    isInstance = isInstance && "state" in value;
-
-    return isInstance;
+export function instanceOfRequestApprover(value: object): value is RequestApprover {
+    if (!('user' in value) || value['user'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    return true;
 }
 
 export function RequestApproverFromJSON(json: any): RequestApprover {
@@ -82,31 +78,33 @@ export function RequestApproverFromJSON(json: any): RequestApprover {
 }
 
 export function RequestApproverFromJSONTyped(json: any, ignoreDiscriminator: boolean): RequestApprover {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'user': RequestApproverUserFromJSON(json['user']),
         'modifiedAt': (new Date(json['modified_at'])),
-        'decision': ApprovalDecisionFromJSON(json['decision']),
+        'decision': json['decision'] == null ? undefined : json['decision'],
         'state': ApprovalStateFromJSON(json['state']),
     };
 }
 
-export function RequestApproverToJSON(value?: RequestApprover | null): any {
-    if (value === undefined) {
-        return undefined;
+export function RequestApproverToJSON(json: any): RequestApprover {
+    return RequestApproverToJSONTyped(json, false);
+}
+
+export function RequestApproverToJSONTyped(value?: RequestApprover | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'user': RequestApproverUserToJSON(value.user),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'decision': ApprovalDecisionToJSON(value.decision),
-        'state': ApprovalStateToJSON(value.state),
+        'user': RequestApproverUserToJSON(value['user']),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'decision': value['decision'],
+        'state': ApprovalStateToJSON(value['state']),
     };
 }
 

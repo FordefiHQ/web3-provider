@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { StarknetChainUniqueId } from './StarknetChainUniqueId';
 import {
     StarknetChainUniqueIdFromJSON,
     StarknetChainUniqueIdFromJSONTyped,
     StarknetChainUniqueIdToJSON,
+    StarknetChainUniqueIdToJSONTyped,
 } from './StarknetChainUniqueId';
 
 /**
@@ -53,12 +54,10 @@ export type StarknetNativeAssetIdentifierRequestTypeEnum = typeof StarknetNative
 /**
  * Check if a given object implements the StarknetNativeAssetIdentifierRequest interface.
  */
-export function instanceOfStarknetNativeAssetIdentifierRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfStarknetNativeAssetIdentifierRequest(value: object): value is StarknetNativeAssetIdentifierRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function StarknetNativeAssetIdentifierRequestFromJSON(json: any): StarknetNativeAssetIdentifierRequest {
@@ -66,7 +65,7 @@ export function StarknetNativeAssetIdentifierRequestFromJSON(json: any): Starkne
 }
 
 export function StarknetNativeAssetIdentifierRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): StarknetNativeAssetIdentifierRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function StarknetNativeAssetIdentifierRequestFromJSONTyped(json: any, ign
     };
 }
 
-export function StarknetNativeAssetIdentifierRequestToJSON(value?: StarknetNativeAssetIdentifierRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function StarknetNativeAssetIdentifierRequestToJSON(json: any): StarknetNativeAssetIdentifierRequest {
+    return StarknetNativeAssetIdentifierRequestToJSONTyped(json, false);
+}
+
+export function StarknetNativeAssetIdentifierRequestToJSONTyped(value?: StarknetNativeAssetIdentifierRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'chain': StarknetChainUniqueIdToJSON(value.chain),
+        'type': value['type'],
+        'chain': StarknetChainUniqueIdToJSON(value['chain']),
     };
 }
 

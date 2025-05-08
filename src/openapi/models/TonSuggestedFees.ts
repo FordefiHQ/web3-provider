@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { TonChainUniqueId } from './TonChainUniqueId';
 import {
     TonChainUniqueIdFromJSON,
     TonChainUniqueIdFromJSONTyped,
     TonChainUniqueIdToJSON,
+    TonChainUniqueIdToJSONTyped,
 } from './TonChainUniqueId';
 
 /**
@@ -59,13 +60,11 @@ export type TonSuggestedFeesTypeEnum = typeof TonSuggestedFeesTypeEnum[keyof typ
 /**
  * Check if a given object implements the TonSuggestedFees interface.
  */
-export function instanceOfTonSuggestedFees(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chainUniqueId" in value;
-    isInstance = isInstance && "gasPrice" in value;
-
-    return isInstance;
+export function instanceOfTonSuggestedFees(value: object): value is TonSuggestedFees {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chainUniqueId' in value) || value['chainUniqueId'] === undefined) return false;
+    if (!('gasPrice' in value) || value['gasPrice'] === undefined) return false;
+    return true;
 }
 
 export function TonSuggestedFeesFromJSON(json: any): TonSuggestedFees {
@@ -73,7 +72,7 @@ export function TonSuggestedFeesFromJSON(json: any): TonSuggestedFees {
 }
 
 export function TonSuggestedFeesFromJSONTyped(json: any, ignoreDiscriminator: boolean): TonSuggestedFees {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -84,18 +83,20 @@ export function TonSuggestedFeesFromJSONTyped(json: any, ignoreDiscriminator: bo
     };
 }
 
-export function TonSuggestedFeesToJSON(value?: TonSuggestedFees | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TonSuggestedFeesToJSON(json: any): TonSuggestedFees {
+    return TonSuggestedFeesToJSONTyped(json, false);
+}
+
+export function TonSuggestedFeesToJSONTyped(value?: TonSuggestedFees | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'chain_unique_id': TonChainUniqueIdToJSON(value.chainUniqueId),
-        'gas_price': value.gasPrice,
+        'type': value['type'],
+        'chain_unique_id': TonChainUniqueIdToJSON(value['chainUniqueId']),
+        'gas_price': value['gasPrice'],
     };
 }
 

@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EvmAddress } from './EvmAddress';
 import {
     EvmAddressFromJSON,
     EvmAddressFromJSONTyped,
     EvmAddressToJSON,
+    EvmAddressToJSONTyped,
 } from './EvmAddress';
 
 /**
@@ -65,14 +66,12 @@ export type Erc1155TypeEnum = typeof Erc1155TypeEnum[keyof typeof Erc1155TypeEnu
 /**
  * Check if a given object implements the Erc1155 interface.
  */
-export function instanceOfErc1155(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "symbol" in value;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfErc1155(value: object): value is Erc1155 {
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('symbol' in value) || value['symbol'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function Erc1155FromJSON(json: any): Erc1155 {
@@ -80,7 +79,7 @@ export function Erc1155FromJSON(json: any): Erc1155 {
 }
 
 export function Erc1155FromJSONTyped(json: any, ignoreDiscriminator: boolean): Erc1155 {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -92,19 +91,21 @@ export function Erc1155FromJSONTyped(json: any, ignoreDiscriminator: boolean): E
     };
 }
 
-export function Erc1155ToJSON(value?: Erc1155 | null): any {
-    if (value === undefined) {
-        return undefined;
+export function Erc1155ToJSON(json: any): Erc1155 {
+    return Erc1155ToJSONTyped(json, false);
+}
+
+export function Erc1155ToJSONTyped(value?: Erc1155 | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'address': EvmAddressToJSON(value.address),
-        'name': value.name,
-        'symbol': value.symbol,
-        'type': value.type,
+        'address': EvmAddressToJSON(value['address']),
+        'name': value['name'],
+        'symbol': value['symbol'],
+        'type': value['type'],
     };
 }
 

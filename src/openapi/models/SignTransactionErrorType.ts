@@ -30,6 +30,17 @@ export const SignTransactionErrorType = {
 export type SignTransactionErrorType = typeof SignTransactionErrorType[keyof typeof SignTransactionErrorType];
 
 
+export function instanceOfSignTransactionErrorType(value: any): boolean {
+    for (const key in SignTransactionErrorType) {
+        if (Object.prototype.hasOwnProperty.call(SignTransactionErrorType, key)) {
+            if (SignTransactionErrorType[key as keyof typeof SignTransactionErrorType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function SignTransactionErrorTypeFromJSON(json: any): SignTransactionErrorType {
     return SignTransactionErrorTypeFromJSONTyped(json, false);
 }
@@ -40,5 +51,9 @@ export function SignTransactionErrorTypeFromJSONTyped(json: any, ignoreDiscrimin
 
 export function SignTransactionErrorTypeToJSON(value?: SignTransactionErrorType | null): any {
     return value as any;
+}
+
+export function SignTransactionErrorTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): SignTransactionErrorType {
+    return value as SignTransactionErrorType;
 }
 

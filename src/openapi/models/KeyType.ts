@@ -26,6 +26,17 @@ export const KeyType = {
 export type KeyType = typeof KeyType[keyof typeof KeyType];
 
 
+export function instanceOfKeyType(value: any): boolean {
+    for (const key in KeyType) {
+        if (Object.prototype.hasOwnProperty.call(KeyType, key)) {
+            if (KeyType[key as keyof typeof KeyType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function KeyTypeFromJSON(json: any): KeyType {
     return KeyTypeFromJSONTyped(json, false);
 }
@@ -36,5 +47,9 @@ export function KeyTypeFromJSONTyped(json: any, ignoreDiscriminator: boolean): K
 
 export function KeyTypeToJSON(value?: KeyType | null): any {
     return value as any;
+}
+
+export function KeyTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): KeyType {
+    return value as KeyType;
 }
 

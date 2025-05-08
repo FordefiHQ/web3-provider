@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -42,12 +42,10 @@ export interface SetKeyApiUserRequest {
 /**
  * Check if a given object implements the SetKeyApiUserRequest interface.
  */
-export function instanceOfSetKeyApiUserRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "publicKey" in value;
-    isInstance = isInstance && "publicKeyHmac" in value;
-
-    return isInstance;
+export function instanceOfSetKeyApiUserRequest(value: object): value is SetKeyApiUserRequest {
+    if (!('publicKey' in value) || value['publicKey'] === undefined) return false;
+    if (!('publicKeyHmac' in value) || value['publicKeyHmac'] === undefined) return false;
+    return true;
 }
 
 export function SetKeyApiUserRequestFromJSON(json: any): SetKeyApiUserRequest {
@@ -55,29 +53,31 @@ export function SetKeyApiUserRequestFromJSON(json: any): SetKeyApiUserRequest {
 }
 
 export function SetKeyApiUserRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): SetKeyApiUserRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'publicKey': json['public_key'],
         'publicKeyHmac': json['public_key_hmac'],
-        'signature': !exists(json, 'signature') ? undefined : json['signature'],
+        'signature': json['signature'] == null ? undefined : json['signature'],
     };
 }
 
-export function SetKeyApiUserRequestToJSON(value?: SetKeyApiUserRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SetKeyApiUserRequestToJSON(json: any): SetKeyApiUserRequest {
+    return SetKeyApiUserRequestToJSONTyped(json, false);
+}
+
+export function SetKeyApiUserRequestToJSONTyped(value?: SetKeyApiUserRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'public_key': value.publicKey,
-        'public_key_hmac': value.publicKeyHmac,
-        'signature': value.signature,
+        'public_key': value['publicKey'],
+        'public_key_hmac': value['publicKeyHmac'],
+        'signature': value['signature'],
     };
 }
 

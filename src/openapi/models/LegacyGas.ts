@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { GasPriorityLevel } from './GasPriorityLevel';
 import {
     GasPriorityLevelFromJSON,
     GasPriorityLevelFromJSONTyped,
     GasPriorityLevelToJSON,
+    GasPriorityLevelToJSONTyped,
 } from './GasPriorityLevel';
 
 /**
@@ -65,14 +66,12 @@ export type LegacyGasTypeEnum = typeof LegacyGasTypeEnum[keyof typeof LegacyGasT
 /**
  * Check if a given object implements the LegacyGas interface.
  */
-export function instanceOfLegacyGas(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "price" in value;
-    isInstance = isInstance && "priority" in value;
-    isInstance = isInstance && "limit" in value;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfLegacyGas(value: object): value is LegacyGas {
+    if (!('price' in value) || value['price'] === undefined) return false;
+    if (!('priority' in value) || value['priority'] === undefined) return false;
+    if (!('limit' in value) || value['limit'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function LegacyGasFromJSON(json: any): LegacyGas {
@@ -80,7 +79,7 @@ export function LegacyGasFromJSON(json: any): LegacyGas {
 }
 
 export function LegacyGasFromJSONTyped(json: any, ignoreDiscriminator: boolean): LegacyGas {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -92,19 +91,21 @@ export function LegacyGasFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     };
 }
 
-export function LegacyGasToJSON(value?: LegacyGas | null): any {
-    if (value === undefined) {
-        return undefined;
+export function LegacyGasToJSON(json: any): LegacyGas {
+    return LegacyGasToJSONTyped(json, false);
+}
+
+export function LegacyGasToJSONTyped(value?: LegacyGas | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'price': value.price,
-        'priority': GasPriorityLevelToJSON(value.priority),
-        'limit': value.limit,
-        'type': value.type,
+        'price': value['price'],
+        'priority': GasPriorityLevelToJSON(value['priority']),
+        'limit': value['limit'],
+        'type': value['type'],
     };
 }
 

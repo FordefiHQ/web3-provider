@@ -19,10 +19,22 @@
  */
 export const EvmMessageType = {
     personalMessageType: 'personal_message_type',
-    typedMessageType: 'typed_message_type'
+    typedMessageType: 'typed_message_type',
+    typedMessageTypeV1: 'typed_message_type_v1'
 } as const;
 export type EvmMessageType = typeof EvmMessageType[keyof typeof EvmMessageType];
 
+
+export function instanceOfEvmMessageType(value: any): boolean {
+    for (const key in EvmMessageType) {
+        if (Object.prototype.hasOwnProperty.call(EvmMessageType, key)) {
+            if (EvmMessageType[key as keyof typeof EvmMessageType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 export function EvmMessageTypeFromJSON(json: any): EvmMessageType {
     return EvmMessageTypeFromJSONTyped(json, false);
@@ -34,5 +46,9 @@ export function EvmMessageTypeFromJSONTyped(json: any, ignoreDiscriminator: bool
 
 export function EvmMessageTypeToJSON(value?: EvmMessageType | null): any {
     return value as any;
+}
+
+export function EvmMessageTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): EvmMessageType {
+    return value as EvmMessageType;
 }
 

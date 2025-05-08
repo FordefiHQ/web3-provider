@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { BaseSuiPureInputValue } from './BaseSuiPureInputValue';
 import {
     BaseSuiPureInputValueFromJSON,
     BaseSuiPureInputValueFromJSONTyped,
     BaseSuiPureInputValueToJSON,
+    BaseSuiPureInputValueToJSONTyped,
 } from './BaseSuiPureInputValue';
 
 /**
@@ -37,11 +38,9 @@ export interface BaseSuiPureInput {
 /**
  * Check if a given object implements the BaseSuiPureInput interface.
  */
-export function instanceOfBaseSuiPureInput(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "value" in value;
-
-    return isInstance;
+export function instanceOfBaseSuiPureInput(value: object): value is BaseSuiPureInput {
+    if (!('value' in value) || value['value'] === undefined) return false;
+    return true;
 }
 
 export function BaseSuiPureInputFromJSON(json: any): BaseSuiPureInput {
@@ -49,7 +48,7 @@ export function BaseSuiPureInputFromJSON(json: any): BaseSuiPureInput {
 }
 
 export function BaseSuiPureInputFromJSONTyped(json: any, ignoreDiscriminator: boolean): BaseSuiPureInput {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -58,16 +57,18 @@ export function BaseSuiPureInputFromJSONTyped(json: any, ignoreDiscriminator: bo
     };
 }
 
-export function BaseSuiPureInputToJSON(value?: BaseSuiPureInput | null): any {
-    if (value === undefined) {
-        return undefined;
+export function BaseSuiPureInputToJSON(json: any): BaseSuiPureInput {
+    return BaseSuiPureInputToJSONTyped(json, false);
+}
+
+export function BaseSuiPureInputToJSONTyped(value?: BaseSuiPureInput | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'value': BaseSuiPureInputValueToJSON(value.value),
+        'value': BaseSuiPureInputValueToJSON(value['value']),
     };
 }
 

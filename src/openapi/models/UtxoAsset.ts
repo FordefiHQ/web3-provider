@@ -12,24 +12,27 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { EnrichedAssetIdentifier } from './EnrichedAssetIdentifier';
-import {
-    EnrichedAssetIdentifierFromJSON,
-    EnrichedAssetIdentifierFromJSONTyped,
-    EnrichedAssetIdentifierToJSON,
-} from './EnrichedAssetIdentifier';
+import { mapValues } from '../runtime';
 import type { Price } from './Price';
 import {
     PriceFromJSON,
     PriceFromJSONTyped,
     PriceToJSON,
+    PriceToJSONTyped,
 } from './Price';
+import type { EnrichedAssetIdentifier } from './EnrichedAssetIdentifier';
+import {
+    EnrichedAssetIdentifierFromJSON,
+    EnrichedAssetIdentifierFromJSONTyped,
+    EnrichedAssetIdentifierToJSON,
+    EnrichedAssetIdentifierToJSONTyped,
+} from './EnrichedAssetIdentifier';
 import type { UtxoNativeAsset } from './UtxoNativeAsset';
 import {
     UtxoNativeAssetFromJSON,
     UtxoNativeAssetFromJSONTyped,
     UtxoNativeAssetToJSON,
+    UtxoNativeAssetToJSONTyped,
 } from './UtxoNativeAsset';
 
 /**
@@ -120,19 +123,17 @@ export type UtxoAssetTypeEnum = typeof UtxoAssetTypeEnum[keyof typeof UtxoAssetT
 /**
  * Check if a given object implements the UtxoAsset interface.
  */
-export function instanceOfUtxoAsset(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "decimals" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "symbol" in value;
-    isInstance = isInstance && "hidden" in value;
-    isInstance = isInstance && "verified" in value;
-    isInstance = isInstance && "assetIdentifier" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "details" in value;
-
-    return isInstance;
+export function instanceOfUtxoAsset(value: object): value is UtxoAsset {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('decimals' in value) || value['decimals'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('symbol' in value) || value['symbol'] === undefined) return false;
+    if (!('hidden' in value) || value['hidden'] === undefined) return false;
+    if (!('verified' in value) || value['verified'] === undefined) return false;
+    if (!('assetIdentifier' in value) || value['assetIdentifier'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    return true;
 }
 
 export function UtxoAssetFromJSON(json: any): UtxoAsset {
@@ -140,45 +141,47 @@ export function UtxoAssetFromJSON(json: any): UtxoAsset {
 }
 
 export function UtxoAssetFromJSONTyped(json: any, ignoreDiscriminator: boolean): UtxoAsset {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'id': json['id'],
         'decimals': json['decimals'],
-        'price': !exists(json, 'price') ? undefined : PriceFromJSON(json['price']),
+        'price': json['price'] == null ? undefined : PriceFromJSON(json['price']),
         'name': json['name'],
         'symbol': json['symbol'],
         'hidden': json['hidden'],
         'verified': json['verified'],
         'assetIdentifier': EnrichedAssetIdentifierFromJSON(json['asset_identifier']),
-        'metadataUri': !exists(json, 'metadata_uri') ? undefined : json['metadata_uri'],
+        'metadataUri': json['metadata_uri'] == null ? undefined : json['metadata_uri'],
         'type': json['type'],
         'details': UtxoNativeAssetFromJSON(json['details']),
     };
 }
 
-export function UtxoAssetToJSON(value?: UtxoAsset | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UtxoAssetToJSON(json: any): UtxoAsset {
+    return UtxoAssetToJSONTyped(json, false);
+}
+
+export function UtxoAssetToJSONTyped(value?: UtxoAsset | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'decimals': value.decimals,
-        'price': PriceToJSON(value.price),
-        'name': value.name,
-        'symbol': value.symbol,
-        'hidden': value.hidden,
-        'verified': value.verified,
-        'asset_identifier': EnrichedAssetIdentifierToJSON(value.assetIdentifier),
-        'metadata_uri': value.metadataUri,
-        'type': value.type,
-        'details': UtxoNativeAssetToJSON(value.details),
+        'id': value['id'],
+        'decimals': value['decimals'],
+        'price': PriceToJSON(value['price']),
+        'name': value['name'],
+        'symbol': value['symbol'],
+        'hidden': value['hidden'],
+        'verified': value['verified'],
+        'asset_identifier': EnrichedAssetIdentifierToJSON(value['assetIdentifier']),
+        'metadata_uri': value['metadataUri'],
+        'type': value['type'],
+        'details': UtxoNativeAssetToJSON(value['details']),
     };
 }
 

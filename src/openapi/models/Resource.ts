@@ -25,6 +25,7 @@ export const Resource = {
     vault: 'vault',
     vaultAddress: 'vault_address',
     vaultGroup: 'vault_group',
+    addressGroup: 'address_group',
     transaction: 'transaction',
     batchTransaction: 'batch_transaction',
     path: 'path',
@@ -33,10 +34,27 @@ export const Resource = {
     accessToken: 'access_token',
     asset: 'asset',
     assetInfo: 'asset_info',
-    vaultDerivationPath: 'vault_derivation_path'
+    vaultDerivationPath: 'vault_derivation_path',
+    blockchain: 'blockchain',
+    export: 'export',
+    quote: 'quote',
+    importKeysRequest: 'import_keys_request',
+    vaultAddressAccount: 'vault_address_account',
+    exchangeAssetMapping: 'exchange_asset_mapping'
 } as const;
 export type Resource = typeof Resource[keyof typeof Resource];
 
+
+export function instanceOfResource(value: any): boolean {
+    for (const key in Resource) {
+        if (Object.prototype.hasOwnProperty.call(Resource, key)) {
+            if (Resource[key as keyof typeof Resource] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 export function ResourceFromJSON(json: any): Resource {
     return ResourceFromJSONTyped(json, false);
@@ -48,5 +66,9 @@ export function ResourceFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
 
 export function ResourceToJSON(value?: Resource | null): any {
     return value as any;
+}
+
+export function ResourceToJSONTyped(value: any, ignoreDiscriminator: boolean): Resource {
+    return value as Resource;
 }
 

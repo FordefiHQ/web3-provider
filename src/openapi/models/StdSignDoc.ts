@@ -12,25 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { AminoMessagesList } from './AminoMessagesList';
-import {
-    AminoMessagesListFromJSON,
-    AminoMessagesListFromJSONTyped,
-    AminoMessagesListToJSON,
-} from './AminoMessagesList';
-import type { EnrichedCosmosChain } from './EnrichedCosmosChain';
-import {
-    EnrichedCosmosChainFromJSON,
-    EnrichedCosmosChainFromJSONTyped,
-    EnrichedCosmosChainToJSON,
-} from './EnrichedCosmosChain';
+import { mapValues } from '../runtime';
 import type { StdFee } from './StdFee';
 import {
     StdFeeFromJSON,
     StdFeeFromJSONTyped,
     StdFeeToJSON,
+    StdFeeToJSONTyped,
 } from './StdFee';
+import type { EnrichedCosmosChain } from './EnrichedCosmosChain';
+import {
+    EnrichedCosmosChainFromJSON,
+    EnrichedCosmosChainFromJSONTyped,
+    EnrichedCosmosChainToJSON,
+    EnrichedCosmosChainToJSONTyped,
+} from './EnrichedCosmosChain';
+import type { AminoMessagesList } from './AminoMessagesList';
+import {
+    AminoMessagesListFromJSON,
+    AminoMessagesListFromJSONTyped,
+    AminoMessagesListToJSON,
+    AminoMessagesListToJSONTyped,
+} from './AminoMessagesList';
 
 /**
  * 
@@ -85,16 +88,14 @@ export interface StdSignDoc {
 /**
  * Check if a given object implements the StdSignDoc interface.
  */
-export function instanceOfStdSignDoc(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "accountNumber" in value;
-    isInstance = isInstance && "sequence" in value;
-    isInstance = isInstance && "fee" in value;
-    isInstance = isInstance && "messages" in value;
-    isInstance = isInstance && "memo" in value;
-
-    return isInstance;
+export function instanceOfStdSignDoc(value: object): value is StdSignDoc {
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('accountNumber' in value) || value['accountNumber'] === undefined) return false;
+    if (!('sequence' in value) || value['sequence'] === undefined) return false;
+    if (!('fee' in value) || value['fee'] === undefined) return false;
+    if (!('messages' in value) || value['messages'] === undefined) return false;
+    if (!('memo' in value) || value['memo'] === undefined) return false;
+    return true;
 }
 
 export function StdSignDocFromJSON(json: any): StdSignDoc {
@@ -102,7 +103,7 @@ export function StdSignDocFromJSON(json: any): StdSignDoc {
 }
 
 export function StdSignDocFromJSONTyped(json: any, ignoreDiscriminator: boolean): StdSignDoc {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -110,29 +111,31 @@ export function StdSignDocFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'chain': EnrichedCosmosChainFromJSON(json['chain']),
         'accountNumber': json['account_number'],
         'sequence': json['sequence'],
-        'timeoutHeight': !exists(json, 'timeout_height') ? undefined : json['timeout_height'],
+        'timeoutHeight': json['timeout_height'] == null ? undefined : json['timeout_height'],
         'fee': StdFeeFromJSON(json['fee']),
         'messages': AminoMessagesListFromJSON(json['messages']),
         'memo': json['memo'],
     };
 }
 
-export function StdSignDocToJSON(value?: StdSignDoc | null): any {
-    if (value === undefined) {
-        return undefined;
+export function StdSignDocToJSON(json: any): StdSignDoc {
+    return StdSignDocToJSONTyped(json, false);
+}
+
+export function StdSignDocToJSONTyped(value?: StdSignDoc | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain': EnrichedCosmosChainToJSON(value.chain),
-        'account_number': value.accountNumber,
-        'sequence': value.sequence,
-        'timeout_height': value.timeoutHeight,
-        'fee': StdFeeToJSON(value.fee),
-        'messages': AminoMessagesListToJSON(value.messages),
-        'memo': value.memo,
+        'chain': EnrichedCosmosChainToJSON(value['chain']),
+        'account_number': value['accountNumber'],
+        'sequence': value['sequence'],
+        'timeout_height': value['timeoutHeight'],
+        'fee': StdFeeToJSON(value['fee']),
+        'messages': AminoMessagesListToJSON(value['messages']),
+        'memo': value['memo'],
     };
 }
 

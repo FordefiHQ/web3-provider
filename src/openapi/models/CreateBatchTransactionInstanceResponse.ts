@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
+import type { SolanaTransaction } from './SolanaTransaction';
 import {
-    SolanaTransaction,
     instanceOfSolanaTransaction,
     SolanaTransactionFromJSON,
     SolanaTransactionFromJSONTyped,
@@ -32,27 +32,28 @@ export function CreateBatchTransactionInstanceResponseFromJSON(json: any): Creat
 }
 
 export function CreateBatchTransactionInstanceResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateBatchTransactionInstanceResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'solana_transaction':
-            return {...SolanaTransactionFromJSONTyped(json, true), type: 'solana_transaction'};
+            return Object.assign({}, SolanaTransactionFromJSONTyped(json, true), { type: 'solana_transaction' } as const);
         default:
             throw new Error(`No variant of CreateBatchTransactionInstanceResponse exists with 'type=${json['type']}'`);
     }
 }
 
-export function CreateBatchTransactionInstanceResponseToJSON(value?: CreateBatchTransactionInstanceResponse | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function CreateBatchTransactionInstanceResponseToJSON(json: any): any {
+    return CreateBatchTransactionInstanceResponseToJSONTyped(json, false);
+}
+
+export function CreateBatchTransactionInstanceResponseToJSONTyped(value?: CreateBatchTransactionInstanceResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'solana_transaction':
-            return SolanaTransactionToJSON(value);
+            return Object.assign({}, SolanaTransactionToJSON(value), { type: 'solana_transaction' } as const);
         default:
             throw new Error(`No variant of CreateBatchTransactionInstanceResponse exists with 'type=${value['type']}'`);
     }

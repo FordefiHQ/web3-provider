@@ -12,31 +12,35 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
+import { mapValues } from '../runtime';
+import type { PricedAsset } from './PricedAsset';
 import {
-    EnrichedEvmAddressFromJSON,
-    EnrichedEvmAddressFromJSONTyped,
-    EnrichedEvmAddressToJSON,
-} from './EnrichedEvmAddress';
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+    PricedAssetToJSONTyped,
+} from './PricedAsset';
 import type { Erc721Contract } from './Erc721Contract';
 import {
     Erc721ContractFromJSON,
     Erc721ContractFromJSONTyped,
     Erc721ContractToJSON,
+    Erc721ContractToJSONTyped,
 } from './Erc721Contract';
 import type { Price } from './Price';
 import {
     PriceFromJSON,
     PriceFromJSONTyped,
     PriceToJSON,
+    PriceToJSONTyped,
 } from './Price';
-import type { PricedAsset } from './PricedAsset';
+import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
 import {
-    PricedAssetFromJSON,
-    PricedAssetFromJSONTyped,
-    PricedAssetToJSON,
-} from './PricedAsset';
+    EnrichedEvmAddressFromJSON,
+    EnrichedEvmAddressFromJSONTyped,
+    EnrichedEvmAddressToJSON,
+    EnrichedEvmAddressToJSONTyped,
+} from './EnrichedEvmAddress';
 
 /**
  * 
@@ -102,16 +106,14 @@ export type Erc721AllowanceChangeTypeEnum = typeof Erc721AllowanceChangeTypeEnum
 /**
  * Check if a given object implements the Erc721AllowanceChange interface.
  */
-export function instanceOfErc721AllowanceChange(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "pricedAsset" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "owner" in value;
-    isInstance = isInstance && "operator" in value;
-    isInstance = isInstance && "tokenId" in value;
-    isInstance = isInstance && "tokenContract" in value;
-
-    return isInstance;
+export function instanceOfErc721AllowanceChange(value: object): value is Erc721AllowanceChange {
+    if (!('pricedAsset' in value) || value['pricedAsset'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('owner' in value) || value['owner'] === undefined) return false;
+    if (!('operator' in value) || value['operator'] === undefined) return false;
+    if (!('tokenId' in value) || value['tokenId'] === undefined) return false;
+    if (!('tokenContract' in value) || value['tokenContract'] === undefined) return false;
+    return true;
 }
 
 export function Erc721AllowanceChangeFromJSON(json: any): Erc721AllowanceChange {
@@ -119,7 +121,7 @@ export function Erc721AllowanceChangeFromJSON(json: any): Erc721AllowanceChange 
 }
 
 export function Erc721AllowanceChangeFromJSONTyped(json: any, ignoreDiscriminator: boolean): Erc721AllowanceChange {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -130,26 +132,28 @@ export function Erc721AllowanceChangeFromJSONTyped(json: any, ignoreDiscriminato
         'operator': EnrichedEvmAddressFromJSON(json['operator']),
         'tokenId': json['token_id'],
         'tokenContract': Erc721ContractFromJSON(json['token_contract']),
-        'price': !exists(json, 'price') ? undefined : PriceFromJSON(json['price']),
+        'price': json['price'] == null ? undefined : PriceFromJSON(json['price']),
     };
 }
 
-export function Erc721AllowanceChangeToJSON(value?: Erc721AllowanceChange | null): any {
-    if (value === undefined) {
-        return undefined;
+export function Erc721AllowanceChangeToJSON(json: any): Erc721AllowanceChange {
+    return Erc721AllowanceChangeToJSONTyped(json, false);
+}
+
+export function Erc721AllowanceChangeToJSONTyped(value?: Erc721AllowanceChange | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'priced_asset': PricedAssetToJSON(value.pricedAsset),
-        'type': value.type,
-        'owner': EnrichedEvmAddressToJSON(value.owner),
-        'operator': EnrichedEvmAddressToJSON(value.operator),
-        'token_id': value.tokenId,
-        'token_contract': Erc721ContractToJSON(value.tokenContract),
-        'price': PriceToJSON(value.price),
+        'priced_asset': PricedAssetToJSON(value['pricedAsset']),
+        'type': value['type'],
+        'owner': EnrichedEvmAddressToJSON(value['owner']),
+        'operator': EnrichedEvmAddressToJSON(value['operator']),
+        'token_id': value['tokenId'],
+        'token_contract': Erc721ContractToJSON(value['tokenContract']),
+        'price': PriceToJSON(value['price']),
     };
 }
 

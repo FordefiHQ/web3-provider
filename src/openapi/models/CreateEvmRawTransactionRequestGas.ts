@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { CustomGasRequest } from './CustomGasRequest';
 import {
-    CustomGasRequest,
     instanceOfCustomGasRequest,
     CustomGasRequestFromJSON,
     CustomGasRequestFromJSONTyped,
     CustomGasRequestToJSON,
 } from './CustomGasRequest';
+import type { GasPriorityRequest } from './GasPriorityRequest';
 import {
-    GasPriorityRequest,
     instanceOfGasPriorityRequest,
     GasPriorityRequestFromJSON,
     GasPriorityRequestFromJSONTyped,
@@ -39,31 +39,32 @@ export function CreateEvmRawTransactionRequestGasFromJSON(json: any): CreateEvmR
 }
 
 export function CreateEvmRawTransactionRequestGasFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateEvmRawTransactionRequestGas {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'custom':
-            return {...CustomGasRequestFromJSONTyped(json, true), type: 'custom'};
+            return Object.assign({}, CustomGasRequestFromJSONTyped(json, true), { type: 'custom' } as const);
         case 'priority':
-            return {...GasPriorityRequestFromJSONTyped(json, true), type: 'priority'};
+            return Object.assign({}, GasPriorityRequestFromJSONTyped(json, true), { type: 'priority' } as const);
         default:
             throw new Error(`No variant of CreateEvmRawTransactionRequestGas exists with 'type=${json['type']}'`);
     }
 }
 
-export function CreateEvmRawTransactionRequestGasToJSON(value?: CreateEvmRawTransactionRequestGas | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function CreateEvmRawTransactionRequestGasToJSON(json: any): any {
+    return CreateEvmRawTransactionRequestGasToJSONTyped(json, false);
+}
+
+export function CreateEvmRawTransactionRequestGasToJSONTyped(value?: CreateEvmRawTransactionRequestGas | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'custom':
-            return CustomGasRequestToJSON(value);
+            return Object.assign({}, CustomGasRequestToJSON(value), { type: 'custom' } as const);
         case 'priority':
-            return GasPriorityRequestToJSON(value);
+            return Object.assign({}, GasPriorityRequestToJSON(value), { type: 'priority' } as const);
         default:
             throw new Error(`No variant of CreateEvmRawTransactionRequestGas exists with 'type=${value['type']}'`);
     }

@@ -12,25 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { EnrichedCosmosChain } from './EnrichedCosmosChain';
+import {
+    EnrichedCosmosChainFromJSON,
+    EnrichedCosmosChainFromJSONTyped,
+    EnrichedCosmosChainToJSON,
+    EnrichedCosmosChainToJSONTyped,
+} from './EnrichedCosmosChain';
 import type { CosmosChainUniqueId } from './CosmosChainUniqueId';
 import {
     CosmosChainUniqueIdFromJSON,
     CosmosChainUniqueIdFromJSONTyped,
     CosmosChainUniqueIdToJSON,
+    CosmosChainUniqueIdToJSONTyped,
 } from './CosmosChainUniqueId';
 import type { CosmosKeyType } from './CosmosKeyType';
 import {
     CosmosKeyTypeFromJSON,
     CosmosKeyTypeFromJSONTyped,
     CosmosKeyTypeToJSON,
+    CosmosKeyTypeToJSONTyped,
 } from './CosmosKeyType';
-import type { EnrichedCosmosChain } from './EnrichedCosmosChain';
-import {
-    EnrichedCosmosChainFromJSON,
-    EnrichedCosmosChainFromJSONTyped,
-    EnrichedCosmosChainToJSON,
-} from './EnrichedCosmosChain';
 
 /**
  * 
@@ -70,16 +73,16 @@ export interface CosmosBechAddressEnrichedChain {
     enrichedChain: EnrichedCosmosChain;
 }
 
+
+
 /**
  * Check if a given object implements the CosmosBechAddressEnrichedChain interface.
  */
-export function instanceOfCosmosBechAddressEnrichedChain(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "enrichedChain" in value;
-
-    return isInstance;
+export function instanceOfCosmosBechAddressEnrichedChain(value: object): value is CosmosBechAddressEnrichedChain {
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('enrichedChain' in value) || value['enrichedChain'] === undefined) return false;
+    return true;
 }
 
 export function CosmosBechAddressEnrichedChainFromJSON(json: any): CosmosBechAddressEnrichedChain {
@@ -87,33 +90,35 @@ export function CosmosBechAddressEnrichedChainFromJSON(json: any): CosmosBechAdd
 }
 
 export function CosmosBechAddressEnrichedChainFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosBechAddressEnrichedChain {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'chain': CosmosChainUniqueIdFromJSON(json['chain']),
         'address': json['address'],
-        'hexRepr': !exists(json, 'hex_repr') ? undefined : json['hex_repr'],
-        'keyType': !exists(json, 'key_type') ? undefined : CosmosKeyTypeFromJSON(json['key_type']),
+        'hexRepr': json['hex_repr'] == null ? undefined : json['hex_repr'],
+        'keyType': json['key_type'] == null ? undefined : CosmosKeyTypeFromJSON(json['key_type']),
         'enrichedChain': EnrichedCosmosChainFromJSON(json['enriched_chain']),
     };
 }
 
-export function CosmosBechAddressEnrichedChainToJSON(value?: CosmosBechAddressEnrichedChain | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosBechAddressEnrichedChainToJSON(json: any): CosmosBechAddressEnrichedChain {
+    return CosmosBechAddressEnrichedChainToJSONTyped(json, false);
+}
+
+export function CosmosBechAddressEnrichedChainToJSONTyped(value?: CosmosBechAddressEnrichedChain | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain': CosmosChainUniqueIdToJSON(value.chain),
-        'address': value.address,
-        'hex_repr': value.hexRepr,
-        'key_type': CosmosKeyTypeToJSON(value.keyType),
-        'enriched_chain': EnrichedCosmosChainToJSON(value.enrichedChain),
+        'chain': CosmosChainUniqueIdToJSON(value['chain']),
+        'address': value['address'],
+        'hex_repr': value['hexRepr'],
+        'key_type': CosmosKeyTypeToJSON(value['keyType']),
+        'enriched_chain': EnrichedCosmosChainToJSON(value['enrichedChain']),
     };
 }
 

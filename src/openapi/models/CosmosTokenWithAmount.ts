@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { CosmosToken } from './CosmosToken';
 import {
     CosmosTokenFromJSON,
     CosmosTokenFromJSONTyped,
     CosmosTokenToJSON,
+    CosmosTokenToJSONTyped,
 } from './CosmosToken';
 
 /**
@@ -59,13 +60,11 @@ export type CosmosTokenWithAmountTypeEnum = typeof CosmosTokenWithAmountTypeEnum
 /**
  * Check if a given object implements the CosmosTokenWithAmount interface.
  */
-export function instanceOfCosmosTokenWithAmount(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "amount" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "coin" in value;
-
-    return isInstance;
+export function instanceOfCosmosTokenWithAmount(value: object): value is CosmosTokenWithAmount {
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('coin' in value) || value['coin'] === undefined) return false;
+    return true;
 }
 
 export function CosmosTokenWithAmountFromJSON(json: any): CosmosTokenWithAmount {
@@ -73,7 +72,7 @@ export function CosmosTokenWithAmountFromJSON(json: any): CosmosTokenWithAmount 
 }
 
 export function CosmosTokenWithAmountFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosTokenWithAmount {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -84,18 +83,20 @@ export function CosmosTokenWithAmountFromJSONTyped(json: any, ignoreDiscriminato
     };
 }
 
-export function CosmosTokenWithAmountToJSON(value?: CosmosTokenWithAmount | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosTokenWithAmountToJSON(json: any): CosmosTokenWithAmount {
+    return CosmosTokenWithAmountToJSONTyped(json, false);
+}
+
+export function CosmosTokenWithAmountToJSONTyped(value?: CosmosTokenWithAmount | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'amount': value.amount,
-        'type': value.type,
-        'coin': CosmosTokenToJSON(value.coin),
+        'amount': value['amount'],
+        'type': value['type'],
+        'coin': CosmosTokenToJSON(value['coin']),
     };
 }
 

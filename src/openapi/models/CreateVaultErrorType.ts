@@ -27,6 +27,17 @@ export const CreateVaultErrorType = {
 export type CreateVaultErrorType = typeof CreateVaultErrorType[keyof typeof CreateVaultErrorType];
 
 
+export function instanceOfCreateVaultErrorType(value: any): boolean {
+    for (const key in CreateVaultErrorType) {
+        if (Object.prototype.hasOwnProperty.call(CreateVaultErrorType, key)) {
+            if (CreateVaultErrorType[key as keyof typeof CreateVaultErrorType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function CreateVaultErrorTypeFromJSON(json: any): CreateVaultErrorType {
     return CreateVaultErrorTypeFromJSONTyped(json, false);
 }
@@ -37,5 +48,9 @@ export function CreateVaultErrorTypeFromJSONTyped(json: any, ignoreDiscriminator
 
 export function CreateVaultErrorTypeToJSON(value?: CreateVaultErrorType | null): any {
     return value as any;
+}
+
+export function CreateVaultErrorTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): CreateVaultErrorType {
+    return value as CreateVaultErrorType;
 }
 

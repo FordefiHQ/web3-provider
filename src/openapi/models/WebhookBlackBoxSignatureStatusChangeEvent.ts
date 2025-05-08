@@ -12,25 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { BlackBoxSignatureState } from './BlackBoxSignatureState';
-import {
-    BlackBoxSignatureStateFromJSON,
-    BlackBoxSignatureStateFromJSONTyped,
-    BlackBoxSignatureStateToJSON,
-} from './BlackBoxSignatureState';
-import type { TransactionDirection } from './TransactionDirection';
-import {
-    TransactionDirectionFromJSON,
-    TransactionDirectionFromJSONTyped,
-    TransactionDirectionToJSON,
-} from './TransactionDirection';
+import { mapValues } from '../runtime';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
     TransactionSpamStateFromJSONTyped,
     TransactionSpamStateToJSON,
+    TransactionSpamStateToJSONTyped,
 } from './TransactionSpamState';
+import type { TransactionDirection } from './TransactionDirection';
+import {
+    TransactionDirectionFromJSON,
+    TransactionDirectionFromJSONTyped,
+    TransactionDirectionToJSON,
+    TransactionDirectionToJSONTyped,
+} from './TransactionDirection';
+import type { NonPushableTransactionState } from './NonPushableTransactionState';
+import {
+    NonPushableTransactionStateFromJSON,
+    NonPushableTransactionStateFromJSONTyped,
+    NonPushableTransactionStateToJSON,
+    NonPushableTransactionStateToJSONTyped,
+} from './NonPushableTransactionState';
 
 /**
  * 
@@ -77,10 +80,10 @@ export interface WebhookBlackBoxSignatureStatusChangeEvent {
     type: WebhookBlackBoxSignatureStatusChangeEventTypeEnum;
     /**
      * 
-     * @type {BlackBoxSignatureState}
+     * @type {NonPushableTransactionState}
      * @memberof WebhookBlackBoxSignatureStatusChangeEvent
      */
-    state: BlackBoxSignatureState;
+    state: NonPushableTransactionState;
 }
 
 
@@ -96,16 +99,14 @@ export type WebhookBlackBoxSignatureStatusChangeEventTypeEnum = typeof WebhookBl
 /**
  * Check if a given object implements the WebhookBlackBoxSignatureStatusChangeEvent interface.
  */
-export function instanceOfWebhookBlackBoxSignatureStatusChangeEvent(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "transactionId" in value;
-    isInstance = isInstance && "isManagedTransaction" in value;
-    isInstance = isInstance && "direction" in value;
-    isInstance = isInstance && "spamState" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "state" in value;
-
-    return isInstance;
+export function instanceOfWebhookBlackBoxSignatureStatusChangeEvent(value: object): value is WebhookBlackBoxSignatureStatusChangeEvent {
+    if (!('transactionId' in value) || value['transactionId'] === undefined) return false;
+    if (!('isManagedTransaction' in value) || value['isManagedTransaction'] === undefined) return false;
+    if (!('direction' in value) || value['direction'] === undefined) return false;
+    if (!('spamState' in value) || value['spamState'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    return true;
 }
 
 export function WebhookBlackBoxSignatureStatusChangeEventFromJSON(json: any): WebhookBlackBoxSignatureStatusChangeEvent {
@@ -113,7 +114,7 @@ export function WebhookBlackBoxSignatureStatusChangeEventFromJSON(json: any): We
 }
 
 export function WebhookBlackBoxSignatureStatusChangeEventFromJSONTyped(json: any, ignoreDiscriminator: boolean): WebhookBlackBoxSignatureStatusChangeEvent {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -121,29 +122,31 @@ export function WebhookBlackBoxSignatureStatusChangeEventFromJSONTyped(json: any
         'transactionId': json['transaction_id'],
         'isManagedTransaction': json['is_managed_transaction'],
         'direction': TransactionDirectionFromJSON(json['direction']),
-        'note': !exists(json, 'note') ? undefined : json['note'],
+        'note': json['note'] == null ? undefined : json['note'],
         'spamState': TransactionSpamStateFromJSON(json['spam_state']),
         'type': json['type'],
-        'state': BlackBoxSignatureStateFromJSON(json['state']),
+        'state': NonPushableTransactionStateFromJSON(json['state']),
     };
 }
 
-export function WebhookBlackBoxSignatureStatusChangeEventToJSON(value?: WebhookBlackBoxSignatureStatusChangeEvent | null): any {
-    if (value === undefined) {
-        return undefined;
+export function WebhookBlackBoxSignatureStatusChangeEventToJSON(json: any): WebhookBlackBoxSignatureStatusChangeEvent {
+    return WebhookBlackBoxSignatureStatusChangeEventToJSONTyped(json, false);
+}
+
+export function WebhookBlackBoxSignatureStatusChangeEventToJSONTyped(value?: WebhookBlackBoxSignatureStatusChangeEvent | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'transaction_id': value.transactionId,
-        'is_managed_transaction': value.isManagedTransaction,
-        'direction': TransactionDirectionToJSON(value.direction),
-        'note': value.note,
-        'spam_state': TransactionSpamStateToJSON(value.spamState),
-        'type': value.type,
-        'state': BlackBoxSignatureStateToJSON(value.state),
+        'transaction_id': value['transactionId'],
+        'is_managed_transaction': value['isManagedTransaction'],
+        'direction': TransactionDirectionToJSON(value['direction']),
+        'note': value['note'],
+        'spam_state': TransactionSpamStateToJSON(value['spamState']),
+        'type': value['type'],
+        'state': NonPushableTransactionStateToJSON(value['state']),
     };
 }
 

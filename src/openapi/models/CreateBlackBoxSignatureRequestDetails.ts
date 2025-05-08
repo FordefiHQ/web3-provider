@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { BinaryHashPayload } from './BinaryHashPayload';
 import {
-    BinaryHashPayload,
     instanceOfBinaryHashPayload,
     BinaryHashPayloadFromJSON,
     BinaryHashPayloadFromJSONTyped,
     BinaryHashPayloadToJSON,
 } from './BinaryHashPayload';
+import type { IntegerHashPayload } from './IntegerHashPayload';
 import {
-    IntegerHashPayload,
     instanceOfIntegerHashPayload,
     IntegerHashPayloadFromJSON,
     IntegerHashPayloadFromJSONTyped,
@@ -39,31 +39,32 @@ export function CreateBlackBoxSignatureRequestDetailsFromJSON(json: any): Create
 }
 
 export function CreateBlackBoxSignatureRequestDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateBlackBoxSignatureRequestDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['format']) {
         case 'hash_binary':
-            return {...BinaryHashPayloadFromJSONTyped(json, true), format: 'hash_binary'};
+            return Object.assign({}, BinaryHashPayloadFromJSONTyped(json, true), { format: 'hash_binary' } as const);
         case 'hash_integer':
-            return {...IntegerHashPayloadFromJSONTyped(json, true), format: 'hash_integer'};
+            return Object.assign({}, IntegerHashPayloadFromJSONTyped(json, true), { format: 'hash_integer' } as const);
         default:
             throw new Error(`No variant of CreateBlackBoxSignatureRequestDetails exists with 'format=${json['format']}'`);
     }
 }
 
-export function CreateBlackBoxSignatureRequestDetailsToJSON(value?: CreateBlackBoxSignatureRequestDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function CreateBlackBoxSignatureRequestDetailsToJSON(json: any): any {
+    return CreateBlackBoxSignatureRequestDetailsToJSONTyped(json, false);
+}
+
+export function CreateBlackBoxSignatureRequestDetailsToJSONTyped(value?: CreateBlackBoxSignatureRequestDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['format']) {
         case 'hash_binary':
-            return BinaryHashPayloadToJSON(value);
+            return Object.assign({}, BinaryHashPayloadToJSON(value), { format: 'hash_binary' } as const);
         case 'hash_integer':
-            return IntegerHashPayloadToJSON(value);
+            return Object.assign({}, IntegerHashPayloadToJSON(value), { format: 'hash_integer' } as const);
         default:
             throw new Error(`No variant of CreateBlackBoxSignatureRequestDetails exists with 'format=${value['format']}'`);
     }

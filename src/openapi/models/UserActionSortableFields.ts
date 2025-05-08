@@ -24,6 +24,17 @@ export const UserActionSortableFields = {
 export type UserActionSortableFields = typeof UserActionSortableFields[keyof typeof UserActionSortableFields];
 
 
+export function instanceOfUserActionSortableFields(value: any): boolean {
+    for (const key in UserActionSortableFields) {
+        if (Object.prototype.hasOwnProperty.call(UserActionSortableFields, key)) {
+            if (UserActionSortableFields[key as keyof typeof UserActionSortableFields] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function UserActionSortableFieldsFromJSON(json: any): UserActionSortableFields {
     return UserActionSortableFieldsFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function UserActionSortableFieldsFromJSONTyped(json: any, ignoreDiscrimin
 
 export function UserActionSortableFieldsToJSON(value?: UserActionSortableFields | null): any {
     return value as any;
+}
+
+export function UserActionSortableFieldsToJSONTyped(value: any, ignoreDiscriminator: boolean): UserActionSortableFields {
+    return value as UserActionSortableFields;
 }
 

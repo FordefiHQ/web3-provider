@@ -12,58 +12,59 @@
  * Do not edit the class manually.
  */
 
+import type { AptosRecipientHex } from './AptosRecipientHex';
 import {
-    AptosRecipientHex,
     instanceOfAptosRecipientHex,
     AptosRecipientHexFromJSON,
     AptosRecipientHexFromJSONTyped,
     AptosRecipientHexToJSON,
 } from './AptosRecipientHex';
+import type { RecipientVaultId } from './RecipientVaultId';
 import {
-    AptosRecipientVaultId,
-    instanceOfAptosRecipientVaultId,
-    AptosRecipientVaultIdFromJSON,
-    AptosRecipientVaultIdFromJSONTyped,
-    AptosRecipientVaultIdToJSON,
-} from './AptosRecipientVaultId';
+    instanceOfRecipientVaultId,
+    RecipientVaultIdFromJSON,
+    RecipientVaultIdFromJSONTyped,
+    RecipientVaultIdToJSON,
+} from './RecipientVaultId';
 
 /**
  * @type CreateAptosTransferRequestTo
  * 
  * @export
  */
-export type CreateAptosTransferRequestTo = { type: 'hex' } & AptosRecipientHex | { type: 'vault_id' } & AptosRecipientVaultId;
+export type CreateAptosTransferRequestTo = { type: 'hex' } & AptosRecipientHex | { type: 'vault_id' } & RecipientVaultId;
 
 export function CreateAptosTransferRequestToFromJSON(json: any): CreateAptosTransferRequestTo {
     return CreateAptosTransferRequestToFromJSONTyped(json, false);
 }
 
 export function CreateAptosTransferRequestToFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateAptosTransferRequestTo {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'hex':
-            return {...AptosRecipientHexFromJSONTyped(json, true), type: 'hex'};
+            return Object.assign({}, AptosRecipientHexFromJSONTyped(json, true), { type: 'hex' } as const);
         case 'vault_id':
-            return {...AptosRecipientVaultIdFromJSONTyped(json, true), type: 'vault_id'};
+            return Object.assign({}, RecipientVaultIdFromJSONTyped(json, true), { type: 'vault_id' } as const);
         default:
             throw new Error(`No variant of CreateAptosTransferRequestTo exists with 'type=${json['type']}'`);
     }
 }
 
-export function CreateAptosTransferRequestToToJSON(value?: CreateAptosTransferRequestTo | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function CreateAptosTransferRequestToToJSON(json: any): any {
+    return CreateAptosTransferRequestToToJSONTyped(json, false);
+}
+
+export function CreateAptosTransferRequestToToJSONTyped(value?: CreateAptosTransferRequestTo | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'hex':
-            return AptosRecipientHexToJSON(value);
+            return Object.assign({}, AptosRecipientHexToJSON(value), { type: 'hex' } as const);
         case 'vault_id':
-            return AptosRecipientVaultIdToJSON(value);
+            return Object.assign({}, RecipientVaultIdToJSON(value), { type: 'vault_id' } as const);
         default:
             throw new Error(`No variant of CreateAptosTransferRequestTo exists with 'type=${value['type']}'`);
     }

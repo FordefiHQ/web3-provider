@@ -29,6 +29,17 @@ export const EncryptedDeviceSharesUploadErrorType = {
 export type EncryptedDeviceSharesUploadErrorType = typeof EncryptedDeviceSharesUploadErrorType[keyof typeof EncryptedDeviceSharesUploadErrorType];
 
 
+export function instanceOfEncryptedDeviceSharesUploadErrorType(value: any): boolean {
+    for (const key in EncryptedDeviceSharesUploadErrorType) {
+        if (Object.prototype.hasOwnProperty.call(EncryptedDeviceSharesUploadErrorType, key)) {
+            if (EncryptedDeviceSharesUploadErrorType[key as keyof typeof EncryptedDeviceSharesUploadErrorType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function EncryptedDeviceSharesUploadErrorTypeFromJSON(json: any): EncryptedDeviceSharesUploadErrorType {
     return EncryptedDeviceSharesUploadErrorTypeFromJSONTyped(json, false);
 }
@@ -39,5 +50,9 @@ export function EncryptedDeviceSharesUploadErrorTypeFromJSONTyped(json: any, ign
 
 export function EncryptedDeviceSharesUploadErrorTypeToJSON(value?: EncryptedDeviceSharesUploadErrorType | null): any {
     return value as any;
+}
+
+export function EncryptedDeviceSharesUploadErrorTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): EncryptedDeviceSharesUploadErrorType {
+    return value as EncryptedDeviceSharesUploadErrorType;
 }
 

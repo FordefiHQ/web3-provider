@@ -26,6 +26,17 @@ export const AptosReversionState = {
 export type AptosReversionState = typeof AptosReversionState[keyof typeof AptosReversionState];
 
 
+export function instanceOfAptosReversionState(value: any): boolean {
+    for (const key in AptosReversionState) {
+        if (Object.prototype.hasOwnProperty.call(AptosReversionState, key)) {
+            if (AptosReversionState[key as keyof typeof AptosReversionState] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function AptosReversionStateFromJSON(json: any): AptosReversionState {
     return AptosReversionStateFromJSONTyped(json, false);
 }
@@ -36,5 +47,9 @@ export function AptosReversionStateFromJSONTyped(json: any, ignoreDiscriminator:
 
 export function AptosReversionStateToJSON(value?: AptosReversionState | null): any {
     return value as any;
+}
+
+export function AptosReversionStateToJSONTyped(value: any, ignoreDiscriminator: boolean): AptosReversionState {
+    return value as AptosReversionState;
 }
 

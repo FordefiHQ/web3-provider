@@ -12,37 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { ActionSigner } from './ActionSigner';
-import {
-    ActionSignerFromJSON,
-    ActionSignerFromJSONTyped,
-    ActionSignerToJSON,
-} from './ActionSigner';
-import type { BackupEmailChageState } from './BackupEmailChageState';
-import {
-    BackupEmailChageStateFromJSON,
-    BackupEmailChageStateFromJSONTyped,
-    BackupEmailChageStateToJSON,
-} from './BackupEmailChageState';
-import type { BackupPublicKey } from './BackupPublicKey';
-import {
-    BackupPublicKeyFromJSON,
-    BackupPublicKeyFromJSONTyped,
-    BackupPublicKeyToJSON,
-} from './BackupPublicKey';
+import { mapValues } from '../runtime';
 import type { BackupState } from './BackupState';
 import {
     BackupStateFromJSON,
     BackupStateFromJSONTyped,
     BackupStateToJSON,
+    BackupStateToJSONTyped,
 } from './BackupState';
+import type { BackupPublicKey } from './BackupPublicKey';
+import {
+    BackupPublicKeyFromJSON,
+    BackupPublicKeyFromJSONTyped,
+    BackupPublicKeyToJSON,
+    BackupPublicKeyToJSONTyped,
+} from './BackupPublicKey';
 import type { BackupType } from './BackupType';
 import {
     BackupTypeFromJSON,
     BackupTypeFromJSONTyped,
     BackupTypeToJSON,
+    BackupTypeToJSONTyped,
 } from './BackupType';
+import type { BackupEmailChageState } from './BackupEmailChageState';
+import {
+    BackupEmailChageStateFromJSON,
+    BackupEmailChageStateFromJSONTyped,
+    BackupEmailChageStateToJSON,
+    BackupEmailChageStateToJSONTyped,
+} from './BackupEmailChageState';
+import type { ActionSigner } from './ActionSigner';
+import {
+    ActionSignerFromJSON,
+    ActionSignerFromJSONTyped,
+    ActionSignerToJSON,
+    ActionSignerToJSONTyped,
+} from './ActionSigner';
 
 /**
  * 
@@ -100,16 +105,16 @@ export interface GetBackupInfoResponse {
     requestId?: string;
 }
 
+
+
 /**
  * Check if a given object implements the GetBackupInfoResponse interface.
  */
-export function instanceOfGetBackupInfoResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "backupAdmins" in value;
-    isInstance = isInstance && "lastSnapshotAt" in value;
-
-    return isInstance;
+export function instanceOfGetBackupInfoResponse(value: object): value is GetBackupInfoResponse {
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('backupAdmins' in value) || value['backupAdmins'] === undefined) return false;
+    if (!('lastSnapshotAt' in value) || value['lastSnapshotAt'] === undefined) return false;
+    return true;
 }
 
 export function GetBackupInfoResponseFromJSON(json: any): GetBackupInfoResponse {
@@ -117,39 +122,41 @@ export function GetBackupInfoResponseFromJSON(json: any): GetBackupInfoResponse 
 }
 
 export function GetBackupInfoResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetBackupInfoResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'state': BackupStateFromJSON(json['state']),
-        'type': !exists(json, 'type') ? undefined : BackupTypeFromJSON(json['type']),
+        'type': json['type'] == null ? undefined : BackupTypeFromJSON(json['type']),
         'backupAdmins': ((json['backup_admins'] as Array<any>).map(ActionSignerFromJSON)),
-        'backupEmail': !exists(json, 'backup_email') ? undefined : json['backup_email'],
-        'emailChangeStatus': !exists(json, 'email_change_status') ? undefined : BackupEmailChageStateFromJSON(json['email_change_status']),
+        'backupEmail': json['backup_email'] == null ? undefined : json['backup_email'],
+        'emailChangeStatus': json['email_change_status'] == null ? undefined : BackupEmailChageStateFromJSON(json['email_change_status']),
         'lastSnapshotAt': (new Date(json['last_snapshot_at'])),
-        'publicKey': !exists(json, 'public_key') ? undefined : BackupPublicKeyFromJSON(json['public_key']),
-        'requestId': !exists(json, 'request_id') ? undefined : json['request_id'],
+        'publicKey': json['public_key'] == null ? undefined : BackupPublicKeyFromJSON(json['public_key']),
+        'requestId': json['request_id'] == null ? undefined : json['request_id'],
     };
 }
 
-export function GetBackupInfoResponseToJSON(value?: GetBackupInfoResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function GetBackupInfoResponseToJSON(json: any): GetBackupInfoResponse {
+    return GetBackupInfoResponseToJSONTyped(json, false);
+}
+
+export function GetBackupInfoResponseToJSONTyped(value?: GetBackupInfoResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'state': BackupStateToJSON(value.state),
-        'type': BackupTypeToJSON(value.type),
-        'backup_admins': ((value.backupAdmins as Array<any>).map(ActionSignerToJSON)),
-        'backup_email': value.backupEmail,
-        'email_change_status': BackupEmailChageStateToJSON(value.emailChangeStatus),
-        'last_snapshot_at': (value.lastSnapshotAt.toISOString()),
-        'public_key': BackupPublicKeyToJSON(value.publicKey),
-        'request_id': value.requestId,
+        'state': BackupStateToJSON(value['state']),
+        'type': BackupTypeToJSON(value['type']),
+        'backup_admins': ((value['backupAdmins'] as Array<any>).map(ActionSignerToJSON)),
+        'backup_email': value['backupEmail'],
+        'email_change_status': BackupEmailChageStateToJSON(value['emailChangeStatus']),
+        'last_snapshot_at': ((value['lastSnapshotAt']).toISOString()),
+        'public_key': BackupPublicKeyToJSON(value['publicKey']),
+        'request_id': value['requestId'],
     };
 }
 

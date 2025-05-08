@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { CosmosNativeCoin } from './CosmosNativeCoin';
 import {
     CosmosNativeCoinFromJSON,
     CosmosNativeCoinFromJSONTyped,
     CosmosNativeCoinToJSON,
+    CosmosNativeCoinToJSONTyped,
 } from './CosmosNativeCoin';
 
 /**
@@ -59,13 +60,11 @@ export type CosmosNativeCoinWithAmountTypeEnum = typeof CosmosNativeCoinWithAmou
 /**
  * Check if a given object implements the CosmosNativeCoinWithAmount interface.
  */
-export function instanceOfCosmosNativeCoinWithAmount(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "amount" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "coin" in value;
-
-    return isInstance;
+export function instanceOfCosmosNativeCoinWithAmount(value: object): value is CosmosNativeCoinWithAmount {
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('coin' in value) || value['coin'] === undefined) return false;
+    return true;
 }
 
 export function CosmosNativeCoinWithAmountFromJSON(json: any): CosmosNativeCoinWithAmount {
@@ -73,7 +72,7 @@ export function CosmosNativeCoinWithAmountFromJSON(json: any): CosmosNativeCoinW
 }
 
 export function CosmosNativeCoinWithAmountFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosNativeCoinWithAmount {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -84,18 +83,20 @@ export function CosmosNativeCoinWithAmountFromJSONTyped(json: any, ignoreDiscrim
     };
 }
 
-export function CosmosNativeCoinWithAmountToJSON(value?: CosmosNativeCoinWithAmount | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosNativeCoinWithAmountToJSON(json: any): CosmosNativeCoinWithAmount {
+    return CosmosNativeCoinWithAmountToJSONTyped(json, false);
+}
+
+export function CosmosNativeCoinWithAmountToJSONTyped(value?: CosmosNativeCoinWithAmount | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'amount': value.amount,
-        'type': value.type,
-        'coin': CosmosNativeCoinToJSON(value.coin),
+        'amount': value['amount'],
+        'type': value['type'],
+        'coin': CosmosNativeCoinToJSON(value['coin']),
     };
 }
 

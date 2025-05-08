@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { PendingVaultGroupActionAdd } from './PendingVaultGroupActionAdd';
 import {
-    PendingVaultGroupActionAdd,
     instanceOfPendingVaultGroupActionAdd,
     PendingVaultGroupActionAddFromJSON,
     PendingVaultGroupActionAddFromJSONTyped,
     PendingVaultGroupActionAddToJSON,
 } from './PendingVaultGroupActionAdd';
+import type { PendingVaultGroupActionRemove } from './PendingVaultGroupActionRemove';
 import {
-    PendingVaultGroupActionRemove,
     instanceOfPendingVaultGroupActionRemove,
     PendingVaultGroupActionRemoveFromJSON,
     PendingVaultGroupActionRemoveFromJSONTyped,
@@ -39,31 +39,32 @@ export function AptosVaultPendingVaultGroupActionFromJSON(json: any): AptosVault
 }
 
 export function AptosVaultPendingVaultGroupActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosVaultPendingVaultGroupAction {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'add':
-            return {...PendingVaultGroupActionAddFromJSONTyped(json, true), type: 'add'};
+            return Object.assign({}, PendingVaultGroupActionAddFromJSONTyped(json, true), { type: 'add' } as const);
         case 'remove':
-            return {...PendingVaultGroupActionRemoveFromJSONTyped(json, true), type: 'remove'};
+            return Object.assign({}, PendingVaultGroupActionRemoveFromJSONTyped(json, true), { type: 'remove' } as const);
         default:
             throw new Error(`No variant of AptosVaultPendingVaultGroupAction exists with 'type=${json['type']}'`);
     }
 }
 
-export function AptosVaultPendingVaultGroupActionToJSON(value?: AptosVaultPendingVaultGroupAction | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function AptosVaultPendingVaultGroupActionToJSON(json: any): any {
+    return AptosVaultPendingVaultGroupActionToJSONTyped(json, false);
+}
+
+export function AptosVaultPendingVaultGroupActionToJSONTyped(value?: AptosVaultPendingVaultGroupAction | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'add':
-            return PendingVaultGroupActionAddToJSON(value);
+            return Object.assign({}, PendingVaultGroupActionAddToJSON(value), { type: 'add' } as const);
         case 'remove':
-            return PendingVaultGroupActionRemoveToJSON(value);
+            return Object.assign({}, PendingVaultGroupActionRemoveToJSON(value), { type: 'remove' } as const);
         default:
             throw new Error(`No variant of AptosVaultPendingVaultGroupAction exists with 'type=${value['type']}'`);
     }

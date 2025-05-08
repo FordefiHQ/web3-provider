@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type IssueApiUserAuthTokenResponseUserTypeEnum = typeof IssueApiUserAuthT
 /**
  * Check if a given object implements the IssueApiUserAuthTokenResponse interface.
  */
-export function instanceOfIssueApiUserAuthTokenResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "userType" in value;
-    isInstance = isInstance && "accessToken" in value;
-
-    return isInstance;
+export function instanceOfIssueApiUserAuthTokenResponse(value: object): value is IssueApiUserAuthTokenResponse {
+    if (!('userType' in value) || value['userType'] === undefined) return false;
+    if (!('accessToken' in value) || value['accessToken'] === undefined) return false;
+    return true;
 }
 
 export function IssueApiUserAuthTokenResponseFromJSON(json: any): IssueApiUserAuthTokenResponse {
@@ -59,7 +57,7 @@ export function IssueApiUserAuthTokenResponseFromJSON(json: any): IssueApiUserAu
 }
 
 export function IssueApiUserAuthTokenResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): IssueApiUserAuthTokenResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function IssueApiUserAuthTokenResponseFromJSONTyped(json: any, ignoreDisc
     };
 }
 
-export function IssueApiUserAuthTokenResponseToJSON(value?: IssueApiUserAuthTokenResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function IssueApiUserAuthTokenResponseToJSON(json: any): IssueApiUserAuthTokenResponse {
+    return IssueApiUserAuthTokenResponseToJSONTyped(json, false);
+}
+
+export function IssueApiUserAuthTokenResponseToJSONTyped(value?: IssueApiUserAuthTokenResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'user_type': value.userType,
-        'access_token': value.accessToken,
+        'user_type': value['userType'],
+        'access_token': value['accessToken'],
     };
 }
 

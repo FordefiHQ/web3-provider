@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { BackupPublicKey } from './BackupPublicKey';
 import {
     BackupPublicKeyFromJSON,
     BackupPublicKeyFromJSONTyped,
     BackupPublicKeyToJSON,
+    BackupPublicKeyToJSONTyped,
 } from './BackupPublicKey';
 
 /**
@@ -43,12 +44,10 @@ export interface CreatePublicKeyBackupRequest {
 /**
  * Check if a given object implements the CreatePublicKeyBackupRequest interface.
  */
-export function instanceOfCreatePublicKeyBackupRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "backupEmail" in value;
-    isInstance = isInstance && "publicKey" in value;
-
-    return isInstance;
+export function instanceOfCreatePublicKeyBackupRequest(value: object): value is CreatePublicKeyBackupRequest {
+    if (!('backupEmail' in value) || value['backupEmail'] === undefined) return false;
+    if (!('publicKey' in value) || value['publicKey'] === undefined) return false;
+    return true;
 }
 
 export function CreatePublicKeyBackupRequestFromJSON(json: any): CreatePublicKeyBackupRequest {
@@ -56,7 +55,7 @@ export function CreatePublicKeyBackupRequestFromJSON(json: any): CreatePublicKey
 }
 
 export function CreatePublicKeyBackupRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreatePublicKeyBackupRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -66,17 +65,19 @@ export function CreatePublicKeyBackupRequestFromJSONTyped(json: any, ignoreDiscr
     };
 }
 
-export function CreatePublicKeyBackupRequestToJSON(value?: CreatePublicKeyBackupRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreatePublicKeyBackupRequestToJSON(json: any): CreatePublicKeyBackupRequest {
+    return CreatePublicKeyBackupRequestToJSONTyped(json, false);
+}
+
+export function CreatePublicKeyBackupRequestToJSONTyped(value?: CreatePublicKeyBackupRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'backup_email': value.backupEmail,
-        'public_key': BackupPublicKeyToJSON(value.publicKey),
+        'backup_email': value['backupEmail'],
+        'public_key': BackupPublicKeyToJSON(value['publicKey']),
     };
 }
 

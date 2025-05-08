@@ -24,6 +24,17 @@ export const CreateEndUserErrorType = {
 export type CreateEndUserErrorType = typeof CreateEndUserErrorType[keyof typeof CreateEndUserErrorType];
 
 
+export function instanceOfCreateEndUserErrorType(value: any): boolean {
+    for (const key in CreateEndUserErrorType) {
+        if (Object.prototype.hasOwnProperty.call(CreateEndUserErrorType, key)) {
+            if (CreateEndUserErrorType[key as keyof typeof CreateEndUserErrorType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function CreateEndUserErrorTypeFromJSON(json: any): CreateEndUserErrorType {
     return CreateEndUserErrorTypeFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function CreateEndUserErrorTypeFromJSONTyped(json: any, ignoreDiscriminat
 
 export function CreateEndUserErrorTypeToJSON(value?: CreateEndUserErrorType | null): any {
     return value as any;
+}
+
+export function CreateEndUserErrorTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): CreateEndUserErrorType {
+    return value as CreateEndUserErrorType;
 }
 

@@ -23,6 +23,17 @@ export const WebhookResourceType = {
 export type WebhookResourceType = typeof WebhookResourceType[keyof typeof WebhookResourceType];
 
 
+export function instanceOfWebhookResourceType(value: any): boolean {
+    for (const key in WebhookResourceType) {
+        if (Object.prototype.hasOwnProperty.call(WebhookResourceType, key)) {
+            if (WebhookResourceType[key as keyof typeof WebhookResourceType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function WebhookResourceTypeFromJSON(json: any): WebhookResourceType {
     return WebhookResourceTypeFromJSONTyped(json, false);
 }
@@ -33,5 +44,9 @@ export function WebhookResourceTypeFromJSONTyped(json: any, ignoreDiscriminator:
 
 export function WebhookResourceTypeToJSON(value?: WebhookResourceType | null): any {
     return value as any;
+}
+
+export function WebhookResourceTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): WebhookResourceType {
+    return value as WebhookResourceType;
 }
 

@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { CompleteDeviceOnboardingErrorType } from './CompleteDeviceOnboardingErrorType';
 import {
     CompleteDeviceOnboardingErrorTypeFromJSON,
     CompleteDeviceOnboardingErrorTypeFromJSONTyped,
     CompleteDeviceOnboardingErrorTypeToJSON,
+    CompleteDeviceOnboardingErrorTypeToJSONTyped,
 } from './CompleteDeviceOnboardingErrorType';
 
 /**
@@ -58,15 +59,15 @@ export interface DefinedPreconditionErrorCompleteDeviceOnboardingErrorType {
     errorType?: CompleteDeviceOnboardingErrorType;
 }
 
+
+
 /**
  * Check if a given object implements the DefinedPreconditionErrorCompleteDeviceOnboardingErrorType interface.
  */
-export function instanceOfDefinedPreconditionErrorCompleteDeviceOnboardingErrorType(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "title" in value;
-    isInstance = isInstance && "detail" in value;
-
-    return isInstance;
+export function instanceOfDefinedPreconditionErrorCompleteDeviceOnboardingErrorType(value: object): value is DefinedPreconditionErrorCompleteDeviceOnboardingErrorType {
+    if (!('title' in value) || value['title'] === undefined) return false;
+    if (!('detail' in value) || value['detail'] === undefined) return false;
+    return true;
 }
 
 export function DefinedPreconditionErrorCompleteDeviceOnboardingErrorTypeFromJSON(json: any): DefinedPreconditionErrorCompleteDeviceOnboardingErrorType {
@@ -74,33 +75,35 @@ export function DefinedPreconditionErrorCompleteDeviceOnboardingErrorTypeFromJSO
 }
 
 export function DefinedPreconditionErrorCompleteDeviceOnboardingErrorTypeFromJSONTyped(json: any, ignoreDiscriminator: boolean): DefinedPreconditionErrorCompleteDeviceOnboardingErrorType {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'title': json['title'],
         'detail': json['detail'],
-        'requestId': !exists(json, 'request_id') ? undefined : json['request_id'],
-        'systemErrorCode': !exists(json, 'system_error_code') ? undefined : json['system_error_code'],
-        'errorType': !exists(json, 'error_type') ? undefined : CompleteDeviceOnboardingErrorTypeFromJSON(json['error_type']),
+        'requestId': json['request_id'] == null ? undefined : json['request_id'],
+        'systemErrorCode': json['system_error_code'] == null ? undefined : json['system_error_code'],
+        'errorType': json['error_type'] == null ? undefined : CompleteDeviceOnboardingErrorTypeFromJSON(json['error_type']),
     };
 }
 
-export function DefinedPreconditionErrorCompleteDeviceOnboardingErrorTypeToJSON(value?: DefinedPreconditionErrorCompleteDeviceOnboardingErrorType | null): any {
-    if (value === undefined) {
-        return undefined;
+export function DefinedPreconditionErrorCompleteDeviceOnboardingErrorTypeToJSON(json: any): DefinedPreconditionErrorCompleteDeviceOnboardingErrorType {
+    return DefinedPreconditionErrorCompleteDeviceOnboardingErrorTypeToJSONTyped(json, false);
+}
+
+export function DefinedPreconditionErrorCompleteDeviceOnboardingErrorTypeToJSONTyped(value?: DefinedPreconditionErrorCompleteDeviceOnboardingErrorType | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'title': value.title,
-        'detail': value.detail,
-        'request_id': value.requestId,
-        'system_error_code': value.systemErrorCode,
-        'error_type': CompleteDeviceOnboardingErrorTypeToJSON(value.errorType),
+        'title': value['title'],
+        'detail': value['detail'],
+        'request_id': value['requestId'],
+        'system_error_code': value['systemErrorCode'],
+        'error_type': CompleteDeviceOnboardingErrorTypeToJSON(value['errorType']),
     };
 }
 

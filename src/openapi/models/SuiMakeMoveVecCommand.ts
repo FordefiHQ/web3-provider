@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { SuiCommandArgument } from './SuiCommandArgument';
 import {
     SuiCommandArgumentFromJSON,
     SuiCommandArgumentFromJSONTyped,
     SuiCommandArgumentToJSON,
+    SuiCommandArgumentToJSONTyped,
 } from './SuiCommandArgument';
 
 /**
@@ -59,12 +60,10 @@ export type SuiMakeMoveVecCommandTypeEnum = typeof SuiMakeMoveVecCommandTypeEnum
 /**
  * Check if a given object implements the SuiMakeMoveVecCommand interface.
  */
-export function instanceOfSuiMakeMoveVecCommand(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "objects" in value;
-
-    return isInstance;
+export function instanceOfSuiMakeMoveVecCommand(value: object): value is SuiMakeMoveVecCommand {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('objects' in value) || value['objects'] === undefined) return false;
+    return true;
 }
 
 export function SuiMakeMoveVecCommandFromJSON(json: any): SuiMakeMoveVecCommand {
@@ -72,29 +71,31 @@ export function SuiMakeMoveVecCommandFromJSON(json: any): SuiMakeMoveVecCommand 
 }
 
 export function SuiMakeMoveVecCommandFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiMakeMoveVecCommand {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
-        'typeTag': !exists(json, 'type_tag') ? undefined : json['type_tag'],
+        'typeTag': json['type_tag'] == null ? undefined : json['type_tag'],
         'objects': ((json['objects'] as Array<any>).map(SuiCommandArgumentFromJSON)),
     };
 }
 
-export function SuiMakeMoveVecCommandToJSON(value?: SuiMakeMoveVecCommand | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiMakeMoveVecCommandToJSON(json: any): SuiMakeMoveVecCommand {
+    return SuiMakeMoveVecCommandToJSONTyped(json, false);
+}
+
+export function SuiMakeMoveVecCommandToJSONTyped(value?: SuiMakeMoveVecCommand | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'type_tag': value.typeTag,
-        'objects': ((value.objects as Array<any>).map(SuiCommandArgumentToJSON)),
+        'type': value['type'],
+        'type_tag': value['typeTag'],
+        'objects': ((value['objects'] as Array<any>).map(SuiCommandArgumentToJSON)),
     };
 }
 

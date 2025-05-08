@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedCosmosChain } from './EnrichedCosmosChain';
 import {
     EnrichedCosmosChainFromJSON,
     EnrichedCosmosChainFromJSONTyped,
     EnrichedCosmosChainToJSON,
+    EnrichedCosmosChainToJSONTyped,
 } from './EnrichedCosmosChain';
 
 /**
@@ -53,12 +54,10 @@ export type CosmosTokenAssetTypeEnum = typeof CosmosTokenAssetTypeEnum[keyof typ
 /**
  * Check if a given object implements the CosmosTokenAsset interface.
  */
-export function instanceOfCosmosTokenAsset(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfCosmosTokenAsset(value: object): value is CosmosTokenAsset {
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function CosmosTokenAssetFromJSON(json: any): CosmosTokenAsset {
@@ -66,7 +65,7 @@ export function CosmosTokenAssetFromJSON(json: any): CosmosTokenAsset {
 }
 
 export function CosmosTokenAssetFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosTokenAsset {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function CosmosTokenAssetFromJSONTyped(json: any, ignoreDiscriminator: bo
     };
 }
 
-export function CosmosTokenAssetToJSON(value?: CosmosTokenAsset | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosTokenAssetToJSON(json: any): CosmosTokenAsset {
+    return CosmosTokenAssetToJSONTyped(json, false);
+}
+
+export function CosmosTokenAssetToJSONTyped(value?: CosmosTokenAsset | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain': EnrichedCosmosChainToJSON(value.chain),
-        'type': value.type,
+        'chain': EnrichedCosmosChainToJSON(value['chain']),
+        'type': value['type'],
     };
 }
 

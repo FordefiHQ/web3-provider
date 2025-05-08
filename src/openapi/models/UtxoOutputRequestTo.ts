@@ -12,22 +12,22 @@
  * Do not edit the class manually.
  */
 
+import type { UtxoOutputToAddressRequest } from './UtxoOutputToAddressRequest';
 import {
-    UtxoOutputToAddressRequest,
     instanceOfUtxoOutputToAddressRequest,
     UtxoOutputToAddressRequestFromJSON,
     UtxoOutputToAddressRequestFromJSONTyped,
     UtxoOutputToAddressRequestToJSON,
 } from './UtxoOutputToAddressRequest';
+import type { UtxoOutputToVaultAddressIdRequest } from './UtxoOutputToVaultAddressIdRequest';
 import {
-    UtxoOutputToVaultAddressIdRequest,
     instanceOfUtxoOutputToVaultAddressIdRequest,
     UtxoOutputToVaultAddressIdRequestFromJSON,
     UtxoOutputToVaultAddressIdRequestFromJSONTyped,
     UtxoOutputToVaultAddressIdRequestToJSON,
 } from './UtxoOutputToVaultAddressIdRequest';
+import type { UtxoOutputToVaultIdRequest } from './UtxoOutputToVaultIdRequest';
 import {
-    UtxoOutputToVaultIdRequest,
     instanceOfUtxoOutputToVaultIdRequest,
     UtxoOutputToVaultIdRequestFromJSON,
     UtxoOutputToVaultIdRequestFromJSONTyped,
@@ -46,35 +46,36 @@ export function UtxoOutputRequestToFromJSON(json: any): UtxoOutputRequestTo {
 }
 
 export function UtxoOutputRequestToFromJSONTyped(json: any, ignoreDiscriminator: boolean): UtxoOutputRequestTo {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'address':
-            return {...UtxoOutputToAddressRequestFromJSONTyped(json, true), type: 'address'};
+            return Object.assign({}, UtxoOutputToAddressRequestFromJSONTyped(json, true), { type: 'address' } as const);
         case 'vault_address_id':
-            return {...UtxoOutputToVaultAddressIdRequestFromJSONTyped(json, true), type: 'vault_address_id'};
+            return Object.assign({}, UtxoOutputToVaultAddressIdRequestFromJSONTyped(json, true), { type: 'vault_address_id' } as const);
         case 'vault_id':
-            return {...UtxoOutputToVaultIdRequestFromJSONTyped(json, true), type: 'vault_id'};
+            return Object.assign({}, UtxoOutputToVaultIdRequestFromJSONTyped(json, true), { type: 'vault_id' } as const);
         default:
             throw new Error(`No variant of UtxoOutputRequestTo exists with 'type=${json['type']}'`);
     }
 }
 
-export function UtxoOutputRequestToToJSON(value?: UtxoOutputRequestTo | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function UtxoOutputRequestToToJSON(json: any): any {
+    return UtxoOutputRequestToToJSONTyped(json, false);
+}
+
+export function UtxoOutputRequestToToJSONTyped(value?: UtxoOutputRequestTo | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'address':
-            return UtxoOutputToAddressRequestToJSON(value);
+            return Object.assign({}, UtxoOutputToAddressRequestToJSON(value), { type: 'address' } as const);
         case 'vault_address_id':
-            return UtxoOutputToVaultAddressIdRequestToJSON(value);
+            return Object.assign({}, UtxoOutputToVaultAddressIdRequestToJSON(value), { type: 'vault_address_id' } as const);
         case 'vault_id':
-            return UtxoOutputToVaultIdRequestToJSON(value);
+            return Object.assign({}, UtxoOutputToVaultIdRequestToJSON(value), { type: 'vault_id' } as const);
         default:
             throw new Error(`No variant of UtxoOutputRequestTo exists with 'type=${value['type']}'`);
     }

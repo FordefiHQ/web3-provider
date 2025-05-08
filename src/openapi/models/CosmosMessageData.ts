@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { CosmosMessageBase64Data } from './CosmosMessageBase64Data';
 import {
-    CosmosMessageBase64Data,
     instanceOfCosmosMessageBase64Data,
     CosmosMessageBase64DataFromJSON,
     CosmosMessageBase64DataFromJSONTyped,
     CosmosMessageBase64DataToJSON,
 } from './CosmosMessageBase64Data';
+import type { CosmosMessageStrData } from './CosmosMessageStrData';
 import {
-    CosmosMessageStrData,
     instanceOfCosmosMessageStrData,
     CosmosMessageStrDataFromJSON,
     CosmosMessageStrDataFromJSONTyped,
@@ -39,31 +39,32 @@ export function CosmosMessageDataFromJSON(json: any): CosmosMessageData {
 }
 
 export function CosmosMessageDataFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosMessageData {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'base64':
-            return {...CosmosMessageBase64DataFromJSONTyped(json, true), type: 'base64'};
+            return Object.assign({}, CosmosMessageBase64DataFromJSONTyped(json, true), { type: 'base64' } as const);
         case 'string':
-            return {...CosmosMessageStrDataFromJSONTyped(json, true), type: 'string'};
+            return Object.assign({}, CosmosMessageStrDataFromJSONTyped(json, true), { type: 'string' } as const);
         default:
             throw new Error(`No variant of CosmosMessageData exists with 'type=${json['type']}'`);
     }
 }
 
-export function CosmosMessageDataToJSON(value?: CosmosMessageData | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function CosmosMessageDataToJSON(json: any): any {
+    return CosmosMessageDataToJSONTyped(json, false);
+}
+
+export function CosmosMessageDataToJSONTyped(value?: CosmosMessageData | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'base64':
-            return CosmosMessageBase64DataToJSON(value);
+            return Object.assign({}, CosmosMessageBase64DataToJSON(value), { type: 'base64' } as const);
         case 'string':
-            return CosmosMessageStrDataToJSON(value);
+            return Object.assign({}, CosmosMessageStrDataToJSON(value), { type: 'string' } as const);
         default:
             throw new Error(`No variant of CosmosMessageData exists with 'type=${value['type']}'`);
     }

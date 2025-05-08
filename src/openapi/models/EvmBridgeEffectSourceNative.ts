@@ -12,25 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
-import {
-    EnrichedEvmAddressFromJSON,
-    EnrichedEvmAddressFromJSONTyped,
-    EnrichedEvmAddressToJSON,
-} from './EnrichedEvmAddress';
-import type { Price } from './Price';
-import {
-    PriceFromJSON,
-    PriceFromJSONTyped,
-    PriceToJSON,
-} from './Price';
+import { mapValues } from '../runtime';
 import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
     PricedAssetFromJSONTyped,
     PricedAssetToJSON,
+    PricedAssetToJSONTyped,
 } from './PricedAsset';
+import type { Price } from './Price';
+import {
+    PriceFromJSON,
+    PriceFromJSONTyped,
+    PriceToJSON,
+    PriceToJSONTyped,
+} from './Price';
+import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
+import {
+    EnrichedEvmAddressFromJSON,
+    EnrichedEvmAddressFromJSONTyped,
+    EnrichedEvmAddressToJSON,
+    EnrichedEvmAddressToJSONTyped,
+} from './EnrichedEvmAddress';
 
 /**
  * 
@@ -77,13 +80,11 @@ export type EvmBridgeEffectSourceNativeTypeEnum = typeof EvmBridgeEffectSourceNa
 /**
  * Check if a given object implements the EvmBridgeEffectSourceNative interface.
  */
-export function instanceOfEvmBridgeEffectSourceNative(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "pricedAsset" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "sourceAddress" in value;
-
-    return isInstance;
+export function instanceOfEvmBridgeEffectSourceNative(value: object): value is EvmBridgeEffectSourceNative {
+    if (!('pricedAsset' in value) || value['pricedAsset'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('sourceAddress' in value) || value['sourceAddress'] === undefined) return false;
+    return true;
 }
 
 export function EvmBridgeEffectSourceNativeFromJSON(json: any): EvmBridgeEffectSourceNative {
@@ -91,7 +92,7 @@ export function EvmBridgeEffectSourceNativeFromJSON(json: any): EvmBridgeEffectS
 }
 
 export function EvmBridgeEffectSourceNativeFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmBridgeEffectSourceNative {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -99,23 +100,25 @@ export function EvmBridgeEffectSourceNativeFromJSONTyped(json: any, ignoreDiscri
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
         'type': json['type'],
         'sourceAddress': EnrichedEvmAddressFromJSON(json['source_address']),
-        'price': !exists(json, 'price') ? undefined : PriceFromJSON(json['price']),
+        'price': json['price'] == null ? undefined : PriceFromJSON(json['price']),
     };
 }
 
-export function EvmBridgeEffectSourceNativeToJSON(value?: EvmBridgeEffectSourceNative | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EvmBridgeEffectSourceNativeToJSON(json: any): EvmBridgeEffectSourceNative {
+    return EvmBridgeEffectSourceNativeToJSONTyped(json, false);
+}
+
+export function EvmBridgeEffectSourceNativeToJSONTyped(value?: EvmBridgeEffectSourceNative | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'priced_asset': PricedAssetToJSON(value.pricedAsset),
-        'type': value.type,
-        'source_address': EnrichedEvmAddressToJSON(value.sourceAddress),
-        'price': PriceToJSON(value.price),
+        'priced_asset': PricedAssetToJSON(value['pricedAsset']),
+        'type': value['type'],
+        'source_address': EnrichedEvmAddressToJSON(value['sourceAddress']),
+        'price': PriceToJSON(value['price']),
     };
 }
 

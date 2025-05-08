@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { SuiChainUniqueId } from './SuiChainUniqueId';
 import {
     SuiChainUniqueIdFromJSON,
     SuiChainUniqueIdFromJSONTyped,
     SuiChainUniqueIdToJSON,
+    SuiChainUniqueIdToJSONTyped,
 } from './SuiChainUniqueId';
 
 /**
@@ -59,13 +60,11 @@ export type SuiPersonalMessageRequestTypeEnum = typeof SuiPersonalMessageRequest
 /**
  * Check if a given object implements the SuiPersonalMessageRequest interface.
  */
-export function instanceOfSuiPersonalMessageRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "rawData" in value;
-
-    return isInstance;
+export function instanceOfSuiPersonalMessageRequest(value: object): value is SuiPersonalMessageRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('rawData' in value) || value['rawData'] === undefined) return false;
+    return true;
 }
 
 export function SuiPersonalMessageRequestFromJSON(json: any): SuiPersonalMessageRequest {
@@ -73,7 +72,7 @@ export function SuiPersonalMessageRequestFromJSON(json: any): SuiPersonalMessage
 }
 
 export function SuiPersonalMessageRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiPersonalMessageRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -84,18 +83,20 @@ export function SuiPersonalMessageRequestFromJSONTyped(json: any, ignoreDiscrimi
     };
 }
 
-export function SuiPersonalMessageRequestToJSON(value?: SuiPersonalMessageRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiPersonalMessageRequestToJSON(json: any): SuiPersonalMessageRequest {
+    return SuiPersonalMessageRequestToJSONTyped(json, false);
+}
+
+export function SuiPersonalMessageRequestToJSONTyped(value?: SuiPersonalMessageRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'chain': SuiChainUniqueIdToJSON(value.chain),
-        'raw_data': value.rawData,
+        'type': value['type'],
+        'chain': SuiChainUniqueIdToJSON(value['chain']),
+        'raw_data': value['rawData'],
     };
 }
 

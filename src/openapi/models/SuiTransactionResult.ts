@@ -12,24 +12,27 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { SuiEffects } from './SuiEffects';
 import {
     SuiEffectsFromJSON,
     SuiEffectsFromJSONTyped,
     SuiEffectsToJSON,
+    SuiEffectsToJSONTyped,
 } from './SuiEffects';
 import type { SuiGas } from './SuiGas';
 import {
     SuiGasFromJSON,
     SuiGasFromJSONTyped,
     SuiGasToJSON,
+    SuiGasToJSONTyped,
 } from './SuiGas';
 import type { SuiReversion } from './SuiReversion';
 import {
     SuiReversionFromJSON,
     SuiReversionFromJSONTyped,
     SuiReversionToJSON,
+    SuiReversionToJSONTyped,
 } from './SuiReversion';
 
 /**
@@ -67,13 +70,11 @@ export interface SuiTransactionResult {
 /**
  * Check if a given object implements the SuiTransactionResult interface.
  */
-export function instanceOfSuiTransactionResult(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "reversion" in value;
-    isInstance = isInstance && "enrichedGas" in value;
-    isInstance = isInstance && "effects" in value;
-
-    return isInstance;
+export function instanceOfSuiTransactionResult(value: object): value is SuiTransactionResult {
+    if (!('reversion' in value) || value['reversion'] === undefined) return false;
+    if (!('enrichedGas' in value) || value['enrichedGas'] === undefined) return false;
+    if (!('effects' in value) || value['effects'] === undefined) return false;
+    return true;
 }
 
 export function SuiTransactionResultFromJSON(json: any): SuiTransactionResult {
@@ -81,31 +82,33 @@ export function SuiTransactionResultFromJSON(json: any): SuiTransactionResult {
 }
 
 export function SuiTransactionResultFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiTransactionResult {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'reversion': SuiReversionFromJSON(json['reversion']),
-        'transactionError': !exists(json, 'transaction_error') ? undefined : json['transaction_error'],
+        'transactionError': json['transaction_error'] == null ? undefined : json['transaction_error'],
         'enrichedGas': SuiGasFromJSON(json['enriched_gas']),
         'effects': SuiEffectsFromJSON(json['effects']),
     };
 }
 
-export function SuiTransactionResultToJSON(value?: SuiTransactionResult | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiTransactionResultToJSON(json: any): SuiTransactionResult {
+    return SuiTransactionResultToJSONTyped(json, false);
+}
+
+export function SuiTransactionResultToJSONTyped(value?: SuiTransactionResult | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'reversion': SuiReversionToJSON(value.reversion),
-        'transaction_error': value.transactionError,
-        'enriched_gas': SuiGasToJSON(value.enrichedGas),
-        'effects': SuiEffectsToJSON(value.effects),
+        'reversion': SuiReversionToJSON(value['reversion']),
+        'transaction_error': value['transactionError'],
+        'enriched_gas': SuiGasToJSON(value['enrichedGas']),
+        'effects': SuiEffectsToJSON(value['effects']),
     };
 }
 

@@ -24,6 +24,17 @@ export const AddressBookGroupState = {
 export type AddressBookGroupState = typeof AddressBookGroupState[keyof typeof AddressBookGroupState];
 
 
+export function instanceOfAddressBookGroupState(value: any): boolean {
+    for (const key in AddressBookGroupState) {
+        if (Object.prototype.hasOwnProperty.call(AddressBookGroupState, key)) {
+            if (AddressBookGroupState[key as keyof typeof AddressBookGroupState] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function AddressBookGroupStateFromJSON(json: any): AddressBookGroupState {
     return AddressBookGroupStateFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function AddressBookGroupStateFromJSONTyped(json: any, ignoreDiscriminato
 
 export function AddressBookGroupStateToJSON(value?: AddressBookGroupState | null): any {
     return value as any;
+}
+
+export function AddressBookGroupStateToJSONTyped(value: any, ignoreDiscriminator: boolean): AddressBookGroupState {
+    return value as AddressBookGroupState;
 }
 

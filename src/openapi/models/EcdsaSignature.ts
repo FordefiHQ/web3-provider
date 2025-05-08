@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -42,13 +42,11 @@ export interface EcdsaSignature {
 /**
  * Check if a given object implements the EcdsaSignature interface.
  */
-export function instanceOfEcdsaSignature(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "r" in value;
-    isInstance = isInstance && "s" in value;
-    isInstance = isInstance && "v" in value;
-
-    return isInstance;
+export function instanceOfEcdsaSignature(value: object): value is EcdsaSignature {
+    if (!('r' in value) || value['r'] === undefined) return false;
+    if (!('s' in value) || value['s'] === undefined) return false;
+    if (!('v' in value) || value['v'] === undefined) return false;
+    return true;
 }
 
 export function EcdsaSignatureFromJSON(json: any): EcdsaSignature {
@@ -56,7 +54,7 @@ export function EcdsaSignatureFromJSON(json: any): EcdsaSignature {
 }
 
 export function EcdsaSignatureFromJSONTyped(json: any, ignoreDiscriminator: boolean): EcdsaSignature {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -67,18 +65,20 @@ export function EcdsaSignatureFromJSONTyped(json: any, ignoreDiscriminator: bool
     };
 }
 
-export function EcdsaSignatureToJSON(value?: EcdsaSignature | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EcdsaSignatureToJSON(json: any): EcdsaSignature {
+    return EcdsaSignatureToJSONTyped(json, false);
+}
+
+export function EcdsaSignatureToJSONTyped(value?: EcdsaSignature | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'r': value.r,
-        's': value.s,
-        'v': value.v,
+        'r': value['r'],
+        's': value['s'],
+        'v': value['v'],
     };
 }
 

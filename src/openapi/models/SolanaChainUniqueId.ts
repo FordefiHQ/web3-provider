@@ -19,10 +19,22 @@
  */
 export const SolanaChainUniqueId = {
     mainnet: 'solana_mainnet',
-    devnet: 'solana_devnet'
+    devnet: 'solana_devnet',
+    eclipseMainnet: 'solana_eclipse_mainnet'
 } as const;
 export type SolanaChainUniqueId = typeof SolanaChainUniqueId[keyof typeof SolanaChainUniqueId];
 
+
+export function instanceOfSolanaChainUniqueId(value: any): boolean {
+    for (const key in SolanaChainUniqueId) {
+        if (Object.prototype.hasOwnProperty.call(SolanaChainUniqueId, key)) {
+            if (SolanaChainUniqueId[key as keyof typeof SolanaChainUniqueId] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 export function SolanaChainUniqueIdFromJSON(json: any): SolanaChainUniqueId {
     return SolanaChainUniqueIdFromJSONTyped(json, false);
@@ -34,5 +46,9 @@ export function SolanaChainUniqueIdFromJSONTyped(json: any, ignoreDiscriminator:
 
 export function SolanaChainUniqueIdToJSON(value?: SolanaChainUniqueId | null): any {
     return value as any;
+}
+
+export function SolanaChainUniqueIdToJSONTyped(value: any, ignoreDiscriminator: boolean): SolanaChainUniqueId {
+    return value as SolanaChainUniqueId;
 }
 

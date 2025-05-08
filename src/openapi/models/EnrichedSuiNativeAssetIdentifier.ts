@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedSuiChain } from './EnrichedSuiChain';
 import {
     EnrichedSuiChainFromJSON,
     EnrichedSuiChainFromJSONTyped,
     EnrichedSuiChainToJSON,
+    EnrichedSuiChainToJSONTyped,
 } from './EnrichedSuiChain';
 
 /**
@@ -53,12 +54,10 @@ export type EnrichedSuiNativeAssetIdentifierTypeEnum = typeof EnrichedSuiNativeA
 /**
  * Check if a given object implements the EnrichedSuiNativeAssetIdentifier interface.
  */
-export function instanceOfEnrichedSuiNativeAssetIdentifier(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfEnrichedSuiNativeAssetIdentifier(value: object): value is EnrichedSuiNativeAssetIdentifier {
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function EnrichedSuiNativeAssetIdentifierFromJSON(json: any): EnrichedSuiNativeAssetIdentifier {
@@ -66,7 +65,7 @@ export function EnrichedSuiNativeAssetIdentifierFromJSON(json: any): EnrichedSui
 }
 
 export function EnrichedSuiNativeAssetIdentifierFromJSONTyped(json: any, ignoreDiscriminator: boolean): EnrichedSuiNativeAssetIdentifier {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function EnrichedSuiNativeAssetIdentifierFromJSONTyped(json: any, ignoreD
     };
 }
 
-export function EnrichedSuiNativeAssetIdentifierToJSON(value?: EnrichedSuiNativeAssetIdentifier | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EnrichedSuiNativeAssetIdentifierToJSON(json: any): EnrichedSuiNativeAssetIdentifier {
+    return EnrichedSuiNativeAssetIdentifierToJSONTyped(json, false);
+}
+
+export function EnrichedSuiNativeAssetIdentifierToJSONTyped(value?: EnrichedSuiNativeAssetIdentifier | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain': EnrichedSuiChainToJSON(value.chain),
-        'type': value.type,
+        'chain': EnrichedSuiChainToJSON(value['chain']),
+        'type': value['type'],
     };
 }
 

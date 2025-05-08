@@ -26,6 +26,17 @@ export const EvmTransferEffectType = {
 export type EvmTransferEffectType = typeof EvmTransferEffectType[keyof typeof EvmTransferEffectType];
 
 
+export function instanceOfEvmTransferEffectType(value: any): boolean {
+    for (const key in EvmTransferEffectType) {
+        if (Object.prototype.hasOwnProperty.call(EvmTransferEffectType, key)) {
+            if (EvmTransferEffectType[key as keyof typeof EvmTransferEffectType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function EvmTransferEffectTypeFromJSON(json: any): EvmTransferEffectType {
     return EvmTransferEffectTypeFromJSONTyped(json, false);
 }
@@ -36,5 +47,9 @@ export function EvmTransferEffectTypeFromJSONTyped(json: any, ignoreDiscriminato
 
 export function EvmTransferEffectTypeToJSON(value?: EvmTransferEffectType | null): any {
     return value as any;
+}
+
+export function EvmTransferEffectTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): EvmTransferEffectType {
+    return value as EvmTransferEffectType;
 }
 

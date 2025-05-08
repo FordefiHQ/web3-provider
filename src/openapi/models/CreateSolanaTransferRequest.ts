@@ -12,31 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { CreateSolanaTransferRequestTo } from './CreateSolanaTransferRequestTo';
 import {
     CreateSolanaTransferRequestToFromJSON,
     CreateSolanaTransferRequestToFromJSONTyped,
     CreateSolanaTransferRequestToToJSON,
+    CreateSolanaTransferRequestToToJSONTyped,
 } from './CreateSolanaTransferRequestTo';
-import type { CreateSolanaTransferRequestValue } from './CreateSolanaTransferRequestValue';
-import {
-    CreateSolanaTransferRequestValueFromJSON,
-    CreateSolanaTransferRequestValueFromJSONTyped,
-    CreateSolanaTransferRequestValueToJSON,
-} from './CreateSolanaTransferRequestValue';
-import type { PushMode } from './PushMode';
-import {
-    PushModeFromJSON,
-    PushModeFromJSONTyped,
-    PushModeToJSON,
-} from './PushMode';
 import type { SolanaAssetIdentifierRequest } from './SolanaAssetIdentifierRequest';
 import {
     SolanaAssetIdentifierRequestFromJSON,
     SolanaAssetIdentifierRequestFromJSONTyped,
     SolanaAssetIdentifierRequestToJSON,
+    SolanaAssetIdentifierRequestToJSONTyped,
 } from './SolanaAssetIdentifierRequest';
+import type { CreateAptosTransferRequestValue } from './CreateAptosTransferRequestValue';
+import {
+    CreateAptosTransferRequestValueFromJSON,
+    CreateAptosTransferRequestValueFromJSONTyped,
+    CreateAptosTransferRequestValueToJSON,
+    CreateAptosTransferRequestValueToJSONTyped,
+} from './CreateAptosTransferRequestValue';
+import type { BatchSolanaTransactionRequestDetailsFee } from './BatchSolanaTransactionRequestDetailsFee';
+import {
+    BatchSolanaTransactionRequestDetailsFeeFromJSON,
+    BatchSolanaTransactionRequestDetailsFeeFromJSONTyped,
+    BatchSolanaTransactionRequestDetailsFeeToJSON,
+    BatchSolanaTransactionRequestDetailsFeeToJSONTyped,
+} from './BatchSolanaTransactionRequestDetailsFee';
+import type { PushMode } from './PushMode';
+import {
+    PushModeFromJSON,
+    PushModeFromJSONTyped,
+    PushModeToJSON,
+    PushModeToJSONTyped,
+} from './PushMode';
 
 /**
  * 
@@ -64,6 +75,12 @@ export interface CreateSolanaTransferRequest {
     pushMode?: PushMode;
     /**
      * 
+     * @type {BatchSolanaTransactionRequestDetailsFee}
+     * @memberof CreateSolanaTransferRequest
+     */
+    fee?: BatchSolanaTransactionRequestDetailsFee;
+    /**
+     * 
      * @type {boolean}
      * @memberof CreateSolanaTransferRequest
      */
@@ -76,10 +93,10 @@ export interface CreateSolanaTransferRequest {
     to: CreateSolanaTransferRequestTo;
     /**
      * 
-     * @type {CreateSolanaTransferRequestValue}
+     * @type {CreateAptosTransferRequestValue}
      * @memberof CreateSolanaTransferRequest
      */
-    value: CreateSolanaTransferRequestValue;
+    value: CreateAptosTransferRequestValue;
     /**
      * 
      * @type {SolanaAssetIdentifierRequest}
@@ -101,14 +118,12 @@ export type CreateSolanaTransferRequestTypeEnum = typeof CreateSolanaTransferReq
 /**
  * Check if a given object implements the CreateSolanaTransferRequest interface.
  */
-export function instanceOfCreateSolanaTransferRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "to" in value;
-    isInstance = isInstance && "value" in value;
-    isInstance = isInstance && "assetIdentifier" in value;
-
-    return isInstance;
+export function instanceOfCreateSolanaTransferRequest(value: object): value is CreateSolanaTransferRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('to' in value) || value['to'] === undefined) return false;
+    if (!('value' in value) || value['value'] === undefined) return false;
+    if (!('assetIdentifier' in value) || value['assetIdentifier'] === undefined) return false;
+    return true;
 }
 
 export function CreateSolanaTransferRequestFromJSON(json: any): CreateSolanaTransferRequest {
@@ -116,37 +131,41 @@ export function CreateSolanaTransferRequestFromJSON(json: any): CreateSolanaTran
 }
 
 export function CreateSolanaTransferRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateSolanaTransferRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
-        'failOnPredictionFailure': !exists(json, 'fail_on_prediction_failure') ? undefined : json['fail_on_prediction_failure'],
-        'pushMode': !exists(json, 'push_mode') ? undefined : PushModeFromJSON(json['push_mode']),
-        'skipPrediction': !exists(json, 'skip_prediction') ? undefined : json['skip_prediction'],
+        'failOnPredictionFailure': json['fail_on_prediction_failure'] == null ? undefined : json['fail_on_prediction_failure'],
+        'pushMode': json['push_mode'] == null ? undefined : PushModeFromJSON(json['push_mode']),
+        'fee': json['fee'] == null ? undefined : BatchSolanaTransactionRequestDetailsFeeFromJSON(json['fee']),
+        'skipPrediction': json['skip_prediction'] == null ? undefined : json['skip_prediction'],
         'to': CreateSolanaTransferRequestToFromJSON(json['to']),
-        'value': CreateSolanaTransferRequestValueFromJSON(json['value']),
+        'value': CreateAptosTransferRequestValueFromJSON(json['value']),
         'assetIdentifier': SolanaAssetIdentifierRequestFromJSON(json['asset_identifier']),
     };
 }
 
-export function CreateSolanaTransferRequestToJSON(value?: CreateSolanaTransferRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateSolanaTransferRequestToJSON(json: any): CreateSolanaTransferRequest {
+    return CreateSolanaTransferRequestToJSONTyped(json, false);
+}
+
+export function CreateSolanaTransferRequestToJSONTyped(value?: CreateSolanaTransferRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'fail_on_prediction_failure': value.failOnPredictionFailure,
-        'push_mode': PushModeToJSON(value.pushMode),
-        'skip_prediction': value.skipPrediction,
-        'to': CreateSolanaTransferRequestToToJSON(value.to),
-        'value': CreateSolanaTransferRequestValueToJSON(value.value),
-        'asset_identifier': SolanaAssetIdentifierRequestToJSON(value.assetIdentifier),
+        'type': value['type'],
+        'fail_on_prediction_failure': value['failOnPredictionFailure'],
+        'push_mode': PushModeToJSON(value['pushMode']),
+        'fee': BatchSolanaTransactionRequestDetailsFeeToJSON(value['fee']),
+        'skip_prediction': value['skipPrediction'],
+        'to': CreateSolanaTransferRequestToToJSON(value['to']),
+        'value': CreateAptosTransferRequestValueToJSON(value['value']),
+        'asset_identifier': SolanaAssetIdentifierRequestToJSON(value['assetIdentifier']),
     };
 }
 

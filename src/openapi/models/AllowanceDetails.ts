@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
 import {
     EnrichedEvmAddressFromJSON,
     EnrichedEvmAddressFromJSONTyped,
     EnrichedEvmAddressToJSON,
+    EnrichedEvmAddressToJSONTyped,
 } from './EnrichedEvmAddress';
 
 /**
@@ -53,12 +54,10 @@ export type AllowanceDetailsTypeEnum = typeof AllowanceDetailsTypeEnum[keyof typ
 /**
  * Check if a given object implements the AllowanceDetails interface.
  */
-export function instanceOfAllowanceDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "spender" in value;
-
-    return isInstance;
+export function instanceOfAllowanceDetails(value: object): value is AllowanceDetails {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('spender' in value) || value['spender'] === undefined) return false;
+    return true;
 }
 
 export function AllowanceDetailsFromJSON(json: any): AllowanceDetails {
@@ -66,7 +65,7 @@ export function AllowanceDetailsFromJSON(json: any): AllowanceDetails {
 }
 
 export function AllowanceDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): AllowanceDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function AllowanceDetailsFromJSONTyped(json: any, ignoreDiscriminator: bo
     };
 }
 
-export function AllowanceDetailsToJSON(value?: AllowanceDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AllowanceDetailsToJSON(json: any): AllowanceDetails {
+    return AllowanceDetailsToJSONTyped(json, false);
+}
+
+export function AllowanceDetailsToJSONTyped(value?: AllowanceDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'spender': EnrichedEvmAddressToJSON(value.spender),
+        'type': value['type'],
+        'spender': EnrichedEvmAddressToJSON(value['spender']),
     };
 }
 

@@ -12,31 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { Erc1155Contract } from './Erc1155Contract';
+import {
+    Erc1155ContractFromJSON,
+    Erc1155ContractFromJSONTyped,
+    Erc1155ContractToJSON,
+    Erc1155ContractToJSONTyped,
+} from './Erc1155Contract';
+import type { Erc721Contract } from './Erc721Contract';
+import {
+    Erc721ContractFromJSON,
+    Erc721ContractFromJSONTyped,
+    Erc721ContractToJSON,
+    Erc721ContractToJSONTyped,
+} from './Erc721Contract';
+import type { Erc1155 } from './Erc1155';
+import {
+    Erc1155FromJSON,
+    Erc1155FromJSONTyped,
+    Erc1155ToJSON,
+    Erc1155ToJSONTyped,
+} from './Erc1155';
 import type { Dapp } from './Dapp';
 import {
     DappFromJSON,
     DappFromJSONTyped,
     DappToJSON,
+    DappToJSONTyped,
 } from './Dapp';
 import type { Erc20Contract } from './Erc20Contract';
 import {
     Erc20ContractFromJSON,
     Erc20ContractFromJSONTyped,
     Erc20ContractToJSON,
+    Erc20ContractToJSONTyped,
 } from './Erc20Contract';
-import type { Erc721 } from './Erc721';
-import {
-    Erc721FromJSON,
-    Erc721FromJSONTyped,
-    Erc721ToJSON,
-} from './Erc721';
-import type { Erc721Contract } from './Erc721Contract';
-import {
-    Erc721ContractFromJSON,
-    Erc721ContractFromJSONTyped,
-    Erc721ContractToJSON,
-} from './Erc721Contract';
 
 /**
  * 
@@ -64,21 +75,19 @@ export interface EvmBalanceChangeEffectTokenContract {
     isVerified: boolean;
     /**
      * 
-     * @type {Erc721}
+     * @type {Erc1155}
      * @memberof EvmBalanceChangeEffectTokenContract
      */
-    token: Erc721;
+    token: Erc1155;
 }
 
 /**
  * Check if a given object implements the EvmBalanceChangeEffectTokenContract interface.
  */
-export function instanceOfEvmBalanceChangeEffectTokenContract(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "isVerified" in value;
-    isInstance = isInstance && "token" in value;
-
-    return isInstance;
+export function instanceOfEvmBalanceChangeEffectTokenContract(value: object): value is EvmBalanceChangeEffectTokenContract {
+    if (!('isVerified' in value) || value['isVerified'] === undefined) return false;
+    if (!('token' in value) || value['token'] === undefined) return false;
+    return true;
 }
 
 export function EvmBalanceChangeEffectTokenContractFromJSON(json: any): EvmBalanceChangeEffectTokenContract {
@@ -86,31 +95,33 @@ export function EvmBalanceChangeEffectTokenContractFromJSON(json: any): EvmBalan
 }
 
 export function EvmBalanceChangeEffectTokenContractFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmBalanceChangeEffectTokenContract {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'dapp': !exists(json, 'dapp') ? undefined : DappFromJSON(json['dapp']),
+        'name': json['name'] == null ? undefined : json['name'],
+        'dapp': json['dapp'] == null ? undefined : DappFromJSON(json['dapp']),
         'isVerified': json['is_verified'],
-        'token': Erc721FromJSON(json['token']),
+        'token': Erc1155FromJSON(json['token']),
     };
 }
 
-export function EvmBalanceChangeEffectTokenContractToJSON(value?: EvmBalanceChangeEffectTokenContract | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EvmBalanceChangeEffectTokenContractToJSON(json: any): EvmBalanceChangeEffectTokenContract {
+    return EvmBalanceChangeEffectTokenContractToJSONTyped(json, false);
+}
+
+export function EvmBalanceChangeEffectTokenContractToJSONTyped(value?: EvmBalanceChangeEffectTokenContract | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'dapp': DappToJSON(value.dapp),
-        'is_verified': value.isVerified,
-        'token': Erc721ToJSON(value.token),
+        'name': value['name'],
+        'dapp': DappToJSON(value['dapp']),
+        'is_verified': value['isVerified'],
+        'token': Erc1155ToJSON(value['token']),
     };
 }
 

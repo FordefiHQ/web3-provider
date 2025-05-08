@@ -23,6 +23,17 @@ export const BannerType = {
 export type BannerType = typeof BannerType[keyof typeof BannerType];
 
 
+export function instanceOfBannerType(value: any): boolean {
+    for (const key in BannerType) {
+        if (Object.prototype.hasOwnProperty.call(BannerType, key)) {
+            if (BannerType[key as keyof typeof BannerType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function BannerTypeFromJSON(json: any): BannerType {
     return BannerTypeFromJSONTyped(json, false);
 }
@@ -33,5 +44,9 @@ export function BannerTypeFromJSONTyped(json: any, ignoreDiscriminator: boolean)
 
 export function BannerTypeToJSON(value?: BannerType | null): any {
     return value as any;
+}
+
+export function BannerTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): BannerType {
+    return value as BannerType;
 }
 

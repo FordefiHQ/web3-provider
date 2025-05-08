@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { SuiObjectInputArgument } from './SuiObjectInputArgument';
 import {
-    SuiObjectInputArgument,
     instanceOfSuiObjectInputArgument,
     SuiObjectInputArgumentFromJSON,
     SuiObjectInputArgumentFromJSONTyped,
     SuiObjectInputArgumentToJSON,
 } from './SuiObjectInputArgument';
+import type { SuiPureInputArgument } from './SuiPureInputArgument';
 import {
-    SuiPureInputArgument,
     instanceOfSuiPureInputArgument,
     SuiPureInputArgumentFromJSON,
     SuiPureInputArgumentFromJSONTyped,
@@ -39,31 +39,32 @@ export function SuiInputFromJSON(json: any): SuiInput {
 }
 
 export function SuiInputFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiInput {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'object':
-            return {...SuiObjectInputArgumentFromJSONTyped(json, true), type: 'object'};
+            return Object.assign({}, SuiObjectInputArgumentFromJSONTyped(json, true), { type: 'object' } as const);
         case 'pure':
-            return {...SuiPureInputArgumentFromJSONTyped(json, true), type: 'pure'};
+            return Object.assign({}, SuiPureInputArgumentFromJSONTyped(json, true), { type: 'pure' } as const);
         default:
             throw new Error(`No variant of SuiInput exists with 'type=${json['type']}'`);
     }
 }
 
-export function SuiInputToJSON(value?: SuiInput | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function SuiInputToJSON(json: any): any {
+    return SuiInputToJSONTyped(json, false);
+}
+
+export function SuiInputToJSONTyped(value?: SuiInput | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'object':
-            return SuiObjectInputArgumentToJSON(value);
+            return Object.assign({}, SuiObjectInputArgumentToJSON(value), { type: 'object' } as const);
         case 'pure':
-            return SuiPureInputArgumentToJSON(value);
+            return Object.assign({}, SuiPureInputArgumentToJSON(value), { type: 'pure' } as const);
         default:
             throw new Error(`No variant of SuiInput exists with 'type=${value['type']}'`);
     }

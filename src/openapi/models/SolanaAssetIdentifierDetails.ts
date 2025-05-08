@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { SolanaNativeAssetIdentifierRequest } from './SolanaNativeAssetIdentifierRequest';
 import {
-    SolanaNativeAssetIdentifierRequest,
     instanceOfSolanaNativeAssetIdentifierRequest,
     SolanaNativeAssetIdentifierRequestFromJSON,
     SolanaNativeAssetIdentifierRequestFromJSONTyped,
     SolanaNativeAssetIdentifierRequestToJSON,
 } from './SolanaNativeAssetIdentifierRequest';
+import type { SolanaSplTokenAssetIdentifierRequest } from './SolanaSplTokenAssetIdentifierRequest';
 import {
-    SolanaSplTokenAssetIdentifierRequest,
     instanceOfSolanaSplTokenAssetIdentifierRequest,
     SolanaSplTokenAssetIdentifierRequestFromJSON,
     SolanaSplTokenAssetIdentifierRequestFromJSONTyped,
@@ -39,31 +39,32 @@ export function SolanaAssetIdentifierDetailsFromJSON(json: any): SolanaAssetIden
 }
 
 export function SolanaAssetIdentifierDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): SolanaAssetIdentifierDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'native':
-            return {...SolanaNativeAssetIdentifierRequestFromJSONTyped(json, true), type: 'native'};
+            return Object.assign({}, SolanaNativeAssetIdentifierRequestFromJSONTyped(json, true), { type: 'native' } as const);
         case 'spl_token':
-            return {...SolanaSplTokenAssetIdentifierRequestFromJSONTyped(json, true), type: 'spl_token'};
+            return Object.assign({}, SolanaSplTokenAssetIdentifierRequestFromJSONTyped(json, true), { type: 'spl_token' } as const);
         default:
             throw new Error(`No variant of SolanaAssetIdentifierDetails exists with 'type=${json['type']}'`);
     }
 }
 
-export function SolanaAssetIdentifierDetailsToJSON(value?: SolanaAssetIdentifierDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function SolanaAssetIdentifierDetailsToJSON(json: any): any {
+    return SolanaAssetIdentifierDetailsToJSONTyped(json, false);
+}
+
+export function SolanaAssetIdentifierDetailsToJSONTyped(value?: SolanaAssetIdentifierDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'native':
-            return SolanaNativeAssetIdentifierRequestToJSON(value);
+            return Object.assign({}, SolanaNativeAssetIdentifierRequestToJSON(value), { type: 'native' } as const);
         case 'spl_token':
-            return SolanaSplTokenAssetIdentifierRequestToJSON(value);
+            return Object.assign({}, SolanaSplTokenAssetIdentifierRequestToJSON(value), { type: 'spl_token' } as const);
         default:
             throw new Error(`No variant of SolanaAssetIdentifierDetails exists with 'type=${value['type']}'`);
     }

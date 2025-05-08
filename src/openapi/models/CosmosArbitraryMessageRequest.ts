@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { CosmosChainUniqueId } from './CosmosChainUniqueId';
 import {
     CosmosChainUniqueIdFromJSON,
     CosmosChainUniqueIdFromJSONTyped,
     CosmosChainUniqueIdToJSON,
+    CosmosChainUniqueIdToJSONTyped,
 } from './CosmosChainUniqueId';
 import type { CosmosMessageData } from './CosmosMessageData';
 import {
     CosmosMessageDataFromJSON,
     CosmosMessageDataFromJSONTyped,
     CosmosMessageDataToJSON,
+    CosmosMessageDataToJSONTyped,
 } from './CosmosMessageData';
 
 /**
@@ -65,13 +67,11 @@ export type CosmosArbitraryMessageRequestTypeEnum = typeof CosmosArbitraryMessag
 /**
  * Check if a given object implements the CosmosArbitraryMessageRequest interface.
  */
-export function instanceOfCosmosArbitraryMessageRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "data" in value;
-
-    return isInstance;
+export function instanceOfCosmosArbitraryMessageRequest(value: object): value is CosmosArbitraryMessageRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('data' in value) || value['data'] === undefined) return false;
+    return true;
 }
 
 export function CosmosArbitraryMessageRequestFromJSON(json: any): CosmosArbitraryMessageRequest {
@@ -79,7 +79,7 @@ export function CosmosArbitraryMessageRequestFromJSON(json: any): CosmosArbitrar
 }
 
 export function CosmosArbitraryMessageRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosArbitraryMessageRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -90,18 +90,20 @@ export function CosmosArbitraryMessageRequestFromJSONTyped(json: any, ignoreDisc
     };
 }
 
-export function CosmosArbitraryMessageRequestToJSON(value?: CosmosArbitraryMessageRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosArbitraryMessageRequestToJSON(json: any): CosmosArbitraryMessageRequest {
+    return CosmosArbitraryMessageRequestToJSONTyped(json, false);
+}
+
+export function CosmosArbitraryMessageRequestToJSONTyped(value?: CosmosArbitraryMessageRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'chain': CosmosChainUniqueIdToJSON(value.chain),
-        'data': CosmosMessageDataToJSON(value.data),
+        'type': value['type'],
+        'chain': CosmosChainUniqueIdToJSON(value['chain']),
+        'data': CosmosMessageDataToJSON(value['data']),
     };
 }
 

@@ -26,6 +26,17 @@ export const TonReversionState = {
 export type TonReversionState = typeof TonReversionState[keyof typeof TonReversionState];
 
 
+export function instanceOfTonReversionState(value: any): boolean {
+    for (const key in TonReversionState) {
+        if (Object.prototype.hasOwnProperty.call(TonReversionState, key)) {
+            if (TonReversionState[key as keyof typeof TonReversionState] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function TonReversionStateFromJSON(json: any): TonReversionState {
     return TonReversionStateFromJSONTyped(json, false);
 }
@@ -36,5 +47,9 @@ export function TonReversionStateFromJSONTyped(json: any, ignoreDiscriminator: b
 
 export function TonReversionStateToJSON(value?: TonReversionState | null): any {
     return value as any;
+}
+
+export function TonReversionStateToJSONTyped(value: any, ignoreDiscriminator: boolean): TonReversionState {
+    return value as TonReversionState;
 }
 

@@ -12,61 +12,70 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedSuiAddress } from './EnrichedSuiAddress';
 import {
     EnrichedSuiAddressFromJSON,
     EnrichedSuiAddressFromJSONTyped,
     EnrichedSuiAddressToJSON,
+    EnrichedSuiAddressToJSONTyped,
 } from './EnrichedSuiAddress';
-import type { EnrichedSuiChain } from './EnrichedSuiChain';
-import {
-    EnrichedSuiChainFromJSON,
-    EnrichedSuiChainFromJSONTyped,
-    EnrichedSuiChainToJSON,
-} from './EnrichedSuiChain';
 import type { ManagedTransactionData } from './ManagedTransactionData';
 import {
     ManagedTransactionDataFromJSON,
     ManagedTransactionDataFromJSONTyped,
     ManagedTransactionDataToJSON,
+    ManagedTransactionDataToJSONTyped,
 } from './ManagedTransactionData';
-import type { Signature } from './Signature';
-import {
-    SignatureFromJSON,
-    SignatureFromJSONTyped,
-    SignatureToJSON,
-} from './Signature';
-import type { SuiMessageState } from './SuiMessageState';
-import {
-    SuiMessageStateFromJSON,
-    SuiMessageStateFromJSONTyped,
-    SuiMessageStateToJSON,
-} from './SuiMessageState';
-import type { SuiMessageStateChange } from './SuiMessageStateChange';
-import {
-    SuiMessageStateChangeFromJSON,
-    SuiMessageStateChangeFromJSONTyped,
-    SuiMessageStateChangeToJSON,
-} from './SuiMessageStateChange';
-import type { SuiMessageType } from './SuiMessageType';
-import {
-    SuiMessageTypeFromJSON,
-    SuiMessageTypeFromJSONTyped,
-    SuiMessageTypeToJSON,
-} from './SuiMessageType';
-import type { TransactionDirection } from './TransactionDirection';
-import {
-    TransactionDirectionFromJSON,
-    TransactionDirectionFromJSONTyped,
-    TransactionDirectionToJSON,
-} from './TransactionDirection';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
     TransactionSpamStateFromJSONTyped,
     TransactionSpamStateToJSON,
+    TransactionSpamStateToJSONTyped,
 } from './TransactionSpamState';
+import type { TransactionDirection } from './TransactionDirection';
+import {
+    TransactionDirectionFromJSON,
+    TransactionDirectionFromJSONTyped,
+    TransactionDirectionToJSON,
+    TransactionDirectionToJSONTyped,
+} from './TransactionDirection';
+import type { Signature } from './Signature';
+import {
+    SignatureFromJSON,
+    SignatureFromJSONTyped,
+    SignatureToJSON,
+    SignatureToJSONTyped,
+} from './Signature';
+import type { NonPushableTransactionStateChange } from './NonPushableTransactionStateChange';
+import {
+    NonPushableTransactionStateChangeFromJSON,
+    NonPushableTransactionStateChangeFromJSONTyped,
+    NonPushableTransactionStateChangeToJSON,
+    NonPushableTransactionStateChangeToJSONTyped,
+} from './NonPushableTransactionStateChange';
+import type { EnrichedSuiChain } from './EnrichedSuiChain';
+import {
+    EnrichedSuiChainFromJSON,
+    EnrichedSuiChainFromJSONTyped,
+    EnrichedSuiChainToJSON,
+    EnrichedSuiChainToJSONTyped,
+} from './EnrichedSuiChain';
+import type { SuiMessageType } from './SuiMessageType';
+import {
+    SuiMessageTypeFromJSON,
+    SuiMessageTypeFromJSONTyped,
+    SuiMessageTypeToJSON,
+    SuiMessageTypeToJSONTyped,
+} from './SuiMessageType';
+import type { NonPushableTransactionState } from './NonPushableTransactionState';
+import {
+    NonPushableTransactionStateFromJSON,
+    NonPushableTransactionStateFromJSONTyped,
+    NonPushableTransactionStateToJSON,
+    NonPushableTransactionStateToJSONTyped,
+} from './NonPushableTransactionState';
 
 /**
  * 
@@ -124,6 +133,24 @@ export interface SuiMessage {
     direction: TransactionDirection;
     /**
      * 
+     * @type {boolean}
+     * @memberof SuiMessage
+     */
+    signedExternally?: boolean;
+    /**
+     * 
+     * @type {NonPushableTransactionState}
+     * @memberof SuiMessage
+     */
+    state: NonPushableTransactionState;
+    /**
+     * 
+     * @type {Array<NonPushableTransactionStateChange>}
+     * @memberof SuiMessage
+     */
+    stateChanges: Array<NonPushableTransactionStateChange>;
+    /**
+     * 
      * @type {string}
      * @memberof SuiMessage
      */
@@ -134,18 +161,6 @@ export interface SuiMessage {
      * @memberof SuiMessage
      */
     suiMessageType: SuiMessageType;
-    /**
-     * 
-     * @type {SuiMessageState}
-     * @memberof SuiMessage
-     */
-    state: SuiMessageState;
-    /**
-     * 
-     * @type {Array<SuiMessageStateChange>}
-     * @memberof SuiMessage
-     */
-    stateChanges: Array<SuiMessageStateChange>;
     /**
      * 
      * @type {string}
@@ -185,23 +200,21 @@ export type SuiMessageTypeEnum = typeof SuiMessageTypeEnum[keyof typeof SuiMessa
 /**
  * Check if a given object implements the SuiMessage interface.
  */
-export function instanceOfSuiMessage(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "signatures" in value;
-    isInstance = isInstance && "direction" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "suiMessageType" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "stateChanges" in value;
-    isInstance = isInstance && "stringData" in value;
-    isInstance = isInstance && "rawData" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "sender" in value;
-
-    return isInstance;
+export function instanceOfSuiMessage(value: object): value is SuiMessage {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('signatures' in value) || value['signatures'] === undefined) return false;
+    if (!('direction' in value) || value['direction'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('stateChanges' in value) || value['stateChanges'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('suiMessageType' in value) || value['suiMessageType'] === undefined) return false;
+    if (!('stringData' in value) || value['stringData'] === undefined) return false;
+    if (!('rawData' in value) || value['rawData'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    return true;
 }
 
 export function SuiMessageFromJSON(json: any): SuiMessage {
@@ -209,7 +222,7 @@ export function SuiMessageFromJSON(json: any): SuiMessage {
 }
 
 export function SuiMessageFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiMessage {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -217,15 +230,16 @@ export function SuiMessageFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
-        'managedTransactionData': !exists(json, 'managed_transaction_data') ? undefined : ManagedTransactionDataFromJSON(json['managed_transaction_data']),
+        'managedTransactionData': json['managed_transaction_data'] == null ? undefined : ManagedTransactionDataFromJSON(json['managed_transaction_data']),
         'signatures': ((json['signatures'] as Array<any>).map(SignatureFromJSON)),
-        'note': !exists(json, 'note') ? undefined : json['note'],
-        'spamState': !exists(json, 'spam_state') ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
+        'note': json['note'] == null ? undefined : json['note'],
+        'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
+        'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'state': NonPushableTransactionStateFromJSON(json['state']),
+        'stateChanges': ((json['state_changes'] as Array<any>).map(NonPushableTransactionStateChangeFromJSON)),
         'type': json['type'],
         'suiMessageType': SuiMessageTypeFromJSON(json['sui_message_type']),
-        'state': SuiMessageStateFromJSON(json['state']),
-        'stateChanges': ((json['state_changes'] as Array<any>).map(SuiMessageStateChangeFromJSON)),
         'stringData': json['string_data'],
         'rawData': json['raw_data'],
         'chain': EnrichedSuiChainFromJSON(json['chain']),
@@ -233,31 +247,34 @@ export function SuiMessageFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     };
 }
 
-export function SuiMessageToJSON(value?: SuiMessage | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiMessageToJSON(json: any): SuiMessage {
+    return SuiMessageToJSONTyped(json, false);
+}
+
+export function SuiMessageToJSONTyped(value?: SuiMessage | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'managed_transaction_data': ManagedTransactionDataToJSON(value.managedTransactionData),
-        'signatures': ((value.signatures as Array<any>).map(SignatureToJSON)),
-        'note': value.note,
-        'spam_state': TransactionSpamStateToJSON(value.spamState),
-        'direction': TransactionDirectionToJSON(value.direction),
-        'type': value.type,
-        'sui_message_type': SuiMessageTypeToJSON(value.suiMessageType),
-        'state': SuiMessageStateToJSON(value.state),
-        'state_changes': ((value.stateChanges as Array<any>).map(SuiMessageStateChangeToJSON)),
-        'string_data': value.stringData,
-        'raw_data': value.rawData,
-        'chain': EnrichedSuiChainToJSON(value.chain),
-        'sender': EnrichedSuiAddressToJSON(value.sender),
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'managed_transaction_data': ManagedTransactionDataToJSON(value['managedTransactionData']),
+        'signatures': ((value['signatures'] as Array<any>).map(SignatureToJSON)),
+        'note': value['note'],
+        'spam_state': TransactionSpamStateToJSON(value['spamState']),
+        'direction': TransactionDirectionToJSON(value['direction']),
+        'signed_externally': value['signedExternally'],
+        'state': NonPushableTransactionStateToJSON(value['state']),
+        'state_changes': ((value['stateChanges'] as Array<any>).map(NonPushableTransactionStateChangeToJSON)),
+        'type': value['type'],
+        'sui_message_type': SuiMessageTypeToJSON(value['suiMessageType']),
+        'string_data': value['stringData'],
+        'raw_data': value['rawData'],
+        'chain': EnrichedSuiChainToJSON(value['chain']),
+        'sender': EnrichedSuiAddressToJSON(value['sender']),
     };
 }
 

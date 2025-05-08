@@ -24,6 +24,17 @@ export const SuiTransferEffectType = {
 export type SuiTransferEffectType = typeof SuiTransferEffectType[keyof typeof SuiTransferEffectType];
 
 
+export function instanceOfSuiTransferEffectType(value: any): boolean {
+    for (const key in SuiTransferEffectType) {
+        if (Object.prototype.hasOwnProperty.call(SuiTransferEffectType, key)) {
+            if (SuiTransferEffectType[key as keyof typeof SuiTransferEffectType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function SuiTransferEffectTypeFromJSON(json: any): SuiTransferEffectType {
     return SuiTransferEffectTypeFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function SuiTransferEffectTypeFromJSONTyped(json: any, ignoreDiscriminato
 
 export function SuiTransferEffectTypeToJSON(value?: SuiTransferEffectType | null): any {
     return value as any;
+}
+
+export function SuiTransferEffectTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): SuiTransferEffectType {
+    return value as SuiTransferEffectType;
 }
 

@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { FiatCurrencySymbol } from './FiatCurrencySymbol';
 import {
     FiatCurrencySymbolFromJSON,
     FiatCurrencySymbolFromJSONTyped,
     FiatCurrencySymbolToJSON,
+    FiatCurrencySymbolToJSONTyped,
 } from './FiatCurrencySymbol';
 
 /**
@@ -40,15 +41,15 @@ export interface FiatCurrency {
     decimals: number;
 }
 
+
+
 /**
  * Check if a given object implements the FiatCurrency interface.
  */
-export function instanceOfFiatCurrency(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "currencySymbol" in value;
-    isInstance = isInstance && "decimals" in value;
-
-    return isInstance;
+export function instanceOfFiatCurrency(value: object): value is FiatCurrency {
+    if (!('currencySymbol' in value) || value['currencySymbol'] === undefined) return false;
+    if (!('decimals' in value) || value['decimals'] === undefined) return false;
+    return true;
 }
 
 export function FiatCurrencyFromJSON(json: any): FiatCurrency {
@@ -56,7 +57,7 @@ export function FiatCurrencyFromJSON(json: any): FiatCurrency {
 }
 
 export function FiatCurrencyFromJSONTyped(json: any, ignoreDiscriminator: boolean): FiatCurrency {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -66,17 +67,19 @@ export function FiatCurrencyFromJSONTyped(json: any, ignoreDiscriminator: boolea
     };
 }
 
-export function FiatCurrencyToJSON(value?: FiatCurrency | null): any {
-    if (value === undefined) {
-        return undefined;
+export function FiatCurrencyToJSON(json: any): FiatCurrency {
+    return FiatCurrencyToJSONTyped(json, false);
+}
+
+export function FiatCurrencyToJSONTyped(value?: FiatCurrency | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'currency_symbol': FiatCurrencySymbolToJSON(value.currencySymbol),
-        'decimals': value.decimals,
+        'currency_symbol': FiatCurrencySymbolToJSON(value['currencySymbol']),
+        'decimals': value['decimals'],
     };
 }
 

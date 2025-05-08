@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { SuiChainUniqueId } from './SuiChainUniqueId';
 import {
     SuiChainUniqueIdFromJSON,
     SuiChainUniqueIdFromJSONTyped,
     SuiChainUniqueIdToJSON,
+    SuiChainUniqueIdToJSONTyped,
 } from './SuiChainUniqueId';
 
 /**
@@ -53,12 +54,10 @@ export type SuiNativeAssetIdentifierRequestTypeEnum = typeof SuiNativeAssetIdent
 /**
  * Check if a given object implements the SuiNativeAssetIdentifierRequest interface.
  */
-export function instanceOfSuiNativeAssetIdentifierRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfSuiNativeAssetIdentifierRequest(value: object): value is SuiNativeAssetIdentifierRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function SuiNativeAssetIdentifierRequestFromJSON(json: any): SuiNativeAssetIdentifierRequest {
@@ -66,7 +65,7 @@ export function SuiNativeAssetIdentifierRequestFromJSON(json: any): SuiNativeAss
 }
 
 export function SuiNativeAssetIdentifierRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiNativeAssetIdentifierRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function SuiNativeAssetIdentifierRequestFromJSONTyped(json: any, ignoreDi
     };
 }
 
-export function SuiNativeAssetIdentifierRequestToJSON(value?: SuiNativeAssetIdentifierRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiNativeAssetIdentifierRequestToJSON(json: any): SuiNativeAssetIdentifierRequest {
+    return SuiNativeAssetIdentifierRequestToJSONTyped(json, false);
+}
+
+export function SuiNativeAssetIdentifierRequestToJSONTyped(value?: SuiNativeAssetIdentifierRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'chain': SuiChainUniqueIdToJSON(value.chain),
+        'type': value['type'],
+        'chain': SuiChainUniqueIdToJSON(value['chain']),
     };
 }
 

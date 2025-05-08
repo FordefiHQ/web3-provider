@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { StarknetChainUniqueId } from './StarknetChainUniqueId';
 import {
     StarknetChainUniqueIdFromJSON,
     StarknetChainUniqueIdFromJSONTyped,
     StarknetChainUniqueIdToJSON,
+    StarknetChainUniqueIdToJSONTyped,
 } from './StarknetChainUniqueId';
 
 /**
@@ -40,15 +41,15 @@ export interface StarknetAddressRequest {
     hexRepr: string;
 }
 
+
+
 /**
  * Check if a given object implements the StarknetAddressRequest interface.
  */
-export function instanceOfStarknetAddressRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "hexRepr" in value;
-
-    return isInstance;
+export function instanceOfStarknetAddressRequest(value: object): value is StarknetAddressRequest {
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('hexRepr' in value) || value['hexRepr'] === undefined) return false;
+    return true;
 }
 
 export function StarknetAddressRequestFromJSON(json: any): StarknetAddressRequest {
@@ -56,7 +57,7 @@ export function StarknetAddressRequestFromJSON(json: any): StarknetAddressReques
 }
 
 export function StarknetAddressRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): StarknetAddressRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -66,17 +67,19 @@ export function StarknetAddressRequestFromJSONTyped(json: any, ignoreDiscriminat
     };
 }
 
-export function StarknetAddressRequestToJSON(value?: StarknetAddressRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function StarknetAddressRequestToJSON(json: any): StarknetAddressRequest {
+    return StarknetAddressRequestToJSONTyped(json, false);
+}
+
+export function StarknetAddressRequestToJSONTyped(value?: StarknetAddressRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain': StarknetChainUniqueIdToJSON(value.chain),
-        'hex_repr': value.hexRepr,
+        'chain': StarknetChainUniqueIdToJSON(value['chain']),
+        'hex_repr': value['hexRepr'],
     };
 }
 

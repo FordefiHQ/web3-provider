@@ -12,22 +12,22 @@
  * Do not edit the class manually.
  */
 
+import type { CreateSuiProgrammableTransactionBlockRequest } from './CreateSuiProgrammableTransactionBlockRequest';
 import {
-    CreateSuiProgrammableTransactionBlockRequest,
     instanceOfCreateSuiProgrammableTransactionBlockRequest,
     CreateSuiProgrammableTransactionBlockRequestFromJSON,
     CreateSuiProgrammableTransactionBlockRequestFromJSONTyped,
     CreateSuiProgrammableTransactionBlockRequestToJSON,
 } from './CreateSuiProgrammableTransactionBlockRequest';
+import type { CreateSuiSerializedTransactionDataRequest } from './CreateSuiSerializedTransactionDataRequest';
 import {
-    CreateSuiSerializedTransactionDataRequest,
     instanceOfCreateSuiSerializedTransactionDataRequest,
     CreateSuiSerializedTransactionDataRequestFromJSON,
     CreateSuiSerializedTransactionDataRequestFromJSONTyped,
     CreateSuiSerializedTransactionDataRequestToJSON,
 } from './CreateSuiSerializedTransactionDataRequest';
+import type { CreateSuiTransferRequest } from './CreateSuiTransferRequest';
 import {
-    CreateSuiTransferRequest,
     instanceOfCreateSuiTransferRequest,
     CreateSuiTransferRequestFromJSON,
     CreateSuiTransferRequestFromJSONTyped,
@@ -46,35 +46,36 @@ export function CreateSuiTransactionRequestDetailsFromJSON(json: any): CreateSui
 }
 
 export function CreateSuiTransactionRequestDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateSuiTransactionRequestDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'sui_binary_canonical_serialization':
-            return {...CreateSuiSerializedTransactionDataRequestFromJSONTyped(json, true), type: 'sui_binary_canonical_serialization'};
+            return Object.assign({}, CreateSuiSerializedTransactionDataRequestFromJSONTyped(json, true), { type: 'sui_binary_canonical_serialization' } as const);
         case 'sui_programmable_transaction_block':
-            return {...CreateSuiProgrammableTransactionBlockRequestFromJSONTyped(json, true), type: 'sui_programmable_transaction_block'};
+            return Object.assign({}, CreateSuiProgrammableTransactionBlockRequestFromJSONTyped(json, true), { type: 'sui_programmable_transaction_block' } as const);
         case 'sui_transfer':
-            return {...CreateSuiTransferRequestFromJSONTyped(json, true), type: 'sui_transfer'};
+            return Object.assign({}, CreateSuiTransferRequestFromJSONTyped(json, true), { type: 'sui_transfer' } as const);
         default:
             throw new Error(`No variant of CreateSuiTransactionRequestDetails exists with 'type=${json['type']}'`);
     }
 }
 
-export function CreateSuiTransactionRequestDetailsToJSON(value?: CreateSuiTransactionRequestDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function CreateSuiTransactionRequestDetailsToJSON(json: any): any {
+    return CreateSuiTransactionRequestDetailsToJSONTyped(json, false);
+}
+
+export function CreateSuiTransactionRequestDetailsToJSONTyped(value?: CreateSuiTransactionRequestDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'sui_binary_canonical_serialization':
-            return CreateSuiSerializedTransactionDataRequestToJSON(value);
+            return Object.assign({}, CreateSuiSerializedTransactionDataRequestToJSON(value), { type: 'sui_binary_canonical_serialization' } as const);
         case 'sui_programmable_transaction_block':
-            return CreateSuiProgrammableTransactionBlockRequestToJSON(value);
+            return Object.assign({}, CreateSuiProgrammableTransactionBlockRequestToJSON(value), { type: 'sui_programmable_transaction_block' } as const);
         case 'sui_transfer':
-            return CreateSuiTransferRequestToJSON(value);
+            return Object.assign({}, CreateSuiTransferRequestToJSON(value), { type: 'sui_transfer' } as const);
         default:
             throw new Error(`No variant of CreateSuiTransactionRequestDetails exists with 'type=${value['type']}'`);
     }

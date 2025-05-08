@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedSuiAddress } from './EnrichedSuiAddress';
 import {
     EnrichedSuiAddressFromJSON,
     EnrichedSuiAddressFromJSONTyped,
     EnrichedSuiAddressToJSON,
+    EnrichedSuiAddressToJSONTyped,
 } from './EnrichedSuiAddress';
 
 /**
@@ -65,13 +66,11 @@ export type SuiCoinTransferDetailsTypeEnum = typeof SuiCoinTransferDetailsTypeEn
 /**
  * Check if a given object implements the SuiCoinTransferDetails interface.
  */
-export function instanceOfSuiCoinTransferDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "sender" in value;
-    isInstance = isInstance && "recipient" in value;
-
-    return isInstance;
+export function instanceOfSuiCoinTransferDetails(value: object): value is SuiCoinTransferDetails {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    if (!('recipient' in value) || value['recipient'] === undefined) return false;
+    return true;
 }
 
 export function SuiCoinTransferDetailsFromJSON(json: any): SuiCoinTransferDetails {
@@ -79,7 +78,7 @@ export function SuiCoinTransferDetailsFromJSON(json: any): SuiCoinTransferDetail
 }
 
 export function SuiCoinTransferDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiCoinTransferDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -87,23 +86,25 @@ export function SuiCoinTransferDetailsFromJSONTyped(json: any, ignoreDiscriminat
         'type': json['type'],
         'sender': EnrichedSuiAddressFromJSON(json['sender']),
         'recipient': EnrichedSuiAddressFromJSON(json['recipient']),
-        'isInternal': !exists(json, 'is_internal') ? undefined : json['is_internal'],
+        'isInternal': json['is_internal'] == null ? undefined : json['is_internal'],
     };
 }
 
-export function SuiCoinTransferDetailsToJSON(value?: SuiCoinTransferDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiCoinTransferDetailsToJSON(json: any): SuiCoinTransferDetails {
+    return SuiCoinTransferDetailsToJSONTyped(json, false);
+}
+
+export function SuiCoinTransferDetailsToJSONTyped(value?: SuiCoinTransferDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'sender': EnrichedSuiAddressToJSON(value.sender),
-        'recipient': EnrichedSuiAddressToJSON(value.recipient),
-        'is_internal': value.isInternal,
+        'type': value['type'],
+        'sender': EnrichedSuiAddressToJSON(value['sender']),
+        'recipient': EnrichedSuiAddressToJSON(value['recipient']),
+        'is_internal': value['isInternal'],
     };
 }
 

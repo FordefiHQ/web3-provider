@@ -23,6 +23,17 @@ export const CosmosMessageType = {
 export type CosmosMessageType = typeof CosmosMessageType[keyof typeof CosmosMessageType];
 
 
+export function instanceOfCosmosMessageType(value: any): boolean {
+    for (const key in CosmosMessageType) {
+        if (Object.prototype.hasOwnProperty.call(CosmosMessageType, key)) {
+            if (CosmosMessageType[key as keyof typeof CosmosMessageType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function CosmosMessageTypeFromJSON(json: any): CosmosMessageType {
     return CosmosMessageTypeFromJSONTyped(json, false);
 }
@@ -33,5 +44,9 @@ export function CosmosMessageTypeFromJSONTyped(json: any, ignoreDiscriminator: b
 
 export function CosmosMessageTypeToJSON(value?: CosmosMessageType | null): any {
     return value as any;
+}
+
+export function CosmosMessageTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): CosmosMessageType {
+    return value as CosmosMessageType;
 }
 

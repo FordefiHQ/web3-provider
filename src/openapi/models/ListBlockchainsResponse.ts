@@ -12,13 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedChain } from './EnrichedChain';
 import {
     EnrichedChainFromJSON,
     EnrichedChainFromJSONTyped,
     EnrichedChainToJSON,
+    EnrichedChainToJSONTyped,
 } from './EnrichedChain';
+import type { PartialErrorResponse } from './PartialErrorResponse';
+import {
+    PartialErrorResponseFromJSON,
+    PartialErrorResponseFromJSONTyped,
+    PartialErrorResponseToJSON,
+    PartialErrorResponseToJSONTyped,
+} from './PartialErrorResponse';
 
 /**
  * 
@@ -26,6 +34,12 @@ import {
  * @interface ListBlockchainsResponse
  */
 export interface ListBlockchainsResponse {
+    /**
+     * 
+     * @type {PartialErrorResponse}
+     * @memberof ListBlockchainsResponse
+     */
+    partialError?: PartialErrorResponse;
     /**
      * 
      * @type {number}
@@ -55,14 +69,12 @@ export interface ListBlockchainsResponse {
 /**
  * Check if a given object implements the ListBlockchainsResponse interface.
  */
-export function instanceOfListBlockchainsResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "total" in value;
-    isInstance = isInstance && "page" in value;
-    isInstance = isInstance && "size" in value;
-    isInstance = isInstance && "chains" in value;
-
-    return isInstance;
+export function instanceOfListBlockchainsResponse(value: object): value is ListBlockchainsResponse {
+    if (!('total' in value) || value['total'] === undefined) return false;
+    if (!('page' in value) || value['page'] === undefined) return false;
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('chains' in value) || value['chains'] === undefined) return false;
+    return true;
 }
 
 export function ListBlockchainsResponseFromJSON(json: any): ListBlockchainsResponse {
@@ -70,11 +82,12 @@ export function ListBlockchainsResponseFromJSON(json: any): ListBlockchainsRespo
 }
 
 export function ListBlockchainsResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): ListBlockchainsResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
+        'partialError': json['partial_error'] == null ? undefined : PartialErrorResponseFromJSON(json['partial_error']),
         'total': json['total'],
         'page': json['page'],
         'size': json['size'],
@@ -82,19 +95,22 @@ export function ListBlockchainsResponseFromJSONTyped(json: any, ignoreDiscrimina
     };
 }
 
-export function ListBlockchainsResponseToJSON(value?: ListBlockchainsResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ListBlockchainsResponseToJSON(json: any): ListBlockchainsResponse {
+    return ListBlockchainsResponseToJSONTyped(json, false);
+}
+
+export function ListBlockchainsResponseToJSONTyped(value?: ListBlockchainsResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'total': value.total,
-        'page': value.page,
-        'size': value.size,
-        'chains': ((value.chains as Array<any>).map(EnrichedChainToJSON)),
+        'partial_error': PartialErrorResponseToJSON(value['partialError']),
+        'total': value['total'],
+        'page': value['page'],
+        'size': value['size'],
+        'chains': ((value['chains'] as Array<any>).map(EnrichedChainToJSON)),
     };
 }
 

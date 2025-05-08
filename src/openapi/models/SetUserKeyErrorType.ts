@@ -23,6 +23,17 @@ export const SetUserKeyErrorType = {
 export type SetUserKeyErrorType = typeof SetUserKeyErrorType[keyof typeof SetUserKeyErrorType];
 
 
+export function instanceOfSetUserKeyErrorType(value: any): boolean {
+    for (const key in SetUserKeyErrorType) {
+        if (Object.prototype.hasOwnProperty.call(SetUserKeyErrorType, key)) {
+            if (SetUserKeyErrorType[key as keyof typeof SetUserKeyErrorType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function SetUserKeyErrorTypeFromJSON(json: any): SetUserKeyErrorType {
     return SetUserKeyErrorTypeFromJSONTyped(json, false);
 }
@@ -33,5 +44,9 @@ export function SetUserKeyErrorTypeFromJSONTyped(json: any, ignoreDiscriminator:
 
 export function SetUserKeyErrorTypeToJSON(value?: SetUserKeyErrorType | null): any {
     return value as any;
+}
+
+export function SetUserKeyErrorTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): SetUserKeyErrorType {
+    return value as SetUserKeyErrorType;
 }
 

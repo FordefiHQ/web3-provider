@@ -22,6 +22,7 @@ import type {
   DefinedPreconditionErrorAddAssetToVaultErrorType,
   DefinedPreconditionErrorCreateVaultAddressErrorType,
   DefinedPreconditionErrorCreateVaultErrorType,
+  ExchangeType,
   GetVaultResponse,
   ListOwnedAssetsResponse,
   ListVaultAddressesResponse,
@@ -29,7 +30,10 @@ import type {
   ListVaultsWithAssetsResponse,
   OwnedAsset,
   OwnedAssetsSortableFields,
+  PageResponseType,
   PreconditionFailedError,
+  PurgeImportedVaultsRequest,
+  PurgeImportedVaultsResponse,
   RenameVaultRequest,
   ResourceError,
   UpdateVaultMetadataRequest,
@@ -39,10 +43,11 @@ import type {
   ValidationError,
   VaultAddressSortableFields,
   VaultMetadata,
+  VaultOriginType,
   VaultSortableFields,
   VaultState,
   VaultType,
-} from '../models';
+} from '../models/index';
 import {
     BaseErrorFromJSON,
     BaseErrorToJSON,
@@ -58,6 +63,8 @@ import {
     DefinedPreconditionErrorCreateVaultAddressErrorTypeToJSON,
     DefinedPreconditionErrorCreateVaultErrorTypeFromJSON,
     DefinedPreconditionErrorCreateVaultErrorTypeToJSON,
+    ExchangeTypeFromJSON,
+    ExchangeTypeToJSON,
     GetVaultResponseFromJSON,
     GetVaultResponseToJSON,
     ListOwnedAssetsResponseFromJSON,
@@ -72,8 +79,14 @@ import {
     OwnedAssetToJSON,
     OwnedAssetsSortableFieldsFromJSON,
     OwnedAssetsSortableFieldsToJSON,
+    PageResponseTypeFromJSON,
+    PageResponseTypeToJSON,
     PreconditionFailedErrorFromJSON,
     PreconditionFailedErrorToJSON,
+    PurgeImportedVaultsRequestFromJSON,
+    PurgeImportedVaultsRequestToJSON,
+    PurgeImportedVaultsResponseFromJSON,
+    PurgeImportedVaultsResponseToJSON,
     RenameVaultRequestFromJSON,
     RenameVaultRequestToJSON,
     ResourceErrorFromJSON,
@@ -92,13 +105,15 @@ import {
     VaultAddressSortableFieldsToJSON,
     VaultMetadataFromJSON,
     VaultMetadataToJSON,
+    VaultOriginTypeFromJSON,
+    VaultOriginTypeToJSON,
     VaultSortableFieldsFromJSON,
     VaultSortableFieldsToJSON,
     VaultStateFromJSON,
     VaultStateToJSON,
     VaultTypeFromJSON,
     VaultTypeToJSON,
-} from '../models';
+} from '../models/index';
 
 export interface AddVaultAssetApiV1VaultsIdAssetsAssetIdPostRequest {
     id: string;
@@ -120,6 +135,7 @@ export interface CreateVaultApiV1VaultsPostRequest {
 
 export interface ExportVaultsWithAssetsApiV1VaultsExportGetRequest {
     vaultsIds?: Array<string>;
+    vaultTypes?: Array<VaultType>;
 }
 
 export interface GetVaultApiV1VaultsIdGetRequest {
@@ -131,16 +147,19 @@ export interface GetVaultAssetApiV1VaultsIdAssetsAssetIdGetRequest {
     assetId: string;
     page?: number;
     size?: number;
+    responseType?: PageResponseType;
 }
 
 export interface GetVaultAssetsApiV1VaultsIdAssetsGetRequest {
     id: string;
     page?: number;
     size?: number;
+    responseType?: PageResponseType;
     chains?: Array<string>;
     assetIds?: Array<string>;
     isHidden?: boolean;
     search?: string;
+    isTransferrable?: boolean;
     sortBy?: Array<OwnedAssetsSortableFields>;
 }
 
@@ -153,6 +172,7 @@ export interface ListVaultAddressesApiV1VaultsIdAddressesGetRequest {
     sortBy?: Array<VaultAddressSortableFields>;
     page?: number;
     size?: number;
+    responseType?: PageResponseType;
     search?: string;
     addresses?: Array<string>;
     addressTypes?: Array<UtxoAddressType>;
@@ -162,6 +182,7 @@ export interface ListVaultsApiV1VaultsGetRequest {
     sortBy?: Array<VaultSortableFields>;
     page?: number;
     size?: number;
+    responseType?: PageResponseType;
     vaultIds?: Array<string>;
     search?: string;
     names?: Array<string>;
@@ -171,12 +192,14 @@ export interface ListVaultsApiV1VaultsGetRequest {
     keyHolderIds?: Array<string>;
     vaultGroupIds?: Array<string>;
     excludeVaultGroupIds?: Array<string>;
+    originType?: VaultOriginType;
 }
 
 export interface ListVaultsWithAssetsApiV1VaultsBalancesGetRequest {
     includeAssetsInfo?: boolean;
     page?: number;
     size?: number;
+    responseType?: PageResponseType;
     vaultIds?: Array<string>;
     chains?: Array<string>;
     search?: string;
@@ -187,7 +210,16 @@ export interface ListVaultsWithAssetsApiV1VaultsBalancesGetRequest {
     hideEmpty?: boolean;
     vaultGroupIds?: Array<string>;
     assetIds?: Array<string>;
+    exchangeDepositEnabledForBlockchainAssetId?: string;
+    exchangeDepositEnabledForExchangeAssetId?: string;
+    exchangeDepositEnabledOnChain?: string;
+    exchangeTypes?: Array<ExchangeType>;
+    originType?: VaultOriginType;
     sortBy?: Array<VaultSortableFields>;
+}
+
+export interface PurgeImportedVaultsApiV1VaultsPurgeImportedVaultsPostRequest {
+    purgeImportedVaultsRequest: PurgeImportedVaultsRequest;
 }
 
 export interface RenameVaultAddressApiV1VaultsAddressesIdNamePutRequest {
@@ -223,12 +255,18 @@ export class VaultsApi extends runtime.BaseAPI {
      * Add Vault Asset
      */
     async addVaultAssetApiV1VaultsIdAssetsAssetIdPostRaw(requestParameters: AddVaultAssetApiV1VaultsIdAssetsAssetIdPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OwnedAsset>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling addVaultAssetApiV1VaultsIdAssetsAssetIdPost.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling addVaultAssetApiV1VaultsIdAssetsAssetIdPost().'
+            );
         }
 
-        if (requestParameters.assetId === null || requestParameters.assetId === undefined) {
-            throw new runtime.RequiredError('assetId','Required parameter requestParameters.assetId was null or undefined when calling addVaultAssetApiV1VaultsIdAssetsAssetIdPost.');
+        if (requestParameters['assetId'] == null) {
+            throw new runtime.RequiredError(
+                'assetId',
+                'Required parameter "assetId" was null or undefined when calling addVaultAssetApiV1VaultsIdAssetsAssetIdPost().'
+            );
         }
 
         const queryParameters: any = {};
@@ -244,7 +282,7 @@ export class VaultsApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/v1/vaults/{id}/assets/{asset_id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"asset_id"}}`, encodeURIComponent(String(requestParameters.assetId))),
+            path: `/api/v1/vaults/{id}/assets/{asset_id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"asset_id"}}`, encodeURIComponent(String(requestParameters['assetId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -267,8 +305,11 @@ export class VaultsApi extends runtime.BaseAPI {
      * Archive Vault
      */
     async archiveVaultApiV1VaultsIdArchivePostRaw(requestParameters: ArchiveVaultApiV1VaultsIdArchivePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling archiveVaultApiV1VaultsIdArchivePost.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling archiveVaultApiV1VaultsIdArchivePost().'
+            );
         }
 
         const queryParameters: any = {};
@@ -284,7 +325,7 @@ export class VaultsApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/v1/vaults/{id}/archive`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/v1/vaults/{id}/archive`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -306,12 +347,18 @@ export class VaultsApi extends runtime.BaseAPI {
      * Create Address
      */
     async createAddressApiV1VaultsIdAddressesPostRaw(requestParameters: CreateAddressApiV1VaultsIdAddressesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UtxoVaultAddress>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling createAddressApiV1VaultsIdAddressesPost.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling createAddressApiV1VaultsIdAddressesPost().'
+            );
         }
 
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling createAddressApiV1VaultsIdAddressesPost.');
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling createAddressApiV1VaultsIdAddressesPost().'
+            );
         }
 
         const queryParameters: any = {};
@@ -329,11 +376,11 @@ export class VaultsApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/v1/vaults/{id}/addresses`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/v1/vaults/{id}/addresses`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body as any,
+            body: requestParameters['body'] as any,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => UtxoVaultAddressFromJSON(jsonValue));
@@ -353,8 +400,11 @@ export class VaultsApi extends runtime.BaseAPI {
      * Create Vault
      */
     async createVaultApiV1VaultsPostRaw(requestParameters: CreateVaultApiV1VaultsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateVaultResponse>> {
-        if (requestParameters.createVaultRequest === null || requestParameters.createVaultRequest === undefined) {
-            throw new runtime.RequiredError('createVaultRequest','Required parameter requestParameters.createVaultRequest was null or undefined when calling createVaultApiV1VaultsPost.');
+        if (requestParameters['createVaultRequest'] == null) {
+            throw new runtime.RequiredError(
+                'createVaultRequest',
+                'Required parameter "createVaultRequest" was null or undefined when calling createVaultApiV1VaultsPost().'
+            );
         }
 
         const queryParameters: any = {};
@@ -376,7 +426,7 @@ export class VaultsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: CreateVaultRequestToJSON(requestParameters.createVaultRequest),
+            body: CreateVaultRequestToJSON(requestParameters['createVaultRequest']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => CreateVaultResponseFromJSON(jsonValue));
@@ -398,8 +448,12 @@ export class VaultsApi extends runtime.BaseAPI {
     async exportVaultsWithAssetsApiV1VaultsExportGetRaw(requestParameters: ExportVaultsWithAssetsApiV1VaultsExportGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
         const queryParameters: any = {};
 
-        if (requestParameters.vaultsIds) {
-            queryParameters['vaults_ids'] = requestParameters.vaultsIds;
+        if (requestParameters['vaultsIds'] != null) {
+            queryParameters['vaults_ids'] = requestParameters['vaultsIds'];
+        }
+
+        if (requestParameters['vaultTypes'] != null) {
+            queryParameters['vault_types'] = requestParameters['vaultTypes'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -419,7 +473,11 @@ export class VaultsApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.TextApiResponse(response) as any;
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<string>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
     }
 
     /**
@@ -436,8 +494,11 @@ export class VaultsApi extends runtime.BaseAPI {
      * Get Vault
      */
     async getVaultApiV1VaultsIdGetRaw(requestParameters: GetVaultApiV1VaultsIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetVaultResponse>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getVaultApiV1VaultsIdGet.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getVaultApiV1VaultsIdGet().'
+            );
         }
 
         const queryParameters: any = {};
@@ -453,7 +514,7 @@ export class VaultsApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/v1/vaults/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/v1/vaults/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -476,22 +537,32 @@ export class VaultsApi extends runtime.BaseAPI {
      * Get Vault Asset
      */
     async getVaultAssetApiV1VaultsIdAssetsAssetIdGetRaw(requestParameters: GetVaultAssetApiV1VaultsIdAssetsAssetIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OwnedAsset>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getVaultAssetApiV1VaultsIdAssetsAssetIdGet.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getVaultAssetApiV1VaultsIdAssetsAssetIdGet().'
+            );
         }
 
-        if (requestParameters.assetId === null || requestParameters.assetId === undefined) {
-            throw new runtime.RequiredError('assetId','Required parameter requestParameters.assetId was null or undefined when calling getVaultAssetApiV1VaultsIdAssetsAssetIdGet.');
+        if (requestParameters['assetId'] == null) {
+            throw new runtime.RequiredError(
+                'assetId',
+                'Required parameter "assetId" was null or undefined when calling getVaultAssetApiV1VaultsIdAssetsAssetIdGet().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.page !== undefined) {
-            queryParameters['page'] = requestParameters.page;
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
         }
 
-        if (requestParameters.size !== undefined) {
-            queryParameters['size'] = requestParameters.size;
+        if (requestParameters['size'] != null) {
+            queryParameters['size'] = requestParameters['size'];
+        }
+
+        if (requestParameters['responseType'] != null) {
+            queryParameters['response_type'] = requestParameters['responseType'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -505,7 +576,7 @@ export class VaultsApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/v1/vaults/{id}/assets/{asset_id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"asset_id"}}`, encodeURIComponent(String(requestParameters.assetId))),
+            path: `/api/v1/vaults/{id}/assets/{asset_id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))).replace(`{${"asset_id"}}`, encodeURIComponent(String(requestParameters['assetId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -528,38 +599,49 @@ export class VaultsApi extends runtime.BaseAPI {
      * Get Vault Assets
      */
     async getVaultAssetsApiV1VaultsIdAssetsGetRaw(requestParameters: GetVaultAssetsApiV1VaultsIdAssetsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListOwnedAssetsResponse>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getVaultAssetsApiV1VaultsIdAssetsGet.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getVaultAssetsApiV1VaultsIdAssetsGet().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.page !== undefined) {
-            queryParameters['page'] = requestParameters.page;
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
         }
 
-        if (requestParameters.size !== undefined) {
-            queryParameters['size'] = requestParameters.size;
+        if (requestParameters['size'] != null) {
+            queryParameters['size'] = requestParameters['size'];
         }
 
-        if (requestParameters.chains) {
-            queryParameters['chains'] = requestParameters.chains;
+        if (requestParameters['responseType'] != null) {
+            queryParameters['response_type'] = requestParameters['responseType'];
         }
 
-        if (requestParameters.assetIds) {
-            queryParameters['asset_ids'] = requestParameters.assetIds;
+        if (requestParameters['chains'] != null) {
+            queryParameters['chains'] = requestParameters['chains'];
         }
 
-        if (requestParameters.isHidden !== undefined) {
-            queryParameters['is_hidden'] = requestParameters.isHidden;
+        if (requestParameters['assetIds'] != null) {
+            queryParameters['asset_ids'] = requestParameters['assetIds'];
         }
 
-        if (requestParameters.search !== undefined) {
-            queryParameters['search'] = requestParameters.search;
+        if (requestParameters['isHidden'] != null) {
+            queryParameters['is_hidden'] = requestParameters['isHidden'];
         }
 
-        if (requestParameters.sortBy) {
-            queryParameters['sort_by'] = requestParameters.sortBy;
+        if (requestParameters['search'] != null) {
+            queryParameters['search'] = requestParameters['search'];
+        }
+
+        if (requestParameters['isTransferrable'] != null) {
+            queryParameters['is_transferrable'] = requestParameters['isTransferrable'];
+        }
+
+        if (requestParameters['sortBy'] != null) {
+            queryParameters['sort_by'] = requestParameters['sortBy'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -573,7 +655,7 @@ export class VaultsApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/v1/vaults/{id}/assets`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/v1/vaults/{id}/assets`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -596,8 +678,11 @@ export class VaultsApi extends runtime.BaseAPI {
      * Get Vault Metadata
      */
     async getVaultMetadataApiV1VaultsIdMetadataGetRaw(requestParameters: GetVaultMetadataApiV1VaultsIdMetadataGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VaultMetadata>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getVaultMetadataApiV1VaultsIdMetadataGet.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getVaultMetadataApiV1VaultsIdMetadataGet().'
+            );
         }
 
         const queryParameters: any = {};
@@ -613,7 +698,7 @@ export class VaultsApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/v1/vaults/{id}/metadata`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/v1/vaults/{id}/metadata`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -636,34 +721,41 @@ export class VaultsApi extends runtime.BaseAPI {
      * List Vault Addresses
      */
     async listVaultAddressesApiV1VaultsIdAddressesGetRaw(requestParameters: ListVaultAddressesApiV1VaultsIdAddressesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListVaultAddressesResponse>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling listVaultAddressesApiV1VaultsIdAddressesGet.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling listVaultAddressesApiV1VaultsIdAddressesGet().'
+            );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.sortBy) {
-            queryParameters['sort_by'] = requestParameters.sortBy;
+        if (requestParameters['sortBy'] != null) {
+            queryParameters['sort_by'] = requestParameters['sortBy'];
         }
 
-        if (requestParameters.page !== undefined) {
-            queryParameters['page'] = requestParameters.page;
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
         }
 
-        if (requestParameters.size !== undefined) {
-            queryParameters['size'] = requestParameters.size;
+        if (requestParameters['size'] != null) {
+            queryParameters['size'] = requestParameters['size'];
         }
 
-        if (requestParameters.search !== undefined) {
-            queryParameters['search'] = requestParameters.search;
+        if (requestParameters['responseType'] != null) {
+            queryParameters['response_type'] = requestParameters['responseType'];
         }
 
-        if (requestParameters.addresses) {
-            queryParameters['addresses'] = requestParameters.addresses;
+        if (requestParameters['search'] != null) {
+            queryParameters['search'] = requestParameters['search'];
         }
 
-        if (requestParameters.addressTypes) {
-            queryParameters['address_types'] = requestParameters.addressTypes;
+        if (requestParameters['addresses'] != null) {
+            queryParameters['addresses'] = requestParameters['addresses'];
+        }
+
+        if (requestParameters['addressTypes'] != null) {
+            queryParameters['address_types'] = requestParameters['addressTypes'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -677,7 +769,7 @@ export class VaultsApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/v1/vaults/{id}/addresses`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/v1/vaults/{id}/addresses`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -702,52 +794,60 @@ export class VaultsApi extends runtime.BaseAPI {
     async listVaultsApiV1VaultsGetRaw(requestParameters: ListVaultsApiV1VaultsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListVaultsResponse>> {
         const queryParameters: any = {};
 
-        if (requestParameters.sortBy) {
-            queryParameters['sort_by'] = requestParameters.sortBy;
+        if (requestParameters['sortBy'] != null) {
+            queryParameters['sort_by'] = requestParameters['sortBy'];
         }
 
-        if (requestParameters.page !== undefined) {
-            queryParameters['page'] = requestParameters.page;
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
         }
 
-        if (requestParameters.size !== undefined) {
-            queryParameters['size'] = requestParameters.size;
+        if (requestParameters['size'] != null) {
+            queryParameters['size'] = requestParameters['size'];
         }
 
-        if (requestParameters.vaultIds) {
-            queryParameters['vault_ids'] = requestParameters.vaultIds;
+        if (requestParameters['responseType'] != null) {
+            queryParameters['response_type'] = requestParameters['responseType'];
         }
 
-        if (requestParameters.search !== undefined) {
-            queryParameters['search'] = requestParameters.search;
+        if (requestParameters['vaultIds'] != null) {
+            queryParameters['vault_ids'] = requestParameters['vaultIds'];
         }
 
-        if (requestParameters.names) {
-            queryParameters['names'] = requestParameters.names;
+        if (requestParameters['search'] != null) {
+            queryParameters['search'] = requestParameters['search'];
         }
 
-        if (requestParameters.vaultTypes) {
-            queryParameters['vault_types'] = requestParameters.vaultTypes;
+        if (requestParameters['names'] != null) {
+            queryParameters['names'] = requestParameters['names'];
         }
 
-        if (requestParameters.vaultStates) {
-            queryParameters['vault_states'] = requestParameters.vaultStates;
+        if (requestParameters['vaultTypes'] != null) {
+            queryParameters['vault_types'] = requestParameters['vaultTypes'];
         }
 
-        if (requestParameters.keysetIds) {
-            queryParameters['keyset_ids'] = requestParameters.keysetIds;
+        if (requestParameters['vaultStates'] != null) {
+            queryParameters['vault_states'] = requestParameters['vaultStates'];
         }
 
-        if (requestParameters.keyHolderIds) {
-            queryParameters['key_holder_ids'] = requestParameters.keyHolderIds;
+        if (requestParameters['keysetIds'] != null) {
+            queryParameters['keyset_ids'] = requestParameters['keysetIds'];
         }
 
-        if (requestParameters.vaultGroupIds) {
-            queryParameters['vault_group_ids'] = requestParameters.vaultGroupIds;
+        if (requestParameters['keyHolderIds'] != null) {
+            queryParameters['key_holder_ids'] = requestParameters['keyHolderIds'];
         }
 
-        if (requestParameters.excludeVaultGroupIds) {
-            queryParameters['exclude_vault_group_ids'] = requestParameters.excludeVaultGroupIds;
+        if (requestParameters['vaultGroupIds'] != null) {
+            queryParameters['vault_group_ids'] = requestParameters['vaultGroupIds'];
+        }
+
+        if (requestParameters['excludeVaultGroupIds'] != null) {
+            queryParameters['exclude_vault_group_ids'] = requestParameters['excludeVaultGroupIds'];
+        }
+
+        if (requestParameters['originType'] != null) {
+            queryParameters['origin_type'] = requestParameters['originType'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -786,60 +886,84 @@ export class VaultsApi extends runtime.BaseAPI {
     async listVaultsWithAssetsApiV1VaultsBalancesGetRaw(requestParameters: ListVaultsWithAssetsApiV1VaultsBalancesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListVaultsWithAssetsResponse>> {
         const queryParameters: any = {};
 
-        if (requestParameters.includeAssetsInfo !== undefined) {
-            queryParameters['include_assets_info'] = requestParameters.includeAssetsInfo;
+        if (requestParameters['includeAssetsInfo'] != null) {
+            queryParameters['include_assets_info'] = requestParameters['includeAssetsInfo'];
         }
 
-        if (requestParameters.page !== undefined) {
-            queryParameters['page'] = requestParameters.page;
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
         }
 
-        if (requestParameters.size !== undefined) {
-            queryParameters['size'] = requestParameters.size;
+        if (requestParameters['size'] != null) {
+            queryParameters['size'] = requestParameters['size'];
         }
 
-        if (requestParameters.vaultIds) {
-            queryParameters['vault_ids'] = requestParameters.vaultIds;
+        if (requestParameters['responseType'] != null) {
+            queryParameters['response_type'] = requestParameters['responseType'];
         }
 
-        if (requestParameters.chains) {
-            queryParameters['chains'] = requestParameters.chains;
+        if (requestParameters['vaultIds'] != null) {
+            queryParameters['vault_ids'] = requestParameters['vaultIds'];
         }
 
-        if (requestParameters.search !== undefined) {
-            queryParameters['search'] = requestParameters.search;
+        if (requestParameters['chains'] != null) {
+            queryParameters['chains'] = requestParameters['chains'];
         }
 
-        if (requestParameters.vaultTypes) {
-            queryParameters['vault_types'] = requestParameters.vaultTypes;
+        if (requestParameters['search'] != null) {
+            queryParameters['search'] = requestParameters['search'];
         }
 
-        if (requestParameters.vaultStates) {
-            queryParameters['vault_states'] = requestParameters.vaultStates;
+        if (requestParameters['vaultTypes'] != null) {
+            queryParameters['vault_types'] = requestParameters['vaultTypes'];
         }
 
-        if (requestParameters.utxoVaultSubTypes) {
-            queryParameters['utxo_vault_sub_types'] = requestParameters.utxoVaultSubTypes;
+        if (requestParameters['vaultStates'] != null) {
+            queryParameters['vault_states'] = requestParameters['vaultStates'];
         }
 
-        if (requestParameters.keyHolderIds) {
-            queryParameters['key_holder_ids'] = requestParameters.keyHolderIds;
+        if (requestParameters['utxoVaultSubTypes'] != null) {
+            queryParameters['utxo_vault_sub_types'] = requestParameters['utxoVaultSubTypes'];
         }
 
-        if (requestParameters.hideEmpty !== undefined) {
-            queryParameters['hide_empty'] = requestParameters.hideEmpty;
+        if (requestParameters['keyHolderIds'] != null) {
+            queryParameters['key_holder_ids'] = requestParameters['keyHolderIds'];
         }
 
-        if (requestParameters.vaultGroupIds) {
-            queryParameters['vault_group_ids'] = requestParameters.vaultGroupIds;
+        if (requestParameters['hideEmpty'] != null) {
+            queryParameters['hide_empty'] = requestParameters['hideEmpty'];
         }
 
-        if (requestParameters.assetIds) {
-            queryParameters['asset_ids'] = requestParameters.assetIds;
+        if (requestParameters['vaultGroupIds'] != null) {
+            queryParameters['vault_group_ids'] = requestParameters['vaultGroupIds'];
         }
 
-        if (requestParameters.sortBy) {
-            queryParameters['sort_by'] = requestParameters.sortBy;
+        if (requestParameters['assetIds'] != null) {
+            queryParameters['asset_ids'] = requestParameters['assetIds'];
+        }
+
+        if (requestParameters['exchangeDepositEnabledForBlockchainAssetId'] != null) {
+            queryParameters['exchange_deposit_enabled_for_blockchain_asset_id'] = requestParameters['exchangeDepositEnabledForBlockchainAssetId'];
+        }
+
+        if (requestParameters['exchangeDepositEnabledForExchangeAssetId'] != null) {
+            queryParameters['exchange_deposit_enabled_for_exchange_asset_id'] = requestParameters['exchangeDepositEnabledForExchangeAssetId'];
+        }
+
+        if (requestParameters['exchangeDepositEnabledOnChain'] != null) {
+            queryParameters['exchange_deposit_enabled_on_chain'] = requestParameters['exchangeDepositEnabledOnChain'];
+        }
+
+        if (requestParameters['exchangeTypes'] != null) {
+            queryParameters['exchange_types'] = requestParameters['exchangeTypes'];
+        }
+
+        if (requestParameters['originType'] != null) {
+            queryParameters['origin_type'] = requestParameters['originType'];
+        }
+
+        if (requestParameters['sortBy'] != null) {
+            queryParameters['sort_by'] = requestParameters['sortBy'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -872,16 +996,15 @@ export class VaultsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Rename an existing vault address.
-     * Rename Vault Address
+     * Purge imported vaults.
+     * Purge Imported Vaults
      */
-    async renameVaultAddressApiV1VaultsAddressesIdNamePutRaw(requestParameters: RenameVaultAddressApiV1VaultsAddressesIdNamePutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling renameVaultAddressApiV1VaultsAddressesIdNamePut.');
-        }
-
-        if (requestParameters.renameVaultRequest === null || requestParameters.renameVaultRequest === undefined) {
-            throw new runtime.RequiredError('renameVaultRequest','Required parameter requestParameters.renameVaultRequest was null or undefined when calling renameVaultAddressApiV1VaultsAddressesIdNamePut.');
+    async purgeImportedVaultsApiV1VaultsPurgeImportedVaultsPostRaw(requestParameters: PurgeImportedVaultsApiV1VaultsPurgeImportedVaultsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PurgeImportedVaultsResponse>> {
+        if (requestParameters['purgeImportedVaultsRequest'] == null) {
+            throw new runtime.RequiredError(
+                'purgeImportedVaultsRequest',
+                'Required parameter "purgeImportedVaultsRequest" was null or undefined when calling purgeImportedVaultsApiV1VaultsPurgeImportedVaultsPost().'
+            );
         }
 
         const queryParameters: any = {};
@@ -899,11 +1022,64 @@ export class VaultsApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/v1/vaults/addresses/{id}/name`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/v1/vaults/purge-imported-vaults`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PurgeImportedVaultsRequestToJSON(requestParameters['purgeImportedVaultsRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PurgeImportedVaultsResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Purge imported vaults.
+     * Purge Imported Vaults
+     */
+    async purgeImportedVaultsApiV1VaultsPurgeImportedVaultsPost(requestParameters: PurgeImportedVaultsApiV1VaultsPurgeImportedVaultsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PurgeImportedVaultsResponse> {
+        const response = await this.purgeImportedVaultsApiV1VaultsPurgeImportedVaultsPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Rename an existing vault address.
+     * Rename Vault Address
+     */
+    async renameVaultAddressApiV1VaultsAddressesIdNamePutRaw(requestParameters: RenameVaultAddressApiV1VaultsAddressesIdNamePutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling renameVaultAddressApiV1VaultsAddressesIdNamePut().'
+            );
+        }
+
+        if (requestParameters['renameVaultRequest'] == null) {
+            throw new runtime.RequiredError(
+                'renameVaultRequest',
+                'Required parameter "renameVaultRequest" was null or undefined when calling renameVaultAddressApiV1VaultsAddressesIdNamePut().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/v1/vaults/addresses/{id}/name`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: RenameVaultRequestToJSON(requestParameters.renameVaultRequest),
+            body: RenameVaultRequestToJSON(requestParameters['renameVaultRequest']),
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -922,12 +1098,18 @@ export class VaultsApi extends runtime.BaseAPI {
      * Rename Vault
      */
     async renameVaultApiV1VaultsIdNamePutRaw(requestParameters: RenameVaultApiV1VaultsIdNamePutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling renameVaultApiV1VaultsIdNamePut.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling renameVaultApiV1VaultsIdNamePut().'
+            );
         }
 
-        if (requestParameters.renameVaultRequest === null || requestParameters.renameVaultRequest === undefined) {
-            throw new runtime.RequiredError('renameVaultRequest','Required parameter requestParameters.renameVaultRequest was null or undefined when calling renameVaultApiV1VaultsIdNamePut.');
+        if (requestParameters['renameVaultRequest'] == null) {
+            throw new runtime.RequiredError(
+                'renameVaultRequest',
+                'Required parameter "renameVaultRequest" was null or undefined when calling renameVaultApiV1VaultsIdNamePut().'
+            );
         }
 
         const queryParameters: any = {};
@@ -945,11 +1127,11 @@ export class VaultsApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/v1/vaults/{id}/name`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/v1/vaults/{id}/name`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: RenameVaultRequestToJSON(requestParameters.renameVaultRequest),
+            body: RenameVaultRequestToJSON(requestParameters['renameVaultRequest']),
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -968,8 +1150,11 @@ export class VaultsApi extends runtime.BaseAPI {
      * Restore Vault
      */
     async restoreVaultApiV1VaultsIdRestorePostRaw(requestParameters: RestoreVaultApiV1VaultsIdRestorePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling restoreVaultApiV1VaultsIdRestorePost.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling restoreVaultApiV1VaultsIdRestorePost().'
+            );
         }
 
         const queryParameters: any = {};
@@ -985,7 +1170,7 @@ export class VaultsApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/v1/vaults/{id}/restore`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/v1/vaults/{id}/restore`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -1007,8 +1192,11 @@ export class VaultsApi extends runtime.BaseAPI {
      * Sync Vault
      */
     async syncVaultApiV1VaultsIdSyncPutRaw(requestParameters: SyncVaultApiV1VaultsIdSyncPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling syncVaultApiV1VaultsIdSyncPut.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling syncVaultApiV1VaultsIdSyncPut().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1024,7 +1212,7 @@ export class VaultsApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/v1/vaults/{id}/sync`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/v1/vaults/{id}/sync`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -1046,12 +1234,18 @@ export class VaultsApi extends runtime.BaseAPI {
      * Update Vault Metadata
      */
     async updateVaultMetadataApiV1VaultsIdMetadataPutRaw(requestParameters: UpdateVaultMetadataApiV1VaultsIdMetadataPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateVaultMetadataApiV1VaultsIdMetadataPut.');
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling updateVaultMetadataApiV1VaultsIdMetadataPut().'
+            );
         }
 
-        if (requestParameters.updateVaultMetadataRequest === null || requestParameters.updateVaultMetadataRequest === undefined) {
-            throw new runtime.RequiredError('updateVaultMetadataRequest','Required parameter requestParameters.updateVaultMetadataRequest was null or undefined when calling updateVaultMetadataApiV1VaultsIdMetadataPut.');
+        if (requestParameters['updateVaultMetadataRequest'] == null) {
+            throw new runtime.RequiredError(
+                'updateVaultMetadataRequest',
+                'Required parameter "updateVaultMetadataRequest" was null or undefined when calling updateVaultMetadataApiV1VaultsIdMetadataPut().'
+            );
         }
 
         const queryParameters: any = {};
@@ -1069,11 +1263,11 @@ export class VaultsApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/api/v1/vaults/{id}/metadata`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/v1/vaults/{id}/metadata`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: UpdateVaultMetadataRequestToJSON(requestParameters.updateVaultMetadataRequest),
+            body: UpdateVaultMetadataRequestToJSON(requestParameters['updateVaultMetadataRequest']),
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -1088,190 +1282,3 @@ export class VaultsApi extends runtime.BaseAPI {
     }
 
 }
-
-/**
- * @export
- */
-export const GetVaultAssetsApiV1VaultsIdAssetsGetChainsEnum = {
-    aptosMainnet: 'aptos_mainnet',
-    aptosTestnet: 'aptos_testnet',
-    cosmosAgoric3: 'cosmos_agoric-3',
-    cosmosAkashnet2: 'cosmos_akashnet-2',
-    cosmosArchway1: 'cosmos_archway-1',
-    cosmosAxelarDojo1: 'cosmos_axelar-dojo-1',
-    cosmosCelestia: 'cosmos_celestia',
-    cosmosCosmoshub4: 'cosmos_cosmoshub-4',
-    cosmosDydxMainnet1: 'cosmos_dydx-mainnet-1',
-    cosmosDydxTestnet4: 'cosmos_dydx-testnet-4',
-    cosmosDymension11001: 'cosmos_dymension_1100-1',
-    cosmosNeutron1: 'cosmos_neutron-1',
-    cosmosNoble1: 'cosmos_noble-1',
-    cosmosOsmosis1: 'cosmos_osmosis-1',
-    cosmosPacific1: 'cosmos_pacific-1',
-    cosmosStride1: 'cosmos_stride-1',
-    evm1: 'evm_1',
-    evm5: 'evm_5',
-    evm10: 'evm_10',
-    evm16: 'evm_16',
-    evm56: 'evm_56',
-    evm100: 'evm_100',
-    evm137: 'evm_137',
-    evm169: 'evm_169',
-    evm250: 'evm_250',
-    evm324: 'evm_324',
-    evm1030: 'evm_1030',
-    evm1100: 'evm_1100',
-    evm1101: 'evm_1101',
-    evm1329: 'evm_1329',
-    evm1729: 'evm_1729',
-    evm2222: 'evm_2222',
-    evm4200: 'evm_4200',
-    evm5000: 'evm_5000',
-    evm7000: 'evm_7000',
-    evm7700: 'evm_7700',
-    evm8453: 'evm_8453',
-    evm17000: 'evm_17000',
-    evm80001: 'evm_80001',
-    evm42161: 'evm_42161',
-    evm43114: 'evm_43114',
-    evm59144: 'evm_59144',
-    evm81457: 'evm_81457',
-    evm421614: 'evm_421614',
-    evm534352: 'evm_534352',
-    evm660279: 'evm_660279',
-    evm810180: 'evm_810180',
-    evm11155111: 'evm_11155111',
-    evmEthereumMainnet: 'evm_ethereum_mainnet',
-    evmEthereumGoerli: 'evm_ethereum_goerli',
-    evmOptimismMainnet: 'evm_optimism_mainnet',
-    evmFlareTestnet: 'evm_flare_testnet',
-    evmBscMainnet: 'evm_bsc_mainnet',
-    evmGnosisMainnet: 'evm_gnosis_mainnet',
-    evmPolygonMainnet: 'evm_polygon_mainnet',
-    evmMantaPacificMainnet: 'evm_manta_pacific_mainnet',
-    evmFantomMainnet: 'evm_fantom_mainnet',
-    evmZksyncEraMainnet: 'evm_zksync_era_mainnet',
-    evmConfluxMainnet: 'evm_conflux_mainnet',
-    evmDymensionMainnet: 'evm_dymension_mainnet',
-    evmPolygonZkevmMainnet: 'evm_polygon_zkevm_mainnet',
-    evmSeiMainnet: 'evm_sei_mainnet',
-    evmReyaMainnet: 'evm_reya_mainnet',
-    evmKavaMainnet: 'evm_kava_mainnet',
-    evmMerlinMainnet: 'evm_merlin_mainnet',
-    evmMantleMainnet: 'evm_mantle_mainnet',
-    evmZetaMainnet: 'evm_zeta_mainnet',
-    evmCantoMainnet: 'evm_canto_mainnet',
-    evmBaseMainnet: 'evm_base_mainnet',
-    evmEthereumHolesky: 'evm_ethereum_holesky',
-    evmPolygonMumbai: 'evm_polygon_mumbai',
-    evmArbitrumMainnet: 'evm_arbitrum_mainnet',
-    evmAvalancheChain: 'evm_avalanche_chain',
-    evmLineaMainnet: 'evm_linea_mainnet',
-    evmBlastMainnet: 'evm_blast_mainnet',
-    evmArbitrumSepolia: 'evm_arbitrum_sepolia',
-    evmScrollMainnet: 'evm_scroll_mainnet',
-    evmXaiMainnet: 'evm_xai_mainnet',
-    evmZklinkNovaMainnet: 'evm_zklink_nova_mainnet',
-    evmEthereumSepolia: 'evm_ethereum_sepolia',
-    solanaMainnet: 'solana_mainnet',
-    solanaDevnet: 'solana_devnet',
-    suiMainnet: 'sui_mainnet',
-    suiTestnet: 'sui_testnet',
-    tonMainnet: 'ton_mainnet',
-    bitcoinMainnet: 'bitcoin_mainnet',
-    bitcoinTestnet: 'bitcoin_testnet'
-} as const;
-export type GetVaultAssetsApiV1VaultsIdAssetsGetChainsEnum = typeof GetVaultAssetsApiV1VaultsIdAssetsGetChainsEnum[keyof typeof GetVaultAssetsApiV1VaultsIdAssetsGetChainsEnum];
-/**
- * @export
- */
-export const ListVaultsWithAssetsApiV1VaultsBalancesGetChainsEnum = {
-    aptosMainnet: 'aptos_mainnet',
-    aptosTestnet: 'aptos_testnet',
-    cosmosAgoric3: 'cosmos_agoric-3',
-    cosmosAkashnet2: 'cosmos_akashnet-2',
-    cosmosArchway1: 'cosmos_archway-1',
-    cosmosAxelarDojo1: 'cosmos_axelar-dojo-1',
-    cosmosCelestia: 'cosmos_celestia',
-    cosmosCosmoshub4: 'cosmos_cosmoshub-4',
-    cosmosDydxMainnet1: 'cosmos_dydx-mainnet-1',
-    cosmosDydxTestnet4: 'cosmos_dydx-testnet-4',
-    cosmosDymension11001: 'cosmos_dymension_1100-1',
-    cosmosNeutron1: 'cosmos_neutron-1',
-    cosmosNoble1: 'cosmos_noble-1',
-    cosmosOsmosis1: 'cosmos_osmosis-1',
-    cosmosPacific1: 'cosmos_pacific-1',
-    cosmosStride1: 'cosmos_stride-1',
-    evm1: 'evm_1',
-    evm5: 'evm_5',
-    evm10: 'evm_10',
-    evm16: 'evm_16',
-    evm56: 'evm_56',
-    evm100: 'evm_100',
-    evm137: 'evm_137',
-    evm169: 'evm_169',
-    evm250: 'evm_250',
-    evm324: 'evm_324',
-    evm1030: 'evm_1030',
-    evm1100: 'evm_1100',
-    evm1101: 'evm_1101',
-    evm1329: 'evm_1329',
-    evm1729: 'evm_1729',
-    evm2222: 'evm_2222',
-    evm4200: 'evm_4200',
-    evm5000: 'evm_5000',
-    evm7000: 'evm_7000',
-    evm7700: 'evm_7700',
-    evm8453: 'evm_8453',
-    evm17000: 'evm_17000',
-    evm80001: 'evm_80001',
-    evm42161: 'evm_42161',
-    evm43114: 'evm_43114',
-    evm59144: 'evm_59144',
-    evm81457: 'evm_81457',
-    evm421614: 'evm_421614',
-    evm534352: 'evm_534352',
-    evm660279: 'evm_660279',
-    evm810180: 'evm_810180',
-    evm11155111: 'evm_11155111',
-    evmEthereumMainnet: 'evm_ethereum_mainnet',
-    evmEthereumGoerli: 'evm_ethereum_goerli',
-    evmOptimismMainnet: 'evm_optimism_mainnet',
-    evmFlareTestnet: 'evm_flare_testnet',
-    evmBscMainnet: 'evm_bsc_mainnet',
-    evmGnosisMainnet: 'evm_gnosis_mainnet',
-    evmPolygonMainnet: 'evm_polygon_mainnet',
-    evmMantaPacificMainnet: 'evm_manta_pacific_mainnet',
-    evmFantomMainnet: 'evm_fantom_mainnet',
-    evmZksyncEraMainnet: 'evm_zksync_era_mainnet',
-    evmConfluxMainnet: 'evm_conflux_mainnet',
-    evmDymensionMainnet: 'evm_dymension_mainnet',
-    evmPolygonZkevmMainnet: 'evm_polygon_zkevm_mainnet',
-    evmSeiMainnet: 'evm_sei_mainnet',
-    evmReyaMainnet: 'evm_reya_mainnet',
-    evmKavaMainnet: 'evm_kava_mainnet',
-    evmMerlinMainnet: 'evm_merlin_mainnet',
-    evmMantleMainnet: 'evm_mantle_mainnet',
-    evmZetaMainnet: 'evm_zeta_mainnet',
-    evmCantoMainnet: 'evm_canto_mainnet',
-    evmBaseMainnet: 'evm_base_mainnet',
-    evmEthereumHolesky: 'evm_ethereum_holesky',
-    evmPolygonMumbai: 'evm_polygon_mumbai',
-    evmArbitrumMainnet: 'evm_arbitrum_mainnet',
-    evmAvalancheChain: 'evm_avalanche_chain',
-    evmLineaMainnet: 'evm_linea_mainnet',
-    evmBlastMainnet: 'evm_blast_mainnet',
-    evmArbitrumSepolia: 'evm_arbitrum_sepolia',
-    evmScrollMainnet: 'evm_scroll_mainnet',
-    evmXaiMainnet: 'evm_xai_mainnet',
-    evmZklinkNovaMainnet: 'evm_zklink_nova_mainnet',
-    evmEthereumSepolia: 'evm_ethereum_sepolia',
-    solanaMainnet: 'solana_mainnet',
-    solanaDevnet: 'solana_devnet',
-    suiMainnet: 'sui_mainnet',
-    suiTestnet: 'sui_testnet',
-    tonMainnet: 'ton_mainnet',
-    bitcoinMainnet: 'bitcoin_mainnet',
-    bitcoinTestnet: 'bitcoin_testnet'
-} as const;
-export type ListVaultsWithAssetsApiV1VaultsBalancesGetChainsEnum = typeof ListVaultsWithAssetsApiV1VaultsBalancesGetChainsEnum[keyof typeof ListVaultsWithAssetsApiV1VaultsBalancesGetChainsEnum];

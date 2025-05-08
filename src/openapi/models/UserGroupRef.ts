@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { UserGroupState } from './UserGroupState';
 import {
     UserGroupStateFromJSON,
     UserGroupStateFromJSONTyped,
     UserGroupStateToJSON,
+    UserGroupStateToJSONTyped,
 } from './UserGroupState';
 
 /**
@@ -46,23 +47,30 @@ export interface UserGroupRef {
     usersCount: number;
     /**
      * 
+     * @type {number}
+     * @memberof UserGroupRef
+     */
+    adminsCount: number;
+    /**
+     * 
      * @type {UserGroupState}
      * @memberof UserGroupRef
      */
     state: UserGroupState;
 }
 
+
+
 /**
  * Check if a given object implements the UserGroupRef interface.
  */
-export function instanceOfUserGroupRef(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "usersCount" in value;
-    isInstance = isInstance && "state" in value;
-
-    return isInstance;
+export function instanceOfUserGroupRef(value: object): value is UserGroupRef {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('usersCount' in value) || value['usersCount'] === undefined) return false;
+    if (!('adminsCount' in value) || value['adminsCount'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    return true;
 }
 
 export function UserGroupRefFromJSON(json: any): UserGroupRef {
@@ -70,7 +78,7 @@ export function UserGroupRefFromJSON(json: any): UserGroupRef {
 }
 
 export function UserGroupRefFromJSONTyped(json: any, ignoreDiscriminator: boolean): UserGroupRef {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -78,23 +86,27 @@ export function UserGroupRefFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'id': json['id'],
         'name': json['name'],
         'usersCount': json['users_count'],
+        'adminsCount': json['admins_count'],
         'state': UserGroupStateFromJSON(json['state']),
     };
 }
 
-export function UserGroupRefToJSON(value?: UserGroupRef | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UserGroupRefToJSON(json: any): UserGroupRef {
+    return UserGroupRefToJSONTyped(json, false);
+}
+
+export function UserGroupRefToJSONTyped(value?: UserGroupRef | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'name': value.name,
-        'users_count': value.usersCount,
-        'state': UserGroupStateToJSON(value.state),
+        'id': value['id'],
+        'name': value['name'],
+        'users_count': value['usersCount'],
+        'admins_count': value['adminsCount'],
+        'state': UserGroupStateToJSON(value['state']),
     };
 }
 

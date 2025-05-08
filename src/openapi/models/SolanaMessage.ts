@@ -12,61 +12,70 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { EnrichedSolanaAddress } from './EnrichedSolanaAddress';
-import {
-    EnrichedSolanaAddressFromJSON,
-    EnrichedSolanaAddressFromJSONTyped,
-    EnrichedSolanaAddressToJSON,
-} from './EnrichedSolanaAddress';
-import type { EnrichedSolanaChain } from './EnrichedSolanaChain';
-import {
-    EnrichedSolanaChainFromJSON,
-    EnrichedSolanaChainFromJSONTyped,
-    EnrichedSolanaChainToJSON,
-} from './EnrichedSolanaChain';
+import { mapValues } from '../runtime';
 import type { ManagedTransactionData } from './ManagedTransactionData';
 import {
     ManagedTransactionDataFromJSON,
     ManagedTransactionDataFromJSONTyped,
     ManagedTransactionDataToJSON,
+    ManagedTransactionDataToJSONTyped,
 } from './ManagedTransactionData';
-import type { Signature } from './Signature';
-import {
-    SignatureFromJSON,
-    SignatureFromJSONTyped,
-    SignatureToJSON,
-} from './Signature';
-import type { SolanaMessageState } from './SolanaMessageState';
-import {
-    SolanaMessageStateFromJSON,
-    SolanaMessageStateFromJSONTyped,
-    SolanaMessageStateToJSON,
-} from './SolanaMessageState';
-import type { SolanaMessageStateChange } from './SolanaMessageStateChange';
-import {
-    SolanaMessageStateChangeFromJSON,
-    SolanaMessageStateChangeFromJSONTyped,
-    SolanaMessageStateChangeToJSON,
-} from './SolanaMessageStateChange';
-import type { SolanaMessageType } from './SolanaMessageType';
-import {
-    SolanaMessageTypeFromJSON,
-    SolanaMessageTypeFromJSONTyped,
-    SolanaMessageTypeToJSON,
-} from './SolanaMessageType';
-import type { TransactionDirection } from './TransactionDirection';
-import {
-    TransactionDirectionFromJSON,
-    TransactionDirectionFromJSONTyped,
-    TransactionDirectionToJSON,
-} from './TransactionDirection';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
     TransactionSpamStateFromJSONTyped,
     TransactionSpamStateToJSON,
+    TransactionSpamStateToJSONTyped,
 } from './TransactionSpamState';
+import type { TransactionDirection } from './TransactionDirection';
+import {
+    TransactionDirectionFromJSON,
+    TransactionDirectionFromJSONTyped,
+    TransactionDirectionToJSON,
+    TransactionDirectionToJSONTyped,
+} from './TransactionDirection';
+import type { SolanaMessageType } from './SolanaMessageType';
+import {
+    SolanaMessageTypeFromJSON,
+    SolanaMessageTypeFromJSONTyped,
+    SolanaMessageTypeToJSON,
+    SolanaMessageTypeToJSONTyped,
+} from './SolanaMessageType';
+import type { EnrichedSolanaAddress } from './EnrichedSolanaAddress';
+import {
+    EnrichedSolanaAddressFromJSON,
+    EnrichedSolanaAddressFromJSONTyped,
+    EnrichedSolanaAddressToJSON,
+    EnrichedSolanaAddressToJSONTyped,
+} from './EnrichedSolanaAddress';
+import type { Signature } from './Signature';
+import {
+    SignatureFromJSON,
+    SignatureFromJSONTyped,
+    SignatureToJSON,
+    SignatureToJSONTyped,
+} from './Signature';
+import type { EnrichedSolanaChain } from './EnrichedSolanaChain';
+import {
+    EnrichedSolanaChainFromJSON,
+    EnrichedSolanaChainFromJSONTyped,
+    EnrichedSolanaChainToJSON,
+    EnrichedSolanaChainToJSONTyped,
+} from './EnrichedSolanaChain';
+import type { NonPushableTransactionStateChange } from './NonPushableTransactionStateChange';
+import {
+    NonPushableTransactionStateChangeFromJSON,
+    NonPushableTransactionStateChangeFromJSONTyped,
+    NonPushableTransactionStateChangeToJSON,
+    NonPushableTransactionStateChangeToJSONTyped,
+} from './NonPushableTransactionStateChange';
+import type { NonPushableTransactionState } from './NonPushableTransactionState';
+import {
+    NonPushableTransactionStateFromJSON,
+    NonPushableTransactionStateFromJSONTyped,
+    NonPushableTransactionStateToJSON,
+    NonPushableTransactionStateToJSONTyped,
+} from './NonPushableTransactionState';
 
 /**
  * 
@@ -124,6 +133,24 @@ export interface SolanaMessage {
     direction: TransactionDirection;
     /**
      * 
+     * @type {boolean}
+     * @memberof SolanaMessage
+     */
+    signedExternally?: boolean;
+    /**
+     * 
+     * @type {NonPushableTransactionState}
+     * @memberof SolanaMessage
+     */
+    state: NonPushableTransactionState;
+    /**
+     * 
+     * @type {Array<NonPushableTransactionStateChange>}
+     * @memberof SolanaMessage
+     */
+    stateChanges: Array<NonPushableTransactionStateChange>;
+    /**
+     * 
      * @type {string}
      * @memberof SolanaMessage
      */
@@ -134,18 +161,6 @@ export interface SolanaMessage {
      * @memberof SolanaMessage
      */
     solanaMessageType: SolanaMessageType;
-    /**
-     * 
-     * @type {SolanaMessageState}
-     * @memberof SolanaMessage
-     */
-    state: SolanaMessageState;
-    /**
-     * 
-     * @type {Array<SolanaMessageStateChange>}
-     * @memberof SolanaMessage
-     */
-    stateChanges: Array<SolanaMessageStateChange>;
     /**
      * 
      * @type {string}
@@ -185,23 +200,21 @@ export type SolanaMessageTypeEnum = typeof SolanaMessageTypeEnum[keyof typeof So
 /**
  * Check if a given object implements the SolanaMessage interface.
  */
-export function instanceOfSolanaMessage(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "signatures" in value;
-    isInstance = isInstance && "direction" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "solanaMessageType" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "stateChanges" in value;
-    isInstance = isInstance && "stringData" in value;
-    isInstance = isInstance && "rawData" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "sender" in value;
-
-    return isInstance;
+export function instanceOfSolanaMessage(value: object): value is SolanaMessage {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('signatures' in value) || value['signatures'] === undefined) return false;
+    if (!('direction' in value) || value['direction'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('stateChanges' in value) || value['stateChanges'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('solanaMessageType' in value) || value['solanaMessageType'] === undefined) return false;
+    if (!('stringData' in value) || value['stringData'] === undefined) return false;
+    if (!('rawData' in value) || value['rawData'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    return true;
 }
 
 export function SolanaMessageFromJSON(json: any): SolanaMessage {
@@ -209,7 +222,7 @@ export function SolanaMessageFromJSON(json: any): SolanaMessage {
 }
 
 export function SolanaMessageFromJSONTyped(json: any, ignoreDiscriminator: boolean): SolanaMessage {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -217,15 +230,16 @@ export function SolanaMessageFromJSONTyped(json: any, ignoreDiscriminator: boole
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
-        'managedTransactionData': !exists(json, 'managed_transaction_data') ? undefined : ManagedTransactionDataFromJSON(json['managed_transaction_data']),
+        'managedTransactionData': json['managed_transaction_data'] == null ? undefined : ManagedTransactionDataFromJSON(json['managed_transaction_data']),
         'signatures': ((json['signatures'] as Array<any>).map(SignatureFromJSON)),
-        'note': !exists(json, 'note') ? undefined : json['note'],
-        'spamState': !exists(json, 'spam_state') ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
+        'note': json['note'] == null ? undefined : json['note'],
+        'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
+        'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'state': NonPushableTransactionStateFromJSON(json['state']),
+        'stateChanges': ((json['state_changes'] as Array<any>).map(NonPushableTransactionStateChangeFromJSON)),
         'type': json['type'],
         'solanaMessageType': SolanaMessageTypeFromJSON(json['solana_message_type']),
-        'state': SolanaMessageStateFromJSON(json['state']),
-        'stateChanges': ((json['state_changes'] as Array<any>).map(SolanaMessageStateChangeFromJSON)),
         'stringData': json['string_data'],
         'rawData': json['raw_data'],
         'chain': EnrichedSolanaChainFromJSON(json['chain']),
@@ -233,31 +247,34 @@ export function SolanaMessageFromJSONTyped(json: any, ignoreDiscriminator: boole
     };
 }
 
-export function SolanaMessageToJSON(value?: SolanaMessage | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SolanaMessageToJSON(json: any): SolanaMessage {
+    return SolanaMessageToJSONTyped(json, false);
+}
+
+export function SolanaMessageToJSONTyped(value?: SolanaMessage | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'managed_transaction_data': ManagedTransactionDataToJSON(value.managedTransactionData),
-        'signatures': ((value.signatures as Array<any>).map(SignatureToJSON)),
-        'note': value.note,
-        'spam_state': TransactionSpamStateToJSON(value.spamState),
-        'direction': TransactionDirectionToJSON(value.direction),
-        'type': value.type,
-        'solana_message_type': SolanaMessageTypeToJSON(value.solanaMessageType),
-        'state': SolanaMessageStateToJSON(value.state),
-        'state_changes': ((value.stateChanges as Array<any>).map(SolanaMessageStateChangeToJSON)),
-        'string_data': value.stringData,
-        'raw_data': value.rawData,
-        'chain': EnrichedSolanaChainToJSON(value.chain),
-        'sender': EnrichedSolanaAddressToJSON(value.sender),
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'managed_transaction_data': ManagedTransactionDataToJSON(value['managedTransactionData']),
+        'signatures': ((value['signatures'] as Array<any>).map(SignatureToJSON)),
+        'note': value['note'],
+        'spam_state': TransactionSpamStateToJSON(value['spamState']),
+        'direction': TransactionDirectionToJSON(value['direction']),
+        'signed_externally': value['signedExternally'],
+        'state': NonPushableTransactionStateToJSON(value['state']),
+        'state_changes': ((value['stateChanges'] as Array<any>).map(NonPushableTransactionStateChangeToJSON)),
+        'type': value['type'],
+        'solana_message_type': SolanaMessageTypeToJSON(value['solanaMessageType']),
+        'string_data': value['stringData'],
+        'raw_data': value['rawData'],
+        'chain': EnrichedSolanaChainToJSON(value['chain']),
+        'sender': EnrichedSolanaAddressToJSON(value['sender']),
     };
 }
 

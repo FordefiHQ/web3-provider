@@ -12,109 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { AptosMessageState } from './AptosMessageState';
+import { mapValues } from '../runtime';
+import type { ExchangeTransactionState } from './ExchangeTransactionState';
 import {
-    AptosMessageStateFromJSON,
-    AptosMessageStateFromJSONTyped,
-    AptosMessageStateToJSON,
-} from './AptosMessageState';
-import type { AptosTransactionState } from './AptosTransactionState';
+    ExchangeTransactionStateFromJSON,
+    ExchangeTransactionStateFromJSONTyped,
+    ExchangeTransactionStateToJSON,
+    ExchangeTransactionStateToJSONTyped,
+} from './ExchangeTransactionState';
+import type { PushableTransactionState } from './PushableTransactionState';
 import {
-    AptosTransactionStateFromJSON,
-    AptosTransactionStateFromJSONTyped,
-    AptosTransactionStateToJSON,
-} from './AptosTransactionState';
-import type { BlackBoxSignatureState } from './BlackBoxSignatureState';
+    PushableTransactionStateFromJSON,
+    PushableTransactionStateFromJSONTyped,
+    PushableTransactionStateToJSON,
+    PushableTransactionStateToJSONTyped,
+} from './PushableTransactionState';
+import type { NonPushableTransactionState } from './NonPushableTransactionState';
 import {
-    BlackBoxSignatureStateFromJSON,
-    BlackBoxSignatureStateFromJSONTyped,
-    BlackBoxSignatureStateToJSON,
-} from './BlackBoxSignatureState';
-import type { CosmosMessageState } from './CosmosMessageState';
-import {
-    CosmosMessageStateFromJSON,
-    CosmosMessageStateFromJSONTyped,
-    CosmosMessageStateToJSON,
-} from './CosmosMessageState';
-import type { CosmosTransactionState } from './CosmosTransactionState';
-import {
-    CosmosTransactionStateFromJSON,
-    CosmosTransactionStateFromJSONTyped,
-    CosmosTransactionStateToJSON,
-} from './CosmosTransactionState';
-import type { EvmMessageState } from './EvmMessageState';
-import {
-    EvmMessageStateFromJSON,
-    EvmMessageStateFromJSONTyped,
-    EvmMessageStateToJSON,
-} from './EvmMessageState';
-import type { EvmTransactionState } from './EvmTransactionState';
-import {
-    EvmTransactionStateFromJSON,
-    EvmTransactionStateFromJSONTyped,
-    EvmTransactionStateToJSON,
-} from './EvmTransactionState';
-import type { SolanaMessageState } from './SolanaMessageState';
-import {
-    SolanaMessageStateFromJSON,
-    SolanaMessageStateFromJSONTyped,
-    SolanaMessageStateToJSON,
-} from './SolanaMessageState';
-import type { SolanaTransactionState } from './SolanaTransactionState';
-import {
-    SolanaTransactionStateFromJSON,
-    SolanaTransactionStateFromJSONTyped,
-    SolanaTransactionStateToJSON,
-} from './SolanaTransactionState';
-import type { StarknetMessageState } from './StarknetMessageState';
-import {
-    StarknetMessageStateFromJSON,
-    StarknetMessageStateFromJSONTyped,
-    StarknetMessageStateToJSON,
-} from './StarknetMessageState';
-import type { StarknetTransactionState } from './StarknetTransactionState';
-import {
-    StarknetTransactionStateFromJSON,
-    StarknetTransactionStateFromJSONTyped,
-    StarknetTransactionStateToJSON,
-} from './StarknetTransactionState';
-import type { SuiMessageState } from './SuiMessageState';
-import {
-    SuiMessageStateFromJSON,
-    SuiMessageStateFromJSONTyped,
-    SuiMessageStateToJSON,
-} from './SuiMessageState';
-import type { SuiTransactionState } from './SuiTransactionState';
-import {
-    SuiTransactionStateFromJSON,
-    SuiTransactionStateFromJSONTyped,
-    SuiTransactionStateToJSON,
-} from './SuiTransactionState';
-import type { TonMessageState } from './TonMessageState';
-import {
-    TonMessageStateFromJSON,
-    TonMessageStateFromJSONTyped,
-    TonMessageStateToJSON,
-} from './TonMessageState';
-import type { TonTransactionState } from './TonTransactionState';
-import {
-    TonTransactionStateFromJSON,
-    TonTransactionStateFromJSONTyped,
-    TonTransactionStateToJSON,
-} from './TonTransactionState';
-import type { UtxoMessageState } from './UtxoMessageState';
-import {
-    UtxoMessageStateFromJSON,
-    UtxoMessageStateFromJSONTyped,
-    UtxoMessageStateToJSON,
-} from './UtxoMessageState';
-import type { UtxoTransactionState } from './UtxoTransactionState';
-import {
-    UtxoTransactionStateFromJSON,
-    UtxoTransactionStateFromJSONTyped,
-    UtxoTransactionStateToJSON,
-} from './UtxoTransactionState';
+    NonPushableTransactionStateFromJSON,
+    NonPushableTransactionStateFromJSONTyped,
+    NonPushableTransactionStateToJSON,
+    NonPushableTransactionStateToJSONTyped,
+} from './NonPushableTransactionState';
 
 /**
  * 
@@ -127,10 +46,8 @@ export interface CreateTransactionWithWaitResponseState {
 /**
  * Check if a given object implements the CreateTransactionWithWaitResponseState interface.
  */
-export function instanceOfCreateTransactionWithWaitResponseState(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfCreateTransactionWithWaitResponseState(value: object): value is CreateTransactionWithWaitResponseState {
+    return true;
 }
 
 export function CreateTransactionWithWaitResponseStateFromJSON(json: any): CreateTransactionWithWaitResponseState {
@@ -141,7 +58,11 @@ export function CreateTransactionWithWaitResponseStateFromJSONTyped(json: any, i
     return json;
 }
 
-export function CreateTransactionWithWaitResponseStateToJSON(value?: CreateTransactionWithWaitResponseState | null): any {
+export function CreateTransactionWithWaitResponseStateToJSON(json: any): CreateTransactionWithWaitResponseState {
+    return CreateTransactionWithWaitResponseStateToJSONTyped(json, false);
+}
+
+export function CreateTransactionWithWaitResponseStateToJSONTyped(value?: CreateTransactionWithWaitResponseState | null, ignoreDiscriminator: boolean = false): any {
     return value;
 }
 

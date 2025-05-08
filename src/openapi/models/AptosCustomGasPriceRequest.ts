@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type AptosCustomGasPriceRequestTypeEnum = typeof AptosCustomGasPriceReque
 /**
  * Check if a given object implements the AptosCustomGasPriceRequest interface.
  */
-export function instanceOfAptosCustomGasPriceRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "price" in value;
-
-    return isInstance;
+export function instanceOfAptosCustomGasPriceRequest(value: object): value is AptosCustomGasPriceRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('price' in value) || value['price'] === undefined) return false;
+    return true;
 }
 
 export function AptosCustomGasPriceRequestFromJSON(json: any): AptosCustomGasPriceRequest {
@@ -59,7 +57,7 @@ export function AptosCustomGasPriceRequestFromJSON(json: any): AptosCustomGasPri
 }
 
 export function AptosCustomGasPriceRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosCustomGasPriceRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function AptosCustomGasPriceRequestFromJSONTyped(json: any, ignoreDiscrim
     };
 }
 
-export function AptosCustomGasPriceRequestToJSON(value?: AptosCustomGasPriceRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AptosCustomGasPriceRequestToJSON(json: any): AptosCustomGasPriceRequest {
+    return AptosCustomGasPriceRequestToJSONTyped(json, false);
+}
+
+export function AptosCustomGasPriceRequestToJSONTyped(value?: AptosCustomGasPriceRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'price': value.price,
+        'type': value['type'],
+        'price': value['price'],
     };
 }
 

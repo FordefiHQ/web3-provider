@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -36,11 +36,9 @@ export interface IssueInternalAuthTokenRequest {
 /**
  * Check if a given object implements the IssueInternalAuthTokenRequest interface.
  */
-export function instanceOfIssueInternalAuthTokenRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "sub" in value;
-
-    return isInstance;
+export function instanceOfIssueInternalAuthTokenRequest(value: object): value is IssueInternalAuthTokenRequest {
+    if (!('sub' in value) || value['sub'] === undefined) return false;
+    return true;
 }
 
 export function IssueInternalAuthTokenRequestFromJSON(json: any): IssueInternalAuthTokenRequest {
@@ -48,27 +46,29 @@ export function IssueInternalAuthTokenRequestFromJSON(json: any): IssueInternalA
 }
 
 export function IssueInternalAuthTokenRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): IssueInternalAuthTokenRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'sub': json['sub'],
-        'expiration': !exists(json, 'expiration') ? undefined : (new Date(json['expiration'])),
+        'expiration': json['expiration'] == null ? undefined : (new Date(json['expiration'])),
     };
 }
 
-export function IssueInternalAuthTokenRequestToJSON(value?: IssueInternalAuthTokenRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function IssueInternalAuthTokenRequestToJSON(json: any): IssueInternalAuthTokenRequest {
+    return IssueInternalAuthTokenRequestToJSONTyped(json, false);
+}
+
+export function IssueInternalAuthTokenRequestToJSONTyped(value?: IssueInternalAuthTokenRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'sub': value.sub,
-        'expiration': value.expiration === undefined ? undefined : (value.expiration.toISOString()),
+        'sub': value['sub'],
+        'expiration': value['expiration'] == null ? undefined : ((value['expiration']).toISOString()),
     };
 }
 

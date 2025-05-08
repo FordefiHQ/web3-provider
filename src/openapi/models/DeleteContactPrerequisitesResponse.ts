@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { DeleteContactPrerequisite } from './DeleteContactPrerequisite';
 import {
     DeleteContactPrerequisiteFromJSON,
     DeleteContactPrerequisiteFromJSONTyped,
     DeleteContactPrerequisiteToJSON,
+    DeleteContactPrerequisiteToJSONTyped,
 } from './DeleteContactPrerequisite';
 
 /**
@@ -37,11 +38,9 @@ export interface DeleteContactPrerequisitesResponse {
 /**
  * Check if a given object implements the DeleteContactPrerequisitesResponse interface.
  */
-export function instanceOfDeleteContactPrerequisitesResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "prerequisites" in value;
-
-    return isInstance;
+export function instanceOfDeleteContactPrerequisitesResponse(value: object): value is DeleteContactPrerequisitesResponse {
+    if (!('prerequisites' in value) || value['prerequisites'] === undefined) return false;
+    return true;
 }
 
 export function DeleteContactPrerequisitesResponseFromJSON(json: any): DeleteContactPrerequisitesResponse {
@@ -49,7 +48,7 @@ export function DeleteContactPrerequisitesResponseFromJSON(json: any): DeleteCon
 }
 
 export function DeleteContactPrerequisitesResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): DeleteContactPrerequisitesResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -58,16 +57,18 @@ export function DeleteContactPrerequisitesResponseFromJSONTyped(json: any, ignor
     };
 }
 
-export function DeleteContactPrerequisitesResponseToJSON(value?: DeleteContactPrerequisitesResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function DeleteContactPrerequisitesResponseToJSON(json: any): DeleteContactPrerequisitesResponse {
+    return DeleteContactPrerequisitesResponseToJSONTyped(json, false);
+}
+
+export function DeleteContactPrerequisitesResponseToJSONTyped(value?: DeleteContactPrerequisitesResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'prerequisites': ((value.prerequisites as Array<any>).map(DeleteContactPrerequisiteToJSON)),
+        'prerequisites': ((value['prerequisites'] as Array<any>).map(DeleteContactPrerequisiteToJSON)),
     };
 }
 

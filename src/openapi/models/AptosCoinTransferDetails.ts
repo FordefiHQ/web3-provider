@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedAptosAddress } from './EnrichedAptosAddress';
 import {
     EnrichedAptosAddressFromJSON,
     EnrichedAptosAddressFromJSONTyped,
     EnrichedAptosAddressToJSON,
+    EnrichedAptosAddressToJSONTyped,
 } from './EnrichedAptosAddress';
 
 /**
@@ -65,13 +66,11 @@ export type AptosCoinTransferDetailsTypeEnum = typeof AptosCoinTransferDetailsTy
 /**
  * Check if a given object implements the AptosCoinTransferDetails interface.
  */
-export function instanceOfAptosCoinTransferDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "sender" in value;
-    isInstance = isInstance && "recipient" in value;
-
-    return isInstance;
+export function instanceOfAptosCoinTransferDetails(value: object): value is AptosCoinTransferDetails {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    if (!('recipient' in value) || value['recipient'] === undefined) return false;
+    return true;
 }
 
 export function AptosCoinTransferDetailsFromJSON(json: any): AptosCoinTransferDetails {
@@ -79,7 +78,7 @@ export function AptosCoinTransferDetailsFromJSON(json: any): AptosCoinTransferDe
 }
 
 export function AptosCoinTransferDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosCoinTransferDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -87,23 +86,25 @@ export function AptosCoinTransferDetailsFromJSONTyped(json: any, ignoreDiscrimin
         'type': json['type'],
         'sender': EnrichedAptosAddressFromJSON(json['sender']),
         'recipient': EnrichedAptosAddressFromJSON(json['recipient']),
-        'isInternal': !exists(json, 'is_internal') ? undefined : json['is_internal'],
+        'isInternal': json['is_internal'] == null ? undefined : json['is_internal'],
     };
 }
 
-export function AptosCoinTransferDetailsToJSON(value?: AptosCoinTransferDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AptosCoinTransferDetailsToJSON(json: any): AptosCoinTransferDetails {
+    return AptosCoinTransferDetailsToJSONTyped(json, false);
+}
+
+export function AptosCoinTransferDetailsToJSONTyped(value?: AptosCoinTransferDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'sender': EnrichedAptosAddressToJSON(value.sender),
-        'recipient': EnrichedAptosAddressToJSON(value.recipient),
-        'is_internal': value.isInternal,
+        'type': value['type'],
+        'sender': EnrichedAptosAddressToJSON(value['sender']),
+        'recipient': EnrichedAptosAddressToJSON(value['recipient']),
+        'is_internal': value['isInternal'],
     };
 }
 

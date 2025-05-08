@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { PsbtInputSignerIdentity } from './PsbtInputSignerIdentity';
 import {
     PsbtInputSignerIdentityFromJSON,
     PsbtInputSignerIdentityFromJSONTyped,
     PsbtInputSignerIdentityToJSON,
+    PsbtInputSignerIdentityToJSONTyped,
 } from './PsbtInputSignerIdentity';
 
 /**
@@ -55,12 +56,10 @@ export interface PsbtInput {
 /**
  * Check if a given object implements the PsbtInput interface.
  */
-export function instanceOfPsbtInput(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "index" in value;
-    isInstance = isInstance && "signerIdentity" in value;
-
-    return isInstance;
+export function instanceOfPsbtInput(value: object): value is PsbtInput {
+    if (!('index' in value) || value['index'] === undefined) return false;
+    if (!('signerIdentity' in value) || value['signerIdentity'] === undefined) return false;
+    return true;
 }
 
 export function PsbtInputFromJSON(json: any): PsbtInput {
@@ -68,31 +67,33 @@ export function PsbtInputFromJSON(json: any): PsbtInput {
 }
 
 export function PsbtInputFromJSONTyped(json: any, ignoreDiscriminator: boolean): PsbtInput {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'index': json['index'],
         'signerIdentity': PsbtInputSignerIdentityFromJSON(json['signer_identity']),
-        'sighashTypes': !exists(json, 'sighash_types') ? undefined : json['sighash_types'],
-        'disableTweakSigner': !exists(json, 'disable_tweak_signer') ? undefined : json['disable_tweak_signer'],
+        'sighashTypes': json['sighash_types'] == null ? undefined : json['sighash_types'],
+        'disableTweakSigner': json['disable_tweak_signer'] == null ? undefined : json['disable_tweak_signer'],
     };
 }
 
-export function PsbtInputToJSON(value?: PsbtInput | null): any {
-    if (value === undefined) {
-        return undefined;
+export function PsbtInputToJSON(json: any): PsbtInput {
+    return PsbtInputToJSONTyped(json, false);
+}
+
+export function PsbtInputToJSONTyped(value?: PsbtInput | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'index': value.index,
-        'signer_identity': PsbtInputSignerIdentityToJSON(value.signerIdentity),
-        'sighash_types': value.sighashTypes,
-        'disable_tweak_signer': value.disableTweakSigner,
+        'index': value['index'],
+        'signer_identity': PsbtInputSignerIdentityToJSON(value['signerIdentity']),
+        'sighash_types': value['sighashTypes'],
+        'disable_tweak_signer': value['disableTweakSigner'],
     };
 }
 

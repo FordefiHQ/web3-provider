@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,11 +46,9 @@ export type CosmosPushDataTypeEnum = typeof CosmosPushDataTypeEnum[keyof typeof 
 /**
  * Check if a given object implements the CosmosPushData interface.
  */
-export function instanceOfCosmosPushData(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfCosmosPushData(value: object): value is CosmosPushData {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function CosmosPushDataFromJSON(json: any): CosmosPushData {
@@ -58,27 +56,29 @@ export function CosmosPushDataFromJSON(json: any): CosmosPushData {
 }
 
 export function CosmosPushDataFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosPushData {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
-        'transactionBody': !exists(json, 'transaction_body') ? undefined : json['transaction_body'],
+        'transactionBody': json['transaction_body'] == null ? undefined : json['transaction_body'],
     };
 }
 
-export function CosmosPushDataToJSON(value?: CosmosPushData | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosPushDataToJSON(json: any): CosmosPushData {
+    return CosmosPushDataToJSONTyped(json, false);
+}
+
+export function CosmosPushDataToJSONTyped(value?: CosmosPushData | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'transaction_body': value.transactionBody,
+        'type': value['type'],
+        'transaction_body': value['transactionBody'],
     };
 }
 

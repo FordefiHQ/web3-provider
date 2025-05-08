@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { FinalizeSyncMpcSessionRequestSessionCallback } from './FinalizeSyncMpcSessionRequestSessionCallback';
-import {
-    FinalizeSyncMpcSessionRequestSessionCallbackFromJSON,
-    FinalizeSyncMpcSessionRequestSessionCallbackFromJSONTyped,
-    FinalizeSyncMpcSessionRequestSessionCallbackToJSON,
-} from './FinalizeSyncMpcSessionRequestSessionCallback';
+import { mapValues } from '../runtime';
 import type { MpcMessage } from './MpcMessage';
 import {
     MpcMessageFromJSON,
     MpcMessageFromJSONTyped,
     MpcMessageToJSON,
+    MpcMessageToJSONTyped,
 } from './MpcMessage';
+import type { FinalizeSyncMpcSessionRequestSessionCallback } from './FinalizeSyncMpcSessionRequestSessionCallback';
+import {
+    FinalizeSyncMpcSessionRequestSessionCallbackFromJSON,
+    FinalizeSyncMpcSessionRequestSessionCallbackFromJSONTyped,
+    FinalizeSyncMpcSessionRequestSessionCallbackToJSON,
+    FinalizeSyncMpcSessionRequestSessionCallbackToJSONTyped,
+} from './FinalizeSyncMpcSessionRequestSessionCallback';
 
 /**
  * 
@@ -49,12 +51,10 @@ export interface FinalizeSyncMpcSessionRequest {
 /**
  * Check if a given object implements the FinalizeSyncMpcSessionRequest interface.
  */
-export function instanceOfFinalizeSyncMpcSessionRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "lastMpcProtocolMessage" in value;
-    isInstance = isInstance && "sessionCallback" in value;
-
-    return isInstance;
+export function instanceOfFinalizeSyncMpcSessionRequest(value: object): value is FinalizeSyncMpcSessionRequest {
+    if (!('lastMpcProtocolMessage' in value) || value['lastMpcProtocolMessage'] === undefined) return false;
+    if (!('sessionCallback' in value) || value['sessionCallback'] === undefined) return false;
+    return true;
 }
 
 export function FinalizeSyncMpcSessionRequestFromJSON(json: any): FinalizeSyncMpcSessionRequest {
@@ -62,7 +62,7 @@ export function FinalizeSyncMpcSessionRequestFromJSON(json: any): FinalizeSyncMp
 }
 
 export function FinalizeSyncMpcSessionRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): FinalizeSyncMpcSessionRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -72,17 +72,19 @@ export function FinalizeSyncMpcSessionRequestFromJSONTyped(json: any, ignoreDisc
     };
 }
 
-export function FinalizeSyncMpcSessionRequestToJSON(value?: FinalizeSyncMpcSessionRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function FinalizeSyncMpcSessionRequestToJSON(json: any): FinalizeSyncMpcSessionRequest {
+    return FinalizeSyncMpcSessionRequestToJSONTyped(json, false);
+}
+
+export function FinalizeSyncMpcSessionRequestToJSONTyped(value?: FinalizeSyncMpcSessionRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'last_mpc_protocol_message': MpcMessageToJSON(value.lastMpcProtocolMessage),
-        'session_callback': FinalizeSyncMpcSessionRequestSessionCallbackToJSON(value.sessionCallback),
+        'last_mpc_protocol_message': MpcMessageToJSON(value['lastMpcProtocolMessage']),
+        'session_callback': FinalizeSyncMpcSessionRequestSessionCallbackToJSON(value['sessionCallback']),
     };
 }
 

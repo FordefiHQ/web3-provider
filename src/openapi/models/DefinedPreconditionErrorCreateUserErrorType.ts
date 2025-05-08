@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { CreateUserErrorType } from './CreateUserErrorType';
 import {
     CreateUserErrorTypeFromJSON,
     CreateUserErrorTypeFromJSONTyped,
     CreateUserErrorTypeToJSON,
+    CreateUserErrorTypeToJSONTyped,
 } from './CreateUserErrorType';
 
 /**
@@ -58,15 +59,15 @@ export interface DefinedPreconditionErrorCreateUserErrorType {
     errorType?: CreateUserErrorType;
 }
 
+
+
 /**
  * Check if a given object implements the DefinedPreconditionErrorCreateUserErrorType interface.
  */
-export function instanceOfDefinedPreconditionErrorCreateUserErrorType(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "title" in value;
-    isInstance = isInstance && "detail" in value;
-
-    return isInstance;
+export function instanceOfDefinedPreconditionErrorCreateUserErrorType(value: object): value is DefinedPreconditionErrorCreateUserErrorType {
+    if (!('title' in value) || value['title'] === undefined) return false;
+    if (!('detail' in value) || value['detail'] === undefined) return false;
+    return true;
 }
 
 export function DefinedPreconditionErrorCreateUserErrorTypeFromJSON(json: any): DefinedPreconditionErrorCreateUserErrorType {
@@ -74,33 +75,35 @@ export function DefinedPreconditionErrorCreateUserErrorTypeFromJSON(json: any): 
 }
 
 export function DefinedPreconditionErrorCreateUserErrorTypeFromJSONTyped(json: any, ignoreDiscriminator: boolean): DefinedPreconditionErrorCreateUserErrorType {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'title': json['title'],
         'detail': json['detail'],
-        'requestId': !exists(json, 'request_id') ? undefined : json['request_id'],
-        'systemErrorCode': !exists(json, 'system_error_code') ? undefined : json['system_error_code'],
-        'errorType': !exists(json, 'error_type') ? undefined : CreateUserErrorTypeFromJSON(json['error_type']),
+        'requestId': json['request_id'] == null ? undefined : json['request_id'],
+        'systemErrorCode': json['system_error_code'] == null ? undefined : json['system_error_code'],
+        'errorType': json['error_type'] == null ? undefined : CreateUserErrorTypeFromJSON(json['error_type']),
     };
 }
 
-export function DefinedPreconditionErrorCreateUserErrorTypeToJSON(value?: DefinedPreconditionErrorCreateUserErrorType | null): any {
-    if (value === undefined) {
-        return undefined;
+export function DefinedPreconditionErrorCreateUserErrorTypeToJSON(json: any): DefinedPreconditionErrorCreateUserErrorType {
+    return DefinedPreconditionErrorCreateUserErrorTypeToJSONTyped(json, false);
+}
+
+export function DefinedPreconditionErrorCreateUserErrorTypeToJSONTyped(value?: DefinedPreconditionErrorCreateUserErrorType | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'title': value.title,
-        'detail': value.detail,
-        'request_id': value.requestId,
-        'system_error_code': value.systemErrorCode,
-        'error_type': CreateUserErrorTypeToJSON(value.errorType),
+        'title': value['title'],
+        'detail': value['detail'],
+        'request_id': value['requestId'],
+        'system_error_code': value['systemErrorCode'],
+        'error_type': CreateUserErrorTypeToJSON(value['errorType']),
     };
 }
 

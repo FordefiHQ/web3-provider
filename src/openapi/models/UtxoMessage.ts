@@ -12,61 +12,70 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedUtxoAddress } from './EnrichedUtxoAddress';
 import {
     EnrichedUtxoAddressFromJSON,
     EnrichedUtxoAddressFromJSONTyped,
     EnrichedUtxoAddressToJSON,
+    EnrichedUtxoAddressToJSONTyped,
 } from './EnrichedUtxoAddress';
-import type { EnrichedUtxoChain } from './EnrichedUtxoChain';
-import {
-    EnrichedUtxoChainFromJSON,
-    EnrichedUtxoChainFromJSONTyped,
-    EnrichedUtxoChainToJSON,
-} from './EnrichedUtxoChain';
-import type { ManagedTransactionData } from './ManagedTransactionData';
-import {
-    ManagedTransactionDataFromJSON,
-    ManagedTransactionDataFromJSONTyped,
-    ManagedTransactionDataToJSON,
-} from './ManagedTransactionData';
-import type { Signature } from './Signature';
-import {
-    SignatureFromJSON,
-    SignatureFromJSONTyped,
-    SignatureToJSON,
-} from './Signature';
-import type { TransactionDirection } from './TransactionDirection';
-import {
-    TransactionDirectionFromJSON,
-    TransactionDirectionFromJSONTyped,
-    TransactionDirectionToJSON,
-} from './TransactionDirection';
-import type { TransactionSpamState } from './TransactionSpamState';
-import {
-    TransactionSpamStateFromJSON,
-    TransactionSpamStateFromJSONTyped,
-    TransactionSpamStateToJSON,
-} from './TransactionSpamState';
-import type { UtxoMessageState } from './UtxoMessageState';
-import {
-    UtxoMessageStateFromJSON,
-    UtxoMessageStateFromJSONTyped,
-    UtxoMessageStateToJSON,
-} from './UtxoMessageState';
-import type { UtxoMessageStateChange } from './UtxoMessageStateChange';
-import {
-    UtxoMessageStateChangeFromJSON,
-    UtxoMessageStateChangeFromJSONTyped,
-    UtxoMessageStateChangeToJSON,
-} from './UtxoMessageStateChange';
 import type { UtxoMessageType } from './UtxoMessageType';
 import {
     UtxoMessageTypeFromJSON,
     UtxoMessageTypeFromJSONTyped,
     UtxoMessageTypeToJSON,
+    UtxoMessageTypeToJSONTyped,
 } from './UtxoMessageType';
+import type { ManagedTransactionData } from './ManagedTransactionData';
+import {
+    ManagedTransactionDataFromJSON,
+    ManagedTransactionDataFromJSONTyped,
+    ManagedTransactionDataToJSON,
+    ManagedTransactionDataToJSONTyped,
+} from './ManagedTransactionData';
+import type { TransactionSpamState } from './TransactionSpamState';
+import {
+    TransactionSpamStateFromJSON,
+    TransactionSpamStateFromJSONTyped,
+    TransactionSpamStateToJSON,
+    TransactionSpamStateToJSONTyped,
+} from './TransactionSpamState';
+import type { TransactionDirection } from './TransactionDirection';
+import {
+    TransactionDirectionFromJSON,
+    TransactionDirectionFromJSONTyped,
+    TransactionDirectionToJSON,
+    TransactionDirectionToJSONTyped,
+} from './TransactionDirection';
+import type { Signature } from './Signature';
+import {
+    SignatureFromJSON,
+    SignatureFromJSONTyped,
+    SignatureToJSON,
+    SignatureToJSONTyped,
+} from './Signature';
+import type { NonPushableTransactionStateChange } from './NonPushableTransactionStateChange';
+import {
+    NonPushableTransactionStateChangeFromJSON,
+    NonPushableTransactionStateChangeFromJSONTyped,
+    NonPushableTransactionStateChangeToJSON,
+    NonPushableTransactionStateChangeToJSONTyped,
+} from './NonPushableTransactionStateChange';
+import type { EnrichedUtxoChain } from './EnrichedUtxoChain';
+import {
+    EnrichedUtxoChainFromJSON,
+    EnrichedUtxoChainFromJSONTyped,
+    EnrichedUtxoChainToJSON,
+    EnrichedUtxoChainToJSONTyped,
+} from './EnrichedUtxoChain';
+import type { NonPushableTransactionState } from './NonPushableTransactionState';
+import {
+    NonPushableTransactionStateFromJSON,
+    NonPushableTransactionStateFromJSONTyped,
+    NonPushableTransactionStateToJSON,
+    NonPushableTransactionStateToJSONTyped,
+} from './NonPushableTransactionState';
 
 /**
  * 
@@ -124,6 +133,24 @@ export interface UtxoMessage {
     direction: TransactionDirection;
     /**
      * 
+     * @type {boolean}
+     * @memberof UtxoMessage
+     */
+    signedExternally?: boolean;
+    /**
+     * 
+     * @type {NonPushableTransactionState}
+     * @memberof UtxoMessage
+     */
+    state: NonPushableTransactionState;
+    /**
+     * 
+     * @type {Array<NonPushableTransactionStateChange>}
+     * @memberof UtxoMessage
+     */
+    stateChanges: Array<NonPushableTransactionStateChange>;
+    /**
+     * 
      * @type {string}
      * @memberof UtxoMessage
      */
@@ -140,18 +167,6 @@ export interface UtxoMessage {
      * @memberof UtxoMessage
      */
     rawData: string;
-    /**
-     * 
-     * @type {UtxoMessageState}
-     * @memberof UtxoMessage
-     */
-    state: UtxoMessageState;
-    /**
-     * 
-     * @type {Array<UtxoMessageStateChange>}
-     * @memberof UtxoMessage
-     */
-    stateChanges: Array<UtxoMessageStateChange>;
     /**
      * 
      * @type {EnrichedUtxoChain}
@@ -185,23 +200,21 @@ export type UtxoMessageTypeEnum = typeof UtxoMessageTypeEnum[keyof typeof UtxoMe
 /**
  * Check if a given object implements the UtxoMessage interface.
  */
-export function instanceOfUtxoMessage(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "signatures" in value;
-    isInstance = isInstance && "direction" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "utxoMessageType" in value;
-    isInstance = isInstance && "rawData" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "stateChanges" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "stringData" in value;
-    isInstance = isInstance && "sender" in value;
-
-    return isInstance;
+export function instanceOfUtxoMessage(value: object): value is UtxoMessage {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('signatures' in value) || value['signatures'] === undefined) return false;
+    if (!('direction' in value) || value['direction'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('stateChanges' in value) || value['stateChanges'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('utxoMessageType' in value) || value['utxoMessageType'] === undefined) return false;
+    if (!('rawData' in value) || value['rawData'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('stringData' in value) || value['stringData'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    return true;
 }
 
 export function UtxoMessageFromJSON(json: any): UtxoMessage {
@@ -209,7 +222,7 @@ export function UtxoMessageFromJSON(json: any): UtxoMessage {
 }
 
 export function UtxoMessageFromJSONTyped(json: any, ignoreDiscriminator: boolean): UtxoMessage {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -217,47 +230,51 @@ export function UtxoMessageFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
-        'managedTransactionData': !exists(json, 'managed_transaction_data') ? undefined : ManagedTransactionDataFromJSON(json['managed_transaction_data']),
+        'managedTransactionData': json['managed_transaction_data'] == null ? undefined : ManagedTransactionDataFromJSON(json['managed_transaction_data']),
         'signatures': ((json['signatures'] as Array<any>).map(SignatureFromJSON)),
-        'note': !exists(json, 'note') ? undefined : json['note'],
-        'spamState': !exists(json, 'spam_state') ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
+        'note': json['note'] == null ? undefined : json['note'],
+        'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
+        'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'state': NonPushableTransactionStateFromJSON(json['state']),
+        'stateChanges': ((json['state_changes'] as Array<any>).map(NonPushableTransactionStateChangeFromJSON)),
         'type': json['type'],
         'utxoMessageType': UtxoMessageTypeFromJSON(json['utxo_message_type']),
         'rawData': json['raw_data'],
-        'state': UtxoMessageStateFromJSON(json['state']),
-        'stateChanges': ((json['state_changes'] as Array<any>).map(UtxoMessageStateChangeFromJSON)),
         'chain': EnrichedUtxoChainFromJSON(json['chain']),
         'stringData': json['string_data'],
         'sender': EnrichedUtxoAddressFromJSON(json['sender']),
     };
 }
 
-export function UtxoMessageToJSON(value?: UtxoMessage | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UtxoMessageToJSON(json: any): UtxoMessage {
+    return UtxoMessageToJSONTyped(json, false);
+}
+
+export function UtxoMessageToJSONTyped(value?: UtxoMessage | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'managed_transaction_data': ManagedTransactionDataToJSON(value.managedTransactionData),
-        'signatures': ((value.signatures as Array<any>).map(SignatureToJSON)),
-        'note': value.note,
-        'spam_state': TransactionSpamStateToJSON(value.spamState),
-        'direction': TransactionDirectionToJSON(value.direction),
-        'type': value.type,
-        'utxo_message_type': UtxoMessageTypeToJSON(value.utxoMessageType),
-        'raw_data': value.rawData,
-        'state': UtxoMessageStateToJSON(value.state),
-        'state_changes': ((value.stateChanges as Array<any>).map(UtxoMessageStateChangeToJSON)),
-        'chain': EnrichedUtxoChainToJSON(value.chain),
-        'string_data': value.stringData,
-        'sender': EnrichedUtxoAddressToJSON(value.sender),
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'managed_transaction_data': ManagedTransactionDataToJSON(value['managedTransactionData']),
+        'signatures': ((value['signatures'] as Array<any>).map(SignatureToJSON)),
+        'note': value['note'],
+        'spam_state': TransactionSpamStateToJSON(value['spamState']),
+        'direction': TransactionDirectionToJSON(value['direction']),
+        'signed_externally': value['signedExternally'],
+        'state': NonPushableTransactionStateToJSON(value['state']),
+        'state_changes': ((value['stateChanges'] as Array<any>).map(NonPushableTransactionStateChangeToJSON)),
+        'type': value['type'],
+        'utxo_message_type': UtxoMessageTypeToJSON(value['utxoMessageType']),
+        'raw_data': value['rawData'],
+        'chain': EnrichedUtxoChainToJSON(value['chain']),
+        'string_data': value['stringData'],
+        'sender': EnrichedUtxoAddressToJSON(value['sender']),
     };
 }
 

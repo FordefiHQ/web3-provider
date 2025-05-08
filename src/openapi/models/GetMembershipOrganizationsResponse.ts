@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -30,11 +30,9 @@ export interface GetMembershipOrganizationsResponse {
 /**
  * Check if a given object implements the GetMembershipOrganizationsResponse interface.
  */
-export function instanceOfGetMembershipOrganizationsResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "authzeroIds" in value;
-
-    return isInstance;
+export function instanceOfGetMembershipOrganizationsResponse(value: object): value is GetMembershipOrganizationsResponse {
+    if (!('authzeroIds' in value) || value['authzeroIds'] === undefined) return false;
+    return true;
 }
 
 export function GetMembershipOrganizationsResponseFromJSON(json: any): GetMembershipOrganizationsResponse {
@@ -42,7 +40,7 @@ export function GetMembershipOrganizationsResponseFromJSON(json: any): GetMember
 }
 
 export function GetMembershipOrganizationsResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetMembershipOrganizationsResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -51,16 +49,18 @@ export function GetMembershipOrganizationsResponseFromJSONTyped(json: any, ignor
     };
 }
 
-export function GetMembershipOrganizationsResponseToJSON(value?: GetMembershipOrganizationsResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function GetMembershipOrganizationsResponseToJSON(json: any): GetMembershipOrganizationsResponse {
+    return GetMembershipOrganizationsResponseToJSONTyped(json, false);
+}
+
+export function GetMembershipOrganizationsResponseToJSONTyped(value?: GetMembershipOrganizationsResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'authzero_ids': value.authzeroIds,
+        'authzero_ids': value['authzeroIds'],
     };
 }
 

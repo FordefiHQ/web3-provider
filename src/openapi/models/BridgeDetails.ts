@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EvmBridgeEffect } from './EvmBridgeEffect';
 import {
     EvmBridgeEffectFromJSON,
     EvmBridgeEffectFromJSONTyped,
     EvmBridgeEffectToJSON,
+    EvmBridgeEffectToJSONTyped,
 } from './EvmBridgeEffect';
 
 /**
@@ -53,12 +54,10 @@ export type BridgeDetailsTypeEnum = typeof BridgeDetailsTypeEnum[keyof typeof Br
 /**
  * Check if a given object implements the BridgeDetails interface.
  */
-export function instanceOfBridgeDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "bridgeEffect" in value;
-
-    return isInstance;
+export function instanceOfBridgeDetails(value: object): value is BridgeDetails {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('bridgeEffect' in value) || value['bridgeEffect'] === undefined) return false;
+    return true;
 }
 
 export function BridgeDetailsFromJSON(json: any): BridgeDetails {
@@ -66,7 +65,7 @@ export function BridgeDetailsFromJSON(json: any): BridgeDetails {
 }
 
 export function BridgeDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): BridgeDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function BridgeDetailsFromJSONTyped(json: any, ignoreDiscriminator: boole
     };
 }
 
-export function BridgeDetailsToJSON(value?: BridgeDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function BridgeDetailsToJSON(json: any): BridgeDetails {
+    return BridgeDetailsToJSONTyped(json, false);
+}
+
+export function BridgeDetailsToJSONTyped(value?: BridgeDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'bridge_effect': EvmBridgeEffectToJSON(value.bridgeEffect),
+        'type': value['type'],
+        'bridge_effect': EvmBridgeEffectToJSON(value['bridgeEffect']),
     };
 }
 

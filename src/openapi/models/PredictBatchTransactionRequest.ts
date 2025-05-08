@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
+import type { PredictBatchSolanaTransactionRequest } from './PredictBatchSolanaTransactionRequest';
 import {
-    PredictBatchSolanaTransactionRequest,
     instanceOfPredictBatchSolanaTransactionRequest,
     PredictBatchSolanaTransactionRequestFromJSON,
     PredictBatchSolanaTransactionRequestFromJSONTyped,
@@ -32,27 +32,28 @@ export function PredictBatchTransactionRequestFromJSON(json: any): PredictBatchT
 }
 
 export function PredictBatchTransactionRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): PredictBatchTransactionRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'solana_transaction':
-            return {...PredictBatchSolanaTransactionRequestFromJSONTyped(json, true), type: 'solana_transaction'};
+            return Object.assign({}, PredictBatchSolanaTransactionRequestFromJSONTyped(json, true), { type: 'solana_transaction' } as const);
         default:
             throw new Error(`No variant of PredictBatchTransactionRequest exists with 'type=${json['type']}'`);
     }
 }
 
-export function PredictBatchTransactionRequestToJSON(value?: PredictBatchTransactionRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function PredictBatchTransactionRequestToJSON(json: any): any {
+    return PredictBatchTransactionRequestToJSONTyped(json, false);
+}
+
+export function PredictBatchTransactionRequestToJSONTyped(value?: PredictBatchTransactionRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'solana_transaction':
-            return PredictBatchSolanaTransactionRequestToJSON(value);
+            return Object.assign({}, PredictBatchSolanaTransactionRequestToJSON(value), { type: 'solana_transaction' } as const);
         default:
             throw new Error(`No variant of PredictBatchTransactionRequest exists with 'type=${value['type']}'`);
     }

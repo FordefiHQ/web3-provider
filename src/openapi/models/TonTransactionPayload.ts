@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { TonNetwork } from './TonNetwork';
-import {
-    TonNetworkFromJSON,
-    TonNetworkFromJSONTyped,
-    TonNetworkToJSON,
-} from './TonNetwork';
+import { mapValues } from '../runtime';
 import type { TonTransactionMessage } from './TonTransactionMessage';
 import {
     TonTransactionMessageFromJSON,
     TonTransactionMessageFromJSONTyped,
     TonTransactionMessageToJSON,
+    TonTransactionMessageToJSONTyped,
 } from './TonTransactionMessage';
+import type { TonNetwork } from './TonNetwork';
+import {
+    TonNetworkFromJSON,
+    TonNetworkFromJSONTyped,
+    TonNetworkToJSON,
+    TonNetworkToJSONTyped,
+} from './TonNetwork';
 
 /**
  * 
@@ -52,14 +54,14 @@ export interface TonTransactionPayload {
     messages: Array<TonTransactionMessage>;
 }
 
+
+
 /**
  * Check if a given object implements the TonTransactionPayload interface.
  */
-export function instanceOfTonTransactionPayload(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "messages" in value;
-
-    return isInstance;
+export function instanceOfTonTransactionPayload(value: object): value is TonTransactionPayload {
+    if (!('messages' in value) || value['messages'] === undefined) return false;
+    return true;
 }
 
 export function TonTransactionPayloadFromJSON(json: any): TonTransactionPayload {
@@ -67,29 +69,31 @@ export function TonTransactionPayloadFromJSON(json: any): TonTransactionPayload 
 }
 
 export function TonTransactionPayloadFromJSONTyped(json: any, ignoreDiscriminator: boolean): TonTransactionPayload {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'validUntil': !exists(json, 'valid_until') ? undefined : json['valid_until'],
-        'network': !exists(json, 'network') ? undefined : TonNetworkFromJSON(json['network']),
+        'validUntil': json['valid_until'] == null ? undefined : json['valid_until'],
+        'network': json['network'] == null ? undefined : TonNetworkFromJSON(json['network']),
         'messages': ((json['messages'] as Array<any>).map(TonTransactionMessageFromJSON)),
     };
 }
 
-export function TonTransactionPayloadToJSON(value?: TonTransactionPayload | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TonTransactionPayloadToJSON(json: any): TonTransactionPayload {
+    return TonTransactionPayloadToJSONTyped(json, false);
+}
+
+export function TonTransactionPayloadToJSONTyped(value?: TonTransactionPayload | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'valid_until': value.validUntil,
-        'network': TonNetworkToJSON(value.network),
-        'messages': ((value.messages as Array<any>).map(TonTransactionMessageToJSON)),
+        'valid_until': value['validUntil'],
+        'network': TonNetworkToJSON(value['network']),
+        'messages': ((value['messages'] as Array<any>).map(TonTransactionMessageToJSON)),
     };
 }
 

@@ -28,6 +28,17 @@ export const ContactSortableFields = {
 export type ContactSortableFields = typeof ContactSortableFields[keyof typeof ContactSortableFields];
 
 
+export function instanceOfContactSortableFields(value: any): boolean {
+    for (const key in ContactSortableFields) {
+        if (Object.prototype.hasOwnProperty.call(ContactSortableFields, key)) {
+            if (ContactSortableFields[key as keyof typeof ContactSortableFields] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function ContactSortableFieldsFromJSON(json: any): ContactSortableFields {
     return ContactSortableFieldsFromJSONTyped(json, false);
 }
@@ -38,5 +49,9 @@ export function ContactSortableFieldsFromJSONTyped(json: any, ignoreDiscriminato
 
 export function ContactSortableFieldsToJSON(value?: ContactSortableFields | null): any {
     return value as any;
+}
+
+export function ContactSortableFieldsToJSONTyped(value: any, ignoreDiscriminator: boolean): ContactSortableFields {
+    return value as ContactSortableFields;
 }
 

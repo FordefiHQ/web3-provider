@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type EvmAccountReprChainTypeEnum = typeof EvmAccountReprChainTypeEnum[key
 /**
  * Check if a given object implements the EvmAccountRepr interface.
  */
-export function instanceOfEvmAccountRepr(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chainType" in value;
-    isInstance = isInstance && "hexRepr" in value;
-
-    return isInstance;
+export function instanceOfEvmAccountRepr(value: object): value is EvmAccountRepr {
+    if (!('chainType' in value) || value['chainType'] === undefined) return false;
+    if (!('hexRepr' in value) || value['hexRepr'] === undefined) return false;
+    return true;
 }
 
 export function EvmAccountReprFromJSON(json: any): EvmAccountRepr {
@@ -59,7 +57,7 @@ export function EvmAccountReprFromJSON(json: any): EvmAccountRepr {
 }
 
 export function EvmAccountReprFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmAccountRepr {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function EvmAccountReprFromJSONTyped(json: any, ignoreDiscriminator: bool
     };
 }
 
-export function EvmAccountReprToJSON(value?: EvmAccountRepr | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EvmAccountReprToJSON(json: any): EvmAccountRepr {
+    return EvmAccountReprToJSONTyped(json, false);
+}
+
+export function EvmAccountReprToJSONTyped(value?: EvmAccountRepr | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain_type': value.chainType,
-        'hex_repr': value.hexRepr,
+        'chain_type': value['chainType'],
+        'hex_repr': value['hexRepr'],
     };
 }
 

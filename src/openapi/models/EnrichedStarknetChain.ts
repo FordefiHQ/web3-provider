@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { BlockchainExplorer } from './BlockchainExplorer';
-import {
-    BlockchainExplorerFromJSON,
-    BlockchainExplorerFromJSONTyped,
-    BlockchainExplorerToJSON,
-} from './BlockchainExplorer';
+import { mapValues } from '../runtime';
 import type { StarknetChainUniqueId } from './StarknetChainUniqueId';
 import {
     StarknetChainUniqueIdFromJSON,
     StarknetChainUniqueIdFromJSONTyped,
     StarknetChainUniqueIdToJSON,
+    StarknetChainUniqueIdToJSONTyped,
 } from './StarknetChainUniqueId';
+import type { BlockchainExplorer } from './BlockchainExplorer';
+import {
+    BlockchainExplorerFromJSON,
+    BlockchainExplorerFromJSONTyped,
+    BlockchainExplorerToJSON,
+    BlockchainExplorerToJSONTyped,
+} from './BlockchainExplorer';
 
 /**
  * 
@@ -74,6 +76,18 @@ export interface EnrichedStarknetChain {
      * @memberof EnrichedStarknetChain
      */
     logoUrl: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EnrichedStarknetChain
+     */
+    isTestnet: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EnrichedStarknetChain
+     */
+    isEnabled: boolean;
 }
 
 
@@ -89,16 +103,16 @@ export type EnrichedStarknetChainChainTypeEnum = typeof EnrichedStarknetChainCha
 /**
  * Check if a given object implements the EnrichedStarknetChain interface.
  */
-export function instanceOfEnrichedStarknetChain(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chainType" in value;
-    isInstance = isInstance && "uniqueId" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "nativeCurrencySymbol" in value;
-    isInstance = isInstance && "nativeCurrencyName" in value;
-    isInstance = isInstance && "logoUrl" in value;
-
-    return isInstance;
+export function instanceOfEnrichedStarknetChain(value: object): value is EnrichedStarknetChain {
+    if (!('chainType' in value) || value['chainType'] === undefined) return false;
+    if (!('uniqueId' in value) || value['uniqueId'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('nativeCurrencySymbol' in value) || value['nativeCurrencySymbol'] === undefined) return false;
+    if (!('nativeCurrencyName' in value) || value['nativeCurrencyName'] === undefined) return false;
+    if (!('logoUrl' in value) || value['logoUrl'] === undefined) return false;
+    if (!('isTestnet' in value) || value['isTestnet'] === undefined) return false;
+    if (!('isEnabled' in value) || value['isEnabled'] === undefined) return false;
+    return true;
 }
 
 export function EnrichedStarknetChainFromJSON(json: any): EnrichedStarknetChain {
@@ -106,7 +120,7 @@ export function EnrichedStarknetChainFromJSON(json: any): EnrichedStarknetChain 
 }
 
 export function EnrichedStarknetChainFromJSONTyped(json: any, ignoreDiscriminator: boolean): EnrichedStarknetChain {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -116,27 +130,33 @@ export function EnrichedStarknetChainFromJSONTyped(json: any, ignoreDiscriminato
         'name': json['name'],
         'nativeCurrencySymbol': json['native_currency_symbol'],
         'nativeCurrencyName': json['native_currency_name'],
-        'blockchainExplorer': !exists(json, 'blockchain_explorer') ? undefined : BlockchainExplorerFromJSON(json['blockchain_explorer']),
+        'blockchainExplorer': json['blockchain_explorer'] == null ? undefined : BlockchainExplorerFromJSON(json['blockchain_explorer']),
         'logoUrl': json['logo_url'],
+        'isTestnet': json['is_testnet'],
+        'isEnabled': json['is_enabled'],
     };
 }
 
-export function EnrichedStarknetChainToJSON(value?: EnrichedStarknetChain | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EnrichedStarknetChainToJSON(json: any): EnrichedStarknetChain {
+    return EnrichedStarknetChainToJSONTyped(json, false);
+}
+
+export function EnrichedStarknetChainToJSONTyped(value?: EnrichedStarknetChain | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain_type': value.chainType,
-        'unique_id': StarknetChainUniqueIdToJSON(value.uniqueId),
-        'name': value.name,
-        'native_currency_symbol': value.nativeCurrencySymbol,
-        'native_currency_name': value.nativeCurrencyName,
-        'blockchain_explorer': BlockchainExplorerToJSON(value.blockchainExplorer),
-        'logo_url': value.logoUrl,
+        'chain_type': value['chainType'],
+        'unique_id': StarknetChainUniqueIdToJSON(value['uniqueId']),
+        'name': value['name'],
+        'native_currency_symbol': value['nativeCurrencySymbol'],
+        'native_currency_name': value['nativeCurrencyName'],
+        'blockchain_explorer': BlockchainExplorerToJSON(value['blockchainExplorer']),
+        'logo_url': value['logoUrl'],
+        'is_testnet': value['isTestnet'],
+        'is_enabled': value['isEnabled'],
     };
 }
 

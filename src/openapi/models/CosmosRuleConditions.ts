@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -30,10 +30,8 @@ export interface CosmosRuleConditions {
 /**
  * Check if a given object implements the CosmosRuleConditions interface.
  */
-export function instanceOfCosmosRuleConditions(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfCosmosRuleConditions(value: object): value is CosmosRuleConditions {
+    return true;
 }
 
 export function CosmosRuleConditionsFromJSON(json: any): CosmosRuleConditions {
@@ -41,25 +39,27 @@ export function CosmosRuleConditionsFromJSON(json: any): CosmosRuleConditions {
 }
 
 export function CosmosRuleConditionsFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosRuleConditions {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'messageTypes': !exists(json, 'message_types') ? undefined : json['message_types'],
+        'messageTypes': json['message_types'] == null ? undefined : json['message_types'],
     };
 }
 
-export function CosmosRuleConditionsToJSON(value?: CosmosRuleConditions | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosRuleConditionsToJSON(json: any): CosmosRuleConditions {
+    return CosmosRuleConditionsToJSONTyped(json, false);
+}
+
+export function CosmosRuleConditionsToJSONTyped(value?: CosmosRuleConditions | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'message_types': value.messageTypes,
+        'message_types': value['messageTypes'],
     };
 }
 

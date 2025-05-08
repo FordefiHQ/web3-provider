@@ -26,6 +26,17 @@ export const EndUserSortableFields = {
 export type EndUserSortableFields = typeof EndUserSortableFields[keyof typeof EndUserSortableFields];
 
 
+export function instanceOfEndUserSortableFields(value: any): boolean {
+    for (const key in EndUserSortableFields) {
+        if (Object.prototype.hasOwnProperty.call(EndUserSortableFields, key)) {
+            if (EndUserSortableFields[key as keyof typeof EndUserSortableFields] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function EndUserSortableFieldsFromJSON(json: any): EndUserSortableFields {
     return EndUserSortableFieldsFromJSONTyped(json, false);
 }
@@ -36,5 +47,9 @@ export function EndUserSortableFieldsFromJSONTyped(json: any, ignoreDiscriminato
 
 export function EndUserSortableFieldsToJSON(value?: EndUserSortableFields | null): any {
     return value as any;
+}
+
+export function EndUserSortableFieldsToJSONTyped(value: any, ignoreDiscriminator: boolean): EndUserSortableFields {
+    return value as EndUserSortableFields;
 }
 

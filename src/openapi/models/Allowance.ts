@@ -12,37 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { VaultRef } from './VaultRef';
+import {
+    VaultRefFromJSON,
+    VaultRefFromJSONTyped,
+    VaultRefToJSON,
+    VaultRefToJSONTyped,
+} from './VaultRef';
 import type { EnrichedAddress } from './EnrichedAddress';
 import {
     EnrichedAddressFromJSON,
     EnrichedAddressFromJSONTyped,
     EnrichedAddressToJSON,
+    EnrichedAddressToJSONTyped,
 } from './EnrichedAddress';
 import type { EnrichedChain } from './EnrichedChain';
 import {
     EnrichedChainFromJSON,
     EnrichedChainFromJSONTyped,
     EnrichedChainToJSON,
+    EnrichedChainToJSONTyped,
 } from './EnrichedChain';
 import type { OwnedAsset } from './OwnedAsset';
 import {
     OwnedAssetFromJSON,
     OwnedAssetFromJSONTyped,
     OwnedAssetToJSON,
+    OwnedAssetToJSONTyped,
 } from './OwnedAsset';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
     UserRefFromJSONTyped,
     UserRefToJSON,
+    UserRefToJSONTyped,
 } from './UserRef';
-import type { VaultRef } from './VaultRef';
-import {
-    VaultRefFromJSON,
-    VaultRefFromJSONTyped,
-    VaultRefToJSON,
-} from './VaultRef';
 
 /**
  * 
@@ -109,17 +114,15 @@ export interface Allowance {
 /**
  * Check if a given object implements the Allowance interface.
  */
-export function instanceOfAllowance(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "ownedAsset" in value;
-    isInstance = isInstance && "vault" in value;
-    isInstance = isInstance && "allowedAt" in value;
-    isInstance = isInstance && "allowanceValue" in value;
-    isInstance = isInstance && "spender" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfAllowance(value: object): value is Allowance {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('ownedAsset' in value) || value['ownedAsset'] === undefined) return false;
+    if (!('vault' in value) || value['vault'] === undefined) return false;
+    if (!('allowedAt' in value) || value['allowedAt'] === undefined) return false;
+    if (!('allowanceValue' in value) || value['allowanceValue'] === undefined) return false;
+    if (!('spender' in value) || value['spender'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function AllowanceFromJSON(json: any): Allowance {
@@ -127,7 +130,7 @@ export function AllowanceFromJSON(json: any): Allowance {
 }
 
 export function AllowanceFromJSONTyped(json: any, ignoreDiscriminator: boolean): Allowance {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -139,29 +142,31 @@ export function AllowanceFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         'allowanceValue': json['allowance_value'],
         'spender': EnrichedAddressFromJSON(json['spender']),
         'chain': EnrichedChainFromJSON(json['chain']),
-        'createdBy': !exists(json, 'created_by') ? undefined : UserRefFromJSON(json['created_by']),
-        'transactionId': !exists(json, 'transaction_id') ? undefined : json['transaction_id'],
+        'createdBy': json['created_by'] == null ? undefined : UserRefFromJSON(json['created_by']),
+        'transactionId': json['transaction_id'] == null ? undefined : json['transaction_id'],
     };
 }
 
-export function AllowanceToJSON(value?: Allowance | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AllowanceToJSON(json: any): Allowance {
+    return AllowanceToJSONTyped(json, false);
+}
+
+export function AllowanceToJSONTyped(value?: Allowance | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'owned_asset': OwnedAssetToJSON(value.ownedAsset),
-        'vault': VaultRefToJSON(value.vault),
-        'allowed_at': (value.allowedAt.toISOString()),
-        'allowance_value': value.allowanceValue,
-        'spender': EnrichedAddressToJSON(value.spender),
-        'chain': EnrichedChainToJSON(value.chain),
-        'created_by': UserRefToJSON(value.createdBy),
-        'transaction_id': value.transactionId,
+        'id': value['id'],
+        'owned_asset': OwnedAssetToJSON(value['ownedAsset']),
+        'vault': VaultRefToJSON(value['vault']),
+        'allowed_at': ((value['allowedAt']).toISOString()),
+        'allowance_value': value['allowanceValue'],
+        'spender': EnrichedAddressToJSON(value['spender']),
+        'chain': EnrichedChainToJSON(value['chain']),
+        'created_by': UserRefToJSON(value['createdBy']),
+        'transaction_id': value['transactionId'],
     };
 }
 

@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { EvmDynamicSuggestedFees } from './EvmDynamicSuggestedFees';
 import {
-    EvmDynamicSuggestedFees,
     instanceOfEvmDynamicSuggestedFees,
     EvmDynamicSuggestedFeesFromJSON,
     EvmDynamicSuggestedFeesFromJSONTyped,
     EvmDynamicSuggestedFeesToJSON,
 } from './EvmDynamicSuggestedFees';
+import type { EvmLegacySuggestedFees } from './EvmLegacySuggestedFees';
 import {
-    EvmLegacySuggestedFees,
     instanceOfEvmLegacySuggestedFees,
     EvmLegacySuggestedFeesFromJSON,
     EvmLegacySuggestedFeesFromJSONTyped,
@@ -39,31 +39,32 @@ export function EvmSuggestedFeesFeesFromJSON(json: any): EvmSuggestedFeesFees {
 }
 
 export function EvmSuggestedFeesFeesFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmSuggestedFeesFees {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'dynamic':
-            return {...EvmDynamicSuggestedFeesFromJSONTyped(json, true), type: 'dynamic'};
+            return Object.assign({}, EvmDynamicSuggestedFeesFromJSONTyped(json, true), { type: 'dynamic' } as const);
         case 'legacy':
-            return {...EvmLegacySuggestedFeesFromJSONTyped(json, true), type: 'legacy'};
+            return Object.assign({}, EvmLegacySuggestedFeesFromJSONTyped(json, true), { type: 'legacy' } as const);
         default:
             throw new Error(`No variant of EvmSuggestedFeesFees exists with 'type=${json['type']}'`);
     }
 }
 
-export function EvmSuggestedFeesFeesToJSON(value?: EvmSuggestedFeesFees | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function EvmSuggestedFeesFeesToJSON(json: any): any {
+    return EvmSuggestedFeesFeesToJSONTyped(json, false);
+}
+
+export function EvmSuggestedFeesFeesToJSONTyped(value?: EvmSuggestedFeesFees | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'dynamic':
-            return EvmDynamicSuggestedFeesToJSON(value);
+            return Object.assign({}, EvmDynamicSuggestedFeesToJSON(value), { type: 'dynamic' } as const);
         case 'legacy':
-            return EvmLegacySuggestedFeesToJSON(value);
+            return Object.assign({}, EvmLegacySuggestedFeesToJSON(value), { type: 'legacy' } as const);
         default:
             throw new Error(`No variant of EvmSuggestedFeesFees exists with 'type=${value['type']}'`);
     }

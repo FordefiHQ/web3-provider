@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { ContactRef } from './ContactRef';
-import {
-    ContactRefFromJSON,
-    ContactRefFromJSONTyped,
-    ContactRefToJSON,
-} from './ContactRef';
+import { mapValues } from '../runtime';
 import type { VaultRef } from './VaultRef';
 import {
     VaultRefFromJSON,
     VaultRefFromJSONTyped,
     VaultRefToJSON,
+    VaultRefToJSONTyped,
 } from './VaultRef';
+import type { ContactRef } from './ContactRef';
+import {
+    ContactRefFromJSON,
+    ContactRefFromJSONTyped,
+    ContactRefToJSON,
+    ContactRefToJSONTyped,
+} from './ContactRef';
 
 /**
  * 
@@ -77,12 +79,10 @@ export type EnrichedAptosAddressTypeEnum = typeof EnrichedAptosAddressTypeEnum[k
 /**
  * Check if a given object implements the EnrichedAptosAddress interface.
  */
-export function instanceOfEnrichedAptosAddress(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "address" in value;
-
-    return isInstance;
+export function instanceOfEnrichedAptosAddress(value: object): value is EnrichedAptosAddress {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    return true;
 }
 
 export function EnrichedAptosAddressFromJSON(json: any): EnrichedAptosAddress {
@@ -90,33 +90,35 @@ export function EnrichedAptosAddressFromJSON(json: any): EnrichedAptosAddress {
 }
 
 export function EnrichedAptosAddressFromJSONTyped(json: any, ignoreDiscriminator: boolean): EnrichedAptosAddress {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'vault': !exists(json, 'vault') ? undefined : VaultRefFromJSON(json['vault']),
-        'explorerUrl': !exists(json, 'explorer_url') ? undefined : json['explorer_url'],
-        'contact': !exists(json, 'contact') ? undefined : ContactRefFromJSON(json['contact']),
+        'vault': json['vault'] == null ? undefined : VaultRefFromJSON(json['vault']),
+        'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
+        'contact': json['contact'] == null ? undefined : ContactRefFromJSON(json['contact']),
         'type': json['type'],
         'address': json['address'],
     };
 }
 
-export function EnrichedAptosAddressToJSON(value?: EnrichedAptosAddress | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EnrichedAptosAddressToJSON(json: any): EnrichedAptosAddress {
+    return EnrichedAptosAddressToJSONTyped(json, false);
+}
+
+export function EnrichedAptosAddressToJSONTyped(value?: EnrichedAptosAddress | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'vault': VaultRefToJSON(value.vault),
-        'explorer_url': value.explorerUrl,
-        'contact': ContactRefToJSON(value.contact),
-        'type': value.type,
-        'address': value.address,
+        'vault': VaultRefToJSON(value['vault']),
+        'explorer_url': value['explorerUrl'],
+        'contact': ContactRefToJSON(value['contact']),
+        'type': value['type'],
+        'address': value['address'],
     };
 }
 

@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type IssueApiUserAuthTokenRequestUserTypeEnum = typeof IssueApiUserAuthTo
 /**
  * Check if a given object implements the IssueApiUserAuthTokenRequest interface.
  */
-export function instanceOfIssueApiUserAuthTokenRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "userType" in value;
-    isInstance = isInstance && "userId" in value;
-
-    return isInstance;
+export function instanceOfIssueApiUserAuthTokenRequest(value: object): value is IssueApiUserAuthTokenRequest {
+    if (!('userType' in value) || value['userType'] === undefined) return false;
+    if (!('userId' in value) || value['userId'] === undefined) return false;
+    return true;
 }
 
 export function IssueApiUserAuthTokenRequestFromJSON(json: any): IssueApiUserAuthTokenRequest {
@@ -59,7 +57,7 @@ export function IssueApiUserAuthTokenRequestFromJSON(json: any): IssueApiUserAut
 }
 
 export function IssueApiUserAuthTokenRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): IssueApiUserAuthTokenRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function IssueApiUserAuthTokenRequestFromJSONTyped(json: any, ignoreDiscr
     };
 }
 
-export function IssueApiUserAuthTokenRequestToJSON(value?: IssueApiUserAuthTokenRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function IssueApiUserAuthTokenRequestToJSON(json: any): IssueApiUserAuthTokenRequest {
+    return IssueApiUserAuthTokenRequestToJSONTyped(json, false);
+}
+
+export function IssueApiUserAuthTokenRequestToJSONTyped(value?: IssueApiUserAuthTokenRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'user_type': value.userType,
-        'user_id': value.userId,
+        'user_type': value['userType'],
+        'user_id': value['userId'],
     };
 }
 

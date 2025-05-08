@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { DynamicGasFields } from './DynamicGasFields';
 import {
     DynamicGasFieldsFromJSON,
     DynamicGasFieldsFromJSONTyped,
     DynamicGasFieldsToJSON,
+    DynamicGasFieldsToJSONTyped,
 } from './DynamicGasFields';
 
 /**
@@ -65,14 +66,12 @@ export type EvmDynamicSuggestedFeesTypeEnum = typeof EvmDynamicSuggestedFeesType
 /**
  * Check if a given object implements the EvmDynamicSuggestedFees interface.
  */
-export function instanceOfEvmDynamicSuggestedFees(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "low" in value;
-    isInstance = isInstance && "medium" in value;
-    isInstance = isInstance && "high" in value;
-
-    return isInstance;
+export function instanceOfEvmDynamicSuggestedFees(value: object): value is EvmDynamicSuggestedFees {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('low' in value) || value['low'] === undefined) return false;
+    if (!('medium' in value) || value['medium'] === undefined) return false;
+    if (!('high' in value) || value['high'] === undefined) return false;
+    return true;
 }
 
 export function EvmDynamicSuggestedFeesFromJSON(json: any): EvmDynamicSuggestedFees {
@@ -80,7 +79,7 @@ export function EvmDynamicSuggestedFeesFromJSON(json: any): EvmDynamicSuggestedF
 }
 
 export function EvmDynamicSuggestedFeesFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmDynamicSuggestedFees {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -92,19 +91,21 @@ export function EvmDynamicSuggestedFeesFromJSONTyped(json: any, ignoreDiscrimina
     };
 }
 
-export function EvmDynamicSuggestedFeesToJSON(value?: EvmDynamicSuggestedFees | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EvmDynamicSuggestedFeesToJSON(json: any): EvmDynamicSuggestedFees {
+    return EvmDynamicSuggestedFeesToJSONTyped(json, false);
+}
+
+export function EvmDynamicSuggestedFeesToJSONTyped(value?: EvmDynamicSuggestedFees | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'low': DynamicGasFieldsToJSON(value.low),
-        'medium': DynamicGasFieldsToJSON(value.medium),
-        'high': DynamicGasFieldsToJSON(value.high),
+        'type': value['type'],
+        'low': DynamicGasFieldsToJSON(value['low']),
+        'medium': DynamicGasFieldsToJSON(value['medium']),
+        'high': DynamicGasFieldsToJSON(value['high']),
     };
 }
 

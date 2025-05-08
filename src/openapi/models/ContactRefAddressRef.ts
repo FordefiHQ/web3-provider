@@ -12,50 +12,71 @@
  * Do not edit the class manually.
  */
 
+import type { AptosAddressBookContactAddressRef } from './AptosAddressBookContactAddressRef';
 import {
-    AptosAddressBookContactAddressRef,
     instanceOfAptosAddressBookContactAddressRef,
     AptosAddressBookContactAddressRefFromJSON,
     AptosAddressBookContactAddressRefFromJSONTyped,
     AptosAddressBookContactAddressRefToJSON,
 } from './AptosAddressBookContactAddressRef';
+import type { CosmosAddressBookContactAddressRef } from './CosmosAddressBookContactAddressRef';
 import {
-    CosmosAddressBookContactAddressRef,
     instanceOfCosmosAddressBookContactAddressRef,
     CosmosAddressBookContactAddressRefFromJSON,
     CosmosAddressBookContactAddressRefFromJSONTyped,
     CosmosAddressBookContactAddressRefToJSON,
 } from './CosmosAddressBookContactAddressRef';
+import type { EVMAddressBookContactAddressRef } from './EVMAddressBookContactAddressRef';
 import {
-    EVMAddressBookContactAddressRef,
     instanceOfEVMAddressBookContactAddressRef,
     EVMAddressBookContactAddressRefFromJSON,
     EVMAddressBookContactAddressRefFromJSONTyped,
     EVMAddressBookContactAddressRefToJSON,
 } from './EVMAddressBookContactAddressRef';
+import type { SolanaAddressBookContactAddressRef } from './SolanaAddressBookContactAddressRef';
 import {
-    SolanaAddressBookContactAddressRef,
     instanceOfSolanaAddressBookContactAddressRef,
     SolanaAddressBookContactAddressRefFromJSON,
     SolanaAddressBookContactAddressRefFromJSONTyped,
     SolanaAddressBookContactAddressRefToJSON,
 } from './SolanaAddressBookContactAddressRef';
+import type { StacksAddressBookContactAddressRef } from './StacksAddressBookContactAddressRef';
 import {
-    SuiAddressBookContactAddressRef,
+    instanceOfStacksAddressBookContactAddressRef,
+    StacksAddressBookContactAddressRefFromJSON,
+    StacksAddressBookContactAddressRefFromJSONTyped,
+    StacksAddressBookContactAddressRefToJSON,
+} from './StacksAddressBookContactAddressRef';
+import type { StarknetAddressBookContactAddressRef } from './StarknetAddressBookContactAddressRef';
+import {
+    instanceOfStarknetAddressBookContactAddressRef,
+    StarknetAddressBookContactAddressRefFromJSON,
+    StarknetAddressBookContactAddressRefFromJSONTyped,
+    StarknetAddressBookContactAddressRefToJSON,
+} from './StarknetAddressBookContactAddressRef';
+import type { SuiAddressBookContactAddressRef } from './SuiAddressBookContactAddressRef';
+import {
     instanceOfSuiAddressBookContactAddressRef,
     SuiAddressBookContactAddressRefFromJSON,
     SuiAddressBookContactAddressRefFromJSONTyped,
     SuiAddressBookContactAddressRefToJSON,
 } from './SuiAddressBookContactAddressRef';
+import type { TonAddressBookContactAddressRef } from './TonAddressBookContactAddressRef';
 import {
-    TonAddressBookContactAddressRef,
     instanceOfTonAddressBookContactAddressRef,
     TonAddressBookContactAddressRefFromJSON,
     TonAddressBookContactAddressRefFromJSONTyped,
     TonAddressBookContactAddressRefToJSON,
 } from './TonAddressBookContactAddressRef';
+import type { TronAddressBookContactAddressRef } from './TronAddressBookContactAddressRef';
 import {
-    UtxoAddressBookContactAddressRef,
+    instanceOfTronAddressBookContactAddressRef,
+    TronAddressBookContactAddressRefFromJSON,
+    TronAddressBookContactAddressRefFromJSONTyped,
+    TronAddressBookContactAddressRefToJSON,
+} from './TronAddressBookContactAddressRef';
+import type { UtxoAddressBookContactAddressRef } from './UtxoAddressBookContactAddressRef';
+import {
     instanceOfUtxoAddressBookContactAddressRef,
     UtxoAddressBookContactAddressRefFromJSON,
     UtxoAddressBookContactAddressRefFromJSONTyped,
@@ -67,58 +88,71 @@ import {
  * 
  * @export
  */
-export type ContactRefAddressRef = { chainType: 'aptos' } & AptosAddressBookContactAddressRef | { chainType: 'cosmos' } & CosmosAddressBookContactAddressRef | { chainType: 'evm' } & EVMAddressBookContactAddressRef | { chainType: 'solana' } & SolanaAddressBookContactAddressRef | { chainType: 'sui' } & SuiAddressBookContactAddressRef | { chainType: 'ton' } & TonAddressBookContactAddressRef | { chainType: 'utxo' } & UtxoAddressBookContactAddressRef;
+export type ContactRefAddressRef = { chainType: 'aptos' } & AptosAddressBookContactAddressRef | { chainType: 'cosmos' } & CosmosAddressBookContactAddressRef | { chainType: 'evm' } & EVMAddressBookContactAddressRef | { chainType: 'solana' } & SolanaAddressBookContactAddressRef | { chainType: 'stacks' } & StacksAddressBookContactAddressRef | { chainType: 'starknet' } & StarknetAddressBookContactAddressRef | { chainType: 'sui' } & SuiAddressBookContactAddressRef | { chainType: 'ton' } & TonAddressBookContactAddressRef | { chainType: 'tron' } & TronAddressBookContactAddressRef | { chainType: 'utxo' } & UtxoAddressBookContactAddressRef;
 
 export function ContactRefAddressRefFromJSON(json: any): ContactRefAddressRef {
     return ContactRefAddressRefFromJSONTyped(json, false);
 }
 
 export function ContactRefAddressRefFromJSONTyped(json: any, ignoreDiscriminator: boolean): ContactRefAddressRef {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['chain_type']) {
         case 'aptos':
-            return {...AptosAddressBookContactAddressRefFromJSONTyped(json, true), chainType: 'aptos'};
+            return Object.assign({}, AptosAddressBookContactAddressRefFromJSONTyped(json, true), { chainType: 'aptos' } as const);
         case 'cosmos':
-            return {...CosmosAddressBookContactAddressRefFromJSONTyped(json, true), chainType: 'cosmos'};
+            return Object.assign({}, CosmosAddressBookContactAddressRefFromJSONTyped(json, true), { chainType: 'cosmos' } as const);
         case 'evm':
-            return {...EVMAddressBookContactAddressRefFromJSONTyped(json, true), chainType: 'evm'};
+            return Object.assign({}, EVMAddressBookContactAddressRefFromJSONTyped(json, true), { chainType: 'evm' } as const);
         case 'solana':
-            return {...SolanaAddressBookContactAddressRefFromJSONTyped(json, true), chainType: 'solana'};
+            return Object.assign({}, SolanaAddressBookContactAddressRefFromJSONTyped(json, true), { chainType: 'solana' } as const);
+        case 'stacks':
+            return Object.assign({}, StacksAddressBookContactAddressRefFromJSONTyped(json, true), { chainType: 'stacks' } as const);
+        case 'starknet':
+            return Object.assign({}, StarknetAddressBookContactAddressRefFromJSONTyped(json, true), { chainType: 'starknet' } as const);
         case 'sui':
-            return {...SuiAddressBookContactAddressRefFromJSONTyped(json, true), chainType: 'sui'};
+            return Object.assign({}, SuiAddressBookContactAddressRefFromJSONTyped(json, true), { chainType: 'sui' } as const);
         case 'ton':
-            return {...TonAddressBookContactAddressRefFromJSONTyped(json, true), chainType: 'ton'};
+            return Object.assign({}, TonAddressBookContactAddressRefFromJSONTyped(json, true), { chainType: 'ton' } as const);
+        case 'tron':
+            return Object.assign({}, TronAddressBookContactAddressRefFromJSONTyped(json, true), { chainType: 'tron' } as const);
         case 'utxo':
-            return {...UtxoAddressBookContactAddressRefFromJSONTyped(json, true), chainType: 'utxo'};
+            return Object.assign({}, UtxoAddressBookContactAddressRefFromJSONTyped(json, true), { chainType: 'utxo' } as const);
         default:
             throw new Error(`No variant of ContactRefAddressRef exists with 'chainType=${json['chainType']}'`);
     }
 }
 
-export function ContactRefAddressRefToJSON(value?: ContactRefAddressRef | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function ContactRefAddressRefToJSON(json: any): any {
+    return ContactRefAddressRefToJSONTyped(json, false);
+}
+
+export function ContactRefAddressRefToJSONTyped(value?: ContactRefAddressRef | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['chainType']) {
         case 'aptos':
-            return AptosAddressBookContactAddressRefToJSON(value);
+            return Object.assign({}, AptosAddressBookContactAddressRefToJSON(value), { chainType: 'aptos' } as const);
         case 'cosmos':
-            return CosmosAddressBookContactAddressRefToJSON(value);
+            return Object.assign({}, CosmosAddressBookContactAddressRefToJSON(value), { chainType: 'cosmos' } as const);
         case 'evm':
-            return EVMAddressBookContactAddressRefToJSON(value);
+            return Object.assign({}, EVMAddressBookContactAddressRefToJSON(value), { chainType: 'evm' } as const);
         case 'solana':
-            return SolanaAddressBookContactAddressRefToJSON(value);
+            return Object.assign({}, SolanaAddressBookContactAddressRefToJSON(value), { chainType: 'solana' } as const);
+        case 'stacks':
+            return Object.assign({}, StacksAddressBookContactAddressRefToJSON(value), { chainType: 'stacks' } as const);
+        case 'starknet':
+            return Object.assign({}, StarknetAddressBookContactAddressRefToJSON(value), { chainType: 'starknet' } as const);
         case 'sui':
-            return SuiAddressBookContactAddressRefToJSON(value);
+            return Object.assign({}, SuiAddressBookContactAddressRefToJSON(value), { chainType: 'sui' } as const);
         case 'ton':
-            return TonAddressBookContactAddressRefToJSON(value);
+            return Object.assign({}, TonAddressBookContactAddressRefToJSON(value), { chainType: 'ton' } as const);
+        case 'tron':
+            return Object.assign({}, TronAddressBookContactAddressRefToJSON(value), { chainType: 'tron' } as const);
         case 'utxo':
-            return UtxoAddressBookContactAddressRefToJSON(value);
+            return Object.assign({}, UtxoAddressBookContactAddressRefToJSON(value), { chainType: 'utxo' } as const);
         default:
             throw new Error(`No variant of ContactRefAddressRef exists with 'chainType=${value['chainType']}'`);
     }

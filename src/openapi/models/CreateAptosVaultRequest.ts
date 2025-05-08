@@ -12,13 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { ImportVaultOptions } from './ImportVaultOptions';
+import { mapValues } from '../runtime';
+import type { ImportVaultDefaultOptions } from './ImportVaultDefaultOptions';
 import {
-    ImportVaultOptionsFromJSON,
-    ImportVaultOptionsFromJSONTyped,
-    ImportVaultOptionsToJSON,
-} from './ImportVaultOptions';
+    ImportVaultDefaultOptionsFromJSON,
+    ImportVaultDefaultOptionsFromJSONTyped,
+    ImportVaultDefaultOptionsToJSON,
+    ImportVaultDefaultOptionsToJSONTyped,
+} from './ImportVaultDefaultOptions';
 
 /**
  * 
@@ -53,10 +54,10 @@ export interface CreateAptosVaultRequest {
     vaultGroupId?: string;
     /**
      * 
-     * @type {ImportVaultOptions}
+     * @type {ImportVaultDefaultOptions}
      * @memberof CreateAptosVaultRequest
      */
-    importVault?: ImportVaultOptions;
+    importVault?: ImportVaultDefaultOptions;
     /**
      * 
      * @type {string}
@@ -78,12 +79,10 @@ export type CreateAptosVaultRequestTypeEnum = typeof CreateAptosVaultRequestType
 /**
  * Check if a given object implements the CreateAptosVaultRequest interface.
  */
-export function instanceOfCreateAptosVaultRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfCreateAptosVaultRequest(value: object): value is CreateAptosVaultRequest {
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function CreateAptosVaultRequestFromJSON(json: any): CreateAptosVaultRequest {
@@ -91,35 +90,37 @@ export function CreateAptosVaultRequestFromJSON(json: any): CreateAptosVaultRequ
 }
 
 export function CreateAptosVaultRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateAptosVaultRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'name': json['name'],
-        'keysetId': !exists(json, 'keyset_id') ? undefined : json['keyset_id'],
-        'endUserId': !exists(json, 'end_user_id') ? undefined : json['end_user_id'],
-        'vaultGroupId': !exists(json, 'vault_group_id') ? undefined : json['vault_group_id'],
-        'importVault': !exists(json, 'import_vault') ? undefined : ImportVaultOptionsFromJSON(json['import_vault']),
+        'keysetId': json['keyset_id'] == null ? undefined : json['keyset_id'],
+        'endUserId': json['end_user_id'] == null ? undefined : json['end_user_id'],
+        'vaultGroupId': json['vault_group_id'] == null ? undefined : json['vault_group_id'],
+        'importVault': json['import_vault'] == null ? undefined : ImportVaultDefaultOptionsFromJSON(json['import_vault']),
         'type': json['type'],
     };
 }
 
-export function CreateAptosVaultRequestToJSON(value?: CreateAptosVaultRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateAptosVaultRequestToJSON(json: any): CreateAptosVaultRequest {
+    return CreateAptosVaultRequestToJSONTyped(json, false);
+}
+
+export function CreateAptosVaultRequestToJSONTyped(value?: CreateAptosVaultRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'keyset_id': value.keysetId,
-        'end_user_id': value.endUserId,
-        'vault_group_id': value.vaultGroupId,
-        'import_vault': ImportVaultOptionsToJSON(value.importVault),
-        'type': value.type,
+        'name': value['name'],
+        'keyset_id': value['keysetId'],
+        'end_user_id': value['endUserId'],
+        'vault_group_id': value['vaultGroupId'],
+        'import_vault': ImportVaultDefaultOptionsToJSON(value['importVault']),
+        'type': value['type'],
     };
 }
 

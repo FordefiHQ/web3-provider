@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -42,12 +42,10 @@ export interface BaseError {
 /**
  * Check if a given object implements the BaseError interface.
  */
-export function instanceOfBaseError(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "title" in value;
-    isInstance = isInstance && "detail" in value;
-
-    return isInstance;
+export function instanceOfBaseError(value: object): value is BaseError {
+    if (!('title' in value) || value['title'] === undefined) return false;
+    if (!('detail' in value) || value['detail'] === undefined) return false;
+    return true;
 }
 
 export function BaseErrorFromJSON(json: any): BaseError {
@@ -55,29 +53,31 @@ export function BaseErrorFromJSON(json: any): BaseError {
 }
 
 export function BaseErrorFromJSONTyped(json: any, ignoreDiscriminator: boolean): BaseError {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'title': json['title'],
         'detail': json['detail'],
-        'requestId': !exists(json, 'request_id') ? undefined : json['request_id'],
+        'requestId': json['request_id'] == null ? undefined : json['request_id'],
     };
 }
 
-export function BaseErrorToJSON(value?: BaseError | null): any {
-    if (value === undefined) {
-        return undefined;
+export function BaseErrorToJSON(json: any): BaseError {
+    return BaseErrorToJSONTyped(json, false);
+}
+
+export function BaseErrorToJSONTyped(value?: BaseError | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'title': value.title,
-        'detail': value.detail,
-        'request_id': value.requestId,
+        'title': value['title'],
+        'detail': value['detail'],
+        'request_id': value['requestId'],
     };
 }
 

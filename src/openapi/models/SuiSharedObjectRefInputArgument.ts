@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -58,14 +58,12 @@ export type SuiSharedObjectRefInputArgumentTypeEnum = typeof SuiSharedObjectRefI
 /**
  * Check if a given object implements the SuiSharedObjectRefInputArgument interface.
  */
-export function instanceOfSuiSharedObjectRefInputArgument(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "objectId" in value;
-    isInstance = isInstance && "initialSharedVersion" in value;
-    isInstance = isInstance && "mutable" in value;
-
-    return isInstance;
+export function instanceOfSuiSharedObjectRefInputArgument(value: object): value is SuiSharedObjectRefInputArgument {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('objectId' in value) || value['objectId'] === undefined) return false;
+    if (!('initialSharedVersion' in value) || value['initialSharedVersion'] === undefined) return false;
+    if (!('mutable' in value) || value['mutable'] === undefined) return false;
+    return true;
 }
 
 export function SuiSharedObjectRefInputArgumentFromJSON(json: any): SuiSharedObjectRefInputArgument {
@@ -73,7 +71,7 @@ export function SuiSharedObjectRefInputArgumentFromJSON(json: any): SuiSharedObj
 }
 
 export function SuiSharedObjectRefInputArgumentFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiSharedObjectRefInputArgument {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -85,19 +83,21 @@ export function SuiSharedObjectRefInputArgumentFromJSONTyped(json: any, ignoreDi
     };
 }
 
-export function SuiSharedObjectRefInputArgumentToJSON(value?: SuiSharedObjectRefInputArgument | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiSharedObjectRefInputArgumentToJSON(json: any): SuiSharedObjectRefInputArgument {
+    return SuiSharedObjectRefInputArgumentToJSONTyped(json, false);
+}
+
+export function SuiSharedObjectRefInputArgumentToJSONTyped(value?: SuiSharedObjectRefInputArgument | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'object_id': value.objectId,
-        'initial_shared_version': value.initialSharedVersion,
-        'mutable': value.mutable,
+        'type': value['type'],
+        'object_id': value['objectId'],
+        'initial_shared_version': value['initialSharedVersion'],
+        'mutable': value['mutable'],
     };
 }
 

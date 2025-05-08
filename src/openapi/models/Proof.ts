@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { ProofProverResult } from './ProofProverResult';
 import {
     ProofProverResultFromJSON,
     ProofProverResultFromJSONTyped,
     ProofProverResultToJSON,
+    ProofProverResultToJSONTyped,
 } from './ProofProverResult';
 
 /**
@@ -37,11 +38,9 @@ export interface Proof {
 /**
  * Check if a given object implements the Proof interface.
  */
-export function instanceOfProof(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "proverResult" in value;
-
-    return isInstance;
+export function instanceOfProof(value: object): value is Proof {
+    if (!('proverResult' in value) || value['proverResult'] === undefined) return false;
+    return true;
 }
 
 export function ProofFromJSON(json: any): Proof {
@@ -49,7 +48,7 @@ export function ProofFromJSON(json: any): Proof {
 }
 
 export function ProofFromJSONTyped(json: any, ignoreDiscriminator: boolean): Proof {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -58,16 +57,18 @@ export function ProofFromJSONTyped(json: any, ignoreDiscriminator: boolean): Pro
     };
 }
 
-export function ProofToJSON(value?: Proof | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ProofToJSON(json: any): Proof {
+    return ProofToJSONTyped(json, false);
+}
+
+export function ProofToJSONTyped(value?: Proof | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'prover_result': ProofProverResultToJSON(value.proverResult),
+        'prover_result': ProofProverResultToJSON(value['proverResult']),
     };
 }
 

@@ -12,31 +12,35 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { SolanaReversion } from './SolanaReversion';
+import {
+    SolanaReversionFromJSON,
+    SolanaReversionFromJSONTyped,
+    SolanaReversionToJSON,
+    SolanaReversionToJSONTyped,
+} from './SolanaReversion';
+import type { SolanaFee } from './SolanaFee';
+import {
+    SolanaFeeFromJSON,
+    SolanaFeeFromJSONTyped,
+    SolanaFeeToJSON,
+    SolanaFeeToJSONTyped,
+} from './SolanaFee';
 import type { InstructionError } from './InstructionError';
 import {
     InstructionErrorFromJSON,
     InstructionErrorFromJSONTyped,
     InstructionErrorToJSON,
+    InstructionErrorToJSONTyped,
 } from './InstructionError';
 import type { SolanaEffects } from './SolanaEffects';
 import {
     SolanaEffectsFromJSON,
     SolanaEffectsFromJSONTyped,
     SolanaEffectsToJSON,
+    SolanaEffectsToJSONTyped,
 } from './SolanaEffects';
-import type { SolanaFee } from './SolanaFee';
-import {
-    SolanaFeeFromJSON,
-    SolanaFeeFromJSONTyped,
-    SolanaFeeToJSON,
-} from './SolanaFee';
-import type { SolanaReversion } from './SolanaReversion';
-import {
-    SolanaReversionFromJSON,
-    SolanaReversionFromJSONTyped,
-    SolanaReversionToJSON,
-} from './SolanaReversion';
 
 /**
  * 
@@ -86,14 +90,12 @@ export interface SolanaTransactionResult {
 /**
  * Check if a given object implements the SolanaTransactionResult interface.
  */
-export function instanceOfSolanaTransactionResult(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "reversion" in value;
-    isInstance = isInstance && "fee" in value;
-    isInstance = isInstance && "enrichedFee" in value;
-    isInstance = isInstance && "effects" in value;
-
-    return isInstance;
+export function instanceOfSolanaTransactionResult(value: object): value is SolanaTransactionResult {
+    if (!('reversion' in value) || value['reversion'] === undefined) return false;
+    if (!('fee' in value) || value['fee'] === undefined) return false;
+    if (!('enrichedFee' in value) || value['enrichedFee'] === undefined) return false;
+    if (!('effects' in value) || value['effects'] === undefined) return false;
+    return true;
 }
 
 export function SolanaTransactionResultFromJSON(json: any): SolanaTransactionResult {
@@ -101,35 +103,37 @@ export function SolanaTransactionResultFromJSON(json: any): SolanaTransactionRes
 }
 
 export function SolanaTransactionResultFromJSONTyped(json: any, ignoreDiscriminator: boolean): SolanaTransactionResult {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'reversion': SolanaReversionFromJSON(json['reversion']),
-        'transactionError': !exists(json, 'transaction_error') ? undefined : json['transaction_error'],
+        'transactionError': json['transaction_error'] == null ? undefined : json['transaction_error'],
         'fee': json['fee'],
         'enrichedFee': SolanaFeeFromJSON(json['enriched_fee']),
         'effects': SolanaEffectsFromJSON(json['effects']),
-        'instructionError': !exists(json, 'instruction_error') ? undefined : InstructionErrorFromJSON(json['instruction_error']),
+        'instructionError': json['instruction_error'] == null ? undefined : InstructionErrorFromJSON(json['instruction_error']),
     };
 }
 
-export function SolanaTransactionResultToJSON(value?: SolanaTransactionResult | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SolanaTransactionResultToJSON(json: any): SolanaTransactionResult {
+    return SolanaTransactionResultToJSONTyped(json, false);
+}
+
+export function SolanaTransactionResultToJSONTyped(value?: SolanaTransactionResult | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'reversion': SolanaReversionToJSON(value.reversion),
-        'transaction_error': value.transactionError,
-        'fee': value.fee,
-        'enriched_fee': SolanaFeeToJSON(value.enrichedFee),
-        'effects': SolanaEffectsToJSON(value.effects),
-        'instruction_error': InstructionErrorToJSON(value.instructionError),
+        'reversion': SolanaReversionToJSON(value['reversion']),
+        'transaction_error': value['transactionError'],
+        'fee': value['fee'],
+        'enriched_fee': SolanaFeeToJSON(value['enrichedFee']),
+        'effects': SolanaEffectsToJSON(value['effects']),
+        'instruction_error': InstructionErrorToJSON(value['instructionError']),
     };
 }
 

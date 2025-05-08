@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { AptosCustomGasPriceRequest } from './AptosCustomGasPriceRequest';
 import {
-    AptosCustomGasPriceRequest,
     instanceOfAptosCustomGasPriceRequest,
     AptosCustomGasPriceRequestFromJSON,
     AptosCustomGasPriceRequestFromJSONTyped,
     AptosCustomGasPriceRequestToJSON,
 } from './AptosCustomGasPriceRequest';
+import type { AptosPriorityGasPriceRequest } from './AptosPriorityGasPriceRequest';
 import {
-    AptosPriorityGasPriceRequest,
     instanceOfAptosPriorityGasPriceRequest,
     AptosPriorityGasPriceRequestFromJSON,
     AptosPriorityGasPriceRequestFromJSONTyped,
@@ -39,31 +39,32 @@ export function AptosGasConfigRequestPriceFromJSON(json: any): AptosGasConfigReq
 }
 
 export function AptosGasConfigRequestPriceFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosGasConfigRequestPrice {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'custom':
-            return {...AptosCustomGasPriceRequestFromJSONTyped(json, true), type: 'custom'};
+            return Object.assign({}, AptosCustomGasPriceRequestFromJSONTyped(json, true), { type: 'custom' } as const);
         case 'priority':
-            return {...AptosPriorityGasPriceRequestFromJSONTyped(json, true), type: 'priority'};
+            return Object.assign({}, AptosPriorityGasPriceRequestFromJSONTyped(json, true), { type: 'priority' } as const);
         default:
             throw new Error(`No variant of AptosGasConfigRequestPrice exists with 'type=${json['type']}'`);
     }
 }
 
-export function AptosGasConfigRequestPriceToJSON(value?: AptosGasConfigRequestPrice | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function AptosGasConfigRequestPriceToJSON(json: any): any {
+    return AptosGasConfigRequestPriceToJSONTyped(json, false);
+}
+
+export function AptosGasConfigRequestPriceToJSONTyped(value?: AptosGasConfigRequestPrice | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'custom':
-            return AptosCustomGasPriceRequestToJSON(value);
+            return Object.assign({}, AptosCustomGasPriceRequestToJSON(value), { type: 'custom' } as const);
         case 'priority':
-            return AptosPriorityGasPriceRequestToJSON(value);
+            return Object.assign({}, AptosPriorityGasPriceRequestToJSON(value), { type: 'priority' } as const);
         default:
             throw new Error(`No variant of AptosGasConfigRequestPrice exists with 'type=${value['type']}'`);
     }

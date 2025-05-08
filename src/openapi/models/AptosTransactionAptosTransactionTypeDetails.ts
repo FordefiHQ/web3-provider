@@ -12,29 +12,29 @@
  * Do not edit the class manually.
  */
 
+import type { AptosCoinTransferDetails } from './AptosCoinTransferDetails';
 import {
-    AptosCoinTransferDetails,
     instanceOfAptosCoinTransferDetails,
     AptosCoinTransferDetailsFromJSON,
     AptosCoinTransferDetailsFromJSONTyped,
     AptosCoinTransferDetailsToJSON,
 } from './AptosCoinTransferDetails';
+import type { AptosEntryPointDetails } from './AptosEntryPointDetails';
 import {
-    AptosEntryPointDetails,
     instanceOfAptosEntryPointDetails,
     AptosEntryPointDetailsFromJSON,
     AptosEntryPointDetailsFromJSONTyped,
     AptosEntryPointDetailsToJSON,
 } from './AptosEntryPointDetails';
+import type { AptosNativeTransferDetails } from './AptosNativeTransferDetails';
 import {
-    AptosNativeTransferDetails,
     instanceOfAptosNativeTransferDetails,
     AptosNativeTransferDetailsFromJSON,
     AptosNativeTransferDetailsFromJSONTyped,
     AptosNativeTransferDetailsToJSON,
 } from './AptosNativeTransferDetails';
+import type { AptosScriptDetails } from './AptosScriptDetails';
 import {
-    AptosScriptDetails,
     instanceOfAptosScriptDetails,
     AptosScriptDetailsFromJSON,
     AptosScriptDetailsFromJSONTyped,
@@ -53,39 +53,40 @@ export function AptosTransactionAptosTransactionTypeDetailsFromJSON(json: any): 
 }
 
 export function AptosTransactionAptosTransactionTypeDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosTransactionAptosTransactionTypeDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'coin_transfer':
-            return {...AptosCoinTransferDetailsFromJSONTyped(json, true), type: 'coin_transfer'};
+            return Object.assign({}, AptosCoinTransferDetailsFromJSONTyped(json, true), { type: 'coin_transfer' } as const);
         case 'entry_point':
-            return {...AptosEntryPointDetailsFromJSONTyped(json, true), type: 'entry_point'};
+            return Object.assign({}, AptosEntryPointDetailsFromJSONTyped(json, true), { type: 'entry_point' } as const);
         case 'native_transfer':
-            return {...AptosNativeTransferDetailsFromJSONTyped(json, true), type: 'native_transfer'};
+            return Object.assign({}, AptosNativeTransferDetailsFromJSONTyped(json, true), { type: 'native_transfer' } as const);
         case 'script':
-            return {...AptosScriptDetailsFromJSONTyped(json, true), type: 'script'};
+            return Object.assign({}, AptosScriptDetailsFromJSONTyped(json, true), { type: 'script' } as const);
         default:
             throw new Error(`No variant of AptosTransactionAptosTransactionTypeDetails exists with 'type=${json['type']}'`);
     }
 }
 
-export function AptosTransactionAptosTransactionTypeDetailsToJSON(value?: AptosTransactionAptosTransactionTypeDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function AptosTransactionAptosTransactionTypeDetailsToJSON(json: any): any {
+    return AptosTransactionAptosTransactionTypeDetailsToJSONTyped(json, false);
+}
+
+export function AptosTransactionAptosTransactionTypeDetailsToJSONTyped(value?: AptosTransactionAptosTransactionTypeDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'coin_transfer':
-            return AptosCoinTransferDetailsToJSON(value);
+            return Object.assign({}, AptosCoinTransferDetailsToJSON(value), { type: 'coin_transfer' } as const);
         case 'entry_point':
-            return AptosEntryPointDetailsToJSON(value);
+            return Object.assign({}, AptosEntryPointDetailsToJSON(value), { type: 'entry_point' } as const);
         case 'native_transfer':
-            return AptosNativeTransferDetailsToJSON(value);
+            return Object.assign({}, AptosNativeTransferDetailsToJSON(value), { type: 'native_transfer' } as const);
         case 'script':
-            return AptosScriptDetailsToJSON(value);
+            return Object.assign({}, AptosScriptDetailsToJSON(value), { type: 'script' } as const);
         default:
             throw new Error(`No variant of AptosTransactionAptosTransactionTypeDetails exists with 'type=${value['type']}'`);
     }

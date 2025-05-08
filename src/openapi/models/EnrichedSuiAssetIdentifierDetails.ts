@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { EnrichedSuiCoinAssetIdentifier } from './EnrichedSuiCoinAssetIdentifier';
 import {
-    EnrichedSuiCoinAssetIdentifier,
     instanceOfEnrichedSuiCoinAssetIdentifier,
     EnrichedSuiCoinAssetIdentifierFromJSON,
     EnrichedSuiCoinAssetIdentifierFromJSONTyped,
     EnrichedSuiCoinAssetIdentifierToJSON,
 } from './EnrichedSuiCoinAssetIdentifier';
+import type { EnrichedSuiNativeAssetIdentifier } from './EnrichedSuiNativeAssetIdentifier';
 import {
-    EnrichedSuiNativeAssetIdentifier,
     instanceOfEnrichedSuiNativeAssetIdentifier,
     EnrichedSuiNativeAssetIdentifierFromJSON,
     EnrichedSuiNativeAssetIdentifierFromJSONTyped,
@@ -39,31 +39,32 @@ export function EnrichedSuiAssetIdentifierDetailsFromJSON(json: any): EnrichedSu
 }
 
 export function EnrichedSuiAssetIdentifierDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): EnrichedSuiAssetIdentifierDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'coin':
-            return {...EnrichedSuiCoinAssetIdentifierFromJSONTyped(json, true), type: 'coin'};
+            return Object.assign({}, EnrichedSuiCoinAssetIdentifierFromJSONTyped(json, true), { type: 'coin' } as const);
         case 'native':
-            return {...EnrichedSuiNativeAssetIdentifierFromJSONTyped(json, true), type: 'native'};
+            return Object.assign({}, EnrichedSuiNativeAssetIdentifierFromJSONTyped(json, true), { type: 'native' } as const);
         default:
             throw new Error(`No variant of EnrichedSuiAssetIdentifierDetails exists with 'type=${json['type']}'`);
     }
 }
 
-export function EnrichedSuiAssetIdentifierDetailsToJSON(value?: EnrichedSuiAssetIdentifierDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function EnrichedSuiAssetIdentifierDetailsToJSON(json: any): any {
+    return EnrichedSuiAssetIdentifierDetailsToJSONTyped(json, false);
+}
+
+export function EnrichedSuiAssetIdentifierDetailsToJSONTyped(value?: EnrichedSuiAssetIdentifierDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'coin':
-            return EnrichedSuiCoinAssetIdentifierToJSON(value);
+            return Object.assign({}, EnrichedSuiCoinAssetIdentifierToJSON(value), { type: 'coin' } as const);
         case 'native':
-            return EnrichedSuiNativeAssetIdentifierToJSON(value);
+            return Object.assign({}, EnrichedSuiNativeAssetIdentifierToJSON(value), { type: 'native' } as const);
         default:
             throw new Error(`No variant of EnrichedSuiAssetIdentifierDetails exists with 'type=${value['type']}'`);
     }

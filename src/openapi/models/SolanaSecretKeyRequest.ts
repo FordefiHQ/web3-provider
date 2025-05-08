@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -30,10 +30,8 @@ export interface SolanaSecretKeyRequest {
 /**
  * Check if a given object implements the SolanaSecretKeyRequest interface.
  */
-export function instanceOfSolanaSecretKeyRequest(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfSolanaSecretKeyRequest(value: object): value is SolanaSecretKeyRequest {
+    return true;
 }
 
 export function SolanaSecretKeyRequestFromJSON(json: any): SolanaSecretKeyRequest {
@@ -41,25 +39,27 @@ export function SolanaSecretKeyRequestFromJSON(json: any): SolanaSecretKeyReques
 }
 
 export function SolanaSecretKeyRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): SolanaSecretKeyRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'data': !exists(json, 'data') ? undefined : json['data'],
+        'data': json['data'] == null ? undefined : json['data'],
     };
 }
 
-export function SolanaSecretKeyRequestToJSON(value?: SolanaSecretKeyRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SolanaSecretKeyRequestToJSON(json: any): SolanaSecretKeyRequest {
+    return SolanaSecretKeyRequestToJSONTyped(json, false);
+}
+
+export function SolanaSecretKeyRequestToJSONTyped(value?: SolanaSecretKeyRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'data': value.data,
+        'data': value['data'],
     };
 }
 

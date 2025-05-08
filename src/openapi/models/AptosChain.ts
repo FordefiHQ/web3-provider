@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AptosChainUniqueId } from './AptosChainUniqueId';
 import {
     AptosChainUniqueIdFromJSON,
     AptosChainUniqueIdFromJSONTyped,
     AptosChainUniqueIdToJSON,
+    AptosChainUniqueIdToJSONTyped,
 } from './AptosChainUniqueId';
 
 /**
@@ -53,12 +54,10 @@ export type AptosChainChainTypeEnum = typeof AptosChainChainTypeEnum[keyof typeo
 /**
  * Check if a given object implements the AptosChain interface.
  */
-export function instanceOfAptosChain(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chainType" in value;
-    isInstance = isInstance && "uniqueId" in value;
-
-    return isInstance;
+export function instanceOfAptosChain(value: object): value is AptosChain {
+    if (!('chainType' in value) || value['chainType'] === undefined) return false;
+    if (!('uniqueId' in value) || value['uniqueId'] === undefined) return false;
+    return true;
 }
 
 export function AptosChainFromJSON(json: any): AptosChain {
@@ -66,7 +65,7 @@ export function AptosChainFromJSON(json: any): AptosChain {
 }
 
 export function AptosChainFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosChain {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function AptosChainFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     };
 }
 
-export function AptosChainToJSON(value?: AptosChain | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AptosChainToJSON(json: any): AptosChain {
+    return AptosChainToJSONTyped(json, false);
+}
+
+export function AptosChainToJSONTyped(value?: AptosChain | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain_type': value.chainType,
-        'unique_id': AptosChainUniqueIdToJSON(value.uniqueId),
+        'chain_type': value['chainType'],
+        'unique_id': AptosChainUniqueIdToJSON(value['uniqueId']),
     };
 }
 

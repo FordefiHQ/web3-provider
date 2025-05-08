@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { EncryptionData } from './EncryptionData';
-import {
-    EncryptionDataFromJSON,
-    EncryptionDataFromJSONTyped,
-    EncryptionDataToJSON,
-} from './EncryptionData';
+import { mapValues } from '../runtime';
 import type { KeyType } from './KeyType';
 import {
     KeyTypeFromJSON,
     KeyTypeFromJSONTyped,
     KeyTypeToJSON,
+    KeyTypeToJSONTyped,
 } from './KeyType';
+import type { EncryptionData } from './EncryptionData';
+import {
+    EncryptionDataFromJSON,
+    EncryptionDataFromJSONTyped,
+    EncryptionDataToJSON,
+    EncryptionDataToJSONTyped,
+} from './EncryptionData';
 
 /**
  * 
@@ -46,10 +48,10 @@ export interface SignKeyShareBackupRequest {
     encryptedDeviceShare: EncryptionData;
     /**
      * 
-     * @type {Array<KeyType>}
+     * @type {Array<string>}
      * @memberof SignKeyShareBackupRequest
      */
-    deviceSharesIncluded: Array<KeyType>;
+    keyIdsIncluded?: Array<string>;
     /**
      * 
      * @type {string}
@@ -62,20 +64,23 @@ export interface SignKeyShareBackupRequest {
      * @memberof SignKeyShareBackupRequest
      */
     backupKey: string;
+    /**
+     * 
+     * @type {Array<KeyType>}
+     * @memberof SignKeyShareBackupRequest
+     */
+    deviceSharesIncluded?: Array<KeyType>;
 }
 
 /**
  * Check if a given object implements the SignKeyShareBackupRequest interface.
  */
-export function instanceOfSignKeyShareBackupRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "signature" in value;
-    isInstance = isInstance && "encryptedDeviceShare" in value;
-    isInstance = isInstance && "deviceSharesIncluded" in value;
-    isInstance = isInstance && "deviceHmac" in value;
-    isInstance = isInstance && "backupKey" in value;
-
-    return isInstance;
+export function instanceOfSignKeyShareBackupRequest(value: object): value is SignKeyShareBackupRequest {
+    if (!('signature' in value) || value['signature'] === undefined) return false;
+    if (!('encryptedDeviceShare' in value) || value['encryptedDeviceShare'] === undefined) return false;
+    if (!('deviceHmac' in value) || value['deviceHmac'] === undefined) return false;
+    if (!('backupKey' in value) || value['backupKey'] === undefined) return false;
+    return true;
 }
 
 export function SignKeyShareBackupRequestFromJSON(json: any): SignKeyShareBackupRequest {
@@ -83,33 +88,37 @@ export function SignKeyShareBackupRequestFromJSON(json: any): SignKeyShareBackup
 }
 
 export function SignKeyShareBackupRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): SignKeyShareBackupRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'signature': json['signature'],
         'encryptedDeviceShare': EncryptionDataFromJSON(json['encrypted_device_share']),
-        'deviceSharesIncluded': ((json['device_shares_included'] as Array<any>).map(KeyTypeFromJSON)),
+        'keyIdsIncluded': json['key_ids_included'] == null ? undefined : json['key_ids_included'],
         'deviceHmac': json['device_hmac'],
         'backupKey': json['backup_key'],
+        'deviceSharesIncluded': json['device_shares_included'] == null ? undefined : ((json['device_shares_included'] as Array<any>).map(KeyTypeFromJSON)),
     };
 }
 
-export function SignKeyShareBackupRequestToJSON(value?: SignKeyShareBackupRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SignKeyShareBackupRequestToJSON(json: any): SignKeyShareBackupRequest {
+    return SignKeyShareBackupRequestToJSONTyped(json, false);
+}
+
+export function SignKeyShareBackupRequestToJSONTyped(value?: SignKeyShareBackupRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'signature': value.signature,
-        'encrypted_device_share': EncryptionDataToJSON(value.encryptedDeviceShare),
-        'device_shares_included': ((value.deviceSharesIncluded as Array<any>).map(KeyTypeToJSON)),
-        'device_hmac': value.deviceHmac,
-        'backup_key': value.backupKey,
+        'signature': value['signature'],
+        'encrypted_device_share': EncryptionDataToJSON(value['encryptedDeviceShare']),
+        'key_ids_included': value['keyIdsIncluded'],
+        'device_hmac': value['deviceHmac'],
+        'backup_key': value['backupKey'],
+        'device_shares_included': value['deviceSharesIncluded'] == null ? undefined : ((value['deviceSharesIncluded'] as Array<any>).map(KeyTypeToJSON)),
     };
 }
 

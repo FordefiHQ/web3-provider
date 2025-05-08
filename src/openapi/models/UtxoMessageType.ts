@@ -24,6 +24,17 @@ export const UtxoMessageType = {
 export type UtxoMessageType = typeof UtxoMessageType[keyof typeof UtxoMessageType];
 
 
+export function instanceOfUtxoMessageType(value: any): boolean {
+    for (const key in UtxoMessageType) {
+        if (Object.prototype.hasOwnProperty.call(UtxoMessageType, key)) {
+            if (UtxoMessageType[key as keyof typeof UtxoMessageType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function UtxoMessageTypeFromJSON(json: any): UtxoMessageType {
     return UtxoMessageTypeFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function UtxoMessageTypeFromJSONTyped(json: any, ignoreDiscriminator: boo
 
 export function UtxoMessageTypeToJSON(value?: UtxoMessageType | null): any {
     return value as any;
+}
+
+export function UtxoMessageTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): UtxoMessageType {
+    return value as UtxoMessageType;
 }
 

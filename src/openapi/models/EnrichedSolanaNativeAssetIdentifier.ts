@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedSolanaChain } from './EnrichedSolanaChain';
 import {
     EnrichedSolanaChainFromJSON,
     EnrichedSolanaChainFromJSONTyped,
     EnrichedSolanaChainToJSON,
+    EnrichedSolanaChainToJSONTyped,
 } from './EnrichedSolanaChain';
 
 /**
@@ -53,12 +54,10 @@ export type EnrichedSolanaNativeAssetIdentifierTypeEnum = typeof EnrichedSolanaN
 /**
  * Check if a given object implements the EnrichedSolanaNativeAssetIdentifier interface.
  */
-export function instanceOfEnrichedSolanaNativeAssetIdentifier(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfEnrichedSolanaNativeAssetIdentifier(value: object): value is EnrichedSolanaNativeAssetIdentifier {
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function EnrichedSolanaNativeAssetIdentifierFromJSON(json: any): EnrichedSolanaNativeAssetIdentifier {
@@ -66,7 +65,7 @@ export function EnrichedSolanaNativeAssetIdentifierFromJSON(json: any): Enriched
 }
 
 export function EnrichedSolanaNativeAssetIdentifierFromJSONTyped(json: any, ignoreDiscriminator: boolean): EnrichedSolanaNativeAssetIdentifier {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function EnrichedSolanaNativeAssetIdentifierFromJSONTyped(json: any, igno
     };
 }
 
-export function EnrichedSolanaNativeAssetIdentifierToJSON(value?: EnrichedSolanaNativeAssetIdentifier | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EnrichedSolanaNativeAssetIdentifierToJSON(json: any): EnrichedSolanaNativeAssetIdentifier {
+    return EnrichedSolanaNativeAssetIdentifierToJSONTyped(json, false);
+}
+
+export function EnrichedSolanaNativeAssetIdentifierToJSONTyped(value?: EnrichedSolanaNativeAssetIdentifier | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain': EnrichedSolanaChainToJSON(value.chain),
-        'type': value.type,
+        'chain': EnrichedSolanaChainToJSON(value['chain']),
+        'type': value['type'],
     };
 }
 

@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -36,12 +36,10 @@ export interface Balances {
 /**
  * Check if a given object implements the Balances interface.
  */
-export function instanceOfBalances(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "mined" in value;
-    isInstance = isInstance && "pendingIncoming" in value;
-
-    return isInstance;
+export function instanceOfBalances(value: object): value is Balances {
+    if (!('mined' in value) || value['mined'] === undefined) return false;
+    if (!('pendingIncoming' in value) || value['pendingIncoming'] === undefined) return false;
+    return true;
 }
 
 export function BalancesFromJSON(json: any): Balances {
@@ -49,7 +47,7 @@ export function BalancesFromJSON(json: any): Balances {
 }
 
 export function BalancesFromJSONTyped(json: any, ignoreDiscriminator: boolean): Balances {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -59,17 +57,19 @@ export function BalancesFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     };
 }
 
-export function BalancesToJSON(value?: Balances | null): any {
-    if (value === undefined) {
-        return undefined;
+export function BalancesToJSON(json: any): Balances {
+    return BalancesToJSONTyped(json, false);
+}
+
+export function BalancesToJSONTyped(value?: Balances | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'mined': value.mined,
-        'pending_incoming': value.pendingIncoming,
+        'mined': value['mined'],
+        'pending_incoming': value['pendingIncoming'],
     };
 }
 

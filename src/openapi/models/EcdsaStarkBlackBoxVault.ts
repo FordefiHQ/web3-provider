@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -53,13 +53,11 @@ export type EcdsaStarkBlackBoxVaultTypeEnum = typeof EcdsaStarkBlackBoxVaultType
 /**
  * Check if a given object implements the EcdsaStarkBlackBoxVault interface.
  */
-export function instanceOfEcdsaStarkBlackBoxVault(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "publicKey" in value;
-    isInstance = isInstance && "starkKey" in value;
-
-    return isInstance;
+export function instanceOfEcdsaStarkBlackBoxVault(value: object): value is EcdsaStarkBlackBoxVault {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('publicKey' in value) || value['publicKey'] === undefined) return false;
+    if (!('starkKey' in value) || value['starkKey'] === undefined) return false;
+    return true;
 }
 
 export function EcdsaStarkBlackBoxVaultFromJSON(json: any): EcdsaStarkBlackBoxVault {
@@ -67,7 +65,7 @@ export function EcdsaStarkBlackBoxVaultFromJSON(json: any): EcdsaStarkBlackBoxVa
 }
 
 export function EcdsaStarkBlackBoxVaultFromJSONTyped(json: any, ignoreDiscriminator: boolean): EcdsaStarkBlackBoxVault {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -78,18 +76,20 @@ export function EcdsaStarkBlackBoxVaultFromJSONTyped(json: any, ignoreDiscrimina
     };
 }
 
-export function EcdsaStarkBlackBoxVaultToJSON(value?: EcdsaStarkBlackBoxVault | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EcdsaStarkBlackBoxVaultToJSON(json: any): EcdsaStarkBlackBoxVault {
+    return EcdsaStarkBlackBoxVaultToJSONTyped(json, false);
+}
+
+export function EcdsaStarkBlackBoxVaultToJSONTyped(value?: EcdsaStarkBlackBoxVault | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'public_key': value.publicKey,
-        'stark_key': value.starkKey,
+        'type': value['type'],
+        'public_key': value['publicKey'],
+        'stark_key': value['starkKey'],
     };
 }
 

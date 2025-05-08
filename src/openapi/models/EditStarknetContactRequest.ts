@@ -12,12 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { StarknetAssetIdentifierRequest } from './StarknetAssetIdentifierRequest';
+import {
+    StarknetAssetIdentifierRequestFromJSON,
+    StarknetAssetIdentifierRequestFromJSONTyped,
+    StarknetAssetIdentifierRequestToJSON,
+    StarknetAssetIdentifierRequestToJSONTyped,
+} from './StarknetAssetIdentifierRequest';
 import type { StarknetChainUniqueId } from './StarknetChainUniqueId';
 import {
     StarknetChainUniqueIdFromJSON,
     StarknetChainUniqueIdFromJSONTyped,
     StarknetChainUniqueIdToJSON,
+    StarknetChainUniqueIdToJSONTyped,
 } from './StarknetChainUniqueId';
 
 /**
@@ -44,6 +52,12 @@ export interface EditStarknetContactRequest {
      * @memberof EditStarknetContactRequest
      */
     chains: Array<StarknetChainUniqueId>;
+    /**
+     * 
+     * @type {Array<StarknetAssetIdentifierRequest>}
+     * @memberof EditStarknetContactRequest
+     */
+    assetsIdentifiers?: Array<StarknetAssetIdentifierRequest>;
 }
 
 
@@ -59,13 +73,11 @@ export type EditStarknetContactRequestTypeEnum = typeof EditStarknetContactReque
 /**
  * Check if a given object implements the EditStarknetContactRequest interface.
  */
-export function instanceOfEditStarknetContactRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chains" in value;
-
-    return isInstance;
+export function instanceOfEditStarknetContactRequest(value: object): value is EditStarknetContactRequest {
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chains' in value) || value['chains'] === undefined) return false;
+    return true;
 }
 
 export function EditStarknetContactRequestFromJSON(json: any): EditStarknetContactRequest {
@@ -73,7 +85,7 @@ export function EditStarknetContactRequestFromJSON(json: any): EditStarknetConta
 }
 
 export function EditStarknetContactRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): EditStarknetContactRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -81,21 +93,25 @@ export function EditStarknetContactRequestFromJSONTyped(json: any, ignoreDiscrim
         'name': json['name'],
         'type': json['type'],
         'chains': ((json['chains'] as Array<any>).map(StarknetChainUniqueIdFromJSON)),
+        'assetsIdentifiers': json['assets_identifiers'] == null ? undefined : ((json['assets_identifiers'] as Array<any>).map(StarknetAssetIdentifierRequestFromJSON)),
     };
 }
 
-export function EditStarknetContactRequestToJSON(value?: EditStarknetContactRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EditStarknetContactRequestToJSON(json: any): EditStarknetContactRequest {
+    return EditStarknetContactRequestToJSONTyped(json, false);
+}
+
+export function EditStarknetContactRequestToJSONTyped(value?: EditStarknetContactRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'type': value.type,
-        'chains': ((value.chains as Array<any>).map(StarknetChainUniqueIdToJSON)),
+        'name': value['name'],
+        'type': value['type'],
+        'chains': ((value['chains'] as Array<any>).map(StarknetChainUniqueIdToJSON)),
+        'assets_identifiers': value['assetsIdentifiers'] == null ? undefined : ((value['assetsIdentifiers'] as Array<any>).map(StarknetAssetIdentifierRequestToJSON)),
     };
 }
 

@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -54,15 +54,13 @@ export interface EndUser {
 /**
  * Check if a given object implements the EndUser interface.
  */
-export function instanceOfEndUser(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "externalId" in value;
-    isInstance = isInstance && "lastLoginAt" in value;
-
-    return isInstance;
+export function instanceOfEndUser(value: object): value is EndUser {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('externalId' in value) || value['externalId'] === undefined) return false;
+    if (!('lastLoginAt' in value) || value['lastLoginAt'] === undefined) return false;
+    return true;
 }
 
 export function EndUserFromJSON(json: any): EndUser {
@@ -70,7 +68,7 @@ export function EndUserFromJSON(json: any): EndUser {
 }
 
 export function EndUserFromJSONTyped(json: any, ignoreDiscriminator: boolean): EndUser {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -83,20 +81,22 @@ export function EndUserFromJSONTyped(json: any, ignoreDiscriminator: boolean): E
     };
 }
 
-export function EndUserToJSON(value?: EndUser | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EndUserToJSON(json: any): EndUser {
+    return EndUserToJSONTyped(json, false);
+}
+
+export function EndUserToJSONTyped(value?: EndUser | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'external_id': value.externalId,
-        'last_login_at': (value.lastLoginAt.toISOString()),
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'external_id': value['externalId'],
+        'last_login_at': ((value['lastLoginAt']).toISOString()),
     };
 }
 

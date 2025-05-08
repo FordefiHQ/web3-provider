@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -52,12 +52,10 @@ export type IssueEndUserAuthTokenRequestUserTypeEnum = typeof IssueEndUserAuthTo
 /**
  * Check if a given object implements the IssueEndUserAuthTokenRequest interface.
  */
-export function instanceOfIssueEndUserAuthTokenRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "userType" in value;
-    isInstance = isInstance && "userId" in value;
-
-    return isInstance;
+export function instanceOfIssueEndUserAuthTokenRequest(value: object): value is IssueEndUserAuthTokenRequest {
+    if (!('userType' in value) || value['userType'] === undefined) return false;
+    if (!('userId' in value) || value['userId'] === undefined) return false;
+    return true;
 }
 
 export function IssueEndUserAuthTokenRequestFromJSON(json: any): IssueEndUserAuthTokenRequest {
@@ -65,29 +63,31 @@ export function IssueEndUserAuthTokenRequestFromJSON(json: any): IssueEndUserAut
 }
 
 export function IssueEndUserAuthTokenRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): IssueEndUserAuthTokenRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'userType': json['user_type'],
         'userId': json['user_id'],
-        'expiration': !exists(json, 'expiration') ? undefined : json['expiration'],
+        'expiration': json['expiration'] == null ? undefined : json['expiration'],
     };
 }
 
-export function IssueEndUserAuthTokenRequestToJSON(value?: IssueEndUserAuthTokenRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function IssueEndUserAuthTokenRequestToJSON(json: any): IssueEndUserAuthTokenRequest {
+    return IssueEndUserAuthTokenRequestToJSONTyped(json, false);
+}
+
+export function IssueEndUserAuthTokenRequestToJSONTyped(value?: IssueEndUserAuthTokenRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'user_type': value.userType,
-        'user_id': value.userId,
-        'expiration': value.expiration,
+        'user_type': value['userType'],
+        'user_id': value['userId'],
+        'expiration': value['expiration'],
     };
 }
 

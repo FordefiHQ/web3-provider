@@ -12,25 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
-import {
-    EnrichedEvmAddressFromJSON,
-    EnrichedEvmAddressFromJSONTyped,
-    EnrichedEvmAddressToJSON,
-} from './EnrichedEvmAddress';
+import { mapValues } from '../runtime';
 import type { Erc1155Contract } from './Erc1155Contract';
 import {
     Erc1155ContractFromJSON,
     Erc1155ContractFromJSONTyped,
     Erc1155ContractToJSON,
+    Erc1155ContractToJSONTyped,
 } from './Erc1155Contract';
 import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
     PricedAssetFromJSONTyped,
     PricedAssetToJSON,
+    PricedAssetToJSONTyped,
 } from './PricedAsset';
+import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
+import {
+    EnrichedEvmAddressFromJSON,
+    EnrichedEvmAddressFromJSONTyped,
+    EnrichedEvmAddressToJSON,
+    EnrichedEvmAddressToJSONTyped,
+} from './EnrichedEvmAddress';
 
 /**
  * 
@@ -89,16 +92,14 @@ export type Erc1155AllowanceForAllChangeTypeEnum = typeof Erc1155AllowanceForAll
 /**
  * Check if a given object implements the Erc1155AllowanceForAllChange interface.
  */
-export function instanceOfErc1155AllowanceForAllChange(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "pricedAsset" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "owner" in value;
-    isInstance = isInstance && "operator" in value;
-    isInstance = isInstance && "approved" in value;
-    isInstance = isInstance && "tokenContract" in value;
-
-    return isInstance;
+export function instanceOfErc1155AllowanceForAllChange(value: object): value is Erc1155AllowanceForAllChange {
+    if (!('pricedAsset' in value) || value['pricedAsset'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('owner' in value) || value['owner'] === undefined) return false;
+    if (!('operator' in value) || value['operator'] === undefined) return false;
+    if (!('approved' in value) || value['approved'] === undefined) return false;
+    if (!('tokenContract' in value) || value['tokenContract'] === undefined) return false;
+    return true;
 }
 
 export function Erc1155AllowanceForAllChangeFromJSON(json: any): Erc1155AllowanceForAllChange {
@@ -106,7 +107,7 @@ export function Erc1155AllowanceForAllChangeFromJSON(json: any): Erc1155Allowanc
 }
 
 export function Erc1155AllowanceForAllChangeFromJSONTyped(json: any, ignoreDiscriminator: boolean): Erc1155AllowanceForAllChange {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -120,21 +121,23 @@ export function Erc1155AllowanceForAllChangeFromJSONTyped(json: any, ignoreDiscr
     };
 }
 
-export function Erc1155AllowanceForAllChangeToJSON(value?: Erc1155AllowanceForAllChange | null): any {
-    if (value === undefined) {
-        return undefined;
+export function Erc1155AllowanceForAllChangeToJSON(json: any): Erc1155AllowanceForAllChange {
+    return Erc1155AllowanceForAllChangeToJSONTyped(json, false);
+}
+
+export function Erc1155AllowanceForAllChangeToJSONTyped(value?: Erc1155AllowanceForAllChange | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'priced_asset': PricedAssetToJSON(value.pricedAsset),
-        'type': value.type,
-        'owner': EnrichedEvmAddressToJSON(value.owner),
-        'operator': EnrichedEvmAddressToJSON(value.operator),
-        'approved': value.approved,
-        'token_contract': Erc1155ContractToJSON(value.tokenContract),
+        'priced_asset': PricedAssetToJSON(value['pricedAsset']),
+        'type': value['type'],
+        'owner': EnrichedEvmAddressToJSON(value['owner']),
+        'operator': EnrichedEvmAddressToJSON(value['operator']),
+        'approved': value['approved'],
+        'token_contract': Erc1155ContractToJSON(value['tokenContract']),
     };
 }
 

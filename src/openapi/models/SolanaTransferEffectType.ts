@@ -24,6 +24,17 @@ export const SolanaTransferEffectType = {
 export type SolanaTransferEffectType = typeof SolanaTransferEffectType[keyof typeof SolanaTransferEffectType];
 
 
+export function instanceOfSolanaTransferEffectType(value: any): boolean {
+    for (const key in SolanaTransferEffectType) {
+        if (Object.prototype.hasOwnProperty.call(SolanaTransferEffectType, key)) {
+            if (SolanaTransferEffectType[key as keyof typeof SolanaTransferEffectType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function SolanaTransferEffectTypeFromJSON(json: any): SolanaTransferEffectType {
     return SolanaTransferEffectTypeFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function SolanaTransferEffectTypeFromJSONTyped(json: any, ignoreDiscrimin
 
 export function SolanaTransferEffectTypeToJSON(value?: SolanaTransferEffectType | null): any {
     return value as any;
+}
+
+export function SolanaTransferEffectTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): SolanaTransferEffectType {
+    return value as SolanaTransferEffectType;
 }
 

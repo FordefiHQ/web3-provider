@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { LogClientType } from './LogClientType';
 import {
     LogClientTypeFromJSON,
     LogClientTypeFromJSONTyped,
     LogClientTypeToJSON,
+    LogClientTypeToJSONTyped,
 } from './LogClientType';
 import type { LogMessage } from './LogMessage';
 import {
     LogMessageFromJSON,
     LogMessageFromJSONTyped,
     LogMessageToJSON,
+    LogMessageToJSONTyped,
 } from './LogMessage';
 
 /**
@@ -52,16 +54,16 @@ export interface CreateLogsRequest {
     clientGitrev: string;
 }
 
+
+
 /**
  * Check if a given object implements the CreateLogsRequest interface.
  */
-export function instanceOfCreateLogsRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "logs" in value;
-    isInstance = isInstance && "clientType" in value;
-    isInstance = isInstance && "clientGitrev" in value;
-
-    return isInstance;
+export function instanceOfCreateLogsRequest(value: object): value is CreateLogsRequest {
+    if (!('logs' in value) || value['logs'] === undefined) return false;
+    if (!('clientType' in value) || value['clientType'] === undefined) return false;
+    if (!('clientGitrev' in value) || value['clientGitrev'] === undefined) return false;
+    return true;
 }
 
 export function CreateLogsRequestFromJSON(json: any): CreateLogsRequest {
@@ -69,7 +71,7 @@ export function CreateLogsRequestFromJSON(json: any): CreateLogsRequest {
 }
 
 export function CreateLogsRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateLogsRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -80,18 +82,20 @@ export function CreateLogsRequestFromJSONTyped(json: any, ignoreDiscriminator: b
     };
 }
 
-export function CreateLogsRequestToJSON(value?: CreateLogsRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateLogsRequestToJSON(json: any): CreateLogsRequest {
+    return CreateLogsRequestToJSONTyped(json, false);
+}
+
+export function CreateLogsRequestToJSONTyped(value?: CreateLogsRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'logs': ((value.logs as Array<any>).map(LogMessageToJSON)),
-        'client_type': LogClientTypeToJSON(value.clientType),
-        'client_gitrev': value.clientGitrev,
+        'logs': ((value['logs'] as Array<any>).map(LogMessageToJSON)),
+        'client_type': LogClientTypeToJSON(value['clientType']),
+        'client_gitrev': value['clientGitrev'],
     };
 }
 

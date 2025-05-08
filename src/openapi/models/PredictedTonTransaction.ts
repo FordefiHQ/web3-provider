@@ -12,67 +12,91 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { ApprovalRequest } from './ApprovalRequest';
-import {
-    ApprovalRequestFromJSON,
-    ApprovalRequestFromJSONTyped,
-    ApprovalRequestToJSON,
-} from './ApprovalRequest';
+import { mapValues } from '../runtime';
 import type { EnrichedTonAddress } from './EnrichedTonAddress';
 import {
     EnrichedTonAddressFromJSON,
     EnrichedTonAddressFromJSONTyped,
     EnrichedTonAddressToJSON,
+    EnrichedTonAddressToJSONTyped,
 } from './EnrichedTonAddress';
-import type { EnrichedTonChain } from './EnrichedTonChain';
+import type { AmlPolicyMatchOutgoing } from './AmlPolicyMatchOutgoing';
 import {
-    EnrichedTonChainFromJSON,
-    EnrichedTonChainFromJSONTyped,
-    EnrichedTonChainToJSON,
-} from './EnrichedTonChain';
-import type { PolicyMatch } from './PolicyMatch';
-import {
-    PolicyMatchFromJSON,
-    PolicyMatchFromJSONTyped,
-    PolicyMatchToJSON,
-} from './PolicyMatch';
-import type { PredictedTonTransactionTonTransactionTypeDetails } from './PredictedTonTransactionTonTransactionTypeDetails';
-import {
-    PredictedTonTransactionTonTransactionTypeDetailsFromJSON,
-    PredictedTonTransactionTonTransactionTypeDetailsFromJSONTyped,
-    PredictedTonTransactionTonTransactionTypeDetailsToJSON,
-} from './PredictedTonTransactionTonTransactionTypeDetails';
-import type { SimulationStatusResult } from './SimulationStatusResult';
-import {
-    SimulationStatusResultFromJSON,
-    SimulationStatusResultFromJSONTyped,
-    SimulationStatusResultToJSON,
-} from './SimulationStatusResult';
+    AmlPolicyMatchOutgoingFromJSON,
+    AmlPolicyMatchOutgoingFromJSONTyped,
+    AmlPolicyMatchOutgoingToJSON,
+    AmlPolicyMatchOutgoingToJSONTyped,
+} from './AmlPolicyMatchOutgoing';
 import type { TonSuggestedFees } from './TonSuggestedFees';
 import {
     TonSuggestedFeesFromJSON,
     TonSuggestedFeesFromJSONTyped,
     TonSuggestedFeesToJSON,
+    TonSuggestedFeesToJSONTyped,
 } from './TonSuggestedFees';
-import type { TonTransactionPayload } from './TonTransactionPayload';
+import type { EnrichedTonChain } from './EnrichedTonChain';
 import {
-    TonTransactionPayloadFromJSON,
-    TonTransactionPayloadFromJSONTyped,
-    TonTransactionPayloadToJSON,
-} from './TonTransactionPayload';
-import type { TonTransactionResult } from './TonTransactionResult';
-import {
-    TonTransactionResultFromJSON,
-    TonTransactionResultFromJSONTyped,
-    TonTransactionResultToJSON,
-} from './TonTransactionResult';
+    EnrichedTonChainFromJSON,
+    EnrichedTonChainFromJSONTyped,
+    EnrichedTonChainToJSON,
+    EnrichedTonChainToJSONTyped,
+} from './EnrichedTonChain';
 import type { TransactionRisk } from './TransactionRisk';
 import {
     TransactionRiskFromJSON,
     TransactionRiskFromJSONTyped,
     TransactionRiskToJSON,
+    TransactionRiskToJSONTyped,
 } from './TransactionRisk';
+import type { PredictedTonTransactionTonTransactionTypeDetails } from './PredictedTonTransactionTonTransactionTypeDetails';
+import {
+    PredictedTonTransactionTonTransactionTypeDetailsFromJSON,
+    PredictedTonTransactionTonTransactionTypeDetailsFromJSONTyped,
+    PredictedTonTransactionTonTransactionTypeDetailsToJSON,
+    PredictedTonTransactionTonTransactionTypeDetailsToJSONTyped,
+} from './PredictedTonTransactionTonTransactionTypeDetails';
+import type { ApprovalRequest } from './ApprovalRequest';
+import {
+    ApprovalRequestFromJSON,
+    ApprovalRequestFromJSONTyped,
+    ApprovalRequestToJSON,
+    ApprovalRequestToJSONTyped,
+} from './ApprovalRequest';
+import type { SimulationStatusResult } from './SimulationStatusResult';
+import {
+    SimulationStatusResultFromJSON,
+    SimulationStatusResultFromJSONTyped,
+    SimulationStatusResultToJSON,
+    SimulationStatusResultToJSONTyped,
+} from './SimulationStatusResult';
+import type { PolicyMatch } from './PolicyMatch';
+import {
+    PolicyMatchFromJSON,
+    PolicyMatchFromJSONTyped,
+    PolicyMatchToJSON,
+    PolicyMatchToJSONTyped,
+} from './PolicyMatch';
+import type { TonTransactionResult } from './TonTransactionResult';
+import {
+    TonTransactionResultFromJSON,
+    TonTransactionResultFromJSONTyped,
+    TonTransactionResultToJSON,
+    TonTransactionResultToJSONTyped,
+} from './TonTransactionResult';
+import type { AmlResults } from './AmlResults';
+import {
+    AmlResultsFromJSON,
+    AmlResultsFromJSONTyped,
+    AmlResultsToJSON,
+    AmlResultsToJSONTyped,
+} from './AmlResults';
+import type { TonTransactionPayload } from './TonTransactionPayload';
+import {
+    TonTransactionPayloadFromJSON,
+    TonTransactionPayloadFromJSONTyped,
+    TonTransactionPayloadToJSON,
+    TonTransactionPayloadToJSONTyped,
+} from './TonTransactionPayload';
 
 /**
  * 
@@ -80,6 +104,12 @@ import {
  * @interface PredictedTonTransaction
  */
 export interface PredictedTonTransaction {
+    /**
+     * 
+     * @type {AmlPolicyMatchOutgoing}
+     * @memberof PredictedTonTransaction
+     */
+    amlPolicyMatch?: AmlPolicyMatchOutgoing;
     /**
      * 
      * @type {PolicyMatch}
@@ -98,6 +128,18 @@ export interface PredictedTonTransaction {
      * @memberof PredictedTonTransaction
      */
     risks: Array<TransactionRisk>;
+    /**
+     * 
+     * @type {string}
+     * @memberof PredictedTonTransaction
+     */
+    note?: string;
+    /**
+     * 
+     * @type {AmlResults}
+     * @memberof PredictedTonTransaction
+     */
+    amlResults?: AmlResults;
     /**
      * 
      * @type {string}
@@ -161,20 +203,18 @@ export type PredictedTonTransactionTypeEnum = typeof PredictedTonTransactionType
 /**
  * Check if a given object implements the PredictedTonTransaction interface.
  */
-export function instanceOfPredictedTonTransaction(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "policyMatch" in value;
-    isInstance = isInstance && "risks" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "expectedResult" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "simulationStatusResult" in value;
-    isInstance = isInstance && "payload" in value;
-    isInstance = isInstance && "tonTransactionTypeDetails" in value;
-    isInstance = isInstance && "suggestedFees" in value;
-    isInstance = isInstance && "sender" in value;
-
-    return isInstance;
+export function instanceOfPredictedTonTransaction(value: object): value is PredictedTonTransaction {
+    if (!('policyMatch' in value) || value['policyMatch'] === undefined) return false;
+    if (!('risks' in value) || value['risks'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('expectedResult' in value) || value['expectedResult'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('simulationStatusResult' in value) || value['simulationStatusResult'] === undefined) return false;
+    if (!('payload' in value) || value['payload'] === undefined) return false;
+    if (!('tonTransactionTypeDetails' in value) || value['tonTransactionTypeDetails'] === undefined) return false;
+    if (!('suggestedFees' in value) || value['suggestedFees'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    return true;
 }
 
 export function PredictedTonTransactionFromJSON(json: any): PredictedTonTransaction {
@@ -182,14 +222,17 @@ export function PredictedTonTransactionFromJSON(json: any): PredictedTonTransact
 }
 
 export function PredictedTonTransactionFromJSONTyped(json: any, ignoreDiscriminator: boolean): PredictedTonTransaction {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
+        'amlPolicyMatch': json['aml_policy_match'] == null ? undefined : AmlPolicyMatchOutgoingFromJSON(json['aml_policy_match']),
         'policyMatch': PolicyMatchFromJSON(json['policy_match']),
-        'approvalRequest': !exists(json, 'approval_request') ? undefined : ApprovalRequestFromJSON(json['approval_request']),
+        'approvalRequest': json['approval_request'] == null ? undefined : ApprovalRequestFromJSON(json['approval_request']),
         'risks': ((json['risks'] as Array<any>).map(TransactionRiskFromJSON)),
+        'note': json['note'] == null ? undefined : json['note'],
+        'amlResults': json['aml_results'] == null ? undefined : AmlResultsFromJSON(json['aml_results']),
         'type': json['type'],
         'expectedResult': TonTransactionResultFromJSON(json['expected_result']),
         'chain': EnrichedTonChainFromJSON(json['chain']),
@@ -201,26 +244,31 @@ export function PredictedTonTransactionFromJSONTyped(json: any, ignoreDiscrimina
     };
 }
 
-export function PredictedTonTransactionToJSON(value?: PredictedTonTransaction | null): any {
-    if (value === undefined) {
-        return undefined;
+export function PredictedTonTransactionToJSON(json: any): PredictedTonTransaction {
+    return PredictedTonTransactionToJSONTyped(json, false);
+}
+
+export function PredictedTonTransactionToJSONTyped(value?: PredictedTonTransaction | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'policy_match': PolicyMatchToJSON(value.policyMatch),
-        'approval_request': ApprovalRequestToJSON(value.approvalRequest),
-        'risks': ((value.risks as Array<any>).map(TransactionRiskToJSON)),
-        'type': value.type,
-        'expected_result': TonTransactionResultToJSON(value.expectedResult),
-        'chain': EnrichedTonChainToJSON(value.chain),
-        'simulation_status_result': SimulationStatusResultToJSON(value.simulationStatusResult),
-        'payload': TonTransactionPayloadToJSON(value.payload),
-        'ton_transaction_type_details': PredictedTonTransactionTonTransactionTypeDetailsToJSON(value.tonTransactionTypeDetails),
-        'suggested_fees': TonSuggestedFeesToJSON(value.suggestedFees),
-        'sender': EnrichedTonAddressToJSON(value.sender),
+        'aml_policy_match': AmlPolicyMatchOutgoingToJSON(value['amlPolicyMatch']),
+        'policy_match': PolicyMatchToJSON(value['policyMatch']),
+        'approval_request': ApprovalRequestToJSON(value['approvalRequest']),
+        'risks': ((value['risks'] as Array<any>).map(TransactionRiskToJSON)),
+        'note': value['note'],
+        'aml_results': AmlResultsToJSON(value['amlResults']),
+        'type': value['type'],
+        'expected_result': TonTransactionResultToJSON(value['expectedResult']),
+        'chain': EnrichedTonChainToJSON(value['chain']),
+        'simulation_status_result': SimulationStatusResultToJSON(value['simulationStatusResult']),
+        'payload': TonTransactionPayloadToJSON(value['payload']),
+        'ton_transaction_type_details': PredictedTonTransactionTonTransactionTypeDetailsToJSON(value['tonTransactionTypeDetails']),
+        'suggested_fees': TonSuggestedFeesToJSON(value['suggestedFees']),
+        'sender': EnrichedTonAddressToJSON(value['sender']),
     };
 }
 

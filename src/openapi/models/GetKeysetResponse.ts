@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { OrganizationKeyset } from './OrganizationKeyset';
 import {
-    OrganizationKeyset,
     instanceOfOrganizationKeyset,
     OrganizationKeysetFromJSON,
     OrganizationKeysetFromJSONTyped,
     OrganizationKeysetToJSON,
 } from './OrganizationKeyset';
+import type { UserKeyset } from './UserKeyset';
 import {
-    UserKeyset,
     instanceOfUserKeyset,
     UserKeysetFromJSON,
     UserKeysetFromJSONTyped,
@@ -39,31 +39,32 @@ export function GetKeysetResponseFromJSON(json: any): GetKeysetResponse {
 }
 
 export function GetKeysetResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetKeysetResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['scope']) {
         case 'organization':
-            return {...OrganizationKeysetFromJSONTyped(json, true), scope: 'organization'};
+            return Object.assign({}, OrganizationKeysetFromJSONTyped(json, true), { scope: 'organization' } as const);
         case 'user':
-            return {...UserKeysetFromJSONTyped(json, true), scope: 'user'};
+            return Object.assign({}, UserKeysetFromJSONTyped(json, true), { scope: 'user' } as const);
         default:
             throw new Error(`No variant of GetKeysetResponse exists with 'scope=${json['scope']}'`);
     }
 }
 
-export function GetKeysetResponseToJSON(value?: GetKeysetResponse | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function GetKeysetResponseToJSON(json: any): any {
+    return GetKeysetResponseToJSONTyped(json, false);
+}
+
+export function GetKeysetResponseToJSONTyped(value?: GetKeysetResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['scope']) {
         case 'organization':
-            return OrganizationKeysetToJSON(value);
+            return Object.assign({}, OrganizationKeysetToJSON(value), { scope: 'organization' } as const);
         case 'user':
-            return UserKeysetToJSON(value);
+            return Object.assign({}, UserKeysetToJSON(value), { scope: 'user' } as const);
         default:
             throw new Error(`No variant of GetKeysetResponse exists with 'scope=${value['scope']}'`);
     }

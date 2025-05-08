@@ -12,22 +12,22 @@
  * Do not edit the class manually.
  */
 
+import type { AminoMessagesList } from './AminoMessagesList';
 import {
-    AminoMessagesList,
     instanceOfAminoMessagesList,
     AminoMessagesListFromJSON,
     AminoMessagesListFromJSONTyped,
     AminoMessagesListToJSON,
 } from './AminoMessagesList';
+import type { DirectMessagesList } from './DirectMessagesList';
 import {
-    DirectMessagesList,
     instanceOfDirectMessagesList,
     DirectMessagesListFromJSON,
     DirectMessagesListFromJSONTyped,
     DirectMessagesListToJSON,
 } from './DirectMessagesList';
+import type { MinedMessagesList } from './MinedMessagesList';
 import {
-    MinedMessagesList,
     instanceOfMinedMessagesList,
     MinedMessagesListFromJSON,
     MinedMessagesListFromJSONTyped,
@@ -46,35 +46,36 @@ export function MessagesListFromJSON(json: any): MessagesList {
 }
 
 export function MessagesListFromJSONTyped(json: any, ignoreDiscriminator: boolean): MessagesList {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['format']) {
         case 'amino':
-            return {...AminoMessagesListFromJSONTyped(json, true), format: 'amino'};
+            return Object.assign({}, AminoMessagesListFromJSONTyped(json, true), { format: 'amino' } as const);
         case 'direct':
-            return {...DirectMessagesListFromJSONTyped(json, true), format: 'direct'};
+            return Object.assign({}, DirectMessagesListFromJSONTyped(json, true), { format: 'direct' } as const);
         case 'mined':
-            return {...MinedMessagesListFromJSONTyped(json, true), format: 'mined'};
+            return Object.assign({}, MinedMessagesListFromJSONTyped(json, true), { format: 'mined' } as const);
         default:
             throw new Error(`No variant of MessagesList exists with 'format=${json['format']}'`);
     }
 }
 
-export function MessagesListToJSON(value?: MessagesList | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function MessagesListToJSON(json: any): any {
+    return MessagesListToJSONTyped(json, false);
+}
+
+export function MessagesListToJSONTyped(value?: MessagesList | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['format']) {
         case 'amino':
-            return AminoMessagesListToJSON(value);
+            return Object.assign({}, AminoMessagesListToJSON(value), { format: 'amino' } as const);
         case 'direct':
-            return DirectMessagesListToJSON(value);
+            return Object.assign({}, DirectMessagesListToJSON(value), { format: 'direct' } as const);
         case 'mined':
-            return MinedMessagesListToJSON(value);
+            return Object.assign({}, MinedMessagesListToJSON(value), { format: 'mined' } as const);
         default:
             throw new Error(`No variant of MessagesList exists with 'format=${value['format']}'`);
     }

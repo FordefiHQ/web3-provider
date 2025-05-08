@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -52,12 +52,10 @@ export type EvmBridgeEffectUnknownDestinationTypeEnum = typeof EvmBridgeEffectUn
 /**
  * Check if a given object implements the EvmBridgeEffectUnknownDestination interface.
  */
-export function instanceOfEvmBridgeEffectUnknownDestination(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "destChain" in value;
-
-    return isInstance;
+export function instanceOfEvmBridgeEffectUnknownDestination(value: object): value is EvmBridgeEffectUnknownDestination {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('destChain' in value) || value['destChain'] === undefined) return false;
+    return true;
 }
 
 export function EvmBridgeEffectUnknownDestinationFromJSON(json: any): EvmBridgeEffectUnknownDestination {
@@ -65,29 +63,31 @@ export function EvmBridgeEffectUnknownDestinationFromJSON(json: any): EvmBridgeE
 }
 
 export function EvmBridgeEffectUnknownDestinationFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmBridgeEffectUnknownDestination {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
-        'destAddress': !exists(json, 'dest_address') ? undefined : json['dest_address'],
+        'destAddress': json['dest_address'] == null ? undefined : json['dest_address'],
         'destChain': json['dest_chain'],
     };
 }
 
-export function EvmBridgeEffectUnknownDestinationToJSON(value?: EvmBridgeEffectUnknownDestination | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EvmBridgeEffectUnknownDestinationToJSON(json: any): EvmBridgeEffectUnknownDestination {
+    return EvmBridgeEffectUnknownDestinationToJSONTyped(json, false);
+}
+
+export function EvmBridgeEffectUnknownDestinationToJSONTyped(value?: EvmBridgeEffectUnknownDestination | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'dest_address': value.destAddress,
-        'dest_chain': value.destChain,
+        'type': value['type'],
+        'dest_address': value['destAddress'],
+        'dest_chain': value['destChain'],
     };
 }
 

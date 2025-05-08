@@ -12,43 +12,56 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { ApprovalRequest } from './ApprovalRequest';
-import {
-    ApprovalRequestFromJSON,
-    ApprovalRequestFromJSONTyped,
-    ApprovalRequestToJSON,
-} from './ApprovalRequest';
-import type { CosmosMessageType } from './CosmosMessageType';
-import {
-    CosmosMessageTypeFromJSON,
-    CosmosMessageTypeFromJSONTyped,
-    CosmosMessageTypeToJSON,
-} from './CosmosMessageType';
+import { mapValues } from '../runtime';
 import type { EnrichedCosmosBechAddress } from './EnrichedCosmosBechAddress';
 import {
     EnrichedCosmosBechAddressFromJSON,
     EnrichedCosmosBechAddressFromJSONTyped,
     EnrichedCosmosBechAddressToJSON,
+    EnrichedCosmosBechAddressToJSONTyped,
 } from './EnrichedCosmosBechAddress';
 import type { EnrichedCosmosChain } from './EnrichedCosmosChain';
 import {
     EnrichedCosmosChainFromJSON,
     EnrichedCosmosChainFromJSONTyped,
     EnrichedCosmosChainToJSON,
+    EnrichedCosmosChainToJSONTyped,
 } from './EnrichedCosmosChain';
-import type { PolicyMatch } from './PolicyMatch';
+import type { AmlPolicyMatchOutgoing } from './AmlPolicyMatchOutgoing';
 import {
-    PolicyMatchFromJSON,
-    PolicyMatchFromJSONTyped,
-    PolicyMatchToJSON,
-} from './PolicyMatch';
+    AmlPolicyMatchOutgoingFromJSON,
+    AmlPolicyMatchOutgoingFromJSONTyped,
+    AmlPolicyMatchOutgoingToJSON,
+    AmlPolicyMatchOutgoingToJSONTyped,
+} from './AmlPolicyMatchOutgoing';
 import type { TransactionRisk } from './TransactionRisk';
 import {
     TransactionRiskFromJSON,
     TransactionRiskFromJSONTyped,
     TransactionRiskToJSON,
+    TransactionRiskToJSONTyped,
 } from './TransactionRisk';
+import type { CosmosMessageType } from './CosmosMessageType';
+import {
+    CosmosMessageTypeFromJSON,
+    CosmosMessageTypeFromJSONTyped,
+    CosmosMessageTypeToJSON,
+    CosmosMessageTypeToJSONTyped,
+} from './CosmosMessageType';
+import type { ApprovalRequest } from './ApprovalRequest';
+import {
+    ApprovalRequestFromJSON,
+    ApprovalRequestFromJSONTyped,
+    ApprovalRequestToJSON,
+    ApprovalRequestToJSONTyped,
+} from './ApprovalRequest';
+import type { PolicyMatch } from './PolicyMatch';
+import {
+    PolicyMatchFromJSON,
+    PolicyMatchFromJSONTyped,
+    PolicyMatchToJSON,
+    PolicyMatchToJSONTyped,
+} from './PolicyMatch';
 
 /**
  * 
@@ -56,6 +69,12 @@ import {
  * @interface PredictedCosmosMessage
  */
 export interface PredictedCosmosMessage {
+    /**
+     * 
+     * @type {AmlPolicyMatchOutgoing}
+     * @memberof PredictedCosmosMessage
+     */
+    amlPolicyMatch?: AmlPolicyMatchOutgoing;
     /**
      * 
      * @type {PolicyMatch}
@@ -74,6 +93,12 @@ export interface PredictedCosmosMessage {
      * @memberof PredictedCosmosMessage
      */
     risks: Array<TransactionRisk>;
+    /**
+     * 
+     * @type {string}
+     * @memberof PredictedCosmosMessage
+     */
+    note?: string;
     /**
      * 
      * @type {string}
@@ -119,17 +144,15 @@ export type PredictedCosmosMessageTypeEnum = typeof PredictedCosmosMessageTypeEn
 /**
  * Check if a given object implements the PredictedCosmosMessage interface.
  */
-export function instanceOfPredictedCosmosMessage(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "policyMatch" in value;
-    isInstance = isInstance && "risks" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "sender" in value;
-    isInstance = isInstance && "cosmosMessageType" in value;
-    isInstance = isInstance && "messageToDisplay" in value;
-
-    return isInstance;
+export function instanceOfPredictedCosmosMessage(value: object): value is PredictedCosmosMessage {
+    if (!('policyMatch' in value) || value['policyMatch'] === undefined) return false;
+    if (!('risks' in value) || value['risks'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    if (!('cosmosMessageType' in value) || value['cosmosMessageType'] === undefined) return false;
+    if (!('messageToDisplay' in value) || value['messageToDisplay'] === undefined) return false;
+    return true;
 }
 
 export function PredictedCosmosMessageFromJSON(json: any): PredictedCosmosMessage {
@@ -137,14 +160,16 @@ export function PredictedCosmosMessageFromJSON(json: any): PredictedCosmosMessag
 }
 
 export function PredictedCosmosMessageFromJSONTyped(json: any, ignoreDiscriminator: boolean): PredictedCosmosMessage {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
+        'amlPolicyMatch': json['aml_policy_match'] == null ? undefined : AmlPolicyMatchOutgoingFromJSON(json['aml_policy_match']),
         'policyMatch': PolicyMatchFromJSON(json['policy_match']),
-        'approvalRequest': !exists(json, 'approval_request') ? undefined : ApprovalRequestFromJSON(json['approval_request']),
+        'approvalRequest': json['approval_request'] == null ? undefined : ApprovalRequestFromJSON(json['approval_request']),
         'risks': ((json['risks'] as Array<any>).map(TransactionRiskFromJSON)),
+        'note': json['note'] == null ? undefined : json['note'],
         'type': json['type'],
         'chain': EnrichedCosmosChainFromJSON(json['chain']),
         'sender': EnrichedCosmosBechAddressFromJSON(json['sender']),
@@ -153,23 +178,27 @@ export function PredictedCosmosMessageFromJSONTyped(json: any, ignoreDiscriminat
     };
 }
 
-export function PredictedCosmosMessageToJSON(value?: PredictedCosmosMessage | null): any {
-    if (value === undefined) {
-        return undefined;
+export function PredictedCosmosMessageToJSON(json: any): PredictedCosmosMessage {
+    return PredictedCosmosMessageToJSONTyped(json, false);
+}
+
+export function PredictedCosmosMessageToJSONTyped(value?: PredictedCosmosMessage | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'policy_match': PolicyMatchToJSON(value.policyMatch),
-        'approval_request': ApprovalRequestToJSON(value.approvalRequest),
-        'risks': ((value.risks as Array<any>).map(TransactionRiskToJSON)),
-        'type': value.type,
-        'chain': EnrichedCosmosChainToJSON(value.chain),
-        'sender': EnrichedCosmosBechAddressToJSON(value.sender),
-        'cosmos_message_type': CosmosMessageTypeToJSON(value.cosmosMessageType),
-        'message_to_display': value.messageToDisplay,
+        'aml_policy_match': AmlPolicyMatchOutgoingToJSON(value['amlPolicyMatch']),
+        'policy_match': PolicyMatchToJSON(value['policyMatch']),
+        'approval_request': ApprovalRequestToJSON(value['approvalRequest']),
+        'risks': ((value['risks'] as Array<any>).map(TransactionRiskToJSON)),
+        'note': value['note'],
+        'type': value['type'],
+        'chain': EnrichedCosmosChainToJSON(value['chain']),
+        'sender': EnrichedCosmosBechAddressToJSON(value['sender']),
+        'cosmos_message_type': CosmosMessageTypeToJSON(value['cosmosMessageType']),
+        'message_to_display': value['messageToDisplay'],
     };
 }
 

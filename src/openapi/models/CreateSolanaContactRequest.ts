@@ -12,12 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { SolanaAssetIdentifierRequest } from './SolanaAssetIdentifierRequest';
+import {
+    SolanaAssetIdentifierRequestFromJSON,
+    SolanaAssetIdentifierRequestFromJSONTyped,
+    SolanaAssetIdentifierRequestToJSON,
+    SolanaAssetIdentifierRequestToJSONTyped,
+} from './SolanaAssetIdentifierRequest';
 import type { SolanaChainUniqueId } from './SolanaChainUniqueId';
 import {
     SolanaChainUniqueIdFromJSON,
     SolanaChainUniqueIdFromJSONTyped,
     SolanaChainUniqueIdToJSON,
+    SolanaChainUniqueIdToJSONTyped,
 } from './SolanaChainUniqueId';
 
 /**
@@ -50,6 +58,12 @@ export interface CreateSolanaContactRequest {
      * @memberof CreateSolanaContactRequest
      */
     chains: Array<SolanaChainUniqueId>;
+    /**
+     * 
+     * @type {Array<SolanaAssetIdentifierRequest>}
+     * @memberof CreateSolanaContactRequest
+     */
+    assetsIdentifiers?: Array<SolanaAssetIdentifierRequest>;
 }
 
 
@@ -65,14 +79,12 @@ export type CreateSolanaContactRequestTypeEnum = typeof CreateSolanaContactReque
 /**
  * Check if a given object implements the CreateSolanaContactRequest interface.
  */
-export function instanceOfCreateSolanaContactRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "chains" in value;
-
-    return isInstance;
+export function instanceOfCreateSolanaContactRequest(value: object): value is CreateSolanaContactRequest {
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('chains' in value) || value['chains'] === undefined) return false;
+    return true;
 }
 
 export function CreateSolanaContactRequestFromJSON(json: any): CreateSolanaContactRequest {
@@ -80,7 +92,7 @@ export function CreateSolanaContactRequestFromJSON(json: any): CreateSolanaConta
 }
 
 export function CreateSolanaContactRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateSolanaContactRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -89,22 +101,26 @@ export function CreateSolanaContactRequestFromJSONTyped(json: any, ignoreDiscrim
         'type': json['type'],
         'address': json['address'],
         'chains': ((json['chains'] as Array<any>).map(SolanaChainUniqueIdFromJSON)),
+        'assetsIdentifiers': json['assets_identifiers'] == null ? undefined : ((json['assets_identifiers'] as Array<any>).map(SolanaAssetIdentifierRequestFromJSON)),
     };
 }
 
-export function CreateSolanaContactRequestToJSON(value?: CreateSolanaContactRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateSolanaContactRequestToJSON(json: any): CreateSolanaContactRequest {
+    return CreateSolanaContactRequestToJSONTyped(json, false);
+}
+
+export function CreateSolanaContactRequestToJSONTyped(value?: CreateSolanaContactRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'type': value.type,
-        'address': value.address,
-        'chains': ((value.chains as Array<any>).map(SolanaChainUniqueIdToJSON)),
+        'name': value['name'],
+        'type': value['type'],
+        'address': value['address'],
+        'chains': ((value['chains'] as Array<any>).map(SolanaChainUniqueIdToJSON)),
+        'assets_identifiers': value['assetsIdentifiers'] == null ? undefined : ((value['assetsIdentifiers'] as Array<any>).map(SolanaAssetIdentifierRequestToJSON)),
     };
 }
 

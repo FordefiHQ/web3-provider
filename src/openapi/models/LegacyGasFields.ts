@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -30,11 +30,9 @@ export interface LegacyGasFields {
 /**
  * Check if a given object implements the LegacyGasFields interface.
  */
-export function instanceOfLegacyGasFields(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "price" in value;
-
-    return isInstance;
+export function instanceOfLegacyGasFields(value: object): value is LegacyGasFields {
+    if (!('price' in value) || value['price'] === undefined) return false;
+    return true;
 }
 
 export function LegacyGasFieldsFromJSON(json: any): LegacyGasFields {
@@ -42,7 +40,7 @@ export function LegacyGasFieldsFromJSON(json: any): LegacyGasFields {
 }
 
 export function LegacyGasFieldsFromJSONTyped(json: any, ignoreDiscriminator: boolean): LegacyGasFields {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -51,16 +49,18 @@ export function LegacyGasFieldsFromJSONTyped(json: any, ignoreDiscriminator: boo
     };
 }
 
-export function LegacyGasFieldsToJSON(value?: LegacyGasFields | null): any {
-    if (value === undefined) {
-        return undefined;
+export function LegacyGasFieldsToJSON(json: any): LegacyGasFields {
+    return LegacyGasFieldsToJSONTyped(json, false);
+}
+
+export function LegacyGasFieldsToJSONTyped(value?: LegacyGasFields | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'price': value.price,
+        'price': value['price'],
     };
 }
 

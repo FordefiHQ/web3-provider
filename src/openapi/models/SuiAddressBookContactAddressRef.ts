@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { SuiChain } from './SuiChain';
 import {
     SuiChainFromJSON,
     SuiChainFromJSONTyped,
     SuiChainToJSON,
+    SuiChainToJSONTyped,
 } from './SuiChain';
 
 /**
@@ -59,13 +60,11 @@ export type SuiAddressBookContactAddressRefChainTypeEnum = typeof SuiAddressBook
 /**
  * Check if a given object implements the SuiAddressBookContactAddressRef interface.
  */
-export function instanceOfSuiAddressBookContactAddressRef(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chainType" in value;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "chains" in value;
-
-    return isInstance;
+export function instanceOfSuiAddressBookContactAddressRef(value: object): value is SuiAddressBookContactAddressRef {
+    if (!('chainType' in value) || value['chainType'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('chains' in value) || value['chains'] === undefined) return false;
+    return true;
 }
 
 export function SuiAddressBookContactAddressRefFromJSON(json: any): SuiAddressBookContactAddressRef {
@@ -73,7 +72,7 @@ export function SuiAddressBookContactAddressRefFromJSON(json: any): SuiAddressBo
 }
 
 export function SuiAddressBookContactAddressRefFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiAddressBookContactAddressRef {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -84,18 +83,20 @@ export function SuiAddressBookContactAddressRefFromJSONTyped(json: any, ignoreDi
     };
 }
 
-export function SuiAddressBookContactAddressRefToJSON(value?: SuiAddressBookContactAddressRef | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiAddressBookContactAddressRefToJSON(json: any): SuiAddressBookContactAddressRef {
+    return SuiAddressBookContactAddressRefToJSONTyped(json, false);
+}
+
+export function SuiAddressBookContactAddressRefToJSONTyped(value?: SuiAddressBookContactAddressRef | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain_type': value.chainType,
-        'address': value.address,
-        'chains': ((value.chains as Array<any>).map(SuiChainToJSON)),
+        'chain_type': value['chainType'],
+        'address': value['address'],
+        'chains': ((value['chains'] as Array<any>).map(SuiChainToJSON)),
     };
 }
 

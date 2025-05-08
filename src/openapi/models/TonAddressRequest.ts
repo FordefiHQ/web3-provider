@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { TonChainUniqueId } from './TonChainUniqueId';
 import {
     TonChainUniqueIdFromJSON,
     TonChainUniqueIdFromJSONTyped,
     TonChainUniqueIdToJSON,
+    TonChainUniqueIdToJSONTyped,
 } from './TonChainUniqueId';
 
 /**
@@ -40,15 +41,15 @@ export interface TonAddressRequest {
     address: string;
 }
 
+
+
 /**
  * Check if a given object implements the TonAddressRequest interface.
  */
-export function instanceOfTonAddressRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "address" in value;
-
-    return isInstance;
+export function instanceOfTonAddressRequest(value: object): value is TonAddressRequest {
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    return true;
 }
 
 export function TonAddressRequestFromJSON(json: any): TonAddressRequest {
@@ -56,7 +57,7 @@ export function TonAddressRequestFromJSON(json: any): TonAddressRequest {
 }
 
 export function TonAddressRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): TonAddressRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -66,17 +67,19 @@ export function TonAddressRequestFromJSONTyped(json: any, ignoreDiscriminator: b
     };
 }
 
-export function TonAddressRequestToJSON(value?: TonAddressRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TonAddressRequestToJSON(json: any): TonAddressRequest {
+    return TonAddressRequestToJSONTyped(json, false);
+}
+
+export function TonAddressRequestToJSONTyped(value?: TonAddressRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain': TonChainUniqueIdToJSON(value.chain),
-        'address': value.address,
+        'chain': TonChainUniqueIdToJSON(value['chain']),
+        'address': value['address'],
     };
 }
 

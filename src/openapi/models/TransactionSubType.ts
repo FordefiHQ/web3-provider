@@ -30,6 +30,17 @@ export const TransactionSubType = {
 export type TransactionSubType = typeof TransactionSubType[keyof typeof TransactionSubType];
 
 
+export function instanceOfTransactionSubType(value: any): boolean {
+    for (const key in TransactionSubType) {
+        if (Object.prototype.hasOwnProperty.call(TransactionSubType, key)) {
+            if (TransactionSubType[key as keyof typeof TransactionSubType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function TransactionSubTypeFromJSON(json: any): TransactionSubType {
     return TransactionSubTypeFromJSONTyped(json, false);
 }
@@ -40,5 +51,9 @@ export function TransactionSubTypeFromJSONTyped(json: any, ignoreDiscriminator: 
 
 export function TransactionSubTypeToJSON(value?: TransactionSubType | null): any {
     return value as any;
+}
+
+export function TransactionSubTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): TransactionSubType {
+    return value as TransactionSubType;
 }
 

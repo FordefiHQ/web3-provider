@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { EnrichedStarknetAddress } from './EnrichedStarknetAddress';
-import {
-    EnrichedStarknetAddressFromJSON,
-    EnrichedStarknetAddressFromJSONTyped,
-    EnrichedStarknetAddressToJSON,
-} from './EnrichedStarknetAddress';
+import { mapValues } from '../runtime';
 import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
     PricedAssetFromJSONTyped,
     PricedAssetToJSON,
+    PricedAssetToJSONTyped,
 } from './PricedAsset';
+import type { EnrichedStarknetAddress } from './EnrichedStarknetAddress';
+import {
+    EnrichedStarknetAddressFromJSON,
+    EnrichedStarknetAddressFromJSONTyped,
+    EnrichedStarknetAddressToJSON,
+    EnrichedStarknetAddressToJSONTyped,
+} from './EnrichedStarknetAddress';
 
 /**
  * 
@@ -55,13 +57,11 @@ export interface StarknetBalanceChangeEffect {
 /**
  * Check if a given object implements the StarknetBalanceChangeEffect interface.
  */
-export function instanceOfStarknetBalanceChangeEffect(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "pricedAsset" in value;
-    isInstance = isInstance && "diff" in value;
-    isInstance = isInstance && "address" in value;
-
-    return isInstance;
+export function instanceOfStarknetBalanceChangeEffect(value: object): value is StarknetBalanceChangeEffect {
+    if (!('pricedAsset' in value) || value['pricedAsset'] === undefined) return false;
+    if (!('diff' in value) || value['diff'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    return true;
 }
 
 export function StarknetBalanceChangeEffectFromJSON(json: any): StarknetBalanceChangeEffect {
@@ -69,7 +69,7 @@ export function StarknetBalanceChangeEffectFromJSON(json: any): StarknetBalanceC
 }
 
 export function StarknetBalanceChangeEffectFromJSONTyped(json: any, ignoreDiscriminator: boolean): StarknetBalanceChangeEffect {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -80,18 +80,20 @@ export function StarknetBalanceChangeEffectFromJSONTyped(json: any, ignoreDiscri
     };
 }
 
-export function StarknetBalanceChangeEffectToJSON(value?: StarknetBalanceChangeEffect | null): any {
-    if (value === undefined) {
-        return undefined;
+export function StarknetBalanceChangeEffectToJSON(json: any): StarknetBalanceChangeEffect {
+    return StarknetBalanceChangeEffectToJSONTyped(json, false);
+}
+
+export function StarknetBalanceChangeEffectToJSONTyped(value?: StarknetBalanceChangeEffect | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'priced_asset': PricedAssetToJSON(value.pricedAsset),
-        'diff': value.diff,
-        'address': EnrichedStarknetAddressToJSON(value.address),
+        'priced_asset': PricedAssetToJSON(value['pricedAsset']),
+        'diff': value['diff'],
+        'address': EnrichedStarknetAddressToJSON(value['address']),
     };
 }
 

@@ -26,6 +26,17 @@ export const StarknetReversionState = {
 export type StarknetReversionState = typeof StarknetReversionState[keyof typeof StarknetReversionState];
 
 
+export function instanceOfStarknetReversionState(value: any): boolean {
+    for (const key in StarknetReversionState) {
+        if (Object.prototype.hasOwnProperty.call(StarknetReversionState, key)) {
+            if (StarknetReversionState[key as keyof typeof StarknetReversionState] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function StarknetReversionStateFromJSON(json: any): StarknetReversionState {
     return StarknetReversionStateFromJSONTyped(json, false);
 }
@@ -36,5 +47,9 @@ export function StarknetReversionStateFromJSONTyped(json: any, ignoreDiscriminat
 
 export function StarknetReversionStateToJSON(value?: StarknetReversionState | null): any {
     return value as any;
+}
+
+export function StarknetReversionStateToJSONTyped(value: any, ignoreDiscriminator: boolean): StarknetReversionState {
+    return value as StarknetReversionState;
 }
 

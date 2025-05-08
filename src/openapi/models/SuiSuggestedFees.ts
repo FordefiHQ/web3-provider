@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { SuiChainUniqueId } from './SuiChainUniqueId';
 import {
     SuiChainUniqueIdFromJSON,
     SuiChainUniqueIdFromJSONTyped,
     SuiChainUniqueIdToJSON,
+    SuiChainUniqueIdToJSONTyped,
 } from './SuiChainUniqueId';
 
 /**
@@ -53,12 +54,10 @@ export type SuiSuggestedFeesTypeEnum = typeof SuiSuggestedFeesTypeEnum[keyof typ
 /**
  * Check if a given object implements the SuiSuggestedFees interface.
  */
-export function instanceOfSuiSuggestedFees(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chainUniqueId" in value;
-
-    return isInstance;
+export function instanceOfSuiSuggestedFees(value: object): value is SuiSuggestedFees {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chainUniqueId' in value) || value['chainUniqueId'] === undefined) return false;
+    return true;
 }
 
 export function SuiSuggestedFeesFromJSON(json: any): SuiSuggestedFees {
@@ -66,7 +65,7 @@ export function SuiSuggestedFeesFromJSON(json: any): SuiSuggestedFees {
 }
 
 export function SuiSuggestedFeesFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiSuggestedFees {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function SuiSuggestedFeesFromJSONTyped(json: any, ignoreDiscriminator: bo
     };
 }
 
-export function SuiSuggestedFeesToJSON(value?: SuiSuggestedFees | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiSuggestedFeesToJSON(json: any): SuiSuggestedFees {
+    return SuiSuggestedFeesToJSONTyped(json, false);
+}
+
+export function SuiSuggestedFeesToJSONTyped(value?: SuiSuggestedFees | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'chain_unique_id': SuiChainUniqueIdToJSON(value.chainUniqueId),
+        'type': value['type'],
+        'chain_unique_id': SuiChainUniqueIdToJSON(value['chainUniqueId']),
     };
 }
 

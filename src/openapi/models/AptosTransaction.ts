@@ -12,91 +12,119 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AptosBlock } from './AptosBlock';
 import {
     AptosBlockFromJSON,
     AptosBlockFromJSONTyped,
     AptosBlockToJSON,
+    AptosBlockToJSONTyped,
 } from './AptosBlock';
-import type { AptosGasData } from './AptosGasData';
-import {
-    AptosGasDataFromJSON,
-    AptosGasDataFromJSONTyped,
-    AptosGasDataToJSON,
-} from './AptosGasData';
-import type { AptosTransactionAptosTransactionTypeDetails } from './AptosTransactionAptosTransactionTypeDetails';
-import {
-    AptosTransactionAptosTransactionTypeDetailsFromJSON,
-    AptosTransactionAptosTransactionTypeDetailsFromJSONTyped,
-    AptosTransactionAptosTransactionTypeDetailsToJSON,
-} from './AptosTransactionAptosTransactionTypeDetails';
-import type { AptosTransactionPayload } from './AptosTransactionPayload';
-import {
-    AptosTransactionPayloadFromJSON,
-    AptosTransactionPayloadFromJSONTyped,
-    AptosTransactionPayloadToJSON,
-} from './AptosTransactionPayload';
-import type { AptosTransactionResult } from './AptosTransactionResult';
-import {
-    AptosTransactionResultFromJSON,
-    AptosTransactionResultFromJSONTyped,
-    AptosTransactionResultToJSON,
-} from './AptosTransactionResult';
-import type { AptosTransactionState } from './AptosTransactionState';
-import {
-    AptosTransactionStateFromJSON,
-    AptosTransactionStateFromJSONTyped,
-    AptosTransactionStateToJSON,
-} from './AptosTransactionState';
-import type { AptosTransactionStateChange } from './AptosTransactionStateChange';
-import {
-    AptosTransactionStateChangeFromJSON,
-    AptosTransactionStateChangeFromJSONTyped,
-    AptosTransactionStateChangeToJSON,
-} from './AptosTransactionStateChange';
-import type { EnrichedAptosAddress } from './EnrichedAptosAddress';
-import {
-    EnrichedAptosAddressFromJSON,
-    EnrichedAptosAddressFromJSONTyped,
-    EnrichedAptosAddressToJSON,
-} from './EnrichedAptosAddress';
 import type { EnrichedAptosChain } from './EnrichedAptosChain';
 import {
     EnrichedAptosChainFromJSON,
     EnrichedAptosChainFromJSONTyped,
     EnrichedAptosChainToJSON,
+    EnrichedAptosChainToJSONTyped,
 } from './EnrichedAptosChain';
 import type { ManagedTransactionData } from './ManagedTransactionData';
 import {
     ManagedTransactionDataFromJSON,
     ManagedTransactionDataFromJSONTyped,
     ManagedTransactionDataToJSON,
+    ManagedTransactionDataToJSONTyped,
 } from './ManagedTransactionData';
+import type { AptosGasData } from './AptosGasData';
+import {
+    AptosGasDataFromJSON,
+    AptosGasDataFromJSONTyped,
+    AptosGasDataToJSON,
+    AptosGasDataToJSONTyped,
+} from './AptosGasData';
+import type { AptosTransactionResult } from './AptosTransactionResult';
+import {
+    AptosTransactionResultFromJSON,
+    AptosTransactionResultFromJSONTyped,
+    AptosTransactionResultToJSON,
+    AptosTransactionResultToJSONTyped,
+} from './AptosTransactionResult';
+import type { AptosTransactionAptosTransactionTypeDetails } from './AptosTransactionAptosTransactionTypeDetails';
+import {
+    AptosTransactionAptosTransactionTypeDetailsFromJSON,
+    AptosTransactionAptosTransactionTypeDetailsFromJSONTyped,
+    AptosTransactionAptosTransactionTypeDetailsToJSON,
+    AptosTransactionAptosTransactionTypeDetailsToJSONTyped,
+} from './AptosTransactionAptosTransactionTypeDetails';
+import type { PushableTransactionStateChange } from './PushableTransactionStateChange';
+import {
+    PushableTransactionStateChangeFromJSON,
+    PushableTransactionStateChangeFromJSONTyped,
+    PushableTransactionStateChangeToJSON,
+    PushableTransactionStateChangeToJSONTyped,
+} from './PushableTransactionStateChange';
+import type { EnrichedAptosAddress } from './EnrichedAptosAddress';
+import {
+    EnrichedAptosAddressFromJSON,
+    EnrichedAptosAddressFromJSONTyped,
+    EnrichedAptosAddressToJSON,
+    EnrichedAptosAddressToJSONTyped,
+} from './EnrichedAptosAddress';
+import type { PushableTransactionState } from './PushableTransactionState';
+import {
+    PushableTransactionStateFromJSON,
+    PushableTransactionStateFromJSONTyped,
+    PushableTransactionStateToJSON,
+    PushableTransactionStateToJSONTyped,
+} from './PushableTransactionState';
+import type { AmlPolicyMatchIncoming } from './AmlPolicyMatchIncoming';
+import {
+    AmlPolicyMatchIncomingFromJSON,
+    AmlPolicyMatchIncomingFromJSONTyped,
+    AmlPolicyMatchIncomingToJSON,
+    AmlPolicyMatchIncomingToJSONTyped,
+} from './AmlPolicyMatchIncoming';
+import type { TransactionSpamState } from './TransactionSpamState';
+import {
+    TransactionSpamStateFromJSON,
+    TransactionSpamStateFromJSONTyped,
+    TransactionSpamStateToJSON,
+    TransactionSpamStateToJSONTyped,
+} from './TransactionSpamState';
+import type { AptosTransactionPayload } from './AptosTransactionPayload';
+import {
+    AptosTransactionPayloadFromJSON,
+    AptosTransactionPayloadFromJSONTyped,
+    AptosTransactionPayloadToJSON,
+    AptosTransactionPayloadToJSONTyped,
+} from './AptosTransactionPayload';
+import type { TransactionDirection } from './TransactionDirection';
+import {
+    TransactionDirectionFromJSON,
+    TransactionDirectionFromJSONTyped,
+    TransactionDirectionToJSON,
+    TransactionDirectionToJSONTyped,
+} from './TransactionDirection';
 import type { Signature } from './Signature';
 import {
     SignatureFromJSON,
     SignatureFromJSONTyped,
     SignatureToJSON,
+    SignatureToJSONTyped,
 } from './Signature';
 import type { SimulationStatusResult } from './SimulationStatusResult';
 import {
     SimulationStatusResultFromJSON,
     SimulationStatusResultFromJSONTyped,
     SimulationStatusResultToJSON,
+    SimulationStatusResultToJSONTyped,
 } from './SimulationStatusResult';
-import type { TransactionDirection } from './TransactionDirection';
+import type { AmlResults } from './AmlResults';
 import {
-    TransactionDirectionFromJSON,
-    TransactionDirectionFromJSONTyped,
-    TransactionDirectionToJSON,
-} from './TransactionDirection';
-import type { TransactionSpamState } from './TransactionSpamState';
-import {
-    TransactionSpamStateFromJSON,
-    TransactionSpamStateFromJSONTyped,
-    TransactionSpamStateToJSON,
-} from './TransactionSpamState';
+    AmlResultsFromJSON,
+    AmlResultsFromJSONTyped,
+    AmlResultsToJSON,
+    AmlResultsToJSONTyped,
+} from './AmlResults';
 
 /**
  * 
@@ -154,6 +182,36 @@ export interface AptosTransaction {
     direction: TransactionDirection;
     /**
      * 
+     * @type {boolean}
+     * @memberof AptosTransaction
+     */
+    signedExternally?: boolean;
+    /**
+     * 
+     * @type {PushableTransactionState}
+     * @memberof AptosTransaction
+     */
+    state: PushableTransactionState;
+    /**
+     * 
+     * @type {Array<PushableTransactionStateChange>}
+     * @memberof AptosTransaction
+     */
+    stateChanges: Array<PushableTransactionStateChange>;
+    /**
+     * 
+     * @type {AmlResults}
+     * @memberof AptosTransaction
+     */
+    amlResults?: AmlResults;
+    /**
+     * 
+     * @type {AmlPolicyMatchIncoming}
+     * @memberof AptosTransaction
+     */
+    incomingAmlPolicyMatch?: AmlPolicyMatchIncoming;
+    /**
+     * 
      * @type {string}
      * @memberof AptosTransaction
      */
@@ -170,18 +228,6 @@ export interface AptosTransaction {
      * @memberof AptosTransaction
      */
     chain: EnrichedAptosChain;
-    /**
-     * 
-     * @type {AptosTransactionState}
-     * @memberof AptosTransaction
-     */
-    state: AptosTransactionState;
-    /**
-     * 
-     * @type {Array<AptosTransactionStateChange>}
-     * @memberof AptosTransaction
-     */
-    stateChanges: Array<AptosTransactionStateChange>;
     /**
      * 
      * @type {number}
@@ -269,23 +315,21 @@ export type AptosTransactionTypeEnum = typeof AptosTransactionTypeEnum[keyof typ
 /**
  * Check if a given object implements the AptosTransaction interface.
  */
-export function instanceOfAptosTransaction(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "signatures" in value;
-    isInstance = isInstance && "direction" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "aptosTransactionTypeDetails" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "stateChanges" in value;
-    isInstance = isInstance && "sender" in value;
-    isInstance = isInstance && "payload" in value;
-    isInstance = isInstance && "gasSubmitted" in value;
-
-    return isInstance;
+export function instanceOfAptosTransaction(value: object): value is AptosTransaction {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('signatures' in value) || value['signatures'] === undefined) return false;
+    if (!('direction' in value) || value['direction'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('stateChanges' in value) || value['stateChanges'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('aptosTransactionTypeDetails' in value) || value['aptosTransactionTypeDetails'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    if (!('payload' in value) || value['payload'] === undefined) return false;
+    if (!('gasSubmitted' in value) || value['gasSubmitted'] === undefined) return false;
+    return true;
 }
 
 export function AptosTransactionFromJSON(json: any): AptosTransaction {
@@ -293,7 +337,7 @@ export function AptosTransactionFromJSON(json: any): AptosTransaction {
 }
 
 export function AptosTransactionFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosTransaction {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -301,65 +345,73 @@ export function AptosTransactionFromJSONTyped(json: any, ignoreDiscriminator: bo
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
-        'managedTransactionData': !exists(json, 'managed_transaction_data') ? undefined : ManagedTransactionDataFromJSON(json['managed_transaction_data']),
+        'managedTransactionData': json['managed_transaction_data'] == null ? undefined : ManagedTransactionDataFromJSON(json['managed_transaction_data']),
         'signatures': ((json['signatures'] as Array<any>).map(SignatureFromJSON)),
-        'note': !exists(json, 'note') ? undefined : json['note'],
-        'spamState': !exists(json, 'spam_state') ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
+        'note': json['note'] == null ? undefined : json['note'],
+        'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
+        'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'state': PushableTransactionStateFromJSON(json['state']),
+        'stateChanges': ((json['state_changes'] as Array<any>).map(PushableTransactionStateChangeFromJSON)),
+        'amlResults': json['aml_results'] == null ? undefined : AmlResultsFromJSON(json['aml_results']),
+        'incomingAmlPolicyMatch': json['incoming_aml_policy_match'] == null ? undefined : AmlPolicyMatchIncomingFromJSON(json['incoming_aml_policy_match']),
         'type': json['type'],
         'aptosTransactionTypeDetails': AptosTransactionAptosTransactionTypeDetailsFromJSON(json['aptos_transaction_type_details']),
         'chain': EnrichedAptosChainFromJSON(json['chain']),
-        'state': AptosTransactionStateFromJSON(json['state']),
-        'stateChanges': ((json['state_changes'] as Array<any>).map(AptosTransactionStateChangeFromJSON)),
-        'version': !exists(json, 'version') ? undefined : json['version'],
-        'nonce': !exists(json, 'nonce') ? undefined : json['nonce'],
+        'version': json['version'] == null ? undefined : json['version'],
+        'nonce': json['nonce'] == null ? undefined : json['nonce'],
         'sender': EnrichedAptosAddressFromJSON(json['sender']),
         'payload': AptosTransactionPayloadFromJSON(json['payload']),
-        'hash': !exists(json, 'hash') ? undefined : json['hash'],
-        'block': !exists(json, 'block') ? undefined : AptosBlockFromJSON(json['block']),
+        'hash': json['hash'] == null ? undefined : json['hash'],
+        'block': json['block'] == null ? undefined : AptosBlockFromJSON(json['block']),
         'gasSubmitted': AptosGasDataFromJSON(json['gas_submitted']),
-        'serializedSignedTransaction': !exists(json, 'serialized_signed_transaction') ? undefined : json['serialized_signed_transaction'],
-        'expectedResult': !exists(json, 'expected_result') ? undefined : AptosTransactionResultFromJSON(json['expected_result']),
-        'simulationStatusResult': !exists(json, 'simulation_status_result') ? undefined : SimulationStatusResultFromJSON(json['simulation_status_result']),
-        'minedResult': !exists(json, 'mined_result') ? undefined : AptosTransactionResultFromJSON(json['mined_result']),
-        'explorerUrl': !exists(json, 'explorer_url') ? undefined : json['explorer_url'],
+        'serializedSignedTransaction': json['serialized_signed_transaction'] == null ? undefined : json['serialized_signed_transaction'],
+        'expectedResult': json['expected_result'] == null ? undefined : AptosTransactionResultFromJSON(json['expected_result']),
+        'simulationStatusResult': json['simulation_status_result'] == null ? undefined : SimulationStatusResultFromJSON(json['simulation_status_result']),
+        'minedResult': json['mined_result'] == null ? undefined : AptosTransactionResultFromJSON(json['mined_result']),
+        'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
     };
 }
 
-export function AptosTransactionToJSON(value?: AptosTransaction | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AptosTransactionToJSON(json: any): AptosTransaction {
+    return AptosTransactionToJSONTyped(json, false);
+}
+
+export function AptosTransactionToJSONTyped(value?: AptosTransaction | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'managed_transaction_data': ManagedTransactionDataToJSON(value.managedTransactionData),
-        'signatures': ((value.signatures as Array<any>).map(SignatureToJSON)),
-        'note': value.note,
-        'spam_state': TransactionSpamStateToJSON(value.spamState),
-        'direction': TransactionDirectionToJSON(value.direction),
-        'type': value.type,
-        'aptos_transaction_type_details': AptosTransactionAptosTransactionTypeDetailsToJSON(value.aptosTransactionTypeDetails),
-        'chain': EnrichedAptosChainToJSON(value.chain),
-        'state': AptosTransactionStateToJSON(value.state),
-        'state_changes': ((value.stateChanges as Array<any>).map(AptosTransactionStateChangeToJSON)),
-        'version': value.version,
-        'nonce': value.nonce,
-        'sender': EnrichedAptosAddressToJSON(value.sender),
-        'payload': AptosTransactionPayloadToJSON(value.payload),
-        'hash': value.hash,
-        'block': AptosBlockToJSON(value.block),
-        'gas_submitted': AptosGasDataToJSON(value.gasSubmitted),
-        'serialized_signed_transaction': value.serializedSignedTransaction,
-        'expected_result': AptosTransactionResultToJSON(value.expectedResult),
-        'simulation_status_result': SimulationStatusResultToJSON(value.simulationStatusResult),
-        'mined_result': AptosTransactionResultToJSON(value.minedResult),
-        'explorer_url': value.explorerUrl,
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'managed_transaction_data': ManagedTransactionDataToJSON(value['managedTransactionData']),
+        'signatures': ((value['signatures'] as Array<any>).map(SignatureToJSON)),
+        'note': value['note'],
+        'spam_state': TransactionSpamStateToJSON(value['spamState']),
+        'direction': TransactionDirectionToJSON(value['direction']),
+        'signed_externally': value['signedExternally'],
+        'state': PushableTransactionStateToJSON(value['state']),
+        'state_changes': ((value['stateChanges'] as Array<any>).map(PushableTransactionStateChangeToJSON)),
+        'aml_results': AmlResultsToJSON(value['amlResults']),
+        'incoming_aml_policy_match': AmlPolicyMatchIncomingToJSON(value['incomingAmlPolicyMatch']),
+        'type': value['type'],
+        'aptos_transaction_type_details': AptosTransactionAptosTransactionTypeDetailsToJSON(value['aptosTransactionTypeDetails']),
+        'chain': EnrichedAptosChainToJSON(value['chain']),
+        'version': value['version'],
+        'nonce': value['nonce'],
+        'sender': EnrichedAptosAddressToJSON(value['sender']),
+        'payload': AptosTransactionPayloadToJSON(value['payload']),
+        'hash': value['hash'],
+        'block': AptosBlockToJSON(value['block']),
+        'gas_submitted': AptosGasDataToJSON(value['gasSubmitted']),
+        'serialized_signed_transaction': value['serializedSignedTransaction'],
+        'expected_result': AptosTransactionResultToJSON(value['expectedResult']),
+        'simulation_status_result': SimulationStatusResultToJSON(value['simulationStatusResult']),
+        'mined_result': AptosTransactionResultToJSON(value['minedResult']),
+        'explorer_url': value['explorerUrl'],
     };
 }
 

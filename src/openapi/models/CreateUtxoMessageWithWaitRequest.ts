@@ -12,31 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { UtxoMessageDetails } from './UtxoMessageDetails';
+import {
+    UtxoMessageDetailsFromJSON,
+    UtxoMessageDetailsFromJSONTyped,
+    UtxoMessageDetailsToJSON,
+    UtxoMessageDetailsToJSONTyped,
+} from './UtxoMessageDetails';
+import type { DappInfo } from './DappInfo';
+import {
+    DappInfoFromJSON,
+    DappInfoFromJSONTyped,
+    DappInfoToJSON,
+    DappInfoToJSONTyped,
+} from './DappInfo';
 import type { SignMode } from './SignMode';
 import {
     SignModeFromJSON,
     SignModeFromJSONTyped,
     SignModeToJSON,
+    SignModeToJSONTyped,
 } from './SignMode';
 import type { SignerType } from './SignerType';
 import {
     SignerTypeFromJSON,
     SignerTypeFromJSONTyped,
     SignerTypeToJSON,
+    SignerTypeToJSONTyped,
 } from './SignerType';
-import type { UtxoMessageDetails } from './UtxoMessageDetails';
+import type { NonPushableTransactionState } from './NonPushableTransactionState';
 import {
-    UtxoMessageDetailsFromJSON,
-    UtxoMessageDetailsFromJSONTyped,
-    UtxoMessageDetailsToJSON,
-} from './UtxoMessageDetails';
-import type { UtxoMessageState } from './UtxoMessageState';
-import {
-    UtxoMessageStateFromJSON,
-    UtxoMessageStateFromJSONTyped,
-    UtxoMessageStateToJSON,
-} from './UtxoMessageState';
+    NonPushableTransactionStateFromJSON,
+    NonPushableTransactionStateFromJSONTyped,
+    NonPushableTransactionStateToJSON,
+    NonPushableTransactionStateToJSONTyped,
+} from './NonPushableTransactionState';
 
 /**
  * 
@@ -70,6 +81,12 @@ export interface CreateUtxoMessageWithWaitRequest {
     signMode?: SignMode;
     /**
      * 
+     * @type {DappInfo}
+     * @memberof CreateUtxoMessageWithWaitRequest
+     */
+    dappInfo?: DappInfo;
+    /**
+     * 
      * @type {string}
      * @memberof CreateUtxoMessageWithWaitRequest
      */
@@ -88,10 +105,10 @@ export interface CreateUtxoMessageWithWaitRequest {
     timeout?: number;
     /**
      * 
-     * @type {UtxoMessageState}
+     * @type {NonPushableTransactionState}
      * @memberof CreateUtxoMessageWithWaitRequest
      */
-    waitForState: UtxoMessageState;
+    waitForState: NonPushableTransactionState;
 }
 
 
@@ -107,14 +124,12 @@ export type CreateUtxoMessageWithWaitRequestTypeEnum = typeof CreateUtxoMessageW
 /**
  * Check if a given object implements the CreateUtxoMessageWithWaitRequest interface.
  */
-export function instanceOfCreateUtxoMessageWithWaitRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "vaultId" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "details" in value;
-    isInstance = isInstance && "waitForState" in value;
-
-    return isInstance;
+export function instanceOfCreateUtxoMessageWithWaitRequest(value: object): value is CreateUtxoMessageWithWaitRequest {
+    if (!('vaultId' in value) || value['vaultId'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    if (!('waitForState' in value) || value['waitForState'] === undefined) return false;
+    return true;
 }
 
 export function CreateUtxoMessageWithWaitRequestFromJSON(json: any): CreateUtxoMessageWithWaitRequest {
@@ -122,39 +137,43 @@ export function CreateUtxoMessageWithWaitRequestFromJSON(json: any): CreateUtxoM
 }
 
 export function CreateUtxoMessageWithWaitRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateUtxoMessageWithWaitRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'vaultId': json['vault_id'],
-        'note': !exists(json, 'note') ? undefined : json['note'],
-        'signerType': !exists(json, 'signer_type') ? undefined : SignerTypeFromJSON(json['signer_type']),
-        'signMode': !exists(json, 'sign_mode') ? undefined : SignModeFromJSON(json['sign_mode']),
+        'note': json['note'] == null ? undefined : json['note'],
+        'signerType': json['signer_type'] == null ? undefined : SignerTypeFromJSON(json['signer_type']),
+        'signMode': json['sign_mode'] == null ? undefined : SignModeFromJSON(json['sign_mode']),
+        'dappInfo': json['dapp_info'] == null ? undefined : DappInfoFromJSON(json['dapp_info']),
         'type': json['type'],
         'details': UtxoMessageDetailsFromJSON(json['details']),
-        'timeout': !exists(json, 'timeout') ? undefined : json['timeout'],
-        'waitForState': UtxoMessageStateFromJSON(json['wait_for_state']),
+        'timeout': json['timeout'] == null ? undefined : json['timeout'],
+        'waitForState': NonPushableTransactionStateFromJSON(json['wait_for_state']),
     };
 }
 
-export function CreateUtxoMessageWithWaitRequestToJSON(value?: CreateUtxoMessageWithWaitRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateUtxoMessageWithWaitRequestToJSON(json: any): CreateUtxoMessageWithWaitRequest {
+    return CreateUtxoMessageWithWaitRequestToJSONTyped(json, false);
+}
+
+export function CreateUtxoMessageWithWaitRequestToJSONTyped(value?: CreateUtxoMessageWithWaitRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'vault_id': value.vaultId,
-        'note': value.note,
-        'signer_type': SignerTypeToJSON(value.signerType),
-        'sign_mode': SignModeToJSON(value.signMode),
-        'type': value.type,
-        'details': UtxoMessageDetailsToJSON(value.details),
-        'timeout': value.timeout,
-        'wait_for_state': UtxoMessageStateToJSON(value.waitForState),
+        'vault_id': value['vaultId'],
+        'note': value['note'],
+        'signer_type': SignerTypeToJSON(value['signerType']),
+        'sign_mode': SignModeToJSON(value['signMode']),
+        'dapp_info': DappInfoToJSON(value['dappInfo']),
+        'type': value['type'],
+        'details': UtxoMessageDetailsToJSON(value['details']),
+        'timeout': value['timeout'],
+        'wait_for_state': NonPushableTransactionStateToJSON(value['waitForState']),
     };
 }
 

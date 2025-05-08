@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { RequestSignature } from './RequestSignature';
 import {
     RequestSignatureFromJSON,
     RequestSignatureFromJSONTyped,
     RequestSignatureToJSON,
+    RequestSignatureToJSONTyped,
 } from './RequestSignature';
 
 /**
@@ -55,13 +56,11 @@ export interface RegisterWebDeviceRequest {
 /**
  * Check if a given object implements the RegisterWebDeviceRequest interface.
  */
-export function instanceOfRegisterWebDeviceRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "apiKeyId" in value;
-    isInstance = isInstance && "publicKey" in value;
-    isInstance = isInstance && "userAgent" in value;
-
-    return isInstance;
+export function instanceOfRegisterWebDeviceRequest(value: object): value is RegisterWebDeviceRequest {
+    if (!('apiKeyId' in value) || value['apiKeyId'] === undefined) return false;
+    if (!('publicKey' in value) || value['publicKey'] === undefined) return false;
+    if (!('userAgent' in value) || value['userAgent'] === undefined) return false;
+    return true;
 }
 
 export function RegisterWebDeviceRequestFromJSON(json: any): RegisterWebDeviceRequest {
@@ -69,7 +68,7 @@ export function RegisterWebDeviceRequestFromJSON(json: any): RegisterWebDeviceRe
 }
 
 export function RegisterWebDeviceRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): RegisterWebDeviceRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -77,23 +76,25 @@ export function RegisterWebDeviceRequestFromJSONTyped(json: any, ignoreDiscrimin
         'apiKeyId': json['api_key_id'],
         'publicKey': json['public_key'],
         'userAgent': json['user_agent'],
-        'requestSignature': !exists(json, 'request_signature') ? undefined : RequestSignatureFromJSON(json['request_signature']),
+        'requestSignature': json['request_signature'] == null ? undefined : RequestSignatureFromJSON(json['request_signature']),
     };
 }
 
-export function RegisterWebDeviceRequestToJSON(value?: RegisterWebDeviceRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function RegisterWebDeviceRequestToJSON(json: any): RegisterWebDeviceRequest {
+    return RegisterWebDeviceRequestToJSONTyped(json, false);
+}
+
+export function RegisterWebDeviceRequestToJSONTyped(value?: RegisterWebDeviceRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'api_key_id': value.apiKeyId,
-        'public_key': value.publicKey,
-        'user_agent': value.userAgent,
-        'request_signature': RequestSignatureToJSON(value.requestSignature),
+        'api_key_id': value['apiKeyId'],
+        'public_key': value['publicKey'],
+        'user_agent': value['userAgent'],
+        'request_signature': RequestSignatureToJSON(value['requestSignature']),
     };
 }
 

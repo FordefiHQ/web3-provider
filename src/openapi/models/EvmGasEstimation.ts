@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { Price } from './Price';
 import {
     PriceFromJSON,
     PriceFromJSONTyped,
     PriceToJSON,
+    PriceToJSONTyped,
 } from './Price';
 
 /**
@@ -43,11 +44,9 @@ export interface EvmGasEstimation {
 /**
  * Check if a given object implements the EvmGasEstimation interface.
  */
-export function instanceOfEvmGasEstimation(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "gasLimit" in value;
-
-    return isInstance;
+export function instanceOfEvmGasEstimation(value: object): value is EvmGasEstimation {
+    if (!('gasLimit' in value) || value['gasLimit'] === undefined) return false;
+    return true;
 }
 
 export function EvmGasEstimationFromJSON(json: any): EvmGasEstimation {
@@ -55,27 +54,29 @@ export function EvmGasEstimationFromJSON(json: any): EvmGasEstimation {
 }
 
 export function EvmGasEstimationFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmGasEstimation {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'gasLimit': json['gas_limit'],
-        'fiatPrice': !exists(json, 'fiat_price') ? undefined : PriceFromJSON(json['fiat_price']),
+        'fiatPrice': json['fiat_price'] == null ? undefined : PriceFromJSON(json['fiat_price']),
     };
 }
 
-export function EvmGasEstimationToJSON(value?: EvmGasEstimation | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EvmGasEstimationToJSON(json: any): EvmGasEstimation {
+    return EvmGasEstimationToJSONTyped(json, false);
+}
+
+export function EvmGasEstimationToJSONTyped(value?: EvmGasEstimation | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'gas_limit': value.gasLimit,
-        'fiat_price': PriceToJSON(value.fiatPrice),
+        'gas_limit': value['gasLimit'],
+        'fiat_price': PriceToJSON(value['fiatPrice']),
     };
 }
 

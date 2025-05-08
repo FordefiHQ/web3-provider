@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AssetIdentifierRequest } from './AssetIdentifierRequest';
 import {
     AssetIdentifierRequestFromJSON,
     AssetIdentifierRequestFromJSONTyped,
     AssetIdentifierRequestToJSON,
+    AssetIdentifierRequestToJSONTyped,
 } from './AssetIdentifierRequest';
 
 /**
@@ -59,13 +60,11 @@ export type InvalidAssetRequestTypeEnum = typeof InvalidAssetRequestTypeEnum[key
 /**
  * Check if a given object implements the InvalidAssetRequest interface.
  */
-export function instanceOfInvalidAssetRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "assetIdentifierRequest" in value;
-    isInstance = isInstance && "error" in value;
-
-    return isInstance;
+export function instanceOfInvalidAssetRequest(value: object): value is InvalidAssetRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('assetIdentifierRequest' in value) || value['assetIdentifierRequest'] === undefined) return false;
+    if (!('error' in value) || value['error'] === undefined) return false;
+    return true;
 }
 
 export function InvalidAssetRequestFromJSON(json: any): InvalidAssetRequest {
@@ -73,7 +72,7 @@ export function InvalidAssetRequestFromJSON(json: any): InvalidAssetRequest {
 }
 
 export function InvalidAssetRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): InvalidAssetRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -84,18 +83,20 @@ export function InvalidAssetRequestFromJSONTyped(json: any, ignoreDiscriminator:
     };
 }
 
-export function InvalidAssetRequestToJSON(value?: InvalidAssetRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function InvalidAssetRequestToJSON(json: any): InvalidAssetRequest {
+    return InvalidAssetRequestToJSONTyped(json, false);
+}
+
+export function InvalidAssetRequestToJSONTyped(value?: InvalidAssetRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'asset_identifier_request': AssetIdentifierRequestToJSON(value.assetIdentifierRequest),
-        'error': value.error,
+        'type': value['type'],
+        'asset_identifier_request': AssetIdentifierRequestToJSON(value['assetIdentifierRequest']),
+        'error': value['error'],
     };
 }
 

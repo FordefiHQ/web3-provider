@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EcdsaSignature } from './EcdsaSignature';
 import {
     EcdsaSignatureFromJSON,
     EcdsaSignatureFromJSONTyped,
     EcdsaSignatureToJSON,
+    EcdsaSignatureToJSONTyped,
 } from './EcdsaSignature';
 
 /**
@@ -59,12 +60,10 @@ export type BlackBoxSignatureEcdsaSecp256k1DetailsTypeEnum = typeof BlackBoxSign
 /**
  * Check if a given object implements the BlackBoxSignatureEcdsaSecp256k1Details interface.
  */
-export function instanceOfBlackBoxSignatureEcdsaSecp256k1Details(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "hashBinary" in value;
-
-    return isInstance;
+export function instanceOfBlackBoxSignatureEcdsaSecp256k1Details(value: object): value is BlackBoxSignatureEcdsaSecp256k1Details {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('hashBinary' in value) || value['hashBinary'] === undefined) return false;
+    return true;
 }
 
 export function BlackBoxSignatureEcdsaSecp256k1DetailsFromJSON(json: any): BlackBoxSignatureEcdsaSecp256k1Details {
@@ -72,29 +71,31 @@ export function BlackBoxSignatureEcdsaSecp256k1DetailsFromJSON(json: any): Black
 }
 
 export function BlackBoxSignatureEcdsaSecp256k1DetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): BlackBoxSignatureEcdsaSecp256k1Details {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
-        'signature': !exists(json, 'signature') ? undefined : EcdsaSignatureFromJSON(json['signature']),
+        'signature': json['signature'] == null ? undefined : EcdsaSignatureFromJSON(json['signature']),
         'hashBinary': json['hash_binary'],
     };
 }
 
-export function BlackBoxSignatureEcdsaSecp256k1DetailsToJSON(value?: BlackBoxSignatureEcdsaSecp256k1Details | null): any {
-    if (value === undefined) {
-        return undefined;
+export function BlackBoxSignatureEcdsaSecp256k1DetailsToJSON(json: any): BlackBoxSignatureEcdsaSecp256k1Details {
+    return BlackBoxSignatureEcdsaSecp256k1DetailsToJSONTyped(json, false);
+}
+
+export function BlackBoxSignatureEcdsaSecp256k1DetailsToJSONTyped(value?: BlackBoxSignatureEcdsaSecp256k1Details | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'signature': EcdsaSignatureToJSON(value.signature),
-        'hash_binary': value.hashBinary,
+        'type': value['type'],
+        'signature': EcdsaSignatureToJSON(value['signature']),
+        'hash_binary': value['hashBinary'],
     };
 }
 

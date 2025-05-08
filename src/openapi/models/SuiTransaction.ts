@@ -12,103 +12,133 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedSuiAddress } from './EnrichedSuiAddress';
 import {
     EnrichedSuiAddressFromJSON,
     EnrichedSuiAddressFromJSONTyped,
     EnrichedSuiAddressToJSON,
+    EnrichedSuiAddressToJSONTyped,
 } from './EnrichedSuiAddress';
-import type { EnrichedSuiChain } from './EnrichedSuiChain';
-import {
-    EnrichedSuiChainFromJSON,
-    EnrichedSuiChainFromJSONTyped,
-    EnrichedSuiChainToJSON,
-} from './EnrichedSuiChain';
 import type { ManagedTransactionData } from './ManagedTransactionData';
 import {
     ManagedTransactionDataFromJSON,
     ManagedTransactionDataFromJSONTyped,
     ManagedTransactionDataToJSON,
+    ManagedTransactionDataToJSONTyped,
 } from './ManagedTransactionData';
 import type { PredictedSuiTransactionSuiTransactionTypeDetails } from './PredictedSuiTransactionSuiTransactionTypeDetails';
 import {
     PredictedSuiTransactionSuiTransactionTypeDetailsFromJSON,
     PredictedSuiTransactionSuiTransactionTypeDetailsFromJSONTyped,
     PredictedSuiTransactionSuiTransactionTypeDetailsToJSON,
+    PredictedSuiTransactionSuiTransactionTypeDetailsToJSONTyped,
 } from './PredictedSuiTransactionSuiTransactionTypeDetails';
+import type { PushableTransactionStateChange } from './PushableTransactionStateChange';
+import {
+    PushableTransactionStateChangeFromJSON,
+    PushableTransactionStateChangeFromJSONTyped,
+    PushableTransactionStateChangeToJSON,
+    PushableTransactionStateChangeToJSONTyped,
+} from './PushableTransactionStateChange';
+import type { PushableTransactionState } from './PushableTransactionState';
+import {
+    PushableTransactionStateFromJSON,
+    PushableTransactionStateFromJSONTyped,
+    PushableTransactionStateToJSON,
+    PushableTransactionStateToJSONTyped,
+} from './PushableTransactionState';
+import type { EnrichedSuiChain } from './EnrichedSuiChain';
+import {
+    EnrichedSuiChainFromJSON,
+    EnrichedSuiChainFromJSONTyped,
+    EnrichedSuiChainToJSON,
+    EnrichedSuiChainToJSONTyped,
+} from './EnrichedSuiChain';
+import type { SuiCheckpointData } from './SuiCheckpointData';
+import {
+    SuiCheckpointDataFromJSON,
+    SuiCheckpointDataFromJSONTyped,
+    SuiCheckpointDataToJSON,
+    SuiCheckpointDataToJSONTyped,
+} from './SuiCheckpointData';
+import type { AmlPolicyMatchIncoming } from './AmlPolicyMatchIncoming';
+import {
+    AmlPolicyMatchIncomingFromJSON,
+    AmlPolicyMatchIncomingFromJSONTyped,
+    AmlPolicyMatchIncomingToJSON,
+    AmlPolicyMatchIncomingToJSONTyped,
+} from './AmlPolicyMatchIncoming';
+import type { SuiGasConfig } from './SuiGasConfig';
+import {
+    SuiGasConfigFromJSON,
+    SuiGasConfigFromJSONTyped,
+    SuiGasConfigToJSON,
+    SuiGasConfigToJSONTyped,
+} from './SuiGasConfig';
+import type { SuiTransactionResult } from './SuiTransactionResult';
+import {
+    SuiTransactionResultFromJSON,
+    SuiTransactionResultFromJSONTyped,
+    SuiTransactionResultToJSON,
+    SuiTransactionResultToJSONTyped,
+} from './SuiTransactionResult';
+import type { TransactionSpamState } from './TransactionSpamState';
+import {
+    TransactionSpamStateFromJSON,
+    TransactionSpamStateFromJSONTyped,
+    TransactionSpamStateToJSON,
+    TransactionSpamStateToJSONTyped,
+} from './TransactionSpamState';
+import type { TransactionDirection } from './TransactionDirection';
+import {
+    TransactionDirectionFromJSON,
+    TransactionDirectionFromJSONTyped,
+    TransactionDirectionToJSON,
+    TransactionDirectionToJSONTyped,
+} from './TransactionDirection';
+import type { SuiCommand } from './SuiCommand';
+import {
+    SuiCommandFromJSON,
+    SuiCommandFromJSONTyped,
+    SuiCommandToJSON,
+    SuiCommandToJSONTyped,
+} from './SuiCommand';
+import type { SuiMessageVersion } from './SuiMessageVersion';
+import {
+    SuiMessageVersionFromJSON,
+    SuiMessageVersionFromJSONTyped,
+    SuiMessageVersionToJSON,
+    SuiMessageVersionToJSONTyped,
+} from './SuiMessageVersion';
 import type { Signature } from './Signature';
 import {
     SignatureFromJSON,
     SignatureFromJSONTyped,
     SignatureToJSON,
+    SignatureToJSONTyped,
 } from './Signature';
 import type { SimulationStatusResult } from './SimulationStatusResult';
 import {
     SimulationStatusResultFromJSON,
     SimulationStatusResultFromJSONTyped,
     SimulationStatusResultToJSON,
+    SimulationStatusResultToJSONTyped,
 } from './SimulationStatusResult';
-import type { SuiCheckpointData } from './SuiCheckpointData';
-import {
-    SuiCheckpointDataFromJSON,
-    SuiCheckpointDataFromJSONTyped,
-    SuiCheckpointDataToJSON,
-} from './SuiCheckpointData';
-import type { SuiCommand } from './SuiCommand';
-import {
-    SuiCommandFromJSON,
-    SuiCommandFromJSONTyped,
-    SuiCommandToJSON,
-} from './SuiCommand';
-import type { SuiGasConfig } from './SuiGasConfig';
-import {
-    SuiGasConfigFromJSON,
-    SuiGasConfigFromJSONTyped,
-    SuiGasConfigToJSON,
-} from './SuiGasConfig';
 import type { SuiInput } from './SuiInput';
 import {
     SuiInputFromJSON,
     SuiInputFromJSONTyped,
     SuiInputToJSON,
+    SuiInputToJSONTyped,
 } from './SuiInput';
-import type { SuiMessageVersion } from './SuiMessageVersion';
+import type { AmlResults } from './AmlResults';
 import {
-    SuiMessageVersionFromJSON,
-    SuiMessageVersionFromJSONTyped,
-    SuiMessageVersionToJSON,
-} from './SuiMessageVersion';
-import type { SuiTransactionResult } from './SuiTransactionResult';
-import {
-    SuiTransactionResultFromJSON,
-    SuiTransactionResultFromJSONTyped,
-    SuiTransactionResultToJSON,
-} from './SuiTransactionResult';
-import type { SuiTransactionState } from './SuiTransactionState';
-import {
-    SuiTransactionStateFromJSON,
-    SuiTransactionStateFromJSONTyped,
-    SuiTransactionStateToJSON,
-} from './SuiTransactionState';
-import type { SuiTransactionStateChange } from './SuiTransactionStateChange';
-import {
-    SuiTransactionStateChangeFromJSON,
-    SuiTransactionStateChangeFromJSONTyped,
-    SuiTransactionStateChangeToJSON,
-} from './SuiTransactionStateChange';
-import type { TransactionDirection } from './TransactionDirection';
-import {
-    TransactionDirectionFromJSON,
-    TransactionDirectionFromJSONTyped,
-    TransactionDirectionToJSON,
-} from './TransactionDirection';
-import type { TransactionSpamState } from './TransactionSpamState';
-import {
-    TransactionSpamStateFromJSON,
-    TransactionSpamStateFromJSONTyped,
-    TransactionSpamStateToJSON,
-} from './TransactionSpamState';
+    AmlResultsFromJSON,
+    AmlResultsFromJSONTyped,
+    AmlResultsToJSON,
+    AmlResultsToJSONTyped,
+} from './AmlResults';
 
 /**
  * 
@@ -166,6 +196,36 @@ export interface SuiTransaction {
     direction: TransactionDirection;
     /**
      * 
+     * @type {boolean}
+     * @memberof SuiTransaction
+     */
+    signedExternally?: boolean;
+    /**
+     * 
+     * @type {PushableTransactionState}
+     * @memberof SuiTransaction
+     */
+    state: PushableTransactionState;
+    /**
+     * 
+     * @type {Array<PushableTransactionStateChange>}
+     * @memberof SuiTransaction
+     */
+    stateChanges: Array<PushableTransactionStateChange>;
+    /**
+     * 
+     * @type {AmlResults}
+     * @memberof SuiTransaction
+     */
+    amlResults?: AmlResults;
+    /**
+     * 
+     * @type {AmlPolicyMatchIncoming}
+     * @memberof SuiTransaction
+     */
+    incomingAmlPolicyMatch?: AmlPolicyMatchIncoming;
+    /**
+     * 
      * @type {string}
      * @memberof SuiTransaction
      */
@@ -182,18 +242,6 @@ export interface SuiTransaction {
      * @memberof SuiTransaction
      */
     chain: EnrichedSuiChain;
-    /**
-     * 
-     * @type {SuiTransactionState}
-     * @memberof SuiTransaction
-     */
-    state: SuiTransactionState;
-    /**
-     * 
-     * @type {Array<SuiTransactionStateChange>}
-     * @memberof SuiTransaction
-     */
-    stateChanges: Array<SuiTransactionStateChange>;
     /**
      * 
      * @type {SuiMessageVersion}
@@ -236,6 +284,12 @@ export interface SuiTransaction {
      * @memberof SuiTransaction
      */
     txBytes?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SuiTransaction
+     */
+    decodedTxBytes?: string;
     /**
      * 
      * @type {SuiCheckpointData}
@@ -299,26 +353,24 @@ export type SuiTransactionTypeEnum = typeof SuiTransactionTypeEnum[keyof typeof 
 /**
  * Check if a given object implements the SuiTransaction interface.
  */
-export function instanceOfSuiTransaction(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "signatures" in value;
-    isInstance = isInstance && "direction" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "suiTransactionTypeDetails" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "stateChanges" in value;
-    isInstance = isInstance && "version" in value;
-    isInstance = isInstance && "inputs" in value;
-    isInstance = isInstance && "commands" in value;
-    isInstance = isInstance && "sender" in value;
-    isInstance = isInstance && "gasSubmitted" in value;
-    isInstance = isInstance && "simulationStatusResult" in value;
-
-    return isInstance;
+export function instanceOfSuiTransaction(value: object): value is SuiTransaction {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('signatures' in value) || value['signatures'] === undefined) return false;
+    if (!('direction' in value) || value['direction'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('stateChanges' in value) || value['stateChanges'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('suiTransactionTypeDetails' in value) || value['suiTransactionTypeDetails'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('inputs' in value) || value['inputs'] === undefined) return false;
+    if (!('commands' in value) || value['commands'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    if (!('gasSubmitted' in value) || value['gasSubmitted'] === undefined) return false;
+    if (!('simulationStatusResult' in value) || value['simulationStatusResult'] === undefined) return false;
+    return true;
 }
 
 export function SuiTransactionFromJSON(json: any): SuiTransaction {
@@ -326,7 +378,7 @@ export function SuiTransactionFromJSON(json: any): SuiTransaction {
 }
 
 export function SuiTransactionFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiTransaction {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -334,71 +386,81 @@ export function SuiTransactionFromJSONTyped(json: any, ignoreDiscriminator: bool
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
-        'managedTransactionData': !exists(json, 'managed_transaction_data') ? undefined : ManagedTransactionDataFromJSON(json['managed_transaction_data']),
+        'managedTransactionData': json['managed_transaction_data'] == null ? undefined : ManagedTransactionDataFromJSON(json['managed_transaction_data']),
         'signatures': ((json['signatures'] as Array<any>).map(SignatureFromJSON)),
-        'note': !exists(json, 'note') ? undefined : json['note'],
-        'spamState': !exists(json, 'spam_state') ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
+        'note': json['note'] == null ? undefined : json['note'],
+        'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
+        'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'state': PushableTransactionStateFromJSON(json['state']),
+        'stateChanges': ((json['state_changes'] as Array<any>).map(PushableTransactionStateChangeFromJSON)),
+        'amlResults': json['aml_results'] == null ? undefined : AmlResultsFromJSON(json['aml_results']),
+        'incomingAmlPolicyMatch': json['incoming_aml_policy_match'] == null ? undefined : AmlPolicyMatchIncomingFromJSON(json['incoming_aml_policy_match']),
         'type': json['type'],
         'suiTransactionTypeDetails': PredictedSuiTransactionSuiTransactionTypeDetailsFromJSON(json['sui_transaction_type_details']),
         'chain': EnrichedSuiChainFromJSON(json['chain']),
-        'state': SuiTransactionStateFromJSON(json['state']),
-        'stateChanges': ((json['state_changes'] as Array<any>).map(SuiTransactionStateChangeFromJSON)),
         'version': SuiMessageVersionFromJSON(json['version']),
         'inputs': ((json['inputs'] as Array<any>).map(SuiInputFromJSON)),
         'commands': ((json['commands'] as Array<any>).map(SuiCommandFromJSON)),
         'sender': EnrichedSuiAddressFromJSON(json['sender']),
-        'recipient': !exists(json, 'recipient') ? undefined : EnrichedSuiAddressFromJSON(json['recipient']),
-        'digest': !exists(json, 'digest') ? undefined : json['digest'],
-        'txBytes': !exists(json, 'tx_bytes') ? undefined : json['tx_bytes'],
-        'checkpoint': !exists(json, 'checkpoint') ? undefined : SuiCheckpointDataFromJSON(json['checkpoint']),
-        'epoch': !exists(json, 'epoch') ? undefined : json['epoch'],
+        'recipient': json['recipient'] == null ? undefined : EnrichedSuiAddressFromJSON(json['recipient']),
+        'digest': json['digest'] == null ? undefined : json['digest'],
+        'txBytes': json['tx_bytes'] == null ? undefined : json['tx_bytes'],
+        'decodedTxBytes': json['decoded_tx_bytes'] == null ? undefined : json['decoded_tx_bytes'],
+        'checkpoint': json['checkpoint'] == null ? undefined : SuiCheckpointDataFromJSON(json['checkpoint']),
+        'epoch': json['epoch'] == null ? undefined : json['epoch'],
         'gasSubmitted': SuiGasConfigFromJSON(json['gas_submitted']),
-        'expectedResult': !exists(json, 'expected_result') ? undefined : SuiTransactionResultFromJSON(json['expected_result']),
+        'expectedResult': json['expected_result'] == null ? undefined : SuiTransactionResultFromJSON(json['expected_result']),
         'simulationStatusResult': SimulationStatusResultFromJSON(json['simulation_status_result']),
-        'minedResult': !exists(json, 'mined_result') ? undefined : SuiTransactionResultFromJSON(json['mined_result']),
-        'transactionBlockData': !exists(json, 'transaction_block_data') ? undefined : json['transaction_block_data'],
-        'explorerUrl': !exists(json, 'explorer_url') ? undefined : json['explorer_url'],
+        'minedResult': json['mined_result'] == null ? undefined : SuiTransactionResultFromJSON(json['mined_result']),
+        'transactionBlockData': json['transaction_block_data'] == null ? undefined : json['transaction_block_data'],
+        'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
     };
 }
 
-export function SuiTransactionToJSON(value?: SuiTransaction | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiTransactionToJSON(json: any): SuiTransaction {
+    return SuiTransactionToJSONTyped(json, false);
+}
+
+export function SuiTransactionToJSONTyped(value?: SuiTransaction | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'managed_transaction_data': ManagedTransactionDataToJSON(value.managedTransactionData),
-        'signatures': ((value.signatures as Array<any>).map(SignatureToJSON)),
-        'note': value.note,
-        'spam_state': TransactionSpamStateToJSON(value.spamState),
-        'direction': TransactionDirectionToJSON(value.direction),
-        'type': value.type,
-        'sui_transaction_type_details': PredictedSuiTransactionSuiTransactionTypeDetailsToJSON(value.suiTransactionTypeDetails),
-        'chain': EnrichedSuiChainToJSON(value.chain),
-        'state': SuiTransactionStateToJSON(value.state),
-        'state_changes': ((value.stateChanges as Array<any>).map(SuiTransactionStateChangeToJSON)),
-        'version': SuiMessageVersionToJSON(value.version),
-        'inputs': ((value.inputs as Array<any>).map(SuiInputToJSON)),
-        'commands': ((value.commands as Array<any>).map(SuiCommandToJSON)),
-        'sender': EnrichedSuiAddressToJSON(value.sender),
-        'recipient': EnrichedSuiAddressToJSON(value.recipient),
-        'digest': value.digest,
-        'tx_bytes': value.txBytes,
-        'checkpoint': SuiCheckpointDataToJSON(value.checkpoint),
-        'epoch': value.epoch,
-        'gas_submitted': SuiGasConfigToJSON(value.gasSubmitted),
-        'expected_result': SuiTransactionResultToJSON(value.expectedResult),
-        'simulation_status_result': SimulationStatusResultToJSON(value.simulationStatusResult),
-        'mined_result': SuiTransactionResultToJSON(value.minedResult),
-        'transaction_block_data': value.transactionBlockData,
-        'explorer_url': value.explorerUrl,
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'managed_transaction_data': ManagedTransactionDataToJSON(value['managedTransactionData']),
+        'signatures': ((value['signatures'] as Array<any>).map(SignatureToJSON)),
+        'note': value['note'],
+        'spam_state': TransactionSpamStateToJSON(value['spamState']),
+        'direction': TransactionDirectionToJSON(value['direction']),
+        'signed_externally': value['signedExternally'],
+        'state': PushableTransactionStateToJSON(value['state']),
+        'state_changes': ((value['stateChanges'] as Array<any>).map(PushableTransactionStateChangeToJSON)),
+        'aml_results': AmlResultsToJSON(value['amlResults']),
+        'incoming_aml_policy_match': AmlPolicyMatchIncomingToJSON(value['incomingAmlPolicyMatch']),
+        'type': value['type'],
+        'sui_transaction_type_details': PredictedSuiTransactionSuiTransactionTypeDetailsToJSON(value['suiTransactionTypeDetails']),
+        'chain': EnrichedSuiChainToJSON(value['chain']),
+        'version': SuiMessageVersionToJSON(value['version']),
+        'inputs': ((value['inputs'] as Array<any>).map(SuiInputToJSON)),
+        'commands': ((value['commands'] as Array<any>).map(SuiCommandToJSON)),
+        'sender': EnrichedSuiAddressToJSON(value['sender']),
+        'recipient': EnrichedSuiAddressToJSON(value['recipient']),
+        'digest': value['digest'],
+        'tx_bytes': value['txBytes'],
+        'decoded_tx_bytes': value['decodedTxBytes'],
+        'checkpoint': SuiCheckpointDataToJSON(value['checkpoint']),
+        'epoch': value['epoch'],
+        'gas_submitted': SuiGasConfigToJSON(value['gasSubmitted']),
+        'expected_result': SuiTransactionResultToJSON(value['expectedResult']),
+        'simulation_status_result': SimulationStatusResultToJSON(value['simulationStatusResult']),
+        'mined_result': SuiTransactionResultToJSON(value['minedResult']),
+        'transaction_block_data': value['transactionBlockData'],
+        'explorer_url': value['explorerUrl'],
     };
 }
 

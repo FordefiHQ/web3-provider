@@ -12,12 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+    PricedAssetToJSONTyped,
+} from './PricedAsset';
 import type { Price } from './Price';
 import {
     PriceFromJSON,
     PriceFromJSONTyped,
     PriceToJSON,
+    PriceToJSONTyped,
 } from './Price';
 
 /**
@@ -38,16 +46,21 @@ export interface SuiGas {
      * @memberof SuiGas
      */
     fiatPrice?: Price;
+    /**
+     * 
+     * @type {PricedAsset}
+     * @memberof SuiGas
+     */
+    pricedAsset: PricedAsset;
 }
 
 /**
  * Check if a given object implements the SuiGas interface.
  */
-export function instanceOfSuiGas(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "totalGas" in value;
-
-    return isInstance;
+export function instanceOfSuiGas(value: object): value is SuiGas {
+    if (!('totalGas' in value) || value['totalGas'] === undefined) return false;
+    if (!('pricedAsset' in value) || value['pricedAsset'] === undefined) return false;
+    return true;
 }
 
 export function SuiGasFromJSON(json: any): SuiGas {
@@ -55,27 +68,31 @@ export function SuiGasFromJSON(json: any): SuiGas {
 }
 
 export function SuiGasFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiGas {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'totalGas': json['total_gas'],
-        'fiatPrice': !exists(json, 'fiat_price') ? undefined : PriceFromJSON(json['fiat_price']),
+        'fiatPrice': json['fiat_price'] == null ? undefined : PriceFromJSON(json['fiat_price']),
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }
 
-export function SuiGasToJSON(value?: SuiGas | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiGasToJSON(json: any): SuiGas {
+    return SuiGasToJSONTyped(json, false);
+}
+
+export function SuiGasToJSONTyped(value?: SuiGas | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'total_gas': value.totalGas,
-        'fiat_price': PriceToJSON(value.fiatPrice),
+        'total_gas': value['totalGas'],
+        'fiat_price': PriceToJSON(value['fiatPrice']),
+        'priced_asset': PricedAssetToJSON(value['pricedAsset']),
     };
 }
 

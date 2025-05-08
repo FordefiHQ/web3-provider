@@ -12,22 +12,22 @@
  * Do not edit the class manually.
  */
 
+import type { CreateEvmRawTransactionRequest } from './CreateEvmRawTransactionRequest';
 import {
-    CreateEvmRawTransactionRequest,
     instanceOfCreateEvmRawTransactionRequest,
     CreateEvmRawTransactionRequestFromJSON,
     CreateEvmRawTransactionRequestFromJSONTyped,
     CreateEvmRawTransactionRequestToJSON,
 } from './CreateEvmRawTransactionRequest';
+import type { CreateEvmRevokeAllowanceRequest } from './CreateEvmRevokeAllowanceRequest';
 import {
-    CreateEvmRevokeAllowanceRequest,
     instanceOfCreateEvmRevokeAllowanceRequest,
     CreateEvmRevokeAllowanceRequestFromJSON,
     CreateEvmRevokeAllowanceRequestFromJSONTyped,
     CreateEvmRevokeAllowanceRequestToJSON,
 } from './CreateEvmRevokeAllowanceRequest';
+import type { CreateEvmTransferRequest } from './CreateEvmTransferRequest';
 import {
-    CreateEvmTransferRequest,
     instanceOfCreateEvmTransferRequest,
     CreateEvmTransferRequestFromJSON,
     CreateEvmTransferRequestFromJSONTyped,
@@ -46,35 +46,36 @@ export function CreateEvmTransactionRequestDetailsFromJSON(json: any): CreateEvm
 }
 
 export function CreateEvmTransactionRequestDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateEvmTransactionRequestDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'evm_raw_transaction':
-            return {...CreateEvmRawTransactionRequestFromJSONTyped(json, true), type: 'evm_raw_transaction'};
+            return Object.assign({}, CreateEvmRawTransactionRequestFromJSONTyped(json, true), { type: 'evm_raw_transaction' } as const);
         case 'evm_revoke_allowance':
-            return {...CreateEvmRevokeAllowanceRequestFromJSONTyped(json, true), type: 'evm_revoke_allowance'};
+            return Object.assign({}, CreateEvmRevokeAllowanceRequestFromJSONTyped(json, true), { type: 'evm_revoke_allowance' } as const);
         case 'evm_transfer':
-            return {...CreateEvmTransferRequestFromJSONTyped(json, true), type: 'evm_transfer'};
+            return Object.assign({}, CreateEvmTransferRequestFromJSONTyped(json, true), { type: 'evm_transfer' } as const);
         default:
             throw new Error(`No variant of CreateEvmTransactionRequestDetails exists with 'type=${json['type']}'`);
     }
 }
 
-export function CreateEvmTransactionRequestDetailsToJSON(value?: CreateEvmTransactionRequestDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function CreateEvmTransactionRequestDetailsToJSON(json: any): any {
+    return CreateEvmTransactionRequestDetailsToJSONTyped(json, false);
+}
+
+export function CreateEvmTransactionRequestDetailsToJSONTyped(value?: CreateEvmTransactionRequestDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'evm_raw_transaction':
-            return CreateEvmRawTransactionRequestToJSON(value);
+            return Object.assign({}, CreateEvmRawTransactionRequestToJSON(value), { type: 'evm_raw_transaction' } as const);
         case 'evm_revoke_allowance':
-            return CreateEvmRevokeAllowanceRequestToJSON(value);
+            return Object.assign({}, CreateEvmRevokeAllowanceRequestToJSON(value), { type: 'evm_revoke_allowance' } as const);
         case 'evm_transfer':
-            return CreateEvmTransferRequestToJSON(value);
+            return Object.assign({}, CreateEvmTransferRequestToJSON(value), { type: 'evm_transfer' } as const);
         default:
             throw new Error(`No variant of CreateEvmTransactionRequestDetails exists with 'type=${value['type']}'`);
     }

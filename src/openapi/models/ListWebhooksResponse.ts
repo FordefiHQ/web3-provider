@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { Webhook } from './Webhook';
 import {
     WebhookFromJSON,
     WebhookFromJSONTyped,
     WebhookToJSON,
+    WebhookToJSONTyped,
 } from './Webhook';
 
 /**
@@ -37,11 +38,9 @@ export interface ListWebhooksResponse {
 /**
  * Check if a given object implements the ListWebhooksResponse interface.
  */
-export function instanceOfListWebhooksResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "webhooks" in value;
-
-    return isInstance;
+export function instanceOfListWebhooksResponse(value: object): value is ListWebhooksResponse {
+    if (!('webhooks' in value) || value['webhooks'] === undefined) return false;
+    return true;
 }
 
 export function ListWebhooksResponseFromJSON(json: any): ListWebhooksResponse {
@@ -49,7 +48,7 @@ export function ListWebhooksResponseFromJSON(json: any): ListWebhooksResponse {
 }
 
 export function ListWebhooksResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): ListWebhooksResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -58,16 +57,18 @@ export function ListWebhooksResponseFromJSONTyped(json: any, ignoreDiscriminator
     };
 }
 
-export function ListWebhooksResponseToJSON(value?: ListWebhooksResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ListWebhooksResponseToJSON(json: any): ListWebhooksResponse {
+    return ListWebhooksResponseToJSONTyped(json, false);
+}
+
+export function ListWebhooksResponseToJSONTyped(value?: ListWebhooksResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'webhooks': ((value.webhooks as Array<any>).map(WebhookToJSON)),
+        'webhooks': ((value['webhooks'] as Array<any>).map(WebhookToJSON)),
     };
 }
 

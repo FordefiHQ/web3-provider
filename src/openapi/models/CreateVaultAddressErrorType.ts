@@ -23,6 +23,17 @@ export const CreateVaultAddressErrorType = {
 export type CreateVaultAddressErrorType = typeof CreateVaultAddressErrorType[keyof typeof CreateVaultAddressErrorType];
 
 
+export function instanceOfCreateVaultAddressErrorType(value: any): boolean {
+    for (const key in CreateVaultAddressErrorType) {
+        if (Object.prototype.hasOwnProperty.call(CreateVaultAddressErrorType, key)) {
+            if (CreateVaultAddressErrorType[key as keyof typeof CreateVaultAddressErrorType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function CreateVaultAddressErrorTypeFromJSON(json: any): CreateVaultAddressErrorType {
     return CreateVaultAddressErrorTypeFromJSONTyped(json, false);
 }
@@ -33,5 +44,9 @@ export function CreateVaultAddressErrorTypeFromJSONTyped(json: any, ignoreDiscri
 
 export function CreateVaultAddressErrorTypeToJSON(value?: CreateVaultAddressErrorType | null): any {
     return value as any;
+}
+
+export function CreateVaultAddressErrorTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): CreateVaultAddressErrorType {
+    return value as CreateVaultAddressErrorType;
 }
 

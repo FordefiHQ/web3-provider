@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { CreateTonSerializedRawTransactionRequest } from './CreateTonSerializedRawTransactionRequest';
 import {
-    CreateTonSerializedRawTransactionRequest,
     instanceOfCreateTonSerializedRawTransactionRequest,
     CreateTonSerializedRawTransactionRequestFromJSON,
     CreateTonSerializedRawTransactionRequestFromJSONTyped,
     CreateTonSerializedRawTransactionRequestToJSON,
 } from './CreateTonSerializedRawTransactionRequest';
+import type { CreateTonTransferRequest } from './CreateTonTransferRequest';
 import {
-    CreateTonTransferRequest,
     instanceOfCreateTonTransferRequest,
     CreateTonTransferRequestFromJSON,
     CreateTonTransferRequestFromJSONTyped,
@@ -32,38 +32,39 @@ import {
  * 
  * @export
  */
-export type CreateTonTransactionRequestDetails = { type: 'ton_contract_call_payload' } & CreateTonSerializedRawTransactionRequest | { type: 'ton_transfer' } & CreateTonTransferRequest;
+export type CreateTonTransactionRequestDetails = { type: 'ton_raw_transaction' } & CreateTonSerializedRawTransactionRequest | { type: 'ton_transfer' } & CreateTonTransferRequest;
 
 export function CreateTonTransactionRequestDetailsFromJSON(json: any): CreateTonTransactionRequestDetails {
     return CreateTonTransactionRequestDetailsFromJSONTyped(json, false);
 }
 
 export function CreateTonTransactionRequestDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateTonTransactionRequestDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
-        case 'ton_contract_call_payload':
-            return {...CreateTonSerializedRawTransactionRequestFromJSONTyped(json, true), type: 'ton_contract_call_payload'};
+        case 'ton_raw_transaction':
+            return Object.assign({}, CreateTonSerializedRawTransactionRequestFromJSONTyped(json, true), { type: 'ton_raw_transaction' } as const);
         case 'ton_transfer':
-            return {...CreateTonTransferRequestFromJSONTyped(json, true), type: 'ton_transfer'};
+            return Object.assign({}, CreateTonTransferRequestFromJSONTyped(json, true), { type: 'ton_transfer' } as const);
         default:
             throw new Error(`No variant of CreateTonTransactionRequestDetails exists with 'type=${json['type']}'`);
     }
 }
 
-export function CreateTonTransactionRequestDetailsToJSON(value?: CreateTonTransactionRequestDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function CreateTonTransactionRequestDetailsToJSON(json: any): any {
+    return CreateTonTransactionRequestDetailsToJSONTyped(json, false);
+}
+
+export function CreateTonTransactionRequestDetailsToJSONTyped(value?: CreateTonTransactionRequestDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
-        case 'ton_contract_call_payload':
-            return CreateTonSerializedRawTransactionRequestToJSON(value);
+        case 'ton_raw_transaction':
+            return Object.assign({}, CreateTonSerializedRawTransactionRequestToJSON(value), { type: 'ton_raw_transaction' } as const);
         case 'ton_transfer':
-            return CreateTonTransferRequestToJSON(value);
+            return Object.assign({}, CreateTonTransferRequestToJSON(value), { type: 'ton_transfer' } as const);
         default:
             throw new Error(`No variant of CreateTonTransactionRequestDetails exists with 'type=${value['type']}'`);
     }

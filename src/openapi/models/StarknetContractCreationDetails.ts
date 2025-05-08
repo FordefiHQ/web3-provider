@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -40,11 +40,9 @@ export type StarknetContractCreationDetailsTypeEnum = typeof StarknetContractCre
 /**
  * Check if a given object implements the StarknetContractCreationDetails interface.
  */
-export function instanceOfStarknetContractCreationDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfStarknetContractCreationDetails(value: object): value is StarknetContractCreationDetails {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function StarknetContractCreationDetailsFromJSON(json: any): StarknetContractCreationDetails {
@@ -52,7 +50,7 @@ export function StarknetContractCreationDetailsFromJSON(json: any): StarknetCont
 }
 
 export function StarknetContractCreationDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): StarknetContractCreationDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -61,16 +59,18 @@ export function StarknetContractCreationDetailsFromJSONTyped(json: any, ignoreDi
     };
 }
 
-export function StarknetContractCreationDetailsToJSON(value?: StarknetContractCreationDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function StarknetContractCreationDetailsToJSON(json: any): StarknetContractCreationDetails {
+    return StarknetContractCreationDetailsToJSONTyped(json, false);
+}
+
+export function StarknetContractCreationDetailsToJSONTyped(value?: StarknetContractCreationDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
+        'type': value['type'],
     };
 }
 

@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type UtxoAccountReprChainTypeEnum = typeof UtxoAccountReprChainTypeEnum[k
 /**
  * Check if a given object implements the UtxoAccountRepr interface.
  */
-export function instanceOfUtxoAccountRepr(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chainType" in value;
-    isInstance = isInstance && "hexRepr" in value;
-
-    return isInstance;
+export function instanceOfUtxoAccountRepr(value: object): value is UtxoAccountRepr {
+    if (!('chainType' in value) || value['chainType'] === undefined) return false;
+    if (!('hexRepr' in value) || value['hexRepr'] === undefined) return false;
+    return true;
 }
 
 export function UtxoAccountReprFromJSON(json: any): UtxoAccountRepr {
@@ -59,7 +57,7 @@ export function UtxoAccountReprFromJSON(json: any): UtxoAccountRepr {
 }
 
 export function UtxoAccountReprFromJSONTyped(json: any, ignoreDiscriminator: boolean): UtxoAccountRepr {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function UtxoAccountReprFromJSONTyped(json: any, ignoreDiscriminator: boo
     };
 }
 
-export function UtxoAccountReprToJSON(value?: UtxoAccountRepr | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UtxoAccountReprToJSON(json: any): UtxoAccountRepr {
+    return UtxoAccountReprToJSONTyped(json, false);
+}
+
+export function UtxoAccountReprToJSONTyped(value?: UtxoAccountRepr | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain_type': value.chainType,
-        'hex_repr': value.hexRepr,
+        'chain_type': value['chainType'],
+        'hex_repr': value['hexRepr'],
     };
 }
 

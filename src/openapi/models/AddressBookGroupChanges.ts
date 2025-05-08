@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AddressBookContact } from './AddressBookContact';
 import {
     AddressBookContactFromJSON,
     AddressBookContactFromJSONTyped,
     AddressBookContactToJSON,
+    AddressBookContactToJSONTyped,
 } from './AddressBookContact';
 
 /**
@@ -55,13 +56,11 @@ export interface AddressBookGroupChanges {
 /**
  * Check if a given object implements the AddressBookGroupChanges interface.
  */
-export function instanceOfAddressBookGroupChanges(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "addedContacts" in value;
-    isInstance = isInstance && "removedContacts" in value;
-    isInstance = isInstance && "newName" in value;
-
-    return isInstance;
+export function instanceOfAddressBookGroupChanges(value: object): value is AddressBookGroupChanges {
+    if (!('addedContacts' in value) || value['addedContacts'] === undefined) return false;
+    if (!('removedContacts' in value) || value['removedContacts'] === undefined) return false;
+    if (!('newName' in value) || value['newName'] === undefined) return false;
+    return true;
 }
 
 export function AddressBookGroupChangesFromJSON(json: any): AddressBookGroupChanges {
@@ -69,31 +68,33 @@ export function AddressBookGroupChangesFromJSON(json: any): AddressBookGroupChan
 }
 
 export function AddressBookGroupChangesFromJSONTyped(json: any, ignoreDiscriminator: boolean): AddressBookGroupChanges {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'changeRequestId': !exists(json, 'change_request_id') ? undefined : json['change_request_id'],
+        'changeRequestId': json['change_request_id'] == null ? undefined : json['change_request_id'],
         'addedContacts': ((json['added_contacts'] as Array<any>).map(AddressBookContactFromJSON)),
         'removedContacts': ((json['removed_contacts'] as Array<any>).map(AddressBookContactFromJSON)),
         'newName': json['new_name'],
     };
 }
 
-export function AddressBookGroupChangesToJSON(value?: AddressBookGroupChanges | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AddressBookGroupChangesToJSON(json: any): AddressBookGroupChanges {
+    return AddressBookGroupChangesToJSONTyped(json, false);
+}
+
+export function AddressBookGroupChangesToJSONTyped(value?: AddressBookGroupChanges | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'change_request_id': value.changeRequestId,
-        'added_contacts': ((value.addedContacts as Array<any>).map(AddressBookContactToJSON)),
-        'removed_contacts': ((value.removedContacts as Array<any>).map(AddressBookContactToJSON)),
-        'new_name': value.newName,
+        'change_request_id': value['changeRequestId'],
+        'added_contacts': ((value['addedContacts'] as Array<any>).map(AddressBookContactToJSON)),
+        'removed_contacts': ((value['removedContacts'] as Array<any>).map(AddressBookContactToJSON)),
+        'new_name': value['newName'],
     };
 }
 

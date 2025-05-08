@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AptosAssetIdentifierDetails } from './AptosAssetIdentifierDetails';
 import {
     AptosAssetIdentifierDetailsFromJSON,
     AptosAssetIdentifierDetailsFromJSONTyped,
     AptosAssetIdentifierDetailsToJSON,
+    AptosAssetIdentifierDetailsToJSONTyped,
 } from './AptosAssetIdentifierDetails';
 
 /**
@@ -53,12 +54,10 @@ export type AptosAssetIdentifierRequestTypeEnum = typeof AptosAssetIdentifierReq
 /**
  * Check if a given object implements the AptosAssetIdentifierRequest interface.
  */
-export function instanceOfAptosAssetIdentifierRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "details" in value;
-
-    return isInstance;
+export function instanceOfAptosAssetIdentifierRequest(value: object): value is AptosAssetIdentifierRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    return true;
 }
 
 export function AptosAssetIdentifierRequestFromJSON(json: any): AptosAssetIdentifierRequest {
@@ -66,7 +65,7 @@ export function AptosAssetIdentifierRequestFromJSON(json: any): AptosAssetIdenti
 }
 
 export function AptosAssetIdentifierRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosAssetIdentifierRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function AptosAssetIdentifierRequestFromJSONTyped(json: any, ignoreDiscri
     };
 }
 
-export function AptosAssetIdentifierRequestToJSON(value?: AptosAssetIdentifierRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AptosAssetIdentifierRequestToJSON(json: any): AptosAssetIdentifierRequest {
+    return AptosAssetIdentifierRequestToJSONTyped(json, false);
+}
+
+export function AptosAssetIdentifierRequestToJSONTyped(value?: AptosAssetIdentifierRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'details': AptosAssetIdentifierDetailsToJSON(value.details),
+        'type': value['type'],
+        'details': AptosAssetIdentifierDetailsToJSON(value['details']),
     };
 }
 

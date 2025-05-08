@@ -12,50 +12,78 @@
  * Do not edit the class manually.
  */
 
+import type { AptosAssetIdentifier } from './AptosAssetIdentifier';
 import {
-    AptosAssetIdentifier,
     instanceOfAptosAssetIdentifier,
     AptosAssetIdentifierFromJSON,
     AptosAssetIdentifierFromJSONTyped,
     AptosAssetIdentifierToJSON,
 } from './AptosAssetIdentifier';
+import type { CosmosAssetIdentifier } from './CosmosAssetIdentifier';
 import {
-    CosmosAssetIdentifier,
     instanceOfCosmosAssetIdentifier,
     CosmosAssetIdentifierFromJSON,
     CosmosAssetIdentifierFromJSONTyped,
     CosmosAssetIdentifierToJSON,
 } from './CosmosAssetIdentifier';
+import type { EvmAssetIdentifier } from './EvmAssetIdentifier';
 import {
-    EvmAssetIdentifier,
     instanceOfEvmAssetIdentifier,
     EvmAssetIdentifierFromJSON,
     EvmAssetIdentifierFromJSONTyped,
     EvmAssetIdentifierToJSON,
 } from './EvmAssetIdentifier';
+import type { ExchangeAssetIdentifier } from './ExchangeAssetIdentifier';
 import {
-    SolanaAssetIdentifier,
+    instanceOfExchangeAssetIdentifier,
+    ExchangeAssetIdentifierFromJSON,
+    ExchangeAssetIdentifierFromJSONTyped,
+    ExchangeAssetIdentifierToJSON,
+} from './ExchangeAssetIdentifier';
+import type { SolanaAssetIdentifier } from './SolanaAssetIdentifier';
+import {
     instanceOfSolanaAssetIdentifier,
     SolanaAssetIdentifierFromJSON,
     SolanaAssetIdentifierFromJSONTyped,
     SolanaAssetIdentifierToJSON,
 } from './SolanaAssetIdentifier';
+import type { StacksAssetIdentifier } from './StacksAssetIdentifier';
 import {
-    SuiAssetIdentifier,
+    instanceOfStacksAssetIdentifier,
+    StacksAssetIdentifierFromJSON,
+    StacksAssetIdentifierFromJSONTyped,
+    StacksAssetIdentifierToJSON,
+} from './StacksAssetIdentifier';
+import type { StarknetAssetIdentifier } from './StarknetAssetIdentifier';
+import {
+    instanceOfStarknetAssetIdentifier,
+    StarknetAssetIdentifierFromJSON,
+    StarknetAssetIdentifierFromJSONTyped,
+    StarknetAssetIdentifierToJSON,
+} from './StarknetAssetIdentifier';
+import type { SuiAssetIdentifier } from './SuiAssetIdentifier';
+import {
     instanceOfSuiAssetIdentifier,
     SuiAssetIdentifierFromJSON,
     SuiAssetIdentifierFromJSONTyped,
     SuiAssetIdentifierToJSON,
 } from './SuiAssetIdentifier';
+import type { TonAssetIdentifier } from './TonAssetIdentifier';
 import {
-    TonAssetIdentifier,
     instanceOfTonAssetIdentifier,
     TonAssetIdentifierFromJSON,
     TonAssetIdentifierFromJSONTyped,
     TonAssetIdentifierToJSON,
 } from './TonAssetIdentifier';
+import type { TronAssetIdentifier } from './TronAssetIdentifier';
 import {
-    UtxoAssetIdentifier,
+    instanceOfTronAssetIdentifier,
+    TronAssetIdentifierFromJSON,
+    TronAssetIdentifierFromJSONTyped,
+    TronAssetIdentifierToJSON,
+} from './TronAssetIdentifier';
+import type { UtxoAssetIdentifier } from './UtxoAssetIdentifier';
+import {
     instanceOfUtxoAssetIdentifier,
     UtxoAssetIdentifierFromJSON,
     UtxoAssetIdentifierFromJSONTyped,
@@ -67,58 +95,75 @@ import {
  * 
  * @export
  */
-export type AssetIdentifier = { type: 'aptos' } & AptosAssetIdentifier | { type: 'cosmos' } & CosmosAssetIdentifier | { type: 'evm' } & EvmAssetIdentifier | { type: 'solana' } & SolanaAssetIdentifier | { type: 'sui' } & SuiAssetIdentifier | { type: 'ton' } & TonAssetIdentifier | { type: 'utxo' } & UtxoAssetIdentifier;
+export type AssetIdentifier = { type: 'aptos' } & AptosAssetIdentifier | { type: 'cosmos' } & CosmosAssetIdentifier | { type: 'evm' } & EvmAssetIdentifier | { type: 'exchange' } & ExchangeAssetIdentifier | { type: 'solana' } & SolanaAssetIdentifier | { type: 'stacks' } & StacksAssetIdentifier | { type: 'starknet' } & StarknetAssetIdentifier | { type: 'sui' } & SuiAssetIdentifier | { type: 'ton' } & TonAssetIdentifier | { type: 'tron' } & TronAssetIdentifier | { type: 'utxo' } & UtxoAssetIdentifier;
 
 export function AssetIdentifierFromJSON(json: any): AssetIdentifier {
     return AssetIdentifierFromJSONTyped(json, false);
 }
 
 export function AssetIdentifierFromJSONTyped(json: any, ignoreDiscriminator: boolean): AssetIdentifier {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'aptos':
-            return {...AptosAssetIdentifierFromJSONTyped(json, true), type: 'aptos'};
+            return Object.assign({}, AptosAssetIdentifierFromJSONTyped(json, true), { type: 'aptos' } as const);
         case 'cosmos':
-            return {...CosmosAssetIdentifierFromJSONTyped(json, true), type: 'cosmos'};
+            return Object.assign({}, CosmosAssetIdentifierFromJSONTyped(json, true), { type: 'cosmos' } as const);
         case 'evm':
-            return {...EvmAssetIdentifierFromJSONTyped(json, true), type: 'evm'};
+            return Object.assign({}, EvmAssetIdentifierFromJSONTyped(json, true), { type: 'evm' } as const);
+        case 'exchange':
+            return Object.assign({}, ExchangeAssetIdentifierFromJSONTyped(json, true), { type: 'exchange' } as const);
         case 'solana':
-            return {...SolanaAssetIdentifierFromJSONTyped(json, true), type: 'solana'};
+            return Object.assign({}, SolanaAssetIdentifierFromJSONTyped(json, true), { type: 'solana' } as const);
+        case 'stacks':
+            return Object.assign({}, StacksAssetIdentifierFromJSONTyped(json, true), { type: 'stacks' } as const);
+        case 'starknet':
+            return Object.assign({}, StarknetAssetIdentifierFromJSONTyped(json, true), { type: 'starknet' } as const);
         case 'sui':
-            return {...SuiAssetIdentifierFromJSONTyped(json, true), type: 'sui'};
+            return Object.assign({}, SuiAssetIdentifierFromJSONTyped(json, true), { type: 'sui' } as const);
         case 'ton':
-            return {...TonAssetIdentifierFromJSONTyped(json, true), type: 'ton'};
+            return Object.assign({}, TonAssetIdentifierFromJSONTyped(json, true), { type: 'ton' } as const);
+        case 'tron':
+            return Object.assign({}, TronAssetIdentifierFromJSONTyped(json, true), { type: 'tron' } as const);
         case 'utxo':
-            return {...UtxoAssetIdentifierFromJSONTyped(json, true), type: 'utxo'};
+            return Object.assign({}, UtxoAssetIdentifierFromJSONTyped(json, true), { type: 'utxo' } as const);
         default:
             throw new Error(`No variant of AssetIdentifier exists with 'type=${json['type']}'`);
     }
 }
 
-export function AssetIdentifierToJSON(value?: AssetIdentifier | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function AssetIdentifierToJSON(json: any): any {
+    return AssetIdentifierToJSONTyped(json, false);
+}
+
+export function AssetIdentifierToJSONTyped(value?: AssetIdentifier | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'aptos':
-            return AptosAssetIdentifierToJSON(value);
+            return Object.assign({}, AptosAssetIdentifierToJSON(value), { type: 'aptos' } as const);
         case 'cosmos':
-            return CosmosAssetIdentifierToJSON(value);
+            return Object.assign({}, CosmosAssetIdentifierToJSON(value), { type: 'cosmos' } as const);
         case 'evm':
-            return EvmAssetIdentifierToJSON(value);
+            return Object.assign({}, EvmAssetIdentifierToJSON(value), { type: 'evm' } as const);
+        case 'exchange':
+            return Object.assign({}, ExchangeAssetIdentifierToJSON(value), { type: 'exchange' } as const);
         case 'solana':
-            return SolanaAssetIdentifierToJSON(value);
+            return Object.assign({}, SolanaAssetIdentifierToJSON(value), { type: 'solana' } as const);
+        case 'stacks':
+            return Object.assign({}, StacksAssetIdentifierToJSON(value), { type: 'stacks' } as const);
+        case 'starknet':
+            return Object.assign({}, StarknetAssetIdentifierToJSON(value), { type: 'starknet' } as const);
         case 'sui':
-            return SuiAssetIdentifierToJSON(value);
+            return Object.assign({}, SuiAssetIdentifierToJSON(value), { type: 'sui' } as const);
         case 'ton':
-            return TonAssetIdentifierToJSON(value);
+            return Object.assign({}, TonAssetIdentifierToJSON(value), { type: 'ton' } as const);
+        case 'tron':
+            return Object.assign({}, TronAssetIdentifierToJSON(value), { type: 'tron' } as const);
         case 'utxo':
-            return UtxoAssetIdentifierToJSON(value);
+            return Object.assign({}, UtxoAssetIdentifierToJSON(value), { type: 'utxo' } as const);
         default:
             throw new Error(`No variant of AssetIdentifier exists with 'type=${value['type']}'`);
     }

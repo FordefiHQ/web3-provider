@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { SolanaChainUniqueId } from './SolanaChainUniqueId';
 import {
     SolanaChainUniqueIdFromJSON,
     SolanaChainUniqueIdFromJSONTyped,
     SolanaChainUniqueIdToJSON,
+    SolanaChainUniqueIdToJSONTyped,
 } from './SolanaChainUniqueId';
 
 /**
@@ -43,7 +44,25 @@ export interface SolanaSuggestedFees {
      * @type {string}
      * @memberof SolanaSuggestedFees
      */
-    feePerSignature: string;
+    baseFee: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SolanaSuggestedFees
+     */
+    low: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SolanaSuggestedFees
+     */
+    medium: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SolanaSuggestedFees
+     */
+    high: string;
 }
 
 
@@ -59,13 +78,14 @@ export type SolanaSuggestedFeesTypeEnum = typeof SolanaSuggestedFeesTypeEnum[key
 /**
  * Check if a given object implements the SolanaSuggestedFees interface.
  */
-export function instanceOfSolanaSuggestedFees(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chainUniqueId" in value;
-    isInstance = isInstance && "feePerSignature" in value;
-
-    return isInstance;
+export function instanceOfSolanaSuggestedFees(value: object): value is SolanaSuggestedFees {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chainUniqueId' in value) || value['chainUniqueId'] === undefined) return false;
+    if (!('baseFee' in value) || value['baseFee'] === undefined) return false;
+    if (!('low' in value) || value['low'] === undefined) return false;
+    if (!('medium' in value) || value['medium'] === undefined) return false;
+    if (!('high' in value) || value['high'] === undefined) return false;
+    return true;
 }
 
 export function SolanaSuggestedFeesFromJSON(json: any): SolanaSuggestedFees {
@@ -73,29 +93,37 @@ export function SolanaSuggestedFeesFromJSON(json: any): SolanaSuggestedFees {
 }
 
 export function SolanaSuggestedFeesFromJSONTyped(json: any, ignoreDiscriminator: boolean): SolanaSuggestedFees {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
         'chainUniqueId': SolanaChainUniqueIdFromJSON(json['chain_unique_id']),
-        'feePerSignature': json['fee_per_signature'],
+        'baseFee': json['base_fee'],
+        'low': json['low'],
+        'medium': json['medium'],
+        'high': json['high'],
     };
 }
 
-export function SolanaSuggestedFeesToJSON(value?: SolanaSuggestedFees | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SolanaSuggestedFeesToJSON(json: any): SolanaSuggestedFees {
+    return SolanaSuggestedFeesToJSONTyped(json, false);
+}
+
+export function SolanaSuggestedFeesToJSONTyped(value?: SolanaSuggestedFees | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'chain_unique_id': SolanaChainUniqueIdToJSON(value.chainUniqueId),
-        'fee_per_signature': value.feePerSignature,
+        'type': value['type'],
+        'chain_unique_id': SolanaChainUniqueIdToJSON(value['chainUniqueId']),
+        'base_fee': value['baseFee'],
+        'low': value['low'],
+        'medium': value['medium'],
+        'high': value['high'],
     };
 }
 

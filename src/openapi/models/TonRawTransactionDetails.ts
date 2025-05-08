@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedTonAddress } from './EnrichedTonAddress';
 import {
     EnrichedTonAddressFromJSON,
     EnrichedTonAddressFromJSONTyped,
     EnrichedTonAddressToJSON,
+    EnrichedTonAddressToJSONTyped,
 } from './EnrichedTonAddress';
 
 /**
@@ -53,12 +54,10 @@ export type TonRawTransactionDetailsTypeEnum = typeof TonRawTransactionDetailsTy
 /**
  * Check if a given object implements the TonRawTransactionDetails interface.
  */
-export function instanceOfTonRawTransactionDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "recipients" in value;
-
-    return isInstance;
+export function instanceOfTonRawTransactionDetails(value: object): value is TonRawTransactionDetails {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('recipients' in value) || value['recipients'] === undefined) return false;
+    return true;
 }
 
 export function TonRawTransactionDetailsFromJSON(json: any): TonRawTransactionDetails {
@@ -66,7 +65,7 @@ export function TonRawTransactionDetailsFromJSON(json: any): TonRawTransactionDe
 }
 
 export function TonRawTransactionDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): TonRawTransactionDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function TonRawTransactionDetailsFromJSONTyped(json: any, ignoreDiscrimin
     };
 }
 
-export function TonRawTransactionDetailsToJSON(value?: TonRawTransactionDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TonRawTransactionDetailsToJSON(json: any): TonRawTransactionDetails {
+    return TonRawTransactionDetailsToJSONTyped(json, false);
+}
+
+export function TonRawTransactionDetailsToJSONTyped(value?: TonRawTransactionDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'recipients': ((value.recipients as Array<any>).map(EnrichedTonAddressToJSON)),
+        'type': value['type'],
+        'recipients': ((value['recipients'] as Array<any>).map(EnrichedTonAddressToJSON)),
     };
 }
 

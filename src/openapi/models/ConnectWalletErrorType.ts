@@ -23,6 +23,17 @@ export const ConnectWalletErrorType = {
 export type ConnectWalletErrorType = typeof ConnectWalletErrorType[keyof typeof ConnectWalletErrorType];
 
 
+export function instanceOfConnectWalletErrorType(value: any): boolean {
+    for (const key in ConnectWalletErrorType) {
+        if (Object.prototype.hasOwnProperty.call(ConnectWalletErrorType, key)) {
+            if (ConnectWalletErrorType[key as keyof typeof ConnectWalletErrorType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function ConnectWalletErrorTypeFromJSON(json: any): ConnectWalletErrorType {
     return ConnectWalletErrorTypeFromJSONTyped(json, false);
 }
@@ -33,5 +44,9 @@ export function ConnectWalletErrorTypeFromJSONTyped(json: any, ignoreDiscriminat
 
 export function ConnectWalletErrorTypeToJSON(value?: ConnectWalletErrorType | null): any {
     return value as any;
+}
+
+export function ConnectWalletErrorTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): ConnectWalletErrorType {
+    return value as ConnectWalletErrorType;
 }
 

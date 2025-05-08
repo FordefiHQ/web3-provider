@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { KeyType } from './KeyType';
 import {
     KeyTypeFromJSON,
     KeyTypeFromJSONTyped,
     KeyTypeToJSON,
+    KeyTypeToJSONTyped,
 } from './KeyType';
 
 /**
@@ -65,14 +66,12 @@ export type CreateMasterKeyCallbackArgsTypeEnum = typeof CreateMasterKeyCallback
 /**
  * Check if a given object implements the CreateMasterKeyCallbackArgs interface.
  */
-export function instanceOfCreateMasterKeyCallbackArgs(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "encryptedShare" in value;
-    isInstance = isInstance && "signature" in value;
-    isInstance = isInstance && "keyType" in value;
-
-    return isInstance;
+export function instanceOfCreateMasterKeyCallbackArgs(value: object): value is CreateMasterKeyCallbackArgs {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('encryptedShare' in value) || value['encryptedShare'] === undefined) return false;
+    if (!('signature' in value) || value['signature'] === undefined) return false;
+    if (!('keyType' in value) || value['keyType'] === undefined) return false;
+    return true;
 }
 
 export function CreateMasterKeyCallbackArgsFromJSON(json: any): CreateMasterKeyCallbackArgs {
@@ -80,7 +79,7 @@ export function CreateMasterKeyCallbackArgsFromJSON(json: any): CreateMasterKeyC
 }
 
 export function CreateMasterKeyCallbackArgsFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateMasterKeyCallbackArgs {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -92,19 +91,21 @@ export function CreateMasterKeyCallbackArgsFromJSONTyped(json: any, ignoreDiscri
     };
 }
 
-export function CreateMasterKeyCallbackArgsToJSON(value?: CreateMasterKeyCallbackArgs | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateMasterKeyCallbackArgsToJSON(json: any): CreateMasterKeyCallbackArgs {
+    return CreateMasterKeyCallbackArgsToJSONTyped(json, false);
+}
+
+export function CreateMasterKeyCallbackArgsToJSONTyped(value?: CreateMasterKeyCallbackArgs | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'encrypted_share': value.encryptedShare,
-        'signature': value.signature,
-        'key_type': KeyTypeToJSON(value.keyType),
+        'type': value['type'],
+        'encrypted_share': value['encryptedShare'],
+        'signature': value['signature'],
+        'key_type': KeyTypeToJSON(value['keyType']),
     };
 }
 

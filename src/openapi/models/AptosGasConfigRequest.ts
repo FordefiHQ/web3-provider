@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AptosGasConfigRequestPrice } from './AptosGasConfigRequestPrice';
 import {
     AptosGasConfigRequestPriceFromJSON,
     AptosGasConfigRequestPriceFromJSONTyped,
     AptosGasConfigRequestPriceToJSON,
+    AptosGasConfigRequestPriceToJSONTyped,
 } from './AptosGasConfigRequestPrice';
 
 /**
@@ -43,11 +44,9 @@ export interface AptosGasConfigRequest {
 /**
  * Check if a given object implements the AptosGasConfigRequest interface.
  */
-export function instanceOfAptosGasConfigRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "price" in value;
-
-    return isInstance;
+export function instanceOfAptosGasConfigRequest(value: object): value is AptosGasConfigRequest {
+    if (!('price' in value) || value['price'] === undefined) return false;
+    return true;
 }
 
 export function AptosGasConfigRequestFromJSON(json: any): AptosGasConfigRequest {
@@ -55,27 +54,29 @@ export function AptosGasConfigRequestFromJSON(json: any): AptosGasConfigRequest 
 }
 
 export function AptosGasConfigRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosGasConfigRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'maxGas': !exists(json, 'max_gas') ? undefined : json['max_gas'],
+        'maxGas': json['max_gas'] == null ? undefined : json['max_gas'],
         'price': AptosGasConfigRequestPriceFromJSON(json['price']),
     };
 }
 
-export function AptosGasConfigRequestToJSON(value?: AptosGasConfigRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AptosGasConfigRequestToJSON(json: any): AptosGasConfigRequest {
+    return AptosGasConfigRequestToJSONTyped(json, false);
+}
+
+export function AptosGasConfigRequestToJSONTyped(value?: AptosGasConfigRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'max_gas': value.maxGas,
-        'price': AptosGasConfigRequestPriceToJSON(value.price),
+        'max_gas': value['maxGas'],
+        'price': AptosGasConfigRequestPriceToJSON(value['price']),
     };
 }
 

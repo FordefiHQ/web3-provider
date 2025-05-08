@@ -24,6 +24,17 @@ export const SuiChainUniqueId = {
 export type SuiChainUniqueId = typeof SuiChainUniqueId[keyof typeof SuiChainUniqueId];
 
 
+export function instanceOfSuiChainUniqueId(value: any): boolean {
+    for (const key in SuiChainUniqueId) {
+        if (Object.prototype.hasOwnProperty.call(SuiChainUniqueId, key)) {
+            if (SuiChainUniqueId[key as keyof typeof SuiChainUniqueId] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function SuiChainUniqueIdFromJSON(json: any): SuiChainUniqueId {
     return SuiChainUniqueIdFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function SuiChainUniqueIdFromJSONTyped(json: any, ignoreDiscriminator: bo
 
 export function SuiChainUniqueIdToJSON(value?: SuiChainUniqueId | null): any {
     return value as any;
+}
+
+export function SuiChainUniqueIdToJSONTyped(value: any, ignoreDiscriminator: boolean): SuiChainUniqueId {
+    return value as SuiChainUniqueId;
 }
 

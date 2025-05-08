@@ -24,6 +24,17 @@ export const ReleaseType = {
 export type ReleaseType = typeof ReleaseType[keyof typeof ReleaseType];
 
 
+export function instanceOfReleaseType(value: any): boolean {
+    for (const key in ReleaseType) {
+        if (Object.prototype.hasOwnProperty.call(ReleaseType, key)) {
+            if (ReleaseType[key as keyof typeof ReleaseType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function ReleaseTypeFromJSON(json: any): ReleaseType {
     return ReleaseTypeFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function ReleaseTypeFromJSONTyped(json: any, ignoreDiscriminator: boolean
 
 export function ReleaseTypeToJSON(value?: ReleaseType | null): any {
     return value as any;
+}
+
+export function ReleaseTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): ReleaseType {
+    return value as ReleaseType;
 }
 

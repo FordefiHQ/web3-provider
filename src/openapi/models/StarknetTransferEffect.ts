@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { EnrichedStarknetAddress } from './EnrichedStarknetAddress';
-import {
-    EnrichedStarknetAddressFromJSON,
-    EnrichedStarknetAddressFromJSONTyped,
-    EnrichedStarknetAddressToJSON,
-} from './EnrichedStarknetAddress';
+import { mapValues } from '../runtime';
 import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
     PricedAssetFromJSONTyped,
     PricedAssetToJSON,
+    PricedAssetToJSONTyped,
 } from './PricedAsset';
+import type { EnrichedStarknetAddress } from './EnrichedStarknetAddress';
+import {
+    EnrichedStarknetAddressFromJSON,
+    EnrichedStarknetAddressFromJSONTyped,
+    EnrichedStarknetAddressToJSON,
+    EnrichedStarknetAddressToJSONTyped,
+} from './EnrichedStarknetAddress';
 
 /**
  * 
@@ -61,14 +63,12 @@ export interface StarknetTransferEffect {
 /**
  * Check if a given object implements the StarknetTransferEffect interface.
  */
-export function instanceOfStarknetTransferEffect(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "pricedAsset" in value;
-    isInstance = isInstance && "amount" in value;
-    isInstance = isInstance && "from" in value;
-    isInstance = isInstance && "to" in value;
-
-    return isInstance;
+export function instanceOfStarknetTransferEffect(value: object): value is StarknetTransferEffect {
+    if (!('pricedAsset' in value) || value['pricedAsset'] === undefined) return false;
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    if (!('from' in value) || value['from'] === undefined) return false;
+    if (!('to' in value) || value['to'] === undefined) return false;
+    return true;
 }
 
 export function StarknetTransferEffectFromJSON(json: any): StarknetTransferEffect {
@@ -76,7 +76,7 @@ export function StarknetTransferEffectFromJSON(json: any): StarknetTransferEffec
 }
 
 export function StarknetTransferEffectFromJSONTyped(json: any, ignoreDiscriminator: boolean): StarknetTransferEffect {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -88,19 +88,21 @@ export function StarknetTransferEffectFromJSONTyped(json: any, ignoreDiscriminat
     };
 }
 
-export function StarknetTransferEffectToJSON(value?: StarknetTransferEffect | null): any {
-    if (value === undefined) {
-        return undefined;
+export function StarknetTransferEffectToJSON(json: any): StarknetTransferEffect {
+    return StarknetTransferEffectToJSONTyped(json, false);
+}
+
+export function StarknetTransferEffectToJSONTyped(value?: StarknetTransferEffect | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'priced_asset': PricedAssetToJSON(value.pricedAsset),
-        'amount': value.amount,
-        'from': EnrichedStarknetAddressToJSON(value.from),
-        'to': EnrichedStarknetAddressToJSON(value.to),
+        'priced_asset': PricedAssetToJSON(value['pricedAsset']),
+        'amount': value['amount'],
+        'from': EnrichedStarknetAddressToJSON(value['from']),
+        'to': EnrichedStarknetAddressToJSON(value['to']),
     };
 }
 

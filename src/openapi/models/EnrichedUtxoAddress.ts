@@ -12,31 +12,35 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { ContactRef } from './ContactRef';
+import { mapValues } from '../runtime';
+import type { VaultRef } from './VaultRef';
 import {
-    ContactRefFromJSON,
-    ContactRefFromJSONTyped,
-    ContactRefToJSON,
-} from './ContactRef';
+    VaultRefFromJSON,
+    VaultRefFromJSONTyped,
+    VaultRefToJSON,
+    VaultRefToJSONTyped,
+} from './VaultRef';
 import type { UtxoAddress } from './UtxoAddress';
 import {
     UtxoAddressFromJSON,
     UtxoAddressFromJSONTyped,
     UtxoAddressToJSON,
+    UtxoAddressToJSONTyped,
 } from './UtxoAddress';
 import type { VaultAddressRef } from './VaultAddressRef';
 import {
     VaultAddressRefFromJSON,
     VaultAddressRefFromJSONTyped,
     VaultAddressRefToJSON,
+    VaultAddressRefToJSONTyped,
 } from './VaultAddressRef';
-import type { VaultRef } from './VaultRef';
+import type { ContactRef } from './ContactRef';
 import {
-    VaultRefFromJSON,
-    VaultRefFromJSONTyped,
-    VaultRefToJSON,
-} from './VaultRef';
+    ContactRefFromJSON,
+    ContactRefFromJSONTyped,
+    ContactRefToJSON,
+    ContactRefToJSONTyped,
+} from './ContactRef';
 
 /**
  * 
@@ -95,12 +99,10 @@ export type EnrichedUtxoAddressTypeEnum = typeof EnrichedUtxoAddressTypeEnum[key
 /**
  * Check if a given object implements the EnrichedUtxoAddress interface.
  */
-export function instanceOfEnrichedUtxoAddress(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "address" in value;
-
-    return isInstance;
+export function instanceOfEnrichedUtxoAddress(value: object): value is EnrichedUtxoAddress {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    return true;
 }
 
 export function EnrichedUtxoAddressFromJSON(json: any): EnrichedUtxoAddress {
@@ -108,35 +110,37 @@ export function EnrichedUtxoAddressFromJSON(json: any): EnrichedUtxoAddress {
 }
 
 export function EnrichedUtxoAddressFromJSONTyped(json: any, ignoreDiscriminator: boolean): EnrichedUtxoAddress {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'vault': !exists(json, 'vault') ? undefined : VaultRefFromJSON(json['vault']),
-        'explorerUrl': !exists(json, 'explorer_url') ? undefined : json['explorer_url'],
-        'contact': !exists(json, 'contact') ? undefined : ContactRefFromJSON(json['contact']),
+        'vault': json['vault'] == null ? undefined : VaultRefFromJSON(json['vault']),
+        'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
+        'contact': json['contact'] == null ? undefined : ContactRefFromJSON(json['contact']),
         'type': json['type'],
         'address': UtxoAddressFromJSON(json['address']),
-        'vaultAddress': !exists(json, 'vault_address') ? undefined : VaultAddressRefFromJSON(json['vault_address']),
+        'vaultAddress': json['vault_address'] == null ? undefined : VaultAddressRefFromJSON(json['vault_address']),
     };
 }
 
-export function EnrichedUtxoAddressToJSON(value?: EnrichedUtxoAddress | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EnrichedUtxoAddressToJSON(json: any): EnrichedUtxoAddress {
+    return EnrichedUtxoAddressToJSONTyped(json, false);
+}
+
+export function EnrichedUtxoAddressToJSONTyped(value?: EnrichedUtxoAddress | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'vault': VaultRefToJSON(value.vault),
-        'explorer_url': value.explorerUrl,
-        'contact': ContactRefToJSON(value.contact),
-        'type': value.type,
-        'address': UtxoAddressToJSON(value.address),
-        'vault_address': VaultAddressRefToJSON(value.vaultAddress),
+        'vault': VaultRefToJSON(value['vault']),
+        'explorer_url': value['explorerUrl'],
+        'contact': ContactRefToJSON(value['contact']),
+        'type': value['type'],
+        'address': UtxoAddressToJSON(value['address']),
+        'vault_address': VaultAddressRefToJSON(value['vaultAddress']),
     };
 }
 

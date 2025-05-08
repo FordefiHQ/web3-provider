@@ -24,6 +24,17 @@ export const DklsRolloutStatus = {
 export type DklsRolloutStatus = typeof DklsRolloutStatus[keyof typeof DklsRolloutStatus];
 
 
+export function instanceOfDklsRolloutStatus(value: any): boolean {
+    for (const key in DklsRolloutStatus) {
+        if (Object.prototype.hasOwnProperty.call(DklsRolloutStatus, key)) {
+            if (DklsRolloutStatus[key as keyof typeof DklsRolloutStatus] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function DklsRolloutStatusFromJSON(json: any): DklsRolloutStatus {
     return DklsRolloutStatusFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function DklsRolloutStatusFromJSONTyped(json: any, ignoreDiscriminator: b
 
 export function DklsRolloutStatusToJSON(value?: DklsRolloutStatus | null): any {
     return value as any;
+}
+
+export function DklsRolloutStatusToJSONTyped(value: any, ignoreDiscriminator: boolean): DklsRolloutStatus {
+    return value as DklsRolloutStatus;
 }
 

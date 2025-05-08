@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -42,12 +42,10 @@ export interface TonBlock {
 /**
  * Check if a given object implements the TonBlock interface.
  */
-export function instanceOfTonBlock(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "sequence" in value;
-    isInstance = isInstance && "minedAt" in value;
-
-    return isInstance;
+export function instanceOfTonBlock(value: object): value is TonBlock {
+    if (!('sequence' in value) || value['sequence'] === undefined) return false;
+    if (!('minedAt' in value) || value['minedAt'] === undefined) return false;
+    return true;
 }
 
 export function TonBlockFromJSON(json: any): TonBlock {
@@ -55,29 +53,31 @@ export function TonBlockFromJSON(json: any): TonBlock {
 }
 
 export function TonBlockFromJSONTyped(json: any, ignoreDiscriminator: boolean): TonBlock {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'sequence': json['sequence'],
-        'hash': !exists(json, 'hash') ? undefined : json['hash'],
+        'hash': json['hash'] == null ? undefined : json['hash'],
         'minedAt': (new Date(json['mined_at'])),
     };
 }
 
-export function TonBlockToJSON(value?: TonBlock | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TonBlockToJSON(json: any): TonBlock {
+    return TonBlockToJSONTyped(json, false);
+}
+
+export function TonBlockToJSONTyped(value?: TonBlock | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'sequence': value.sequence,
-        'hash': value.hash,
-        'mined_at': (value.minedAt.toISOString()),
+        'sequence': value['sequence'],
+        'hash': value['hash'],
+        'mined_at': ((value['minedAt']).toISOString()),
     };
 }
 

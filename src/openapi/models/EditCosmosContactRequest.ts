@@ -12,7 +12,15 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { CosmosAssetIdentifierRequest } from './CosmosAssetIdentifierRequest';
+import {
+    CosmosAssetIdentifierRequestFromJSON,
+    CosmosAssetIdentifierRequestFromJSONTyped,
+    CosmosAssetIdentifierRequestToJSON,
+    CosmosAssetIdentifierRequestToJSONTyped,
+} from './CosmosAssetIdentifierRequest';
+
 /**
  * 
  * @export
@@ -31,6 +39,18 @@ export interface EditCosmosContactRequest {
      * @memberof EditCosmosContactRequest
      */
     type: EditCosmosContactRequestTypeEnum;
+    /**
+     * 
+     * @type {Array<CosmosAssetIdentifierRequest>}
+     * @memberof EditCosmosContactRequest
+     */
+    assetsIdentifiers?: Array<CosmosAssetIdentifierRequest>;
+    /**
+     * 
+     * @type {string}
+     * @memberof EditCosmosContactRequest
+     */
+    memo?: string;
 }
 
 
@@ -46,12 +66,10 @@ export type EditCosmosContactRequestTypeEnum = typeof EditCosmosContactRequestTy
 /**
  * Check if a given object implements the EditCosmosContactRequest interface.
  */
-export function instanceOfEditCosmosContactRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfEditCosmosContactRequest(value: object): value is EditCosmosContactRequest {
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function EditCosmosContactRequestFromJSON(json: any): EditCosmosContactRequest {
@@ -59,27 +77,33 @@ export function EditCosmosContactRequestFromJSON(json: any): EditCosmosContactRe
 }
 
 export function EditCosmosContactRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): EditCosmosContactRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'name': json['name'],
         'type': json['type'],
+        'assetsIdentifiers': json['assets_identifiers'] == null ? undefined : ((json['assets_identifiers'] as Array<any>).map(CosmosAssetIdentifierRequestFromJSON)),
+        'memo': json['memo'] == null ? undefined : json['memo'],
     };
 }
 
-export function EditCosmosContactRequestToJSON(value?: EditCosmosContactRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EditCosmosContactRequestToJSON(json: any): EditCosmosContactRequest {
+    return EditCosmosContactRequestToJSONTyped(json, false);
+}
+
+export function EditCosmosContactRequestToJSONTyped(value?: EditCosmosContactRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'type': value.type,
+        'name': value['name'],
+        'type': value['type'],
+        'assets_identifiers': value['assetsIdentifiers'] == null ? undefined : ((value['assetsIdentifiers'] as Array<any>).map(CosmosAssetIdentifierRequestToJSON)),
+        'memo': value['memo'],
     };
 }
 

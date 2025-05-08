@@ -12,29 +12,29 @@
  * Do not edit the class manually.
  */
 
+import type { EcdsaSecp256k1BlackBoxVault } from './EcdsaSecp256k1BlackBoxVault';
 import {
-    EcdsaSecp256k1BlackBoxVault,
     instanceOfEcdsaSecp256k1BlackBoxVault,
     EcdsaSecp256k1BlackBoxVaultFromJSON,
     EcdsaSecp256k1BlackBoxVaultFromJSONTyped,
     EcdsaSecp256k1BlackBoxVaultToJSON,
 } from './EcdsaSecp256k1BlackBoxVault';
+import type { EcdsaStarkBlackBoxVault } from './EcdsaStarkBlackBoxVault';
 import {
-    EcdsaStarkBlackBoxVault,
     instanceOfEcdsaStarkBlackBoxVault,
     EcdsaStarkBlackBoxVaultFromJSON,
     EcdsaStarkBlackBoxVaultFromJSONTyped,
     EcdsaStarkBlackBoxVaultToJSON,
 } from './EcdsaStarkBlackBoxVault';
+import type { EddsaED25519BlackBoxVault } from './EddsaED25519BlackBoxVault';
 import {
-    EddsaED25519BlackBoxVault,
     instanceOfEddsaED25519BlackBoxVault,
     EddsaED25519BlackBoxVaultFromJSON,
     EddsaED25519BlackBoxVaultFromJSONTyped,
     EddsaED25519BlackBoxVaultToJSON,
 } from './EddsaED25519BlackBoxVault';
+import type { SchnorrSecp256k1BlackBoxValue } from './SchnorrSecp256k1BlackBoxValue';
 import {
-    SchnorrSecp256k1BlackBoxValue,
     instanceOfSchnorrSecp256k1BlackBoxValue,
     SchnorrSecp256k1BlackBoxValueFromJSON,
     SchnorrSecp256k1BlackBoxValueFromJSONTyped,
@@ -53,39 +53,40 @@ export function BlackBoxVaultDetailsFromJSON(json: any): BlackBoxVaultDetails {
 }
 
 export function BlackBoxVaultDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): BlackBoxVaultDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'ecdsa_secp256k1':
-            return {...EcdsaSecp256k1BlackBoxVaultFromJSONTyped(json, true), type: 'ecdsa_secp256k1'};
+            return Object.assign({}, EcdsaSecp256k1BlackBoxVaultFromJSONTyped(json, true), { type: 'ecdsa_secp256k1' } as const);
         case 'ecdsa_stark':
-            return {...EcdsaStarkBlackBoxVaultFromJSONTyped(json, true), type: 'ecdsa_stark'};
+            return Object.assign({}, EcdsaStarkBlackBoxVaultFromJSONTyped(json, true), { type: 'ecdsa_stark' } as const);
         case 'eddsa_ed25519':
-            return {...EddsaED25519BlackBoxVaultFromJSONTyped(json, true), type: 'eddsa_ed25519'};
+            return Object.assign({}, EddsaED25519BlackBoxVaultFromJSONTyped(json, true), { type: 'eddsa_ed25519' } as const);
         case 'schnorr_secp256k1':
-            return {...SchnorrSecp256k1BlackBoxValueFromJSONTyped(json, true), type: 'schnorr_secp256k1'};
+            return Object.assign({}, SchnorrSecp256k1BlackBoxValueFromJSONTyped(json, true), { type: 'schnorr_secp256k1' } as const);
         default:
             throw new Error(`No variant of BlackBoxVaultDetails exists with 'type=${json['type']}'`);
     }
 }
 
-export function BlackBoxVaultDetailsToJSON(value?: BlackBoxVaultDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function BlackBoxVaultDetailsToJSON(json: any): any {
+    return BlackBoxVaultDetailsToJSONTyped(json, false);
+}
+
+export function BlackBoxVaultDetailsToJSONTyped(value?: BlackBoxVaultDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'ecdsa_secp256k1':
-            return EcdsaSecp256k1BlackBoxVaultToJSON(value);
+            return Object.assign({}, EcdsaSecp256k1BlackBoxVaultToJSON(value), { type: 'ecdsa_secp256k1' } as const);
         case 'ecdsa_stark':
-            return EcdsaStarkBlackBoxVaultToJSON(value);
+            return Object.assign({}, EcdsaStarkBlackBoxVaultToJSON(value), { type: 'ecdsa_stark' } as const);
         case 'eddsa_ed25519':
-            return EddsaED25519BlackBoxVaultToJSON(value);
+            return Object.assign({}, EddsaED25519BlackBoxVaultToJSON(value), { type: 'eddsa_ed25519' } as const);
         case 'schnorr_secp256k1':
-            return SchnorrSecp256k1BlackBoxValueToJSON(value);
+            return Object.assign({}, SchnorrSecp256k1BlackBoxValueToJSON(value), { type: 'schnorr_secp256k1' } as const);
         default:
             throw new Error(`No variant of BlackBoxVaultDetails exists with 'type=${value['type']}'`);
     }

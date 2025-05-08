@@ -24,6 +24,17 @@ export const InitiateSignSessionErrorType = {
 export type InitiateSignSessionErrorType = typeof InitiateSignSessionErrorType[keyof typeof InitiateSignSessionErrorType];
 
 
+export function instanceOfInitiateSignSessionErrorType(value: any): boolean {
+    for (const key in InitiateSignSessionErrorType) {
+        if (Object.prototype.hasOwnProperty.call(InitiateSignSessionErrorType, key)) {
+            if (InitiateSignSessionErrorType[key as keyof typeof InitiateSignSessionErrorType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function InitiateSignSessionErrorTypeFromJSON(json: any): InitiateSignSessionErrorType {
     return InitiateSignSessionErrorTypeFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function InitiateSignSessionErrorTypeFromJSONTyped(json: any, ignoreDiscr
 
 export function InitiateSignSessionErrorTypeToJSON(value?: InitiateSignSessionErrorType | null): any {
     return value as any;
+}
+
+export function InitiateSignSessionErrorTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): InitiateSignSessionErrorType {
+    return value as InitiateSignSessionErrorType;
 }
 

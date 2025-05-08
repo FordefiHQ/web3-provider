@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { DeleteAddressBookGroupPrerequisiteType } from './DeleteAddressBookGroupPrerequisiteType';
-import {
-    DeleteAddressBookGroupPrerequisiteTypeFromJSON,
-    DeleteAddressBookGroupPrerequisiteTypeFromJSONTyped,
-    DeleteAddressBookGroupPrerequisiteTypeToJSON,
-} from './DeleteAddressBookGroupPrerequisiteType';
+import { mapValues } from '../runtime';
 import type { DeletePrerequisiteSeverity } from './DeletePrerequisiteSeverity';
 import {
     DeletePrerequisiteSeverityFromJSON,
     DeletePrerequisiteSeverityFromJSONTyped,
     DeletePrerequisiteSeverityToJSON,
+    DeletePrerequisiteSeverityToJSONTyped,
 } from './DeletePrerequisiteSeverity';
+import type { DeleteAddressBookGroupPrerequisiteType } from './DeleteAddressBookGroupPrerequisiteType';
+import {
+    DeleteAddressBookGroupPrerequisiteTypeFromJSON,
+    DeleteAddressBookGroupPrerequisiteTypeFromJSONTyped,
+    DeleteAddressBookGroupPrerequisiteTypeToJSON,
+    DeleteAddressBookGroupPrerequisiteTypeToJSONTyped,
+} from './DeleteAddressBookGroupPrerequisiteType';
 
 /**
  * 
@@ -46,15 +48,15 @@ export interface DeleteAddressBookGroupPrerequisite {
     severity: DeletePrerequisiteSeverity;
 }
 
+
+
 /**
  * Check if a given object implements the DeleteAddressBookGroupPrerequisite interface.
  */
-export function instanceOfDeleteAddressBookGroupPrerequisite(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "severity" in value;
-
-    return isInstance;
+export function instanceOfDeleteAddressBookGroupPrerequisite(value: object): value is DeleteAddressBookGroupPrerequisite {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('severity' in value) || value['severity'] === undefined) return false;
+    return true;
 }
 
 export function DeleteAddressBookGroupPrerequisiteFromJSON(json: any): DeleteAddressBookGroupPrerequisite {
@@ -62,7 +64,7 @@ export function DeleteAddressBookGroupPrerequisiteFromJSON(json: any): DeleteAdd
 }
 
 export function DeleteAddressBookGroupPrerequisiteFromJSONTyped(json: any, ignoreDiscriminator: boolean): DeleteAddressBookGroupPrerequisite {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -72,17 +74,19 @@ export function DeleteAddressBookGroupPrerequisiteFromJSONTyped(json: any, ignor
     };
 }
 
-export function DeleteAddressBookGroupPrerequisiteToJSON(value?: DeleteAddressBookGroupPrerequisite | null): any {
-    if (value === undefined) {
-        return undefined;
+export function DeleteAddressBookGroupPrerequisiteToJSON(json: any): DeleteAddressBookGroupPrerequisite {
+    return DeleteAddressBookGroupPrerequisiteToJSONTyped(json, false);
+}
+
+export function DeleteAddressBookGroupPrerequisiteToJSONTyped(value?: DeleteAddressBookGroupPrerequisite | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': DeleteAddressBookGroupPrerequisiteTypeToJSON(value.type),
-        'severity': DeletePrerequisiteSeverityToJSON(value.severity),
+        'type': DeleteAddressBookGroupPrerequisiteTypeToJSON(value['type']),
+        'severity': DeletePrerequisiteSeverityToJSON(value['severity']),
     };
 }
 

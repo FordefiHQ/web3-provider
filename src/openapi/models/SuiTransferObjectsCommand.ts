@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { SuiCommandArgument } from './SuiCommandArgument';
 import {
     SuiCommandArgumentFromJSON,
     SuiCommandArgumentFromJSONTyped,
     SuiCommandArgumentToJSON,
+    SuiCommandArgumentToJSONTyped,
 } from './SuiCommandArgument';
 
 /**
@@ -59,13 +60,11 @@ export type SuiTransferObjectsCommandTypeEnum = typeof SuiTransferObjectsCommand
 /**
  * Check if a given object implements the SuiTransferObjectsCommand interface.
  */
-export function instanceOfSuiTransferObjectsCommand(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "objects" in value;
-    isInstance = isInstance && "address" in value;
-
-    return isInstance;
+export function instanceOfSuiTransferObjectsCommand(value: object): value is SuiTransferObjectsCommand {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('objects' in value) || value['objects'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    return true;
 }
 
 export function SuiTransferObjectsCommandFromJSON(json: any): SuiTransferObjectsCommand {
@@ -73,7 +72,7 @@ export function SuiTransferObjectsCommandFromJSON(json: any): SuiTransferObjects
 }
 
 export function SuiTransferObjectsCommandFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiTransferObjectsCommand {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -84,18 +83,20 @@ export function SuiTransferObjectsCommandFromJSONTyped(json: any, ignoreDiscrimi
     };
 }
 
-export function SuiTransferObjectsCommandToJSON(value?: SuiTransferObjectsCommand | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiTransferObjectsCommandToJSON(json: any): SuiTransferObjectsCommand {
+    return SuiTransferObjectsCommandToJSONTyped(json, false);
+}
+
+export function SuiTransferObjectsCommandToJSONTyped(value?: SuiTransferObjectsCommand | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'objects': ((value.objects as Array<any>).map(SuiCommandArgumentToJSON)),
-        'address': SuiCommandArgumentToJSON(value.address),
+        'type': value['type'],
+        'objects': ((value['objects'] as Array<any>).map(SuiCommandArgumentToJSON)),
+        'address': SuiCommandArgumentToJSON(value['address']),
     };
 }
 

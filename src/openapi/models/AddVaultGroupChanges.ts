@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { VaultRef } from './VaultRef';
 import {
     VaultRefFromJSON,
     VaultRefFromJSONTyped,
     VaultRefToJSON,
+    VaultRefToJSONTyped,
 } from './VaultRef';
 
 /**
@@ -65,14 +66,12 @@ export type AddVaultGroupChangesTypeEnum = typeof AddVaultGroupChangesTypeEnum[k
 /**
  * Check if a given object implements the AddVaultGroupChanges interface.
  */
-export function instanceOfAddVaultGroupChanges(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "changeRequestId" in value;
-    isInstance = isInstance && "addedVaults" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "newName" in value;
-
-    return isInstance;
+export function instanceOfAddVaultGroupChanges(value: object): value is AddVaultGroupChanges {
+    if (!('changeRequestId' in value) || value['changeRequestId'] === undefined) return false;
+    if (!('addedVaults' in value) || value['addedVaults'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('newName' in value) || value['newName'] === undefined) return false;
+    return true;
 }
 
 export function AddVaultGroupChangesFromJSON(json: any): AddVaultGroupChanges {
@@ -80,7 +79,7 @@ export function AddVaultGroupChangesFromJSON(json: any): AddVaultGroupChanges {
 }
 
 export function AddVaultGroupChangesFromJSONTyped(json: any, ignoreDiscriminator: boolean): AddVaultGroupChanges {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -92,19 +91,21 @@ export function AddVaultGroupChangesFromJSONTyped(json: any, ignoreDiscriminator
     };
 }
 
-export function AddVaultGroupChangesToJSON(value?: AddVaultGroupChanges | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AddVaultGroupChangesToJSON(json: any): AddVaultGroupChanges {
+    return AddVaultGroupChangesToJSONTyped(json, false);
+}
+
+export function AddVaultGroupChangesToJSONTyped(value?: AddVaultGroupChanges | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'change_request_id': value.changeRequestId,
-        'added_vaults': ((value.addedVaults as Array<any>).map(VaultRefToJSON)),
-        'type': value.type,
-        'new_name': value.newName,
+        'change_request_id': value['changeRequestId'],
+        'added_vaults': ((value['addedVaults'] as Array<any>).map(VaultRefToJSON)),
+        'type': value['type'],
+        'new_name': value['newName'],
     };
 }
 

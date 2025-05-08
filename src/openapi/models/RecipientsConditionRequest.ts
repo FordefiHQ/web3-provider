@@ -12,12 +12,27 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { VaultsConditionRequest } from './VaultsConditionRequest';
+import {
+    VaultsConditionRequestFromJSON,
+    VaultsConditionRequestFromJSONTyped,
+    VaultsConditionRequestToJSON,
+    VaultsConditionRequestToJSONTyped,
+} from './VaultsConditionRequest';
+import type { AddressBookConditionRequest } from './AddressBookConditionRequest';
+import {
+    AddressBookConditionRequestFromJSON,
+    AddressBookConditionRequestFromJSONTyped,
+    AddressBookConditionRequestToJSON,
+    AddressBookConditionRequestToJSONTyped,
+} from './AddressBookConditionRequest';
 import type { MultiChainAccount } from './MultiChainAccount';
 import {
     MultiChainAccountFromJSON,
     MultiChainAccountFromJSONTyped,
     MultiChainAccountToJSON,
+    MultiChainAccountToJSONTyped,
 } from './MultiChainAccount';
 
 /**
@@ -34,16 +49,10 @@ export interface RecipientsConditionRequest {
     addresses?: Array<MultiChainAccount>;
     /**
      * 
-     * @type {Array<string>}
+     * @type {VaultsConditionRequest}
      * @memberof RecipientsConditionRequest
      */
-    vaultIds?: Array<string>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof RecipientsConditionRequest
-     */
-    vaultGroupIds?: Array<string>;
+    vaults?: VaultsConditionRequest;
     /**
      * 
      * @type {Array<string>}
@@ -52,25 +61,17 @@ export interface RecipientsConditionRequest {
     dappIds?: Array<string>;
     /**
      * 
-     * @type {Array<string>}
+     * @type {AddressBookConditionRequest}
      * @memberof RecipientsConditionRequest
      */
-    addressBookContactIds?: Array<string>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof RecipientsConditionRequest
-     */
-    addressBookGroupIds?: Array<string>;
+    addressbookContacts?: AddressBookConditionRequest;
 }
 
 /**
  * Check if a given object implements the RecipientsConditionRequest interface.
  */
-export function instanceOfRecipientsConditionRequest(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfRecipientsConditionRequest(value: object): value is RecipientsConditionRequest {
+    return true;
 }
 
 export function RecipientsConditionRequestFromJSON(json: any): RecipientsConditionRequest {
@@ -78,35 +79,33 @@ export function RecipientsConditionRequestFromJSON(json: any): RecipientsConditi
 }
 
 export function RecipientsConditionRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): RecipientsConditionRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'addresses': !exists(json, 'addresses') ? undefined : ((json['addresses'] as Array<any>).map(MultiChainAccountFromJSON)),
-        'vaultIds': !exists(json, 'vault_ids') ? undefined : json['vault_ids'],
-        'vaultGroupIds': !exists(json, 'vault_group_ids') ? undefined : json['vault_group_ids'],
-        'dappIds': !exists(json, 'dapp_ids') ? undefined : json['dapp_ids'],
-        'addressBookContactIds': !exists(json, 'address_book_contact_ids') ? undefined : json['address_book_contact_ids'],
-        'addressBookGroupIds': !exists(json, 'address_book_group_ids') ? undefined : json['address_book_group_ids'],
+        'addresses': json['addresses'] == null ? undefined : ((json['addresses'] as Array<any>).map(MultiChainAccountFromJSON)),
+        'vaults': json['vaults'] == null ? undefined : VaultsConditionRequestFromJSON(json['vaults']),
+        'dappIds': json['dapp_ids'] == null ? undefined : json['dapp_ids'],
+        'addressbookContacts': json['addressbook_contacts'] == null ? undefined : AddressBookConditionRequestFromJSON(json['addressbook_contacts']),
     };
 }
 
-export function RecipientsConditionRequestToJSON(value?: RecipientsConditionRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function RecipientsConditionRequestToJSON(json: any): RecipientsConditionRequest {
+    return RecipientsConditionRequestToJSONTyped(json, false);
+}
+
+export function RecipientsConditionRequestToJSONTyped(value?: RecipientsConditionRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'addresses': value.addresses === undefined ? undefined : ((value.addresses as Array<any>).map(MultiChainAccountToJSON)),
-        'vault_ids': value.vaultIds,
-        'vault_group_ids': value.vaultGroupIds,
-        'dapp_ids': value.dappIds,
-        'address_book_contact_ids': value.addressBookContactIds,
-        'address_book_group_ids': value.addressBookGroupIds,
+        'addresses': value['addresses'] == null ? undefined : ((value['addresses'] as Array<any>).map(MultiChainAccountToJSON)),
+        'vaults': VaultsConditionRequestToJSON(value['vaults']),
+        'dapp_ids': value['dappIds'],
+        'addressbook_contacts': AddressBookConditionRequestToJSON(value['addressbookContacts']),
     };
 }
 

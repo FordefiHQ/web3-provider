@@ -23,6 +23,17 @@ export const SetDesiredKeyTypesErrorType = {
 export type SetDesiredKeyTypesErrorType = typeof SetDesiredKeyTypesErrorType[keyof typeof SetDesiredKeyTypesErrorType];
 
 
+export function instanceOfSetDesiredKeyTypesErrorType(value: any): boolean {
+    for (const key in SetDesiredKeyTypesErrorType) {
+        if (Object.prototype.hasOwnProperty.call(SetDesiredKeyTypesErrorType, key)) {
+            if (SetDesiredKeyTypesErrorType[key as keyof typeof SetDesiredKeyTypesErrorType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function SetDesiredKeyTypesErrorTypeFromJSON(json: any): SetDesiredKeyTypesErrorType {
     return SetDesiredKeyTypesErrorTypeFromJSONTyped(json, false);
 }
@@ -33,5 +44,9 @@ export function SetDesiredKeyTypesErrorTypeFromJSONTyped(json: any, ignoreDiscri
 
 export function SetDesiredKeyTypesErrorTypeToJSON(value?: SetDesiredKeyTypesErrorType | null): any {
     return value as any;
+}
+
+export function SetDesiredKeyTypesErrorTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): SetDesiredKeyTypesErrorType {
+    return value as SetDesiredKeyTypesErrorType;
 }
 

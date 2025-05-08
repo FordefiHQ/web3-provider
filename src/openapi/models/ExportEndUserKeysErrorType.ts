@@ -24,6 +24,17 @@ export const ExportEndUserKeysErrorType = {
 export type ExportEndUserKeysErrorType = typeof ExportEndUserKeysErrorType[keyof typeof ExportEndUserKeysErrorType];
 
 
+export function instanceOfExportEndUserKeysErrorType(value: any): boolean {
+    for (const key in ExportEndUserKeysErrorType) {
+        if (Object.prototype.hasOwnProperty.call(ExportEndUserKeysErrorType, key)) {
+            if (ExportEndUserKeysErrorType[key as keyof typeof ExportEndUserKeysErrorType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function ExportEndUserKeysErrorTypeFromJSON(json: any): ExportEndUserKeysErrorType {
     return ExportEndUserKeysErrorTypeFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function ExportEndUserKeysErrorTypeFromJSONTyped(json: any, ignoreDiscrim
 
 export function ExportEndUserKeysErrorTypeToJSON(value?: ExportEndUserKeysErrorType | null): any {
     return value as any;
+}
+
+export function ExportEndUserKeysErrorTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): ExportEndUserKeysErrorType {
+    return value as ExportEndUserKeysErrorType;
 }
 

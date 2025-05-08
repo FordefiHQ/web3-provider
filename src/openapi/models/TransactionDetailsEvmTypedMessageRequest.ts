@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EvmChainRequest } from './EvmChainRequest';
 import {
     EvmChainRequestFromJSON,
     EvmChainRequestFromJSONTyped,
     EvmChainRequestToJSON,
+    EvmChainRequestToJSONTyped,
 } from './EvmChainRequest';
 
 /**
@@ -59,13 +60,11 @@ export type TransactionDetailsEvmTypedMessageRequestTypeEnum = typeof Transactio
 /**
  * Check if a given object implements the TransactionDetailsEvmTypedMessageRequest interface.
  */
-export function instanceOfTransactionDetailsEvmTypedMessageRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "rawData" in value;
-
-    return isInstance;
+export function instanceOfTransactionDetailsEvmTypedMessageRequest(value: object): value is TransactionDetailsEvmTypedMessageRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('rawData' in value) || value['rawData'] === undefined) return false;
+    return true;
 }
 
 export function TransactionDetailsEvmTypedMessageRequestFromJSON(json: any): TransactionDetailsEvmTypedMessageRequest {
@@ -73,7 +72,7 @@ export function TransactionDetailsEvmTypedMessageRequestFromJSON(json: any): Tra
 }
 
 export function TransactionDetailsEvmTypedMessageRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): TransactionDetailsEvmTypedMessageRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -84,18 +83,20 @@ export function TransactionDetailsEvmTypedMessageRequestFromJSONTyped(json: any,
     };
 }
 
-export function TransactionDetailsEvmTypedMessageRequestToJSON(value?: TransactionDetailsEvmTypedMessageRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TransactionDetailsEvmTypedMessageRequestToJSON(json: any): TransactionDetailsEvmTypedMessageRequest {
+    return TransactionDetailsEvmTypedMessageRequestToJSONTyped(json, false);
+}
+
+export function TransactionDetailsEvmTypedMessageRequestToJSONTyped(value?: TransactionDetailsEvmTypedMessageRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'chain': EvmChainRequestToJSON(value.chain),
-        'raw_data': value.rawData,
+        'type': value['type'],
+        'chain': EvmChainRequestToJSON(value['chain']),
+        'raw_data': value['rawData'],
     };
 }
 

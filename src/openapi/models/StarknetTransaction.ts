@@ -12,85 +12,112 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { EnrichedStarknetAddress } from './EnrichedStarknetAddress';
-import {
-    EnrichedStarknetAddressFromJSON,
-    EnrichedStarknetAddressFromJSONTyped,
-    EnrichedStarknetAddressToJSON,
-} from './EnrichedStarknetAddress';
-import type { EnrichedStarknetChain } from './EnrichedStarknetChain';
-import {
-    EnrichedStarknetChainFromJSON,
-    EnrichedStarknetChainFromJSONTyped,
-    EnrichedStarknetChainToJSON,
-} from './EnrichedStarknetChain';
-import type { ManagedTransactionData } from './ManagedTransactionData';
-import {
-    ManagedTransactionDataFromJSON,
-    ManagedTransactionDataFromJSONTyped,
-    ManagedTransactionDataToJSON,
-} from './ManagedTransactionData';
+import { mapValues } from '../runtime';
 import type { PredictedStarknetTransactionStarknetTransactionTypeDetails } from './PredictedStarknetTransactionStarknetTransactionTypeDetails';
 import {
     PredictedStarknetTransactionStarknetTransactionTypeDetailsFromJSON,
     PredictedStarknetTransactionStarknetTransactionTypeDetailsFromJSONTyped,
     PredictedStarknetTransactionStarknetTransactionTypeDetailsToJSON,
+    PredictedStarknetTransactionStarknetTransactionTypeDetailsToJSONTyped,
 } from './PredictedStarknetTransactionStarknetTransactionTypeDetails';
+import type { ManagedTransactionData } from './ManagedTransactionData';
+import {
+    ManagedTransactionDataFromJSON,
+    ManagedTransactionDataFromJSONTyped,
+    ManagedTransactionDataToJSON,
+    ManagedTransactionDataToJSONTyped,
+} from './ManagedTransactionData';
+import type { EnrichedStarknetChain } from './EnrichedStarknetChain';
+import {
+    EnrichedStarknetChainFromJSON,
+    EnrichedStarknetChainFromJSONTyped,
+    EnrichedStarknetChainToJSON,
+    EnrichedStarknetChainToJSONTyped,
+} from './EnrichedStarknetChain';
+import type { PushableTransactionStateChange } from './PushableTransactionStateChange';
+import {
+    PushableTransactionStateChangeFromJSON,
+    PushableTransactionStateChangeFromJSONTyped,
+    PushableTransactionStateChangeToJSON,
+    PushableTransactionStateChangeToJSONTyped,
+} from './PushableTransactionStateChange';
+import type { StarknetBlock } from './StarknetBlock';
+import {
+    StarknetBlockFromJSON,
+    StarknetBlockFromJSONTyped,
+    StarknetBlockToJSON,
+    StarknetBlockToJSONTyped,
+} from './StarknetBlock';
+import type { PushableTransactionState } from './PushableTransactionState';
+import {
+    PushableTransactionStateFromJSON,
+    PushableTransactionStateFromJSONTyped,
+    PushableTransactionStateToJSON,
+    PushableTransactionStateToJSONTyped,
+} from './PushableTransactionState';
+import type { StarknetTransactionResult } from './StarknetTransactionResult';
+import {
+    StarknetTransactionResultFromJSON,
+    StarknetTransactionResultFromJSONTyped,
+    StarknetTransactionResultToJSON,
+    StarknetTransactionResultToJSONTyped,
+} from './StarknetTransactionResult';
+import type { AmlPolicyMatchIncoming } from './AmlPolicyMatchIncoming';
+import {
+    AmlPolicyMatchIncomingFromJSON,
+    AmlPolicyMatchIncomingFromJSONTyped,
+    AmlPolicyMatchIncomingToJSON,
+    AmlPolicyMatchIncomingToJSONTyped,
+} from './AmlPolicyMatchIncoming';
+import type { StarknetCallData } from './StarknetCallData';
+import {
+    StarknetCallDataFromJSON,
+    StarknetCallDataFromJSONTyped,
+    StarknetCallDataToJSON,
+    StarknetCallDataToJSONTyped,
+} from './StarknetCallData';
+import type { TransactionSpamState } from './TransactionSpamState';
+import {
+    TransactionSpamStateFromJSON,
+    TransactionSpamStateFromJSONTyped,
+    TransactionSpamStateToJSON,
+    TransactionSpamStateToJSONTyped,
+} from './TransactionSpamState';
+import type { TransactionDirection } from './TransactionDirection';
+import {
+    TransactionDirectionFromJSON,
+    TransactionDirectionFromJSONTyped,
+    TransactionDirectionToJSON,
+    TransactionDirectionToJSONTyped,
+} from './TransactionDirection';
+import type { EnrichedStarknetAddress } from './EnrichedStarknetAddress';
+import {
+    EnrichedStarknetAddressFromJSON,
+    EnrichedStarknetAddressFromJSONTyped,
+    EnrichedStarknetAddressToJSON,
+    EnrichedStarknetAddressToJSONTyped,
+} from './EnrichedStarknetAddress';
 import type { Signature } from './Signature';
 import {
     SignatureFromJSON,
     SignatureFromJSONTyped,
     SignatureToJSON,
+    SignatureToJSONTyped,
 } from './Signature';
 import type { SimulationStatusResult } from './SimulationStatusResult';
 import {
     SimulationStatusResultFromJSON,
     SimulationStatusResultFromJSONTyped,
     SimulationStatusResultToJSON,
+    SimulationStatusResultToJSONTyped,
 } from './SimulationStatusResult';
-import type { StarknetBlock } from './StarknetBlock';
+import type { AmlResults } from './AmlResults';
 import {
-    StarknetBlockFromJSON,
-    StarknetBlockFromJSONTyped,
-    StarknetBlockToJSON,
-} from './StarknetBlock';
-import type { StarknetCallData } from './StarknetCallData';
-import {
-    StarknetCallDataFromJSON,
-    StarknetCallDataFromJSONTyped,
-    StarknetCallDataToJSON,
-} from './StarknetCallData';
-import type { StarknetTransactionResult } from './StarknetTransactionResult';
-import {
-    StarknetTransactionResultFromJSON,
-    StarknetTransactionResultFromJSONTyped,
-    StarknetTransactionResultToJSON,
-} from './StarknetTransactionResult';
-import type { StarknetTransactionState } from './StarknetTransactionState';
-import {
-    StarknetTransactionStateFromJSON,
-    StarknetTransactionStateFromJSONTyped,
-    StarknetTransactionStateToJSON,
-} from './StarknetTransactionState';
-import type { StarknetTransactionStateChange } from './StarknetTransactionStateChange';
-import {
-    StarknetTransactionStateChangeFromJSON,
-    StarknetTransactionStateChangeFromJSONTyped,
-    StarknetTransactionStateChangeToJSON,
-} from './StarknetTransactionStateChange';
-import type { TransactionDirection } from './TransactionDirection';
-import {
-    TransactionDirectionFromJSON,
-    TransactionDirectionFromJSONTyped,
-    TransactionDirectionToJSON,
-} from './TransactionDirection';
-import type { TransactionSpamState } from './TransactionSpamState';
-import {
-    TransactionSpamStateFromJSON,
-    TransactionSpamStateFromJSONTyped,
-    TransactionSpamStateToJSON,
-} from './TransactionSpamState';
+    AmlResultsFromJSON,
+    AmlResultsFromJSONTyped,
+    AmlResultsToJSON,
+    AmlResultsToJSONTyped,
+} from './AmlResults';
 
 /**
  * 
@@ -148,6 +175,36 @@ export interface StarknetTransaction {
     direction: TransactionDirection;
     /**
      * 
+     * @type {boolean}
+     * @memberof StarknetTransaction
+     */
+    signedExternally?: boolean;
+    /**
+     * 
+     * @type {PushableTransactionState}
+     * @memberof StarknetTransaction
+     */
+    state: PushableTransactionState;
+    /**
+     * 
+     * @type {Array<PushableTransactionStateChange>}
+     * @memberof StarknetTransaction
+     */
+    stateChanges: Array<PushableTransactionStateChange>;
+    /**
+     * 
+     * @type {AmlResults}
+     * @memberof StarknetTransaction
+     */
+    amlResults?: AmlResults;
+    /**
+     * 
+     * @type {AmlPolicyMatchIncoming}
+     * @memberof StarknetTransaction
+     */
+    incomingAmlPolicyMatch?: AmlPolicyMatchIncoming;
+    /**
+     * 
      * @type {string}
      * @memberof StarknetTransaction
      */
@@ -170,18 +227,6 @@ export interface StarknetTransaction {
      * @memberof StarknetTransaction
      */
     chain: EnrichedStarknetChain;
-    /**
-     * 
-     * @type {StarknetTransactionState}
-     * @memberof StarknetTransaction
-     */
-    state: StarknetTransactionState;
-    /**
-     * 
-     * @type {Array<StarknetTransactionStateChange>}
-     * @memberof StarknetTransaction
-     */
-    stateChanges: Array<StarknetTransactionStateChange>;
     /**
      * 
      * @type {number}
@@ -235,13 +280,13 @@ export interface StarknetTransaction {
      * @type {string}
      * @memberof StarknetTransaction
      */
-    l1GasMaxAmount: string;
+    l1GasMaxAmount?: string;
     /**
      * 
      * @type {string}
      * @memberof StarknetTransaction
      */
-    l1GasMaxPricePerUnit: string;
+    l1GasMaxPricePerUnit?: string;
 }
 
 
@@ -257,24 +302,20 @@ export type StarknetTransactionTypeEnum = typeof StarknetTransactionTypeEnum[key
 /**
  * Check if a given object implements the StarknetTransaction interface.
  */
-export function instanceOfStarknetTransaction(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "signatures" in value;
-    isInstance = isInstance && "direction" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "starknetTransactionTypeDetails" in value;
-    isInstance = isInstance && "callData" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "stateChanges" in value;
-    isInstance = isInstance && "sender" in value;
-    isInstance = isInstance && "l1GasMaxAmount" in value;
-    isInstance = isInstance && "l1GasMaxPricePerUnit" in value;
-
-    return isInstance;
+export function instanceOfStarknetTransaction(value: object): value is StarknetTransaction {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('signatures' in value) || value['signatures'] === undefined) return false;
+    if (!('direction' in value) || value['direction'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('stateChanges' in value) || value['stateChanges'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('starknetTransactionTypeDetails' in value) || value['starknetTransactionTypeDetails'] === undefined) return false;
+    if (!('callData' in value) || value['callData'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    return true;
 }
 
 export function StarknetTransactionFromJSON(json: any): StarknetTransaction {
@@ -282,7 +323,7 @@ export function StarknetTransactionFromJSON(json: any): StarknetTransaction {
 }
 
 export function StarknetTransactionFromJSONTyped(json: any, ignoreDiscriminator: boolean): StarknetTransaction {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -290,63 +331,71 @@ export function StarknetTransactionFromJSONTyped(json: any, ignoreDiscriminator:
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
-        'managedTransactionData': !exists(json, 'managed_transaction_data') ? undefined : ManagedTransactionDataFromJSON(json['managed_transaction_data']),
+        'managedTransactionData': json['managed_transaction_data'] == null ? undefined : ManagedTransactionDataFromJSON(json['managed_transaction_data']),
         'signatures': ((json['signatures'] as Array<any>).map(SignatureFromJSON)),
-        'note': !exists(json, 'note') ? undefined : json['note'],
-        'spamState': !exists(json, 'spam_state') ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
+        'note': json['note'] == null ? undefined : json['note'],
+        'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
+        'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'state': PushableTransactionStateFromJSON(json['state']),
+        'stateChanges': ((json['state_changes'] as Array<any>).map(PushableTransactionStateChangeFromJSON)),
+        'amlResults': json['aml_results'] == null ? undefined : AmlResultsFromJSON(json['aml_results']),
+        'incomingAmlPolicyMatch': json['incoming_aml_policy_match'] == null ? undefined : AmlPolicyMatchIncomingFromJSON(json['incoming_aml_policy_match']),
         'type': json['type'],
         'starknetTransactionTypeDetails': PredictedStarknetTransactionStarknetTransactionTypeDetailsFromJSON(json['starknet_transaction_type_details']),
         'callData': ((json['call_data'] as Array<any>).map(StarknetCallDataFromJSON)),
         'chain': EnrichedStarknetChainFromJSON(json['chain']),
-        'state': StarknetTransactionStateFromJSON(json['state']),
-        'stateChanges': ((json['state_changes'] as Array<any>).map(StarknetTransactionStateChangeFromJSON)),
-        'nonce': !exists(json, 'nonce') ? undefined : json['nonce'],
+        'nonce': json['nonce'] == null ? undefined : json['nonce'],
         'sender': EnrichedStarknetAddressFromJSON(json['sender']),
-        'hash': !exists(json, 'hash') ? undefined : json['hash'],
-        'block': !exists(json, 'block') ? undefined : StarknetBlockFromJSON(json['block']),
-        'expectedResult': !exists(json, 'expected_result') ? undefined : StarknetTransactionResultFromJSON(json['expected_result']),
-        'simulationStatusResult': !exists(json, 'simulation_status_result') ? undefined : SimulationStatusResultFromJSON(json['simulation_status_result']),
-        'minedResult': !exists(json, 'mined_result') ? undefined : StarknetTransactionResultFromJSON(json['mined_result']),
-        'explorerUrl': !exists(json, 'explorer_url') ? undefined : json['explorer_url'],
-        'l1GasMaxAmount': json['l1_gas_max_amount'],
-        'l1GasMaxPricePerUnit': json['l1_gas_max_price_per_unit'],
+        'hash': json['hash'] == null ? undefined : json['hash'],
+        'block': json['block'] == null ? undefined : StarknetBlockFromJSON(json['block']),
+        'expectedResult': json['expected_result'] == null ? undefined : StarknetTransactionResultFromJSON(json['expected_result']),
+        'simulationStatusResult': json['simulation_status_result'] == null ? undefined : SimulationStatusResultFromJSON(json['simulation_status_result']),
+        'minedResult': json['mined_result'] == null ? undefined : StarknetTransactionResultFromJSON(json['mined_result']),
+        'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
+        'l1GasMaxAmount': json['l1_gas_max_amount'] == null ? undefined : json['l1_gas_max_amount'],
+        'l1GasMaxPricePerUnit': json['l1_gas_max_price_per_unit'] == null ? undefined : json['l1_gas_max_price_per_unit'],
     };
 }
 
-export function StarknetTransactionToJSON(value?: StarknetTransaction | null): any {
-    if (value === undefined) {
-        return undefined;
+export function StarknetTransactionToJSON(json: any): StarknetTransaction {
+    return StarknetTransactionToJSONTyped(json, false);
+}
+
+export function StarknetTransactionToJSONTyped(value?: StarknetTransaction | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'managed_transaction_data': ManagedTransactionDataToJSON(value.managedTransactionData),
-        'signatures': ((value.signatures as Array<any>).map(SignatureToJSON)),
-        'note': value.note,
-        'spam_state': TransactionSpamStateToJSON(value.spamState),
-        'direction': TransactionDirectionToJSON(value.direction),
-        'type': value.type,
-        'starknet_transaction_type_details': PredictedStarknetTransactionStarknetTransactionTypeDetailsToJSON(value.starknetTransactionTypeDetails),
-        'call_data': ((value.callData as Array<any>).map(StarknetCallDataToJSON)),
-        'chain': EnrichedStarknetChainToJSON(value.chain),
-        'state': StarknetTransactionStateToJSON(value.state),
-        'state_changes': ((value.stateChanges as Array<any>).map(StarknetTransactionStateChangeToJSON)),
-        'nonce': value.nonce,
-        'sender': EnrichedStarknetAddressToJSON(value.sender),
-        'hash': value.hash,
-        'block': StarknetBlockToJSON(value.block),
-        'expected_result': StarknetTransactionResultToJSON(value.expectedResult),
-        'simulation_status_result': SimulationStatusResultToJSON(value.simulationStatusResult),
-        'mined_result': StarknetTransactionResultToJSON(value.minedResult),
-        'explorer_url': value.explorerUrl,
-        'l1_gas_max_amount': value.l1GasMaxAmount,
-        'l1_gas_max_price_per_unit': value.l1GasMaxPricePerUnit,
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'managed_transaction_data': ManagedTransactionDataToJSON(value['managedTransactionData']),
+        'signatures': ((value['signatures'] as Array<any>).map(SignatureToJSON)),
+        'note': value['note'],
+        'spam_state': TransactionSpamStateToJSON(value['spamState']),
+        'direction': TransactionDirectionToJSON(value['direction']),
+        'signed_externally': value['signedExternally'],
+        'state': PushableTransactionStateToJSON(value['state']),
+        'state_changes': ((value['stateChanges'] as Array<any>).map(PushableTransactionStateChangeToJSON)),
+        'aml_results': AmlResultsToJSON(value['amlResults']),
+        'incoming_aml_policy_match': AmlPolicyMatchIncomingToJSON(value['incomingAmlPolicyMatch']),
+        'type': value['type'],
+        'starknet_transaction_type_details': PredictedStarknetTransactionStarknetTransactionTypeDetailsToJSON(value['starknetTransactionTypeDetails']),
+        'call_data': ((value['callData'] as Array<any>).map(StarknetCallDataToJSON)),
+        'chain': EnrichedStarknetChainToJSON(value['chain']),
+        'nonce': value['nonce'],
+        'sender': EnrichedStarknetAddressToJSON(value['sender']),
+        'hash': value['hash'],
+        'block': StarknetBlockToJSON(value['block']),
+        'expected_result': StarknetTransactionResultToJSON(value['expectedResult']),
+        'simulation_status_result': SimulationStatusResultToJSON(value['simulationStatusResult']),
+        'mined_result': StarknetTransactionResultToJSON(value['minedResult']),
+        'explorer_url': value['explorerUrl'],
+        'l1_gas_max_amount': value['l1GasMaxAmount'],
+        'l1_gas_max_price_per_unit': value['l1GasMaxPricePerUnit'],
     };
 }
 

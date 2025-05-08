@@ -27,6 +27,17 @@ export const SubmitChangeProposalErrorType = {
 export type SubmitChangeProposalErrorType = typeof SubmitChangeProposalErrorType[keyof typeof SubmitChangeProposalErrorType];
 
 
+export function instanceOfSubmitChangeProposalErrorType(value: any): boolean {
+    for (const key in SubmitChangeProposalErrorType) {
+        if (Object.prototype.hasOwnProperty.call(SubmitChangeProposalErrorType, key)) {
+            if (SubmitChangeProposalErrorType[key as keyof typeof SubmitChangeProposalErrorType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function SubmitChangeProposalErrorTypeFromJSON(json: any): SubmitChangeProposalErrorType {
     return SubmitChangeProposalErrorTypeFromJSONTyped(json, false);
 }
@@ -37,5 +48,9 @@ export function SubmitChangeProposalErrorTypeFromJSONTyped(json: any, ignoreDisc
 
 export function SubmitChangeProposalErrorTypeToJSON(value?: SubmitChangeProposalErrorType | null): any {
     return value as any;
+}
+
+export function SubmitChangeProposalErrorTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): SubmitChangeProposalErrorType {
+    return value as SubmitChangeProposalErrorType;
 }
 

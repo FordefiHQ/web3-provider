@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { MultiChainAccount } from './MultiChainAccount';
 import {
     MultiChainAccountFromJSON,
     MultiChainAccountFromJSONTyped,
     MultiChainAccountToJSON,
+    MultiChainAccountToJSONTyped,
 } from './MultiChainAccount';
 
 /**
@@ -43,11 +44,9 @@ export interface TriggerAutoProtectionRequest {
 /**
  * Check if a given object implements the TriggerAutoProtectionRequest interface.
  */
-export function instanceOfTriggerAutoProtectionRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "account" in value;
-
-    return isInstance;
+export function instanceOfTriggerAutoProtectionRequest(value: object): value is TriggerAutoProtectionRequest {
+    if (!('account' in value) || value['account'] === undefined) return false;
+    return true;
 }
 
 export function TriggerAutoProtectionRequestFromJSON(json: any): TriggerAutoProtectionRequest {
@@ -55,27 +54,29 @@ export function TriggerAutoProtectionRequestFromJSON(json: any): TriggerAutoProt
 }
 
 export function TriggerAutoProtectionRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): TriggerAutoProtectionRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'account': MultiChainAccountFromJSON(json['account']),
-        'note': !exists(json, 'note') ? undefined : json['note'],
+        'note': json['note'] == null ? undefined : json['note'],
     };
 }
 
-export function TriggerAutoProtectionRequestToJSON(value?: TriggerAutoProtectionRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TriggerAutoProtectionRequestToJSON(json: any): TriggerAutoProtectionRequest {
+    return TriggerAutoProtectionRequestToJSONTyped(json, false);
+}
+
+export function TriggerAutoProtectionRequestToJSONTyped(value?: TriggerAutoProtectionRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'account': MultiChainAccountToJSON(value.account),
-        'note': value.note,
+        'account': MultiChainAccountToJSON(value['account']),
+        'note': value['note'],
     };
 }
 

@@ -12,69 +12,81 @@
  * Do not edit the class manually.
  */
 
+import type { ApiSigner } from './ApiSigner';
 import {
-    ApiSigner,
     instanceOfApiSigner,
     ApiSignerFromJSON,
     ApiSignerFromJSONTyped,
     ApiSignerToJSON,
 } from './ApiSigner';
+import type { ApiUser } from './ApiUser';
 import {
-    ApiUser,
     instanceOfApiUser,
     ApiUserFromJSON,
     ApiUserFromJSONTyped,
     ApiUserToJSON,
 } from './ApiUser';
+import type { Person } from './Person';
 import {
-    Person,
     instanceOfPerson,
     PersonFromJSON,
     PersonFromJSONTyped,
     PersonToJSON,
 } from './Person';
+import type { SystemUser } from './SystemUser';
+import {
+    instanceOfSystemUser,
+    SystemUserFromJSON,
+    SystemUserFromJSONTyped,
+    SystemUserToJSON,
+} from './SystemUser';
 
 /**
  * @type GetUserResponse
  * 
  * @export
  */
-export type GetUserResponse = { userType: 'api_signer' } & ApiSigner | { userType: 'api_user' } & ApiUser | { userType: 'person' } & Person;
+export type GetUserResponse = { userType: 'api_signer' } & ApiSigner | { userType: 'api_user' } & ApiUser | { userType: 'person' } & Person | { userType: 'system' } & SystemUser;
 
 export function GetUserResponseFromJSON(json: any): GetUserResponse {
     return GetUserResponseFromJSONTyped(json, false);
 }
 
 export function GetUserResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetUserResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['user_type']) {
         case 'api_signer':
-            return {...ApiSignerFromJSONTyped(json, true), userType: 'api_signer'};
+            return Object.assign({}, ApiSignerFromJSONTyped(json, true), { userType: 'api_signer' } as const);
         case 'api_user':
-            return {...ApiUserFromJSONTyped(json, true), userType: 'api_user'};
+            return Object.assign({}, ApiUserFromJSONTyped(json, true), { userType: 'api_user' } as const);
         case 'person':
-            return {...PersonFromJSONTyped(json, true), userType: 'person'};
+            return Object.assign({}, PersonFromJSONTyped(json, true), { userType: 'person' } as const);
+        case 'system':
+            return Object.assign({}, SystemUserFromJSONTyped(json, true), { userType: 'system' } as const);
         default:
             throw new Error(`No variant of GetUserResponse exists with 'userType=${json['userType']}'`);
     }
 }
 
-export function GetUserResponseToJSON(value?: GetUserResponse | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function GetUserResponseToJSON(json: any): any {
+    return GetUserResponseToJSONTyped(json, false);
+}
+
+export function GetUserResponseToJSONTyped(value?: GetUserResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['userType']) {
         case 'api_signer':
-            return ApiSignerToJSON(value);
+            return Object.assign({}, ApiSignerToJSON(value), { userType: 'api_signer' } as const);
         case 'api_user':
-            return ApiUserToJSON(value);
+            return Object.assign({}, ApiUserToJSON(value), { userType: 'api_user' } as const);
         case 'person':
-            return PersonToJSON(value);
+            return Object.assign({}, PersonToJSON(value), { userType: 'person' } as const);
+        case 'system':
+            return Object.assign({}, SystemUserToJSON(value), { userType: 'system' } as const);
         default:
             throw new Error(`No variant of GetUserResponse exists with 'userType=${value['userType']}'`);
     }

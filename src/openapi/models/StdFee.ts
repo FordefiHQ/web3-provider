@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { CosmosCoinWithAmount } from './CosmosCoinWithAmount';
 import {
     CosmosCoinWithAmountFromJSON,
     CosmosCoinWithAmountFromJSONTyped,
     CosmosCoinWithAmountToJSON,
+    CosmosCoinWithAmountToJSONTyped,
 } from './CosmosCoinWithAmount';
 import type { EnrichedCosmosBechAddress } from './EnrichedCosmosBechAddress';
 import {
     EnrichedCosmosBechAddressFromJSON,
     EnrichedCosmosBechAddressFromJSONTyped,
     EnrichedCosmosBechAddressToJSON,
+    EnrichedCosmosBechAddressToJSONTyped,
 } from './EnrichedCosmosBechAddress';
 
 /**
@@ -67,12 +69,10 @@ export interface StdFee {
 /**
  * Check if a given object implements the StdFee interface.
  */
-export function instanceOfStdFee(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "coins" in value;
-    isInstance = isInstance && "gas" in value;
-
-    return isInstance;
+export function instanceOfStdFee(value: object): value is StdFee {
+    if (!('coins' in value) || value['coins'] === undefined) return false;
+    if (!('gas' in value) || value['gas'] === undefined) return false;
+    return true;
 }
 
 export function StdFeeFromJSON(json: any): StdFee {
@@ -80,33 +80,35 @@ export function StdFeeFromJSON(json: any): StdFee {
 }
 
 export function StdFeeFromJSONTyped(json: any, ignoreDiscriminator: boolean): StdFee {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'coins': ((json['coins'] as Array<any>).map(CosmosCoinWithAmountFromJSON)),
         'gas': json['gas'],
-        'payer': !exists(json, 'payer') ? undefined : EnrichedCosmosBechAddressFromJSON(json['payer']),
-        'granter': !exists(json, 'granter') ? undefined : EnrichedCosmosBechAddressFromJSON(json['granter']),
-        'feePayer': !exists(json, 'fee_payer') ? undefined : EnrichedCosmosBechAddressFromJSON(json['fee_payer']),
+        'payer': json['payer'] == null ? undefined : EnrichedCosmosBechAddressFromJSON(json['payer']),
+        'granter': json['granter'] == null ? undefined : EnrichedCosmosBechAddressFromJSON(json['granter']),
+        'feePayer': json['fee_payer'] == null ? undefined : EnrichedCosmosBechAddressFromJSON(json['fee_payer']),
     };
 }
 
-export function StdFeeToJSON(value?: StdFee | null): any {
-    if (value === undefined) {
-        return undefined;
+export function StdFeeToJSON(json: any): StdFee {
+    return StdFeeToJSONTyped(json, false);
+}
+
+export function StdFeeToJSONTyped(value?: StdFee | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'coins': ((value.coins as Array<any>).map(CosmosCoinWithAmountToJSON)),
-        'gas': value.gas,
-        'payer': EnrichedCosmosBechAddressToJSON(value.payer),
-        'granter': EnrichedCosmosBechAddressToJSON(value.granter),
-        'fee_payer': EnrichedCosmosBechAddressToJSON(value.feePayer),
+        'coins': ((value['coins'] as Array<any>).map(CosmosCoinWithAmountToJSON)),
+        'gas': value['gas'],
+        'payer': EnrichedCosmosBechAddressToJSON(value['payer']),
+        'granter': EnrichedCosmosBechAddressToJSON(value['granter']),
+        'fee_payer': EnrichedCosmosBechAddressToJSON(value['feePayer']),
     };
 }
 

@@ -23,6 +23,17 @@ export const AmountLimitCurrencyCondition = {
 export type AmountLimitCurrencyCondition = typeof AmountLimitCurrencyCondition[keyof typeof AmountLimitCurrencyCondition];
 
 
+export function instanceOfAmountLimitCurrencyCondition(value: any): boolean {
+    for (const key in AmountLimitCurrencyCondition) {
+        if (Object.prototype.hasOwnProperty.call(AmountLimitCurrencyCondition, key)) {
+            if (AmountLimitCurrencyCondition[key as keyof typeof AmountLimitCurrencyCondition] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function AmountLimitCurrencyConditionFromJSON(json: any): AmountLimitCurrencyCondition {
     return AmountLimitCurrencyConditionFromJSONTyped(json, false);
 }
@@ -33,5 +44,9 @@ export function AmountLimitCurrencyConditionFromJSONTyped(json: any, ignoreDiscr
 
 export function AmountLimitCurrencyConditionToJSON(value?: AmountLimitCurrencyCondition | null): any {
     return value as any;
+}
+
+export function AmountLimitCurrencyConditionToJSONTyped(value: any, ignoreDiscriminator: boolean): AmountLimitCurrencyCondition {
+    return value as AmountLimitCurrencyCondition;
 }
 

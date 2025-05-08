@@ -12,19 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { FeePriorityLevel } from './FeePriorityLevel';
+import { mapValues } from '../runtime';
+import type { PricedAsset } from './PricedAsset';
 import {
-    FeePriorityLevelFromJSON,
-    FeePriorityLevelFromJSONTyped,
-    FeePriorityLevelToJSON,
-} from './FeePriorityLevel';
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+    PricedAssetToJSONTyped,
+} from './PricedAsset';
 import type { Price } from './Price';
 import {
     PriceFromJSON,
     PriceFromJSONTyped,
     PriceToJSON,
+    PriceToJSONTyped,
 } from './Price';
+import type { FeePriorityLevel } from './FeePriorityLevel';
+import {
+    FeePriorityLevelFromJSON,
+    FeePriorityLevelFromJSONTyped,
+    FeePriorityLevelToJSON,
+    FeePriorityLevelToJSONTyped,
+} from './FeePriorityLevel';
 
 /**
  * 
@@ -49,6 +58,12 @@ export interface UtxoFees {
      * @type {string}
      * @memberof UtxoFees
      */
+    transactionByteSize: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UtxoFees
+     */
     totalFee: string;
     /**
      * 
@@ -56,18 +71,26 @@ export interface UtxoFees {
      * @memberof UtxoFees
      */
     fiatPrice?: Price;
+    /**
+     * 
+     * @type {PricedAsset}
+     * @memberof UtxoFees
+     */
+    pricedAsset: PricedAsset;
 }
+
+
 
 /**
  * Check if a given object implements the UtxoFees interface.
  */
-export function instanceOfUtxoFees(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "priority" in value;
-    isInstance = isInstance && "feePerByte" in value;
-    isInstance = isInstance && "totalFee" in value;
-
-    return isInstance;
+export function instanceOfUtxoFees(value: object): value is UtxoFees {
+    if (!('priority' in value) || value['priority'] === undefined) return false;
+    if (!('feePerByte' in value) || value['feePerByte'] === undefined) return false;
+    if (!('transactionByteSize' in value) || value['transactionByteSize'] === undefined) return false;
+    if (!('totalFee' in value) || value['totalFee'] === undefined) return false;
+    if (!('pricedAsset' in value) || value['pricedAsset'] === undefined) return false;
+    return true;
 }
 
 export function UtxoFeesFromJSON(json: any): UtxoFees {
@@ -75,31 +98,37 @@ export function UtxoFeesFromJSON(json: any): UtxoFees {
 }
 
 export function UtxoFeesFromJSONTyped(json: any, ignoreDiscriminator: boolean): UtxoFees {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'priority': FeePriorityLevelFromJSON(json['priority']),
         'feePerByte': json['fee_per_byte'],
+        'transactionByteSize': json['transaction_byte_size'],
         'totalFee': json['total_fee'],
-        'fiatPrice': !exists(json, 'fiat_price') ? undefined : PriceFromJSON(json['fiat_price']),
+        'fiatPrice': json['fiat_price'] == null ? undefined : PriceFromJSON(json['fiat_price']),
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }
 
-export function UtxoFeesToJSON(value?: UtxoFees | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UtxoFeesToJSON(json: any): UtxoFees {
+    return UtxoFeesToJSONTyped(json, false);
+}
+
+export function UtxoFeesToJSONTyped(value?: UtxoFees | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'priority': FeePriorityLevelToJSON(value.priority),
-        'fee_per_byte': value.feePerByte,
-        'total_fee': value.totalFee,
-        'fiat_price': PriceToJSON(value.fiatPrice),
+        'priority': FeePriorityLevelToJSON(value['priority']),
+        'fee_per_byte': value['feePerByte'],
+        'transaction_byte_size': value['transactionByteSize'],
+        'total_fee': value['totalFee'],
+        'fiat_price': PriceToJSON(value['fiatPrice']),
+        'priced_asset': PricedAssetToJSON(value['pricedAsset']),
     };
 }
 

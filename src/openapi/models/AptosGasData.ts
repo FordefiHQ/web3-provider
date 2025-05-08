@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AptosGasPrice } from './AptosGasPrice';
 import {
     AptosGasPriceFromJSON,
     AptosGasPriceFromJSONTyped,
     AptosGasPriceToJSON,
+    AptosGasPriceToJSONTyped,
 } from './AptosGasPrice';
 
 /**
@@ -43,12 +44,10 @@ export interface AptosGasData {
 /**
  * Check if a given object implements the AptosGasData interface.
  */
-export function instanceOfAptosGasData(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "gasLimit" in value;
-    isInstance = isInstance && "price" in value;
-
-    return isInstance;
+export function instanceOfAptosGasData(value: object): value is AptosGasData {
+    if (!('gasLimit' in value) || value['gasLimit'] === undefined) return false;
+    if (!('price' in value) || value['price'] === undefined) return false;
+    return true;
 }
 
 export function AptosGasDataFromJSON(json: any): AptosGasData {
@@ -56,7 +55,7 @@ export function AptosGasDataFromJSON(json: any): AptosGasData {
 }
 
 export function AptosGasDataFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosGasData {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -66,17 +65,19 @@ export function AptosGasDataFromJSONTyped(json: any, ignoreDiscriminator: boolea
     };
 }
 
-export function AptosGasDataToJSON(value?: AptosGasData | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AptosGasDataToJSON(json: any): AptosGasData {
+    return AptosGasDataToJSONTyped(json, false);
+}
+
+export function AptosGasDataToJSONTyped(value?: AptosGasData | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'gas_limit': value.gasLimit,
-        'price': AptosGasPriceToJSON(value.price),
+        'gas_limit': value['gasLimit'],
+        'price': AptosGasPriceToJSON(value['price']),
     };
 }
 

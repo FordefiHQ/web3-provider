@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EvmChain } from './EvmChain';
 import {
     EvmChainFromJSON,
     EvmChainFromJSONTyped,
     EvmChainToJSON,
+    EvmChainToJSONTyped,
 } from './EvmChain';
 
 /**
@@ -59,13 +60,11 @@ export type EVMAddressBookContactAddressRefChainTypeEnum = typeof EVMAddressBook
 /**
  * Check if a given object implements the EVMAddressBookContactAddressRef interface.
  */
-export function instanceOfEVMAddressBookContactAddressRef(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chainType" in value;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "chains" in value;
-
-    return isInstance;
+export function instanceOfEVMAddressBookContactAddressRef(value: object): value is EVMAddressBookContactAddressRef {
+    if (!('chainType' in value) || value['chainType'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('chains' in value) || value['chains'] === undefined) return false;
+    return true;
 }
 
 export function EVMAddressBookContactAddressRefFromJSON(json: any): EVMAddressBookContactAddressRef {
@@ -73,7 +72,7 @@ export function EVMAddressBookContactAddressRefFromJSON(json: any): EVMAddressBo
 }
 
 export function EVMAddressBookContactAddressRefFromJSONTyped(json: any, ignoreDiscriminator: boolean): EVMAddressBookContactAddressRef {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -84,18 +83,20 @@ export function EVMAddressBookContactAddressRefFromJSONTyped(json: any, ignoreDi
     };
 }
 
-export function EVMAddressBookContactAddressRefToJSON(value?: EVMAddressBookContactAddressRef | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EVMAddressBookContactAddressRefToJSON(json: any): EVMAddressBookContactAddressRef {
+    return EVMAddressBookContactAddressRefToJSONTyped(json, false);
+}
+
+export function EVMAddressBookContactAddressRefToJSONTyped(value?: EVMAddressBookContactAddressRef | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain_type': value.chainType,
-        'address': value.address,
-        'chains': ((value.chains as Array<any>).map(EvmChainToJSON)),
+        'chain_type': value['chainType'],
+        'address': value['address'],
+        'chains': ((value['chains'] as Array<any>).map(EvmChainToJSON)),
     };
 }
 

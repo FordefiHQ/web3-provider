@@ -12,22 +12,22 @@
  * Do not edit the class manually.
  */
 
+import type { RuleActionAllow } from './RuleActionAllow';
 import {
-    RuleActionAllow,
     instanceOfRuleActionAllow,
     RuleActionAllowFromJSON,
     RuleActionAllowFromJSONTyped,
     RuleActionAllowToJSON,
 } from './RuleActionAllow';
+import type { RuleActionBlock } from './RuleActionBlock';
 import {
-    RuleActionBlock,
     instanceOfRuleActionBlock,
     RuleActionBlockFromJSON,
     RuleActionBlockFromJSONTyped,
     RuleActionBlockToJSON,
 } from './RuleActionBlock';
+import type { RuleActionRequireApproval } from './RuleActionRequireApproval';
 import {
-    RuleActionRequireApproval,
     instanceOfRuleActionRequireApproval,
     RuleActionRequireApprovalFromJSON,
     RuleActionRequireApprovalFromJSONTyped,
@@ -46,35 +46,36 @@ export function RuleActionFromJSON(json: any): RuleAction {
 }
 
 export function RuleActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): RuleAction {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'allow':
-            return {...RuleActionAllowFromJSONTyped(json, true), type: 'allow'};
+            return Object.assign({}, RuleActionAllowFromJSONTyped(json, true), { type: 'allow' } as const);
         case 'block':
-            return {...RuleActionBlockFromJSONTyped(json, true), type: 'block'};
+            return Object.assign({}, RuleActionBlockFromJSONTyped(json, true), { type: 'block' } as const);
         case 'require_approval':
-            return {...RuleActionRequireApprovalFromJSONTyped(json, true), type: 'require_approval'};
+            return Object.assign({}, RuleActionRequireApprovalFromJSONTyped(json, true), { type: 'require_approval' } as const);
         default:
             throw new Error(`No variant of RuleAction exists with 'type=${json['type']}'`);
     }
 }
 
-export function RuleActionToJSON(value?: RuleAction | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function RuleActionToJSON(json: any): any {
+    return RuleActionToJSONTyped(json, false);
+}
+
+export function RuleActionToJSONTyped(value?: RuleAction | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'allow':
-            return RuleActionAllowToJSON(value);
+            return Object.assign({}, RuleActionAllowToJSON(value), { type: 'allow' } as const);
         case 'block':
-            return RuleActionBlockToJSON(value);
+            return Object.assign({}, RuleActionBlockToJSON(value), { type: 'block' } as const);
         case 'require_approval':
-            return RuleActionRequireApprovalToJSON(value);
+            return Object.assign({}, RuleActionRequireApprovalToJSON(value), { type: 'require_approval' } as const);
         default:
             throw new Error(`No variant of RuleAction exists with 'type=${value['type']}'`);
     }

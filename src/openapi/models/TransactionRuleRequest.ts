@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { RuleActionRequest } from './RuleActionRequest';
 import {
     RuleActionRequestFromJSON,
     RuleActionRequestFromJSONTyped,
     RuleActionRequestToJSON,
+    RuleActionRequestToJSONTyped,
 } from './RuleActionRequest';
 import type { TransactionRuleConditionsRequest } from './TransactionRuleConditionsRequest';
 import {
     TransactionRuleConditionsRequestFromJSON,
     TransactionRuleConditionsRequestFromJSONTyped,
     TransactionRuleConditionsRequestToJSON,
+    TransactionRuleConditionsRequestToJSONTyped,
 } from './TransactionRuleConditionsRequest';
 
 /**
@@ -61,12 +63,10 @@ export interface TransactionRuleRequest {
 /**
  * Check if a given object implements the TransactionRuleRequest interface.
  */
-export function instanceOfTransactionRuleRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "action" in value;
-
-    return isInstance;
+export function instanceOfTransactionRuleRequest(value: object): value is TransactionRuleRequest {
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('action' in value) || value['action'] === undefined) return false;
+    return true;
 }
 
 export function TransactionRuleRequestFromJSON(json: any): TransactionRuleRequest {
@@ -74,31 +74,33 @@ export function TransactionRuleRequestFromJSON(json: any): TransactionRuleReques
 }
 
 export function TransactionRuleRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): TransactionRuleRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'existingId': !exists(json, 'existing_id') ? undefined : json['existing_id'],
+        'existingId': json['existing_id'] == null ? undefined : json['existing_id'],
         'name': json['name'],
-        'conditions': !exists(json, 'conditions') ? undefined : TransactionRuleConditionsRequestFromJSON(json['conditions']),
+        'conditions': json['conditions'] == null ? undefined : TransactionRuleConditionsRequestFromJSON(json['conditions']),
         'action': RuleActionRequestFromJSON(json['action']),
     };
 }
 
-export function TransactionRuleRequestToJSON(value?: TransactionRuleRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TransactionRuleRequestToJSON(json: any): TransactionRuleRequest {
+    return TransactionRuleRequestToJSONTyped(json, false);
+}
+
+export function TransactionRuleRequestToJSONTyped(value?: TransactionRuleRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'existing_id': value.existingId,
-        'name': value.name,
-        'conditions': TransactionRuleConditionsRequestToJSON(value.conditions),
-        'action': RuleActionRequestToJSON(value.action),
+        'existing_id': value['existingId'],
+        'name': value['name'],
+        'conditions': TransactionRuleConditionsRequestToJSON(value['conditions']),
+        'action': RuleActionRequestToJSON(value['action']),
     };
 }
 

@@ -23,6 +23,17 @@ export const StarknetMessageType = {
 export type StarknetMessageType = typeof StarknetMessageType[keyof typeof StarknetMessageType];
 
 
+export function instanceOfStarknetMessageType(value: any): boolean {
+    for (const key in StarknetMessageType) {
+        if (Object.prototype.hasOwnProperty.call(StarknetMessageType, key)) {
+            if (StarknetMessageType[key as keyof typeof StarknetMessageType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function StarknetMessageTypeFromJSON(json: any): StarknetMessageType {
     return StarknetMessageTypeFromJSONTyped(json, false);
 }
@@ -33,5 +44,9 @@ export function StarknetMessageTypeFromJSONTyped(json: any, ignoreDiscriminator:
 
 export function StarknetMessageTypeToJSON(value?: StarknetMessageType | null): any {
     return value as any;
+}
+
+export function StarknetMessageTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): StarknetMessageType {
+    return value as StarknetMessageType;
 }
 

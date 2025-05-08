@@ -12,18 +12,27 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { PartialErrorResponse } from './PartialErrorResponse';
+import {
+    PartialErrorResponseFromJSON,
+    PartialErrorResponseFromJSONTyped,
+    PartialErrorResponseToJSON,
+    PartialErrorResponseToJSONTyped,
+} from './PartialErrorResponse';
 import type { Asset } from './Asset';
 import {
     AssetFromJSON,
     AssetFromJSONTyped,
     AssetToJSON,
+    AssetToJSONTyped,
 } from './Asset';
 import type { AssetInfo } from './AssetInfo';
 import {
     AssetInfoFromJSON,
     AssetInfoFromJSONTyped,
     AssetInfoToJSON,
+    AssetInfoToJSONTyped,
 } from './AssetInfo';
 
 /**
@@ -32,6 +41,12 @@ import {
  * @interface ListAssetsResponse
  */
 export interface ListAssetsResponse {
+    /**
+     * 
+     * @type {PartialErrorResponse}
+     * @memberof ListAssetsResponse
+     */
+    partialError?: PartialErrorResponse;
     /**
      * 
      * @type {number}
@@ -68,15 +83,13 @@ export interface ListAssetsResponse {
 /**
  * Check if a given object implements the ListAssetsResponse interface.
  */
-export function instanceOfListAssetsResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "total" in value;
-    isInstance = isInstance && "page" in value;
-    isInstance = isInstance && "size" in value;
-    isInstance = isInstance && "assets" in value;
-    isInstance = isInstance && "assetInfos" in value;
-
-    return isInstance;
+export function instanceOfListAssetsResponse(value: object): value is ListAssetsResponse {
+    if (!('total' in value) || value['total'] === undefined) return false;
+    if (!('page' in value) || value['page'] === undefined) return false;
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('assets' in value) || value['assets'] === undefined) return false;
+    if (!('assetInfos' in value) || value['assetInfos'] === undefined) return false;
+    return true;
 }
 
 export function ListAssetsResponseFromJSON(json: any): ListAssetsResponse {
@@ -84,11 +97,12 @@ export function ListAssetsResponseFromJSON(json: any): ListAssetsResponse {
 }
 
 export function ListAssetsResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): ListAssetsResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
+        'partialError': json['partial_error'] == null ? undefined : PartialErrorResponseFromJSON(json['partial_error']),
         'total': json['total'],
         'page': json['page'],
         'size': json['size'],
@@ -97,20 +111,23 @@ export function ListAssetsResponseFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-export function ListAssetsResponseToJSON(value?: ListAssetsResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ListAssetsResponseToJSON(json: any): ListAssetsResponse {
+    return ListAssetsResponseToJSONTyped(json, false);
+}
+
+export function ListAssetsResponseToJSONTyped(value?: ListAssetsResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'total': value.total,
-        'page': value.page,
-        'size': value.size,
-        'assets': ((value.assets as Array<any>).map(AssetToJSON)),
-        'asset_infos': ((value.assetInfos as Array<any>).map(AssetInfoToJSON)),
+        'partial_error': PartialErrorResponseToJSON(value['partialError']),
+        'total': value['total'],
+        'page': value['page'],
+        'size': value['size'],
+        'assets': ((value['assets'] as Array<any>).map(AssetToJSON)),
+        'asset_infos': ((value['assetInfos'] as Array<any>).map(AssetInfoToJSON)),
     };
 }
 

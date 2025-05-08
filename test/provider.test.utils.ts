@@ -1,10 +1,11 @@
 import { Hex, numberToHex } from 'viem';
-import { EvmChainId, EvmChainUniqueId, FordefiProviderConfig, FordefiWeb3Provider } from '../src';
+import { FordefiProviderConfig, FordefiWeb3Provider } from '../src';
+import { EvmChainId, EvmChainUniqueId } from '../src/types';
 import { env } from './env';
 
 const sepoliaChainFixture = {
   chainId: 11155111 as const satisfies EvmChainId,
-  uniqueId: EvmChainUniqueId.ethereumSepolia,
+  uniqueId: 'evm_ethereum_sepolia' as const satisfies EvmChainUniqueId,
 };
 
 // "Gil Staging" organization, organizationId="20e0a222-2600-4cb7-8cad-f20650bf78aa"

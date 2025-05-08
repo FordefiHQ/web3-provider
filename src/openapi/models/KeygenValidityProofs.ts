@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { Proof } from './Proof';
 import {
     ProofFromJSON,
     ProofFromJSONTyped,
     ProofToJSON,
+    ProofToJSONTyped,
 } from './Proof';
 
 /**
@@ -37,11 +38,9 @@ export interface KeygenValidityProofs {
 /**
  * Check if a given object implements the KeygenValidityProofs interface.
  */
-export function instanceOfKeygenValidityProofs(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "paillierBlumProof" in value;
-
-    return isInstance;
+export function instanceOfKeygenValidityProofs(value: object): value is KeygenValidityProofs {
+    if (!('paillierBlumProof' in value) || value['paillierBlumProof'] === undefined) return false;
+    return true;
 }
 
 export function KeygenValidityProofsFromJSON(json: any): KeygenValidityProofs {
@@ -49,7 +48,7 @@ export function KeygenValidityProofsFromJSON(json: any): KeygenValidityProofs {
 }
 
 export function KeygenValidityProofsFromJSONTyped(json: any, ignoreDiscriminator: boolean): KeygenValidityProofs {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -58,16 +57,18 @@ export function KeygenValidityProofsFromJSONTyped(json: any, ignoreDiscriminator
     };
 }
 
-export function KeygenValidityProofsToJSON(value?: KeygenValidityProofs | null): any {
-    if (value === undefined) {
-        return undefined;
+export function KeygenValidityProofsToJSON(json: any): KeygenValidityProofs {
+    return KeygenValidityProofsToJSONTyped(json, false);
+}
+
+export function KeygenValidityProofsToJSONTyped(value?: KeygenValidityProofs | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'paillier_blum_proof': ProofToJSON(value.paillierBlumProof),
+        'paillier_blum_proof': ProofToJSON(value['paillierBlumProof']),
     };
 }
 

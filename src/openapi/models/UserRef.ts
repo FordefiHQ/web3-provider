@@ -12,36 +12,36 @@
  * Do not edit the class manually.
  */
 
+import type { ApiSignerRef } from './ApiSignerRef';
 import {
-    ApiSignerRef,
     instanceOfApiSignerRef,
     ApiSignerRefFromJSON,
     ApiSignerRefFromJSONTyped,
     ApiSignerRefToJSON,
 } from './ApiSignerRef';
+import type { ApiUserRef } from './ApiUserRef';
 import {
-    ApiUserRef,
     instanceOfApiUserRef,
     ApiUserRefFromJSON,
     ApiUserRefFromJSONTyped,
     ApiUserRefToJSON,
 } from './ApiUserRef';
+import type { EndUserRef } from './EndUserRef';
 import {
-    EndUserRef,
     instanceOfEndUserRef,
     EndUserRefFromJSON,
     EndUserRefFromJSONTyped,
     EndUserRefToJSON,
 } from './EndUserRef';
+import type { PersonRef } from './PersonRef';
 import {
-    PersonRef,
     instanceOfPersonRef,
     PersonRefFromJSON,
     PersonRefFromJSONTyped,
     PersonRefToJSON,
 } from './PersonRef';
+import type { SystemUserRef } from './SystemUserRef';
 import {
-    SystemUserRef,
     instanceOfSystemUserRef,
     SystemUserRefFromJSON,
     SystemUserRefFromJSONTyped,
@@ -60,43 +60,44 @@ export function UserRefFromJSON(json: any): UserRef {
 }
 
 export function UserRefFromJSONTyped(json: any, ignoreDiscriminator: boolean): UserRef {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['user_type']) {
         case 'api_signer':
-            return {...ApiSignerRefFromJSONTyped(json, true), userType: 'api_signer'};
+            return Object.assign({}, ApiSignerRefFromJSONTyped(json, true), { userType: 'api_signer' } as const);
         case 'api_user':
-            return {...ApiUserRefFromJSONTyped(json, true), userType: 'api_user'};
+            return Object.assign({}, ApiUserRefFromJSONTyped(json, true), { userType: 'api_user' } as const);
         case 'end_user':
-            return {...EndUserRefFromJSONTyped(json, true), userType: 'end_user'};
+            return Object.assign({}, EndUserRefFromJSONTyped(json, true), { userType: 'end_user' } as const);
         case 'person':
-            return {...PersonRefFromJSONTyped(json, true), userType: 'person'};
+            return Object.assign({}, PersonRefFromJSONTyped(json, true), { userType: 'person' } as const);
         case 'system':
-            return {...SystemUserRefFromJSONTyped(json, true), userType: 'system'};
+            return Object.assign({}, SystemUserRefFromJSONTyped(json, true), { userType: 'system' } as const);
         default:
             throw new Error(`No variant of UserRef exists with 'userType=${json['userType']}'`);
     }
 }
 
-export function UserRefToJSON(value?: UserRef | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function UserRefToJSON(json: any): any {
+    return UserRefToJSONTyped(json, false);
+}
+
+export function UserRefToJSONTyped(value?: UserRef | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['userType']) {
         case 'api_signer':
-            return ApiSignerRefToJSON(value);
+            return Object.assign({}, ApiSignerRefToJSON(value), { userType: 'api_signer' } as const);
         case 'api_user':
-            return ApiUserRefToJSON(value);
+            return Object.assign({}, ApiUserRefToJSON(value), { userType: 'api_user' } as const);
         case 'end_user':
-            return EndUserRefToJSON(value);
+            return Object.assign({}, EndUserRefToJSON(value), { userType: 'end_user' } as const);
         case 'person':
-            return PersonRefToJSON(value);
+            return Object.assign({}, PersonRefToJSON(value), { userType: 'person' } as const);
         case 'system':
-            return SystemUserRefToJSON(value);
+            return Object.assign({}, SystemUserRefToJSON(value), { userType: 'system' } as const);
         default:
             throw new Error(`No variant of UserRef exists with 'userType=${value['userType']}'`);
     }

@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { Erc20 } from './Erc20';
 import {
     Erc20FromJSON,
     Erc20FromJSONTyped,
     Erc20ToJSON,
+    Erc20ToJSONTyped,
 } from './Erc20';
 import type { FiatCurrency } from './FiatCurrency';
 import {
     FiatCurrencyFromJSON,
     FiatCurrencyFromJSONTyped,
     FiatCurrencyToJSON,
+    FiatCurrencyToJSONTyped,
 } from './FiatCurrency';
 
 /**
@@ -62,14 +64,12 @@ export interface PricedErc20 {
 /**
  * Check if a given object implements the PricedErc20 interface.
  */
-export function instanceOfPricedErc20(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "price" in value;
-    isInstance = isInstance && "priceFloat" in value;
-    isInstance = isInstance && "fiatCurrency" in value;
-    isInstance = isInstance && "token" in value;
-
-    return isInstance;
+export function instanceOfPricedErc20(value: object): value is PricedErc20 {
+    if (!('price' in value) || value['price'] === undefined) return false;
+    if (!('priceFloat' in value) || value['priceFloat'] === undefined) return false;
+    if (!('fiatCurrency' in value) || value['fiatCurrency'] === undefined) return false;
+    if (!('token' in value) || value['token'] === undefined) return false;
+    return true;
 }
 
 export function PricedErc20FromJSON(json: any): PricedErc20 {
@@ -77,7 +77,7 @@ export function PricedErc20FromJSON(json: any): PricedErc20 {
 }
 
 export function PricedErc20FromJSONTyped(json: any, ignoreDiscriminator: boolean): PricedErc20 {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -89,19 +89,21 @@ export function PricedErc20FromJSONTyped(json: any, ignoreDiscriminator: boolean
     };
 }
 
-export function PricedErc20ToJSON(value?: PricedErc20 | null): any {
-    if (value === undefined) {
-        return undefined;
+export function PricedErc20ToJSON(json: any): PricedErc20 {
+    return PricedErc20ToJSONTyped(json, false);
+}
+
+export function PricedErc20ToJSONTyped(value?: PricedErc20 | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'price': value.price,
-        'price_float': value.priceFloat,
-        'fiat_currency': FiatCurrencyToJSON(value.fiatCurrency),
-        'token': Erc20ToJSON(value.token),
+        'price': value['price'],
+        'price_float': value['priceFloat'],
+        'fiat_currency': FiatCurrencyToJSON(value['fiatCurrency']),
+        'token': Erc20ToJSON(value['token']),
     };
 }
 

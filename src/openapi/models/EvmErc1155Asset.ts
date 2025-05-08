@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
-import {
-    EnrichedEvmAddressFromJSON,
-    EnrichedEvmAddressFromJSONTyped,
-    EnrichedEvmAddressToJSON,
-} from './EnrichedEvmAddress';
+import { mapValues } from '../runtime';
 import type { EnrichedEvmChain } from './EnrichedEvmChain';
 import {
     EnrichedEvmChainFromJSON,
     EnrichedEvmChainFromJSONTyped,
     EnrichedEvmChainToJSON,
+    EnrichedEvmChainToJSONTyped,
 } from './EnrichedEvmChain';
+import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
+import {
+    EnrichedEvmAddressFromJSON,
+    EnrichedEvmAddressFromJSONTyped,
+    EnrichedEvmAddressToJSON,
+    EnrichedEvmAddressToJSONTyped,
+} from './EnrichedEvmAddress';
 
 /**
  * 
@@ -71,14 +73,12 @@ export type EvmErc1155AssetTypeEnum = typeof EvmErc1155AssetTypeEnum[keyof typeo
 /**
  * Check if a given object implements the EvmErc1155Asset interface.
  */
-export function instanceOfEvmErc1155Asset(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "token" in value;
-    isInstance = isInstance && "tokenId" in value;
-
-    return isInstance;
+export function instanceOfEvmErc1155Asset(value: object): value is EvmErc1155Asset {
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('token' in value) || value['token'] === undefined) return false;
+    if (!('tokenId' in value) || value['tokenId'] === undefined) return false;
+    return true;
 }
 
 export function EvmErc1155AssetFromJSON(json: any): EvmErc1155Asset {
@@ -86,7 +86,7 @@ export function EvmErc1155AssetFromJSON(json: any): EvmErc1155Asset {
 }
 
 export function EvmErc1155AssetFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmErc1155Asset {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -98,19 +98,21 @@ export function EvmErc1155AssetFromJSONTyped(json: any, ignoreDiscriminator: boo
     };
 }
 
-export function EvmErc1155AssetToJSON(value?: EvmErc1155Asset | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EvmErc1155AssetToJSON(json: any): EvmErc1155Asset {
+    return EvmErc1155AssetToJSONTyped(json, false);
+}
+
+export function EvmErc1155AssetToJSONTyped(value?: EvmErc1155Asset | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain': EnrichedEvmChainToJSON(value.chain),
-        'type': value.type,
-        'token': EnrichedEvmAddressToJSON(value.token),
-        'token_id': value.tokenId,
+        'chain': EnrichedEvmChainToJSON(value['chain']),
+        'type': value['type'],
+        'token': EnrichedEvmAddressToJSON(value['token']),
+        'token_id': value['tokenId'],
     };
 }
 

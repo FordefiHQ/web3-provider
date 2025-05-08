@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { RequestSignature } from './RequestSignature';
 import {
     RequestSignatureFromJSON,
     RequestSignatureFromJSONTyped,
     RequestSignatureToJSON,
+    RequestSignatureToJSONTyped,
 } from './RequestSignature';
 
 /**
@@ -43,12 +44,10 @@ export interface InheritWebDevicesRequest {
 /**
  * Check if a given object implements the InheritWebDevicesRequest interface.
  */
-export function instanceOfInheritWebDevicesRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "requestSignatureByParentOrganization" in value;
-    isInstance = isInstance && "requestSignatureByChildOrganization" in value;
-
-    return isInstance;
+export function instanceOfInheritWebDevicesRequest(value: object): value is InheritWebDevicesRequest {
+    if (!('requestSignatureByParentOrganization' in value) || value['requestSignatureByParentOrganization'] === undefined) return false;
+    if (!('requestSignatureByChildOrganization' in value) || value['requestSignatureByChildOrganization'] === undefined) return false;
+    return true;
 }
 
 export function InheritWebDevicesRequestFromJSON(json: any): InheritWebDevicesRequest {
@@ -56,7 +55,7 @@ export function InheritWebDevicesRequestFromJSON(json: any): InheritWebDevicesRe
 }
 
 export function InheritWebDevicesRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): InheritWebDevicesRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -66,17 +65,19 @@ export function InheritWebDevicesRequestFromJSONTyped(json: any, ignoreDiscrimin
     };
 }
 
-export function InheritWebDevicesRequestToJSON(value?: InheritWebDevicesRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function InheritWebDevicesRequestToJSON(json: any): InheritWebDevicesRequest {
+    return InheritWebDevicesRequestToJSONTyped(json, false);
+}
+
+export function InheritWebDevicesRequestToJSONTyped(value?: InheritWebDevicesRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'request_signature_by_parent_organization': RequestSignatureToJSON(value.requestSignatureByParentOrganization),
-        'request_signature_by_child_organization': RequestSignatureToJSON(value.requestSignatureByChildOrganization),
+        'request_signature_by_parent_organization': RequestSignatureToJSON(value['requestSignatureByParentOrganization']),
+        'request_signature_by_child_organization': RequestSignatureToJSON(value['requestSignatureByChildOrganization']),
     };
 }
 

@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { UserGroupRef } from './UserGroupRef';
-import {
-    UserGroupRefFromJSON,
-    UserGroupRefFromJSONTyped,
-    UserGroupRefToJSON,
-} from './UserGroupRef';
+import { mapValues } from '../runtime';
 import type { UserRole } from './UserRole';
 import {
     UserRoleFromJSON,
     UserRoleFromJSONTyped,
     UserRoleToJSON,
+    UserRoleToJSONTyped,
 } from './UserRole';
+import type { UserGroupRef } from './UserGroupRef';
+import {
+    UserGroupRefFromJSON,
+    UserGroupRefFromJSONTyped,
+    UserGroupRefToJSON,
+    UserGroupRefToJSONTyped,
+} from './UserGroupRef';
 
 /**
  * 
@@ -108,8 +110,9 @@ export interface ApiUserExt {
      * 
      * @type {boolean}
      * @memberof ApiUserExt
+     * @deprecated
      */
-    isSavedToEnclave: boolean;
+    isSavedToEnclave?: boolean;
 }
 
 
@@ -134,20 +137,17 @@ export type ApiUserExtStateEnum = typeof ApiUserExtStateEnum[keyof typeof ApiUse
 /**
  * Check if a given object implements the ApiUserExt interface.
  */
-export function instanceOfApiUserExt(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "userType" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "role" in value;
-    isInstance = isInstance && "publicKey" in value;
-    isInstance = isInstance && "publicKeyHmac" in value;
-    isInstance = isInstance && "isSavedToEnclave" in value;
-
-    return isInstance;
+export function instanceOfApiUserExt(value: object): value is ApiUserExt {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('userType' in value) || value['userType'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('role' in value) || value['role'] === undefined) return false;
+    if (!('publicKey' in value) || value['publicKey'] === undefined) return false;
+    if (!('publicKeyHmac' in value) || value['publicKeyHmac'] === undefined) return false;
+    return true;
 }
 
 export function ApiUserExtFromJSON(json: any): ApiUserExt {
@@ -155,7 +155,7 @@ export function ApiUserExtFromJSON(json: any): ApiUserExt {
 }
 
 export function ApiUserExtFromJSONTyped(json: any, ignoreDiscriminator: boolean): ApiUserExt {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -167,37 +167,39 @@ export function ApiUserExtFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'name': json['name'],
         'state': json['state'],
         'role': UserRoleFromJSON(json['role']),
-        'userGroups': !exists(json, 'user_groups') ? undefined : ((json['user_groups'] as Array<any>).map(UserGroupRefFromJSON)),
-        'pendingAdditionToUserGroups': !exists(json, 'pending_addition_to_user_groups') ? undefined : ((json['pending_addition_to_user_groups'] as Array<any>).map(UserGroupRefFromJSON)),
-        'pendingRemovalFromUserGroups': !exists(json, 'pending_removal_from_user_groups') ? undefined : ((json['pending_removal_from_user_groups'] as Array<any>).map(UserGroupRefFromJSON)),
+        'userGroups': json['user_groups'] == null ? undefined : ((json['user_groups'] as Array<any>).map(UserGroupRefFromJSON)),
+        'pendingAdditionToUserGroups': json['pending_addition_to_user_groups'] == null ? undefined : ((json['pending_addition_to_user_groups'] as Array<any>).map(UserGroupRefFromJSON)),
+        'pendingRemovalFromUserGroups': json['pending_removal_from_user_groups'] == null ? undefined : ((json['pending_removal_from_user_groups'] as Array<any>).map(UserGroupRefFromJSON)),
         'publicKey': json['public_key'],
         'publicKeyHmac': json['public_key_hmac'],
-        'isSavedToEnclave': json['is_saved_to_enclave'],
+        'isSavedToEnclave': json['is_saved_to_enclave'] == null ? undefined : json['is_saved_to_enclave'],
     };
 }
 
-export function ApiUserExtToJSON(value?: ApiUserExt | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ApiUserExtToJSON(json: any): ApiUserExt {
+    return ApiUserExtToJSONTyped(json, false);
+}
+
+export function ApiUserExtToJSONTyped(value?: ApiUserExt | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'user_type': value.userType,
-        'name': value.name,
-        'state': value.state,
-        'role': UserRoleToJSON(value.role),
-        'user_groups': value.userGroups === undefined ? undefined : ((value.userGroups as Array<any>).map(UserGroupRefToJSON)),
-        'pending_addition_to_user_groups': value.pendingAdditionToUserGroups === undefined ? undefined : ((value.pendingAdditionToUserGroups as Array<any>).map(UserGroupRefToJSON)),
-        'pending_removal_from_user_groups': value.pendingRemovalFromUserGroups === undefined ? undefined : ((value.pendingRemovalFromUserGroups as Array<any>).map(UserGroupRefToJSON)),
-        'public_key': value.publicKey,
-        'public_key_hmac': value.publicKeyHmac,
-        'is_saved_to_enclave': value.isSavedToEnclave,
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'user_type': value['userType'],
+        'name': value['name'],
+        'state': value['state'],
+        'role': UserRoleToJSON(value['role']),
+        'user_groups': value['userGroups'] == null ? undefined : ((value['userGroups'] as Array<any>).map(UserGroupRefToJSON)),
+        'pending_addition_to_user_groups': value['pendingAdditionToUserGroups'] == null ? undefined : ((value['pendingAdditionToUserGroups'] as Array<any>).map(UserGroupRefToJSON)),
+        'pending_removal_from_user_groups': value['pendingRemovalFromUserGroups'] == null ? undefined : ((value['pendingRemovalFromUserGroups'] as Array<any>).map(UserGroupRefToJSON)),
+        'public_key': value['publicKey'],
+        'public_key_hmac': value['publicKeyHmac'],
+        'is_saved_to_enclave': value['isSavedToEnclave'],
     };
 }
 

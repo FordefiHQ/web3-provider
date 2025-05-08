@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -30,11 +30,9 @@ export interface StartOnboardingResponse {
 /**
  * Check if a given object implements the StartOnboardingResponse interface.
  */
-export function instanceOfStartOnboardingResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "organizationId" in value;
-
-    return isInstance;
+export function instanceOfStartOnboardingResponse(value: object): value is StartOnboardingResponse {
+    if (!('organizationId' in value) || value['organizationId'] === undefined) return false;
+    return true;
 }
 
 export function StartOnboardingResponseFromJSON(json: any): StartOnboardingResponse {
@@ -42,7 +40,7 @@ export function StartOnboardingResponseFromJSON(json: any): StartOnboardingRespo
 }
 
 export function StartOnboardingResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): StartOnboardingResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -51,16 +49,18 @@ export function StartOnboardingResponseFromJSONTyped(json: any, ignoreDiscrimina
     };
 }
 
-export function StartOnboardingResponseToJSON(value?: StartOnboardingResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function StartOnboardingResponseToJSON(json: any): StartOnboardingResponse {
+    return StartOnboardingResponseToJSONTyped(json, false);
+}
+
+export function StartOnboardingResponseToJSONTyped(value?: StartOnboardingResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'organization_id': value.organizationId,
+        'organization_id': value['organizationId'],
     };
 }
 

@@ -12,31 +12,35 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
-import {
-    EnrichedEvmAddressFromJSON,
-    EnrichedEvmAddressFromJSONTyped,
-    EnrichedEvmAddressToJSON,
-} from './EnrichedEvmAddress';
+import { mapValues } from '../runtime';
 import type { EvmMessageDomainData } from './EvmMessageDomainData';
 import {
     EvmMessageDomainDataFromJSON,
     EvmMessageDomainDataFromJSONTyped,
     EvmMessageDomainDataToJSON,
+    EvmMessageDomainDataToJSONTyped,
 } from './EvmMessageDomainData';
-import type { Price } from './Price';
-import {
-    PriceFromJSON,
-    PriceFromJSONTyped,
-    PriceToJSON,
-} from './Price';
 import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
     PricedAssetFromJSONTyped,
     PricedAssetToJSON,
+    PricedAssetToJSONTyped,
 } from './PricedAsset';
+import type { Price } from './Price';
+import {
+    PriceFromJSON,
+    PriceFromJSONTyped,
+    PriceToJSON,
+    PriceToJSONTyped,
+} from './Price';
+import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
+import {
+    EnrichedEvmAddressFromJSON,
+    EnrichedEvmAddressFromJSONTyped,
+    EnrichedEvmAddressToJSON,
+    EnrichedEvmAddressToJSONTyped,
+} from './EnrichedEvmAddress';
 
 /**
  * 
@@ -50,6 +54,12 @@ export interface PermitTypedMessageEvmMessage {
      * @memberof PermitTypedMessageEvmMessage
      */
     domain: EvmMessageDomainData;
+    /**
+     * 
+     * @type {string}
+     * @memberof PermitTypedMessageEvmMessage
+     */
+    primaryType: string;
     /**
      * 
      * @type {string}
@@ -113,18 +123,17 @@ export type PermitTypedMessageEvmMessageTypeEnum = typeof PermitTypedMessageEvmM
 /**
  * Check if a given object implements the PermitTypedMessageEvmMessage interface.
  */
-export function instanceOfPermitTypedMessageEvmMessage(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "domain" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "owner" in value;
-    isInstance = isInstance && "spender" in value;
-    isInstance = isInstance && "value" in value;
-    isInstance = isInstance && "deadline" in value;
-    isInstance = isInstance && "nonce" in value;
-    isInstance = isInstance && "pricedAsset" in value;
-
-    return isInstance;
+export function instanceOfPermitTypedMessageEvmMessage(value: object): value is PermitTypedMessageEvmMessage {
+    if (!('domain' in value) || value['domain'] === undefined) return false;
+    if (!('primaryType' in value) || value['primaryType'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('owner' in value) || value['owner'] === undefined) return false;
+    if (!('spender' in value) || value['spender'] === undefined) return false;
+    if (!('value' in value) || value['value'] === undefined) return false;
+    if (!('deadline' in value) || value['deadline'] === undefined) return false;
+    if (!('nonce' in value) || value['nonce'] === undefined) return false;
+    if (!('pricedAsset' in value) || value['pricedAsset'] === undefined) return false;
+    return true;
 }
 
 export function PermitTypedMessageEvmMessageFromJSON(json: any): PermitTypedMessageEvmMessage {
@@ -132,41 +141,45 @@ export function PermitTypedMessageEvmMessageFromJSON(json: any): PermitTypedMess
 }
 
 export function PermitTypedMessageEvmMessageFromJSONTyped(json: any, ignoreDiscriminator: boolean): PermitTypedMessageEvmMessage {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'domain': EvmMessageDomainDataFromJSON(json['domain']),
+        'primaryType': json['primary_type'],
         'type': json['type'],
         'owner': EnrichedEvmAddressFromJSON(json['owner']),
         'spender': EnrichedEvmAddressFromJSON(json['spender']),
         'value': json['value'],
         'deadline': (new Date(json['deadline'])),
         'nonce': json['nonce'],
-        'price': !exists(json, 'price') ? undefined : PriceFromJSON(json['price']),
+        'price': json['price'] == null ? undefined : PriceFromJSON(json['price']),
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }
 
-export function PermitTypedMessageEvmMessageToJSON(value?: PermitTypedMessageEvmMessage | null): any {
-    if (value === undefined) {
-        return undefined;
+export function PermitTypedMessageEvmMessageToJSON(json: any): PermitTypedMessageEvmMessage {
+    return PermitTypedMessageEvmMessageToJSONTyped(json, false);
+}
+
+export function PermitTypedMessageEvmMessageToJSONTyped(value?: PermitTypedMessageEvmMessage | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'domain': EvmMessageDomainDataToJSON(value.domain),
-        'type': value.type,
-        'owner': EnrichedEvmAddressToJSON(value.owner),
-        'spender': EnrichedEvmAddressToJSON(value.spender),
-        'value': value.value,
-        'deadline': (value.deadline.toISOString()),
-        'nonce': value.nonce,
-        'price': PriceToJSON(value.price),
-        'priced_asset': PricedAssetToJSON(value.pricedAsset),
+        'domain': EvmMessageDomainDataToJSON(value['domain']),
+        'primary_type': value['primaryType'],
+        'type': value['type'],
+        'owner': EnrichedEvmAddressToJSON(value['owner']),
+        'spender': EnrichedEvmAddressToJSON(value['spender']),
+        'value': value['value'],
+        'deadline': ((value['deadline']).toISOString()),
+        'nonce': value['nonce'],
+        'price': PriceToJSON(value['price']),
+        'priced_asset': PricedAssetToJSON(value['pricedAsset']),
     };
 }
 

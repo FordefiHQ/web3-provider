@@ -24,6 +24,17 @@ export const VaultGroupOwner = {
 export type VaultGroupOwner = typeof VaultGroupOwner[keyof typeof VaultGroupOwner];
 
 
+export function instanceOfVaultGroupOwner(value: any): boolean {
+    for (const key in VaultGroupOwner) {
+        if (Object.prototype.hasOwnProperty.call(VaultGroupOwner, key)) {
+            if (VaultGroupOwner[key as keyof typeof VaultGroupOwner] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function VaultGroupOwnerFromJSON(json: any): VaultGroupOwner {
     return VaultGroupOwnerFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function VaultGroupOwnerFromJSONTyped(json: any, ignoreDiscriminator: boo
 
 export function VaultGroupOwnerToJSON(value?: VaultGroupOwner | null): any {
     return value as any;
+}
+
+export function VaultGroupOwnerToJSONTyped(value: any, ignoreDiscriminator: boolean): VaultGroupOwner {
+    return value as VaultGroupOwner;
 }
 

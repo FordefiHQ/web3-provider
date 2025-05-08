@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { AddVaultGroupChanges } from './AddVaultGroupChanges';
 import {
-    AddVaultGroupChanges,
     instanceOfAddVaultGroupChanges,
     AddVaultGroupChangesFromJSON,
     AddVaultGroupChangesFromJSONTyped,
     AddVaultGroupChangesToJSON,
 } from './AddVaultGroupChanges';
+import type { EditVaultGroupChanges } from './EditVaultGroupChanges';
 import {
-    EditVaultGroupChanges,
     instanceOfEditVaultGroupChanges,
     EditVaultGroupChangesFromJSON,
     EditVaultGroupChangesFromJSONTyped,
@@ -39,31 +39,32 @@ export function VaultGroupChangeActionPendingChangesFromJSON(json: any): VaultGr
 }
 
 export function VaultGroupChangeActionPendingChangesFromJSONTyped(json: any, ignoreDiscriminator: boolean): VaultGroupChangeActionPendingChanges {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'add_group':
-            return {...AddVaultGroupChangesFromJSONTyped(json, true), type: 'add_group'};
+            return Object.assign({}, AddVaultGroupChangesFromJSONTyped(json, true), { type: 'add_group' } as const);
         case 'edit_group':
-            return {...EditVaultGroupChangesFromJSONTyped(json, true), type: 'edit_group'};
+            return Object.assign({}, EditVaultGroupChangesFromJSONTyped(json, true), { type: 'edit_group' } as const);
         default:
             throw new Error(`No variant of VaultGroupChangeActionPendingChanges exists with 'type=${json['type']}'`);
     }
 }
 
-export function VaultGroupChangeActionPendingChangesToJSON(value?: VaultGroupChangeActionPendingChanges | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function VaultGroupChangeActionPendingChangesToJSON(json: any): any {
+    return VaultGroupChangeActionPendingChangesToJSONTyped(json, false);
+}
+
+export function VaultGroupChangeActionPendingChangesToJSONTyped(value?: VaultGroupChangeActionPendingChanges | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'add_group':
-            return AddVaultGroupChangesToJSON(value);
+            return Object.assign({}, AddVaultGroupChangesToJSON(value), { type: 'add_group' } as const);
         case 'edit_group':
-            return EditVaultGroupChangesToJSON(value);
+            return Object.assign({}, EditVaultGroupChangesToJSON(value), { type: 'edit_group' } as const);
         default:
             throw new Error(`No variant of VaultGroupChangeActionPendingChanges exists with 'type=${value['type']}'`);
     }

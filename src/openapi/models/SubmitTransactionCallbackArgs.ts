@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -40,11 +40,9 @@ export type SubmitTransactionCallbackArgsTypeEnum = typeof SubmitTransactionCall
 /**
  * Check if a given object implements the SubmitTransactionCallbackArgs interface.
  */
-export function instanceOfSubmitTransactionCallbackArgs(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfSubmitTransactionCallbackArgs(value: object): value is SubmitTransactionCallbackArgs {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function SubmitTransactionCallbackArgsFromJSON(json: any): SubmitTransactionCallbackArgs {
@@ -52,7 +50,7 @@ export function SubmitTransactionCallbackArgsFromJSON(json: any): SubmitTransact
 }
 
 export function SubmitTransactionCallbackArgsFromJSONTyped(json: any, ignoreDiscriminator: boolean): SubmitTransactionCallbackArgs {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -61,16 +59,18 @@ export function SubmitTransactionCallbackArgsFromJSONTyped(json: any, ignoreDisc
     };
 }
 
-export function SubmitTransactionCallbackArgsToJSON(value?: SubmitTransactionCallbackArgs | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SubmitTransactionCallbackArgsToJSON(json: any): SubmitTransactionCallbackArgs {
+    return SubmitTransactionCallbackArgsToJSONTyped(json, false);
+}
+
+export function SubmitTransactionCallbackArgsToJSONTyped(value?: SubmitTransactionCallbackArgs | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
+        'type': value['type'],
     };
 }
 

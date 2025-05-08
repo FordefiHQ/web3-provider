@@ -12,67 +12,91 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { ApprovalRequest } from './ApprovalRequest';
+import { mapValues } from '../runtime';
+import type { AmlPolicyMatchOutgoing } from './AmlPolicyMatchOutgoing';
 import {
-    ApprovalRequestFromJSON,
-    ApprovalRequestFromJSONTyped,
-    ApprovalRequestToJSON,
-} from './ApprovalRequest';
-import type { EnrichedSolanaAddress } from './EnrichedSolanaAddress';
-import {
-    EnrichedSolanaAddressFromJSON,
-    EnrichedSolanaAddressFromJSONTyped,
-    EnrichedSolanaAddressToJSON,
-} from './EnrichedSolanaAddress';
-import type { EnrichedSolanaChain } from './EnrichedSolanaChain';
-import {
-    EnrichedSolanaChainFromJSON,
-    EnrichedSolanaChainFromJSONTyped,
-    EnrichedSolanaChainToJSON,
-} from './EnrichedSolanaChain';
-import type { PolicyMatch } from './PolicyMatch';
-import {
-    PolicyMatchFromJSON,
-    PolicyMatchFromJSONTyped,
-    PolicyMatchToJSON,
-} from './PolicyMatch';
-import type { PredictedSolanaTransactionSolanaTransactionTypeDetails } from './PredictedSolanaTransactionSolanaTransactionTypeDetails';
-import {
-    PredictedSolanaTransactionSolanaTransactionTypeDetailsFromJSON,
-    PredictedSolanaTransactionSolanaTransactionTypeDetailsFromJSONTyped,
-    PredictedSolanaTransactionSolanaTransactionTypeDetailsToJSON,
-} from './PredictedSolanaTransactionSolanaTransactionTypeDetails';
-import type { SimulationStatusResult } from './SimulationStatusResult';
-import {
-    SimulationStatusResultFromJSON,
-    SimulationStatusResultFromJSONTyped,
-    SimulationStatusResultToJSON,
-} from './SimulationStatusResult';
-import type { SolanaCompiledInstruction } from './SolanaCompiledInstruction';
-import {
-    SolanaCompiledInstructionFromJSON,
-    SolanaCompiledInstructionFromJSONTyped,
-    SolanaCompiledInstructionToJSON,
-} from './SolanaCompiledInstruction';
-import type { SolanaSuggestedFees } from './SolanaSuggestedFees';
-import {
-    SolanaSuggestedFeesFromJSON,
-    SolanaSuggestedFeesFromJSONTyped,
-    SolanaSuggestedFeesToJSON,
-} from './SolanaSuggestedFees';
-import type { SolanaTransactionResult } from './SolanaTransactionResult';
-import {
-    SolanaTransactionResultFromJSON,
-    SolanaTransactionResultFromJSONTyped,
-    SolanaTransactionResultToJSON,
-} from './SolanaTransactionResult';
+    AmlPolicyMatchOutgoingFromJSON,
+    AmlPolicyMatchOutgoingFromJSONTyped,
+    AmlPolicyMatchOutgoingToJSON,
+    AmlPolicyMatchOutgoingToJSONTyped,
+} from './AmlPolicyMatchOutgoing';
 import type { TransactionRisk } from './TransactionRisk';
 import {
     TransactionRiskFromJSON,
     TransactionRiskFromJSONTyped,
     TransactionRiskToJSON,
+    TransactionRiskToJSONTyped,
 } from './TransactionRisk';
+import type { SolanaCompiledInstruction } from './SolanaCompiledInstruction';
+import {
+    SolanaCompiledInstructionFromJSON,
+    SolanaCompiledInstructionFromJSONTyped,
+    SolanaCompiledInstructionToJSON,
+    SolanaCompiledInstructionToJSONTyped,
+} from './SolanaCompiledInstruction';
+import type { EnrichedSolanaAddress } from './EnrichedSolanaAddress';
+import {
+    EnrichedSolanaAddressFromJSON,
+    EnrichedSolanaAddressFromJSONTyped,
+    EnrichedSolanaAddressToJSON,
+    EnrichedSolanaAddressToJSONTyped,
+} from './EnrichedSolanaAddress';
+import type { SolanaTransactionResult } from './SolanaTransactionResult';
+import {
+    SolanaTransactionResultFromJSON,
+    SolanaTransactionResultFromJSONTyped,
+    SolanaTransactionResultToJSON,
+    SolanaTransactionResultToJSONTyped,
+} from './SolanaTransactionResult';
+import type { ApprovalRequest } from './ApprovalRequest';
+import {
+    ApprovalRequestFromJSON,
+    ApprovalRequestFromJSONTyped,
+    ApprovalRequestToJSON,
+    ApprovalRequestToJSONTyped,
+} from './ApprovalRequest';
+import type { EnrichedSolanaChain } from './EnrichedSolanaChain';
+import {
+    EnrichedSolanaChainFromJSON,
+    EnrichedSolanaChainFromJSONTyped,
+    EnrichedSolanaChainToJSON,
+    EnrichedSolanaChainToJSONTyped,
+} from './EnrichedSolanaChain';
+import type { SimulationStatusResult } from './SimulationStatusResult';
+import {
+    SimulationStatusResultFromJSON,
+    SimulationStatusResultFromJSONTyped,
+    SimulationStatusResultToJSON,
+    SimulationStatusResultToJSONTyped,
+} from './SimulationStatusResult';
+import type { PredictedSolanaTransactionSolanaTransactionTypeDetails } from './PredictedSolanaTransactionSolanaTransactionTypeDetails';
+import {
+    PredictedSolanaTransactionSolanaTransactionTypeDetailsFromJSON,
+    PredictedSolanaTransactionSolanaTransactionTypeDetailsFromJSONTyped,
+    PredictedSolanaTransactionSolanaTransactionTypeDetailsToJSON,
+    PredictedSolanaTransactionSolanaTransactionTypeDetailsToJSONTyped,
+} from './PredictedSolanaTransactionSolanaTransactionTypeDetails';
+import type { PolicyMatch } from './PolicyMatch';
+import {
+    PolicyMatchFromJSON,
+    PolicyMatchFromJSONTyped,
+    PolicyMatchToJSON,
+    PolicyMatchToJSONTyped,
+} from './PolicyMatch';
+import type { SolanaSuggestedFees } from './SolanaSuggestedFees';
+import {
+    SolanaSuggestedFeesFromJSON,
+    SolanaSuggestedFeesFromJSONTyped,
+    SolanaSuggestedFeesToJSON,
+    SolanaSuggestedFeesToJSONTyped,
+} from './SolanaSuggestedFees';
+import type { AmlResults } from './AmlResults';
+import {
+    AmlResultsFromJSON,
+    AmlResultsFromJSONTyped,
+    AmlResultsToJSON,
+    AmlResultsToJSONTyped,
+} from './AmlResults';
 
 /**
  * 
@@ -80,6 +104,12 @@ import {
  * @interface PredictedSolanaTransaction
  */
 export interface PredictedSolanaTransaction {
+    /**
+     * 
+     * @type {AmlPolicyMatchOutgoing}
+     * @memberof PredictedSolanaTransaction
+     */
+    amlPolicyMatch?: AmlPolicyMatchOutgoing;
     /**
      * 
      * @type {PolicyMatch}
@@ -98,6 +128,18 @@ export interface PredictedSolanaTransaction {
      * @memberof PredictedSolanaTransaction
      */
     risks: Array<TransactionRisk>;
+    /**
+     * 
+     * @type {string}
+     * @memberof PredictedSolanaTransaction
+     */
+    note?: string;
+    /**
+     * 
+     * @type {AmlResults}
+     * @memberof PredictedSolanaTransaction
+     */
+    amlResults?: AmlResults;
     /**
      * 
      * @type {string}
@@ -146,6 +188,18 @@ export interface PredictedSolanaTransaction {
      * @memberof PredictedSolanaTransaction
      */
     instructions: Array<SolanaCompiledInstruction>;
+    /**
+     * 
+     * @type {string}
+     * @memberof PredictedSolanaTransaction
+     */
+    rawTransaction?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PredictedSolanaTransaction
+     */
+    wasFeeSetInRequest: boolean;
 }
 
 
@@ -161,20 +215,19 @@ export type PredictedSolanaTransactionTypeEnum = typeof PredictedSolanaTransacti
 /**
  * Check if a given object implements the PredictedSolanaTransaction interface.
  */
-export function instanceOfPredictedSolanaTransaction(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "policyMatch" in value;
-    isInstance = isInstance && "risks" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "expectedResult" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "simulationStatusResult" in value;
-    isInstance = isInstance && "solanaTransactionTypeDetails" in value;
-    isInstance = isInstance && "sender" in value;
-    isInstance = isInstance && "suggestedFees" in value;
-    isInstance = isInstance && "instructions" in value;
-
-    return isInstance;
+export function instanceOfPredictedSolanaTransaction(value: object): value is PredictedSolanaTransaction {
+    if (!('policyMatch' in value) || value['policyMatch'] === undefined) return false;
+    if (!('risks' in value) || value['risks'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('expectedResult' in value) || value['expectedResult'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('simulationStatusResult' in value) || value['simulationStatusResult'] === undefined) return false;
+    if (!('solanaTransactionTypeDetails' in value) || value['solanaTransactionTypeDetails'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    if (!('suggestedFees' in value) || value['suggestedFees'] === undefined) return false;
+    if (!('instructions' in value) || value['instructions'] === undefined) return false;
+    if (!('wasFeeSetInRequest' in value) || value['wasFeeSetInRequest'] === undefined) return false;
+    return true;
 }
 
 export function PredictedSolanaTransactionFromJSON(json: any): PredictedSolanaTransaction {
@@ -182,14 +235,17 @@ export function PredictedSolanaTransactionFromJSON(json: any): PredictedSolanaTr
 }
 
 export function PredictedSolanaTransactionFromJSONTyped(json: any, ignoreDiscriminator: boolean): PredictedSolanaTransaction {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
+        'amlPolicyMatch': json['aml_policy_match'] == null ? undefined : AmlPolicyMatchOutgoingFromJSON(json['aml_policy_match']),
         'policyMatch': PolicyMatchFromJSON(json['policy_match']),
-        'approvalRequest': !exists(json, 'approval_request') ? undefined : ApprovalRequestFromJSON(json['approval_request']),
+        'approvalRequest': json['approval_request'] == null ? undefined : ApprovalRequestFromJSON(json['approval_request']),
         'risks': ((json['risks'] as Array<any>).map(TransactionRiskFromJSON)),
+        'note': json['note'] == null ? undefined : json['note'],
+        'amlResults': json['aml_results'] == null ? undefined : AmlResultsFromJSON(json['aml_results']),
         'type': json['type'],
         'expectedResult': SolanaTransactionResultFromJSON(json['expected_result']),
         'chain': EnrichedSolanaChainFromJSON(json['chain']),
@@ -198,29 +254,38 @@ export function PredictedSolanaTransactionFromJSONTyped(json: any, ignoreDiscrim
         'sender': EnrichedSolanaAddressFromJSON(json['sender']),
         'suggestedFees': SolanaSuggestedFeesFromJSON(json['suggested_fees']),
         'instructions': ((json['instructions'] as Array<any>).map(SolanaCompiledInstructionFromJSON)),
+        'rawTransaction': json['raw_transaction'] == null ? undefined : json['raw_transaction'],
+        'wasFeeSetInRequest': json['was_fee_set_in_request'],
     };
 }
 
-export function PredictedSolanaTransactionToJSON(value?: PredictedSolanaTransaction | null): any {
-    if (value === undefined) {
-        return undefined;
+export function PredictedSolanaTransactionToJSON(json: any): PredictedSolanaTransaction {
+    return PredictedSolanaTransactionToJSONTyped(json, false);
+}
+
+export function PredictedSolanaTransactionToJSONTyped(value?: PredictedSolanaTransaction | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'policy_match': PolicyMatchToJSON(value.policyMatch),
-        'approval_request': ApprovalRequestToJSON(value.approvalRequest),
-        'risks': ((value.risks as Array<any>).map(TransactionRiskToJSON)),
-        'type': value.type,
-        'expected_result': SolanaTransactionResultToJSON(value.expectedResult),
-        'chain': EnrichedSolanaChainToJSON(value.chain),
-        'simulation_status_result': SimulationStatusResultToJSON(value.simulationStatusResult),
-        'solana_transaction_type_details': PredictedSolanaTransactionSolanaTransactionTypeDetailsToJSON(value.solanaTransactionTypeDetails),
-        'sender': EnrichedSolanaAddressToJSON(value.sender),
-        'suggested_fees': SolanaSuggestedFeesToJSON(value.suggestedFees),
-        'instructions': ((value.instructions as Array<any>).map(SolanaCompiledInstructionToJSON)),
+        'aml_policy_match': AmlPolicyMatchOutgoingToJSON(value['amlPolicyMatch']),
+        'policy_match': PolicyMatchToJSON(value['policyMatch']),
+        'approval_request': ApprovalRequestToJSON(value['approvalRequest']),
+        'risks': ((value['risks'] as Array<any>).map(TransactionRiskToJSON)),
+        'note': value['note'],
+        'aml_results': AmlResultsToJSON(value['amlResults']),
+        'type': value['type'],
+        'expected_result': SolanaTransactionResultToJSON(value['expectedResult']),
+        'chain': EnrichedSolanaChainToJSON(value['chain']),
+        'simulation_status_result': SimulationStatusResultToJSON(value['simulationStatusResult']),
+        'solana_transaction_type_details': PredictedSolanaTransactionSolanaTransactionTypeDetailsToJSON(value['solanaTransactionTypeDetails']),
+        'sender': EnrichedSolanaAddressToJSON(value['sender']),
+        'suggested_fees': SolanaSuggestedFeesToJSON(value['suggestedFees']),
+        'instructions': ((value['instructions'] as Array<any>).map(SolanaCompiledInstructionToJSON)),
+        'raw_transaction': value['rawTransaction'],
+        'was_fee_set_in_request': value['wasFeeSetInRequest'],
     };
 }
 

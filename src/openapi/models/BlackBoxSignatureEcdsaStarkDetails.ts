@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EcdsaSignature } from './EcdsaSignature';
 import {
     EcdsaSignatureFromJSON,
     EcdsaSignatureFromJSONTyped,
     EcdsaSignatureToJSON,
+    EcdsaSignatureToJSONTyped,
 } from './EcdsaSignature';
 
 /**
@@ -66,13 +67,11 @@ export type BlackBoxSignatureEcdsaStarkDetailsTypeEnum = typeof BlackBoxSignatur
 /**
  * Check if a given object implements the BlackBoxSignatureEcdsaStarkDetails interface.
  */
-export function instanceOfBlackBoxSignatureEcdsaStarkDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "hashBinary" in value;
-    isInstance = isInstance && "hashInteger" in value;
-
-    return isInstance;
+export function instanceOfBlackBoxSignatureEcdsaStarkDetails(value: object): value is BlackBoxSignatureEcdsaStarkDetails {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('hashBinary' in value) || value['hashBinary'] === undefined) return false;
+    if (!('hashInteger' in value) || value['hashInteger'] === undefined) return false;
+    return true;
 }
 
 export function BlackBoxSignatureEcdsaStarkDetailsFromJSON(json: any): BlackBoxSignatureEcdsaStarkDetails {
@@ -80,31 +79,33 @@ export function BlackBoxSignatureEcdsaStarkDetailsFromJSON(json: any): BlackBoxS
 }
 
 export function BlackBoxSignatureEcdsaStarkDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): BlackBoxSignatureEcdsaStarkDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
-        'signature': !exists(json, 'signature') ? undefined : EcdsaSignatureFromJSON(json['signature']),
+        'signature': json['signature'] == null ? undefined : EcdsaSignatureFromJSON(json['signature']),
         'hashBinary': json['hash_binary'],
         'hashInteger': json['hash_integer'],
     };
 }
 
-export function BlackBoxSignatureEcdsaStarkDetailsToJSON(value?: BlackBoxSignatureEcdsaStarkDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function BlackBoxSignatureEcdsaStarkDetailsToJSON(json: any): BlackBoxSignatureEcdsaStarkDetails {
+    return BlackBoxSignatureEcdsaStarkDetailsToJSONTyped(json, false);
+}
+
+export function BlackBoxSignatureEcdsaStarkDetailsToJSONTyped(value?: BlackBoxSignatureEcdsaStarkDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'signature': EcdsaSignatureToJSON(value.signature),
-        'hash_binary': value.hashBinary,
-        'hash_integer': value.hashInteger,
+        'type': value['type'],
+        'signature': EcdsaSignatureToJSON(value['signature']),
+        'hash_binary': value['hashBinary'],
+        'hash_integer': value['hashInteger'],
     };
 }
 

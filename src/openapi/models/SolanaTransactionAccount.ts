@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedSolanaAddress } from './EnrichedSolanaAddress';
 import {
     EnrichedSolanaAddressFromJSON,
     EnrichedSolanaAddressFromJSONTyped,
     EnrichedSolanaAddressToJSON,
+    EnrichedSolanaAddressToJSONTyped,
 } from './EnrichedSolanaAddress';
 
 /**
@@ -49,13 +50,11 @@ export interface SolanaTransactionAccount {
 /**
  * Check if a given object implements the SolanaTransactionAccount interface.
  */
-export function instanceOfSolanaTransactionAccount(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "writable" in value;
-    isInstance = isInstance && "signer" in value;
-
-    return isInstance;
+export function instanceOfSolanaTransactionAccount(value: object): value is SolanaTransactionAccount {
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('writable' in value) || value['writable'] === undefined) return false;
+    if (!('signer' in value) || value['signer'] === undefined) return false;
+    return true;
 }
 
 export function SolanaTransactionAccountFromJSON(json: any): SolanaTransactionAccount {
@@ -63,7 +62,7 @@ export function SolanaTransactionAccountFromJSON(json: any): SolanaTransactionAc
 }
 
 export function SolanaTransactionAccountFromJSONTyped(json: any, ignoreDiscriminator: boolean): SolanaTransactionAccount {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -74,18 +73,20 @@ export function SolanaTransactionAccountFromJSONTyped(json: any, ignoreDiscrimin
     };
 }
 
-export function SolanaTransactionAccountToJSON(value?: SolanaTransactionAccount | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SolanaTransactionAccountToJSON(json: any): SolanaTransactionAccount {
+    return SolanaTransactionAccountToJSONTyped(json, false);
+}
+
+export function SolanaTransactionAccountToJSONTyped(value?: SolanaTransactionAccount | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'address': EnrichedSolanaAddressToJSON(value.address),
-        'writable': value.writable,
-        'signer': value.signer,
+        'address': EnrichedSolanaAddressToJSON(value['address']),
+        'writable': value['writable'],
+        'signer': value['signer'],
     };
 }
 
