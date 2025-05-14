@@ -19,7 +19,7 @@
  */
 export const ExchangeReversionState = {
     notReverted: 'not_reverted',
-    insufficientExchangeVaultFunds: 'insufficient_exchange_vault_funds'
+    insufficientExchangeWithdrawFunds: 'insufficient_exchange_withdraw_funds'
 } as const;
 export type ExchangeReversionState = typeof ExchangeReversionState[keyof typeof ExchangeReversionState];
 

@@ -52,6 +52,12 @@ export interface VaultRef {
      * @type {string}
      * @memberof VaultRef
      */
+    vaultGroupId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof VaultRef
+     */
     name: string;
     /**
      * 
@@ -92,6 +98,7 @@ export interface VaultRef {
  */
 export function instanceOfVaultRef(value: object): value is VaultRef {
     if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('vaultGroupId' in value) || value['vaultGroupId'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('state' in value) || value['state'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
@@ -109,6 +116,7 @@ export function VaultRefFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     return {
         
         'id': json['id'],
+        'vaultGroupId': json['vault_group_id'],
         'name': json['name'],
         'address': json['address'] == null ? undefined : json['address'],
         'state': VaultStateFromJSON(json['state']),
@@ -130,6 +138,7 @@ export function VaultRefToJSONTyped(value?: VaultRef | null, ignoreDiscriminator
     return {
         
         'id': value['id'],
+        'vault_group_id': value['vaultGroupId'],
         'name': value['name'],
         'address': value['address'],
         'state': VaultStateToJSON(value['state']),

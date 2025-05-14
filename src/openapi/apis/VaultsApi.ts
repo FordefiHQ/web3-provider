@@ -193,6 +193,7 @@ export interface ListVaultsApiV1VaultsGetRequest {
     vaultGroupIds?: Array<string>;
     excludeVaultGroupIds?: Array<string>;
     originType?: VaultOriginType;
+    accountAddresses?: Array<string>;
 }
 
 export interface ListVaultsWithAssetsApiV1VaultsBalancesGetRequest {
@@ -848,6 +849,10 @@ export class VaultsApi extends runtime.BaseAPI {
 
         if (requestParameters['originType'] != null) {
             queryParameters['origin_type'] = requestParameters['originType'];
+        }
+
+        if (requestParameters['accountAddresses'] != null) {
+            queryParameters['account_addresses'] = requestParameters['accountAddresses'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

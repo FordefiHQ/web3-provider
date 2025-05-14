@@ -51,7 +51,7 @@ export interface EditSolanaContactRequest {
      * @type {Array<SolanaChainUniqueId>}
      * @memberof EditSolanaContactRequest
      */
-    chains: Array<SolanaChainUniqueId>;
+    chains?: Array<SolanaChainUniqueId>;
     /**
      * 
      * @type {Array<SolanaAssetIdentifierRequest>}
@@ -76,7 +76,6 @@ export type EditSolanaContactRequestTypeEnum = typeof EditSolanaContactRequestTy
 export function instanceOfEditSolanaContactRequest(value: object): value is EditSolanaContactRequest {
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
-    if (!('chains' in value) || value['chains'] === undefined) return false;
     return true;
 }
 
@@ -92,7 +91,7 @@ export function EditSolanaContactRequestFromJSONTyped(json: any, ignoreDiscrimin
         
         'name': json['name'],
         'type': json['type'],
-        'chains': ((json['chains'] as Array<any>).map(SolanaChainUniqueIdFromJSON)),
+        'chains': json['chains'] == null ? undefined : ((json['chains'] as Array<any>).map(SolanaChainUniqueIdFromJSON)),
         'assetsIdentifiers': json['assets_identifiers'] == null ? undefined : ((json['assets_identifiers'] as Array<any>).map(SolanaAssetIdentifierRequestFromJSON)),
     };
 }
@@ -110,7 +109,7 @@ export function EditSolanaContactRequestToJSONTyped(value?: EditSolanaContactReq
         
         'name': value['name'],
         'type': value['type'],
-        'chains': ((value['chains'] as Array<any>).map(SolanaChainUniqueIdToJSON)),
+        'chains': value['chains'] == null ? undefined : ((value['chains'] as Array<any>).map(SolanaChainUniqueIdToJSON)),
         'assets_identifiers': value['assetsIdentifiers'] == null ? undefined : ((value['assetsIdentifiers'] as Array<any>).map(SolanaAssetIdentifierRequestToJSON)),
     };
 }

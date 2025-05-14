@@ -20,13 +20,6 @@ import {
     OrganizationTypeToJSON,
     OrganizationTypeToJSONTyped,
 } from './OrganizationType';
-import type { DklsRolloutStatus } from './DklsRolloutStatus';
-import {
-    DklsRolloutStatusFromJSON,
-    DklsRolloutStatusFromJSONTyped,
-    DklsRolloutStatusToJSON,
-    DklsRolloutStatusToJSONTyped,
-} from './DklsRolloutStatus';
 
 /**
  * 
@@ -58,12 +51,6 @@ export interface StartOnboardingRequest {
      * @memberof StartOnboardingRequest
      */
     shouldSupportEndUsers: boolean;
-    /**
-     * 
-     * @type {DklsRolloutStatus}
-     * @memberof StartOnboardingRequest
-     */
-    dklsRolloutStatus?: DklsRolloutStatus;
     /**
      * 
      * @type {boolean}
@@ -105,7 +92,6 @@ export function StartOnboardingRequestFromJSONTyped(json: any, ignoreDiscriminat
         'organizationType': OrganizationTypeFromJSON(json['organization_type']),
         'adminEmail': json['admin_email'],
         'shouldSupportEndUsers': json['should_support_end_users'],
-        'dklsRolloutStatus': json['dkls_rollout_status'] == null ? undefined : DklsRolloutStatusFromJSON(json['dkls_rollout_status']),
         'isImportOrganization': json['is_import_organization'] == null ? undefined : json['is_import_organization'],
         'crmId': json['crm_id'] == null ? undefined : json['crm_id'],
     };
@@ -126,7 +112,6 @@ export function StartOnboardingRequestToJSONTyped(value?: StartOnboardingRequest
         'organization_type': OrganizationTypeToJSON(value['organizationType']),
         'admin_email': value['adminEmail'],
         'should_support_end_users': value['shouldSupportEndUsers'],
-        'dkls_rollout_status': DklsRolloutStatusToJSON(value['dklsRolloutStatus']),
         'is_import_organization': value['isImportOrganization'],
         'crm_id': value['crmId'],
     };

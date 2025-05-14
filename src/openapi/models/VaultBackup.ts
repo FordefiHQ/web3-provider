@@ -32,6 +32,12 @@ export interface VaultBackup {
      * @type {string}
      * @memberof VaultBackup
      */
+    masterKeyId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof VaultBackup
+     */
     vaultId: string;
     /**
      * 
@@ -63,18 +69,26 @@ export interface VaultBackup {
      * @memberof VaultBackup
      */
     vaultAddresses: Array<VaultAddressBackup>;
+    /**
+     * 
+     * @type {string}
+     * @memberof VaultBackup
+     */
+    vaultState: string;
 }
 
 /**
  * Check if a given object implements the VaultBackup interface.
  */
 export function instanceOfVaultBackup(value: object): value is VaultBackup {
+    if (!('masterKeyId' in value) || value['masterKeyId'] === undefined) return false;
     if (!('vaultId' in value) || value['vaultId'] === undefined) return false;
     if (!('address' in value) || value['address'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('derivationPath' in value) || value['derivationPath'] === undefined) return false;
     if (!('vaultType' in value) || value['vaultType'] === undefined) return false;
     if (!('vaultAddresses' in value) || value['vaultAddresses'] === undefined) return false;
+    if (!('vaultState' in value) || value['vaultState'] === undefined) return false;
     return true;
 }
 
@@ -88,12 +102,14 @@ export function VaultBackupFromJSONTyped(json: any, ignoreDiscriminator: boolean
     }
     return {
         
+        'masterKeyId': json['master_key_id'],
         'vaultId': json['vault_id'],
         'address': json['address'],
         'name': json['name'],
         'derivationPath': json['derivation_path'],
         'vaultType': json['vault_type'],
         'vaultAddresses': ((json['vault_addresses'] as Array<any>).map(VaultAddressBackupFromJSON)),
+        'vaultState': json['vault_state'],
     };
 }
 
@@ -108,12 +124,14 @@ export function VaultBackupToJSONTyped(value?: VaultBackup | null, ignoreDiscrim
 
     return {
         
+        'master_key_id': value['masterKeyId'],
         'vault_id': value['vaultId'],
         'address': value['address'],
         'name': value['name'],
         'derivation_path': value['derivationPath'],
         'vault_type': value['vaultType'],
         'vault_addresses': ((value['vaultAddresses'] as Array<any>).map(VaultAddressBackupToJSON)),
+        'vault_state': value['vaultState'],
     };
 }
 

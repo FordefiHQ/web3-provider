@@ -13,13 +13,6 @@
  */
 
 import { mapValues } from '../runtime';
-import type { KeyType } from './KeyType';
-import {
-    KeyTypeFromJSON,
-    KeyTypeFromJSONTyped,
-    KeyTypeToJSON,
-    KeyTypeToJSONTyped,
-} from './KeyType';
 import type { EncryptedBackupShareByDevice } from './EncryptedBackupShareByDevice';
 import {
     EncryptedBackupShareByDeviceFromJSON,
@@ -51,13 +44,7 @@ export interface MigrateBackupRequest {
      * @type {Array<string>}
      * @memberof MigrateBackupRequest
      */
-    keyIdsIncluded?: Array<string>;
-    /**
-     * 
-     * @type {Array<KeyType>}
-     * @memberof MigrateBackupRequest
-     */
-    deviceSharesIncluded?: Array<KeyType>;
+    keyIdsIncluded: Array<string>;
 }
 
 /**
@@ -66,6 +53,7 @@ export interface MigrateBackupRequest {
 export function instanceOfMigrateBackupRequest(value: object): value is MigrateBackupRequest {
     if (!('encryptedSharesForBackup' in value) || value['encryptedSharesForBackup'] === undefined) return false;
     if (!('signature' in value) || value['signature'] === undefined) return false;
+    if (!('keyIdsIncluded' in value) || value['keyIdsIncluded'] === undefined) return false;
     return true;
 }
 
@@ -81,8 +69,7 @@ export function MigrateBackupRequestFromJSONTyped(json: any, ignoreDiscriminator
         
         'encryptedSharesForBackup': ((json['encrypted_shares_for_backup'] as Array<any>).map(EncryptedBackupShareByDeviceFromJSON)),
         'signature': json['signature'],
-        'keyIdsIncluded': json['key_ids_included'] == null ? undefined : json['key_ids_included'],
-        'deviceSharesIncluded': json['device_shares_included'] == null ? undefined : ((json['device_shares_included'] as Array<any>).map(KeyTypeFromJSON)),
+        'keyIdsIncluded': json['key_ids_included'],
     };
 }
 
@@ -100,7 +87,6 @@ export function MigrateBackupRequestToJSONTyped(value?: MigrateBackupRequest | n
         'encrypted_shares_for_backup': ((value['encryptedSharesForBackup'] as Array<any>).map(EncryptedBackupShareByDeviceToJSON)),
         'signature': value['signature'],
         'key_ids_included': value['keyIdsIncluded'],
-        'device_shares_included': value['deviceSharesIncluded'] == null ? undefined : ((value['deviceSharesIncluded'] as Array<any>).map(KeyTypeToJSON)),
     };
 }
 

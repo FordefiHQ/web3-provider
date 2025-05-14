@@ -57,7 +57,7 @@ export interface CreateStarknetContactRequest {
      * @type {Array<StarknetChainUniqueId>}
      * @memberof CreateStarknetContactRequest
      */
-    chains: Array<StarknetChainUniqueId>;
+    chains?: Array<StarknetChainUniqueId>;
     /**
      * 
      * @type {Array<StarknetAssetIdentifierRequest>}
@@ -83,7 +83,6 @@ export function instanceOfCreateStarknetContactRequest(value: object): value is 
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
     if (!('address' in value) || value['address'] === undefined) return false;
-    if (!('chains' in value) || value['chains'] === undefined) return false;
     return true;
 }
 
@@ -100,7 +99,7 @@ export function CreateStarknetContactRequestFromJSONTyped(json: any, ignoreDiscr
         'name': json['name'],
         'type': json['type'],
         'address': json['address'],
-        'chains': ((json['chains'] as Array<any>).map(StarknetChainUniqueIdFromJSON)),
+        'chains': json['chains'] == null ? undefined : ((json['chains'] as Array<any>).map(StarknetChainUniqueIdFromJSON)),
         'assetsIdentifiers': json['assets_identifiers'] == null ? undefined : ((json['assets_identifiers'] as Array<any>).map(StarknetAssetIdentifierRequestFromJSON)),
     };
 }
@@ -119,7 +118,7 @@ export function CreateStarknetContactRequestToJSONTyped(value?: CreateStarknetCo
         'name': value['name'],
         'type': value['type'],
         'address': value['address'],
-        'chains': ((value['chains'] as Array<any>).map(StarknetChainUniqueIdToJSON)),
+        'chains': value['chains'] == null ? undefined : ((value['chains'] as Array<any>).map(StarknetChainUniqueIdToJSON)),
         'assets_identifiers': value['assetsIdentifiers'] == null ? undefined : ((value['assetsIdentifiers'] as Array<any>).map(StarknetAssetIdentifierRequestToJSON)),
     };
 }

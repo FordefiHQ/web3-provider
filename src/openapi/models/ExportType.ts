@@ -18,7 +18,8 @@
  * @export
  */
 export const ExportType = {
-    csv: 'csv'
+    csv: 'csv',
+    zip: 'zip'
 } as const;
 export type ExportType = typeof ExportType[keyof typeof ExportType];
 

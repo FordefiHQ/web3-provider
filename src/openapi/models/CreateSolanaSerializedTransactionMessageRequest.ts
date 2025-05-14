@@ -57,6 +57,12 @@ import {
 export interface CreateSolanaSerializedTransactionMessageRequest {
     /**
      * 
+     * @type {BatchSolanaTransactionRequestDetailsFee}
+     * @memberof CreateSolanaSerializedTransactionMessageRequest
+     */
+    fee?: BatchSolanaTransactionRequestDetailsFee;
+    /**
+     * 
      * @type {string}
      * @memberof CreateSolanaSerializedTransactionMessageRequest
      */
@@ -73,12 +79,6 @@ export interface CreateSolanaSerializedTransactionMessageRequest {
      * @memberof CreateSolanaSerializedTransactionMessageRequest
      */
     pushMode?: PushMode;
-    /**
-     * 
-     * @type {BatchSolanaTransactionRequestDetailsFee}
-     * @memberof CreateSolanaSerializedTransactionMessageRequest
-     */
-    fee?: BatchSolanaTransactionRequestDetailsFee;
     /**
      * 
      * @type {boolean}
@@ -141,10 +141,10 @@ export function CreateSolanaSerializedTransactionMessageRequestFromJSONTyped(jso
     }
     return {
         
+        'fee': json['fee'] == null ? undefined : BatchSolanaTransactionRequestDetailsFeeFromJSON(json['fee']),
         'type': json['type'],
         'failOnPredictionFailure': json['fail_on_prediction_failure'] == null ? undefined : json['fail_on_prediction_failure'],
         'pushMode': json['push_mode'] == null ? undefined : PushModeFromJSON(json['push_mode']),
-        'fee': json['fee'] == null ? undefined : BatchSolanaTransactionRequestDetailsFeeFromJSON(json['fee']),
         'skipPrediction': json['skip_prediction'] == null ? undefined : json['skip_prediction'],
         'chain': SolanaChainUniqueIdFromJSON(json['chain']),
         'data': json['data'],
@@ -164,10 +164,10 @@ export function CreateSolanaSerializedTransactionMessageRequestToJSONTyped(value
 
     return {
         
+        'fee': BatchSolanaTransactionRequestDetailsFeeToJSON(value['fee']),
         'type': value['type'],
         'fail_on_prediction_failure': value['failOnPredictionFailure'],
         'push_mode': PushModeToJSON(value['pushMode']),
-        'fee': BatchSolanaTransactionRequestDetailsFeeToJSON(value['fee']),
         'skip_prediction': value['skipPrediction'],
         'chain': SolanaChainUniqueIdToJSON(value['chain']),
         'data': value['data'],

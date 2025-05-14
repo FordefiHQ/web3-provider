@@ -50,7 +50,7 @@ export interface CreateEVMContactRequest {
      * @type {Array<string>}
      * @memberof CreateEVMContactRequest
      */
-    chains: Array<string>;
+    chains?: Array<string>;
     /**
      * 
      * @type {Array<EvmAssetIdentifierRequest>}
@@ -76,7 +76,6 @@ export function instanceOfCreateEVMContactRequest(value: object): value is Creat
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
     if (!('address' in value) || value['address'] === undefined) return false;
-    if (!('chains' in value) || value['chains'] === undefined) return false;
     return true;
 }
 
@@ -93,7 +92,7 @@ export function CreateEVMContactRequestFromJSONTyped(json: any, ignoreDiscrimina
         'name': json['name'],
         'type': json['type'],
         'address': json['address'],
-        'chains': json['chains'],
+        'chains': json['chains'] == null ? undefined : json['chains'],
         'assetsIdentifiers': json['assets_identifiers'] == null ? undefined : ((json['assets_identifiers'] as Array<any>).map(EvmAssetIdentifierRequestFromJSON)),
     };
 }

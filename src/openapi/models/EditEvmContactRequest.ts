@@ -44,7 +44,7 @@ export interface EditEvmContactRequest {
      * @type {Array<string>}
      * @memberof EditEvmContactRequest
      */
-    chains: Array<string>;
+    chains?: Array<string>;
     /**
      * 
      * @type {Array<EvmAssetIdentifierRequest>}
@@ -69,7 +69,6 @@ export type EditEvmContactRequestTypeEnum = typeof EditEvmContactRequestTypeEnum
 export function instanceOfEditEvmContactRequest(value: object): value is EditEvmContactRequest {
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
-    if (!('chains' in value) || value['chains'] === undefined) return false;
     return true;
 }
 
@@ -85,7 +84,7 @@ export function EditEvmContactRequestFromJSONTyped(json: any, ignoreDiscriminato
         
         'name': json['name'],
         'type': json['type'],
-        'chains': json['chains'],
+        'chains': json['chains'] == null ? undefined : json['chains'],
         'assetsIdentifiers': json['assets_identifiers'] == null ? undefined : ((json['assets_identifiers'] as Array<any>).map(EvmAssetIdentifierRequestFromJSON)),
     };
 }

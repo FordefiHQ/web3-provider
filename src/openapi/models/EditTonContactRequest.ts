@@ -51,7 +51,7 @@ export interface EditTonContactRequest {
      * @type {Array<TonChainUniqueId>}
      * @memberof EditTonContactRequest
      */
-    chains: Array<TonChainUniqueId>;
+    chains?: Array<TonChainUniqueId>;
     /**
      * 
      * @type {Array<TonAssetIdentifierRequest>}
@@ -82,7 +82,6 @@ export type EditTonContactRequestTypeEnum = typeof EditTonContactRequestTypeEnum
 export function instanceOfEditTonContactRequest(value: object): value is EditTonContactRequest {
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
-    if (!('chains' in value) || value['chains'] === undefined) return false;
     return true;
 }
 
@@ -98,7 +97,7 @@ export function EditTonContactRequestFromJSONTyped(json: any, ignoreDiscriminato
         
         'name': json['name'],
         'type': json['type'],
-        'chains': ((json['chains'] as Array<any>).map(TonChainUniqueIdFromJSON)),
+        'chains': json['chains'] == null ? undefined : ((json['chains'] as Array<any>).map(TonChainUniqueIdFromJSON)),
         'assetsIdentifiers': json['assets_identifiers'] == null ? undefined : ((json['assets_identifiers'] as Array<any>).map(TonAssetIdentifierRequestFromJSON)),
         'comment': json['comment'] == null ? undefined : json['comment'],
     };
@@ -117,7 +116,7 @@ export function EditTonContactRequestToJSONTyped(value?: EditTonContactRequest |
         
         'name': value['name'],
         'type': value['type'],
-        'chains': ((value['chains'] as Array<any>).map(TonChainUniqueIdToJSON)),
+        'chains': value['chains'] == null ? undefined : ((value['chains'] as Array<any>).map(TonChainUniqueIdToJSON)),
         'assets_identifiers': value['assetsIdentifiers'] == null ? undefined : ((value['assetsIdentifiers'] as Array<any>).map(TonAssetIdentifierRequestToJSON)),
         'comment': value['comment'],
     };

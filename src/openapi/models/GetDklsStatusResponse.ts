@@ -23,15 +23,15 @@ export interface GetDklsStatusResponse {
      * 
      * @type {boolean}
      * @memberof GetDklsStatusResponse
+     * @deprecated
      */
-    dklsEnabledForKeygen: boolean;
+    dklsEnabledForKeygen?: boolean;
 }
 
 /**
  * Check if a given object implements the GetDklsStatusResponse interface.
  */
 export function instanceOfGetDklsStatusResponse(value: object): value is GetDklsStatusResponse {
-    if (!('dklsEnabledForKeygen' in value) || value['dklsEnabledForKeygen'] === undefined) return false;
     return true;
 }
 
@@ -45,7 +45,7 @@ export function GetDklsStatusResponseFromJSONTyped(json: any, ignoreDiscriminato
     }
     return {
         
-        'dklsEnabledForKeygen': json['dkls_enabled_for_keygen'],
+        'dklsEnabledForKeygen': json['dkls_enabled_for_keygen'] == null ? undefined : json['dkls_enabled_for_keygen'],
     };
 }
 

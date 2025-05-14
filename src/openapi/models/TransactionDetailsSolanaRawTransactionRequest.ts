@@ -107,6 +107,12 @@ export interface TransactionDetailsSolanaRawTransactionRequest {
     recentBlockhash?: string;
     /**
      * 
+     * @type {BatchSolanaTransactionRequestDetailsFee}
+     * @memberof TransactionDetailsSolanaRawTransactionRequest
+     */
+    fee?: BatchSolanaTransactionRequestDetailsFee;
+    /**
+     * 
      * @type {string}
      * @memberof TransactionDetailsSolanaRawTransactionRequest
      */
@@ -123,12 +129,6 @@ export interface TransactionDetailsSolanaRawTransactionRequest {
      * @memberof TransactionDetailsSolanaRawTransactionRequest
      */
     skipSimulation?: boolean;
-    /**
-     * 
-     * @type {BatchSolanaTransactionRequestDetailsFee}
-     * @memberof TransactionDetailsSolanaRawTransactionRequest
-     */
-    fee?: BatchSolanaTransactionRequestDetailsFee;
     /**
      * 
      * @type {SolanaChainUniqueId}
@@ -176,10 +176,10 @@ export function TransactionDetailsSolanaRawTransactionRequestFromJSONTyped(json:
         'addressTableLookups': ((json['address_table_lookups'] as Array<any>).map(SolanaMessageAddressTableLookupRequestFromJSON)),
         'signatures': json['signatures'] == null ? undefined : ((json['signatures'] as Array<any>).map(SolanaTransactionSignaturesRequestFromJSON)),
         'recentBlockhash': json['recent_blockhash'] == null ? undefined : json['recent_blockhash'],
+        'fee': json['fee'] == null ? undefined : BatchSolanaTransactionRequestDetailsFeeFromJSON(json['fee']),
         'type': json['type'],
         'failOnPredictionFailure': json['fail_on_prediction_failure'] == null ? undefined : json['fail_on_prediction_failure'],
         'skipSimulation': json['skip_simulation'] == null ? undefined : json['skip_simulation'],
-        'fee': json['fee'] == null ? undefined : BatchSolanaTransactionRequestDetailsFeeFromJSON(json['fee']),
         'chain': SolanaChainUniqueIdFromJSON(json['chain']),
     };
 }
@@ -201,10 +201,10 @@ export function TransactionDetailsSolanaRawTransactionRequestToJSONTyped(value?:
         'address_table_lookups': ((value['addressTableLookups'] as Array<any>).map(SolanaMessageAddressTableLookupRequestToJSON)),
         'signatures': value['signatures'] == null ? undefined : ((value['signatures'] as Array<any>).map(SolanaTransactionSignaturesRequestToJSON)),
         'recent_blockhash': value['recentBlockhash'],
+        'fee': BatchSolanaTransactionRequestDetailsFeeToJSON(value['fee']),
         'type': value['type'],
         'fail_on_prediction_failure': value['failOnPredictionFailure'],
         'skip_simulation': value['skipSimulation'],
-        'fee': BatchSolanaTransactionRequestDetailsFeeToJSON(value['fee']),
         'chain': SolanaChainUniqueIdToJSON(value['chain']),
     };
 }

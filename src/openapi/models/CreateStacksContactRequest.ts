@@ -57,7 +57,7 @@ export interface CreateStacksContactRequest {
      * @type {Array<StacksChainUniqueId>}
      * @memberof CreateStacksContactRequest
      */
-    chains: Array<StacksChainUniqueId>;
+    chains?: Array<StacksChainUniqueId>;
     /**
      * 
      * @type {Array<StacksAssetIdentifierRequest>}
@@ -89,7 +89,6 @@ export function instanceOfCreateStacksContactRequest(value: object): value is Cr
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
     if (!('address' in value) || value['address'] === undefined) return false;
-    if (!('chains' in value) || value['chains'] === undefined) return false;
     return true;
 }
 
@@ -106,7 +105,7 @@ export function CreateStacksContactRequestFromJSONTyped(json: any, ignoreDiscrim
         'name': json['name'],
         'type': json['type'],
         'address': json['address'],
-        'chains': ((json['chains'] as Array<any>).map(StacksChainUniqueIdFromJSON)),
+        'chains': json['chains'] == null ? undefined : ((json['chains'] as Array<any>).map(StacksChainUniqueIdFromJSON)),
         'assetsIdentifiers': json['assets_identifiers'] == null ? undefined : ((json['assets_identifiers'] as Array<any>).map(StacksAssetIdentifierRequestFromJSON)),
         'memo': json['memo'] == null ? undefined : json['memo'],
     };
@@ -126,7 +125,7 @@ export function CreateStacksContactRequestToJSONTyped(value?: CreateStacksContac
         'name': value['name'],
         'type': value['type'],
         'address': value['address'],
-        'chains': ((value['chains'] as Array<any>).map(StacksChainUniqueIdToJSON)),
+        'chains': value['chains'] == null ? undefined : ((value['chains'] as Array<any>).map(StacksChainUniqueIdToJSON)),
         'assets_identifiers': value['assetsIdentifiers'] == null ? undefined : ((value['assetsIdentifiers'] as Array<any>).map(StacksAssetIdentifierRequestToJSON)),
         'memo': value['memo'],
     };

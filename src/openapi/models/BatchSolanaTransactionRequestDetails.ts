@@ -43,6 +43,12 @@ import {
 export interface BatchSolanaTransactionRequestDetails {
     /**
      * 
+     * @type {BatchSolanaTransactionRequestDetailsFee}
+     * @memberof BatchSolanaTransactionRequestDetails
+     */
+    fee?: BatchSolanaTransactionRequestDetailsFee;
+    /**
+     * 
      * @type {string}
      * @memberof BatchSolanaTransactionRequestDetails
      */
@@ -59,12 +65,6 @@ export interface BatchSolanaTransactionRequestDetails {
      * @memberof BatchSolanaTransactionRequestDetails
      */
     skipSimulation?: boolean;
-    /**
-     * 
-     * @type {BatchSolanaTransactionRequestDetailsFee}
-     * @memberof BatchSolanaTransactionRequestDetails
-     */
-    fee?: BatchSolanaTransactionRequestDetailsFee;
     /**
      * 
      * @type {SolanaChainUniqueId}
@@ -109,10 +109,10 @@ export function BatchSolanaTransactionRequestDetailsFromJSONTyped(json: any, ign
     }
     return {
         
+        'fee': json['fee'] == null ? undefined : BatchSolanaTransactionRequestDetailsFeeFromJSON(json['fee']),
         'type': json['type'],
         'failOnPredictionFailure': json['fail_on_prediction_failure'] == null ? undefined : json['fail_on_prediction_failure'],
         'skipSimulation': json['skip_simulation'] == null ? undefined : json['skip_simulation'],
-        'fee': json['fee'] == null ? undefined : BatchSolanaTransactionRequestDetailsFeeFromJSON(json['fee']),
         'chain': SolanaChainUniqueIdFromJSON(json['chain']),
         'transactions': ((json['transactions'] as Array<any>).map(BatchSolanaTransactionInstanceDetailsFromJSON)),
     };
@@ -129,10 +129,10 @@ export function BatchSolanaTransactionRequestDetailsToJSONTyped(value?: BatchSol
 
     return {
         
+        'fee': BatchSolanaTransactionRequestDetailsFeeToJSON(value['fee']),
         'type': value['type'],
         'fail_on_prediction_failure': value['failOnPredictionFailure'],
         'skip_simulation': value['skipSimulation'],
-        'fee': BatchSolanaTransactionRequestDetailsFeeToJSON(value['fee']),
         'chain': SolanaChainUniqueIdToJSON(value['chain']),
         'transactions': ((value['transactions'] as Array<any>).map(BatchSolanaTransactionInstanceDetailsToJSON)),
     };

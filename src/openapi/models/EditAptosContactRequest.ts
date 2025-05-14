@@ -51,7 +51,7 @@ export interface EditAptosContactRequest {
      * @type {Array<AptosChainUniqueId>}
      * @memberof EditAptosContactRequest
      */
-    chains: Array<AptosChainUniqueId>;
+    chains?: Array<AptosChainUniqueId>;
     /**
      * 
      * @type {Array<AptosAssetIdentifierRequest>}
@@ -76,7 +76,6 @@ export type EditAptosContactRequestTypeEnum = typeof EditAptosContactRequestType
 export function instanceOfEditAptosContactRequest(value: object): value is EditAptosContactRequest {
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
-    if (!('chains' in value) || value['chains'] === undefined) return false;
     return true;
 }
 
@@ -92,7 +91,7 @@ export function EditAptosContactRequestFromJSONTyped(json: any, ignoreDiscrimina
         
         'name': json['name'],
         'type': json['type'],
-        'chains': ((json['chains'] as Array<any>).map(AptosChainUniqueIdFromJSON)),
+        'chains': json['chains'] == null ? undefined : ((json['chains'] as Array<any>).map(AptosChainUniqueIdFromJSON)),
         'assetsIdentifiers': json['assets_identifiers'] == null ? undefined : ((json['assets_identifiers'] as Array<any>).map(AptosAssetIdentifierRequestFromJSON)),
     };
 }
@@ -110,7 +109,7 @@ export function EditAptosContactRequestToJSONTyped(value?: EditAptosContactReque
         
         'name': value['name'],
         'type': value['type'],
-        'chains': ((value['chains'] as Array<any>).map(AptosChainUniqueIdToJSON)),
+        'chains': value['chains'] == null ? undefined : ((value['chains'] as Array<any>).map(AptosChainUniqueIdToJSON)),
         'assets_identifiers': value['assetsIdentifiers'] == null ? undefined : ((value['assetsIdentifiers'] as Array<any>).map(AptosAssetIdentifierRequestToJSON)),
     };
 }

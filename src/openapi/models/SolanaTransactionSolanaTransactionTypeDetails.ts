@@ -12,13 +12,13 @@
  * Do not edit the class manually.
  */
 
-import type { PredictedSolanaSpotSwapDetails } from './PredictedSolanaSpotSwapDetails';
+import type { GetSolanaSpotSwapDetails } from './GetSolanaSpotSwapDetails';
 import {
-    instanceOfPredictedSolanaSpotSwapDetails,
-    PredictedSolanaSpotSwapDetailsFromJSON,
-    PredictedSolanaSpotSwapDetailsFromJSONTyped,
-    PredictedSolanaSpotSwapDetailsToJSON,
-} from './PredictedSolanaSpotSwapDetails';
+    instanceOfGetSolanaSpotSwapDetails,
+    GetSolanaSpotSwapDetailsFromJSON,
+    GetSolanaSpotSwapDetailsFromJSONTyped,
+    GetSolanaSpotSwapDetailsToJSON,
+} from './GetSolanaSpotSwapDetails';
 import type { SolanaNativeTransferDetails } from './SolanaNativeTransferDetails';
 import {
     instanceOfSolanaNativeTransferDetails,
@@ -42,17 +42,17 @@ import {
 } from './SolanaTokenTransferDetails';
 
 /**
- * @type PredictedSolanaTransactionSolanaTransactionTypeDetails
+ * @type SolanaTransactionSolanaTransactionTypeDetails
  * 
  * @export
  */
-export type PredictedSolanaTransactionSolanaTransactionTypeDetails = { type: 'native_transfer' } & SolanaNativeTransferDetails | { type: 'raw_transaction' } & SolanaRawTransactionDetails | { type: 'spot_swap' } & PredictedSolanaSpotSwapDetails | { type: 'token_transfer' } & SolanaTokenTransferDetails;
+export type SolanaTransactionSolanaTransactionTypeDetails = { type: 'native_transfer' } & SolanaNativeTransferDetails | { type: 'raw_transaction' } & SolanaRawTransactionDetails | { type: 'spot_swap' } & GetSolanaSpotSwapDetails | { type: 'token_transfer' } & SolanaTokenTransferDetails;
 
-export function PredictedSolanaTransactionSolanaTransactionTypeDetailsFromJSON(json: any): PredictedSolanaTransactionSolanaTransactionTypeDetails {
-    return PredictedSolanaTransactionSolanaTransactionTypeDetailsFromJSONTyped(json, false);
+export function SolanaTransactionSolanaTransactionTypeDetailsFromJSON(json: any): SolanaTransactionSolanaTransactionTypeDetails {
+    return SolanaTransactionSolanaTransactionTypeDetailsFromJSONTyped(json, false);
 }
 
-export function PredictedSolanaTransactionSolanaTransactionTypeDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): PredictedSolanaTransactionSolanaTransactionTypeDetails {
+export function SolanaTransactionSolanaTransactionTypeDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): SolanaTransactionSolanaTransactionTypeDetails {
     if (json == null) {
         return json;
     }
@@ -62,19 +62,19 @@ export function PredictedSolanaTransactionSolanaTransactionTypeDetailsFromJSONTy
         case 'raw_transaction':
             return Object.assign({}, SolanaRawTransactionDetailsFromJSONTyped(json, true), { type: 'raw_transaction' } as const);
         case 'spot_swap':
-            return Object.assign({}, PredictedSolanaSpotSwapDetailsFromJSONTyped(json, true), { type: 'spot_swap' } as const);
+            return Object.assign({}, GetSolanaSpotSwapDetailsFromJSONTyped(json, true), { type: 'spot_swap' } as const);
         case 'token_transfer':
             return Object.assign({}, SolanaTokenTransferDetailsFromJSONTyped(json, true), { type: 'token_transfer' } as const);
         default:
-            throw new Error(`No variant of PredictedSolanaTransactionSolanaTransactionTypeDetails exists with 'type=${json['type']}'`);
+            throw new Error(`No variant of SolanaTransactionSolanaTransactionTypeDetails exists with 'type=${json['type']}'`);
     }
 }
 
-export function PredictedSolanaTransactionSolanaTransactionTypeDetailsToJSON(json: any): any {
-    return PredictedSolanaTransactionSolanaTransactionTypeDetailsToJSONTyped(json, false);
+export function SolanaTransactionSolanaTransactionTypeDetailsToJSON(json: any): any {
+    return SolanaTransactionSolanaTransactionTypeDetailsToJSONTyped(json, false);
 }
 
-export function PredictedSolanaTransactionSolanaTransactionTypeDetailsToJSONTyped(value?: PredictedSolanaTransactionSolanaTransactionTypeDetails | null, ignoreDiscriminator: boolean = false): any {
+export function SolanaTransactionSolanaTransactionTypeDetailsToJSONTyped(value?: SolanaTransactionSolanaTransactionTypeDetails | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
@@ -84,11 +84,11 @@ export function PredictedSolanaTransactionSolanaTransactionTypeDetailsToJSONType
         case 'raw_transaction':
             return Object.assign({}, SolanaRawTransactionDetailsToJSON(value), { type: 'raw_transaction' } as const);
         case 'spot_swap':
-            return Object.assign({}, PredictedSolanaSpotSwapDetailsToJSON(value), { type: 'spot_swap' } as const);
+            return Object.assign({}, GetSolanaSpotSwapDetailsToJSON(value), { type: 'spot_swap' } as const);
         case 'token_transfer':
             return Object.assign({}, SolanaTokenTransferDetailsToJSON(value), { type: 'token_transfer' } as const);
         default:
-            throw new Error(`No variant of PredictedSolanaTransactionSolanaTransactionTypeDetails exists with 'type=${value['type']}'`);
+            throw new Error(`No variant of SolanaTransactionSolanaTransactionTypeDetails exists with 'type=${value['type']}'`);
     }
 
 }

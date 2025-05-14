@@ -20,13 +20,13 @@ import {
     SolanaAssetIdentifierRequestToJSON,
     SolanaAssetIdentifierRequestToJSONTyped,
 } from './SolanaAssetIdentifierRequest';
-import type { BatchSolanaTransactionRequestDetailsFee } from './BatchSolanaTransactionRequestDetailsFee';
+import type { CreateSolanaSpotSwapRequestFee } from './CreateSolanaSpotSwapRequestFee';
 import {
-    BatchSolanaTransactionRequestDetailsFeeFromJSON,
-    BatchSolanaTransactionRequestDetailsFeeFromJSONTyped,
-    BatchSolanaTransactionRequestDetailsFeeToJSON,
-    BatchSolanaTransactionRequestDetailsFeeToJSONTyped,
-} from './BatchSolanaTransactionRequestDetailsFee';
+    CreateSolanaSpotSwapRequestFeeFromJSON,
+    CreateSolanaSpotSwapRequestFeeFromJSONTyped,
+    CreateSolanaSpotSwapRequestFeeToJSON,
+    CreateSolanaSpotSwapRequestFeeToJSONTyped,
+} from './CreateSolanaSpotSwapRequestFee';
 
 /**
  * 
@@ -60,6 +60,12 @@ export interface TransactionDetailsSolanaSpotSwapTransactionRequest {
     amount: string;
     /**
      * 
+     * @type {CreateSolanaSpotSwapRequestFee}
+     * @memberof TransactionDetailsSolanaSpotSwapTransactionRequest
+     */
+    fee?: CreateSolanaSpotSwapRequestFee;
+    /**
+     * 
      * @type {string}
      * @memberof TransactionDetailsSolanaSpotSwapTransactionRequest
      */
@@ -82,12 +88,6 @@ export interface TransactionDetailsSolanaSpotSwapTransactionRequest {
      * @memberof TransactionDetailsSolanaSpotSwapTransactionRequest
      */
     skipSimulation?: boolean;
-    /**
-     * 
-     * @type {BatchSolanaTransactionRequestDetailsFee}
-     * @memberof TransactionDetailsSolanaSpotSwapTransactionRequest
-     */
-    fee?: BatchSolanaTransactionRequestDetailsFee;
 }
 
 
@@ -126,11 +126,11 @@ export function TransactionDetailsSolanaSpotSwapTransactionRequestFromJSONTyped(
         'inputAssetIdentifier': SolanaAssetIdentifierRequestFromJSON(json['input_asset_identifier']),
         'outputAssetIdentifier': SolanaAssetIdentifierRequestFromJSON(json['output_asset_identifier']),
         'amount': json['amount'],
+        'fee': json['fee'] == null ? undefined : CreateSolanaSpotSwapRequestFeeFromJSON(json['fee']),
         'slippageBps': json['slippage_bps'] == null ? undefined : json['slippage_bps'],
         'type': json['type'],
         'failOnPredictionFailure': json['fail_on_prediction_failure'] == null ? undefined : json['fail_on_prediction_failure'],
         'skipSimulation': json['skip_simulation'] == null ? undefined : json['skip_simulation'],
-        'fee': json['fee'] == null ? undefined : BatchSolanaTransactionRequestDetailsFeeFromJSON(json['fee']),
     };
 }
 
@@ -149,11 +149,11 @@ export function TransactionDetailsSolanaSpotSwapTransactionRequestToJSONTyped(va
         'input_asset_identifier': SolanaAssetIdentifierRequestToJSON(value['inputAssetIdentifier']),
         'output_asset_identifier': SolanaAssetIdentifierRequestToJSON(value['outputAssetIdentifier']),
         'amount': value['amount'],
+        'fee': CreateSolanaSpotSwapRequestFeeToJSON(value['fee']),
         'slippage_bps': value['slippageBps'],
         'type': value['type'],
         'fail_on_prediction_failure': value['failOnPredictionFailure'],
         'skip_simulation': value['skipSimulation'],
-        'fee': BatchSolanaTransactionRequestDetailsFeeToJSON(value['fee']),
     };
 }
 

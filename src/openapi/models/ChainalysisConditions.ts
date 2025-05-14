@@ -120,10 +120,10 @@ export interface ChainalysisConditions {
     riskRating?: Array<RiskRating>;
     /**
      * 
-     * @type {ExposureType}
+     * @type {Array<ExposureType>}
      * @memberof ChainalysisConditions
      */
-    exposureType: ExposureType;
+    exposureTypes?: Array<ExposureType>;
 }
 
 
@@ -136,7 +136,6 @@ export function instanceOfChainalysisConditions(value: object): value is Chainal
     if (!('origins' in value) || value['origins'] === undefined) return false;
     if (!('recipients' in value) || value['recipients'] === undefined) return false;
     if (!('direction' in value) || value['direction'] === undefined) return false;
-    if (!('exposureType' in value) || value['exposureType'] === undefined) return false;
     return true;
 }
 
@@ -157,7 +156,7 @@ export function ChainalysisConditionsFromJSONTyped(json: any, ignoreDiscriminato
         'direction': DirectionFromJSON(json['direction']),
         'categories': json['categories'] == null ? undefined : ((json['categories'] as Array<any>).map(CategoryFromJSON)),
         'riskRating': json['risk_rating'] == null ? undefined : ((json['risk_rating'] as Array<any>).map(RiskRatingFromJSON)),
-        'exposureType': ExposureTypeFromJSON(json['exposure_type']),
+        'exposureTypes': json['exposure_types'] == null ? undefined : ((json['exposure_types'] as Array<any>).map(ExposureTypeFromJSON)),
     };
 }
 
@@ -179,7 +178,7 @@ export function ChainalysisConditionsToJSONTyped(value?: ChainalysisConditions |
         'direction': DirectionToJSON(value['direction']),
         'categories': value['categories'] == null ? undefined : ((value['categories'] as Array<any>).map(CategoryToJSON)),
         'risk_rating': value['riskRating'] == null ? undefined : ((value['riskRating'] as Array<any>).map(RiskRatingToJSON)),
-        'exposure_type': ExposureTypeToJSON(value['exposureType']),
+        'exposure_types': value['exposureTypes'] == null ? undefined : ((value['exposureTypes'] as Array<any>).map(ExposureTypeToJSON)),
     };
 }
 
