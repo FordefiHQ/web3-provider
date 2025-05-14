@@ -83,6 +83,7 @@ export interface RegisterTransactionSignSessionResponse {
      * 
      * @type {boolean}
      * @memberof RegisterTransactionSignSessionResponse
+     * @deprecated
      */
     dklsEnabled?: boolean;
 }

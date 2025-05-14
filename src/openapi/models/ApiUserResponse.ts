@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { UserAllowedIpSettings } from './UserAllowedIpSettings';
+import {
+    UserAllowedIpSettingsFromJSON,
+    UserAllowedIpSettingsFromJSONTyped,
+    UserAllowedIpSettingsToJSON,
+    UserAllowedIpSettingsToJSONTyped,
+} from './UserAllowedIpSettings';
 import type { UserRole } from './UserRole';
 import {
     UserRoleFromJSON,
@@ -96,6 +103,12 @@ export interface ApiUserResponse {
     pendingRemovalFromUserGroups?: Array<UserGroupRef>;
     /**
      * 
+     * @type {UserAllowedIpSettings}
+     * @memberof ApiUserResponse
+     */
+    allowedIpSettings: UserAllowedIpSettings;
+    /**
+     * 
      * @type {string}
      * @memberof ApiUserResponse
      */
@@ -132,6 +145,7 @@ export function instanceOfApiUserResponse(value: object): value is ApiUserRespon
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('state' in value) || value['state'] === undefined) return false;
     if (!('role' in value) || value['role'] === undefined) return false;
+    if (!('allowedIpSettings' in value) || value['allowedIpSettings'] === undefined) return false;
     if (!('accessToken' in value) || value['accessToken'] === undefined) return false;
     return true;
 }
@@ -156,6 +170,7 @@ export function ApiUserResponseFromJSONTyped(json: any, ignoreDiscriminator: boo
         'userGroups': json['user_groups'] == null ? undefined : ((json['user_groups'] as Array<any>).map(UserGroupRefFromJSON)),
         'pendingAdditionToUserGroups': json['pending_addition_to_user_groups'] == null ? undefined : ((json['pending_addition_to_user_groups'] as Array<any>).map(UserGroupRefFromJSON)),
         'pendingRemovalFromUserGroups': json['pending_removal_from_user_groups'] == null ? undefined : ((json['pending_removal_from_user_groups'] as Array<any>).map(UserGroupRefFromJSON)),
+        'allowedIpSettings': UserAllowedIpSettingsFromJSON(json['allowed_ip_settings']),
         'accessToken': json['access_token'],
     };
 }
@@ -181,6 +196,7 @@ export function ApiUserResponseToJSONTyped(value?: ApiUserResponse | null, ignor
         'user_groups': value['userGroups'] == null ? undefined : ((value['userGroups'] as Array<any>).map(UserGroupRefToJSON)),
         'pending_addition_to_user_groups': value['pendingAdditionToUserGroups'] == null ? undefined : ((value['pendingAdditionToUserGroups'] as Array<any>).map(UserGroupRefToJSON)),
         'pending_removal_from_user_groups': value['pendingRemovalFromUserGroups'] == null ? undefined : ((value['pendingRemovalFromUserGroups'] as Array<any>).map(UserGroupRefToJSON)),
+        'allowed_ip_settings': UserAllowedIpSettingsToJSON(value['allowedIpSettings']),
         'access_token': value['accessToken'],
     };
 }

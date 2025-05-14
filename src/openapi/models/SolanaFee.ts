@@ -20,6 +20,13 @@ import {
     PricedAssetToJSON,
     PricedAssetToJSONTyped,
 } from './PricedAsset';
+import type { SolanaFeeType } from './SolanaFeeType';
+import {
+    SolanaFeeTypeFromJSON,
+    SolanaFeeTypeFromJSONTyped,
+    SolanaFeeTypeToJSON,
+    SolanaFeeTypeToJSONTyped,
+} from './SolanaFeeType';
 import type { Price } from './Price';
 import {
     PriceFromJSON,
@@ -67,6 +74,12 @@ export interface SolanaFee {
     fee: string;
     /**
      * 
+     * @type {SolanaFeeType}
+     * @memberof SolanaFee
+     */
+    feeType: SolanaFeeType;
+    /**
+     * 
      * @type {Price}
      * @memberof SolanaFee
      */
@@ -89,6 +102,7 @@ export function instanceOfSolanaFee(value: object): value is SolanaFee {
     if (!('baseFee' in value) || value['baseFee'] === undefined) return false;
     if (!('priorityFee' in value) || value['priorityFee'] === undefined) return false;
     if (!('fee' in value) || value['fee'] === undefined) return false;
+    if (!('feeType' in value) || value['feeType'] === undefined) return false;
     if (!('pricedAsset' in value) || value['pricedAsset'] === undefined) return false;
     return true;
 }
@@ -107,6 +121,7 @@ export function SolanaFeeFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         'baseFee': json['base_fee'],
         'priorityFee': json['priority_fee'],
         'fee': json['fee'],
+        'feeType': SolanaFeeTypeFromJSON(json['fee_type']),
         'fiatPrice': json['fiat_price'] == null ? undefined : PriceFromJSON(json['fiat_price']),
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
@@ -127,6 +142,7 @@ export function SolanaFeeToJSONTyped(value?: SolanaFee | null, ignoreDiscriminat
         'base_fee': value['baseFee'],
         'priority_fee': value['priorityFee'],
         'fee': value['fee'],
+        'fee_type': SolanaFeeTypeToJSON(value['feeType']),
         'fiat_price': PriceToJSON(value['fiatPrice']),
         'priced_asset': PricedAssetToJSON(value['pricedAsset']),
     };

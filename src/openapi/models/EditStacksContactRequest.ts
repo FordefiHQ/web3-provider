@@ -51,7 +51,7 @@ export interface EditStacksContactRequest {
      * @type {Array<StacksChainUniqueId>}
      * @memberof EditStacksContactRequest
      */
-    chains: Array<StacksChainUniqueId>;
+    chains?: Array<StacksChainUniqueId>;
     /**
      * 
      * @type {Array<StacksAssetIdentifierRequest>}
@@ -82,7 +82,6 @@ export type EditStacksContactRequestTypeEnum = typeof EditStacksContactRequestTy
 export function instanceOfEditStacksContactRequest(value: object): value is EditStacksContactRequest {
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
-    if (!('chains' in value) || value['chains'] === undefined) return false;
     return true;
 }
 
@@ -98,7 +97,7 @@ export function EditStacksContactRequestFromJSONTyped(json: any, ignoreDiscrimin
         
         'name': json['name'],
         'type': json['type'],
-        'chains': ((json['chains'] as Array<any>).map(StacksChainUniqueIdFromJSON)),
+        'chains': json['chains'] == null ? undefined : ((json['chains'] as Array<any>).map(StacksChainUniqueIdFromJSON)),
         'assetsIdentifiers': json['assets_identifiers'] == null ? undefined : ((json['assets_identifiers'] as Array<any>).map(StacksAssetIdentifierRequestFromJSON)),
         'memo': json['memo'] == null ? undefined : json['memo'],
     };
@@ -117,7 +116,7 @@ export function EditStacksContactRequestToJSONTyped(value?: EditStacksContactReq
         
         'name': value['name'],
         'type': value['type'],
-        'chains': ((value['chains'] as Array<any>).map(StacksChainUniqueIdToJSON)),
+        'chains': value['chains'] == null ? undefined : ((value['chains'] as Array<any>).map(StacksChainUniqueIdToJSON)),
         'assets_identifiers': value['assetsIdentifiers'] == null ? undefined : ((value['assetsIdentifiers'] as Array<any>).map(StacksAssetIdentifierRequestToJSON)),
         'memo': value['memo'],
     };

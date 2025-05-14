@@ -234,8 +234,8 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
     }
 
     const response = await this.apiClient.vaults.listVaultsApiV1VaultsGet({
-      search: this.config.address,
       vaultTypes: [VaultType.evm],
+      accountAddresses: [this.config.address],
     });
     const { vaults } = response;
 

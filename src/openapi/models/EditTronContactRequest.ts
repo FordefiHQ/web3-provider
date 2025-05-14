@@ -51,7 +51,7 @@ export interface EditTronContactRequest {
      * @type {Array<TronChainUniqueId>}
      * @memberof EditTronContactRequest
      */
-    chains: Array<TronChainUniqueId>;
+    chains?: Array<TronChainUniqueId>;
     /**
      * 
      * @type {Array<TronAssetIdentifierRequest>}
@@ -82,7 +82,6 @@ export type EditTronContactRequestTypeEnum = typeof EditTronContactRequestTypeEn
 export function instanceOfEditTronContactRequest(value: object): value is EditTronContactRequest {
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
-    if (!('chains' in value) || value['chains'] === undefined) return false;
     return true;
 }
 
@@ -98,7 +97,7 @@ export function EditTronContactRequestFromJSONTyped(json: any, ignoreDiscriminat
         
         'name': json['name'],
         'type': json['type'],
-        'chains': ((json['chains'] as Array<any>).map(TronChainUniqueIdFromJSON)),
+        'chains': json['chains'] == null ? undefined : ((json['chains'] as Array<any>).map(TronChainUniqueIdFromJSON)),
         'assetsIdentifiers': json['assets_identifiers'] == null ? undefined : ((json['assets_identifiers'] as Array<any>).map(TronAssetIdentifierRequestFromJSON)),
         'memo': json['memo'] == null ? undefined : json['memo'],
     };
@@ -117,7 +116,7 @@ export function EditTronContactRequestToJSONTyped(value?: EditTronContactRequest
         
         'name': value['name'],
         'type': value['type'],
-        'chains': ((value['chains'] as Array<any>).map(TronChainUniqueIdToJSON)),
+        'chains': value['chains'] == null ? undefined : ((value['chains'] as Array<any>).map(TronChainUniqueIdToJSON)),
         'assets_identifiers': value['assetsIdentifiers'] == null ? undefined : ((value['assetsIdentifiers'] as Array<any>).map(TronAssetIdentifierRequestToJSON)),
         'memo': value['memo'],
     };

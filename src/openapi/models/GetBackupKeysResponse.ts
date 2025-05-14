@@ -13,13 +13,6 @@
  */
 
 import { mapValues } from '../runtime';
-import type { KeyType } from './KeyType';
-import {
-    KeyTypeFromJSON,
-    KeyTypeFromJSONTyped,
-    KeyTypeToJSON,
-    KeyTypeToJSONTyped,
-} from './KeyType';
 import type { TimestampedSignature } from './TimestampedSignature';
 import {
     TimestampedSignatureFromJSON,
@@ -65,12 +58,6 @@ export interface GetBackupKeysResponse {
      * @memberof GetBackupKeysResponse
      */
     keyIdsIncluded: Array<string>;
-    /**
-     * 
-     * @type {Array<KeyType>}
-     * @memberof GetBackupKeysResponse
-     */
-    deviceSharesIncluded: Array<KeyType>;
 }
 
 /**
@@ -81,7 +68,6 @@ export function instanceOfGetBackupKeysResponse(value: object): value is GetBack
     if (!('devicesPublicKeys' in value) || value['devicesPublicKeys'] === undefined) return false;
     if (!('timestampedSignature' in value) || value['timestampedSignature'] === undefined) return false;
     if (!('keyIdsIncluded' in value) || value['keyIdsIncluded'] === undefined) return false;
-    if (!('deviceSharesIncluded' in value) || value['deviceSharesIncluded'] === undefined) return false;
     return true;
 }
 
@@ -99,7 +85,6 @@ export function GetBackupKeysResponseFromJSONTyped(json: any, ignoreDiscriminato
         'devicesPublicKeys': ((json['devices_public_keys'] as Array<any>).map(BackupPublicKeyByDeviceFromJSON)),
         'timestampedSignature': TimestampedSignatureFromJSON(json['timestamped_signature']),
         'keyIdsIncluded': json['key_ids_included'],
-        'deviceSharesIncluded': ((json['device_shares_included'] as Array<any>).map(KeyTypeFromJSON)),
     };
 }
 
@@ -118,7 +103,6 @@ export function GetBackupKeysResponseToJSONTyped(value?: GetBackupKeysResponse |
         'devices_public_keys': ((value['devicesPublicKeys'] as Array<any>).map(BackupPublicKeyByDeviceToJSON)),
         'timestamped_signature': TimestampedSignatureToJSON(value['timestampedSignature']),
         'key_ids_included': value['keyIdsIncluded'],
-        'device_shares_included': ((value['deviceSharesIncluded'] as Array<any>).map(KeyTypeToJSON)),
     };
 }
 

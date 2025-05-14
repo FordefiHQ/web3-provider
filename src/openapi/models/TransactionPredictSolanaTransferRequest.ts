@@ -50,6 +50,12 @@ import {
 export interface TransactionPredictSolanaTransferRequest {
     /**
      * 
+     * @type {BatchSolanaTransactionRequestDetailsFee}
+     * @memberof TransactionPredictSolanaTransferRequest
+     */
+    fee?: BatchSolanaTransactionRequestDetailsFee;
+    /**
+     * 
      * @type {string}
      * @memberof TransactionPredictSolanaTransferRequest
      */
@@ -66,12 +72,6 @@ export interface TransactionPredictSolanaTransferRequest {
      * @memberof TransactionPredictSolanaTransferRequest
      */
     skipSimulation?: boolean;
-    /**
-     * 
-     * @type {BatchSolanaTransactionRequestDetailsFee}
-     * @memberof TransactionPredictSolanaTransferRequest
-     */
-    fee?: BatchSolanaTransactionRequestDetailsFee;
     /**
      * 
      * @type {CreateSolanaTransferRequestTo}
@@ -123,10 +123,10 @@ export function TransactionPredictSolanaTransferRequestFromJSONTyped(json: any, 
     }
     return {
         
+        'fee': json['fee'] == null ? undefined : BatchSolanaTransactionRequestDetailsFeeFromJSON(json['fee']),
         'type': json['type'],
         'failOnPredictionFailure': json['fail_on_prediction_failure'] == null ? undefined : json['fail_on_prediction_failure'],
         'skipSimulation': json['skip_simulation'] == null ? undefined : json['skip_simulation'],
-        'fee': json['fee'] == null ? undefined : BatchSolanaTransactionRequestDetailsFeeFromJSON(json['fee']),
         'to': CreateSolanaTransferRequestToFromJSON(json['to']),
         'value': CreateAptosTransferRequestValueFromJSON(json['value']),
         'assetIdentifier': SolanaAssetIdentifierRequestFromJSON(json['asset_identifier']),
@@ -144,10 +144,10 @@ export function TransactionPredictSolanaTransferRequestToJSONTyped(value?: Trans
 
     return {
         
+        'fee': BatchSolanaTransactionRequestDetailsFeeToJSON(value['fee']),
         'type': value['type'],
         'fail_on_prediction_failure': value['failOnPredictionFailure'],
         'skip_simulation': value['skipSimulation'],
-        'fee': BatchSolanaTransactionRequestDetailsFeeToJSON(value['fee']),
         'to': CreateSolanaTransferRequestToToJSON(value['to']),
         'value': CreateAptosTransferRequestValueToJSON(value['value']),
         'asset_identifier': SolanaAssetIdentifierRequestToJSON(value['assetIdentifier']),

@@ -57,7 +57,7 @@ export interface CreateTronContactRequest {
      * @type {Array<TronChainUniqueId>}
      * @memberof CreateTronContactRequest
      */
-    chains: Array<TronChainUniqueId>;
+    chains?: Array<TronChainUniqueId>;
     /**
      * 
      * @type {Array<TronAssetIdentifierRequest>}
@@ -89,7 +89,6 @@ export function instanceOfCreateTronContactRequest(value: object): value is Crea
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
     if (!('address' in value) || value['address'] === undefined) return false;
-    if (!('chains' in value) || value['chains'] === undefined) return false;
     return true;
 }
 
@@ -106,7 +105,7 @@ export function CreateTronContactRequestFromJSONTyped(json: any, ignoreDiscrimin
         'name': json['name'],
         'type': json['type'],
         'address': json['address'],
-        'chains': ((json['chains'] as Array<any>).map(TronChainUniqueIdFromJSON)),
+        'chains': json['chains'] == null ? undefined : ((json['chains'] as Array<any>).map(TronChainUniqueIdFromJSON)),
         'assetsIdentifiers': json['assets_identifiers'] == null ? undefined : ((json['assets_identifiers'] as Array<any>).map(TronAssetIdentifierRequestFromJSON)),
         'memo': json['memo'] == null ? undefined : json['memo'],
     };
@@ -126,7 +125,7 @@ export function CreateTronContactRequestToJSONTyped(value?: CreateTronContactReq
         'name': value['name'],
         'type': value['type'],
         'address': value['address'],
-        'chains': ((value['chains'] as Array<any>).map(TronChainUniqueIdToJSON)),
+        'chains': value['chains'] == null ? undefined : ((value['chains'] as Array<any>).map(TronChainUniqueIdToJSON)),
         'assets_identifiers': value['assetsIdentifiers'] == null ? undefined : ((value['assetsIdentifiers'] as Array<any>).map(TronAssetIdentifierRequestToJSON)),
         'memo': value['memo'],
     };

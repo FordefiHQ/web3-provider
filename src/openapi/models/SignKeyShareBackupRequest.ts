@@ -13,13 +13,6 @@
  */
 
 import { mapValues } from '../runtime';
-import type { KeyType } from './KeyType';
-import {
-    KeyTypeFromJSON,
-    KeyTypeFromJSONTyped,
-    KeyTypeToJSON,
-    KeyTypeToJSONTyped,
-} from './KeyType';
 import type { EncryptionData } from './EncryptionData';
 import {
     EncryptionDataFromJSON,
@@ -64,12 +57,6 @@ export interface SignKeyShareBackupRequest {
      * @memberof SignKeyShareBackupRequest
      */
     backupKey: string;
-    /**
-     * 
-     * @type {Array<KeyType>}
-     * @memberof SignKeyShareBackupRequest
-     */
-    deviceSharesIncluded?: Array<KeyType>;
 }
 
 /**
@@ -98,7 +85,6 @@ export function SignKeyShareBackupRequestFromJSONTyped(json: any, ignoreDiscrimi
         'keyIdsIncluded': json['key_ids_included'] == null ? undefined : json['key_ids_included'],
         'deviceHmac': json['device_hmac'],
         'backupKey': json['backup_key'],
-        'deviceSharesIncluded': json['device_shares_included'] == null ? undefined : ((json['device_shares_included'] as Array<any>).map(KeyTypeFromJSON)),
     };
 }
 
@@ -118,7 +104,6 @@ export function SignKeyShareBackupRequestToJSONTyped(value?: SignKeyShareBackupR
         'key_ids_included': value['keyIdsIncluded'],
         'device_hmac': value['deviceHmac'],
         'backup_key': value['backupKey'],
-        'device_shares_included': value['deviceSharesIncluded'] == null ? undefined : ((value['deviceSharesIncluded'] as Array<any>).map(KeyTypeToJSON)),
     };
 }
 

@@ -38,55 +38,55 @@ import {
 /**
  * 
  * @export
- * @interface SolanaSpotSwapDetails
+ * @interface GetSolanaSpotSwapDetails
  */
-export interface SolanaSpotSwapDetails {
+export interface GetSolanaSpotSwapDetails {
     /**
      * 
      * @type {string}
-     * @memberof SolanaSpotSwapDetails
+     * @memberof GetSolanaSpotSwapDetails
      */
-    type: SolanaSpotSwapDetailsTypeEnum;
+    type: GetSolanaSpotSwapDetailsTypeEnum;
     /**
      * 
      * @type {string}
-     * @memberof SolanaSpotSwapDetails
+     * @memberof GetSolanaSpotSwapDetails
      */
     slippageBps: string;
     /**
      * 
      * @type {string}
-     * @memberof SolanaSpotSwapDetails
+     * @memberof GetSolanaSpotSwapDetails
      */
     priceImpactPct: string;
     /**
      * 
      * @type {string}
-     * @memberof SolanaSpotSwapDetails
+     * @memberof GetSolanaSpotSwapDetails
      */
     rate: string;
     /**
      * 
      * @type {SolanaSpotSwapBroadcastMode}
-     * @memberof SolanaSpotSwapDetails
+     * @memberof GetSolanaSpotSwapDetails
      */
     broadcastMode: SolanaSpotSwapBroadcastMode;
     /**
      * 
      * @type {AssetInfo}
-     * @memberof SolanaSpotSwapDetails
+     * @memberof GetSolanaSpotSwapDetails
      */
     inputAsset: AssetInfo;
     /**
      * 
      * @type {AssetInfo}
-     * @memberof SolanaSpotSwapDetails
+     * @memberof GetSolanaSpotSwapDetails
      */
     outputAsset: AssetInfo;
     /**
      * 
      * @type {Array<EnrichedSolanaAddress>}
-     * @memberof SolanaSpotSwapDetails
+     * @memberof GetSolanaSpotSwapDetails
      */
     recipients: Array<EnrichedSolanaAddress>;
 }
@@ -95,16 +95,16 @@ export interface SolanaSpotSwapDetails {
 /**
  * @export
  */
-export const SolanaSpotSwapDetailsTypeEnum = {
+export const GetSolanaSpotSwapDetailsTypeEnum = {
     spotSwap: 'spot_swap'
 } as const;
-export type SolanaSpotSwapDetailsTypeEnum = typeof SolanaSpotSwapDetailsTypeEnum[keyof typeof SolanaSpotSwapDetailsTypeEnum];
+export type GetSolanaSpotSwapDetailsTypeEnum = typeof GetSolanaSpotSwapDetailsTypeEnum[keyof typeof GetSolanaSpotSwapDetailsTypeEnum];
 
 
 /**
- * Check if a given object implements the SolanaSpotSwapDetails interface.
+ * Check if a given object implements the GetSolanaSpotSwapDetails interface.
  */
-export function instanceOfSolanaSpotSwapDetails(value: object): value is SolanaSpotSwapDetails {
+export function instanceOfGetSolanaSpotSwapDetails(value: object): value is GetSolanaSpotSwapDetails {
     if (!('type' in value) || value['type'] === undefined) return false;
     if (!('slippageBps' in value) || value['slippageBps'] === undefined) return false;
     if (!('priceImpactPct' in value) || value['priceImpactPct'] === undefined) return false;
@@ -116,11 +116,11 @@ export function instanceOfSolanaSpotSwapDetails(value: object): value is SolanaS
     return true;
 }
 
-export function SolanaSpotSwapDetailsFromJSON(json: any): SolanaSpotSwapDetails {
-    return SolanaSpotSwapDetailsFromJSONTyped(json, false);
+export function GetSolanaSpotSwapDetailsFromJSON(json: any): GetSolanaSpotSwapDetails {
+    return GetSolanaSpotSwapDetailsFromJSONTyped(json, false);
 }
 
-export function SolanaSpotSwapDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): SolanaSpotSwapDetails {
+export function GetSolanaSpotSwapDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetSolanaSpotSwapDetails {
     if (json == null) {
         return json;
     }
@@ -137,11 +137,11 @@ export function SolanaSpotSwapDetailsFromJSONTyped(json: any, ignoreDiscriminato
     };
 }
 
-export function SolanaSpotSwapDetailsToJSON(json: any): SolanaSpotSwapDetails {
-    return SolanaSpotSwapDetailsToJSONTyped(json, false);
+export function GetSolanaSpotSwapDetailsToJSON(json: any): GetSolanaSpotSwapDetails {
+    return GetSolanaSpotSwapDetailsToJSONTyped(json, false);
 }
 
-export function SolanaSpotSwapDetailsToJSONTyped(value?: SolanaSpotSwapDetails | null, ignoreDiscriminator: boolean = false): any {
+export function GetSolanaSpotSwapDetailsToJSONTyped(value?: GetSolanaSpotSwapDetails | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

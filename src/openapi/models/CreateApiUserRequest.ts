@@ -13,6 +13,14 @@
  */
 
 import { mapValues } from '../runtime';
+import type { UserAllowedIpSettings } from './UserAllowedIpSettings';
+import {
+    UserAllowedIpSettingsFromJSON,
+    UserAllowedIpSettingsFromJSONTyped,
+    UserAllowedIpSettingsToJSON,
+    UserAllowedIpSettingsToJSONTyped,
+} from './UserAllowedIpSettings';
+
 /**
  * 
  * @export
@@ -37,6 +45,12 @@ export interface CreateApiUserRequest {
      * @memberof CreateApiUserRequest
      */
     userRole: CreateApiUserRequestUserRoleEnum;
+    /**
+     * 
+     * @type {UserAllowedIpSettings}
+     * @memberof CreateApiUserRequest
+     */
+    allowedIpSettings: UserAllowedIpSettings;
 }
 
 
@@ -65,6 +79,7 @@ export function instanceOfCreateApiUserRequest(value: object): value is CreateAp
     if (!('userType' in value) || value['userType'] === undefined) return false;
     if (!('userName' in value) || value['userName'] === undefined) return false;
     if (!('userRole' in value) || value['userRole'] === undefined) return false;
+    if (!('allowedIpSettings' in value) || value['allowedIpSettings'] === undefined) return false;
     return true;
 }
 
@@ -81,6 +96,7 @@ export function CreateApiUserRequestFromJSONTyped(json: any, ignoreDiscriminator
         'userType': json['user_type'],
         'userName': json['user_name'],
         'userRole': json['user_role'],
+        'allowedIpSettings': UserAllowedIpSettingsFromJSON(json['allowed_ip_settings']),
     };
 }
 
@@ -98,6 +114,7 @@ export function CreateApiUserRequestToJSONTyped(value?: CreateApiUserRequest | n
         'user_type': value['userType'],
         'user_name': value['userName'],
         'user_role': value['userRole'],
+        'allowed_ip_settings': UserAllowedIpSettingsToJSON(value['allowedIpSettings']),
     };
 }
 

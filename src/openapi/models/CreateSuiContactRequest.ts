@@ -57,7 +57,7 @@ export interface CreateSuiContactRequest {
      * @type {Array<SuiChainUniqueId>}
      * @memberof CreateSuiContactRequest
      */
-    chains: Array<SuiChainUniqueId>;
+    chains?: Array<SuiChainUniqueId>;
     /**
      * 
      * @type {Array<SuiAssetIdentifierRequest>}
@@ -83,7 +83,6 @@ export function instanceOfCreateSuiContactRequest(value: object): value is Creat
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
     if (!('address' in value) || value['address'] === undefined) return false;
-    if (!('chains' in value) || value['chains'] === undefined) return false;
     return true;
 }
 
@@ -100,7 +99,7 @@ export function CreateSuiContactRequestFromJSONTyped(json: any, ignoreDiscrimina
         'name': json['name'],
         'type': json['type'],
         'address': json['address'],
-        'chains': ((json['chains'] as Array<any>).map(SuiChainUniqueIdFromJSON)),
+        'chains': json['chains'] == null ? undefined : ((json['chains'] as Array<any>).map(SuiChainUniqueIdFromJSON)),
         'assetsIdentifiers': json['assets_identifiers'] == null ? undefined : ((json['assets_identifiers'] as Array<any>).map(SuiAssetIdentifierRequestFromJSON)),
     };
 }
@@ -119,7 +118,7 @@ export function CreateSuiContactRequestToJSONTyped(value?: CreateSuiContactReque
         'name': value['name'],
         'type': value['type'],
         'address': value['address'],
-        'chains': ((value['chains'] as Array<any>).map(SuiChainUniqueIdToJSON)),
+        'chains': value['chains'] == null ? undefined : ((value['chains'] as Array<any>).map(SuiChainUniqueIdToJSON)),
         'assets_identifiers': value['assetsIdentifiers'] == null ? undefined : ((value['assetsIdentifiers'] as Array<any>).map(SuiAssetIdentifierRequestToJSON)),
     };
 }

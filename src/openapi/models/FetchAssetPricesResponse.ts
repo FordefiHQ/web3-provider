@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { PartialErrorResponse } from './PartialErrorResponse';
+import {
+    PartialErrorResponseFromJSON,
+    PartialErrorResponseFromJSONTyped,
+    PartialErrorResponseToJSON,
+    PartialErrorResponseToJSONTyped,
+} from './PartialErrorResponse';
 import type { PricedAssetResponse } from './PricedAssetResponse';
 import {
     PricedAssetResponseFromJSON,
@@ -29,6 +36,30 @@ import {
 export interface FetchAssetPricesResponse {
     /**
      * 
+     * @type {PartialErrorResponse}
+     * @memberof FetchAssetPricesResponse
+     */
+    partialError?: PartialErrorResponse;
+    /**
+     * 
+     * @type {number}
+     * @memberof FetchAssetPricesResponse
+     */
+    total: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof FetchAssetPricesResponse
+     */
+    page: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof FetchAssetPricesResponse
+     */
+    size: number;
+    /**
+     * 
      * @type {Array<PricedAssetResponse>}
      * @memberof FetchAssetPricesResponse
      */
@@ -39,6 +70,9 @@ export interface FetchAssetPricesResponse {
  * Check if a given object implements the FetchAssetPricesResponse interface.
  */
 export function instanceOfFetchAssetPricesResponse(value: object): value is FetchAssetPricesResponse {
+    if (!('total' in value) || value['total'] === undefined) return false;
+    if (!('page' in value) || value['page'] === undefined) return false;
+    if (!('size' in value) || value['size'] === undefined) return false;
     if (!('pricedAssets' in value) || value['pricedAssets'] === undefined) return false;
     return true;
 }
@@ -53,6 +87,10 @@ export function FetchAssetPricesResponseFromJSONTyped(json: any, ignoreDiscrimin
     }
     return {
         
+        'partialError': json['partial_error'] == null ? undefined : PartialErrorResponseFromJSON(json['partial_error']),
+        'total': json['total'],
+        'page': json['page'],
+        'size': json['size'],
         'pricedAssets': ((json['priced_assets'] as Array<any>).map(PricedAssetResponseFromJSON)),
     };
 }
@@ -68,6 +106,10 @@ export function FetchAssetPricesResponseToJSONTyped(value?: FetchAssetPricesResp
 
     return {
         
+        'partial_error': PartialErrorResponseToJSON(value['partialError']),
+        'total': value['total'],
+        'page': value['page'],
+        'size': value['size'],
         'priced_assets': ((value['pricedAssets'] as Array<any>).map(PricedAssetResponseToJSON)),
     };
 }

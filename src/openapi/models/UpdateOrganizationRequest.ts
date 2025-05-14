@@ -20,13 +20,6 @@ import {
     OrganizationTypeToJSON,
     OrganizationTypeToJSONTyped,
 } from './OrganizationType';
-import type { DklsRolloutStatus } from './DklsRolloutStatus';
-import {
-    DklsRolloutStatusFromJSON,
-    DklsRolloutStatusFromJSONTyped,
-    DklsRolloutStatusToJSON,
-    DklsRolloutStatusToJSONTyped,
-} from './DklsRolloutStatus';
 
 /**
  * 
@@ -58,12 +51,6 @@ export interface UpdateOrganizationRequest {
      * @memberof UpdateOrganizationRequest
      */
     allowDeterministicSigning?: boolean;
-    /**
-     * 
-     * @type {DklsRolloutStatus}
-     * @memberof UpdateOrganizationRequest
-     */
-    dklsRolloutStatus?: DklsRolloutStatus;
     /**
      * 
      * @type {number}
@@ -119,7 +106,6 @@ export function UpdateOrganizationRequestFromJSONTyped(json: any, ignoreDiscrimi
         'isDeprecated': json['is_deprecated'] == null ? undefined : json['is_deprecated'],
         'name': json['name'] == null ? undefined : json['name'],
         'allowDeterministicSigning': json['allow_deterministic_signing'] == null ? undefined : json['allow_deterministic_signing'],
-        'dklsRolloutStatus': json['dkls_rollout_status'] == null ? undefined : DklsRolloutStatusFromJSON(json['dkls_rollout_status']),
         'daysTillBackupExpires': json['days_till_backup_expires'] == null ? undefined : json['days_till_backup_expires'],
         'shouldResetBackup': json['should_reset_backup'] == null ? undefined : json['should_reset_backup'],
         'crmId': json['crm_id'] == null ? undefined : json['crm_id'],
@@ -143,7 +129,6 @@ export function UpdateOrganizationRequestToJSONTyped(value?: UpdateOrganizationR
         'is_deprecated': value['isDeprecated'],
         'name': value['name'],
         'allow_deterministic_signing': value['allowDeterministicSigning'],
-        'dkls_rollout_status': DklsRolloutStatusToJSON(value['dklsRolloutStatus']),
         'days_till_backup_expires': value['daysTillBackupExpires'],
         'should_reset_backup': value['shouldResetBackup'],
         'crm_id': value['crmId'],

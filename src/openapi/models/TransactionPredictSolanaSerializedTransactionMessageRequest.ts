@@ -50,6 +50,12 @@ import {
 export interface TransactionPredictSolanaSerializedTransactionMessageRequest {
     /**
      * 
+     * @type {BatchSolanaTransactionRequestDetailsFee}
+     * @memberof TransactionPredictSolanaSerializedTransactionMessageRequest
+     */
+    fee?: BatchSolanaTransactionRequestDetailsFee;
+    /**
+     * 
      * @type {string}
      * @memberof TransactionPredictSolanaSerializedTransactionMessageRequest
      */
@@ -66,12 +72,6 @@ export interface TransactionPredictSolanaSerializedTransactionMessageRequest {
      * @memberof TransactionPredictSolanaSerializedTransactionMessageRequest
      */
     skipSimulation?: boolean;
-    /**
-     * 
-     * @type {BatchSolanaTransactionRequestDetailsFee}
-     * @memberof TransactionPredictSolanaSerializedTransactionMessageRequest
-     */
-    fee?: BatchSolanaTransactionRequestDetailsFee;
     /**
      * 
      * @type {SolanaChainUniqueId}
@@ -128,10 +128,10 @@ export function TransactionPredictSolanaSerializedTransactionMessageRequestFromJ
     }
     return {
         
+        'fee': json['fee'] == null ? undefined : BatchSolanaTransactionRequestDetailsFeeFromJSON(json['fee']),
         'type': json['type'],
         'failOnPredictionFailure': json['fail_on_prediction_failure'] == null ? undefined : json['fail_on_prediction_failure'],
         'skipSimulation': json['skip_simulation'] == null ? undefined : json['skip_simulation'],
-        'fee': json['fee'] == null ? undefined : BatchSolanaTransactionRequestDetailsFeeFromJSON(json['fee']),
         'chain': SolanaChainUniqueIdFromJSON(json['chain']),
         'data': json['data'],
         'signatures': json['signatures'] == null ? undefined : ((json['signatures'] as Array<any>).map(SolanaTransactionSignaturesRequestFromJSON)),
@@ -150,10 +150,10 @@ export function TransactionPredictSolanaSerializedTransactionMessageRequestToJSO
 
     return {
         
+        'fee': BatchSolanaTransactionRequestDetailsFeeToJSON(value['fee']),
         'type': value['type'],
         'fail_on_prediction_failure': value['failOnPredictionFailure'],
         'skip_simulation': value['skipSimulation'],
-        'fee': BatchSolanaTransactionRequestDetailsFeeToJSON(value['fee']),
         'chain': SolanaChainUniqueIdToJSON(value['chain']),
         'data': value['data'],
         'signatures': value['signatures'] == null ? undefined : ((value['signatures'] as Array<any>).map(SolanaTransactionSignaturesRequestToJSON)),

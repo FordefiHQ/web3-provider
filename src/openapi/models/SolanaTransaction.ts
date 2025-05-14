@@ -34,13 +34,6 @@ import {
     PushableTransactionStateChangeToJSON,
     PushableTransactionStateChangeToJSONTyped,
 } from './PushableTransactionStateChange';
-import type { PredictedSolanaTransactionSolanaTransactionTypeDetails } from './PredictedSolanaTransactionSolanaTransactionTypeDetails';
-import {
-    PredictedSolanaTransactionSolanaTransactionTypeDetailsFromJSON,
-    PredictedSolanaTransactionSolanaTransactionTypeDetailsFromJSONTyped,
-    PredictedSolanaTransactionSolanaTransactionTypeDetailsToJSON,
-    PredictedSolanaTransactionSolanaTransactionTypeDetailsToJSONTyped,
-} from './PredictedSolanaTransactionSolanaTransactionTypeDetails';
 import type { PushableTransactionState } from './PushableTransactionState';
 import {
     PushableTransactionStateFromJSON,
@@ -125,6 +118,13 @@ import {
     SolanaEnrichedMessageAddressTableLookupToJSON,
     SolanaEnrichedMessageAddressTableLookupToJSONTyped,
 } from './SolanaEnrichedMessageAddressTableLookup';
+import type { SolanaTransactionSolanaTransactionTypeDetails } from './SolanaTransactionSolanaTransactionTypeDetails';
+import {
+    SolanaTransactionSolanaTransactionTypeDetailsFromJSON,
+    SolanaTransactionSolanaTransactionTypeDetailsFromJSONTyped,
+    SolanaTransactionSolanaTransactionTypeDetailsToJSON,
+    SolanaTransactionSolanaTransactionTypeDetailsToJSONTyped,
+} from './SolanaTransactionSolanaTransactionTypeDetails';
 import type { SolanaBlockData } from './SolanaBlockData';
 import {
     SolanaBlockDataFromJSON,
@@ -232,10 +232,10 @@ export interface SolanaTransaction {
     type: SolanaTransactionTypeEnum;
     /**
      * 
-     * @type {PredictedSolanaTransactionSolanaTransactionTypeDetails}
+     * @type {SolanaTransactionSolanaTransactionTypeDetails}
      * @memberof SolanaTransaction
      */
-    solanaTransactionTypeDetails: PredictedSolanaTransactionSolanaTransactionTypeDetails;
+    solanaTransactionTypeDetails: SolanaTransactionSolanaTransactionTypeDetails;
     /**
      * 
      * @type {EnrichedSolanaChain}
@@ -386,7 +386,7 @@ export function SolanaTransactionFromJSONTyped(json: any, ignoreDiscriminator: b
         'amlResults': json['aml_results'] == null ? undefined : AmlResultsFromJSON(json['aml_results']),
         'incomingAmlPolicyMatch': json['incoming_aml_policy_match'] == null ? undefined : AmlPolicyMatchIncomingFromJSON(json['incoming_aml_policy_match']),
         'type': json['type'],
-        'solanaTransactionTypeDetails': PredictedSolanaTransactionSolanaTransactionTypeDetailsFromJSON(json['solana_transaction_type_details']),
+        'solanaTransactionTypeDetails': SolanaTransactionSolanaTransactionTypeDetailsFromJSON(json['solana_transaction_type_details']),
         'chain': EnrichedSolanaChainFromJSON(json['chain']),
         'version': SolanaMessageVersionFromJSON(json['version']),
         'instructions': ((json['instructions'] as Array<any>).map(SolanaCompiledInstructionFromJSON)),
@@ -430,7 +430,7 @@ export function SolanaTransactionToJSONTyped(value?: SolanaTransaction | null, i
         'aml_results': AmlResultsToJSON(value['amlResults']),
         'incoming_aml_policy_match': AmlPolicyMatchIncomingToJSON(value['incomingAmlPolicyMatch']),
         'type': value['type'],
-        'solana_transaction_type_details': PredictedSolanaTransactionSolanaTransactionTypeDetailsToJSON(value['solanaTransactionTypeDetails']),
+        'solana_transaction_type_details': SolanaTransactionSolanaTransactionTypeDetailsToJSON(value['solanaTransactionTypeDetails']),
         'chain': EnrichedSolanaChainToJSON(value['chain']),
         'version': SolanaMessageVersionToJSON(value['version']),
         'instructions': ((value['instructions'] as Array<any>).map(SolanaCompiledInstructionToJSON)),

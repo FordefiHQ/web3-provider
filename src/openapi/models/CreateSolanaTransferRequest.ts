@@ -57,6 +57,12 @@ import {
 export interface CreateSolanaTransferRequest {
     /**
      * 
+     * @type {BatchSolanaTransactionRequestDetailsFee}
+     * @memberof CreateSolanaTransferRequest
+     */
+    fee?: BatchSolanaTransactionRequestDetailsFee;
+    /**
+     * 
      * @type {string}
      * @memberof CreateSolanaTransferRequest
      */
@@ -73,12 +79,6 @@ export interface CreateSolanaTransferRequest {
      * @memberof CreateSolanaTransferRequest
      */
     pushMode?: PushMode;
-    /**
-     * 
-     * @type {BatchSolanaTransactionRequestDetailsFee}
-     * @memberof CreateSolanaTransferRequest
-     */
-    fee?: BatchSolanaTransactionRequestDetailsFee;
     /**
      * 
      * @type {boolean}
@@ -136,10 +136,10 @@ export function CreateSolanaTransferRequestFromJSONTyped(json: any, ignoreDiscri
     }
     return {
         
+        'fee': json['fee'] == null ? undefined : BatchSolanaTransactionRequestDetailsFeeFromJSON(json['fee']),
         'type': json['type'],
         'failOnPredictionFailure': json['fail_on_prediction_failure'] == null ? undefined : json['fail_on_prediction_failure'],
         'pushMode': json['push_mode'] == null ? undefined : PushModeFromJSON(json['push_mode']),
-        'fee': json['fee'] == null ? undefined : BatchSolanaTransactionRequestDetailsFeeFromJSON(json['fee']),
         'skipPrediction': json['skip_prediction'] == null ? undefined : json['skip_prediction'],
         'to': CreateSolanaTransferRequestToFromJSON(json['to']),
         'value': CreateAptosTransferRequestValueFromJSON(json['value']),
@@ -158,10 +158,10 @@ export function CreateSolanaTransferRequestToJSONTyped(value?: CreateSolanaTrans
 
     return {
         
+        'fee': BatchSolanaTransactionRequestDetailsFeeToJSON(value['fee']),
         'type': value['type'],
         'fail_on_prediction_failure': value['failOnPredictionFailure'],
         'push_mode': PushModeToJSON(value['pushMode']),
-        'fee': BatchSolanaTransactionRequestDetailsFeeToJSON(value['fee']),
         'skip_prediction': value['skipPrediction'],
         'to': CreateSolanaTransferRequestToToJSON(value['to']),
         'value': CreateAptosTransferRequestValueToJSON(value['value']),

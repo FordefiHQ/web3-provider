@@ -20,13 +20,6 @@ import {
     ExportTypeToJSON,
     ExportTypeToJSONTyped,
 } from './ExportType';
-import type { Resource } from './Resource';
-import {
-    ResourceFromJSON,
-    ResourceFromJSONTyped,
-    ResourceToJSON,
-    ResourceToJSONTyped,
-} from './Resource';
 import type { ExportState } from './ExportState';
 import {
     ExportStateFromJSON,
@@ -34,6 +27,13 @@ import {
     ExportStateToJSON,
     ExportStateToJSONTyped,
 } from './ExportState';
+import type { ExportedResource } from './ExportedResource';
+import {
+    ExportedResourceFromJSON,
+    ExportedResourceFromJSONTyped,
+    ExportedResourceToJSON,
+    ExportedResourceToJSONTyped,
+} from './ExportedResource';
 
 /**
  * 
@@ -79,10 +79,10 @@ export interface Export {
     userId: string;
     /**
      * 
-     * @type {Resource}
+     * @type {ExportedResource}
      * @memberof Export
      */
-    resourceType: Resource;
+    resourceType: ExportedResource;
     /**
      * 
      * @type {number}
@@ -159,7 +159,7 @@ export function ExportFromJSONTyped(json: any, ignoreDiscriminator: boolean): Ex
         'state': ExportStateFromJSON(json['state']),
         'organizationId': json['organization_id'],
         'userId': json['user_id'],
-        'resourceType': ResourceFromJSON(json['resource_type']),
+        'resourceType': ExportedResourceFromJSON(json['resource_type']),
         'successfulItemsCount': json['successful_items_count'],
         'failedItemsCount': json['failed_items_count'],
         'totalItemsCount': json['total_items_count'],
@@ -186,7 +186,7 @@ export function ExportToJSONTyped(value?: Export | null, ignoreDiscriminator: bo
         'state': ExportStateToJSON(value['state']),
         'organization_id': value['organizationId'],
         'user_id': value['userId'],
-        'resource_type': ResourceToJSON(value['resourceType']),
+        'resource_type': ExportedResourceToJSON(value['resourceType']),
         'successful_items_count': value['successfulItemsCount'],
         'failed_items_count': value['failedItemsCount'],
         'total_items_count': value['totalItemsCount'],
