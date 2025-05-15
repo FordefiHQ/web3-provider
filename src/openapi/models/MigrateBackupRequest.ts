@@ -12,19 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EncryptedBackupShareByDevice } from './EncryptedBackupShareByDevice';
 import {
     EncryptedBackupShareByDeviceFromJSON,
     EncryptedBackupShareByDeviceFromJSONTyped,
     EncryptedBackupShareByDeviceToJSON,
+    EncryptedBackupShareByDeviceToJSONTyped,
 } from './EncryptedBackupShareByDevice';
-import type { KeyType } from './KeyType';
-import {
-    KeyTypeFromJSON,
-    KeyTypeFromJSONTyped,
-    KeyTypeToJSON,
-} from './KeyType';
 
 /**
  * 
@@ -46,22 +41,20 @@ export interface MigrateBackupRequest {
     signature: string;
     /**
      * 
-     * @type {Array<KeyType>}
+     * @type {Array<string>}
      * @memberof MigrateBackupRequest
      */
-    deviceSharesIncluded: Array<KeyType>;
+    keyIdsIncluded: Array<string>;
 }
 
 /**
  * Check if a given object implements the MigrateBackupRequest interface.
  */
-export function instanceOfMigrateBackupRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "encryptedSharesForBackup" in value;
-    isInstance = isInstance && "signature" in value;
-    isInstance = isInstance && "deviceSharesIncluded" in value;
-
-    return isInstance;
+export function instanceOfMigrateBackupRequest(value: object): value is MigrateBackupRequest {
+    if (!('encryptedSharesForBackup' in value) || value['encryptedSharesForBackup'] === undefined) return false;
+    if (!('signature' in value) || value['signature'] === undefined) return false;
+    if (!('keyIdsIncluded' in value) || value['keyIdsIncluded'] === undefined) return false;
+    return true;
 }
 
 export function MigrateBackupRequestFromJSON(json: any): MigrateBackupRequest {
@@ -69,29 +62,31 @@ export function MigrateBackupRequestFromJSON(json: any): MigrateBackupRequest {
 }
 
 export function MigrateBackupRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): MigrateBackupRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'encryptedSharesForBackup': ((json['encrypted_shares_for_backup'] as Array<any>).map(EncryptedBackupShareByDeviceFromJSON)),
         'signature': json['signature'],
-        'deviceSharesIncluded': ((json['device_shares_included'] as Array<any>).map(KeyTypeFromJSON)),
+        'keyIdsIncluded': json['key_ids_included'],
     };
 }
 
-export function MigrateBackupRequestToJSON(value?: MigrateBackupRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MigrateBackupRequestToJSON(json: any): MigrateBackupRequest {
+    return MigrateBackupRequestToJSONTyped(json, false);
+}
+
+export function MigrateBackupRequestToJSONTyped(value?: MigrateBackupRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'encrypted_shares_for_backup': ((value.encryptedSharesForBackup as Array<any>).map(EncryptedBackupShareByDeviceToJSON)),
-        'signature': value.signature,
-        'device_shares_included': ((value.deviceSharesIncluded as Array<any>).map(KeyTypeToJSON)),
+        'encrypted_shares_for_backup': ((value['encryptedSharesForBackup'] as Array<any>).map(EncryptedBackupShareByDeviceToJSON)),
+        'signature': value['signature'],
+        'key_ids_included': value['keyIdsIncluded'],
     };
 }
 

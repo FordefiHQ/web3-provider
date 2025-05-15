@@ -12,37 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
-import {
-    EnrichedEvmAddressFromJSON,
-    EnrichedEvmAddressFromJSONTyped,
-    EnrichedEvmAddressToJSON,
-} from './EnrichedEvmAddress';
-import type { EvmBalanceChangeEffectTokenContract } from './EvmBalanceChangeEffectTokenContract';
-import {
-    EvmBalanceChangeEffectTokenContractFromJSON,
-    EvmBalanceChangeEffectTokenContractFromJSONTyped,
-    EvmBalanceChangeEffectTokenContractToJSON,
-} from './EvmBalanceChangeEffectTokenContract';
-import type { EvmBalanceChangeEffectType } from './EvmBalanceChangeEffectType';
-import {
-    EvmBalanceChangeEffectTypeFromJSON,
-    EvmBalanceChangeEffectTypeFromJSONTyped,
-    EvmBalanceChangeEffectTypeToJSON,
-} from './EvmBalanceChangeEffectType';
-import type { Price } from './Price';
-import {
-    PriceFromJSON,
-    PriceFromJSONTyped,
-    PriceToJSON,
-} from './Price';
+import { mapValues } from '../runtime';
 import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
     PricedAssetFromJSONTyped,
     PricedAssetToJSON,
+    PricedAssetToJSONTyped,
 } from './PricedAsset';
+import type { EvmBalanceChangeEffectTokenContract } from './EvmBalanceChangeEffectTokenContract';
+import {
+    EvmBalanceChangeEffectTokenContractFromJSON,
+    EvmBalanceChangeEffectTokenContractFromJSONTyped,
+    EvmBalanceChangeEffectTokenContractToJSON,
+    EvmBalanceChangeEffectTokenContractToJSONTyped,
+} from './EvmBalanceChangeEffectTokenContract';
+import type { Price } from './Price';
+import {
+    PriceFromJSON,
+    PriceFromJSONTyped,
+    PriceToJSON,
+    PriceToJSONTyped,
+} from './Price';
+import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
+import {
+    EnrichedEvmAddressFromJSON,
+    EnrichedEvmAddressFromJSONTyped,
+    EnrichedEvmAddressToJSON,
+    EnrichedEvmAddressToJSONTyped,
+} from './EnrichedEvmAddress';
+import type { EvmBalanceChangeEffectType } from './EvmBalanceChangeEffectType';
+import {
+    EvmBalanceChangeEffectTypeFromJSON,
+    EvmBalanceChangeEffectTypeFromJSONTyped,
+    EvmBalanceChangeEffectTypeToJSON,
+    EvmBalanceChangeEffectTypeToJSONTyped,
+} from './EvmBalanceChangeEffectType';
 
 /**
  * 
@@ -109,18 +114,18 @@ export interface EvmBalanceChangeEffect {
     owned?: boolean;
 }
 
+
+
 /**
  * Check if a given object implements the EvmBalanceChangeEffect interface.
  */
-export function instanceOfEvmBalanceChangeEffect(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "pricedAsset" in value;
-    isInstance = isInstance && "diff" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "owner" in value;
-
-    return isInstance;
+export function instanceOfEvmBalanceChangeEffect(value: object): value is EvmBalanceChangeEffect {
+    if (!('pricedAsset' in value) || value['pricedAsset'] === undefined) return false;
+    if (!('diff' in value) || value['diff'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('owner' in value) || value['owner'] === undefined) return false;
+    return true;
 }
 
 export function EvmBalanceChangeEffectFromJSON(json: any): EvmBalanceChangeEffect {
@@ -128,7 +133,7 @@ export function EvmBalanceChangeEffectFromJSON(json: any): EvmBalanceChangeEffec
 }
 
 export function EvmBalanceChangeEffectFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmBalanceChangeEffect {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -138,31 +143,33 @@ export function EvmBalanceChangeEffectFromJSONTyped(json: any, ignoreDiscriminat
         'type': EvmBalanceChangeEffectTypeFromJSON(json['type']),
         'address': EnrichedEvmAddressFromJSON(json['address']),
         'owner': EnrichedEvmAddressFromJSON(json['owner']),
-        'price': !exists(json, 'price') ? undefined : PriceFromJSON(json['price']),
-        'tokenContract': !exists(json, 'token_contract') ? undefined : EvmBalanceChangeEffectTokenContractFromJSON(json['token_contract']),
-        'tokenId': !exists(json, 'token_id') ? undefined : json['token_id'],
-        'owned': !exists(json, 'owned') ? undefined : json['owned'],
+        'price': json['price'] == null ? undefined : PriceFromJSON(json['price']),
+        'tokenContract': json['token_contract'] == null ? undefined : EvmBalanceChangeEffectTokenContractFromJSON(json['token_contract']),
+        'tokenId': json['token_id'] == null ? undefined : json['token_id'],
+        'owned': json['owned'] == null ? undefined : json['owned'],
     };
 }
 
-export function EvmBalanceChangeEffectToJSON(value?: EvmBalanceChangeEffect | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EvmBalanceChangeEffectToJSON(json: any): EvmBalanceChangeEffect {
+    return EvmBalanceChangeEffectToJSONTyped(json, false);
+}
+
+export function EvmBalanceChangeEffectToJSONTyped(value?: EvmBalanceChangeEffect | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'priced_asset': PricedAssetToJSON(value.pricedAsset),
-        'diff': value.diff,
-        'type': EvmBalanceChangeEffectTypeToJSON(value.type),
-        'address': EnrichedEvmAddressToJSON(value.address),
-        'owner': EnrichedEvmAddressToJSON(value.owner),
-        'price': PriceToJSON(value.price),
-        'token_contract': EvmBalanceChangeEffectTokenContractToJSON(value.tokenContract),
-        'token_id': value.tokenId,
-        'owned': value.owned,
+        'priced_asset': PricedAssetToJSON(value['pricedAsset']),
+        'diff': value['diff'],
+        'type': EvmBalanceChangeEffectTypeToJSON(value['type']),
+        'address': EnrichedEvmAddressToJSON(value['address']),
+        'owner': EnrichedEvmAddressToJSON(value['owner']),
+        'price': PriceToJSON(value['price']),
+        'token_contract': EvmBalanceChangeEffectTokenContractToJSON(value['tokenContract']),
+        'token_id': value['tokenId'],
+        'owned': value['owned'],
     };
 }
 

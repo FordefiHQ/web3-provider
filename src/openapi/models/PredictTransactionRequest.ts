@@ -12,190 +12,246 @@
  * Do not edit the class manually.
  */
 
+import type { PredictStacksTransactionRequest } from './PredictStacksTransactionRequest';
 import {
-    TransactionDetailsAptosMessageRequest,
-    instanceOfTransactionDetailsAptosMessageRequest,
-    TransactionDetailsAptosMessageRequestFromJSON,
-    TransactionDetailsAptosMessageRequestFromJSONTyped,
-    TransactionDetailsAptosMessageRequestToJSON,
-} from './TransactionDetailsAptosMessageRequest';
+    instanceOfPredictStacksTransactionRequest,
+    PredictStacksTransactionRequestFromJSON,
+    PredictStacksTransactionRequestFromJSONTyped,
+    PredictStacksTransactionRequestToJSON,
+} from './PredictStacksTransactionRequest';
+import type { PredictStarknetMessageRequest } from './PredictStarknetMessageRequest';
 import {
-    TransactionDetailsAptosTransactionRequest,
-    instanceOfTransactionDetailsAptosTransactionRequest,
-    TransactionDetailsAptosTransactionRequestFromJSON,
-    TransactionDetailsAptosTransactionRequestFromJSONTyped,
-    TransactionDetailsAptosTransactionRequestToJSON,
-} from './TransactionDetailsAptosTransactionRequest';
+    instanceOfPredictStarknetMessageRequest,
+    PredictStarknetMessageRequestFromJSON,
+    PredictStarknetMessageRequestFromJSONTyped,
+    PredictStarknetMessageRequestToJSON,
+} from './PredictStarknetMessageRequest';
+import type { PredictStarknetTransactionRequest } from './PredictStarknetTransactionRequest';
 import {
-    TransactionDetailsCosmosMessageRequest,
-    instanceOfTransactionDetailsCosmosMessageRequest,
-    TransactionDetailsCosmosMessageRequestFromJSON,
-    TransactionDetailsCosmosMessageRequestFromJSONTyped,
-    TransactionDetailsCosmosMessageRequestToJSON,
-} from './TransactionDetailsCosmosMessageRequest';
+    instanceOfPredictStarknetTransactionRequest,
+    PredictStarknetTransactionRequestFromJSON,
+    PredictStarknetTransactionRequestFromJSONTyped,
+    PredictStarknetTransactionRequestToJSON,
+} from './PredictStarknetTransactionRequest';
+import type { TransactionPredictAptosMessageRequest } from './TransactionPredictAptosMessageRequest';
 import {
-    TransactionDetailsCosmosTransactionRequest,
-    instanceOfTransactionDetailsCosmosTransactionRequest,
-    TransactionDetailsCosmosTransactionRequestFromJSON,
-    TransactionDetailsCosmosTransactionRequestFromJSONTyped,
-    TransactionDetailsCosmosTransactionRequestToJSON,
-} from './TransactionDetailsCosmosTransactionRequest';
+    instanceOfTransactionPredictAptosMessageRequest,
+    TransactionPredictAptosMessageRequestFromJSON,
+    TransactionPredictAptosMessageRequestFromJSONTyped,
+    TransactionPredictAptosMessageRequestToJSON,
+} from './TransactionPredictAptosMessageRequest';
+import type { TransactionPredictAptosTransactionRequest } from './TransactionPredictAptosTransactionRequest';
 import {
-    TransactionDetailsEvmMessageRequest,
-    instanceOfTransactionDetailsEvmMessageRequest,
-    TransactionDetailsEvmMessageRequestFromJSON,
-    TransactionDetailsEvmMessageRequestFromJSONTyped,
-    TransactionDetailsEvmMessageRequestToJSON,
-} from './TransactionDetailsEvmMessageRequest';
+    instanceOfTransactionPredictAptosTransactionRequest,
+    TransactionPredictAptosTransactionRequestFromJSON,
+    TransactionPredictAptosTransactionRequestFromJSONTyped,
+    TransactionPredictAptosTransactionRequestToJSON,
+} from './TransactionPredictAptosTransactionRequest';
+import type { TransactionPredictCosmosMessageRequest } from './TransactionPredictCosmosMessageRequest';
 import {
-    TransactionDetailsEvmTransactionRequest,
-    instanceOfTransactionDetailsEvmTransactionRequest,
-    TransactionDetailsEvmTransactionRequestFromJSON,
-    TransactionDetailsEvmTransactionRequestFromJSONTyped,
-    TransactionDetailsEvmTransactionRequestToJSON,
-} from './TransactionDetailsEvmTransactionRequest';
+    instanceOfTransactionPredictCosmosMessageRequest,
+    TransactionPredictCosmosMessageRequestFromJSON,
+    TransactionPredictCosmosMessageRequestFromJSONTyped,
+    TransactionPredictCosmosMessageRequestToJSON,
+} from './TransactionPredictCosmosMessageRequest';
+import type { TransactionPredictCosmosTransactionRequest } from './TransactionPredictCosmosTransactionRequest';
 import {
-    TransactionDetailsSolanaMessageRequest,
-    instanceOfTransactionDetailsSolanaMessageRequest,
-    TransactionDetailsSolanaMessageRequestFromJSON,
-    TransactionDetailsSolanaMessageRequestFromJSONTyped,
-    TransactionDetailsSolanaMessageRequestToJSON,
-} from './TransactionDetailsSolanaMessageRequest';
+    instanceOfTransactionPredictCosmosTransactionRequest,
+    TransactionPredictCosmosTransactionRequestFromJSON,
+    TransactionPredictCosmosTransactionRequestFromJSONTyped,
+    TransactionPredictCosmosTransactionRequestToJSON,
+} from './TransactionPredictCosmosTransactionRequest';
+import type { TransactionPredictEvmMessageRequest } from './TransactionPredictEvmMessageRequest';
 import {
-    TransactionDetailsSolanaTransactionRequest,
-    instanceOfTransactionDetailsSolanaTransactionRequest,
-    TransactionDetailsSolanaTransactionRequestFromJSON,
-    TransactionDetailsSolanaTransactionRequestFromJSONTyped,
-    TransactionDetailsSolanaTransactionRequestToJSON,
-} from './TransactionDetailsSolanaTransactionRequest';
+    instanceOfTransactionPredictEvmMessageRequest,
+    TransactionPredictEvmMessageRequestFromJSON,
+    TransactionPredictEvmMessageRequestFromJSONTyped,
+    TransactionPredictEvmMessageRequestToJSON,
+} from './TransactionPredictEvmMessageRequest';
+import type { TransactionPredictEvmTransactionRequest } from './TransactionPredictEvmTransactionRequest';
 import {
-    TransactionDetailsSuiMessageRequest,
-    instanceOfTransactionDetailsSuiMessageRequest,
-    TransactionDetailsSuiMessageRequestFromJSON,
-    TransactionDetailsSuiMessageRequestFromJSONTyped,
-    TransactionDetailsSuiMessageRequestToJSON,
-} from './TransactionDetailsSuiMessageRequest';
+    instanceOfTransactionPredictEvmTransactionRequest,
+    TransactionPredictEvmTransactionRequestFromJSON,
+    TransactionPredictEvmTransactionRequestFromJSONTyped,
+    TransactionPredictEvmTransactionRequestToJSON,
+} from './TransactionPredictEvmTransactionRequest';
+import type { TransactionPredictExchangeTransactionRequest } from './TransactionPredictExchangeTransactionRequest';
 import {
-    TransactionDetailsSuiTransactionRequest,
-    instanceOfTransactionDetailsSuiTransactionRequest,
-    TransactionDetailsSuiTransactionRequestFromJSON,
-    TransactionDetailsSuiTransactionRequestFromJSONTyped,
-    TransactionDetailsSuiTransactionRequestToJSON,
-} from './TransactionDetailsSuiTransactionRequest';
+    instanceOfTransactionPredictExchangeTransactionRequest,
+    TransactionPredictExchangeTransactionRequestFromJSON,
+    TransactionPredictExchangeTransactionRequestFromJSONTyped,
+    TransactionPredictExchangeTransactionRequestToJSON,
+} from './TransactionPredictExchangeTransactionRequest';
+import type { TransactionPredictSolanaMessageRequest } from './TransactionPredictSolanaMessageRequest';
 import {
-    TransactionDetailsTonMessageRequest,
-    instanceOfTransactionDetailsTonMessageRequest,
-    TransactionDetailsTonMessageRequestFromJSON,
-    TransactionDetailsTonMessageRequestFromJSONTyped,
-    TransactionDetailsTonMessageRequestToJSON,
-} from './TransactionDetailsTonMessageRequest';
+    instanceOfTransactionPredictSolanaMessageRequest,
+    TransactionPredictSolanaMessageRequestFromJSON,
+    TransactionPredictSolanaMessageRequestFromJSONTyped,
+    TransactionPredictSolanaMessageRequestToJSON,
+} from './TransactionPredictSolanaMessageRequest';
+import type { TransactionPredictSolanaTransactionRequest } from './TransactionPredictSolanaTransactionRequest';
 import {
-    TransactionDetailsTonTransactionRequest,
-    instanceOfTransactionDetailsTonTransactionRequest,
-    TransactionDetailsTonTransactionRequestFromJSON,
-    TransactionDetailsTonTransactionRequestFromJSONTyped,
-    TransactionDetailsTonTransactionRequestToJSON,
-} from './TransactionDetailsTonTransactionRequest';
+    instanceOfTransactionPredictSolanaTransactionRequest,
+    TransactionPredictSolanaTransactionRequestFromJSON,
+    TransactionPredictSolanaTransactionRequestFromJSONTyped,
+    TransactionPredictSolanaTransactionRequestToJSON,
+} from './TransactionPredictSolanaTransactionRequest';
+import type { TransactionPredictSuiMessageRequest } from './TransactionPredictSuiMessageRequest';
 import {
-    TransactionDetailsUtxoMessageRequest,
-    instanceOfTransactionDetailsUtxoMessageRequest,
-    TransactionDetailsUtxoMessageRequestFromJSON,
-    TransactionDetailsUtxoMessageRequestFromJSONTyped,
-    TransactionDetailsUtxoMessageRequestToJSON,
-} from './TransactionDetailsUtxoMessageRequest';
+    instanceOfTransactionPredictSuiMessageRequest,
+    TransactionPredictSuiMessageRequestFromJSON,
+    TransactionPredictSuiMessageRequestFromJSONTyped,
+    TransactionPredictSuiMessageRequestToJSON,
+} from './TransactionPredictSuiMessageRequest';
+import type { TransactionPredictSuiTransactionRequest } from './TransactionPredictSuiTransactionRequest';
 import {
-    TransactionDetailsUtxoTransactionRequest,
-    instanceOfTransactionDetailsUtxoTransactionRequest,
-    TransactionDetailsUtxoTransactionRequestFromJSON,
-    TransactionDetailsUtxoTransactionRequestFromJSONTyped,
-    TransactionDetailsUtxoTransactionRequestToJSON,
-} from './TransactionDetailsUtxoTransactionRequest';
+    instanceOfTransactionPredictSuiTransactionRequest,
+    TransactionPredictSuiTransactionRequestFromJSON,
+    TransactionPredictSuiTransactionRequestFromJSONTyped,
+    TransactionPredictSuiTransactionRequestToJSON,
+} from './TransactionPredictSuiTransactionRequest';
+import type { TransactionPredictTonMessageRequest } from './TransactionPredictTonMessageRequest';
+import {
+    instanceOfTransactionPredictTonMessageRequest,
+    TransactionPredictTonMessageRequestFromJSON,
+    TransactionPredictTonMessageRequestFromJSONTyped,
+    TransactionPredictTonMessageRequestToJSON,
+} from './TransactionPredictTonMessageRequest';
+import type { TransactionPredictTonTransactionRequest } from './TransactionPredictTonTransactionRequest';
+import {
+    instanceOfTransactionPredictTonTransactionRequest,
+    TransactionPredictTonTransactionRequestFromJSON,
+    TransactionPredictTonTransactionRequestFromJSONTyped,
+    TransactionPredictTonTransactionRequestToJSON,
+} from './TransactionPredictTonTransactionRequest';
+import type { TransactionPredictTronTransactionRequest } from './TransactionPredictTronTransactionRequest';
+import {
+    instanceOfTransactionPredictTronTransactionRequest,
+    TransactionPredictTronTransactionRequestFromJSON,
+    TransactionPredictTronTransactionRequestFromJSONTyped,
+    TransactionPredictTronTransactionRequestToJSON,
+} from './TransactionPredictTronTransactionRequest';
+import type { TransactionPredictUtxoMessageRequest } from './TransactionPredictUtxoMessageRequest';
+import {
+    instanceOfTransactionPredictUtxoMessageRequest,
+    TransactionPredictUtxoMessageRequestFromJSON,
+    TransactionPredictUtxoMessageRequestFromJSONTyped,
+    TransactionPredictUtxoMessageRequestToJSON,
+} from './TransactionPredictUtxoMessageRequest';
+import type { TransactionPredictUtxoTransactionRequest } from './TransactionPredictUtxoTransactionRequest';
+import {
+    instanceOfTransactionPredictUtxoTransactionRequest,
+    TransactionPredictUtxoTransactionRequestFromJSON,
+    TransactionPredictUtxoTransactionRequestFromJSONTyped,
+    TransactionPredictUtxoTransactionRequestToJSON,
+} from './TransactionPredictUtxoTransactionRequest';
 
 /**
  * @type PredictTransactionRequest
  * 
  * @export
  */
-export type PredictTransactionRequest = { type: 'aptos_message' } & TransactionDetailsAptosMessageRequest | { type: 'aptos_transaction' } & TransactionDetailsAptosTransactionRequest | { type: 'cosmos_message' } & TransactionDetailsCosmosMessageRequest | { type: 'cosmos_transaction' } & TransactionDetailsCosmosTransactionRequest | { type: 'evm_message' } & TransactionDetailsEvmMessageRequest | { type: 'evm_transaction' } & TransactionDetailsEvmTransactionRequest | { type: 'solana_message' } & TransactionDetailsSolanaMessageRequest | { type: 'solana_transaction' } & TransactionDetailsSolanaTransactionRequest | { type: 'sui_message' } & TransactionDetailsSuiMessageRequest | { type: 'sui_transaction' } & TransactionDetailsSuiTransactionRequest | { type: 'ton_message' } & TransactionDetailsTonMessageRequest | { type: 'ton_transaction' } & TransactionDetailsTonTransactionRequest | { type: 'utxo_message' } & TransactionDetailsUtxoMessageRequest | { type: 'utxo_transaction' } & TransactionDetailsUtxoTransactionRequest;
+export type PredictTransactionRequest = { type: 'aptos_message' } & TransactionPredictAptosMessageRequest | { type: 'aptos_transaction' } & TransactionPredictAptosTransactionRequest | { type: 'cosmos_message' } & TransactionPredictCosmosMessageRequest | { type: 'cosmos_transaction' } & TransactionPredictCosmosTransactionRequest | { type: 'evm_message' } & TransactionPredictEvmMessageRequest | { type: 'evm_transaction' } & TransactionPredictEvmTransactionRequest | { type: 'exchange_transaction' } & TransactionPredictExchangeTransactionRequest | { type: 'solana_message' } & TransactionPredictSolanaMessageRequest | { type: 'solana_transaction' } & TransactionPredictSolanaTransactionRequest | { type: 'stacks_transaction' } & PredictStacksTransactionRequest | { type: 'starknet_message' } & PredictStarknetMessageRequest | { type: 'starknet_transaction' } & PredictStarknetTransactionRequest | { type: 'sui_message' } & TransactionPredictSuiMessageRequest | { type: 'sui_transaction' } & TransactionPredictSuiTransactionRequest | { type: 'ton_message' } & TransactionPredictTonMessageRequest | { type: 'ton_transaction' } & TransactionPredictTonTransactionRequest | { type: 'tron_transaction' } & TransactionPredictTronTransactionRequest | { type: 'utxo_message' } & TransactionPredictUtxoMessageRequest | { type: 'utxo_transaction' } & TransactionPredictUtxoTransactionRequest;
 
 export function PredictTransactionRequestFromJSON(json: any): PredictTransactionRequest {
     return PredictTransactionRequestFromJSONTyped(json, false);
 }
 
 export function PredictTransactionRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): PredictTransactionRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'aptos_message':
-            return {...TransactionDetailsAptosMessageRequestFromJSONTyped(json, true), type: 'aptos_message'};
+            return Object.assign({}, TransactionPredictAptosMessageRequestFromJSONTyped(json, true), { type: 'aptos_message' } as const);
         case 'aptos_transaction':
-            return {...TransactionDetailsAptosTransactionRequestFromJSONTyped(json, true), type: 'aptos_transaction'};
+            return Object.assign({}, TransactionPredictAptosTransactionRequestFromJSONTyped(json, true), { type: 'aptos_transaction' } as const);
         case 'cosmos_message':
-            return {...TransactionDetailsCosmosMessageRequestFromJSONTyped(json, true), type: 'cosmos_message'};
+            return Object.assign({}, TransactionPredictCosmosMessageRequestFromJSONTyped(json, true), { type: 'cosmos_message' } as const);
         case 'cosmos_transaction':
-            return {...TransactionDetailsCosmosTransactionRequestFromJSONTyped(json, true), type: 'cosmos_transaction'};
+            return Object.assign({}, TransactionPredictCosmosTransactionRequestFromJSONTyped(json, true), { type: 'cosmos_transaction' } as const);
         case 'evm_message':
-            return {...TransactionDetailsEvmMessageRequestFromJSONTyped(json, true), type: 'evm_message'};
+            return Object.assign({}, TransactionPredictEvmMessageRequestFromJSONTyped(json, true), { type: 'evm_message' } as const);
         case 'evm_transaction':
-            return {...TransactionDetailsEvmTransactionRequestFromJSONTyped(json, true), type: 'evm_transaction'};
+            return Object.assign({}, TransactionPredictEvmTransactionRequestFromJSONTyped(json, true), { type: 'evm_transaction' } as const);
+        case 'exchange_transaction':
+            return Object.assign({}, TransactionPredictExchangeTransactionRequestFromJSONTyped(json, true), { type: 'exchange_transaction' } as const);
         case 'solana_message':
-            return {...TransactionDetailsSolanaMessageRequestFromJSONTyped(json, true), type: 'solana_message'};
+            return Object.assign({}, TransactionPredictSolanaMessageRequestFromJSONTyped(json, true), { type: 'solana_message' } as const);
         case 'solana_transaction':
-            return {...TransactionDetailsSolanaTransactionRequestFromJSONTyped(json, true), type: 'solana_transaction'};
+            return Object.assign({}, TransactionPredictSolanaTransactionRequestFromJSONTyped(json, true), { type: 'solana_transaction' } as const);
+        case 'stacks_transaction':
+            return Object.assign({}, PredictStacksTransactionRequestFromJSONTyped(json, true), { type: 'stacks_transaction' } as const);
+        case 'starknet_message':
+            return Object.assign({}, PredictStarknetMessageRequestFromJSONTyped(json, true), { type: 'starknet_message' } as const);
+        case 'starknet_transaction':
+            return Object.assign({}, PredictStarknetTransactionRequestFromJSONTyped(json, true), { type: 'starknet_transaction' } as const);
         case 'sui_message':
-            return {...TransactionDetailsSuiMessageRequestFromJSONTyped(json, true), type: 'sui_message'};
+            return Object.assign({}, TransactionPredictSuiMessageRequestFromJSONTyped(json, true), { type: 'sui_message' } as const);
         case 'sui_transaction':
-            return {...TransactionDetailsSuiTransactionRequestFromJSONTyped(json, true), type: 'sui_transaction'};
+            return Object.assign({}, TransactionPredictSuiTransactionRequestFromJSONTyped(json, true), { type: 'sui_transaction' } as const);
         case 'ton_message':
-            return {...TransactionDetailsTonMessageRequestFromJSONTyped(json, true), type: 'ton_message'};
+            return Object.assign({}, TransactionPredictTonMessageRequestFromJSONTyped(json, true), { type: 'ton_message' } as const);
         case 'ton_transaction':
-            return {...TransactionDetailsTonTransactionRequestFromJSONTyped(json, true), type: 'ton_transaction'};
+            return Object.assign({}, TransactionPredictTonTransactionRequestFromJSONTyped(json, true), { type: 'ton_transaction' } as const);
+        case 'tron_transaction':
+            return Object.assign({}, TransactionPredictTronTransactionRequestFromJSONTyped(json, true), { type: 'tron_transaction' } as const);
         case 'utxo_message':
-            return {...TransactionDetailsUtxoMessageRequestFromJSONTyped(json, true), type: 'utxo_message'};
+            return Object.assign({}, TransactionPredictUtxoMessageRequestFromJSONTyped(json, true), { type: 'utxo_message' } as const);
         case 'utxo_transaction':
-            return {...TransactionDetailsUtxoTransactionRequestFromJSONTyped(json, true), type: 'utxo_transaction'};
+            return Object.assign({}, TransactionPredictUtxoTransactionRequestFromJSONTyped(json, true), { type: 'utxo_transaction' } as const);
         default:
             throw new Error(`No variant of PredictTransactionRequest exists with 'type=${json['type']}'`);
     }
 }
 
-export function PredictTransactionRequestToJSON(value?: PredictTransactionRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function PredictTransactionRequestToJSON(json: any): any {
+    return PredictTransactionRequestToJSONTyped(json, false);
+}
+
+export function PredictTransactionRequestToJSONTyped(value?: PredictTransactionRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'aptos_message':
-            return TransactionDetailsAptosMessageRequestToJSON(value);
+            return Object.assign({}, TransactionPredictAptosMessageRequestToJSON(value), { type: 'aptos_message' } as const);
         case 'aptos_transaction':
-            return TransactionDetailsAptosTransactionRequestToJSON(value);
+            return Object.assign({}, TransactionPredictAptosTransactionRequestToJSON(value), { type: 'aptos_transaction' } as const);
         case 'cosmos_message':
-            return TransactionDetailsCosmosMessageRequestToJSON(value);
+            return Object.assign({}, TransactionPredictCosmosMessageRequestToJSON(value), { type: 'cosmos_message' } as const);
         case 'cosmos_transaction':
-            return TransactionDetailsCosmosTransactionRequestToJSON(value);
+            return Object.assign({}, TransactionPredictCosmosTransactionRequestToJSON(value), { type: 'cosmos_transaction' } as const);
         case 'evm_message':
-            return TransactionDetailsEvmMessageRequestToJSON(value);
+            return Object.assign({}, TransactionPredictEvmMessageRequestToJSON(value), { type: 'evm_message' } as const);
         case 'evm_transaction':
-            return TransactionDetailsEvmTransactionRequestToJSON(value);
+            return Object.assign({}, TransactionPredictEvmTransactionRequestToJSON(value), { type: 'evm_transaction' } as const);
+        case 'exchange_transaction':
+            return Object.assign({}, TransactionPredictExchangeTransactionRequestToJSON(value), { type: 'exchange_transaction' } as const);
         case 'solana_message':
-            return TransactionDetailsSolanaMessageRequestToJSON(value);
+            return Object.assign({}, TransactionPredictSolanaMessageRequestToJSON(value), { type: 'solana_message' } as const);
         case 'solana_transaction':
-            return TransactionDetailsSolanaTransactionRequestToJSON(value);
+            return Object.assign({}, TransactionPredictSolanaTransactionRequestToJSON(value), { type: 'solana_transaction' } as const);
+        case 'stacks_transaction':
+            return Object.assign({}, PredictStacksTransactionRequestToJSON(value), { type: 'stacks_transaction' } as const);
+        case 'starknet_message':
+            return Object.assign({}, PredictStarknetMessageRequestToJSON(value), { type: 'starknet_message' } as const);
+        case 'starknet_transaction':
+            return Object.assign({}, PredictStarknetTransactionRequestToJSON(value), { type: 'starknet_transaction' } as const);
         case 'sui_message':
-            return TransactionDetailsSuiMessageRequestToJSON(value);
+            return Object.assign({}, TransactionPredictSuiMessageRequestToJSON(value), { type: 'sui_message' } as const);
         case 'sui_transaction':
-            return TransactionDetailsSuiTransactionRequestToJSON(value);
+            return Object.assign({}, TransactionPredictSuiTransactionRequestToJSON(value), { type: 'sui_transaction' } as const);
         case 'ton_message':
-            return TransactionDetailsTonMessageRequestToJSON(value);
+            return Object.assign({}, TransactionPredictTonMessageRequestToJSON(value), { type: 'ton_message' } as const);
         case 'ton_transaction':
-            return TransactionDetailsTonTransactionRequestToJSON(value);
+            return Object.assign({}, TransactionPredictTonTransactionRequestToJSON(value), { type: 'ton_transaction' } as const);
+        case 'tron_transaction':
+            return Object.assign({}, TransactionPredictTronTransactionRequestToJSON(value), { type: 'tron_transaction' } as const);
         case 'utxo_message':
-            return TransactionDetailsUtxoMessageRequestToJSON(value);
+            return Object.assign({}, TransactionPredictUtxoMessageRequestToJSON(value), { type: 'utxo_message' } as const);
         case 'utxo_transaction':
-            return TransactionDetailsUtxoTransactionRequestToJSON(value);
+            return Object.assign({}, TransactionPredictUtxoTransactionRequestToJSON(value), { type: 'utxo_transaction' } as const);
         default:
             throw new Error(`No variant of PredictTransactionRequest exists with 'type=${value['type']}'`);
     }

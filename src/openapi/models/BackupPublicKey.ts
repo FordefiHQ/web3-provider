@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -36,12 +36,10 @@ export interface BackupPublicKey {
 /**
  * Check if a given object implements the BackupPublicKey interface.
  */
-export function instanceOfBackupPublicKey(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "fileName" in value;
-    isInstance = isInstance && "key" in value;
-
-    return isInstance;
+export function instanceOfBackupPublicKey(value: object): value is BackupPublicKey {
+    if (!('fileName' in value) || value['fileName'] === undefined) return false;
+    if (!('key' in value) || value['key'] === undefined) return false;
+    return true;
 }
 
 export function BackupPublicKeyFromJSON(json: any): BackupPublicKey {
@@ -49,7 +47,7 @@ export function BackupPublicKeyFromJSON(json: any): BackupPublicKey {
 }
 
 export function BackupPublicKeyFromJSONTyped(json: any, ignoreDiscriminator: boolean): BackupPublicKey {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -59,17 +57,19 @@ export function BackupPublicKeyFromJSONTyped(json: any, ignoreDiscriminator: boo
     };
 }
 
-export function BackupPublicKeyToJSON(value?: BackupPublicKey | null): any {
-    if (value === undefined) {
-        return undefined;
+export function BackupPublicKeyToJSON(json: any): BackupPublicKey {
+    return BackupPublicKeyToJSONTyped(json, false);
+}
+
+export function BackupPublicKeyToJSONTyped(value?: BackupPublicKey | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'file_name': value.fileName,
-        'key': value.key,
+        'file_name': value['fileName'],
+        'key': value['key'],
     };
 }
 

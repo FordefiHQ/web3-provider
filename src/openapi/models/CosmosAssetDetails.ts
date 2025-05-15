@@ -12,25 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { CosmosNativeAsset } from './CosmosNativeAsset';
-import {
-    CosmosNativeAssetFromJSON,
-    CosmosNativeAssetFromJSONTyped,
-    CosmosNativeAssetToJSON,
-} from './CosmosNativeAsset';
-import type { CosmosTokenAsset } from './CosmosTokenAsset';
-import {
-    CosmosTokenAssetFromJSON,
-    CosmosTokenAssetFromJSONTyped,
-    CosmosTokenAssetToJSON,
-} from './CosmosTokenAsset';
+import { mapValues } from '../runtime';
 import type { EnrichedCosmosChain } from './EnrichedCosmosChain';
 import {
     EnrichedCosmosChainFromJSON,
     EnrichedCosmosChainFromJSONTyped,
     EnrichedCosmosChainToJSON,
+    EnrichedCosmosChainToJSONTyped,
 } from './EnrichedCosmosChain';
+import type { CosmosTokenAsset } from './CosmosTokenAsset';
+import {
+    CosmosTokenAssetFromJSON,
+    CosmosTokenAssetFromJSONTyped,
+    CosmosTokenAssetToJSON,
+    CosmosTokenAssetToJSONTyped,
+} from './CosmosTokenAsset';
+import type { CosmosNativeAsset } from './CosmosNativeAsset';
+import {
+    CosmosNativeAssetFromJSON,
+    CosmosNativeAssetFromJSONTyped,
+    CosmosNativeAssetToJSON,
+    CosmosNativeAssetToJSONTyped,
+} from './CosmosNativeAsset';
 
 /**
  * 
@@ -57,7 +60,8 @@ export interface CosmosAssetDetails {
  * @export
  */
 export const CosmosAssetDetailsTypeEnum = {
-    cosmosTokenAsset: 'cosmos_token_asset'
+    nativeAsset: 'cosmos_native_asset',
+    tokenAsset: 'cosmos_token_asset'
 } as const;
 export type CosmosAssetDetailsTypeEnum = typeof CosmosAssetDetailsTypeEnum[keyof typeof CosmosAssetDetailsTypeEnum];
 
@@ -65,12 +69,10 @@ export type CosmosAssetDetailsTypeEnum = typeof CosmosAssetDetailsTypeEnum[keyof
 /**
  * Check if a given object implements the CosmosAssetDetails interface.
  */
-export function instanceOfCosmosAssetDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfCosmosAssetDetails(value: object): value is CosmosAssetDetails {
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function CosmosAssetDetailsFromJSON(json: any): CosmosAssetDetails {
@@ -78,7 +80,7 @@ export function CosmosAssetDetailsFromJSON(json: any): CosmosAssetDetails {
 }
 
 export function CosmosAssetDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosAssetDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -88,17 +90,19 @@ export function CosmosAssetDetailsFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-export function CosmosAssetDetailsToJSON(value?: CosmosAssetDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosAssetDetailsToJSON(json: any): CosmosAssetDetails {
+    return CosmosAssetDetailsToJSONTyped(json, false);
+}
+
+export function CosmosAssetDetailsToJSONTyped(value?: CosmosAssetDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain': EnrichedCosmosChainToJSON(value.chain),
-        'type': value.type,
+        'chain': EnrichedCosmosChainToJSON(value['chain']),
+        'type': value['type'],
     };
 }
 

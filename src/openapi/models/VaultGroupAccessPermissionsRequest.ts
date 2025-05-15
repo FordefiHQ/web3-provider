@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { VaultGroupAccessPermissionsAll } from './VaultGroupAccessPermissionsAll';
 import {
-    VaultGroupAccessPermissionsAll,
     instanceOfVaultGroupAccessPermissionsAll,
     VaultGroupAccessPermissionsAllFromJSON,
     VaultGroupAccessPermissionsAllFromJSONTyped,
     VaultGroupAccessPermissionsAllToJSON,
 } from './VaultGroupAccessPermissionsAll';
+import type { VaultGroupAccessPermissionsPermittedRequest } from './VaultGroupAccessPermissionsPermittedRequest';
 import {
-    VaultGroupAccessPermissionsPermittedRequest,
     instanceOfVaultGroupAccessPermissionsPermittedRequest,
     VaultGroupAccessPermissionsPermittedRequestFromJSON,
     VaultGroupAccessPermissionsPermittedRequestFromJSONTyped,
@@ -39,31 +39,32 @@ export function VaultGroupAccessPermissionsRequestFromJSON(json: any): VaultGrou
 }
 
 export function VaultGroupAccessPermissionsRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): VaultGroupAccessPermissionsRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['access_type']) {
         case 'all':
-            return {...VaultGroupAccessPermissionsAllFromJSONTyped(json, true), accessType: 'all'};
+            return Object.assign({}, VaultGroupAccessPermissionsAllFromJSONTyped(json, true), { accessType: 'all' } as const);
         case 'permitted':
-            return {...VaultGroupAccessPermissionsPermittedRequestFromJSONTyped(json, true), accessType: 'permitted'};
+            return Object.assign({}, VaultGroupAccessPermissionsPermittedRequestFromJSONTyped(json, true), { accessType: 'permitted' } as const);
         default:
             throw new Error(`No variant of VaultGroupAccessPermissionsRequest exists with 'accessType=${json['accessType']}'`);
     }
 }
 
-export function VaultGroupAccessPermissionsRequestToJSON(value?: VaultGroupAccessPermissionsRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function VaultGroupAccessPermissionsRequestToJSON(json: any): any {
+    return VaultGroupAccessPermissionsRequestToJSONTyped(json, false);
+}
+
+export function VaultGroupAccessPermissionsRequestToJSONTyped(value?: VaultGroupAccessPermissionsRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['accessType']) {
         case 'all':
-            return VaultGroupAccessPermissionsAllToJSON(value);
+            return Object.assign({}, VaultGroupAccessPermissionsAllToJSON(value), { accessType: 'all' } as const);
         case 'permitted':
-            return VaultGroupAccessPermissionsPermittedRequestToJSON(value);
+            return Object.assign({}, VaultGroupAccessPermissionsPermittedRequestToJSON(value), { accessType: 'permitted' } as const);
         default:
             throw new Error(`No variant of VaultGroupAccessPermissionsRequest exists with 'accessType=${value['accessType']}'`);
     }

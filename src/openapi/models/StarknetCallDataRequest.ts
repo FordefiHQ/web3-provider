@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -42,13 +42,11 @@ export interface StarknetCallDataRequest {
 /**
  * Check if a given object implements the StarknetCallDataRequest interface.
  */
-export function instanceOfStarknetCallDataRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "to" in value;
-    isInstance = isInstance && "methodName" in value;
-    isInstance = isInstance && "methodArguments" in value;
-
-    return isInstance;
+export function instanceOfStarknetCallDataRequest(value: object): value is StarknetCallDataRequest {
+    if (!('to' in value) || value['to'] === undefined) return false;
+    if (!('methodName' in value) || value['methodName'] === undefined) return false;
+    if (!('methodArguments' in value) || value['methodArguments'] === undefined) return false;
+    return true;
 }
 
 export function StarknetCallDataRequestFromJSON(json: any): StarknetCallDataRequest {
@@ -56,7 +54,7 @@ export function StarknetCallDataRequestFromJSON(json: any): StarknetCallDataRequ
 }
 
 export function StarknetCallDataRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): StarknetCallDataRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -67,18 +65,20 @@ export function StarknetCallDataRequestFromJSONTyped(json: any, ignoreDiscrimina
     };
 }
 
-export function StarknetCallDataRequestToJSON(value?: StarknetCallDataRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function StarknetCallDataRequestToJSON(json: any): StarknetCallDataRequest {
+    return StarknetCallDataRequestToJSONTyped(json, false);
+}
+
+export function StarknetCallDataRequestToJSONTyped(value?: StarknetCallDataRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'to': value.to,
-        'method_name': value.methodName,
-        'method_arguments': value.methodArguments,
+        'to': value['to'],
+        'method_name': value['methodName'],
+        'method_arguments': value['methodArguments'],
     };
 }
 

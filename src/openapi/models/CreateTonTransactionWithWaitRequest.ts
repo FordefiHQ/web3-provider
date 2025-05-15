@@ -12,31 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { CreateTonTransactionRequestDetails } from './CreateTonTransactionRequestDetails';
+import { mapValues } from '../runtime';
+import type { DappInfo } from './DappInfo';
 import {
-    CreateTonTransactionRequestDetailsFromJSON,
-    CreateTonTransactionRequestDetailsFromJSONTyped,
-    CreateTonTransactionRequestDetailsToJSON,
-} from './CreateTonTransactionRequestDetails';
+    DappInfoFromJSON,
+    DappInfoFromJSONTyped,
+    DappInfoToJSON,
+    DappInfoToJSONTyped,
+} from './DappInfo';
 import type { SignMode } from './SignMode';
 import {
     SignModeFromJSON,
     SignModeFromJSONTyped,
     SignModeToJSON,
+    SignModeToJSONTyped,
 } from './SignMode';
+import type { CreateTonTransactionRequestDetails } from './CreateTonTransactionRequestDetails';
+import {
+    CreateTonTransactionRequestDetailsFromJSON,
+    CreateTonTransactionRequestDetailsFromJSONTyped,
+    CreateTonTransactionRequestDetailsToJSON,
+    CreateTonTransactionRequestDetailsToJSONTyped,
+} from './CreateTonTransactionRequestDetails';
+import type { PushableTransactionState } from './PushableTransactionState';
+import {
+    PushableTransactionStateFromJSON,
+    PushableTransactionStateFromJSONTyped,
+    PushableTransactionStateToJSON,
+    PushableTransactionStateToJSONTyped,
+} from './PushableTransactionState';
 import type { SignerType } from './SignerType';
 import {
     SignerTypeFromJSON,
     SignerTypeFromJSONTyped,
     SignerTypeToJSON,
+    SignerTypeToJSONTyped,
 } from './SignerType';
-import type { TonTransactionState } from './TonTransactionState';
-import {
-    TonTransactionStateFromJSON,
-    TonTransactionStateFromJSONTyped,
-    TonTransactionStateToJSON,
-} from './TonTransactionState';
 
 /**
  * 
@@ -70,6 +81,12 @@ export interface CreateTonTransactionWithWaitRequest {
     signMode?: SignMode;
     /**
      * 
+     * @type {DappInfo}
+     * @memberof CreateTonTransactionWithWaitRequest
+     */
+    dappInfo?: DappInfo;
+    /**
+     * 
      * @type {string}
      * @memberof CreateTonTransactionWithWaitRequest
      */
@@ -88,10 +105,10 @@ export interface CreateTonTransactionWithWaitRequest {
     timeout?: number;
     /**
      * 
-     * @type {TonTransactionState}
+     * @type {PushableTransactionState}
      * @memberof CreateTonTransactionWithWaitRequest
      */
-    waitForState: TonTransactionState;
+    waitForState: PushableTransactionState;
 }
 
 
@@ -107,14 +124,12 @@ export type CreateTonTransactionWithWaitRequestTypeEnum = typeof CreateTonTransa
 /**
  * Check if a given object implements the CreateTonTransactionWithWaitRequest interface.
  */
-export function instanceOfCreateTonTransactionWithWaitRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "vaultId" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "details" in value;
-    isInstance = isInstance && "waitForState" in value;
-
-    return isInstance;
+export function instanceOfCreateTonTransactionWithWaitRequest(value: object): value is CreateTonTransactionWithWaitRequest {
+    if (!('vaultId' in value) || value['vaultId'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    if (!('waitForState' in value) || value['waitForState'] === undefined) return false;
+    return true;
 }
 
 export function CreateTonTransactionWithWaitRequestFromJSON(json: any): CreateTonTransactionWithWaitRequest {
@@ -122,39 +137,43 @@ export function CreateTonTransactionWithWaitRequestFromJSON(json: any): CreateTo
 }
 
 export function CreateTonTransactionWithWaitRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateTonTransactionWithWaitRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'vaultId': json['vault_id'],
-        'note': !exists(json, 'note') ? undefined : json['note'],
-        'signerType': !exists(json, 'signer_type') ? undefined : SignerTypeFromJSON(json['signer_type']),
-        'signMode': !exists(json, 'sign_mode') ? undefined : SignModeFromJSON(json['sign_mode']),
+        'note': json['note'] == null ? undefined : json['note'],
+        'signerType': json['signer_type'] == null ? undefined : SignerTypeFromJSON(json['signer_type']),
+        'signMode': json['sign_mode'] == null ? undefined : SignModeFromJSON(json['sign_mode']),
+        'dappInfo': json['dapp_info'] == null ? undefined : DappInfoFromJSON(json['dapp_info']),
         'type': json['type'],
         'details': CreateTonTransactionRequestDetailsFromJSON(json['details']),
-        'timeout': !exists(json, 'timeout') ? undefined : json['timeout'],
-        'waitForState': TonTransactionStateFromJSON(json['wait_for_state']),
+        'timeout': json['timeout'] == null ? undefined : json['timeout'],
+        'waitForState': PushableTransactionStateFromJSON(json['wait_for_state']),
     };
 }
 
-export function CreateTonTransactionWithWaitRequestToJSON(value?: CreateTonTransactionWithWaitRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateTonTransactionWithWaitRequestToJSON(json: any): CreateTonTransactionWithWaitRequest {
+    return CreateTonTransactionWithWaitRequestToJSONTyped(json, false);
+}
+
+export function CreateTonTransactionWithWaitRequestToJSONTyped(value?: CreateTonTransactionWithWaitRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'vault_id': value.vaultId,
-        'note': value.note,
-        'signer_type': SignerTypeToJSON(value.signerType),
-        'sign_mode': SignModeToJSON(value.signMode),
-        'type': value.type,
-        'details': CreateTonTransactionRequestDetailsToJSON(value.details),
-        'timeout': value.timeout,
-        'wait_for_state': TonTransactionStateToJSON(value.waitForState),
+        'vault_id': value['vaultId'],
+        'note': value['note'],
+        'signer_type': SignerTypeToJSON(value['signerType']),
+        'sign_mode': SignModeToJSON(value['signMode']),
+        'dapp_info': DappInfoToJSON(value['dappInfo']),
+        'type': value['type'],
+        'details': CreateTonTransactionRequestDetailsToJSON(value['details']),
+        'timeout': value['timeout'],
+        'wait_for_state': PushableTransactionStateToJSON(value['waitForState']),
     };
 }
 

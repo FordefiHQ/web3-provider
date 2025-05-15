@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { SolanaChain } from './SolanaChain';
 import {
     SolanaChainFromJSON,
     SolanaChainFromJSONTyped,
     SolanaChainToJSON,
+    SolanaChainToJSONTyped,
 } from './SolanaChain';
 
 /**
@@ -59,13 +60,11 @@ export type SolanaAddressBookContactAddressRefChainTypeEnum = typeof SolanaAddre
 /**
  * Check if a given object implements the SolanaAddressBookContactAddressRef interface.
  */
-export function instanceOfSolanaAddressBookContactAddressRef(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chainType" in value;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "chains" in value;
-
-    return isInstance;
+export function instanceOfSolanaAddressBookContactAddressRef(value: object): value is SolanaAddressBookContactAddressRef {
+    if (!('chainType' in value) || value['chainType'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('chains' in value) || value['chains'] === undefined) return false;
+    return true;
 }
 
 export function SolanaAddressBookContactAddressRefFromJSON(json: any): SolanaAddressBookContactAddressRef {
@@ -73,7 +72,7 @@ export function SolanaAddressBookContactAddressRefFromJSON(json: any): SolanaAdd
 }
 
 export function SolanaAddressBookContactAddressRefFromJSONTyped(json: any, ignoreDiscriminator: boolean): SolanaAddressBookContactAddressRef {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -84,18 +83,20 @@ export function SolanaAddressBookContactAddressRefFromJSONTyped(json: any, ignor
     };
 }
 
-export function SolanaAddressBookContactAddressRefToJSON(value?: SolanaAddressBookContactAddressRef | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SolanaAddressBookContactAddressRefToJSON(json: any): SolanaAddressBookContactAddressRef {
+    return SolanaAddressBookContactAddressRefToJSONTyped(json, false);
+}
+
+export function SolanaAddressBookContactAddressRefToJSONTyped(value?: SolanaAddressBookContactAddressRef | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain_type': value.chainType,
-        'address': value.address,
-        'chains': ((value.chains as Array<any>).map(SolanaChainToJSON)),
+        'chain_type': value['chainType'],
+        'address': value['address'],
+        'chains': ((value['chains'] as Array<any>).map(SolanaChainToJSON)),
     };
 }
 

@@ -12,13 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedDapp } from './EnrichedDapp';
 import {
     EnrichedDappFromJSON,
     EnrichedDappFromJSONTyped,
     EnrichedDappToJSON,
+    EnrichedDappToJSONTyped,
 } from './EnrichedDapp';
+import type { PartialErrorResponse } from './PartialErrorResponse';
+import {
+    PartialErrorResponseFromJSON,
+    PartialErrorResponseFromJSONTyped,
+    PartialErrorResponseToJSON,
+    PartialErrorResponseToJSONTyped,
+} from './PartialErrorResponse';
 
 /**
  * 
@@ -26,6 +34,12 @@ import {
  * @interface ListDappsResponse
  */
 export interface ListDappsResponse {
+    /**
+     * 
+     * @type {PartialErrorResponse}
+     * @memberof ListDappsResponse
+     */
+    partialError?: PartialErrorResponse;
     /**
      * 
      * @type {number}
@@ -55,14 +69,12 @@ export interface ListDappsResponse {
 /**
  * Check if a given object implements the ListDappsResponse interface.
  */
-export function instanceOfListDappsResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "total" in value;
-    isInstance = isInstance && "page" in value;
-    isInstance = isInstance && "size" in value;
-    isInstance = isInstance && "dapps" in value;
-
-    return isInstance;
+export function instanceOfListDappsResponse(value: object): value is ListDappsResponse {
+    if (!('total' in value) || value['total'] === undefined) return false;
+    if (!('page' in value) || value['page'] === undefined) return false;
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('dapps' in value) || value['dapps'] === undefined) return false;
+    return true;
 }
 
 export function ListDappsResponseFromJSON(json: any): ListDappsResponse {
@@ -70,11 +82,12 @@ export function ListDappsResponseFromJSON(json: any): ListDappsResponse {
 }
 
 export function ListDappsResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): ListDappsResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
+        'partialError': json['partial_error'] == null ? undefined : PartialErrorResponseFromJSON(json['partial_error']),
         'total': json['total'],
         'page': json['page'],
         'size': json['size'],
@@ -82,19 +95,22 @@ export function ListDappsResponseFromJSONTyped(json: any, ignoreDiscriminator: b
     };
 }
 
-export function ListDappsResponseToJSON(value?: ListDappsResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ListDappsResponseToJSON(json: any): ListDappsResponse {
+    return ListDappsResponseToJSONTyped(json, false);
+}
+
+export function ListDappsResponseToJSONTyped(value?: ListDappsResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'total': value.total,
-        'page': value.page,
-        'size': value.size,
-        'dapps': ((value.dapps as Array<any>).map(EnrichedDappToJSON)),
+        'partial_error': PartialErrorResponseToJSON(value['partialError']),
+        'total': value['total'],
+        'page': value['page'],
+        'size': value['size'],
+        'dapps': ((value['dapps'] as Array<any>).map(EnrichedDappToJSON)),
     };
 }
 

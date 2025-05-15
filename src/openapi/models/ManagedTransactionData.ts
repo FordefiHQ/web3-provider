@@ -12,67 +12,84 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { ActionSigningRequest } from './ActionSigningRequest';
-import {
-    ActionSigningRequestFromJSON,
-    ActionSigningRequestFromJSONTyped,
-    ActionSigningRequestToJSON,
-} from './ActionSigningRequest';
-import type { ApprovalRequest } from './ApprovalRequest';
-import {
-    ApprovalRequestFromJSON,
-    ApprovalRequestFromJSONTyped,
-    ApprovalRequestToJSON,
-} from './ApprovalRequest';
-import type { BatchData } from './BatchData';
-import {
-    BatchDataFromJSON,
-    BatchDataFromJSONTyped,
-    BatchDataToJSON,
-} from './BatchData';
-import type { PolicyMatch } from './PolicyMatch';
-import {
-    PolicyMatchFromJSON,
-    PolicyMatchFromJSONTyped,
-    PolicyMatchToJSON,
-} from './PolicyMatch';
-import type { PushMode } from './PushMode';
-import {
-    PushModeFromJSON,
-    PushModeFromJSONTyped,
-    PushModeToJSON,
-} from './PushMode';
-import type { SignMode } from './SignMode';
-import {
-    SignModeFromJSON,
-    SignModeFromJSONTyped,
-    SignModeToJSON,
-} from './SignMode';
-import type { SignerType } from './SignerType';
-import {
-    SignerTypeFromJSON,
-    SignerTypeFromJSONTyped,
-    SignerTypeToJSON,
-} from './SignerType';
-import type { TransactionRisk } from './TransactionRisk';
-import {
-    TransactionRiskFromJSON,
-    TransactionRiskFromJSONTyped,
-    TransactionRiskToJSON,
-} from './TransactionRisk';
-import type { UserRef } from './UserRef';
-import {
-    UserRefFromJSON,
-    UserRefFromJSONTyped,
-    UserRefToJSON,
-} from './UserRef';
+import { mapValues } from '../runtime';
 import type { VaultRef } from './VaultRef';
 import {
     VaultRefFromJSON,
     VaultRefFromJSONTyped,
     VaultRefToJSON,
+    VaultRefToJSONTyped,
 } from './VaultRef';
+import type { AmlPolicyMatchOutgoing } from './AmlPolicyMatchOutgoing';
+import {
+    AmlPolicyMatchOutgoingFromJSON,
+    AmlPolicyMatchOutgoingFromJSONTyped,
+    AmlPolicyMatchOutgoingToJSON,
+    AmlPolicyMatchOutgoingToJSONTyped,
+} from './AmlPolicyMatchOutgoing';
+import type { ActionSigningRequest } from './ActionSigningRequest';
+import {
+    ActionSigningRequestFromJSON,
+    ActionSigningRequestFromJSONTyped,
+    ActionSigningRequestToJSON,
+    ActionSigningRequestToJSONTyped,
+} from './ActionSigningRequest';
+import type { TransactionRisk } from './TransactionRisk';
+import {
+    TransactionRiskFromJSON,
+    TransactionRiskFromJSONTyped,
+    TransactionRiskToJSON,
+    TransactionRiskToJSONTyped,
+} from './TransactionRisk';
+import type { SignMode } from './SignMode';
+import {
+    SignModeFromJSON,
+    SignModeFromJSONTyped,
+    SignModeToJSON,
+    SignModeToJSONTyped,
+} from './SignMode';
+import type { BatchData } from './BatchData';
+import {
+    BatchDataFromJSON,
+    BatchDataFromJSONTyped,
+    BatchDataToJSON,
+    BatchDataToJSONTyped,
+} from './BatchData';
+import type { ApprovalRequest } from './ApprovalRequest';
+import {
+    ApprovalRequestFromJSON,
+    ApprovalRequestFromJSONTyped,
+    ApprovalRequestToJSON,
+    ApprovalRequestToJSONTyped,
+} from './ApprovalRequest';
+import type { PolicyMatch } from './PolicyMatch';
+import {
+    PolicyMatchFromJSON,
+    PolicyMatchFromJSONTyped,
+    PolicyMatchToJSON,
+    PolicyMatchToJSONTyped,
+} from './PolicyMatch';
+import type { SignerType } from './SignerType';
+import {
+    SignerTypeFromJSON,
+    SignerTypeFromJSONTyped,
+    SignerTypeToJSON,
+    SignerTypeToJSONTyped,
+} from './SignerType';
+import type { UserRef } from './UserRef';
+import {
+    UserRefFromJSON,
+    UserRefFromJSONTyped,
+    UserRefToJSON,
+    UserRefToJSONTyped,
+} from './UserRef';
+import type { PushMode } from './PushMode';
+import {
+    PushModeFromJSON,
+    PushModeFromJSONTyped,
+    PushModeToJSON,
+    PushModeToJSONTyped,
+} from './PushMode';
 
 /**
  * 
@@ -104,6 +121,12 @@ export interface ManagedTransactionData {
      * @memberof ManagedTransactionData
      */
     approvalRequest?: ApprovalRequest;
+    /**
+     * 
+     * @type {AmlPolicyMatchOutgoing}
+     * @memberof ManagedTransactionData
+     */
+    amlPolicyMatch?: AmlPolicyMatchOutgoing;
     /**
      * 
      * @type {PolicyMatch}
@@ -178,18 +201,18 @@ export interface ManagedTransactionData {
     signMode?: SignMode;
 }
 
+
+
 /**
  * Check if a given object implements the ManagedTransactionData interface.
  */
-export function instanceOfManagedTransactionData(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "createdBy" in value;
-    isInstance = isInstance && "signerType" in value;
-    isInstance = isInstance && "risks" in value;
-    isInstance = isInstance && "vault" in value;
-    isInstance = isInstance && "hasCurrentUserVaultPermissions" in value;
-
-    return isInstance;
+export function instanceOfManagedTransactionData(value: object): value is ManagedTransactionData {
+    if (!('createdBy' in value) || value['createdBy'] === undefined) return false;
+    if (!('signerType' in value) || value['signerType'] === undefined) return false;
+    if (!('risks' in value) || value['risks'] === undefined) return false;
+    if (!('vault' in value) || value['vault'] === undefined) return false;
+    if (!('hasCurrentUserVaultPermissions' in value) || value['hasCurrentUserVaultPermissions'] === undefined) return false;
+    return true;
 }
 
 export function ManagedTransactionDataFromJSON(json: any): ManagedTransactionData {
@@ -197,55 +220,59 @@ export function ManagedTransactionDataFromJSON(json: any): ManagedTransactionDat
 }
 
 export function ManagedTransactionDataFromJSONTyped(json: any, ignoreDiscriminator: boolean): ManagedTransactionData {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'createdBy': UserRefFromJSON(json['created_by']),
-        'abortedBy': !exists(json, 'aborted_by') ? undefined : UserRefFromJSON(json['aborted_by']),
-        'deviceSigningRequest': !exists(json, 'device_signing_request') ? undefined : ActionSigningRequestFromJSON(json['device_signing_request']),
-        'approvalRequest': !exists(json, 'approval_request') ? undefined : ApprovalRequestFromJSON(json['approval_request']),
-        'policyMatch': !exists(json, 'policy_match') ? undefined : PolicyMatchFromJSON(json['policy_match']),
+        'abortedBy': json['aborted_by'] == null ? undefined : UserRefFromJSON(json['aborted_by']),
+        'deviceSigningRequest': json['device_signing_request'] == null ? undefined : ActionSigningRequestFromJSON(json['device_signing_request']),
+        'approvalRequest': json['approval_request'] == null ? undefined : ApprovalRequestFromJSON(json['approval_request']),
+        'amlPolicyMatch': json['aml_policy_match'] == null ? undefined : AmlPolicyMatchOutgoingFromJSON(json['aml_policy_match']),
+        'policyMatch': json['policy_match'] == null ? undefined : PolicyMatchFromJSON(json['policy_match']),
         'signerType': SignerTypeFromJSON(json['signer_type']),
         'risks': ((json['risks'] as Array<any>).map(TransactionRiskFromJSON)),
-        'errorPushingToBlockchainMessage': !exists(json, 'error_pushing_to_blockchain_message') ? undefined : json['error_pushing_to_blockchain_message'],
-        'originalErrorPushingToBlockchainMessage': !exists(json, 'original_error_pushing_to_blockchain_message') ? undefined : json['original_error_pushing_to_blockchain_message'],
+        'errorPushingToBlockchainMessage': json['error_pushing_to_blockchain_message'] == null ? undefined : json['error_pushing_to_blockchain_message'],
+        'originalErrorPushingToBlockchainMessage': json['original_error_pushing_to_blockchain_message'] == null ? undefined : json['original_error_pushing_to_blockchain_message'],
         'vault': VaultRefFromJSON(json['vault']),
-        'idempotenceId': !exists(json, 'idempotence_id') ? undefined : json['idempotence_id'],
+        'idempotenceId': json['idempotence_id'] == null ? undefined : json['idempotence_id'],
         'hasCurrentUserVaultPermissions': json['has_current_user_vault_permissions'],
-        'batchData': !exists(json, 'batch_data') ? undefined : BatchDataFromJSON(json['batch_data']),
-        'pushMode': !exists(json, 'push_mode') ? undefined : PushModeFromJSON(json['push_mode']),
-        'lastPushedAt': !exists(json, 'last_pushed_at') ? undefined : (new Date(json['last_pushed_at'])),
-        'signMode': !exists(json, 'sign_mode') ? undefined : SignModeFromJSON(json['sign_mode']),
+        'batchData': json['batch_data'] == null ? undefined : BatchDataFromJSON(json['batch_data']),
+        'pushMode': json['push_mode'] == null ? undefined : PushModeFromJSON(json['push_mode']),
+        'lastPushedAt': json['last_pushed_at'] == null ? undefined : (new Date(json['last_pushed_at'])),
+        'signMode': json['sign_mode'] == null ? undefined : SignModeFromJSON(json['sign_mode']),
     };
 }
 
-export function ManagedTransactionDataToJSON(value?: ManagedTransactionData | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ManagedTransactionDataToJSON(json: any): ManagedTransactionData {
+    return ManagedTransactionDataToJSONTyped(json, false);
+}
+
+export function ManagedTransactionDataToJSONTyped(value?: ManagedTransactionData | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'created_by': UserRefToJSON(value.createdBy),
-        'aborted_by': UserRefToJSON(value.abortedBy),
-        'device_signing_request': ActionSigningRequestToJSON(value.deviceSigningRequest),
-        'approval_request': ApprovalRequestToJSON(value.approvalRequest),
-        'policy_match': PolicyMatchToJSON(value.policyMatch),
-        'signer_type': SignerTypeToJSON(value.signerType),
-        'risks': ((value.risks as Array<any>).map(TransactionRiskToJSON)),
-        'error_pushing_to_blockchain_message': value.errorPushingToBlockchainMessage,
-        'original_error_pushing_to_blockchain_message': value.originalErrorPushingToBlockchainMessage,
-        'vault': VaultRefToJSON(value.vault),
-        'idempotence_id': value.idempotenceId,
-        'has_current_user_vault_permissions': value.hasCurrentUserVaultPermissions,
-        'batch_data': BatchDataToJSON(value.batchData),
-        'push_mode': PushModeToJSON(value.pushMode),
-        'last_pushed_at': value.lastPushedAt === undefined ? undefined : (value.lastPushedAt.toISOString()),
-        'sign_mode': SignModeToJSON(value.signMode),
+        'created_by': UserRefToJSON(value['createdBy']),
+        'aborted_by': UserRefToJSON(value['abortedBy']),
+        'device_signing_request': ActionSigningRequestToJSON(value['deviceSigningRequest']),
+        'approval_request': ApprovalRequestToJSON(value['approvalRequest']),
+        'aml_policy_match': AmlPolicyMatchOutgoingToJSON(value['amlPolicyMatch']),
+        'policy_match': PolicyMatchToJSON(value['policyMatch']),
+        'signer_type': SignerTypeToJSON(value['signerType']),
+        'risks': ((value['risks'] as Array<any>).map(TransactionRiskToJSON)),
+        'error_pushing_to_blockchain_message': value['errorPushingToBlockchainMessage'],
+        'original_error_pushing_to_blockchain_message': value['originalErrorPushingToBlockchainMessage'],
+        'vault': VaultRefToJSON(value['vault']),
+        'idempotence_id': value['idempotenceId'],
+        'has_current_user_vault_permissions': value['hasCurrentUserVaultPermissions'],
+        'batch_data': BatchDataToJSON(value['batchData']),
+        'push_mode': PushModeToJSON(value['pushMode']),
+        'last_pushed_at': value['lastPushedAt'] == null ? undefined : ((value['lastPushedAt']).toISOString()),
+        'sign_mode': SignModeToJSON(value['signMode']),
     };
 }
 

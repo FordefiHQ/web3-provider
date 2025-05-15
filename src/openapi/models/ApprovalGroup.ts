@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { UserGroupRef } from './UserGroupRef';
-import {
-    UserGroupRefFromJSON,
-    UserGroupRefFromJSONTyped,
-    UserGroupRefToJSON,
-} from './UserGroupRef';
+import { mapValues } from '../runtime';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
     UserRefFromJSONTyped,
     UserRefToJSON,
+    UserRefToJSONTyped,
 } from './UserRef';
+import type { UserGroupRef } from './UserGroupRef';
+import {
+    UserGroupRefFromJSON,
+    UserGroupRefFromJSONTyped,
+    UserGroupRefToJSON,
+    UserGroupRefToJSONTyped,
+} from './UserGroupRef';
 
 /**
  * 
@@ -55,13 +57,11 @@ export interface ApprovalGroup {
 /**
  * Check if a given object implements the ApprovalGroup interface.
  */
-export function instanceOfApprovalGroup(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "threshold" in value;
-    isInstance = isInstance && "userRefs" in value;
-    isInstance = isInstance && "userGroupRefs" in value;
-
-    return isInstance;
+export function instanceOfApprovalGroup(value: object): value is ApprovalGroup {
+    if (!('threshold' in value) || value['threshold'] === undefined) return false;
+    if (!('userRefs' in value) || value['userRefs'] === undefined) return false;
+    if (!('userGroupRefs' in value) || value['userGroupRefs'] === undefined) return false;
+    return true;
 }
 
 export function ApprovalGroupFromJSON(json: any): ApprovalGroup {
@@ -69,7 +69,7 @@ export function ApprovalGroupFromJSON(json: any): ApprovalGroup {
 }
 
 export function ApprovalGroupFromJSONTyped(json: any, ignoreDiscriminator: boolean): ApprovalGroup {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -80,18 +80,20 @@ export function ApprovalGroupFromJSONTyped(json: any, ignoreDiscriminator: boole
     };
 }
 
-export function ApprovalGroupToJSON(value?: ApprovalGroup | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ApprovalGroupToJSON(json: any): ApprovalGroup {
+    return ApprovalGroupToJSONTyped(json, false);
+}
+
+export function ApprovalGroupToJSONTyped(value?: ApprovalGroup | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'threshold': value.threshold,
-        'user_refs': ((value.userRefs as Array<any>).map(UserRefToJSON)),
-        'user_group_refs': ((value.userGroupRefs as Array<any>).map(UserGroupRefToJSON)),
+        'threshold': value['threshold'],
+        'user_refs': ((value['userRefs'] as Array<any>).map(UserRefToJSON)),
+        'user_group_refs': ((value['userGroupRefs'] as Array<any>).map(UserGroupRefToJSON)),
     };
 }
 

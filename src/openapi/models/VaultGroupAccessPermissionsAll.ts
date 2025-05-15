@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -40,11 +40,9 @@ export type VaultGroupAccessPermissionsAllAccessTypeEnum = typeof VaultGroupAcce
 /**
  * Check if a given object implements the VaultGroupAccessPermissionsAll interface.
  */
-export function instanceOfVaultGroupAccessPermissionsAll(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "accessType" in value;
-
-    return isInstance;
+export function instanceOfVaultGroupAccessPermissionsAll(value: object): value is VaultGroupAccessPermissionsAll {
+    if (!('accessType' in value) || value['accessType'] === undefined) return false;
+    return true;
 }
 
 export function VaultGroupAccessPermissionsAllFromJSON(json: any): VaultGroupAccessPermissionsAll {
@@ -52,7 +50,7 @@ export function VaultGroupAccessPermissionsAllFromJSON(json: any): VaultGroupAcc
 }
 
 export function VaultGroupAccessPermissionsAllFromJSONTyped(json: any, ignoreDiscriminator: boolean): VaultGroupAccessPermissionsAll {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -61,16 +59,18 @@ export function VaultGroupAccessPermissionsAllFromJSONTyped(json: any, ignoreDis
     };
 }
 
-export function VaultGroupAccessPermissionsAllToJSON(value?: VaultGroupAccessPermissionsAll | null): any {
-    if (value === undefined) {
-        return undefined;
+export function VaultGroupAccessPermissionsAllToJSON(json: any): VaultGroupAccessPermissionsAll {
+    return VaultGroupAccessPermissionsAllToJSONTyped(json, false);
+}
+
+export function VaultGroupAccessPermissionsAllToJSONTyped(value?: VaultGroupAccessPermissionsAll | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'access_type': value.accessType,
+        'access_type': value['accessType'],
     };
 }
 

@@ -12,30 +12,34 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { CreateEvmRawTransactionRequestGas } from './CreateEvmRawTransactionRequestGas';
-import {
-    CreateEvmRawTransactionRequestGasFromJSON,
-    CreateEvmRawTransactionRequestGasFromJSONTyped,
-    CreateEvmRawTransactionRequestGasToJSON,
-} from './CreateEvmRawTransactionRequestGas';
+import { mapValues } from '../runtime';
 import type { EvmChainRequest } from './EvmChainRequest';
 import {
     EvmChainRequestFromJSON,
     EvmChainRequestFromJSONTyped,
     EvmChainRequestToJSON,
+    EvmChainRequestToJSONTyped,
 } from './EvmChainRequest';
 import type { EvmDataRequest } from './EvmDataRequest';
 import {
     EvmDataRequestFromJSON,
     EvmDataRequestFromJSONTyped,
     EvmDataRequestToJSON,
+    EvmDataRequestToJSONTyped,
 } from './EvmDataRequest';
+import type { CreateEvmRawTransactionRequestGas } from './CreateEvmRawTransactionRequestGas';
+import {
+    CreateEvmRawTransactionRequestGasFromJSON,
+    CreateEvmRawTransactionRequestGasFromJSONTyped,
+    CreateEvmRawTransactionRequestGasToJSON,
+    CreateEvmRawTransactionRequestGasToJSONTyped,
+} from './CreateEvmRawTransactionRequestGas';
 import type { PushMode } from './PushMode';
 import {
     PushModeFromJSON,
     PushModeFromJSONTyped,
     PushModeToJSON,
+    PushModeToJSONTyped,
 } from './PushMode';
 
 /**
@@ -61,7 +65,7 @@ export interface CreateEvmRawTransactionRequest {
      * @type {CreateEvmRawTransactionRequestGas}
      * @memberof CreateEvmRawTransactionRequest
      */
-    gas: CreateEvmRawTransactionRequestGas;
+    gas?: CreateEvmRawTransactionRequestGas;
     /**
      * 
      * @type {boolean}
@@ -125,14 +129,11 @@ export type CreateEvmRawTransactionRequestTypeEnum = typeof CreateEvmRawTransact
 /**
  * Check if a given object implements the CreateEvmRawTransactionRequest interface.
  */
-export function instanceOfCreateEvmRawTransactionRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "gas" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "value" in value;
-
-    return isInstance;
+export function instanceOfCreateEvmRawTransactionRequest(value: object): value is CreateEvmRawTransactionRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('value' in value) || value['value'] === undefined) return false;
+    return true;
 }
 
 export function CreateEvmRawTransactionRequestFromJSON(json: any): CreateEvmRawTransactionRequest {
@@ -140,45 +141,47 @@ export function CreateEvmRawTransactionRequestFromJSON(json: any): CreateEvmRawT
 }
 
 export function CreateEvmRawTransactionRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateEvmRawTransactionRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
-        'useSecureNode': !exists(json, 'use_secure_node') ? undefined : json['use_secure_node'],
-        'gas': CreateEvmRawTransactionRequestGasFromJSON(json['gas']),
-        'failOnPredictionFailure': !exists(json, 'fail_on_prediction_failure') ? undefined : json['fail_on_prediction_failure'],
-        'skipPrediction': !exists(json, 'skip_prediction') ? undefined : json['skip_prediction'],
-        'pushMode': !exists(json, 'push_mode') ? undefined : PushModeFromJSON(json['push_mode']),
-        'funder': !exists(json, 'funder') ? undefined : json['funder'],
+        'useSecureNode': json['use_secure_node'] == null ? undefined : json['use_secure_node'],
+        'gas': json['gas'] == null ? undefined : CreateEvmRawTransactionRequestGasFromJSON(json['gas']),
+        'failOnPredictionFailure': json['fail_on_prediction_failure'] == null ? undefined : json['fail_on_prediction_failure'],
+        'skipPrediction': json['skip_prediction'] == null ? undefined : json['skip_prediction'],
+        'pushMode': json['push_mode'] == null ? undefined : PushModeFromJSON(json['push_mode']),
+        'funder': json['funder'] == null ? undefined : json['funder'],
         'chain': EvmChainRequestFromJSON(json['chain']),
-        'to': !exists(json, 'to') ? undefined : json['to'],
+        'to': json['to'] == null ? undefined : json['to'],
         'value': json['value'],
-        'data': !exists(json, 'data') ? undefined : EvmDataRequestFromJSON(json['data']),
+        'data': json['data'] == null ? undefined : EvmDataRequestFromJSON(json['data']),
     };
 }
 
-export function CreateEvmRawTransactionRequestToJSON(value?: CreateEvmRawTransactionRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateEvmRawTransactionRequestToJSON(json: any): CreateEvmRawTransactionRequest {
+    return CreateEvmRawTransactionRequestToJSONTyped(json, false);
+}
+
+export function CreateEvmRawTransactionRequestToJSONTyped(value?: CreateEvmRawTransactionRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'use_secure_node': value.useSecureNode,
-        'gas': CreateEvmRawTransactionRequestGasToJSON(value.gas),
-        'fail_on_prediction_failure': value.failOnPredictionFailure,
-        'skip_prediction': value.skipPrediction,
-        'push_mode': PushModeToJSON(value.pushMode),
-        'funder': value.funder,
-        'chain': EvmChainRequestToJSON(value.chain),
-        'to': value.to,
-        'value': value.value,
-        'data': EvmDataRequestToJSON(value.data),
+        'type': value['type'],
+        'use_secure_node': value['useSecureNode'],
+        'gas': CreateEvmRawTransactionRequestGasToJSON(value['gas']),
+        'fail_on_prediction_failure': value['failOnPredictionFailure'],
+        'skip_prediction': value['skipPrediction'],
+        'push_mode': PushModeToJSON(value['pushMode']),
+        'funder': value['funder'],
+        'chain': EvmChainRequestToJSON(value['chain']),
+        'to': value['to'],
+        'value': value['value'],
+        'data': EvmDataRequestToJSON(value['data']),
     };
 }
 

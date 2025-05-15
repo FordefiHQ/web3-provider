@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AminoMessage } from './AminoMessage';
 import {
     AminoMessageFromJSON,
     AminoMessageFromJSONTyped,
     AminoMessageToJSON,
+    AminoMessageToJSONTyped,
 } from './AminoMessage';
 import type { StdFeeRequest } from './StdFeeRequest';
 import {
     StdFeeRequestFromJSON,
     StdFeeRequestFromJSONTyped,
     StdFeeRequestToJSON,
+    StdFeeRequestToJSONTyped,
 } from './StdFeeRequest';
 
 /**
@@ -77,12 +79,10 @@ export type AminoRequestDataFormatEnum = typeof AminoRequestDataFormatEnum[keyof
 /**
  * Check if a given object implements the AminoRequestData interface.
  */
-export function instanceOfAminoRequestData(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "format" in value;
-    isInstance = isInstance && "messages" in value;
-
-    return isInstance;
+export function instanceOfAminoRequestData(value: object): value is AminoRequestData {
+    if (!('format' in value) || value['format'] === undefined) return false;
+    if (!('messages' in value) || value['messages'] === undefined) return false;
+    return true;
 }
 
 export function AminoRequestDataFromJSON(json: any): AminoRequestData {
@@ -90,33 +90,35 @@ export function AminoRequestDataFromJSON(json: any): AminoRequestData {
 }
 
 export function AminoRequestDataFromJSONTyped(json: any, ignoreDiscriminator: boolean): AminoRequestData {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'format': json['format'],
         'messages': ((json['messages'] as Array<any>).map(AminoMessageFromJSON)),
-        'memo': !exists(json, 'memo') ? undefined : json['memo'],
-        'stdFee': !exists(json, 'std_fee') ? undefined : StdFeeRequestFromJSON(json['std_fee']),
-        'timeoutHeight': !exists(json, 'timeout_height') ? undefined : json['timeout_height'],
+        'memo': json['memo'] == null ? undefined : json['memo'],
+        'stdFee': json['std_fee'] == null ? undefined : StdFeeRequestFromJSON(json['std_fee']),
+        'timeoutHeight': json['timeout_height'] == null ? undefined : json['timeout_height'],
     };
 }
 
-export function AminoRequestDataToJSON(value?: AminoRequestData | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AminoRequestDataToJSON(json: any): AminoRequestData {
+    return AminoRequestDataToJSONTyped(json, false);
+}
+
+export function AminoRequestDataToJSONTyped(value?: AminoRequestData | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'format': value.format,
-        'messages': ((value.messages as Array<any>).map(AminoMessageToJSON)),
-        'memo': value.memo,
-        'std_fee': StdFeeRequestToJSON(value.stdFee),
-        'timeout_height': value.timeoutHeight,
+        'format': value['format'],
+        'messages': ((value['messages'] as Array<any>).map(AminoMessageToJSON)),
+        'memo': value['memo'],
+        'std_fee': StdFeeRequestToJSON(value['stdFee']),
+        'timeout_height': value['timeoutHeight'],
     };
 }
 

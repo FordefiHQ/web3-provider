@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -36,10 +36,8 @@ export interface InitiatorsConditionRequest {
 /**
  * Check if a given object implements the InitiatorsConditionRequest interface.
  */
-export function instanceOfInitiatorsConditionRequest(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfInitiatorsConditionRequest(value: object): value is InitiatorsConditionRequest {
+    return true;
 }
 
 export function InitiatorsConditionRequestFromJSON(json: any): InitiatorsConditionRequest {
@@ -47,27 +45,29 @@ export function InitiatorsConditionRequestFromJSON(json: any): InitiatorsConditi
 }
 
 export function InitiatorsConditionRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): InitiatorsConditionRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'userIds': !exists(json, 'user_ids') ? undefined : json['user_ids'],
-        'userGroupIds': !exists(json, 'user_group_ids') ? undefined : json['user_group_ids'],
+        'userIds': json['user_ids'] == null ? undefined : json['user_ids'],
+        'userGroupIds': json['user_group_ids'] == null ? undefined : json['user_group_ids'],
     };
 }
 
-export function InitiatorsConditionRequestToJSON(value?: InitiatorsConditionRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function InitiatorsConditionRequestToJSON(json: any): InitiatorsConditionRequest {
+    return InitiatorsConditionRequestToJSONTyped(json, false);
+}
+
+export function InitiatorsConditionRequestToJSONTyped(value?: InitiatorsConditionRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'user_ids': value.userIds,
-        'user_group_ids': value.userGroupIds,
+        'user_ids': value['userIds'],
+        'user_group_ids': value['userGroupIds'],
     };
 }
 

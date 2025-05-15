@@ -28,6 +28,17 @@ export const TransactionRuleDiff = {
 export type TransactionRuleDiff = typeof TransactionRuleDiff[keyof typeof TransactionRuleDiff];
 
 
+export function instanceOfTransactionRuleDiff(value: any): boolean {
+    for (const key in TransactionRuleDiff) {
+        if (Object.prototype.hasOwnProperty.call(TransactionRuleDiff, key)) {
+            if (TransactionRuleDiff[key as keyof typeof TransactionRuleDiff] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function TransactionRuleDiffFromJSON(json: any): TransactionRuleDiff {
     return TransactionRuleDiffFromJSONTyped(json, false);
 }
@@ -38,5 +49,9 @@ export function TransactionRuleDiffFromJSONTyped(json: any, ignoreDiscriminator:
 
 export function TransactionRuleDiffToJSON(value?: TransactionRuleDiff | null): any {
     return value as any;
+}
+
+export function TransactionRuleDiffToJSONTyped(value: any, ignoreDiscriminator: boolean): TransactionRuleDiff {
+    return value as TransactionRuleDiff;
 }
 

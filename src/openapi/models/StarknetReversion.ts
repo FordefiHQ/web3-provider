@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { StarknetReversionState } from './StarknetReversionState';
 import {
     StarknetReversionStateFromJSON,
     StarknetReversionStateFromJSONTyped,
     StarknetReversionStateToJSON,
+    StarknetReversionStateToJSONTyped,
 } from './StarknetReversionState';
 
 /**
@@ -40,14 +41,14 @@ export interface StarknetReversion {
     reason?: string;
 }
 
+
+
 /**
  * Check if a given object implements the StarknetReversion interface.
  */
-export function instanceOfStarknetReversion(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "state" in value;
-
-    return isInstance;
+export function instanceOfStarknetReversion(value: object): value is StarknetReversion {
+    if (!('state' in value) || value['state'] === undefined) return false;
+    return true;
 }
 
 export function StarknetReversionFromJSON(json: any): StarknetReversion {
@@ -55,27 +56,29 @@ export function StarknetReversionFromJSON(json: any): StarknetReversion {
 }
 
 export function StarknetReversionFromJSONTyped(json: any, ignoreDiscriminator: boolean): StarknetReversion {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'state': StarknetReversionStateFromJSON(json['state']),
-        'reason': !exists(json, 'reason') ? undefined : json['reason'],
+        'reason': json['reason'] == null ? undefined : json['reason'],
     };
 }
 
-export function StarknetReversionToJSON(value?: StarknetReversion | null): any {
-    if (value === undefined) {
-        return undefined;
+export function StarknetReversionToJSON(json: any): StarknetReversion {
+    return StarknetReversionToJSONTyped(json, false);
+}
+
+export function StarknetReversionToJSONTyped(value?: StarknetReversion | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'state': StarknetReversionStateToJSON(value.state),
-        'reason': value.reason,
+        'state': StarknetReversionStateToJSON(value['state']),
+        'reason': value['reason'],
     };
 }
 

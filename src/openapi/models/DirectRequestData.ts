@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -58,13 +58,11 @@ export type DirectRequestDataFormatEnum = typeof DirectRequestDataFormatEnum[key
 /**
  * Check if a given object implements the DirectRequestData interface.
  */
-export function instanceOfDirectRequestData(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "format" in value;
-    isInstance = isInstance && "body" in value;
-    isInstance = isInstance && "authInfo" in value;
-
-    return isInstance;
+export function instanceOfDirectRequestData(value: object): value is DirectRequestData {
+    if (!('format' in value) || value['format'] === undefined) return false;
+    if (!('body' in value) || value['body'] === undefined) return false;
+    if (!('authInfo' in value) || value['authInfo'] === undefined) return false;
+    return true;
 }
 
 export function DirectRequestDataFromJSON(json: any): DirectRequestData {
@@ -72,7 +70,7 @@ export function DirectRequestDataFromJSON(json: any): DirectRequestData {
 }
 
 export function DirectRequestDataFromJSONTyped(json: any, ignoreDiscriminator: boolean): DirectRequestData {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -80,23 +78,25 @@ export function DirectRequestDataFromJSONTyped(json: any, ignoreDiscriminator: b
         'format': json['format'],
         'body': json['body'],
         'authInfo': json['auth_info'],
-        'accountNumber': !exists(json, 'account_number') ? undefined : json['account_number'],
+        'accountNumber': json['account_number'] == null ? undefined : json['account_number'],
     };
 }
 
-export function DirectRequestDataToJSON(value?: DirectRequestData | null): any {
-    if (value === undefined) {
-        return undefined;
+export function DirectRequestDataToJSON(json: any): DirectRequestData {
+    return DirectRequestDataToJSONTyped(json, false);
+}
+
+export function DirectRequestDataToJSONTyped(value?: DirectRequestData | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'format': value.format,
-        'body': value.body,
-        'auth_info': value.authInfo,
-        'account_number': value.accountNumber,
+        'format': value['format'],
+        'body': value['body'],
+        'auth_info': value['authInfo'],
+        'account_number': value['accountNumber'],
     };
 }
 

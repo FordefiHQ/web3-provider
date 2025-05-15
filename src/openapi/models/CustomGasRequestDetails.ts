@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { DynamicGasRequest } from './DynamicGasRequest';
 import {
-    DynamicGasRequest,
     instanceOfDynamicGasRequest,
     DynamicGasRequestFromJSON,
     DynamicGasRequestFromJSONTyped,
     DynamicGasRequestToJSON,
 } from './DynamicGasRequest';
+import type { LegacyGasRequest } from './LegacyGasRequest';
 import {
-    LegacyGasRequest,
     instanceOfLegacyGasRequest,
     LegacyGasRequestFromJSON,
     LegacyGasRequestFromJSONTyped,
@@ -39,31 +39,32 @@ export function CustomGasRequestDetailsFromJSON(json: any): CustomGasRequestDeta
 }
 
 export function CustomGasRequestDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): CustomGasRequestDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'dynamic':
-            return {...DynamicGasRequestFromJSONTyped(json, true), type: 'dynamic'};
+            return Object.assign({}, DynamicGasRequestFromJSONTyped(json, true), { type: 'dynamic' } as const);
         case 'legacy':
-            return {...LegacyGasRequestFromJSONTyped(json, true), type: 'legacy'};
+            return Object.assign({}, LegacyGasRequestFromJSONTyped(json, true), { type: 'legacy' } as const);
         default:
             throw new Error(`No variant of CustomGasRequestDetails exists with 'type=${json['type']}'`);
     }
 }
 
-export function CustomGasRequestDetailsToJSON(value?: CustomGasRequestDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function CustomGasRequestDetailsToJSON(json: any): any {
+    return CustomGasRequestDetailsToJSONTyped(json, false);
+}
+
+export function CustomGasRequestDetailsToJSONTyped(value?: CustomGasRequestDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'dynamic':
-            return DynamicGasRequestToJSON(value);
+            return Object.assign({}, DynamicGasRequestToJSON(value), { type: 'dynamic' } as const);
         case 'legacy':
-            return LegacyGasRequestToJSON(value);
+            return Object.assign({}, LegacyGasRequestToJSON(value), { type: 'legacy' } as const);
         default:
             throw new Error(`No variant of CustomGasRequestDetails exists with 'type=${value['type']}'`);
     }

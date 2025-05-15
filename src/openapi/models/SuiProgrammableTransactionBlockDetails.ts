@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedSuiAddress } from './EnrichedSuiAddress';
 import {
     EnrichedSuiAddressFromJSON,
     EnrichedSuiAddressFromJSONTyped,
     EnrichedSuiAddressToJSON,
+    EnrichedSuiAddressToJSONTyped,
 } from './EnrichedSuiAddress';
 
 /**
@@ -59,13 +60,11 @@ export type SuiProgrammableTransactionBlockDetailsTypeEnum = typeof SuiProgramma
 /**
  * Check if a given object implements the SuiProgrammableTransactionBlockDetails interface.
  */
-export function instanceOfSuiProgrammableTransactionBlockDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "sender" in value;
-    isInstance = isInstance && "recipients" in value;
-
-    return isInstance;
+export function instanceOfSuiProgrammableTransactionBlockDetails(value: object): value is SuiProgrammableTransactionBlockDetails {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    if (!('recipients' in value) || value['recipients'] === undefined) return false;
+    return true;
 }
 
 export function SuiProgrammableTransactionBlockDetailsFromJSON(json: any): SuiProgrammableTransactionBlockDetails {
@@ -73,7 +72,7 @@ export function SuiProgrammableTransactionBlockDetailsFromJSON(json: any): SuiPr
 }
 
 export function SuiProgrammableTransactionBlockDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiProgrammableTransactionBlockDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -84,18 +83,20 @@ export function SuiProgrammableTransactionBlockDetailsFromJSONTyped(json: any, i
     };
 }
 
-export function SuiProgrammableTransactionBlockDetailsToJSON(value?: SuiProgrammableTransactionBlockDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiProgrammableTransactionBlockDetailsToJSON(json: any): SuiProgrammableTransactionBlockDetails {
+    return SuiProgrammableTransactionBlockDetailsToJSONTyped(json, false);
+}
+
+export function SuiProgrammableTransactionBlockDetailsToJSONTyped(value?: SuiProgrammableTransactionBlockDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'sender': EnrichedSuiAddressToJSON(value.sender),
-        'recipients': ((value.recipients as Array<any>).map(EnrichedSuiAddressToJSON)),
+        'type': value['type'],
+        'sender': EnrichedSuiAddressToJSON(value['sender']),
+        'recipients': ((value['recipients'] as Array<any>).map(EnrichedSuiAddressToJSON)),
     };
 }
 

@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AptosChainUniqueId } from './AptosChainUniqueId';
 import {
     AptosChainUniqueIdFromJSON,
     AptosChainUniqueIdFromJSONTyped,
     AptosChainUniqueIdToJSON,
+    AptosChainUniqueIdToJSONTyped,
 } from './AptosChainUniqueId';
 
 /**
@@ -53,12 +54,10 @@ export type AptosNativeAssetIdentifierRequestTypeEnum = typeof AptosNativeAssetI
 /**
  * Check if a given object implements the AptosNativeAssetIdentifierRequest interface.
  */
-export function instanceOfAptosNativeAssetIdentifierRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfAptosNativeAssetIdentifierRequest(value: object): value is AptosNativeAssetIdentifierRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function AptosNativeAssetIdentifierRequestFromJSON(json: any): AptosNativeAssetIdentifierRequest {
@@ -66,7 +65,7 @@ export function AptosNativeAssetIdentifierRequestFromJSON(json: any): AptosNativ
 }
 
 export function AptosNativeAssetIdentifierRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosNativeAssetIdentifierRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function AptosNativeAssetIdentifierRequestFromJSONTyped(json: any, ignore
     };
 }
 
-export function AptosNativeAssetIdentifierRequestToJSON(value?: AptosNativeAssetIdentifierRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AptosNativeAssetIdentifierRequestToJSON(json: any): AptosNativeAssetIdentifierRequest {
+    return AptosNativeAssetIdentifierRequestToJSONTyped(json, false);
+}
+
+export function AptosNativeAssetIdentifierRequestToJSONTyped(value?: AptosNativeAssetIdentifierRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'chain': AptosChainUniqueIdToJSON(value.chain),
+        'type': value['type'],
+        'chain': AptosChainUniqueIdToJSON(value['chain']),
     };
 }
 

@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { AminoRequestData } from './AminoRequestData';
 import {
-    AminoRequestData,
     instanceOfAminoRequestData,
     AminoRequestDataFromJSON,
     AminoRequestDataFromJSONTyped,
     AminoRequestDataToJSON,
 } from './AminoRequestData';
+import type { DirectRequestData } from './DirectRequestData';
 import {
-    DirectRequestData,
     instanceOfDirectRequestData,
     DirectRequestDataFromJSON,
     DirectRequestDataFromJSONTyped,
@@ -39,31 +39,32 @@ export function TypedCosmosRawTransactionRequestRequestDataFromJSON(json: any): 
 }
 
 export function TypedCosmosRawTransactionRequestRequestDataFromJSONTyped(json: any, ignoreDiscriminator: boolean): TypedCosmosRawTransactionRequestRequestData {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['format']) {
         case 'amino':
-            return {...AminoRequestDataFromJSONTyped(json, true), format: 'amino'};
+            return Object.assign({}, AminoRequestDataFromJSONTyped(json, true), { format: 'amino' } as const);
         case 'direct':
-            return {...DirectRequestDataFromJSONTyped(json, true), format: 'direct'};
+            return Object.assign({}, DirectRequestDataFromJSONTyped(json, true), { format: 'direct' } as const);
         default:
             throw new Error(`No variant of TypedCosmosRawTransactionRequestRequestData exists with 'format=${json['format']}'`);
     }
 }
 
-export function TypedCosmosRawTransactionRequestRequestDataToJSON(value?: TypedCosmosRawTransactionRequestRequestData | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function TypedCosmosRawTransactionRequestRequestDataToJSON(json: any): any {
+    return TypedCosmosRawTransactionRequestRequestDataToJSONTyped(json, false);
+}
+
+export function TypedCosmosRawTransactionRequestRequestDataToJSONTyped(value?: TypedCosmosRawTransactionRequestRequestData | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['format']) {
         case 'amino':
-            return AminoRequestDataToJSON(value);
+            return Object.assign({}, AminoRequestDataToJSON(value), { format: 'amino' } as const);
         case 'direct':
-            return DirectRequestDataToJSON(value);
+            return Object.assign({}, DirectRequestDataToJSON(value), { format: 'direct' } as const);
         default:
             throw new Error(`No variant of TypedCosmosRawTransactionRequestRequestData exists with 'format=${value['format']}'`);
     }

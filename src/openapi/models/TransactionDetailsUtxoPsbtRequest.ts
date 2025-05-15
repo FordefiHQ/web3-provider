@@ -12,25 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { PsbtInput } from './PsbtInput';
 import {
     PsbtInputFromJSON,
     PsbtInputFromJSONTyped,
     PsbtInputToJSON,
+    PsbtInputToJSONTyped,
 } from './PsbtInput';
-import type { PushMode } from './PushMode';
-import {
-    PushModeFromJSON,
-    PushModeFromJSONTyped,
-    PushModeToJSON,
-} from './PushMode';
 import type { UtxoAddress } from './UtxoAddress';
 import {
     UtxoAddressFromJSON,
     UtxoAddressFromJSONTyped,
     UtxoAddressToJSON,
+    UtxoAddressToJSONTyped,
 } from './UtxoAddress';
+import type { PushMode } from './PushMode';
+import {
+    PushModeFromJSON,
+    PushModeFromJSONTyped,
+    PushModeToJSON,
+    PushModeToJSONTyped,
+} from './PushMode';
 
 /**
  * 
@@ -89,13 +92,11 @@ export type TransactionDetailsUtxoPsbtRequestTypeEnum = typeof TransactionDetail
 /**
  * Check if a given object implements the TransactionDetailsUtxoPsbtRequest interface.
  */
-export function instanceOfTransactionDetailsUtxoPsbtRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "psbtRawData" in value;
-    isInstance = isInstance && "sender" in value;
-
-    return isInstance;
+export function instanceOfTransactionDetailsUtxoPsbtRequest(value: object): value is TransactionDetailsUtxoPsbtRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('psbtRawData' in value) || value['psbtRawData'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    return true;
 }
 
 export function TransactionDetailsUtxoPsbtRequestFromJSON(json: any): TransactionDetailsUtxoPsbtRequest {
@@ -103,35 +104,37 @@ export function TransactionDetailsUtxoPsbtRequestFromJSON(json: any): Transactio
 }
 
 export function TransactionDetailsUtxoPsbtRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): TransactionDetailsUtxoPsbtRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
         'psbtRawData': json['psbt_raw_data'],
-        'autoFinalize': !exists(json, 'auto_finalize') ? undefined : json['auto_finalize'],
+        'autoFinalize': json['auto_finalize'] == null ? undefined : json['auto_finalize'],
         'sender': UtxoAddressFromJSON(json['sender']),
-        'inputs': !exists(json, 'inputs') ? undefined : ((json['inputs'] as Array<any>).map(PsbtInputFromJSON)),
-        'pushMode': !exists(json, 'push_mode') ? undefined : PushModeFromJSON(json['push_mode']),
+        'inputs': json['inputs'] == null ? undefined : ((json['inputs'] as Array<any>).map(PsbtInputFromJSON)),
+        'pushMode': json['push_mode'] == null ? undefined : PushModeFromJSON(json['push_mode']),
     };
 }
 
-export function TransactionDetailsUtxoPsbtRequestToJSON(value?: TransactionDetailsUtxoPsbtRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TransactionDetailsUtxoPsbtRequestToJSON(json: any): TransactionDetailsUtxoPsbtRequest {
+    return TransactionDetailsUtxoPsbtRequestToJSONTyped(json, false);
+}
+
+export function TransactionDetailsUtxoPsbtRequestToJSONTyped(value?: TransactionDetailsUtxoPsbtRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'psbt_raw_data': value.psbtRawData,
-        'auto_finalize': value.autoFinalize,
-        'sender': UtxoAddressToJSON(value.sender),
-        'inputs': value.inputs === undefined ? undefined : ((value.inputs as Array<any>).map(PsbtInputToJSON)),
-        'push_mode': PushModeToJSON(value.pushMode),
+        'type': value['type'],
+        'psbt_raw_data': value['psbtRawData'],
+        'auto_finalize': value['autoFinalize'],
+        'sender': UtxoAddressToJSON(value['sender']),
+        'inputs': value['inputs'] == null ? undefined : ((value['inputs'] as Array<any>).map(PsbtInputToJSON)),
+        'push_mode': PushModeToJSON(value['pushMode']),
     };
 }
 

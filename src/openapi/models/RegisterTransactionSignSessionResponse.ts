@@ -12,24 +12,27 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { KeyDerivationArgs } from './KeyDerivationArgs';
-import {
-    KeyDerivationArgsFromJSON,
-    KeyDerivationArgsFromJSONTyped,
-    KeyDerivationArgsToJSON,
-} from './KeyDerivationArgs';
+import { mapValues } from '../runtime';
 import type { SignSession } from './SignSession';
 import {
     SignSessionFromJSON,
     SignSessionFromJSONTyped,
     SignSessionToJSON,
+    SignSessionToJSONTyped,
 } from './SignSession';
+import type { KeyDerivationArgs } from './KeyDerivationArgs';
+import {
+    KeyDerivationArgsFromJSON,
+    KeyDerivationArgsFromJSONTyped,
+    KeyDerivationArgsToJSON,
+    KeyDerivationArgsToJSONTyped,
+} from './KeyDerivationArgs';
 import type { TimestampedSignature } from './TimestampedSignature';
 import {
     TimestampedSignatureFromJSON,
     TimestampedSignatureFromJSONTyped,
     TimestampedSignatureToJSON,
+    TimestampedSignatureToJSONTyped,
 } from './TimestampedSignature';
 
 /**
@@ -57,7 +60,7 @@ export interface RegisterTransactionSignSessionResponse {
      * @type {TimestampedSignature}
      * @memberof RegisterTransactionSignSessionResponse
      */
-    timestampedSignature: TimestampedSignature;
+    timestampedSignature?: TimestampedSignature;
     /**
      * 
      * @type {TimestampedSignature}
@@ -80,6 +83,7 @@ export interface RegisterTransactionSignSessionResponse {
      * 
      * @type {boolean}
      * @memberof RegisterTransactionSignSessionResponse
+     * @deprecated
      */
     dklsEnabled?: boolean;
 }
@@ -87,16 +91,13 @@ export interface RegisterTransactionSignSessionResponse {
 /**
  * Check if a given object implements the RegisterTransactionSignSessionResponse interface.
  */
-export function instanceOfRegisterTransactionSignSessionResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "sessionId" in value;
-    isInstance = isInstance && "hash" in value;
-    isInstance = isInstance && "timestampedSignature" in value;
-    isInstance = isInstance && "timestampedSignatureV2" in value;
-    isInstance = isInstance && "keyDerivationArgs" in value;
-    isInstance = isInstance && "signSessions" in value;
-
-    return isInstance;
+export function instanceOfRegisterTransactionSignSessionResponse(value: object): value is RegisterTransactionSignSessionResponse {
+    if (!('sessionId' in value) || value['sessionId'] === undefined) return false;
+    if (!('hash' in value) || value['hash'] === undefined) return false;
+    if (!('timestampedSignatureV2' in value) || value['timestampedSignatureV2'] === undefined) return false;
+    if (!('keyDerivationArgs' in value) || value['keyDerivationArgs'] === undefined) return false;
+    if (!('signSessions' in value) || value['signSessions'] === undefined) return false;
+    return true;
 }
 
 export function RegisterTransactionSignSessionResponseFromJSON(json: any): RegisterTransactionSignSessionResponse {
@@ -104,37 +105,39 @@ export function RegisterTransactionSignSessionResponseFromJSON(json: any): Regis
 }
 
 export function RegisterTransactionSignSessionResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): RegisterTransactionSignSessionResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'sessionId': json['session_id'],
         'hash': json['hash'],
-        'timestampedSignature': TimestampedSignatureFromJSON(json['timestamped_signature']),
+        'timestampedSignature': json['timestamped_signature'] == null ? undefined : TimestampedSignatureFromJSON(json['timestamped_signature']),
         'timestampedSignatureV2': TimestampedSignatureFromJSON(json['timestamped_signature_v2']),
         'keyDerivationArgs': KeyDerivationArgsFromJSON(json['key_derivation_args']),
         'signSessions': ((json['sign_sessions'] as Array<any>).map(SignSessionFromJSON)),
-        'dklsEnabled': !exists(json, 'dkls_enabled') ? undefined : json['dkls_enabled'],
+        'dklsEnabled': json['dkls_enabled'] == null ? undefined : json['dkls_enabled'],
     };
 }
 
-export function RegisterTransactionSignSessionResponseToJSON(value?: RegisterTransactionSignSessionResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function RegisterTransactionSignSessionResponseToJSON(json: any): RegisterTransactionSignSessionResponse {
+    return RegisterTransactionSignSessionResponseToJSONTyped(json, false);
+}
+
+export function RegisterTransactionSignSessionResponseToJSONTyped(value?: RegisterTransactionSignSessionResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'session_id': value.sessionId,
-        'hash': value.hash,
-        'timestamped_signature': TimestampedSignatureToJSON(value.timestampedSignature),
-        'timestamped_signature_v2': TimestampedSignatureToJSON(value.timestampedSignatureV2),
-        'key_derivation_args': KeyDerivationArgsToJSON(value.keyDerivationArgs),
-        'sign_sessions': ((value.signSessions as Array<any>).map(SignSessionToJSON)),
-        'dkls_enabled': value.dklsEnabled,
+        'session_id': value['sessionId'],
+        'hash': value['hash'],
+        'timestamped_signature': TimestampedSignatureToJSON(value['timestampedSignature']),
+        'timestamped_signature_v2': TimestampedSignatureToJSON(value['timestampedSignatureV2']),
+        'key_derivation_args': KeyDerivationArgsToJSON(value['keyDerivationArgs']),
+        'sign_sessions': ((value['signSessions'] as Array<any>).map(SignSessionToJSON)),
+        'dkls_enabled': value['dklsEnabled'],
     };
 }
 

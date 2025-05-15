@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { KeyType } from './KeyType';
 import {
     KeyTypeFromJSON,
     KeyTypeFromJSONTyped,
     KeyTypeToJSON,
+    KeyTypeToJSONTyped,
 } from './KeyType';
 
 /**
@@ -65,13 +66,11 @@ export type CreateUserKeyCallbackArgsTypeEnum = typeof CreateUserKeyCallbackArgs
 /**
  * Check if a given object implements the CreateUserKeyCallbackArgs interface.
  */
-export function instanceOfCreateUserKeyCallbackArgs(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "keysetId" in value;
-    isInstance = isInstance && "keyType" in value;
-
-    return isInstance;
+export function instanceOfCreateUserKeyCallbackArgs(value: object): value is CreateUserKeyCallbackArgs {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('keysetId' in value) || value['keysetId'] === undefined) return false;
+    if (!('keyType' in value) || value['keyType'] === undefined) return false;
+    return true;
 }
 
 export function CreateUserKeyCallbackArgsFromJSON(json: any): CreateUserKeyCallbackArgs {
@@ -79,7 +78,7 @@ export function CreateUserKeyCallbackArgsFromJSON(json: any): CreateUserKeyCallb
 }
 
 export function CreateUserKeyCallbackArgsFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateUserKeyCallbackArgs {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -87,23 +86,25 @@ export function CreateUserKeyCallbackArgsFromJSONTyped(json: any, ignoreDiscrimi
         'type': json['type'],
         'keysetId': json['keyset_id'],
         'keyType': KeyTypeFromJSON(json['key_type']),
-        'authPublicKey': !exists(json, 'auth_public_key') ? undefined : json['auth_public_key'],
+        'authPublicKey': json['auth_public_key'] == null ? undefined : json['auth_public_key'],
     };
 }
 
-export function CreateUserKeyCallbackArgsToJSON(value?: CreateUserKeyCallbackArgs | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateUserKeyCallbackArgsToJSON(json: any): CreateUserKeyCallbackArgs {
+    return CreateUserKeyCallbackArgsToJSONTyped(json, false);
+}
+
+export function CreateUserKeyCallbackArgsToJSONTyped(value?: CreateUserKeyCallbackArgs | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'keyset_id': value.keysetId,
-        'key_type': KeyTypeToJSON(value.keyType),
-        'auth_public_key': value.authPublicKey,
+        'type': value['type'],
+        'keyset_id': value['keysetId'],
+        'key_type': KeyTypeToJSON(value['keyType']),
+        'auth_public_key': value['authPublicKey'],
     };
 }
 

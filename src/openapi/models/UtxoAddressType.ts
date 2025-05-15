@@ -26,6 +26,17 @@ export const UtxoAddressType = {
 export type UtxoAddressType = typeof UtxoAddressType[keyof typeof UtxoAddressType];
 
 
+export function instanceOfUtxoAddressType(value: any): boolean {
+    for (const key in UtxoAddressType) {
+        if (Object.prototype.hasOwnProperty.call(UtxoAddressType, key)) {
+            if (UtxoAddressType[key as keyof typeof UtxoAddressType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function UtxoAddressTypeFromJSON(json: any): UtxoAddressType {
     return UtxoAddressTypeFromJSONTyped(json, false);
 }
@@ -36,5 +47,9 @@ export function UtxoAddressTypeFromJSONTyped(json: any, ignoreDiscriminator: boo
 
 export function UtxoAddressTypeToJSON(value?: UtxoAddressType | null): any {
     return value as any;
+}
+
+export function UtxoAddressTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): UtxoAddressType {
+    return value as UtxoAddressType;
 }
 

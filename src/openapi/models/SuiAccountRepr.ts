@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type SuiAccountReprChainTypeEnum = typeof SuiAccountReprChainTypeEnum[key
 /**
  * Check if a given object implements the SuiAccountRepr interface.
  */
-export function instanceOfSuiAccountRepr(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chainType" in value;
-    isInstance = isInstance && "hexRepr" in value;
-
-    return isInstance;
+export function instanceOfSuiAccountRepr(value: object): value is SuiAccountRepr {
+    if (!('chainType' in value) || value['chainType'] === undefined) return false;
+    if (!('hexRepr' in value) || value['hexRepr'] === undefined) return false;
+    return true;
 }
 
 export function SuiAccountReprFromJSON(json: any): SuiAccountRepr {
@@ -59,7 +57,7 @@ export function SuiAccountReprFromJSON(json: any): SuiAccountRepr {
 }
 
 export function SuiAccountReprFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiAccountRepr {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function SuiAccountReprFromJSONTyped(json: any, ignoreDiscriminator: bool
     };
 }
 
-export function SuiAccountReprToJSON(value?: SuiAccountRepr | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiAccountReprToJSON(json: any): SuiAccountRepr {
+    return SuiAccountReprToJSONTyped(json, false);
+}
+
+export function SuiAccountReprToJSONTyped(value?: SuiAccountRepr | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain_type': value.chainType,
-        'hex_repr': value.hexRepr,
+        'chain_type': value['chainType'],
+        'hex_repr': value['hexRepr'],
     };
 }
 

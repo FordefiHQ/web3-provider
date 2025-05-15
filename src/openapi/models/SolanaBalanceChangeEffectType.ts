@@ -24,6 +24,17 @@ export const SolanaBalanceChangeEffectType = {
 export type SolanaBalanceChangeEffectType = typeof SolanaBalanceChangeEffectType[keyof typeof SolanaBalanceChangeEffectType];
 
 
+export function instanceOfSolanaBalanceChangeEffectType(value: any): boolean {
+    for (const key in SolanaBalanceChangeEffectType) {
+        if (Object.prototype.hasOwnProperty.call(SolanaBalanceChangeEffectType, key)) {
+            if (SolanaBalanceChangeEffectType[key as keyof typeof SolanaBalanceChangeEffectType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function SolanaBalanceChangeEffectTypeFromJSON(json: any): SolanaBalanceChangeEffectType {
     return SolanaBalanceChangeEffectTypeFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function SolanaBalanceChangeEffectTypeFromJSONTyped(json: any, ignoreDisc
 
 export function SolanaBalanceChangeEffectTypeToJSON(value?: SolanaBalanceChangeEffectType | null): any {
     return value as any;
+}
+
+export function SolanaBalanceChangeEffectTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): SolanaBalanceChangeEffectType {
+    return value as SolanaBalanceChangeEffectType;
 }
 

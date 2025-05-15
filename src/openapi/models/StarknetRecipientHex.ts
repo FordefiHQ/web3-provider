@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type StarknetRecipientHexTypeEnum = typeof StarknetRecipientHexTypeEnum[k
 /**
  * Check if a given object implements the StarknetRecipientHex interface.
  */
-export function instanceOfStarknetRecipientHex(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "address" in value;
-
-    return isInstance;
+export function instanceOfStarknetRecipientHex(value: object): value is StarknetRecipientHex {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    return true;
 }
 
 export function StarknetRecipientHexFromJSON(json: any): StarknetRecipientHex {
@@ -59,7 +57,7 @@ export function StarknetRecipientHexFromJSON(json: any): StarknetRecipientHex {
 }
 
 export function StarknetRecipientHexFromJSONTyped(json: any, ignoreDiscriminator: boolean): StarknetRecipientHex {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function StarknetRecipientHexFromJSONTyped(json: any, ignoreDiscriminator
     };
 }
 
-export function StarknetRecipientHexToJSON(value?: StarknetRecipientHex | null): any {
-    if (value === undefined) {
-        return undefined;
+export function StarknetRecipientHexToJSON(json: any): StarknetRecipientHex {
+    return StarknetRecipientHexToJSONTyped(json, false);
+}
+
+export function StarknetRecipientHexToJSONTyped(value?: StarknetRecipientHex | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'address': value.address,
+        'type': value['type'],
+        'address': value['address'],
     };
 }
 

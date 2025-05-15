@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -36,12 +36,10 @@ export interface Attestation {
 /**
  * Check if a given object implements the Attestation interface.
  */
-export function instanceOfAttestation(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "attestation" in value;
-    isInstance = isInstance && "certificate" in value;
-
-    return isInstance;
+export function instanceOfAttestation(value: object): value is Attestation {
+    if (!('attestation' in value) || value['attestation'] === undefined) return false;
+    if (!('certificate' in value) || value['certificate'] === undefined) return false;
+    return true;
 }
 
 export function AttestationFromJSON(json: any): Attestation {
@@ -49,7 +47,7 @@ export function AttestationFromJSON(json: any): Attestation {
 }
 
 export function AttestationFromJSONTyped(json: any, ignoreDiscriminator: boolean): Attestation {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -59,17 +57,19 @@ export function AttestationFromJSONTyped(json: any, ignoreDiscriminator: boolean
     };
 }
 
-export function AttestationToJSON(value?: Attestation | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AttestationToJSON(json: any): Attestation {
+    return AttestationToJSONTyped(json, false);
+}
+
+export function AttestationToJSONTyped(value?: Attestation | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'attestation': value.attestation,
-        'certificate': value.certificate,
+        'attestation': value['attestation'],
+        'certificate': value['certificate'],
     };
 }
 

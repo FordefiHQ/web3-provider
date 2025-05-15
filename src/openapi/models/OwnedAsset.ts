@@ -12,25 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { Asset } from './Asset';
-import {
-    AssetFromJSON,
-    AssetFromJSONTyped,
-    AssetToJSON,
-} from './Asset';
-import type { Balances } from './Balances';
-import {
-    BalancesFromJSON,
-    BalancesFromJSONTyped,
-    BalancesToJSON,
-} from './Balances';
+import { mapValues } from '../runtime';
 import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
     PricedAssetFromJSONTyped,
     PricedAssetToJSON,
+    PricedAssetToJSONTyped,
 } from './PricedAsset';
+import type { Balances } from './Balances';
+import {
+    BalancesFromJSON,
+    BalancesFromJSONTyped,
+    BalancesToJSON,
+    BalancesToJSONTyped,
+} from './Balances';
+import type { Asset } from './Asset';
+import {
+    AssetFromJSON,
+    AssetFromJSONTyped,
+    AssetToJSON,
+    AssetToJSONTyped,
+} from './Asset';
 
 /**
  * 
@@ -54,6 +57,7 @@ export interface OwnedAsset {
      * 
      * @type {string}
      * @memberof OwnedAsset
+     * @deprecated
      */
     balance: string;
     /**
@@ -67,13 +71,11 @@ export interface OwnedAsset {
 /**
  * Check if a given object implements the OwnedAsset interface.
  */
-export function instanceOfOwnedAsset(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "pricedAsset" in value;
-    isInstance = isInstance && "balance" in value;
-    isInstance = isInstance && "balances" in value;
-
-    return isInstance;
+export function instanceOfOwnedAsset(value: object): value is OwnedAsset {
+    if (!('pricedAsset' in value) || value['pricedAsset'] === undefined) return false;
+    if (!('balance' in value) || value['balance'] === undefined) return false;
+    if (!('balances' in value) || value['balances'] === undefined) return false;
+    return true;
 }
 
 export function OwnedAssetFromJSON(json: any): OwnedAsset {
@@ -81,31 +83,33 @@ export function OwnedAssetFromJSON(json: any): OwnedAsset {
 }
 
 export function OwnedAssetFromJSONTyped(json: any, ignoreDiscriminator: boolean): OwnedAsset {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'asset': !exists(json, 'asset') ? undefined : AssetFromJSON(json['asset']),
+        'asset': json['asset'] == null ? undefined : AssetFromJSON(json['asset']),
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
         'balance': json['balance'],
         'balances': BalancesFromJSON(json['balances']),
     };
 }
 
-export function OwnedAssetToJSON(value?: OwnedAsset | null): any {
-    if (value === undefined) {
-        return undefined;
+export function OwnedAssetToJSON(json: any): OwnedAsset {
+    return OwnedAssetToJSONTyped(json, false);
+}
+
+export function OwnedAssetToJSONTyped(value?: OwnedAsset | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'asset': AssetToJSON(value.asset),
-        'priced_asset': PricedAssetToJSON(value.pricedAsset),
-        'balance': value.balance,
-        'balances': BalancesToJSON(value.balances),
+        'asset': AssetToJSON(value['asset']),
+        'priced_asset': PricedAssetToJSON(value['pricedAsset']),
+        'balance': value['balance'],
+        'balances': BalancesToJSON(value['balances']),
     };
 }
 

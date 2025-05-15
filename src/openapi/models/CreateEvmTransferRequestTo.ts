@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -24,10 +24,8 @@ export interface CreateEvmTransferRequestTo {
 /**
  * Check if a given object implements the CreateEvmTransferRequestTo interface.
  */
-export function instanceOfCreateEvmTransferRequestTo(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfCreateEvmTransferRequestTo(value: object): value is CreateEvmTransferRequestTo {
+    return true;
 }
 
 export function CreateEvmTransferRequestToFromJSON(json: any): CreateEvmTransferRequestTo {
@@ -38,7 +36,11 @@ export function CreateEvmTransferRequestToFromJSONTyped(json: any, ignoreDiscrim
     return json;
 }
 
-export function CreateEvmTransferRequestToToJSON(value?: CreateEvmTransferRequestTo | null): any {
+export function CreateEvmTransferRequestToToJSON(json: any): CreateEvmTransferRequestTo {
+    return CreateEvmTransferRequestToToJSONTyped(json, false);
+}
+
+export function CreateEvmTransferRequestToToJSONTyped(value?: CreateEvmTransferRequestTo | null, ignoreDiscriminator: boolean = false): any {
     return value;
 }
 

@@ -23,6 +23,17 @@ export const AddAssetToVaultErrorType = {
 export type AddAssetToVaultErrorType = typeof AddAssetToVaultErrorType[keyof typeof AddAssetToVaultErrorType];
 
 
+export function instanceOfAddAssetToVaultErrorType(value: any): boolean {
+    for (const key in AddAssetToVaultErrorType) {
+        if (Object.prototype.hasOwnProperty.call(AddAssetToVaultErrorType, key)) {
+            if (AddAssetToVaultErrorType[key as keyof typeof AddAssetToVaultErrorType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function AddAssetToVaultErrorTypeFromJSON(json: any): AddAssetToVaultErrorType {
     return AddAssetToVaultErrorTypeFromJSONTyped(json, false);
 }
@@ -33,5 +44,9 @@ export function AddAssetToVaultErrorTypeFromJSONTyped(json: any, ignoreDiscrimin
 
 export function AddAssetToVaultErrorTypeToJSON(value?: AddAssetToVaultErrorType | null): any {
     return value as any;
+}
+
+export function AddAssetToVaultErrorTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): AddAssetToVaultErrorType {
+    return value as AddAssetToVaultErrorType;
 }
 

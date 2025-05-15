@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -23,18 +23,16 @@ export interface GetDklsStatusResponse {
      * 
      * @type {boolean}
      * @memberof GetDklsStatusResponse
+     * @deprecated
      */
-    dklsEnabledForKeygen: boolean;
+    dklsEnabledForKeygen?: boolean;
 }
 
 /**
  * Check if a given object implements the GetDklsStatusResponse interface.
  */
-export function instanceOfGetDklsStatusResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "dklsEnabledForKeygen" in value;
-
-    return isInstance;
+export function instanceOfGetDklsStatusResponse(value: object): value is GetDklsStatusResponse {
+    return true;
 }
 
 export function GetDklsStatusResponseFromJSON(json: any): GetDklsStatusResponse {
@@ -42,25 +40,27 @@ export function GetDklsStatusResponseFromJSON(json: any): GetDklsStatusResponse 
 }
 
 export function GetDklsStatusResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetDklsStatusResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'dklsEnabledForKeygen': json['dkls_enabled_for_keygen'],
+        'dklsEnabledForKeygen': json['dkls_enabled_for_keygen'] == null ? undefined : json['dkls_enabled_for_keygen'],
     };
 }
 
-export function GetDklsStatusResponseToJSON(value?: GetDklsStatusResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function GetDklsStatusResponseToJSON(json: any): GetDklsStatusResponse {
+    return GetDklsStatusResponseToJSONTyped(json, false);
+}
+
+export function GetDklsStatusResponseToJSONTyped(value?: GetDklsStatusResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'dkls_enabled_for_keygen': value.dklsEnabledForKeygen,
+        'dkls_enabled_for_keygen': value['dklsEnabledForKeygen'],
     };
 }
 

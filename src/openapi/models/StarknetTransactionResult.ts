@@ -12,25 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { StarknetEffects } from './StarknetEffects';
 import {
     StarknetEffectsFromJSON,
     StarknetEffectsFromJSONTyped,
     StarknetEffectsToJSON,
+    StarknetEffectsToJSONTyped,
 } from './StarknetEffects';
-import type { StarknetFees } from './StarknetFees';
-import {
-    StarknetFeesFromJSON,
-    StarknetFeesFromJSONTyped,
-    StarknetFeesToJSON,
-} from './StarknetFees';
 import type { StarknetReversion } from './StarknetReversion';
 import {
     StarknetReversionFromJSON,
     StarknetReversionFromJSONTyped,
     StarknetReversionToJSON,
+    StarknetReversionToJSONTyped,
 } from './StarknetReversion';
+import type { StarknetFees } from './StarknetFees';
+import {
+    StarknetFeesFromJSON,
+    StarknetFeesFromJSONTyped,
+    StarknetFeesToJSON,
+    StarknetFeesToJSONTyped,
+} from './StarknetFees';
 
 /**
  * 
@@ -61,13 +64,11 @@ export interface StarknetTransactionResult {
 /**
  * Check if a given object implements the StarknetTransactionResult interface.
  */
-export function instanceOfStarknetTransactionResult(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "reversion" in value;
-    isInstance = isInstance && "fees" in value;
-    isInstance = isInstance && "effects" in value;
-
-    return isInstance;
+export function instanceOfStarknetTransactionResult(value: object): value is StarknetTransactionResult {
+    if (!('reversion' in value) || value['reversion'] === undefined) return false;
+    if (!('fees' in value) || value['fees'] === undefined) return false;
+    if (!('effects' in value) || value['effects'] === undefined) return false;
+    return true;
 }
 
 export function StarknetTransactionResultFromJSON(json: any): StarknetTransactionResult {
@@ -75,7 +76,7 @@ export function StarknetTransactionResultFromJSON(json: any): StarknetTransactio
 }
 
 export function StarknetTransactionResultFromJSONTyped(json: any, ignoreDiscriminator: boolean): StarknetTransactionResult {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -86,18 +87,20 @@ export function StarknetTransactionResultFromJSONTyped(json: any, ignoreDiscrimi
     };
 }
 
-export function StarknetTransactionResultToJSON(value?: StarknetTransactionResult | null): any {
-    if (value === undefined) {
-        return undefined;
+export function StarknetTransactionResultToJSON(json: any): StarknetTransactionResult {
+    return StarknetTransactionResultToJSONTyped(json, false);
+}
+
+export function StarknetTransactionResultToJSONTyped(value?: StarknetTransactionResult | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'reversion': StarknetReversionToJSON(value.reversion),
-        'fees': StarknetFeesToJSON(value.fees),
-        'effects': StarknetEffectsToJSON(value.effects),
+        'reversion': StarknetReversionToJSON(value['reversion']),
+        'fees': StarknetFeesToJSON(value['fees']),
+        'effects': StarknetEffectsToJSON(value['effects']),
     };
 }
 

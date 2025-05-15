@@ -12,37 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { PersonRef } from './PersonRef';
+import {
+    PersonRefFromJSON,
+    PersonRefFromJSONTyped,
+    PersonRefToJSON,
+    PersonRefToJSONTyped,
+} from './PersonRef';
 import type { ActionSigningRequest } from './ActionSigningRequest';
 import {
     ActionSigningRequestFromJSON,
     ActionSigningRequestFromJSONTyped,
     ActionSigningRequestToJSON,
+    ActionSigningRequestToJSONTyped,
 } from './ActionSigningRequest';
 import type { ApprovalRequest } from './ApprovalRequest';
 import {
     ApprovalRequestFromJSON,
     ApprovalRequestFromJSONTyped,
     ApprovalRequestToJSON,
+    ApprovalRequestToJSONTyped,
 } from './ApprovalRequest';
-import type { PersonRef } from './PersonRef';
-import {
-    PersonRefFromJSON,
-    PersonRefFromJSONTyped,
-    PersonRefToJSON,
-} from './PersonRef';
-import type { UserGroupRef } from './UserGroupRef';
-import {
-    UserGroupRefFromJSON,
-    UserGroupRefFromJSONTyped,
-    UserGroupRefToJSON,
-} from './UserGroupRef';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
     UserRefFromJSONTyped,
     UserRefToJSON,
+    UserRefToJSONTyped,
 } from './UserRef';
+import type { UserGroupRef } from './UserGroupRef';
+import {
+    UserGroupRefFromJSON,
+    UserGroupRefFromJSONTyped,
+    UserGroupRefToJSON,
+    UserGroupRefToJSONTyped,
+} from './UserGroupRef';
 
 /**
  * 
@@ -70,16 +75,16 @@ export interface AddPersonMembershipAction {
     modifiedAt: Date;
     /**
      * 
-     * @type {string}
-     * @memberof AddPersonMembershipAction
-     */
-    type: AddPersonMembershipActionTypeEnum;
-    /**
-     * 
      * @type {boolean}
      * @memberof AddPersonMembershipAction
      */
     isPending: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof AddPersonMembershipAction
+     */
+    type: AddPersonMembershipActionTypeEnum;
     /**
      * 
      * @type {UserRef}
@@ -154,19 +159,17 @@ export type AddPersonMembershipActionStateEnum = typeof AddPersonMembershipActio
 /**
  * Check if a given object implements the AddPersonMembershipAction interface.
  */
-export function instanceOfAddPersonMembershipAction(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "isPending" in value;
-    isInstance = isInstance && "createdBy" in value;
-    isInstance = isInstance && "personRef" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "approvalRequest" in value;
-
-    return isInstance;
+export function instanceOfAddPersonMembershipAction(value: object): value is AddPersonMembershipAction {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('isPending' in value) || value['isPending'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('createdBy' in value) || value['createdBy'] === undefined) return false;
+    if (!('personRef' in value) || value['personRef'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('approvalRequest' in value) || value['approvalRequest'] === undefined) return false;
+    return true;
 }
 
 export function AddPersonMembershipActionFromJSON(json: any): AddPersonMembershipAction {
@@ -174,7 +177,7 @@ export function AddPersonMembershipActionFromJSON(json: any): AddPersonMembershi
 }
 
 export function AddPersonMembershipActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): AddPersonMembershipAction {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -182,41 +185,43 @@ export function AddPersonMembershipActionFromJSONTyped(json: any, ignoreDiscrimi
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
-        'type': json['type'],
         'isPending': json['is_pending'],
+        'type': json['type'],
         'createdBy': UserRefFromJSON(json['created_by']),
-        'abortedBy': !exists(json, 'aborted_by') ? undefined : UserRefFromJSON(json['aborted_by']),
+        'abortedBy': json['aborted_by'] == null ? undefined : UserRefFromJSON(json['aborted_by']),
         'personRef': PersonRefFromJSON(json['person_ref']),
         'state': json['state'],
-        'deviceId': !exists(json, 'device_id') ? undefined : json['device_id'],
+        'deviceId': json['device_id'] == null ? undefined : json['device_id'],
         'approvalRequest': ApprovalRequestFromJSON(json['approval_request']),
-        'signingRequest': !exists(json, 'signing_request') ? undefined : ActionSigningRequestFromJSON(json['signing_request']),
-        'pendingAdditionToGroups': !exists(json, 'pending_addition_to_groups') ? undefined : ((json['pending_addition_to_groups'] as Array<any>).map(UserGroupRefFromJSON)),
+        'signingRequest': json['signing_request'] == null ? undefined : ActionSigningRequestFromJSON(json['signing_request']),
+        'pendingAdditionToGroups': json['pending_addition_to_groups'] == null ? undefined : ((json['pending_addition_to_groups'] as Array<any>).map(UserGroupRefFromJSON)),
     };
 }
 
-export function AddPersonMembershipActionToJSON(value?: AddPersonMembershipAction | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AddPersonMembershipActionToJSON(json: any): AddPersonMembershipAction {
+    return AddPersonMembershipActionToJSONTyped(json, false);
+}
+
+export function AddPersonMembershipActionToJSONTyped(value?: AddPersonMembershipAction | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'type': value.type,
-        'is_pending': value.isPending,
-        'created_by': UserRefToJSON(value.createdBy),
-        'aborted_by': UserRefToJSON(value.abortedBy),
-        'person_ref': PersonRefToJSON(value.personRef),
-        'state': value.state,
-        'device_id': value.deviceId,
-        'approval_request': ApprovalRequestToJSON(value.approvalRequest),
-        'signing_request': ActionSigningRequestToJSON(value.signingRequest),
-        'pending_addition_to_groups': value.pendingAdditionToGroups === undefined ? undefined : ((value.pendingAdditionToGroups as Array<any>).map(UserGroupRefToJSON)),
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'is_pending': value['isPending'],
+        'type': value['type'],
+        'created_by': UserRefToJSON(value['createdBy']),
+        'aborted_by': UserRefToJSON(value['abortedBy']),
+        'person_ref': PersonRefToJSON(value['personRef']),
+        'state': value['state'],
+        'device_id': value['deviceId'],
+        'approval_request': ApprovalRequestToJSON(value['approvalRequest']),
+        'signing_request': ActionSigningRequestToJSON(value['signingRequest']),
+        'pending_addition_to_groups': value['pendingAdditionToGroups'] == null ? undefined : ((value['pendingAdditionToGroups'] as Array<any>).map(UserGroupRefToJSON)),
     };
 }
 

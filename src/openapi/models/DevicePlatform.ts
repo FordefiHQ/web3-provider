@@ -24,6 +24,17 @@ export const DevicePlatform = {
 export type DevicePlatform = typeof DevicePlatform[keyof typeof DevicePlatform];
 
 
+export function instanceOfDevicePlatform(value: any): boolean {
+    for (const key in DevicePlatform) {
+        if (Object.prototype.hasOwnProperty.call(DevicePlatform, key)) {
+            if (DevicePlatform[key as keyof typeof DevicePlatform] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function DevicePlatformFromJSON(json: any): DevicePlatform {
     return DevicePlatformFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function DevicePlatformFromJSONTyped(json: any, ignoreDiscriminator: bool
 
 export function DevicePlatformToJSON(value?: DevicePlatform | null): any {
     return value as any;
+}
+
+export function DevicePlatformToJSONTyped(value: any, ignoreDiscriminator: boolean): DevicePlatform {
+    return value as DevicePlatform;
 }
 

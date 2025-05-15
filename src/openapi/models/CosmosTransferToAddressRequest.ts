@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { CosmosBechAddress } from './CosmosBechAddress';
 import {
     CosmosBechAddressFromJSON,
     CosmosBechAddressFromJSONTyped,
     CosmosBechAddressToJSON,
+    CosmosBechAddressToJSONTyped,
 } from './CosmosBechAddress';
 
 /**
@@ -53,12 +54,10 @@ export type CosmosTransferToAddressRequestTypeEnum = typeof CosmosTransferToAddr
 /**
  * Check if a given object implements the CosmosTransferToAddressRequest interface.
  */
-export function instanceOfCosmosTransferToAddressRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "address" in value;
-
-    return isInstance;
+export function instanceOfCosmosTransferToAddressRequest(value: object): value is CosmosTransferToAddressRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    return true;
 }
 
 export function CosmosTransferToAddressRequestFromJSON(json: any): CosmosTransferToAddressRequest {
@@ -66,7 +65,7 @@ export function CosmosTransferToAddressRequestFromJSON(json: any): CosmosTransfe
 }
 
 export function CosmosTransferToAddressRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosTransferToAddressRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function CosmosTransferToAddressRequestFromJSONTyped(json: any, ignoreDis
     };
 }
 
-export function CosmosTransferToAddressRequestToJSON(value?: CosmosTransferToAddressRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosTransferToAddressRequestToJSON(json: any): CosmosTransferToAddressRequest {
+    return CosmosTransferToAddressRequestToJSONTyped(json, false);
+}
+
+export function CosmosTransferToAddressRequestToJSONTyped(value?: CosmosTransferToAddressRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'address': CosmosBechAddressToJSON(value.address),
+        'type': value['type'],
+        'address': CosmosBechAddressToJSON(value['address']),
     };
 }
 

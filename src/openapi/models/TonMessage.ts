@@ -12,61 +12,70 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedTonAddress } from './EnrichedTonAddress';
 import {
     EnrichedTonAddressFromJSON,
     EnrichedTonAddressFromJSONTyped,
     EnrichedTonAddressToJSON,
+    EnrichedTonAddressToJSONTyped,
 } from './EnrichedTonAddress';
-import type { EnrichedTonChain } from './EnrichedTonChain';
-import {
-    EnrichedTonChainFromJSON,
-    EnrichedTonChainFromJSONTyped,
-    EnrichedTonChainToJSON,
-} from './EnrichedTonChain';
 import type { ManagedTransactionData } from './ManagedTransactionData';
 import {
     ManagedTransactionDataFromJSON,
     ManagedTransactionDataFromJSONTyped,
     ManagedTransactionDataToJSON,
+    ManagedTransactionDataToJSONTyped,
 } from './ManagedTransactionData';
-import type { Signature } from './Signature';
-import {
-    SignatureFromJSON,
-    SignatureFromJSONTyped,
-    SignatureToJSON,
-} from './Signature';
-import type { TonMessageState } from './TonMessageState';
-import {
-    TonMessageStateFromJSON,
-    TonMessageStateFromJSONTyped,
-    TonMessageStateToJSON,
-} from './TonMessageState';
-import type { TonMessageStateChange } from './TonMessageStateChange';
-import {
-    TonMessageStateChangeFromJSON,
-    TonMessageStateChangeFromJSONTyped,
-    TonMessageStateChangeToJSON,
-} from './TonMessageStateChange';
-import type { TonMessageType } from './TonMessageType';
-import {
-    TonMessageTypeFromJSON,
-    TonMessageTypeFromJSONTyped,
-    TonMessageTypeToJSON,
-} from './TonMessageType';
-import type { TransactionDirection } from './TransactionDirection';
-import {
-    TransactionDirectionFromJSON,
-    TransactionDirectionFromJSONTyped,
-    TransactionDirectionToJSON,
-} from './TransactionDirection';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
     TransactionSpamStateFromJSONTyped,
     TransactionSpamStateToJSON,
+    TransactionSpamStateToJSONTyped,
 } from './TransactionSpamState';
+import type { TransactionDirection } from './TransactionDirection';
+import {
+    TransactionDirectionFromJSON,
+    TransactionDirectionFromJSONTyped,
+    TransactionDirectionToJSON,
+    TransactionDirectionToJSONTyped,
+} from './TransactionDirection';
+import type { EnrichedTonChain } from './EnrichedTonChain';
+import {
+    EnrichedTonChainFromJSON,
+    EnrichedTonChainFromJSONTyped,
+    EnrichedTonChainToJSON,
+    EnrichedTonChainToJSONTyped,
+} from './EnrichedTonChain';
+import type { TonMessageType } from './TonMessageType';
+import {
+    TonMessageTypeFromJSON,
+    TonMessageTypeFromJSONTyped,
+    TonMessageTypeToJSON,
+    TonMessageTypeToJSONTyped,
+} from './TonMessageType';
+import type { Signature } from './Signature';
+import {
+    SignatureFromJSON,
+    SignatureFromJSONTyped,
+    SignatureToJSON,
+    SignatureToJSONTyped,
+} from './Signature';
+import type { NonPushableTransactionStateChange } from './NonPushableTransactionStateChange';
+import {
+    NonPushableTransactionStateChangeFromJSON,
+    NonPushableTransactionStateChangeFromJSONTyped,
+    NonPushableTransactionStateChangeToJSON,
+    NonPushableTransactionStateChangeToJSONTyped,
+} from './NonPushableTransactionStateChange';
+import type { NonPushableTransactionState } from './NonPushableTransactionState';
+import {
+    NonPushableTransactionStateFromJSON,
+    NonPushableTransactionStateFromJSONTyped,
+    NonPushableTransactionStateToJSON,
+    NonPushableTransactionStateToJSONTyped,
+} from './NonPushableTransactionState';
 
 /**
  * 
@@ -124,6 +133,24 @@ export interface TonMessage {
     direction: TransactionDirection;
     /**
      * 
+     * @type {boolean}
+     * @memberof TonMessage
+     */
+    signedExternally?: boolean;
+    /**
+     * 
+     * @type {NonPushableTransactionState}
+     * @memberof TonMessage
+     */
+    state: NonPushableTransactionState;
+    /**
+     * 
+     * @type {Array<NonPushableTransactionStateChange>}
+     * @memberof TonMessage
+     */
+    stateChanges: Array<NonPushableTransactionStateChange>;
+    /**
+     * 
      * @type {string}
      * @memberof TonMessage
      */
@@ -134,18 +161,6 @@ export interface TonMessage {
      * @memberof TonMessage
      */
     tonMessageType: TonMessageType;
-    /**
-     * 
-     * @type {TonMessageState}
-     * @memberof TonMessage
-     */
-    state: TonMessageState;
-    /**
-     * 
-     * @type {Array<TonMessageStateChange>}
-     * @memberof TonMessage
-     */
-    stateChanges: Array<TonMessageStateChange>;
     /**
      * 
      * @type {string}
@@ -184,10 +199,10 @@ export interface TonMessage {
     domainBytesLength: number;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof TonMessage
      */
-    timestamp: string;
+    timestamp: number;
 }
 
 
@@ -203,26 +218,24 @@ export type TonMessageTypeEnum = typeof TonMessageTypeEnum[keyof typeof TonMessa
 /**
  * Check if a given object implements the TonMessage interface.
  */
-export function instanceOfTonMessage(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "signatures" in value;
-    isInstance = isInstance && "direction" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "tonMessageType" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "stateChanges" in value;
-    isInstance = isInstance && "rawPayloadToSign" in value;
-    isInstance = isInstance && "stringPayloadToSign" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "sender" in value;
-    isInstance = isInstance && "domain" in value;
-    isInstance = isInstance && "domainBytesLength" in value;
-    isInstance = isInstance && "timestamp" in value;
-
-    return isInstance;
+export function instanceOfTonMessage(value: object): value is TonMessage {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('signatures' in value) || value['signatures'] === undefined) return false;
+    if (!('direction' in value) || value['direction'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('stateChanges' in value) || value['stateChanges'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('tonMessageType' in value) || value['tonMessageType'] === undefined) return false;
+    if (!('rawPayloadToSign' in value) || value['rawPayloadToSign'] === undefined) return false;
+    if (!('stringPayloadToSign' in value) || value['stringPayloadToSign'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    if (!('domain' in value) || value['domain'] === undefined) return false;
+    if (!('domainBytesLength' in value) || value['domainBytesLength'] === undefined) return false;
+    if (!('timestamp' in value) || value['timestamp'] === undefined) return false;
+    return true;
 }
 
 export function TonMessageFromJSON(json: any): TonMessage {
@@ -230,7 +243,7 @@ export function TonMessageFromJSON(json: any): TonMessage {
 }
 
 export function TonMessageFromJSONTyped(json: any, ignoreDiscriminator: boolean): TonMessage {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -238,15 +251,16 @@ export function TonMessageFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
-        'managedTransactionData': !exists(json, 'managed_transaction_data') ? undefined : ManagedTransactionDataFromJSON(json['managed_transaction_data']),
+        'managedTransactionData': json['managed_transaction_data'] == null ? undefined : ManagedTransactionDataFromJSON(json['managed_transaction_data']),
         'signatures': ((json['signatures'] as Array<any>).map(SignatureFromJSON)),
-        'note': !exists(json, 'note') ? undefined : json['note'],
-        'spamState': !exists(json, 'spam_state') ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
+        'note': json['note'] == null ? undefined : json['note'],
+        'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
+        'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'state': NonPushableTransactionStateFromJSON(json['state']),
+        'stateChanges': ((json['state_changes'] as Array<any>).map(NonPushableTransactionStateChangeFromJSON)),
         'type': json['type'],
         'tonMessageType': TonMessageTypeFromJSON(json['ton_message_type']),
-        'state': TonMessageStateFromJSON(json['state']),
-        'stateChanges': ((json['state_changes'] as Array<any>).map(TonMessageStateChangeFromJSON)),
         'rawPayloadToSign': json['raw_payload_to_sign'],
         'stringPayloadToSign': json['string_payload_to_sign'],
         'chain': EnrichedTonChainFromJSON(json['chain']),
@@ -257,34 +271,37 @@ export function TonMessageFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     };
 }
 
-export function TonMessageToJSON(value?: TonMessage | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TonMessageToJSON(json: any): TonMessage {
+    return TonMessageToJSONTyped(json, false);
+}
+
+export function TonMessageToJSONTyped(value?: TonMessage | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'managed_transaction_data': ManagedTransactionDataToJSON(value.managedTransactionData),
-        'signatures': ((value.signatures as Array<any>).map(SignatureToJSON)),
-        'note': value.note,
-        'spam_state': TransactionSpamStateToJSON(value.spamState),
-        'direction': TransactionDirectionToJSON(value.direction),
-        'type': value.type,
-        'ton_message_type': TonMessageTypeToJSON(value.tonMessageType),
-        'state': TonMessageStateToJSON(value.state),
-        'state_changes': ((value.stateChanges as Array<any>).map(TonMessageStateChangeToJSON)),
-        'raw_payload_to_sign': value.rawPayloadToSign,
-        'string_payload_to_sign': value.stringPayloadToSign,
-        'chain': EnrichedTonChainToJSON(value.chain),
-        'sender': EnrichedTonAddressToJSON(value.sender),
-        'domain': value.domain,
-        'domain_bytes_length': value.domainBytesLength,
-        'timestamp': value.timestamp,
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'managed_transaction_data': ManagedTransactionDataToJSON(value['managedTransactionData']),
+        'signatures': ((value['signatures'] as Array<any>).map(SignatureToJSON)),
+        'note': value['note'],
+        'spam_state': TransactionSpamStateToJSON(value['spamState']),
+        'direction': TransactionDirectionToJSON(value['direction']),
+        'signed_externally': value['signedExternally'],
+        'state': NonPushableTransactionStateToJSON(value['state']),
+        'state_changes': ((value['stateChanges'] as Array<any>).map(NonPushableTransactionStateChangeToJSON)),
+        'type': value['type'],
+        'ton_message_type': TonMessageTypeToJSON(value['tonMessageType']),
+        'raw_payload_to_sign': value['rawPayloadToSign'],
+        'string_payload_to_sign': value['stringPayloadToSign'],
+        'chain': EnrichedTonChainToJSON(value['chain']),
+        'sender': EnrichedTonAddressToJSON(value['sender']),
+        'domain': value['domain'],
+        'domain_bytes_length': value['domainBytesLength'],
+        'timestamp': value['timestamp'],
     };
 }
 

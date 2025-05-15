@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { SuiReversionState } from './SuiReversionState';
 import {
     SuiReversionStateFromJSON,
     SuiReversionStateFromJSONTyped,
     SuiReversionStateToJSON,
+    SuiReversionStateToJSONTyped,
 } from './SuiReversionState';
 
 /**
@@ -40,14 +41,14 @@ export interface SuiReversion {
     reason?: string;
 }
 
+
+
 /**
  * Check if a given object implements the SuiReversion interface.
  */
-export function instanceOfSuiReversion(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "state" in value;
-
-    return isInstance;
+export function instanceOfSuiReversion(value: object): value is SuiReversion {
+    if (!('state' in value) || value['state'] === undefined) return false;
+    return true;
 }
 
 export function SuiReversionFromJSON(json: any): SuiReversion {
@@ -55,27 +56,29 @@ export function SuiReversionFromJSON(json: any): SuiReversion {
 }
 
 export function SuiReversionFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiReversion {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'state': SuiReversionStateFromJSON(json['state']),
-        'reason': !exists(json, 'reason') ? undefined : json['reason'],
+        'reason': json['reason'] == null ? undefined : json['reason'],
     };
 }
 
-export function SuiReversionToJSON(value?: SuiReversion | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiReversionToJSON(json: any): SuiReversion {
+    return SuiReversionToJSONTyped(json, false);
+}
+
+export function SuiReversionToJSONTyped(value?: SuiReversion | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'state': SuiReversionStateToJSON(value.state),
-        'reason': value.reason,
+        'state': SuiReversionStateToJSON(value['state']),
+        'reason': value['reason'],
     };
 }
 

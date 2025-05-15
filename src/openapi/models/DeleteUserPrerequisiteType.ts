@@ -29,10 +29,23 @@ export const DeleteUserPrerequisiteType = {
     pendingQuorumSizeUpdate: 'pending_quorum_size_update',
     userInGroup: 'user_in_group',
     userPendingAdditionToGroup: 'user_pending_addition_to_group',
-    userPendingRemovalFromGroup: 'user_pending_removal_from_group'
+    userPendingRemovalFromGroup: 'user_pending_removal_from_group',
+    userPartOfQuorum: 'user_part_of_quorum',
+    userPartOfVaultGroupPermissions: 'user_part_of_vault_group_permissions'
 } as const;
 export type DeleteUserPrerequisiteType = typeof DeleteUserPrerequisiteType[keyof typeof DeleteUserPrerequisiteType];
 
+
+export function instanceOfDeleteUserPrerequisiteType(value: any): boolean {
+    for (const key in DeleteUserPrerequisiteType) {
+        if (Object.prototype.hasOwnProperty.call(DeleteUserPrerequisiteType, key)) {
+            if (DeleteUserPrerequisiteType[key as keyof typeof DeleteUserPrerequisiteType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 export function DeleteUserPrerequisiteTypeFromJSON(json: any): DeleteUserPrerequisiteType {
     return DeleteUserPrerequisiteTypeFromJSONTyped(json, false);
@@ -44,5 +57,9 @@ export function DeleteUserPrerequisiteTypeFromJSONTyped(json: any, ignoreDiscrim
 
 export function DeleteUserPrerequisiteTypeToJSON(value?: DeleteUserPrerequisiteType | null): any {
     return value as any;
+}
+
+export function DeleteUserPrerequisiteTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): DeleteUserPrerequisiteType {
+    return value as DeleteUserPrerequisiteType;
 }
 

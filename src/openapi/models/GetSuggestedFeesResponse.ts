@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { SuggestedFees } from './SuggestedFees';
 import {
     SuggestedFeesFromJSON,
     SuggestedFeesFromJSONTyped,
     SuggestedFeesToJSON,
+    SuggestedFeesToJSONTyped,
 } from './SuggestedFees';
 
 /**
@@ -37,11 +38,9 @@ export interface GetSuggestedFeesResponse {
 /**
  * Check if a given object implements the GetSuggestedFeesResponse interface.
  */
-export function instanceOfGetSuggestedFeesResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "suggestedFees" in value;
-
-    return isInstance;
+export function instanceOfGetSuggestedFeesResponse(value: object): value is GetSuggestedFeesResponse {
+    if (!('suggestedFees' in value) || value['suggestedFees'] === undefined) return false;
+    return true;
 }
 
 export function GetSuggestedFeesResponseFromJSON(json: any): GetSuggestedFeesResponse {
@@ -49,7 +48,7 @@ export function GetSuggestedFeesResponseFromJSON(json: any): GetSuggestedFeesRes
 }
 
 export function GetSuggestedFeesResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetSuggestedFeesResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -58,16 +57,18 @@ export function GetSuggestedFeesResponseFromJSONTyped(json: any, ignoreDiscrimin
     };
 }
 
-export function GetSuggestedFeesResponseToJSON(value?: GetSuggestedFeesResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function GetSuggestedFeesResponseToJSON(json: any): GetSuggestedFeesResponse {
+    return GetSuggestedFeesResponseToJSONTyped(json, false);
+}
+
+export function GetSuggestedFeesResponseToJSONTyped(value?: GetSuggestedFeesResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'suggested_fees': (mapValues(value.suggestedFees, SuggestedFeesToJSON)),
+        'suggested_fees': (mapValues(value['suggestedFees'], SuggestedFeesToJSON)),
     };
 }
 

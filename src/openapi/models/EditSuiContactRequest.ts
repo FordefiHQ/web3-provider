@@ -12,12 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { SuiAssetIdentifierRequest } from './SuiAssetIdentifierRequest';
+import {
+    SuiAssetIdentifierRequestFromJSON,
+    SuiAssetIdentifierRequestFromJSONTyped,
+    SuiAssetIdentifierRequestToJSON,
+    SuiAssetIdentifierRequestToJSONTyped,
+} from './SuiAssetIdentifierRequest';
 import type { SuiChainUniqueId } from './SuiChainUniqueId';
 import {
     SuiChainUniqueIdFromJSON,
     SuiChainUniqueIdFromJSONTyped,
     SuiChainUniqueIdToJSON,
+    SuiChainUniqueIdToJSONTyped,
 } from './SuiChainUniqueId';
 
 /**
@@ -43,7 +51,13 @@ export interface EditSuiContactRequest {
      * @type {Array<SuiChainUniqueId>}
      * @memberof EditSuiContactRequest
      */
-    chains: Array<SuiChainUniqueId>;
+    chains?: Array<SuiChainUniqueId>;
+    /**
+     * 
+     * @type {Array<SuiAssetIdentifierRequest>}
+     * @memberof EditSuiContactRequest
+     */
+    assetsIdentifiers?: Array<SuiAssetIdentifierRequest>;
 }
 
 
@@ -59,13 +73,10 @@ export type EditSuiContactRequestTypeEnum = typeof EditSuiContactRequestTypeEnum
 /**
  * Check if a given object implements the EditSuiContactRequest interface.
  */
-export function instanceOfEditSuiContactRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chains" in value;
-
-    return isInstance;
+export function instanceOfEditSuiContactRequest(value: object): value is EditSuiContactRequest {
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function EditSuiContactRequestFromJSON(json: any): EditSuiContactRequest {
@@ -73,29 +84,33 @@ export function EditSuiContactRequestFromJSON(json: any): EditSuiContactRequest 
 }
 
 export function EditSuiContactRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): EditSuiContactRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'name': json['name'],
         'type': json['type'],
-        'chains': ((json['chains'] as Array<any>).map(SuiChainUniqueIdFromJSON)),
+        'chains': json['chains'] == null ? undefined : ((json['chains'] as Array<any>).map(SuiChainUniqueIdFromJSON)),
+        'assetsIdentifiers': json['assets_identifiers'] == null ? undefined : ((json['assets_identifiers'] as Array<any>).map(SuiAssetIdentifierRequestFromJSON)),
     };
 }
 
-export function EditSuiContactRequestToJSON(value?: EditSuiContactRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EditSuiContactRequestToJSON(json: any): EditSuiContactRequest {
+    return EditSuiContactRequestToJSONTyped(json, false);
+}
+
+export function EditSuiContactRequestToJSONTyped(value?: EditSuiContactRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'type': value.type,
-        'chains': ((value.chains as Array<any>).map(SuiChainUniqueIdToJSON)),
+        'name': value['name'],
+        'type': value['type'],
+        'chains': value['chains'] == null ? undefined : ((value['chains'] as Array<any>).map(SuiChainUniqueIdToJSON)),
+        'assets_identifiers': value['assetsIdentifiers'] == null ? undefined : ((value['assetsIdentifiers'] as Array<any>).map(SuiAssetIdentifierRequestToJSON)),
     };
 }
 

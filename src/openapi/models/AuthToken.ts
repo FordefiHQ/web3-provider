@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -70,16 +70,14 @@ export type AuthTokenUserTypeEnum = typeof AuthTokenUserTypeEnum[keyof typeof Au
 /**
  * Check if a given object implements the AuthToken interface.
  */
-export function instanceOfAuthToken(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "userId" in value;
-    isInstance = isInstance && "expiredAt" in value;
-    isInstance = isInstance && "userType" in value;
-
-    return isInstance;
+export function instanceOfAuthToken(value: object): value is AuthToken {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('userId' in value) || value['userId'] === undefined) return false;
+    if (!('expiredAt' in value) || value['expiredAt'] === undefined) return false;
+    if (!('userType' in value) || value['userType'] === undefined) return false;
+    return true;
 }
 
 export function AuthTokenFromJSON(json: any): AuthToken {
@@ -87,7 +85,7 @@ export function AuthTokenFromJSON(json: any): AuthToken {
 }
 
 export function AuthTokenFromJSONTyped(json: any, ignoreDiscriminator: boolean): AuthToken {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -101,21 +99,23 @@ export function AuthTokenFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     };
 }
 
-export function AuthTokenToJSON(value?: AuthToken | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AuthTokenToJSON(json: any): AuthToken {
+    return AuthTokenToJSONTyped(json, false);
+}
+
+export function AuthTokenToJSONTyped(value?: AuthToken | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'user_id': value.userId,
-        'expired_at': (value.expiredAt.toISOString()),
-        'user_type': value.userType,
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'user_id': value['userId'],
+        'expired_at': ((value['expiredAt']).toISOString()),
+        'user_type': value['userType'],
     };
 }
 

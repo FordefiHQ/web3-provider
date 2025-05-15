@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -42,13 +42,11 @@ export interface BatchData {
 /**
  * Check if a given object implements the BatchData interface.
  */
-export function instanceOfBatchData(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "batchId" in value;
-    isInstance = isInstance && "indexInBatch" in value;
-    isInstance = isInstance && "batchSize" in value;
-
-    return isInstance;
+export function instanceOfBatchData(value: object): value is BatchData {
+    if (!('batchId' in value) || value['batchId'] === undefined) return false;
+    if (!('indexInBatch' in value) || value['indexInBatch'] === undefined) return false;
+    if (!('batchSize' in value) || value['batchSize'] === undefined) return false;
+    return true;
 }
 
 export function BatchDataFromJSON(json: any): BatchData {
@@ -56,7 +54,7 @@ export function BatchDataFromJSON(json: any): BatchData {
 }
 
 export function BatchDataFromJSONTyped(json: any, ignoreDiscriminator: boolean): BatchData {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -67,18 +65,20 @@ export function BatchDataFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     };
 }
 
-export function BatchDataToJSON(value?: BatchData | null): any {
-    if (value === undefined) {
-        return undefined;
+export function BatchDataToJSON(json: any): BatchData {
+    return BatchDataToJSONTyped(json, false);
+}
+
+export function BatchDataToJSONTyped(value?: BatchData | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'batch_id': value.batchId,
-        'index_in_batch': value.indexInBatch,
-        'batch_size': value.batchSize,
+        'batch_id': value['batchId'],
+        'index_in_batch': value['indexInBatch'],
+        'batch_size': value['batchSize'],
     };
 }
 

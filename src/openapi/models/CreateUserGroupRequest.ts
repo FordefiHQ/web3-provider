@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -36,11 +36,9 @@ export interface CreateUserGroupRequest {
 /**
  * Check if a given object implements the CreateUserGroupRequest interface.
  */
-export function instanceOfCreateUserGroupRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "name" in value;
-
-    return isInstance;
+export function instanceOfCreateUserGroupRequest(value: object): value is CreateUserGroupRequest {
+    if (!('name' in value) || value['name'] === undefined) return false;
+    return true;
 }
 
 export function CreateUserGroupRequestFromJSON(json: any): CreateUserGroupRequest {
@@ -48,27 +46,29 @@ export function CreateUserGroupRequestFromJSON(json: any): CreateUserGroupReques
 }
 
 export function CreateUserGroupRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateUserGroupRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'name': json['name'],
-        'userIds': !exists(json, 'user_ids') ? undefined : json['user_ids'],
+        'userIds': json['user_ids'] == null ? undefined : json['user_ids'],
     };
 }
 
-export function CreateUserGroupRequestToJSON(value?: CreateUserGroupRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateUserGroupRequestToJSON(json: any): CreateUserGroupRequest {
+    return CreateUserGroupRequestToJSONTyped(json, false);
+}
+
+export function CreateUserGroupRequestToJSONTyped(value?: CreateUserGroupRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'user_ids': value.userIds,
+        'name': value['name'],
+        'user_ids': value['userIds'],
     };
 }
 

@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { ApprovalGroupRequest } from './ApprovalGroupRequest';
 import {
     ApprovalGroupRequestFromJSON,
     ApprovalGroupRequestFromJSONTyped,
     ApprovalGroupRequestToJSON,
+    ApprovalGroupRequestToJSONTyped,
 } from './ApprovalGroupRequest';
 
 /**
@@ -53,12 +54,10 @@ export type RuleActionRequireApprovalRequestTypeEnum = typeof RuleActionRequireA
 /**
  * Check if a given object implements the RuleActionRequireApprovalRequest interface.
  */
-export function instanceOfRuleActionRequireApprovalRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "approvalGroups" in value;
-
-    return isInstance;
+export function instanceOfRuleActionRequireApprovalRequest(value: object): value is RuleActionRequireApprovalRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('approvalGroups' in value) || value['approvalGroups'] === undefined) return false;
+    return true;
 }
 
 export function RuleActionRequireApprovalRequestFromJSON(json: any): RuleActionRequireApprovalRequest {
@@ -66,7 +65,7 @@ export function RuleActionRequireApprovalRequestFromJSON(json: any): RuleActionR
 }
 
 export function RuleActionRequireApprovalRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): RuleActionRequireApprovalRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function RuleActionRequireApprovalRequestFromJSONTyped(json: any, ignoreD
     };
 }
 
-export function RuleActionRequireApprovalRequestToJSON(value?: RuleActionRequireApprovalRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function RuleActionRequireApprovalRequestToJSON(json: any): RuleActionRequireApprovalRequest {
+    return RuleActionRequireApprovalRequestToJSONTyped(json, false);
+}
+
+export function RuleActionRequireApprovalRequestToJSONTyped(value?: RuleActionRequireApprovalRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'approval_groups': ((value.approvalGroups as Array<any>).map(ApprovalGroupRequestToJSON)),
+        'type': value['type'],
+        'approval_groups': ((value['approvalGroups'] as Array<any>).map(ApprovalGroupRequestToJSON)),
     };
 }
 

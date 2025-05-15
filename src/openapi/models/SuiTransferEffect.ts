@@ -12,24 +12,27 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedSuiAddress } from './EnrichedSuiAddress';
 import {
     EnrichedSuiAddressFromJSON,
     EnrichedSuiAddressFromJSONTyped,
     EnrichedSuiAddressToJSON,
+    EnrichedSuiAddressToJSONTyped,
 } from './EnrichedSuiAddress';
 import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
     PricedAssetFromJSONTyped,
     PricedAssetToJSON,
+    PricedAssetToJSONTyped,
 } from './PricedAsset';
 import type { SuiTransferEffectType } from './SuiTransferEffectType';
 import {
     SuiTransferEffectTypeFromJSON,
     SuiTransferEffectTypeFromJSONTyped,
     SuiTransferEffectTypeToJSON,
+    SuiTransferEffectTypeToJSONTyped,
 } from './SuiTransferEffectType';
 
 /**
@@ -70,18 +73,18 @@ export interface SuiTransferEffect {
     to: EnrichedSuiAddress;
 }
 
+
+
 /**
  * Check if a given object implements the SuiTransferEffect interface.
  */
-export function instanceOfSuiTransferEffect(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "pricedAsset" in value;
-    isInstance = isInstance && "amount" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "from" in value;
-    isInstance = isInstance && "to" in value;
-
-    return isInstance;
+export function instanceOfSuiTransferEffect(value: object): value is SuiTransferEffect {
+    if (!('pricedAsset' in value) || value['pricedAsset'] === undefined) return false;
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('from' in value) || value['from'] === undefined) return false;
+    if (!('to' in value) || value['to'] === undefined) return false;
+    return true;
 }
 
 export function SuiTransferEffectFromJSON(json: any): SuiTransferEffect {
@@ -89,7 +92,7 @@ export function SuiTransferEffectFromJSON(json: any): SuiTransferEffect {
 }
 
 export function SuiTransferEffectFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiTransferEffect {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -102,20 +105,22 @@ export function SuiTransferEffectFromJSONTyped(json: any, ignoreDiscriminator: b
     };
 }
 
-export function SuiTransferEffectToJSON(value?: SuiTransferEffect | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiTransferEffectToJSON(json: any): SuiTransferEffect {
+    return SuiTransferEffectToJSONTyped(json, false);
+}
+
+export function SuiTransferEffectToJSONTyped(value?: SuiTransferEffect | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'priced_asset': PricedAssetToJSON(value.pricedAsset),
-        'amount': value.amount,
-        'type': SuiTransferEffectTypeToJSON(value.type),
-        'from': EnrichedSuiAddressToJSON(value.from),
-        'to': EnrichedSuiAddressToJSON(value.to),
+        'priced_asset': PricedAssetToJSON(value['pricedAsset']),
+        'amount': value['amount'],
+        'type': SuiTransferEffectTypeToJSON(value['type']),
+        'from': EnrichedSuiAddressToJSON(value['from']),
+        'to': EnrichedSuiAddressToJSON(value['to']),
     };
 }
 

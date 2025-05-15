@@ -26,6 +26,17 @@ export const SignerType = {
 export type SignerType = typeof SignerType[keyof typeof SignerType];
 
 
+export function instanceOfSignerType(value: any): boolean {
+    for (const key in SignerType) {
+        if (Object.prototype.hasOwnProperty.call(SignerType, key)) {
+            if (SignerType[key as keyof typeof SignerType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function SignerTypeFromJSON(json: any): SignerType {
     return SignerTypeFromJSONTyped(json, false);
 }
@@ -36,5 +47,9 @@ export function SignerTypeFromJSONTyped(json: any, ignoreDiscriminator: boolean)
 
 export function SignerTypeToJSON(value?: SignerType | null): any {
     return value as any;
+}
+
+export function SignerTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): SignerType {
+    return value as SignerType;
 }
 

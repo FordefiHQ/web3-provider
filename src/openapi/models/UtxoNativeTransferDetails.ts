@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { TransferDirection } from './TransferDirection';
-import {
-    TransferDirectionFromJSON,
-    TransferDirectionFromJSONTyped,
-    TransferDirectionToJSON,
-} from './TransferDirection';
+import { mapValues } from '../runtime';
 import type { VaultRef } from './VaultRef';
 import {
     VaultRefFromJSON,
     VaultRefFromJSONTyped,
     VaultRefToJSON,
+    VaultRefToJSONTyped,
 } from './VaultRef';
+import type { TransferDirection } from './TransferDirection';
+import {
+    TransferDirectionFromJSON,
+    TransferDirectionFromJSONTyped,
+    TransferDirectionToJSON,
+    TransferDirectionToJSONTyped,
+} from './TransferDirection';
 
 /**
  * 
@@ -56,6 +58,12 @@ export interface UtxoNativeTransferDetails {
      * @memberof UtxoNativeTransferDetails
      */
     vault?: VaultRef;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof UtxoNativeTransferDetails
+     */
+    memos: Array<string>;
 }
 
 
@@ -71,12 +79,11 @@ export type UtxoNativeTransferDetailsTypeEnum = typeof UtxoNativeTransferDetails
 /**
  * Check if a given object implements the UtxoNativeTransferDetails interface.
  */
-export function instanceOfUtxoNativeTransferDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "direction" in value;
-
-    return isInstance;
+export function instanceOfUtxoNativeTransferDetails(value: object): value is UtxoNativeTransferDetails {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('direction' in value) || value['direction'] === undefined) return false;
+    if (!('memos' in value) || value['memos'] === undefined) return false;
+    return true;
 }
 
 export function UtxoNativeTransferDetailsFromJSON(json: any): UtxoNativeTransferDetails {
@@ -84,31 +91,35 @@ export function UtxoNativeTransferDetailsFromJSON(json: any): UtxoNativeTransfer
 }
 
 export function UtxoNativeTransferDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): UtxoNativeTransferDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
         'direction': TransferDirectionFromJSON(json['direction']),
-        'isInternal': !exists(json, 'is_internal') ? undefined : json['is_internal'],
-        'vault': !exists(json, 'vault') ? undefined : VaultRefFromJSON(json['vault']),
+        'isInternal': json['is_internal'] == null ? undefined : json['is_internal'],
+        'vault': json['vault'] == null ? undefined : VaultRefFromJSON(json['vault']),
+        'memos': json['memos'],
     };
 }
 
-export function UtxoNativeTransferDetailsToJSON(value?: UtxoNativeTransferDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UtxoNativeTransferDetailsToJSON(json: any): UtxoNativeTransferDetails {
+    return UtxoNativeTransferDetailsToJSONTyped(json, false);
+}
+
+export function UtxoNativeTransferDetailsToJSONTyped(value?: UtxoNativeTransferDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'direction': TransferDirectionToJSON(value.direction),
-        'is_internal': value.isInternal,
-        'vault': VaultRefToJSON(value.vault),
+        'type': value['type'],
+        'direction': TransferDirectionToJSON(value['direction']),
+        'is_internal': value['isInternal'],
+        'vault': VaultRefToJSON(value['vault']),
+        'memos': value['memos'],
     };
 }
 

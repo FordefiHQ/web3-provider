@@ -23,6 +23,17 @@ export const SuiMessageVersion = {
 export type SuiMessageVersion = typeof SuiMessageVersion[keyof typeof SuiMessageVersion];
 
 
+export function instanceOfSuiMessageVersion(value: any): boolean {
+    for (const key in SuiMessageVersion) {
+        if (Object.prototype.hasOwnProperty.call(SuiMessageVersion, key)) {
+            if (SuiMessageVersion[key as keyof typeof SuiMessageVersion] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function SuiMessageVersionFromJSON(json: any): SuiMessageVersion {
     return SuiMessageVersionFromJSONTyped(json, false);
 }
@@ -33,5 +44,9 @@ export function SuiMessageVersionFromJSONTyped(json: any, ignoreDiscriminator: b
 
 export function SuiMessageVersionToJSON(value?: SuiMessageVersion | null): any {
     return value as any;
+}
+
+export function SuiMessageVersionToJSONTyped(value: any, ignoreDiscriminator: boolean): SuiMessageVersion {
+    return value as SuiMessageVersion;
 }
 

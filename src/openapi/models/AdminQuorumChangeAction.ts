@@ -12,19 +12,35 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { AdminQuorum } from './AdminQuorum';
+import {
+    AdminQuorumFromJSON,
+    AdminQuorumFromJSONTyped,
+    AdminQuorumToJSON,
+    AdminQuorumToJSONTyped,
+} from './AdminQuorum';
 import type { ApprovalRequest } from './ApprovalRequest';
 import {
     ApprovalRequestFromJSON,
     ApprovalRequestFromJSONTyped,
     ApprovalRequestToJSON,
+    ApprovalRequestToJSONTyped,
 } from './ApprovalRequest';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
     UserRefFromJSONTyped,
     UserRefToJSON,
+    UserRefToJSONTyped,
 } from './UserRef';
+import type { VerificationRequest } from './VerificationRequest';
+import {
+    VerificationRequestFromJSON,
+    VerificationRequestFromJSONTyped,
+    VerificationRequestToJSON,
+    VerificationRequestToJSONTyped,
+} from './VerificationRequest';
 
 /**
  * 
@@ -52,16 +68,16 @@ export interface AdminQuorumChangeAction {
     modifiedAt: Date;
     /**
      * 
-     * @type {string}
-     * @memberof AdminQuorumChangeAction
-     */
-    type: AdminQuorumChangeActionTypeEnum;
-    /**
-     * 
      * @type {boolean}
      * @memberof AdminQuorumChangeAction
      */
     isPending: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminQuorumChangeAction
+     */
+    type: AdminQuorumChangeActionTypeEnum;
     /**
      * 
      * @type {UserRef}
@@ -76,10 +92,22 @@ export interface AdminQuorumChangeAction {
     abortedBy?: UserRef;
     /**
      * 
+     * @type {string}
+     * @memberof AdminQuorumChangeAction
+     */
+    requestId: string;
+    /**
+     * 
      * @type {ApprovalRequest}
      * @memberof AdminQuorumChangeAction
      */
-    approvalRequest: ApprovalRequest;
+    approvalRequest?: ApprovalRequest;
+    /**
+     * 
+     * @type {VerificationRequest}
+     * @memberof AdminQuorumChangeAction
+     */
+    verificationRequest?: VerificationRequest;
     /**
      * 
      * @type {string}
@@ -88,16 +116,16 @@ export interface AdminQuorumChangeAction {
     state: AdminQuorumChangeActionStateEnum;
     /**
      * 
-     * @type {number}
+     * @type {AdminQuorum}
      * @memberof AdminQuorumChangeAction
      */
-    oldQuorumSize: number;
+    oldQuorum: AdminQuorum;
     /**
      * 
-     * @type {number}
+     * @type {AdminQuorum}
      * @memberof AdminQuorumChangeAction
      */
-    newQuorumSize: number;
+    newQuorum: AdminQuorum;
 }
 
 
@@ -113,6 +141,8 @@ export type AdminQuorumChangeActionTypeEnum = typeof AdminQuorumChangeActionType
  * @export
  */
 export const AdminQuorumChangeActionStateEnum = {
+    pendingVerification: 'pending_verification',
+    pendingApproval: 'pending_approval',
     created: 'created',
     completed: 'completed',
     aborted: 'aborted',
@@ -124,20 +154,18 @@ export type AdminQuorumChangeActionStateEnum = typeof AdminQuorumChangeActionSta
 /**
  * Check if a given object implements the AdminQuorumChangeAction interface.
  */
-export function instanceOfAdminQuorumChangeAction(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "isPending" in value;
-    isInstance = isInstance && "createdBy" in value;
-    isInstance = isInstance && "approvalRequest" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "oldQuorumSize" in value;
-    isInstance = isInstance && "newQuorumSize" in value;
-
-    return isInstance;
+export function instanceOfAdminQuorumChangeAction(value: object): value is AdminQuorumChangeAction {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('isPending' in value) || value['isPending'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('createdBy' in value) || value['createdBy'] === undefined) return false;
+    if (!('requestId' in value) || value['requestId'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('oldQuorum' in value) || value['oldQuorum'] === undefined) return false;
+    if (!('newQuorum' in value) || value['newQuorum'] === undefined) return false;
+    return true;
 }
 
 export function AdminQuorumChangeActionFromJSON(json: any): AdminQuorumChangeAction {
@@ -145,7 +173,7 @@ export function AdminQuorumChangeActionFromJSON(json: any): AdminQuorumChangeAct
 }
 
 export function AdminQuorumChangeActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): AdminQuorumChangeAction {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -153,37 +181,43 @@ export function AdminQuorumChangeActionFromJSONTyped(json: any, ignoreDiscrimina
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
-        'type': json['type'],
         'isPending': json['is_pending'],
+        'type': json['type'],
         'createdBy': UserRefFromJSON(json['created_by']),
-        'abortedBy': !exists(json, 'aborted_by') ? undefined : UserRefFromJSON(json['aborted_by']),
-        'approvalRequest': ApprovalRequestFromJSON(json['approval_request']),
+        'abortedBy': json['aborted_by'] == null ? undefined : UserRefFromJSON(json['aborted_by']),
+        'requestId': json['request_id'],
+        'approvalRequest': json['approval_request'] == null ? undefined : ApprovalRequestFromJSON(json['approval_request']),
+        'verificationRequest': json['verification_request'] == null ? undefined : VerificationRequestFromJSON(json['verification_request']),
         'state': json['state'],
-        'oldQuorumSize': json['old_quorum_size'],
-        'newQuorumSize': json['new_quorum_size'],
+        'oldQuorum': AdminQuorumFromJSON(json['old_quorum']),
+        'newQuorum': AdminQuorumFromJSON(json['new_quorum']),
     };
 }
 
-export function AdminQuorumChangeActionToJSON(value?: AdminQuorumChangeAction | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AdminQuorumChangeActionToJSON(json: any): AdminQuorumChangeAction {
+    return AdminQuorumChangeActionToJSONTyped(json, false);
+}
+
+export function AdminQuorumChangeActionToJSONTyped(value?: AdminQuorumChangeAction | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'type': value.type,
-        'is_pending': value.isPending,
-        'created_by': UserRefToJSON(value.createdBy),
-        'aborted_by': UserRefToJSON(value.abortedBy),
-        'approval_request': ApprovalRequestToJSON(value.approvalRequest),
-        'state': value.state,
-        'old_quorum_size': value.oldQuorumSize,
-        'new_quorum_size': value.newQuorumSize,
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'is_pending': value['isPending'],
+        'type': value['type'],
+        'created_by': UserRefToJSON(value['createdBy']),
+        'aborted_by': UserRefToJSON(value['abortedBy']),
+        'request_id': value['requestId'],
+        'approval_request': ApprovalRequestToJSON(value['approvalRequest']),
+        'verification_request': VerificationRequestToJSON(value['verificationRequest']),
+        'state': value['state'],
+        'old_quorum': AdminQuorumToJSON(value['oldQuorum']),
+        'new_quorum': AdminQuorumToJSON(value['newQuorum']),
     };
 }
 

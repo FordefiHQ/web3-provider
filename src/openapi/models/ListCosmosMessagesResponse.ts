@@ -12,13 +12,27 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { PartialErrorResponse } from './PartialErrorResponse';
+import {
+    PartialErrorResponseFromJSON,
+    PartialErrorResponseFromJSONTyped,
+    PartialErrorResponseToJSON,
+    PartialErrorResponseToJSONTyped,
+} from './PartialErrorResponse';
+
 /**
  * 
  * @export
  * @interface ListCosmosMessagesResponse
  */
 export interface ListCosmosMessagesResponse {
+    /**
+     * 
+     * @type {PartialErrorResponse}
+     * @memberof ListCosmosMessagesResponse
+     */
+    partialError?: PartialErrorResponse;
     /**
      * 
      * @type {number}
@@ -48,14 +62,12 @@ export interface ListCosmosMessagesResponse {
 /**
  * Check if a given object implements the ListCosmosMessagesResponse interface.
  */
-export function instanceOfListCosmosMessagesResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "total" in value;
-    isInstance = isInstance && "page" in value;
-    isInstance = isInstance && "size" in value;
-    isInstance = isInstance && "messages" in value;
-
-    return isInstance;
+export function instanceOfListCosmosMessagesResponse(value: object): value is ListCosmosMessagesResponse {
+    if (!('total' in value) || value['total'] === undefined) return false;
+    if (!('page' in value) || value['page'] === undefined) return false;
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('messages' in value) || value['messages'] === undefined) return false;
+    return true;
 }
 
 export function ListCosmosMessagesResponseFromJSON(json: any): ListCosmosMessagesResponse {
@@ -63,11 +75,12 @@ export function ListCosmosMessagesResponseFromJSON(json: any): ListCosmosMessage
 }
 
 export function ListCosmosMessagesResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): ListCosmosMessagesResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
+        'partialError': json['partial_error'] == null ? undefined : PartialErrorResponseFromJSON(json['partial_error']),
         'total': json['total'],
         'page': json['page'],
         'size': json['size'],
@@ -75,19 +88,22 @@ export function ListCosmosMessagesResponseFromJSONTyped(json: any, ignoreDiscrim
     };
 }
 
-export function ListCosmosMessagesResponseToJSON(value?: ListCosmosMessagesResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ListCosmosMessagesResponseToJSON(json: any): ListCosmosMessagesResponse {
+    return ListCosmosMessagesResponseToJSONTyped(json, false);
+}
+
+export function ListCosmosMessagesResponseToJSONTyped(value?: ListCosmosMessagesResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'total': value.total,
-        'page': value.page,
-        'size': value.size,
-        'messages': value.messages,
+        'partial_error': PartialErrorResponseToJSON(value['partialError']),
+        'total': value['total'],
+        'page': value['page'],
+        'size': value['size'],
+        'messages': value['messages'],
     };
 }
 

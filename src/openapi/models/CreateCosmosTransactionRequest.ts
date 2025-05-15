@@ -12,24 +12,34 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { CreateCosmosTransactionRequestDetails } from './CreateCosmosTransactionRequestDetails';
+import { mapValues } from '../runtime';
+import type { DappInfo } from './DappInfo';
 import {
-    CreateCosmosTransactionRequestDetailsFromJSON,
-    CreateCosmosTransactionRequestDetailsFromJSONTyped,
-    CreateCosmosTransactionRequestDetailsToJSON,
-} from './CreateCosmosTransactionRequestDetails';
+    DappInfoFromJSON,
+    DappInfoFromJSONTyped,
+    DappInfoToJSON,
+    DappInfoToJSONTyped,
+} from './DappInfo';
 import type { SignMode } from './SignMode';
 import {
     SignModeFromJSON,
     SignModeFromJSONTyped,
     SignModeToJSON,
+    SignModeToJSONTyped,
 } from './SignMode';
+import type { CreateCosmosTransactionRequestDetails } from './CreateCosmosTransactionRequestDetails';
+import {
+    CreateCosmosTransactionRequestDetailsFromJSON,
+    CreateCosmosTransactionRequestDetailsFromJSONTyped,
+    CreateCosmosTransactionRequestDetailsToJSON,
+    CreateCosmosTransactionRequestDetailsToJSONTyped,
+} from './CreateCosmosTransactionRequestDetails';
 import type { SignerType } from './SignerType';
 import {
     SignerTypeFromJSON,
     SignerTypeFromJSONTyped,
     SignerTypeToJSON,
+    SignerTypeToJSONTyped,
 } from './SignerType';
 
 /**
@@ -64,6 +74,12 @@ export interface CreateCosmosTransactionRequest {
     signMode?: SignMode;
     /**
      * 
+     * @type {DappInfo}
+     * @memberof CreateCosmosTransactionRequest
+     */
+    dappInfo?: DappInfo;
+    /**
+     * 
      * @type {string}
      * @memberof CreateCosmosTransactionRequest
      */
@@ -89,13 +105,11 @@ export type CreateCosmosTransactionRequestTypeEnum = typeof CreateCosmosTransact
 /**
  * Check if a given object implements the CreateCosmosTransactionRequest interface.
  */
-export function instanceOfCreateCosmosTransactionRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "vaultId" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "details" in value;
-
-    return isInstance;
+export function instanceOfCreateCosmosTransactionRequest(value: object): value is CreateCosmosTransactionRequest {
+    if (!('vaultId' in value) || value['vaultId'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    return true;
 }
 
 export function CreateCosmosTransactionRequestFromJSON(json: any): CreateCosmosTransactionRequest {
@@ -103,35 +117,39 @@ export function CreateCosmosTransactionRequestFromJSON(json: any): CreateCosmosT
 }
 
 export function CreateCosmosTransactionRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateCosmosTransactionRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'vaultId': json['vault_id'],
-        'note': !exists(json, 'note') ? undefined : json['note'],
-        'signerType': !exists(json, 'signer_type') ? undefined : SignerTypeFromJSON(json['signer_type']),
-        'signMode': !exists(json, 'sign_mode') ? undefined : SignModeFromJSON(json['sign_mode']),
+        'note': json['note'] == null ? undefined : json['note'],
+        'signerType': json['signer_type'] == null ? undefined : SignerTypeFromJSON(json['signer_type']),
+        'signMode': json['sign_mode'] == null ? undefined : SignModeFromJSON(json['sign_mode']),
+        'dappInfo': json['dapp_info'] == null ? undefined : DappInfoFromJSON(json['dapp_info']),
         'type': json['type'],
         'details': CreateCosmosTransactionRequestDetailsFromJSON(json['details']),
     };
 }
 
-export function CreateCosmosTransactionRequestToJSON(value?: CreateCosmosTransactionRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateCosmosTransactionRequestToJSON(json: any): CreateCosmosTransactionRequest {
+    return CreateCosmosTransactionRequestToJSONTyped(json, false);
+}
+
+export function CreateCosmosTransactionRequestToJSONTyped(value?: CreateCosmosTransactionRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'vault_id': value.vaultId,
-        'note': value.note,
-        'signer_type': SignerTypeToJSON(value.signerType),
-        'sign_mode': SignModeToJSON(value.signMode),
-        'type': value.type,
-        'details': CreateCosmosTransactionRequestDetailsToJSON(value.details),
+        'vault_id': value['vaultId'],
+        'note': value['note'],
+        'signer_type': SignerTypeToJSON(value['signerType']),
+        'sign_mode': SignModeToJSON(value['signMode']),
+        'dapp_info': DappInfoToJSON(value['dappInfo']),
+        'type': value['type'],
+        'details': CreateCosmosTransactionRequestDetailsToJSON(value['details']),
     };
 }
 

@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { CosmosEffects } from './CosmosEffects';
-import {
-    CosmosEffectsFromJSON,
-    CosmosEffectsFromJSONTyped,
-    CosmosEffectsToJSON,
-} from './CosmosEffects';
+import { mapValues } from '../runtime';
 import type { CosmosGasDebit } from './CosmosGasDebit';
 import {
     CosmosGasDebitFromJSON,
     CosmosGasDebitFromJSONTyped,
     CosmosGasDebitToJSON,
+    CosmosGasDebitToJSONTyped,
 } from './CosmosGasDebit';
+import type { CosmosEffects } from './CosmosEffects';
+import {
+    CosmosEffectsFromJSON,
+    CosmosEffectsFromJSONTyped,
+    CosmosEffectsToJSON,
+    CosmosEffectsToJSONTyped,
+} from './CosmosEffects';
 
 /**
  * 
@@ -55,12 +57,10 @@ export interface CosmosTransactionResult {
 /**
  * Check if a given object implements the CosmosTransactionResult interface.
  */
-export function instanceOfCosmosTransactionResult(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "gasDebit" in value;
-    isInstance = isInstance && "effects" in value;
-
-    return isInstance;
+export function instanceOfCosmosTransactionResult(value: object): value is CosmosTransactionResult {
+    if (!('gasDebit' in value) || value['gasDebit'] === undefined) return false;
+    if (!('effects' in value) || value['effects'] === undefined) return false;
+    return true;
 }
 
 export function CosmosTransactionResultFromJSON(json: any): CosmosTransactionResult {
@@ -68,29 +68,31 @@ export function CosmosTransactionResultFromJSON(json: any): CosmosTransactionRes
 }
 
 export function CosmosTransactionResultFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosTransactionResult {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'message': !exists(json, 'message') ? undefined : json['message'],
+        'message': json['message'] == null ? undefined : json['message'],
         'gasDebit': CosmosGasDebitFromJSON(json['gas_debit']),
         'effects': CosmosEffectsFromJSON(json['effects']),
     };
 }
 
-export function CosmosTransactionResultToJSON(value?: CosmosTransactionResult | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosTransactionResultToJSON(json: any): CosmosTransactionResult {
+    return CosmosTransactionResultToJSONTyped(json, false);
+}
+
+export function CosmosTransactionResultToJSONTyped(value?: CosmosTransactionResult | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'message': value.message,
-        'gas_debit': CosmosGasDebitToJSON(value.gasDebit),
-        'effects': CosmosEffectsToJSON(value.effects),
+        'message': value['message'],
+        'gas_debit': CosmosGasDebitToJSON(value['gasDebit']),
+        'effects': CosmosEffectsToJSON(value['effects']),
     };
 }
 

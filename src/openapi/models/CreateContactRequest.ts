@@ -12,57 +12,71 @@
  * Do not edit the class manually.
  */
 
+import type { CreateAptosContactRequest } from './CreateAptosContactRequest';
 import {
-    CreateAptosContactRequest,
     instanceOfCreateAptosContactRequest,
     CreateAptosContactRequestFromJSON,
     CreateAptosContactRequestFromJSONTyped,
     CreateAptosContactRequestToJSON,
 } from './CreateAptosContactRequest';
+import type { CreateCosmosContactRequest } from './CreateCosmosContactRequest';
 import {
-    CreateCosmosContactRequest,
     instanceOfCreateCosmosContactRequest,
     CreateCosmosContactRequestFromJSON,
     CreateCosmosContactRequestFromJSONTyped,
     CreateCosmosContactRequestToJSON,
 } from './CreateCosmosContactRequest';
+import type { CreateEVMContactRequest } from './CreateEVMContactRequest';
 import {
-    CreateEVMContactRequest,
     instanceOfCreateEVMContactRequest,
     CreateEVMContactRequestFromJSON,
     CreateEVMContactRequestFromJSONTyped,
     CreateEVMContactRequestToJSON,
 } from './CreateEVMContactRequest';
+import type { CreateSolanaContactRequest } from './CreateSolanaContactRequest';
 import {
-    CreateSolanaContactRequest,
     instanceOfCreateSolanaContactRequest,
     CreateSolanaContactRequestFromJSON,
     CreateSolanaContactRequestFromJSONTyped,
     CreateSolanaContactRequestToJSON,
 } from './CreateSolanaContactRequest';
+import type { CreateStacksContactRequest } from './CreateStacksContactRequest';
 import {
-    CreateStarknetContactRequest,
+    instanceOfCreateStacksContactRequest,
+    CreateStacksContactRequestFromJSON,
+    CreateStacksContactRequestFromJSONTyped,
+    CreateStacksContactRequestToJSON,
+} from './CreateStacksContactRequest';
+import type { CreateStarknetContactRequest } from './CreateStarknetContactRequest';
+import {
     instanceOfCreateStarknetContactRequest,
     CreateStarknetContactRequestFromJSON,
     CreateStarknetContactRequestFromJSONTyped,
     CreateStarknetContactRequestToJSON,
 } from './CreateStarknetContactRequest';
+import type { CreateSuiContactRequest } from './CreateSuiContactRequest';
 import {
-    CreateSuiContactRequest,
     instanceOfCreateSuiContactRequest,
     CreateSuiContactRequestFromJSON,
     CreateSuiContactRequestFromJSONTyped,
     CreateSuiContactRequestToJSON,
 } from './CreateSuiContactRequest';
+import type { CreateTonContactRequest } from './CreateTonContactRequest';
 import {
-    CreateTonContactRequest,
     instanceOfCreateTonContactRequest,
     CreateTonContactRequestFromJSON,
     CreateTonContactRequestFromJSONTyped,
     CreateTonContactRequestToJSON,
 } from './CreateTonContactRequest';
+import type { CreateTronContactRequest } from './CreateTronContactRequest';
 import {
-    CreateUtxoContactRequest,
+    instanceOfCreateTronContactRequest,
+    CreateTronContactRequestFromJSON,
+    CreateTronContactRequestFromJSONTyped,
+    CreateTronContactRequestToJSON,
+} from './CreateTronContactRequest';
+import type { CreateUtxoContactRequest } from './CreateUtxoContactRequest';
+import {
     instanceOfCreateUtxoContactRequest,
     CreateUtxoContactRequestFromJSON,
     CreateUtxoContactRequestFromJSONTyped,
@@ -74,62 +88,71 @@ import {
  * 
  * @export
  */
-export type CreateContactRequest = { type: 'aptos' } & CreateAptosContactRequest | { type: 'cosmos' } & CreateCosmosContactRequest | { type: 'evm' } & CreateEVMContactRequest | { type: 'solana' } & CreateSolanaContactRequest | { type: 'starknet' } & CreateStarknetContactRequest | { type: 'sui' } & CreateSuiContactRequest | { type: 'ton' } & CreateTonContactRequest | { type: 'utxo' } & CreateUtxoContactRequest;
+export type CreateContactRequest = { type: 'aptos' } & CreateAptosContactRequest | { type: 'cosmos' } & CreateCosmosContactRequest | { type: 'evm' } & CreateEVMContactRequest | { type: 'solana' } & CreateSolanaContactRequest | { type: 'stacks' } & CreateStacksContactRequest | { type: 'starknet' } & CreateStarknetContactRequest | { type: 'sui' } & CreateSuiContactRequest | { type: 'ton' } & CreateTonContactRequest | { type: 'tron' } & CreateTronContactRequest | { type: 'utxo' } & CreateUtxoContactRequest;
 
 export function CreateContactRequestFromJSON(json: any): CreateContactRequest {
     return CreateContactRequestFromJSONTyped(json, false);
 }
 
 export function CreateContactRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateContactRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'aptos':
-            return {...CreateAptosContactRequestFromJSONTyped(json, true), type: 'aptos'};
+            return Object.assign({}, CreateAptosContactRequestFromJSONTyped(json, true), { type: 'aptos' } as const);
         case 'cosmos':
-            return {...CreateCosmosContactRequestFromJSONTyped(json, true), type: 'cosmos'};
+            return Object.assign({}, CreateCosmosContactRequestFromJSONTyped(json, true), { type: 'cosmos' } as const);
         case 'evm':
-            return {...CreateEVMContactRequestFromJSONTyped(json, true), type: 'evm'};
+            return Object.assign({}, CreateEVMContactRequestFromJSONTyped(json, true), { type: 'evm' } as const);
         case 'solana':
-            return {...CreateSolanaContactRequestFromJSONTyped(json, true), type: 'solana'};
+            return Object.assign({}, CreateSolanaContactRequestFromJSONTyped(json, true), { type: 'solana' } as const);
+        case 'stacks':
+            return Object.assign({}, CreateStacksContactRequestFromJSONTyped(json, true), { type: 'stacks' } as const);
         case 'starknet':
-            return {...CreateStarknetContactRequestFromJSONTyped(json, true), type: 'starknet'};
+            return Object.assign({}, CreateStarknetContactRequestFromJSONTyped(json, true), { type: 'starknet' } as const);
         case 'sui':
-            return {...CreateSuiContactRequestFromJSONTyped(json, true), type: 'sui'};
+            return Object.assign({}, CreateSuiContactRequestFromJSONTyped(json, true), { type: 'sui' } as const);
         case 'ton':
-            return {...CreateTonContactRequestFromJSONTyped(json, true), type: 'ton'};
+            return Object.assign({}, CreateTonContactRequestFromJSONTyped(json, true), { type: 'ton' } as const);
+        case 'tron':
+            return Object.assign({}, CreateTronContactRequestFromJSONTyped(json, true), { type: 'tron' } as const);
         case 'utxo':
-            return {...CreateUtxoContactRequestFromJSONTyped(json, true), type: 'utxo'};
+            return Object.assign({}, CreateUtxoContactRequestFromJSONTyped(json, true), { type: 'utxo' } as const);
         default:
             throw new Error(`No variant of CreateContactRequest exists with 'type=${json['type']}'`);
     }
 }
 
-export function CreateContactRequestToJSON(value?: CreateContactRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function CreateContactRequestToJSON(json: any): any {
+    return CreateContactRequestToJSONTyped(json, false);
+}
+
+export function CreateContactRequestToJSONTyped(value?: CreateContactRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'aptos':
-            return CreateAptosContactRequestToJSON(value);
+            return Object.assign({}, CreateAptosContactRequestToJSON(value), { type: 'aptos' } as const);
         case 'cosmos':
-            return CreateCosmosContactRequestToJSON(value);
+            return Object.assign({}, CreateCosmosContactRequestToJSON(value), { type: 'cosmos' } as const);
         case 'evm':
-            return CreateEVMContactRequestToJSON(value);
+            return Object.assign({}, CreateEVMContactRequestToJSON(value), { type: 'evm' } as const);
         case 'solana':
-            return CreateSolanaContactRequestToJSON(value);
+            return Object.assign({}, CreateSolanaContactRequestToJSON(value), { type: 'solana' } as const);
+        case 'stacks':
+            return Object.assign({}, CreateStacksContactRequestToJSON(value), { type: 'stacks' } as const);
         case 'starknet':
-            return CreateStarknetContactRequestToJSON(value);
+            return Object.assign({}, CreateStarknetContactRequestToJSON(value), { type: 'starknet' } as const);
         case 'sui':
-            return CreateSuiContactRequestToJSON(value);
+            return Object.assign({}, CreateSuiContactRequestToJSON(value), { type: 'sui' } as const);
         case 'ton':
-            return CreateTonContactRequestToJSON(value);
+            return Object.assign({}, CreateTonContactRequestToJSON(value), { type: 'ton' } as const);
+        case 'tron':
+            return Object.assign({}, CreateTronContactRequestToJSON(value), { type: 'tron' } as const);
         case 'utxo':
-            return CreateUtxoContactRequestToJSON(value);
+            return Object.assign({}, CreateUtxoContactRequestToJSON(value), { type: 'utxo' } as const);
         default:
             throw new Error(`No variant of CreateContactRequest exists with 'type=${value['type']}'`);
     }

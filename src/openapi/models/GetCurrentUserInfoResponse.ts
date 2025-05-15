@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { OrganizationMembership } from './OrganizationMembership';
 import {
     OrganizationMembershipFromJSON,
     OrganizationMembershipFromJSONTyped,
     OrganizationMembershipToJSON,
+    OrganizationMembershipToJSONTyped,
 } from './OrganizationMembership';
 import type { User } from './User';
 import {
     UserFromJSON,
     UserFromJSONTyped,
     UserToJSON,
+    UserToJSONTyped,
 } from './User';
 
 /**
@@ -67,15 +69,13 @@ export interface GetCurrentUserInfoResponse {
 /**
  * Check if a given object implements the GetCurrentUserInfoResponse interface.
  */
-export function instanceOfGetCurrentUserInfoResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "user" in value;
-    isInstance = isInstance && "organizationId" in value;
-    isInstance = isInstance && "organizationName" in value;
-    isInstance = isInstance && "impersonationIsActive" in value;
-    isInstance = isInstance && "memberships" in value;
-
-    return isInstance;
+export function instanceOfGetCurrentUserInfoResponse(value: object): value is GetCurrentUserInfoResponse {
+    if (!('user' in value) || value['user'] === undefined) return false;
+    if (!('organizationId' in value) || value['organizationId'] === undefined) return false;
+    if (!('organizationName' in value) || value['organizationName'] === undefined) return false;
+    if (!('impersonationIsActive' in value) || value['impersonationIsActive'] === undefined) return false;
+    if (!('memberships' in value) || value['memberships'] === undefined) return false;
+    return true;
 }
 
 export function GetCurrentUserInfoResponseFromJSON(json: any): GetCurrentUserInfoResponse {
@@ -83,7 +83,7 @@ export function GetCurrentUserInfoResponseFromJSON(json: any): GetCurrentUserInf
 }
 
 export function GetCurrentUserInfoResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetCurrentUserInfoResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -96,20 +96,22 @@ export function GetCurrentUserInfoResponseFromJSONTyped(json: any, ignoreDiscrim
     };
 }
 
-export function GetCurrentUserInfoResponseToJSON(value?: GetCurrentUserInfoResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function GetCurrentUserInfoResponseToJSON(json: any): GetCurrentUserInfoResponse {
+    return GetCurrentUserInfoResponseToJSONTyped(json, false);
+}
+
+export function GetCurrentUserInfoResponseToJSONTyped(value?: GetCurrentUserInfoResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'user': UserToJSON(value.user),
-        'organization_id': value.organizationId,
-        'organization_name': value.organizationName,
-        'impersonation_is_active': value.impersonationIsActive,
-        'memberships': ((value.memberships as Array<any>).map(OrganizationMembershipToJSON)),
+        'user': UserToJSON(value['user']),
+        'organization_id': value['organizationId'],
+        'organization_name': value['organizationName'],
+        'impersonation_is_active': value['impersonationIsActive'],
+        'memberships': ((value['memberships'] as Array<any>).map(OrganizationMembershipToJSON)),
     };
 }
 

@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { CreateAptosSerializedRawTransactionRequest } from './CreateAptosSerializedRawTransactionRequest';
 import {
-    CreateAptosSerializedRawTransactionRequest,
     instanceOfCreateAptosSerializedRawTransactionRequest,
     CreateAptosSerializedRawTransactionRequestFromJSON,
     CreateAptosSerializedRawTransactionRequestFromJSONTyped,
     CreateAptosSerializedRawTransactionRequestToJSON,
 } from './CreateAptosSerializedRawTransactionRequest';
+import type { CreateAptosTransferRequest } from './CreateAptosTransferRequest';
 import {
-    CreateAptosTransferRequest,
     instanceOfCreateAptosTransferRequest,
     CreateAptosTransferRequestFromJSON,
     CreateAptosTransferRequestFromJSONTyped,
@@ -39,31 +39,32 @@ export function CreateAptosTransactionRequestDetailsFromJSON(json: any): CreateA
 }
 
 export function CreateAptosTransactionRequestDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateAptosTransactionRequestDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'aptos_serialized_entry_point_payload':
-            return {...CreateAptosSerializedRawTransactionRequestFromJSONTyped(json, true), type: 'aptos_serialized_entry_point_payload'};
+            return Object.assign({}, CreateAptosSerializedRawTransactionRequestFromJSONTyped(json, true), { type: 'aptos_serialized_entry_point_payload' } as const);
         case 'aptos_transfer':
-            return {...CreateAptosTransferRequestFromJSONTyped(json, true), type: 'aptos_transfer'};
+            return Object.assign({}, CreateAptosTransferRequestFromJSONTyped(json, true), { type: 'aptos_transfer' } as const);
         default:
             throw new Error(`No variant of CreateAptosTransactionRequestDetails exists with 'type=${json['type']}'`);
     }
 }
 
-export function CreateAptosTransactionRequestDetailsToJSON(value?: CreateAptosTransactionRequestDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function CreateAptosTransactionRequestDetailsToJSON(json: any): any {
+    return CreateAptosTransactionRequestDetailsToJSONTyped(json, false);
+}
+
+export function CreateAptosTransactionRequestDetailsToJSONTyped(value?: CreateAptosTransactionRequestDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'aptos_serialized_entry_point_payload':
-            return CreateAptosSerializedRawTransactionRequestToJSON(value);
+            return Object.assign({}, CreateAptosSerializedRawTransactionRequestToJSON(value), { type: 'aptos_serialized_entry_point_payload' } as const);
         case 'aptos_transfer':
-            return CreateAptosTransferRequestToJSON(value);
+            return Object.assign({}, CreateAptosTransferRequestToJSON(value), { type: 'aptos_transfer' } as const);
         default:
             throw new Error(`No variant of CreateAptosTransactionRequestDetails exists with 'type=${value['type']}'`);
     }

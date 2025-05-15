@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { UserGroupRef } from './UserGroupRef';
-import {
-    UserGroupRefFromJSON,
-    UserGroupRefFromJSONTyped,
-    UserGroupRefToJSON,
-} from './UserGroupRef';
+import { mapValues } from '../runtime';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
     UserRefFromJSONTyped,
     UserRefToJSON,
+    UserRefToJSONTyped,
 } from './UserRef';
+import type { UserGroupRef } from './UserGroupRef';
+import {
+    UserGroupRefFromJSON,
+    UserGroupRefFromJSONTyped,
+    UserGroupRefToJSON,
+    UserGroupRefToJSONTyped,
+} from './UserGroupRef';
 
 /**
  * 
@@ -65,13 +67,11 @@ export type VaultGroupAccessPermissionsPermittedAccessTypeEnum = typeof VaultGro
 /**
  * Check if a given object implements the VaultGroupAccessPermissionsPermitted interface.
  */
-export function instanceOfVaultGroupAccessPermissionsPermitted(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "accessType" in value;
-    isInstance = isInstance && "userGroups" in value;
-    isInstance = isInstance && "users" in value;
-
-    return isInstance;
+export function instanceOfVaultGroupAccessPermissionsPermitted(value: object): value is VaultGroupAccessPermissionsPermitted {
+    if (!('accessType' in value) || value['accessType'] === undefined) return false;
+    if (!('userGroups' in value) || value['userGroups'] === undefined) return false;
+    if (!('users' in value) || value['users'] === undefined) return false;
+    return true;
 }
 
 export function VaultGroupAccessPermissionsPermittedFromJSON(json: any): VaultGroupAccessPermissionsPermitted {
@@ -79,7 +79,7 @@ export function VaultGroupAccessPermissionsPermittedFromJSON(json: any): VaultGr
 }
 
 export function VaultGroupAccessPermissionsPermittedFromJSONTyped(json: any, ignoreDiscriminator: boolean): VaultGroupAccessPermissionsPermitted {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -90,18 +90,20 @@ export function VaultGroupAccessPermissionsPermittedFromJSONTyped(json: any, ign
     };
 }
 
-export function VaultGroupAccessPermissionsPermittedToJSON(value?: VaultGroupAccessPermissionsPermitted | null): any {
-    if (value === undefined) {
-        return undefined;
+export function VaultGroupAccessPermissionsPermittedToJSON(json: any): VaultGroupAccessPermissionsPermitted {
+    return VaultGroupAccessPermissionsPermittedToJSONTyped(json, false);
+}
+
+export function VaultGroupAccessPermissionsPermittedToJSONTyped(value?: VaultGroupAccessPermissionsPermitted | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'access_type': value.accessType,
-        'user_groups': ((value.userGroups as Array<any>).map(UserGroupRefToJSON)),
-        'users': ((value.users as Array<any>).map(UserRefToJSON)),
+        'access_type': value['accessType'],
+        'user_groups': ((value['userGroups'] as Array<any>).map(UserGroupRefToJSON)),
+        'users': ((value['users'] as Array<any>).map(UserRefToJSON)),
     };
 }
 

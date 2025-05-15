@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { ProofType } from './ProofType';
 import {
-    ProofType,
     instanceOfProofType,
     ProofTypeFromJSON,
     ProofTypeFromJSONTyped,
     ProofTypeToJSON,
 } from './ProofType';
+import type { ProverErrorType } from './ProverErrorType';
 import {
-    ProverErrorType,
     instanceOfProverErrorType,
     ProverErrorTypeFromJSON,
     ProverErrorTypeFromJSONTyped,
@@ -39,31 +39,32 @@ export function ProofProverResultFromJSON(json: any): ProofProverResult {
 }
 
 export function ProofProverResultFromJSONTyped(json: any, ignoreDiscriminator: boolean): ProofProverResult {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'error':
-            return {...ProverErrorTypeFromJSONTyped(json, true), type: 'error'};
+            return Object.assign({}, ProverErrorTypeFromJSONTyped(json, true), { type: 'error' } as const);
         case 'proof':
-            return {...ProofTypeFromJSONTyped(json, true), type: 'proof'};
+            return Object.assign({}, ProofTypeFromJSONTyped(json, true), { type: 'proof' } as const);
         default:
             throw new Error(`No variant of ProofProverResult exists with 'type=${json['type']}'`);
     }
 }
 
-export function ProofProverResultToJSON(value?: ProofProverResult | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function ProofProverResultToJSON(json: any): any {
+    return ProofProverResultToJSONTyped(json, false);
+}
+
+export function ProofProverResultToJSONTyped(value?: ProofProverResult | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'error':
-            return ProverErrorTypeToJSON(value);
+            return Object.assign({}, ProverErrorTypeToJSON(value), { type: 'error' } as const);
         case 'proof':
-            return ProofTypeToJSON(value);
+            return Object.assign({}, ProofTypeToJSON(value), { type: 'proof' } as const);
         default:
             throw new Error(`No variant of ProofProverResult exists with 'type=${value['type']}'`);
     }

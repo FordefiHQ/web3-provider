@@ -32,6 +32,17 @@ export const ReleaseTransactionErrorType = {
 export type ReleaseTransactionErrorType = typeof ReleaseTransactionErrorType[keyof typeof ReleaseTransactionErrorType];
 
 
+export function instanceOfReleaseTransactionErrorType(value: any): boolean {
+    for (const key in ReleaseTransactionErrorType) {
+        if (Object.prototype.hasOwnProperty.call(ReleaseTransactionErrorType, key)) {
+            if (ReleaseTransactionErrorType[key as keyof typeof ReleaseTransactionErrorType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function ReleaseTransactionErrorTypeFromJSON(json: any): ReleaseTransactionErrorType {
     return ReleaseTransactionErrorTypeFromJSONTyped(json, false);
 }
@@ -42,5 +53,9 @@ export function ReleaseTransactionErrorTypeFromJSONTyped(json: any, ignoreDiscri
 
 export function ReleaseTransactionErrorTypeToJSON(value?: ReleaseTransactionErrorType | null): any {
     return value as any;
+}
+
+export function ReleaseTransactionErrorTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): ReleaseTransactionErrorType {
+    return value as ReleaseTransactionErrorType;
 }
 

@@ -24,6 +24,17 @@ export const BackupType = {
 export type BackupType = typeof BackupType[keyof typeof BackupType];
 
 
+export function instanceOfBackupType(value: any): boolean {
+    for (const key in BackupType) {
+        if (Object.prototype.hasOwnProperty.call(BackupType, key)) {
+            if (BackupType[key as keyof typeof BackupType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function BackupTypeFromJSON(json: any): BackupType {
     return BackupTypeFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function BackupTypeFromJSONTyped(json: any, ignoreDiscriminator: boolean)
 
 export function BackupTypeToJSON(value?: BackupType | null): any {
     return value as any;
+}
+
+export function BackupTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): BackupType {
+    return value as BackupType;
 }
 

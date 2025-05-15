@@ -12,25 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { ImportKeysStatus } from './ImportKeysStatus';
 import {
     ImportKeysStatusFromJSON,
     ImportKeysStatusFromJSONTyped,
     ImportKeysStatusToJSON,
+    ImportKeysStatusToJSONTyped,
 } from './ImportKeysStatus';
-import type { UserRole } from './UserRole';
-import {
-    UserRoleFromJSON,
-    UserRoleFromJSONTyped,
-    UserRoleToJSON,
-} from './UserRole';
 import type { UserState } from './UserState';
 import {
     UserStateFromJSON,
     UserStateFromJSONTyped,
     UserStateToJSON,
+    UserStateToJSONTyped,
 } from './UserState';
+import type { UserRole } from './UserRole';
+import {
+    UserRoleFromJSON,
+    UserRoleFromJSONTyped,
+    UserRoleToJSON,
+    UserRoleToJSONTyped,
+} from './UserRole';
 
 /**
  * 
@@ -122,21 +125,33 @@ export interface OrganizationMembership {
      * @memberof OrganizationMembership
      */
     importKeysStatus?: ImportKeysStatus;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof OrganizationMembership
+     */
+    allowVaultCreationInImportOrganization?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationMembership
+     */
+    encryptedOrgKey?: string;
 }
+
+
 
 /**
  * Check if a given object implements the OrganizationMembership interface.
  */
-export function instanceOfOrganizationMembership(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "organizationId" in value;
-    isInstance = isInstance && "organizationName" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "isNewDeviceProvisioning" in value;
-    isInstance = isInstance && "isEndUsersSupportedOrganization" in value;
-    isInstance = isInstance && "organizationHasBackup" in value;
-
-    return isInstance;
+export function instanceOfOrganizationMembership(value: object): value is OrganizationMembership {
+    if (!('organizationId' in value) || value['organizationId'] === undefined) return false;
+    if (!('organizationName' in value) || value['organizationName'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('isNewDeviceProvisioning' in value) || value['isNewDeviceProvisioning'] === undefined) return false;
+    if (!('isEndUsersSupportedOrganization' in value) || value['isEndUsersSupportedOrganization'] === undefined) return false;
+    if (!('organizationHasBackup' in value) || value['organizationHasBackup'] === undefined) return false;
+    return true;
 }
 
 export function OrganizationMembershipFromJSON(json: any): OrganizationMembership {
@@ -144,7 +159,7 @@ export function OrganizationMembershipFromJSON(json: any): OrganizationMembershi
 }
 
 export function OrganizationMembershipFromJSONTyped(json: any, ignoreDiscriminator: boolean): OrganizationMembership {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -153,42 +168,48 @@ export function OrganizationMembershipFromJSONTyped(json: any, ignoreDiscriminat
         'organizationName': json['organization_name'],
         'state': UserStateFromJSON(json['state']),
         'isNewDeviceProvisioning': json['is_new_device_provisioning'],
-        'role': !exists(json, 'role') ? undefined : UserRoleFromJSON(json['role']),
+        'role': json['role'] == null ? undefined : UserRoleFromJSON(json['role']),
         'isEndUsersSupportedOrganization': json['is_end_users_supported_organization'],
-        'organizationActivatedAt': !exists(json, 'organization_activated_at') ? undefined : (new Date(json['organization_activated_at'])),
-        'daysLeftToBackup': !exists(json, 'days_left_to_backup') ? undefined : json['days_left_to_backup'],
+        'organizationActivatedAt': json['organization_activated_at'] == null ? undefined : (new Date(json['organization_activated_at'])),
+        'daysLeftToBackup': json['days_left_to_backup'] == null ? undefined : json['days_left_to_backup'],
         'organizationHasBackup': json['organization_has_backup'],
-        'activeDeviceId': !exists(json, 'active_device_id') ? undefined : json['active_device_id'],
-        'isTrustedForCurrentWebDevice': !exists(json, 'is_trusted_for_current_web_device') ? undefined : json['is_trusted_for_current_web_device'],
-        'hasTrustedWebDevices': !exists(json, 'has_trusted_web_devices') ? undefined : json['has_trusted_web_devices'],
-        'isImportOrganization': !exists(json, 'is_import_organization') ? undefined : json['is_import_organization'],
-        'importKeysStatus': !exists(json, 'import_keys_status') ? undefined : ImportKeysStatusFromJSON(json['import_keys_status']),
+        'activeDeviceId': json['active_device_id'] == null ? undefined : json['active_device_id'],
+        'isTrustedForCurrentWebDevice': json['is_trusted_for_current_web_device'] == null ? undefined : json['is_trusted_for_current_web_device'],
+        'hasTrustedWebDevices': json['has_trusted_web_devices'] == null ? undefined : json['has_trusted_web_devices'],
+        'isImportOrganization': json['is_import_organization'] == null ? undefined : json['is_import_organization'],
+        'importKeysStatus': json['import_keys_status'] == null ? undefined : ImportKeysStatusFromJSON(json['import_keys_status']),
+        'allowVaultCreationInImportOrganization': json['allow_vault_creation_in_import_organization'] == null ? undefined : json['allow_vault_creation_in_import_organization'],
+        'encryptedOrgKey': json['encrypted_org_key'] == null ? undefined : json['encrypted_org_key'],
     };
 }
 
-export function OrganizationMembershipToJSON(value?: OrganizationMembership | null): any {
-    if (value === undefined) {
-        return undefined;
+export function OrganizationMembershipToJSON(json: any): OrganizationMembership {
+    return OrganizationMembershipToJSONTyped(json, false);
+}
+
+export function OrganizationMembershipToJSONTyped(value?: OrganizationMembership | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'organization_id': value.organizationId,
-        'organization_name': value.organizationName,
-        'state': UserStateToJSON(value.state),
-        'is_new_device_provisioning': value.isNewDeviceProvisioning,
-        'role': UserRoleToJSON(value.role),
-        'is_end_users_supported_organization': value.isEndUsersSupportedOrganization,
-        'organization_activated_at': value.organizationActivatedAt === undefined ? undefined : (value.organizationActivatedAt.toISOString()),
-        'days_left_to_backup': value.daysLeftToBackup,
-        'organization_has_backup': value.organizationHasBackup,
-        'active_device_id': value.activeDeviceId,
-        'is_trusted_for_current_web_device': value.isTrustedForCurrentWebDevice,
-        'has_trusted_web_devices': value.hasTrustedWebDevices,
-        'is_import_organization': value.isImportOrganization,
-        'import_keys_status': ImportKeysStatusToJSON(value.importKeysStatus),
+        'organization_id': value['organizationId'],
+        'organization_name': value['organizationName'],
+        'state': UserStateToJSON(value['state']),
+        'is_new_device_provisioning': value['isNewDeviceProvisioning'],
+        'role': UserRoleToJSON(value['role']),
+        'is_end_users_supported_organization': value['isEndUsersSupportedOrganization'],
+        'organization_activated_at': value['organizationActivatedAt'] == null ? undefined : ((value['organizationActivatedAt']).toISOString()),
+        'days_left_to_backup': value['daysLeftToBackup'],
+        'organization_has_backup': value['organizationHasBackup'],
+        'active_device_id': value['activeDeviceId'],
+        'is_trusted_for_current_web_device': value['isTrustedForCurrentWebDevice'],
+        'has_trusted_web_devices': value['hasTrustedWebDevices'],
+        'is_import_organization': value['isImportOrganization'],
+        'import_keys_status': ImportKeysStatusToJSON(value['importKeysStatus']),
+        'allow_vault_creation_in_import_organization': value['allowVaultCreationInImportOrganization'],
+        'encrypted_org_key': value['encryptedOrgKey'],
     };
 }
 

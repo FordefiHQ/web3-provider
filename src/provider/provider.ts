@@ -24,9 +24,7 @@ import {
   CreateEvmTypedMessageRequestTypeEnum,
   EnrichedEvmChain,
   EvmChain,
-  EvmMessage,
-  EvmTransaction,
-  EvmTransactionState,
+  PushableTransactionState,
   PushMode,
   VaultType,
 } from '../openapi';
@@ -214,8 +212,8 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
 
     const { chains } = await this.apiClient.blockchains.listChainsApiV1BlockchainsGet({ chainTypes: [ChainType.evm] });
     const chain = (chains as EnrichedEvmChain[]).find((chain) => {
-      // if chainId is a string (i.e. EvmChainUnique.evm_ethereum_sepolia === 'evm_ethereum_sepolia') match by `uniqueId` property
-      // otherwise match by the numeric `chainId` property (i.e. EvmChainId.NUMBER_11155111 === 11155111)
+      // if chainId is a string (i.e. 'evm_ethereum_sepolia') match by `uniqueId` property
+      // otherwise match by the numeric `chainId` property (i.e. 11155111)
       const matchedProperty: keyof EvmChain = typeof this.config.chainId === 'string' ? 'uniqueId' : 'chainId';
       return chain[matchedProperty] === this.config.chainId;
     });
@@ -236,8 +234,8 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
     }
 
     const response = await this.apiClient.vaults.listVaultsApiV1VaultsGet({
-      search: this.config.address,
       vaultTypes: [VaultType.evm],
+      accountAddresses: [this.config.address],
     });
     const { vaults } = response;
 
@@ -367,7 +365,7 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
 
     return waitForTransactionState({
       transaction,
-      desiredState: EvmTransactionState.signed,
+      desiredState: PushableTransactionState.signed,
       apiClient: this.apiClient,
       timeoutDurationMs,
       pollingIntervalMs,

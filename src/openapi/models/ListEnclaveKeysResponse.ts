@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { AttestedSigningKey } from './AttestedSigningKey';
-import {
-    AttestedSigningKeyFromJSON,
-    AttestedSigningKeyFromJSONTyped,
-    AttestedSigningKeyToJSON,
-} from './AttestedSigningKey';
+import { mapValues } from '../runtime';
 import type { SignedEncryptionKey } from './SignedEncryptionKey';
 import {
     SignedEncryptionKeyFromJSON,
     SignedEncryptionKeyFromJSONTyped,
     SignedEncryptionKeyToJSON,
+    SignedEncryptionKeyToJSONTyped,
 } from './SignedEncryptionKey';
+import type { AttestedSigningKey } from './AttestedSigningKey';
+import {
+    AttestedSigningKeyFromJSON,
+    AttestedSigningKeyFromJSONTyped,
+    AttestedSigningKeyToJSON,
+    AttestedSigningKeyToJSONTyped,
+} from './AttestedSigningKey';
 
 /**
  * 
@@ -49,12 +51,10 @@ export interface ListEnclaveKeysResponse {
 /**
  * Check if a given object implements the ListEnclaveKeysResponse interface.
  */
-export function instanceOfListEnclaveKeysResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "signKey" in value;
-    isInstance = isInstance && "encryptionKey" in value;
-
-    return isInstance;
+export function instanceOfListEnclaveKeysResponse(value: object): value is ListEnclaveKeysResponse {
+    if (!('signKey' in value) || value['signKey'] === undefined) return false;
+    if (!('encryptionKey' in value) || value['encryptionKey'] === undefined) return false;
+    return true;
 }
 
 export function ListEnclaveKeysResponseFromJSON(json: any): ListEnclaveKeysResponse {
@@ -62,7 +62,7 @@ export function ListEnclaveKeysResponseFromJSON(json: any): ListEnclaveKeysRespo
 }
 
 export function ListEnclaveKeysResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): ListEnclaveKeysResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -72,17 +72,19 @@ export function ListEnclaveKeysResponseFromJSONTyped(json: any, ignoreDiscrimina
     };
 }
 
-export function ListEnclaveKeysResponseToJSON(value?: ListEnclaveKeysResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ListEnclaveKeysResponseToJSON(json: any): ListEnclaveKeysResponse {
+    return ListEnclaveKeysResponseToJSONTyped(json, false);
+}
+
+export function ListEnclaveKeysResponseToJSONTyped(value?: ListEnclaveKeysResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'sign_key': AttestedSigningKeyToJSON(value.signKey),
-        'encryption_key': SignedEncryptionKeyToJSON(value.encryptionKey),
+        'sign_key': AttestedSigningKeyToJSON(value['signKey']),
+        'encryption_key': SignedEncryptionKeyToJSON(value['encryptionKey']),
     };
 }
 

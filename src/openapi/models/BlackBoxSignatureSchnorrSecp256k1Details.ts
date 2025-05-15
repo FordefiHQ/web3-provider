@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -52,12 +52,10 @@ export type BlackBoxSignatureSchnorrSecp256k1DetailsTypeEnum = typeof BlackBoxSi
 /**
  * Check if a given object implements the BlackBoxSignatureSchnorrSecp256k1Details interface.
  */
-export function instanceOfBlackBoxSignatureSchnorrSecp256k1Details(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "hashBinary" in value;
-
-    return isInstance;
+export function instanceOfBlackBoxSignatureSchnorrSecp256k1Details(value: object): value is BlackBoxSignatureSchnorrSecp256k1Details {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('hashBinary' in value) || value['hashBinary'] === undefined) return false;
+    return true;
 }
 
 export function BlackBoxSignatureSchnorrSecp256k1DetailsFromJSON(json: any): BlackBoxSignatureSchnorrSecp256k1Details {
@@ -65,29 +63,31 @@ export function BlackBoxSignatureSchnorrSecp256k1DetailsFromJSON(json: any): Bla
 }
 
 export function BlackBoxSignatureSchnorrSecp256k1DetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): BlackBoxSignatureSchnorrSecp256k1Details {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
-        'signature': !exists(json, 'signature') ? undefined : json['signature'],
+        'signature': json['signature'] == null ? undefined : json['signature'],
         'hashBinary': json['hash_binary'],
     };
 }
 
-export function BlackBoxSignatureSchnorrSecp256k1DetailsToJSON(value?: BlackBoxSignatureSchnorrSecp256k1Details | null): any {
-    if (value === undefined) {
-        return undefined;
+export function BlackBoxSignatureSchnorrSecp256k1DetailsToJSON(json: any): BlackBoxSignatureSchnorrSecp256k1Details {
+    return BlackBoxSignatureSchnorrSecp256k1DetailsToJSONTyped(json, false);
+}
+
+export function BlackBoxSignatureSchnorrSecp256k1DetailsToJSONTyped(value?: BlackBoxSignatureSchnorrSecp256k1Details | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'signature': value.signature,
-        'hash_binary': value.hashBinary,
+        'type': value['type'],
+        'signature': value['signature'],
+        'hash_binary': value['hashBinary'],
     };
 }
 

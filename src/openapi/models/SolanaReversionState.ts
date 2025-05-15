@@ -27,6 +27,17 @@ export const SolanaReversionState = {
 export type SolanaReversionState = typeof SolanaReversionState[keyof typeof SolanaReversionState];
 
 
+export function instanceOfSolanaReversionState(value: any): boolean {
+    for (const key in SolanaReversionState) {
+        if (Object.prototype.hasOwnProperty.call(SolanaReversionState, key)) {
+            if (SolanaReversionState[key as keyof typeof SolanaReversionState] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function SolanaReversionStateFromJSON(json: any): SolanaReversionState {
     return SolanaReversionStateFromJSONTyped(json, false);
 }
@@ -37,5 +48,9 @@ export function SolanaReversionStateFromJSONTyped(json: any, ignoreDiscriminator
 
 export function SolanaReversionStateToJSON(value?: SolanaReversionState | null): any {
     return value as any;
+}
+
+export function SolanaReversionStateToJSONTyped(value: any, ignoreDiscriminator: boolean): SolanaReversionState {
+    return value as SolanaReversionState;
 }
 

@@ -12,18 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { DklsRolloutStatus } from './DklsRolloutStatus';
-import {
-    DklsRolloutStatusFromJSON,
-    DklsRolloutStatusFromJSONTyped,
-    DklsRolloutStatusToJSON,
-} from './DklsRolloutStatus';
+import { mapValues } from '../runtime';
 import type { OrganizationType } from './OrganizationType';
 import {
     OrganizationTypeFromJSON,
     OrganizationTypeFromJSONTyped,
     OrganizationTypeToJSON,
+    OrganizationTypeToJSONTyped,
 } from './OrganizationType';
 
 /**
@@ -58,19 +53,43 @@ export interface UpdateOrganizationRequest {
     allowDeterministicSigning?: boolean;
     /**
      * 
-     * @type {DklsRolloutStatus}
+     * @type {number}
      * @memberof UpdateOrganizationRequest
      */
-    dklsRolloutStatus?: DklsRolloutStatus;
+    daysTillBackupExpires?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UpdateOrganizationRequest
+     */
+    shouldResetBackup?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateOrganizationRequest
+     */
+    crmId?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UpdateOrganizationRequest
+     */
+    setDustTransactionDetection?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateOrganizationRequest
+     */
+    setDustTransactionThreshold?: number;
 }
+
+
 
 /**
  * Check if a given object implements the UpdateOrganizationRequest interface.
  */
-export function instanceOfUpdateOrganizationRequest(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfUpdateOrganizationRequest(value: object): value is UpdateOrganizationRequest {
+    return true;
 }
 
 export function UpdateOrganizationRequestFromJSON(json: any): UpdateOrganizationRequest {
@@ -78,33 +97,43 @@ export function UpdateOrganizationRequestFromJSON(json: any): UpdateOrganization
 }
 
 export function UpdateOrganizationRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): UpdateOrganizationRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'organizationType': !exists(json, 'organization_type') ? undefined : OrganizationTypeFromJSON(json['organization_type']),
-        'isDeprecated': !exists(json, 'is_deprecated') ? undefined : json['is_deprecated'],
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'allowDeterministicSigning': !exists(json, 'allow_deterministic_signing') ? undefined : json['allow_deterministic_signing'],
-        'dklsRolloutStatus': !exists(json, 'dkls_rollout_status') ? undefined : DklsRolloutStatusFromJSON(json['dkls_rollout_status']),
+        'organizationType': json['organization_type'] == null ? undefined : OrganizationTypeFromJSON(json['organization_type']),
+        'isDeprecated': json['is_deprecated'] == null ? undefined : json['is_deprecated'],
+        'name': json['name'] == null ? undefined : json['name'],
+        'allowDeterministicSigning': json['allow_deterministic_signing'] == null ? undefined : json['allow_deterministic_signing'],
+        'daysTillBackupExpires': json['days_till_backup_expires'] == null ? undefined : json['days_till_backup_expires'],
+        'shouldResetBackup': json['should_reset_backup'] == null ? undefined : json['should_reset_backup'],
+        'crmId': json['crm_id'] == null ? undefined : json['crm_id'],
+        'setDustTransactionDetection': json['set_dust_transaction_detection'] == null ? undefined : json['set_dust_transaction_detection'],
+        'setDustTransactionThreshold': json['set_dust_transaction_threshold'] == null ? undefined : json['set_dust_transaction_threshold'],
     };
 }
 
-export function UpdateOrganizationRequestToJSON(value?: UpdateOrganizationRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UpdateOrganizationRequestToJSON(json: any): UpdateOrganizationRequest {
+    return UpdateOrganizationRequestToJSONTyped(json, false);
+}
+
+export function UpdateOrganizationRequestToJSONTyped(value?: UpdateOrganizationRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'organization_type': OrganizationTypeToJSON(value.organizationType),
-        'is_deprecated': value.isDeprecated,
-        'name': value.name,
-        'allow_deterministic_signing': value.allowDeterministicSigning,
-        'dkls_rollout_status': DklsRolloutStatusToJSON(value.dklsRolloutStatus),
+        'organization_type': OrganizationTypeToJSON(value['organizationType']),
+        'is_deprecated': value['isDeprecated'],
+        'name': value['name'],
+        'allow_deterministic_signing': value['allowDeterministicSigning'],
+        'days_till_backup_expires': value['daysTillBackupExpires'],
+        'should_reset_backup': value['shouldResetBackup'],
+        'crm_id': value['crmId'],
+        'set_dust_transaction_detection': value['setDustTransactionDetection'],
+        'set_dust_transaction_threshold': value['setDustTransactionThreshold'],
     };
 }
 

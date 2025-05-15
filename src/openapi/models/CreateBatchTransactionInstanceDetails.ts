@@ -12,37 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { SolanaCompiledInstructionRequest } from './SolanaCompiledInstructionRequest';
-import {
-    SolanaCompiledInstructionRequestFromJSON,
-    SolanaCompiledInstructionRequestFromJSONTyped,
-    SolanaCompiledInstructionRequestToJSON,
-} from './SolanaCompiledInstructionRequest';
+import { mapValues } from '../runtime';
 import type { SolanaMessageAddressTableLookupRequest } from './SolanaMessageAddressTableLookupRequest';
 import {
     SolanaMessageAddressTableLookupRequestFromJSON,
     SolanaMessageAddressTableLookupRequestFromJSONTyped,
     SolanaMessageAddressTableLookupRequestToJSON,
+    SolanaMessageAddressTableLookupRequestToJSONTyped,
 } from './SolanaMessageAddressTableLookupRequest';
 import type { SolanaMessageVersion } from './SolanaMessageVersion';
 import {
     SolanaMessageVersionFromJSON,
     SolanaMessageVersionFromJSONTyped,
     SolanaMessageVersionToJSON,
+    SolanaMessageVersionToJSONTyped,
 } from './SolanaMessageVersion';
-import type { SolanaTransactionAccountRequest } from './SolanaTransactionAccountRequest';
-import {
-    SolanaTransactionAccountRequestFromJSON,
-    SolanaTransactionAccountRequestFromJSONTyped,
-    SolanaTransactionAccountRequestToJSON,
-} from './SolanaTransactionAccountRequest';
 import type { SolanaTransactionSignaturesRequest } from './SolanaTransactionSignaturesRequest';
 import {
     SolanaTransactionSignaturesRequestFromJSON,
     SolanaTransactionSignaturesRequestFromJSONTyped,
     SolanaTransactionSignaturesRequestToJSON,
+    SolanaTransactionSignaturesRequestToJSONTyped,
 } from './SolanaTransactionSignaturesRequest';
+import type { SolanaCompiledInstructionRequest } from './SolanaCompiledInstructionRequest';
+import {
+    SolanaCompiledInstructionRequestFromJSON,
+    SolanaCompiledInstructionRequestFromJSONTyped,
+    SolanaCompiledInstructionRequestToJSON,
+    SolanaCompiledInstructionRequestToJSONTyped,
+} from './SolanaCompiledInstructionRequest';
+import type { SolanaTransactionAccountRequest } from './SolanaTransactionAccountRequest';
+import {
+    SolanaTransactionAccountRequestFromJSON,
+    SolanaTransactionAccountRequestFromJSONTyped,
+    SolanaTransactionAccountRequestToJSON,
+    SolanaTransactionAccountRequestToJSONTyped,
+} from './SolanaTransactionAccountRequest';
 
 /**
  * 
@@ -88,17 +93,17 @@ export interface CreateBatchTransactionInstanceDetails {
     recentBlockhash?: string;
 }
 
+
+
 /**
  * Check if a given object implements the CreateBatchTransactionInstanceDetails interface.
  */
-export function instanceOfCreateBatchTransactionInstanceDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "version" in value;
-    isInstance = isInstance && "instructions" in value;
-    isInstance = isInstance && "accounts" in value;
-    isInstance = isInstance && "addressTableLookups" in value;
-
-    return isInstance;
+export function instanceOfCreateBatchTransactionInstanceDetails(value: object): value is CreateBatchTransactionInstanceDetails {
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('instructions' in value) || value['instructions'] === undefined) return false;
+    if (!('accounts' in value) || value['accounts'] === undefined) return false;
+    if (!('addressTableLookups' in value) || value['addressTableLookups'] === undefined) return false;
+    return true;
 }
 
 export function CreateBatchTransactionInstanceDetailsFromJSON(json: any): CreateBatchTransactionInstanceDetails {
@@ -106,7 +111,7 @@ export function CreateBatchTransactionInstanceDetailsFromJSON(json: any): Create
 }
 
 export function CreateBatchTransactionInstanceDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateBatchTransactionInstanceDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -115,26 +120,28 @@ export function CreateBatchTransactionInstanceDetailsFromJSONTyped(json: any, ig
         'instructions': ((json['instructions'] as Array<any>).map(SolanaCompiledInstructionRequestFromJSON)),
         'accounts': ((json['accounts'] as Array<any>).map(SolanaTransactionAccountRequestFromJSON)),
         'addressTableLookups': ((json['address_table_lookups'] as Array<any>).map(SolanaMessageAddressTableLookupRequestFromJSON)),
-        'signatures': !exists(json, 'signatures') ? undefined : ((json['signatures'] as Array<any>).map(SolanaTransactionSignaturesRequestFromJSON)),
-        'recentBlockhash': !exists(json, 'recent_blockhash') ? undefined : json['recent_blockhash'],
+        'signatures': json['signatures'] == null ? undefined : ((json['signatures'] as Array<any>).map(SolanaTransactionSignaturesRequestFromJSON)),
+        'recentBlockhash': json['recent_blockhash'] == null ? undefined : json['recent_blockhash'],
     };
 }
 
-export function CreateBatchTransactionInstanceDetailsToJSON(value?: CreateBatchTransactionInstanceDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateBatchTransactionInstanceDetailsToJSON(json: any): CreateBatchTransactionInstanceDetails {
+    return CreateBatchTransactionInstanceDetailsToJSONTyped(json, false);
+}
+
+export function CreateBatchTransactionInstanceDetailsToJSONTyped(value?: CreateBatchTransactionInstanceDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'version': SolanaMessageVersionToJSON(value.version),
-        'instructions': ((value.instructions as Array<any>).map(SolanaCompiledInstructionRequestToJSON)),
-        'accounts': ((value.accounts as Array<any>).map(SolanaTransactionAccountRequestToJSON)),
-        'address_table_lookups': ((value.addressTableLookups as Array<any>).map(SolanaMessageAddressTableLookupRequestToJSON)),
-        'signatures': value.signatures === undefined ? undefined : ((value.signatures as Array<any>).map(SolanaTransactionSignaturesRequestToJSON)),
-        'recent_blockhash': value.recentBlockhash,
+        'version': SolanaMessageVersionToJSON(value['version']),
+        'instructions': ((value['instructions'] as Array<any>).map(SolanaCompiledInstructionRequestToJSON)),
+        'accounts': ((value['accounts'] as Array<any>).map(SolanaTransactionAccountRequestToJSON)),
+        'address_table_lookups': ((value['addressTableLookups'] as Array<any>).map(SolanaMessageAddressTableLookupRequestToJSON)),
+        'signatures': value['signatures'] == null ? undefined : ((value['signatures'] as Array<any>).map(SolanaTransactionSignaturesRequestToJSON)),
+        'recent_blockhash': value['recentBlockhash'],
     };
 }
 

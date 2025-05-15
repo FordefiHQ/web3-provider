@@ -12,37 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { AptosChain } from './AptosChain';
-import {
-    AptosChainFromJSON,
-    AptosChainFromJSONTyped,
-    AptosChainToJSON,
-} from './AptosChain';
-import type { AptosTransactionState } from './AptosTransactionState';
-import {
-    AptosTransactionStateFromJSON,
-    AptosTransactionStateFromJSONTyped,
-    AptosTransactionStateToJSON,
-} from './AptosTransactionState';
-import type { AptosTransactionType } from './AptosTransactionType';
-import {
-    AptosTransactionTypeFromJSON,
-    AptosTransactionTypeFromJSONTyped,
-    AptosTransactionTypeToJSON,
-} from './AptosTransactionType';
-import type { TransactionDirection } from './TransactionDirection';
-import {
-    TransactionDirectionFromJSON,
-    TransactionDirectionFromJSONTyped,
-    TransactionDirectionToJSON,
-} from './TransactionDirection';
+import { mapValues } from '../runtime';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
     TransactionSpamStateFromJSONTyped,
     TransactionSpamStateToJSON,
+    TransactionSpamStateToJSONTyped,
 } from './TransactionSpamState';
+import type { TransactionDirection } from './TransactionDirection';
+import {
+    TransactionDirectionFromJSON,
+    TransactionDirectionFromJSONTyped,
+    TransactionDirectionToJSON,
+    TransactionDirectionToJSONTyped,
+} from './TransactionDirection';
+import type { AptosChain } from './AptosChain';
+import {
+    AptosChainFromJSON,
+    AptosChainFromJSONTyped,
+    AptosChainToJSON,
+    AptosChainToJSONTyped,
+} from './AptosChain';
+import type { AptosTransactionType } from './AptosTransactionType';
+import {
+    AptosTransactionTypeFromJSON,
+    AptosTransactionTypeFromJSONTyped,
+    AptosTransactionTypeToJSON,
+    AptosTransactionTypeToJSONTyped,
+} from './AptosTransactionType';
+import type { PushableTransactionState } from './PushableTransactionState';
+import {
+    PushableTransactionStateFromJSON,
+    PushableTransactionStateFromJSONTyped,
+    PushableTransactionStateToJSON,
+    PushableTransactionStateToJSONTyped,
+} from './PushableTransactionState';
 
 /**
  * 
@@ -83,6 +88,12 @@ export interface WebhookAptosTransactionStatusChangeEvent {
     spamState: TransactionSpamState;
     /**
      * 
+     * @type {PushableTransactionState}
+     * @memberof WebhookAptosTransactionStatusChangeEvent
+     */
+    state: PushableTransactionState;
+    /**
+     * 
      * @type {string}
      * @memberof WebhookAptosTransactionStatusChangeEvent
      */
@@ -93,12 +104,6 @@ export interface WebhookAptosTransactionStatusChangeEvent {
      * @memberof WebhookAptosTransactionStatusChangeEvent
      */
     aptosTransactionType: AptosTransactionType;
-    /**
-     * 
-     * @type {AptosTransactionState}
-     * @memberof WebhookAptosTransactionStatusChangeEvent
-     */
-    state: AptosTransactionState;
     /**
      * 
      * @type {string}
@@ -132,18 +137,16 @@ export type WebhookAptosTransactionStatusChangeEventTypeEnum = typeof WebhookApt
 /**
  * Check if a given object implements the WebhookAptosTransactionStatusChangeEvent interface.
  */
-export function instanceOfWebhookAptosTransactionStatusChangeEvent(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "transactionId" in value;
-    isInstance = isInstance && "isManagedTransaction" in value;
-    isInstance = isInstance && "direction" in value;
-    isInstance = isInstance && "spamState" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "aptosTransactionType" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfWebhookAptosTransactionStatusChangeEvent(value: object): value is WebhookAptosTransactionStatusChangeEvent {
+    if (!('transactionId' in value) || value['transactionId'] === undefined) return false;
+    if (!('isManagedTransaction' in value) || value['isManagedTransaction'] === undefined) return false;
+    if (!('direction' in value) || value['direction'] === undefined) return false;
+    if (!('spamState' in value) || value['spamState'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('aptosTransactionType' in value) || value['aptosTransactionType'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function WebhookAptosTransactionStatusChangeEventFromJSON(json: any): WebhookAptosTransactionStatusChangeEvent {
@@ -151,7 +154,7 @@ export function WebhookAptosTransactionStatusChangeEventFromJSON(json: any): Web
 }
 
 export function WebhookAptosTransactionStatusChangeEventFromJSONTyped(json: any, ignoreDiscriminator: boolean): WebhookAptosTransactionStatusChangeEvent {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -159,37 +162,39 @@ export function WebhookAptosTransactionStatusChangeEventFromJSONTyped(json: any,
         'transactionId': json['transaction_id'],
         'isManagedTransaction': json['is_managed_transaction'],
         'direction': TransactionDirectionFromJSON(json['direction']),
-        'note': !exists(json, 'note') ? undefined : json['note'],
+        'note': json['note'] == null ? undefined : json['note'],
         'spamState': TransactionSpamStateFromJSON(json['spam_state']),
+        'state': PushableTransactionStateFromJSON(json['state']),
         'type': json['type'],
         'aptosTransactionType': AptosTransactionTypeFromJSON(json['aptos_transaction_type']),
-        'state': AptosTransactionStateFromJSON(json['state']),
-        'hash': !exists(json, 'hash') ? undefined : json['hash'],
-        'serializedSignedTransaction': !exists(json, 'serialized_signed_transaction') ? undefined : json['serialized_signed_transaction'],
+        'hash': json['hash'] == null ? undefined : json['hash'],
+        'serializedSignedTransaction': json['serialized_signed_transaction'] == null ? undefined : json['serialized_signed_transaction'],
         'chain': AptosChainFromJSON(json['chain']),
     };
 }
 
-export function WebhookAptosTransactionStatusChangeEventToJSON(value?: WebhookAptosTransactionStatusChangeEvent | null): any {
-    if (value === undefined) {
-        return undefined;
+export function WebhookAptosTransactionStatusChangeEventToJSON(json: any): WebhookAptosTransactionStatusChangeEvent {
+    return WebhookAptosTransactionStatusChangeEventToJSONTyped(json, false);
+}
+
+export function WebhookAptosTransactionStatusChangeEventToJSONTyped(value?: WebhookAptosTransactionStatusChangeEvent | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'transaction_id': value.transactionId,
-        'is_managed_transaction': value.isManagedTransaction,
-        'direction': TransactionDirectionToJSON(value.direction),
-        'note': value.note,
-        'spam_state': TransactionSpamStateToJSON(value.spamState),
-        'type': value.type,
-        'aptos_transaction_type': AptosTransactionTypeToJSON(value.aptosTransactionType),
-        'state': AptosTransactionStateToJSON(value.state),
-        'hash': value.hash,
-        'serialized_signed_transaction': value.serializedSignedTransaction,
-        'chain': AptosChainToJSON(value.chain),
+        'transaction_id': value['transactionId'],
+        'is_managed_transaction': value['isManagedTransaction'],
+        'direction': TransactionDirectionToJSON(value['direction']),
+        'note': value['note'],
+        'spam_state': TransactionSpamStateToJSON(value['spamState']),
+        'state': PushableTransactionStateToJSON(value['state']),
+        'type': value['type'],
+        'aptos_transaction_type': AptosTransactionTypeToJSON(value['aptosTransactionType']),
+        'hash': value['hash'],
+        'serialized_signed_transaction': value['serializedSignedTransaction'],
+        'chain': AptosChainToJSON(value['chain']),
     };
 }
 

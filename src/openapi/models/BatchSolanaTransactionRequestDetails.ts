@@ -12,19 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { BatchSolanaTransactionInstanceDetails } from './BatchSolanaTransactionInstanceDetails';
 import {
     BatchSolanaTransactionInstanceDetailsFromJSON,
     BatchSolanaTransactionInstanceDetailsFromJSONTyped,
     BatchSolanaTransactionInstanceDetailsToJSON,
+    BatchSolanaTransactionInstanceDetailsToJSONTyped,
 } from './BatchSolanaTransactionInstanceDetails';
 import type { SolanaChainUniqueId } from './SolanaChainUniqueId';
 import {
     SolanaChainUniqueIdFromJSON,
     SolanaChainUniqueIdFromJSONTyped,
     SolanaChainUniqueIdToJSON,
+    SolanaChainUniqueIdToJSONTyped,
 } from './SolanaChainUniqueId';
+import type { BatchSolanaTransactionRequestDetailsFee } from './BatchSolanaTransactionRequestDetailsFee';
+import {
+    BatchSolanaTransactionRequestDetailsFeeFromJSON,
+    BatchSolanaTransactionRequestDetailsFeeFromJSONTyped,
+    BatchSolanaTransactionRequestDetailsFeeToJSON,
+    BatchSolanaTransactionRequestDetailsFeeToJSONTyped,
+} from './BatchSolanaTransactionRequestDetailsFee';
 
 /**
  * 
@@ -32,6 +41,12 @@ import {
  * @interface BatchSolanaTransactionRequestDetails
  */
 export interface BatchSolanaTransactionRequestDetails {
+    /**
+     * 
+     * @type {BatchSolanaTransactionRequestDetailsFee}
+     * @memberof BatchSolanaTransactionRequestDetails
+     */
+    fee?: BatchSolanaTransactionRequestDetailsFee;
     /**
      * 
      * @type {string}
@@ -77,13 +92,11 @@ export type BatchSolanaTransactionRequestDetailsTypeEnum = typeof BatchSolanaTra
 /**
  * Check if a given object implements the BatchSolanaTransactionRequestDetails interface.
  */
-export function instanceOfBatchSolanaTransactionRequestDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "transactions" in value;
-
-    return isInstance;
+export function instanceOfBatchSolanaTransactionRequestDetails(value: object): value is BatchSolanaTransactionRequestDetails {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('transactions' in value) || value['transactions'] === undefined) return false;
+    return true;
 }
 
 export function BatchSolanaTransactionRequestDetailsFromJSON(json: any): BatchSolanaTransactionRequestDetails {
@@ -91,33 +104,37 @@ export function BatchSolanaTransactionRequestDetailsFromJSON(json: any): BatchSo
 }
 
 export function BatchSolanaTransactionRequestDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): BatchSolanaTransactionRequestDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
+        'fee': json['fee'] == null ? undefined : BatchSolanaTransactionRequestDetailsFeeFromJSON(json['fee']),
         'type': json['type'],
-        'failOnPredictionFailure': !exists(json, 'fail_on_prediction_failure') ? undefined : json['fail_on_prediction_failure'],
-        'skipSimulation': !exists(json, 'skip_simulation') ? undefined : json['skip_simulation'],
+        'failOnPredictionFailure': json['fail_on_prediction_failure'] == null ? undefined : json['fail_on_prediction_failure'],
+        'skipSimulation': json['skip_simulation'] == null ? undefined : json['skip_simulation'],
         'chain': SolanaChainUniqueIdFromJSON(json['chain']),
         'transactions': ((json['transactions'] as Array<any>).map(BatchSolanaTransactionInstanceDetailsFromJSON)),
     };
 }
 
-export function BatchSolanaTransactionRequestDetailsToJSON(value?: BatchSolanaTransactionRequestDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function BatchSolanaTransactionRequestDetailsToJSON(json: any): BatchSolanaTransactionRequestDetails {
+    return BatchSolanaTransactionRequestDetailsToJSONTyped(json, false);
+}
+
+export function BatchSolanaTransactionRequestDetailsToJSONTyped(value?: BatchSolanaTransactionRequestDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'fail_on_prediction_failure': value.failOnPredictionFailure,
-        'skip_simulation': value.skipSimulation,
-        'chain': SolanaChainUniqueIdToJSON(value.chain),
-        'transactions': ((value.transactions as Array<any>).map(BatchSolanaTransactionInstanceDetailsToJSON)),
+        'fee': BatchSolanaTransactionRequestDetailsFeeToJSON(value['fee']),
+        'type': value['type'],
+        'fail_on_prediction_failure': value['failOnPredictionFailure'],
+        'skip_simulation': value['skipSimulation'],
+        'chain': SolanaChainUniqueIdToJSON(value['chain']),
+        'transactions': ((value['transactions'] as Array<any>).map(BatchSolanaTransactionInstanceDetailsToJSON)),
     };
 }
 

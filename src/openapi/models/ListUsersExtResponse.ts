@@ -12,13 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { UserExt } from './UserExt';
 import {
     UserExtFromJSON,
     UserExtFromJSONTyped,
     UserExtToJSON,
+    UserExtToJSONTyped,
 } from './UserExt';
+import type { PartialErrorResponse } from './PartialErrorResponse';
+import {
+    PartialErrorResponseFromJSON,
+    PartialErrorResponseFromJSONTyped,
+    PartialErrorResponseToJSON,
+    PartialErrorResponseToJSONTyped,
+} from './PartialErrorResponse';
 
 /**
  * 
@@ -26,6 +34,12 @@ import {
  * @interface ListUsersExtResponse
  */
 export interface ListUsersExtResponse {
+    /**
+     * 
+     * @type {PartialErrorResponse}
+     * @memberof ListUsersExtResponse
+     */
+    partialError?: PartialErrorResponse;
     /**
      * 
      * @type {number}
@@ -55,14 +69,12 @@ export interface ListUsersExtResponse {
 /**
  * Check if a given object implements the ListUsersExtResponse interface.
  */
-export function instanceOfListUsersExtResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "total" in value;
-    isInstance = isInstance && "page" in value;
-    isInstance = isInstance && "size" in value;
-    isInstance = isInstance && "users" in value;
-
-    return isInstance;
+export function instanceOfListUsersExtResponse(value: object): value is ListUsersExtResponse {
+    if (!('total' in value) || value['total'] === undefined) return false;
+    if (!('page' in value) || value['page'] === undefined) return false;
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('users' in value) || value['users'] === undefined) return false;
+    return true;
 }
 
 export function ListUsersExtResponseFromJSON(json: any): ListUsersExtResponse {
@@ -70,11 +82,12 @@ export function ListUsersExtResponseFromJSON(json: any): ListUsersExtResponse {
 }
 
 export function ListUsersExtResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): ListUsersExtResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
+        'partialError': json['partial_error'] == null ? undefined : PartialErrorResponseFromJSON(json['partial_error']),
         'total': json['total'],
         'page': json['page'],
         'size': json['size'],
@@ -82,19 +95,22 @@ export function ListUsersExtResponseFromJSONTyped(json: any, ignoreDiscriminator
     };
 }
 
-export function ListUsersExtResponseToJSON(value?: ListUsersExtResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ListUsersExtResponseToJSON(json: any): ListUsersExtResponse {
+    return ListUsersExtResponseToJSONTyped(json, false);
+}
+
+export function ListUsersExtResponseToJSONTyped(value?: ListUsersExtResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'total': value.total,
-        'page': value.page,
-        'size': value.size,
-        'users': ((value.users as Array<any>).map(UserExtToJSON)),
+        'partial_error': PartialErrorResponseToJSON(value['partialError']),
+        'total': value['total'],
+        'page': value['page'],
+        'size': value['size'],
+        'users': ((value['users'] as Array<any>).map(UserExtToJSON)),
     };
 }
 

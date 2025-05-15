@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -42,13 +42,11 @@ export interface StarknetBlock {
 /**
  * Check if a given object implements the StarknetBlock interface.
  */
-export function instanceOfStarknetBlock(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "number" in value;
-    isInstance = isInstance && "hash" in value;
-    isInstance = isInstance && "minedAt" in value;
-
-    return isInstance;
+export function instanceOfStarknetBlock(value: object): value is StarknetBlock {
+    if (!('number' in value) || value['number'] === undefined) return false;
+    if (!('hash' in value) || value['hash'] === undefined) return false;
+    if (!('minedAt' in value) || value['minedAt'] === undefined) return false;
+    return true;
 }
 
 export function StarknetBlockFromJSON(json: any): StarknetBlock {
@@ -56,7 +54,7 @@ export function StarknetBlockFromJSON(json: any): StarknetBlock {
 }
 
 export function StarknetBlockFromJSONTyped(json: any, ignoreDiscriminator: boolean): StarknetBlock {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -67,18 +65,20 @@ export function StarknetBlockFromJSONTyped(json: any, ignoreDiscriminator: boole
     };
 }
 
-export function StarknetBlockToJSON(value?: StarknetBlock | null): any {
-    if (value === undefined) {
-        return undefined;
+export function StarknetBlockToJSON(json: any): StarknetBlock {
+    return StarknetBlockToJSONTyped(json, false);
+}
+
+export function StarknetBlockToJSONTyped(value?: StarknetBlock | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'number': value.number,
-        'hash': value.hash,
-        'mined_at': (value.minedAt.toISOString()),
+        'number': value['number'],
+        'hash': value['hash'],
+        'mined_at': ((value['minedAt']).toISOString()),
     };
 }
 

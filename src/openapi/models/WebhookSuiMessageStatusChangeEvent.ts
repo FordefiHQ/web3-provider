@@ -12,37 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { SuiChain } from './SuiChain';
 import {
     SuiChainFromJSON,
     SuiChainFromJSONTyped,
     SuiChainToJSON,
+    SuiChainToJSONTyped,
 } from './SuiChain';
-import type { SuiMessageState } from './SuiMessageState';
-import {
-    SuiMessageStateFromJSON,
-    SuiMessageStateFromJSONTyped,
-    SuiMessageStateToJSON,
-} from './SuiMessageState';
-import type { SuiMessageType } from './SuiMessageType';
-import {
-    SuiMessageTypeFromJSON,
-    SuiMessageTypeFromJSONTyped,
-    SuiMessageTypeToJSON,
-} from './SuiMessageType';
-import type { TransactionDirection } from './TransactionDirection';
-import {
-    TransactionDirectionFromJSON,
-    TransactionDirectionFromJSONTyped,
-    TransactionDirectionToJSON,
-} from './TransactionDirection';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
     TransactionSpamStateFromJSONTyped,
     TransactionSpamStateToJSON,
+    TransactionSpamStateToJSONTyped,
 } from './TransactionSpamState';
+import type { TransactionDirection } from './TransactionDirection';
+import {
+    TransactionDirectionFromJSON,
+    TransactionDirectionFromJSONTyped,
+    TransactionDirectionToJSON,
+    TransactionDirectionToJSONTyped,
+} from './TransactionDirection';
+import type { SuiMessageType } from './SuiMessageType';
+import {
+    SuiMessageTypeFromJSON,
+    SuiMessageTypeFromJSONTyped,
+    SuiMessageTypeToJSON,
+    SuiMessageTypeToJSONTyped,
+} from './SuiMessageType';
+import type { NonPushableTransactionState } from './NonPushableTransactionState';
+import {
+    NonPushableTransactionStateFromJSON,
+    NonPushableTransactionStateFromJSONTyped,
+    NonPushableTransactionStateToJSON,
+    NonPushableTransactionStateToJSONTyped,
+} from './NonPushableTransactionState';
 
 /**
  * 
@@ -83,6 +88,12 @@ export interface WebhookSuiMessageStatusChangeEvent {
     spamState: TransactionSpamState;
     /**
      * 
+     * @type {NonPushableTransactionState}
+     * @memberof WebhookSuiMessageStatusChangeEvent
+     */
+    state: NonPushableTransactionState;
+    /**
+     * 
      * @type {string}
      * @memberof WebhookSuiMessageStatusChangeEvent
      */
@@ -93,12 +104,6 @@ export interface WebhookSuiMessageStatusChangeEvent {
      * @memberof WebhookSuiMessageStatusChangeEvent
      */
     suiMessageType: SuiMessageType;
-    /**
-     * 
-     * @type {SuiMessageState}
-     * @memberof WebhookSuiMessageStatusChangeEvent
-     */
-    state: SuiMessageState;
     /**
      * 
      * @type {SuiChain}
@@ -120,18 +125,16 @@ export type WebhookSuiMessageStatusChangeEventTypeEnum = typeof WebhookSuiMessag
 /**
  * Check if a given object implements the WebhookSuiMessageStatusChangeEvent interface.
  */
-export function instanceOfWebhookSuiMessageStatusChangeEvent(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "transactionId" in value;
-    isInstance = isInstance && "isManagedTransaction" in value;
-    isInstance = isInstance && "direction" in value;
-    isInstance = isInstance && "spamState" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "suiMessageType" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfWebhookSuiMessageStatusChangeEvent(value: object): value is WebhookSuiMessageStatusChangeEvent {
+    if (!('transactionId' in value) || value['transactionId'] === undefined) return false;
+    if (!('isManagedTransaction' in value) || value['isManagedTransaction'] === undefined) return false;
+    if (!('direction' in value) || value['direction'] === undefined) return false;
+    if (!('spamState' in value) || value['spamState'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('suiMessageType' in value) || value['suiMessageType'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function WebhookSuiMessageStatusChangeEventFromJSON(json: any): WebhookSuiMessageStatusChangeEvent {
@@ -139,7 +142,7 @@ export function WebhookSuiMessageStatusChangeEventFromJSON(json: any): WebhookSu
 }
 
 export function WebhookSuiMessageStatusChangeEventFromJSONTyped(json: any, ignoreDiscriminator: boolean): WebhookSuiMessageStatusChangeEvent {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -147,33 +150,35 @@ export function WebhookSuiMessageStatusChangeEventFromJSONTyped(json: any, ignor
         'transactionId': json['transaction_id'],
         'isManagedTransaction': json['is_managed_transaction'],
         'direction': TransactionDirectionFromJSON(json['direction']),
-        'note': !exists(json, 'note') ? undefined : json['note'],
+        'note': json['note'] == null ? undefined : json['note'],
         'spamState': TransactionSpamStateFromJSON(json['spam_state']),
+        'state': NonPushableTransactionStateFromJSON(json['state']),
         'type': json['type'],
         'suiMessageType': SuiMessageTypeFromJSON(json['sui_message_type']),
-        'state': SuiMessageStateFromJSON(json['state']),
         'chain': SuiChainFromJSON(json['chain']),
     };
 }
 
-export function WebhookSuiMessageStatusChangeEventToJSON(value?: WebhookSuiMessageStatusChangeEvent | null): any {
-    if (value === undefined) {
-        return undefined;
+export function WebhookSuiMessageStatusChangeEventToJSON(json: any): WebhookSuiMessageStatusChangeEvent {
+    return WebhookSuiMessageStatusChangeEventToJSONTyped(json, false);
+}
+
+export function WebhookSuiMessageStatusChangeEventToJSONTyped(value?: WebhookSuiMessageStatusChangeEvent | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'transaction_id': value.transactionId,
-        'is_managed_transaction': value.isManagedTransaction,
-        'direction': TransactionDirectionToJSON(value.direction),
-        'note': value.note,
-        'spam_state': TransactionSpamStateToJSON(value.spamState),
-        'type': value.type,
-        'sui_message_type': SuiMessageTypeToJSON(value.suiMessageType),
-        'state': SuiMessageStateToJSON(value.state),
-        'chain': SuiChainToJSON(value.chain),
+        'transaction_id': value['transactionId'],
+        'is_managed_transaction': value['isManagedTransaction'],
+        'direction': TransactionDirectionToJSON(value['direction']),
+        'note': value['note'],
+        'spam_state': TransactionSpamStateToJSON(value['spamState']),
+        'state': NonPushableTransactionStateToJSON(value['state']),
+        'type': value['type'],
+        'sui_message_type': SuiMessageTypeToJSON(value['suiMessageType']),
+        'chain': SuiChainToJSON(value['chain']),
     };
 }
 

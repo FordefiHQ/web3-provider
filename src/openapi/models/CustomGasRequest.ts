@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { CustomGasRequestDetails } from './CustomGasRequestDetails';
 import {
     CustomGasRequestDetailsFromJSON,
     CustomGasRequestDetailsFromJSONTyped,
     CustomGasRequestDetailsToJSON,
+    CustomGasRequestDetailsToJSONTyped,
 } from './CustomGasRequestDetails';
 
 /**
@@ -59,12 +60,10 @@ export type CustomGasRequestTypeEnum = typeof CustomGasRequestTypeEnum[keyof typ
 /**
  * Check if a given object implements the CustomGasRequest interface.
  */
-export function instanceOfCustomGasRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "details" in value;
-
-    return isInstance;
+export function instanceOfCustomGasRequest(value: object): value is CustomGasRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    return true;
 }
 
 export function CustomGasRequestFromJSON(json: any): CustomGasRequest {
@@ -72,29 +71,31 @@ export function CustomGasRequestFromJSON(json: any): CustomGasRequest {
 }
 
 export function CustomGasRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CustomGasRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'gasLimit': !exists(json, 'gas_limit') ? undefined : json['gas_limit'],
+        'gasLimit': json['gas_limit'] == null ? undefined : json['gas_limit'],
         'type': json['type'],
         'details': CustomGasRequestDetailsFromJSON(json['details']),
     };
 }
 
-export function CustomGasRequestToJSON(value?: CustomGasRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CustomGasRequestToJSON(json: any): CustomGasRequest {
+    return CustomGasRequestToJSONTyped(json, false);
+}
+
+export function CustomGasRequestToJSONTyped(value?: CustomGasRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'gas_limit': value.gasLimit,
-        'type': value.type,
-        'details': CustomGasRequestDetailsToJSON(value.details),
+        'gas_limit': value['gasLimit'],
+        'type': value['type'],
+        'details': CustomGasRequestDetailsToJSON(value['details']),
     };
 }
 

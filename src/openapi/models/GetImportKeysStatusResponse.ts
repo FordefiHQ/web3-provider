@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { ImportKeysStatus } from './ImportKeysStatus';
 import {
     ImportKeysStatusFromJSON,
     ImportKeysStatusFromJSONTyped,
     ImportKeysStatusToJSON,
+    ImportKeysStatusToJSONTyped,
 } from './ImportKeysStatus';
 
 /**
@@ -32,44 +33,16 @@ export interface GetImportKeysStatusResponse {
      * @memberof GetImportKeysStatusResponse
      */
     state: ImportKeysStatus;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof GetImportKeysStatusResponse
-     */
-    importedEcdsa: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof GetImportKeysStatusResponse
-     */
-    importedEddsa: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof GetImportKeysStatusResponse
-     */
-    importedEcdsaStark: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof GetImportKeysStatusResponse
-     */
-    importedSchnorrSecp256k1: boolean;
 }
+
+
 
 /**
  * Check if a given object implements the GetImportKeysStatusResponse interface.
  */
-export function instanceOfGetImportKeysStatusResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "importedEcdsa" in value;
-    isInstance = isInstance && "importedEddsa" in value;
-    isInstance = isInstance && "importedEcdsaStark" in value;
-    isInstance = isInstance && "importedSchnorrSecp256k1" in value;
-
-    return isInstance;
+export function instanceOfGetImportKeysStatusResponse(value: object): value is GetImportKeysStatusResponse {
+    if (!('state' in value) || value['state'] === undefined) return false;
+    return true;
 }
 
 export function GetImportKeysStatusResponseFromJSON(json: any): GetImportKeysStatusResponse {
@@ -77,33 +50,27 @@ export function GetImportKeysStatusResponseFromJSON(json: any): GetImportKeysSta
 }
 
 export function GetImportKeysStatusResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetImportKeysStatusResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'state': ImportKeysStatusFromJSON(json['state']),
-        'importedEcdsa': json['imported_ecdsa'],
-        'importedEddsa': json['imported_eddsa'],
-        'importedEcdsaStark': json['imported_ecdsa_stark'],
-        'importedSchnorrSecp256k1': json['imported_schnorr_secp256k1'],
     };
 }
 
-export function GetImportKeysStatusResponseToJSON(value?: GetImportKeysStatusResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function GetImportKeysStatusResponseToJSON(json: any): GetImportKeysStatusResponse {
+    return GetImportKeysStatusResponseToJSONTyped(json, false);
+}
+
+export function GetImportKeysStatusResponseToJSONTyped(value?: GetImportKeysStatusResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'state': ImportKeysStatusToJSON(value.state),
-        'imported_ecdsa': value.importedEcdsa,
-        'imported_eddsa': value.importedEddsa,
-        'imported_ecdsa_stark': value.importedEcdsaStark,
-        'imported_schnorr_secp256k1': value.importedSchnorrSecp256k1,
+        'state': ImportKeysStatusToJSON(value['state']),
     };
 }
 

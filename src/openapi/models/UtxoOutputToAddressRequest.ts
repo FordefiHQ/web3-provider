@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type UtxoOutputToAddressRequestTypeEnum = typeof UtxoOutputToAddressReque
 /**
  * Check if a given object implements the UtxoOutputToAddressRequest interface.
  */
-export function instanceOfUtxoOutputToAddressRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "address" in value;
-
-    return isInstance;
+export function instanceOfUtxoOutputToAddressRequest(value: object): value is UtxoOutputToAddressRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    return true;
 }
 
 export function UtxoOutputToAddressRequestFromJSON(json: any): UtxoOutputToAddressRequest {
@@ -59,7 +57,7 @@ export function UtxoOutputToAddressRequestFromJSON(json: any): UtxoOutputToAddre
 }
 
 export function UtxoOutputToAddressRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): UtxoOutputToAddressRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function UtxoOutputToAddressRequestFromJSONTyped(json: any, ignoreDiscrim
     };
 }
 
-export function UtxoOutputToAddressRequestToJSON(value?: UtxoOutputToAddressRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UtxoOutputToAddressRequestToJSON(json: any): UtxoOutputToAddressRequest {
+    return UtxoOutputToAddressRequestToJSONTyped(json, false);
+}
+
+export function UtxoOutputToAddressRequestToJSONTyped(value?: UtxoOutputToAddressRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'address': value.address,
+        'type': value['type'],
+        'address': value['address'],
     };
 }
 

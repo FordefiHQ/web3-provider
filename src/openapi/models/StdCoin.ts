@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -36,12 +36,10 @@ export interface StdCoin {
 /**
  * Check if a given object implements the StdCoin interface.
  */
-export function instanceOfStdCoin(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "denom" in value;
-    isInstance = isInstance && "amount" in value;
-
-    return isInstance;
+export function instanceOfStdCoin(value: object): value is StdCoin {
+    if (!('denom' in value) || value['denom'] === undefined) return false;
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    return true;
 }
 
 export function StdCoinFromJSON(json: any): StdCoin {
@@ -49,7 +47,7 @@ export function StdCoinFromJSON(json: any): StdCoin {
 }
 
 export function StdCoinFromJSONTyped(json: any, ignoreDiscriminator: boolean): StdCoin {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -59,17 +57,19 @@ export function StdCoinFromJSONTyped(json: any, ignoreDiscriminator: boolean): S
     };
 }
 
-export function StdCoinToJSON(value?: StdCoin | null): any {
-    if (value === undefined) {
-        return undefined;
+export function StdCoinToJSON(json: any): StdCoin {
+    return StdCoinToJSONTyped(json, false);
+}
+
+export function StdCoinToJSONTyped(value?: StdCoin | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'denom': value.denom,
-        'amount': value.amount,
+        'denom': value['denom'],
+        'amount': value['amount'],
     };
 }
 

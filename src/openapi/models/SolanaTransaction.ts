@@ -12,103 +12,133 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { EnrichedSolanaAddress } from './EnrichedSolanaAddress';
-import {
-    EnrichedSolanaAddressFromJSON,
-    EnrichedSolanaAddressFromJSONTyped,
-    EnrichedSolanaAddressToJSON,
-} from './EnrichedSolanaAddress';
-import type { EnrichedSolanaChain } from './EnrichedSolanaChain';
-import {
-    EnrichedSolanaChainFromJSON,
-    EnrichedSolanaChainFromJSONTyped,
-    EnrichedSolanaChainToJSON,
-} from './EnrichedSolanaChain';
+import { mapValues } from '../runtime';
 import type { ManagedTransactionData } from './ManagedTransactionData';
 import {
     ManagedTransactionDataFromJSON,
     ManagedTransactionDataFromJSONTyped,
     ManagedTransactionDataToJSON,
+    ManagedTransactionDataToJSONTyped,
 } from './ManagedTransactionData';
-import type { PredictedSolanaTransactionSolanaTransactionTypeDetails } from './PredictedSolanaTransactionSolanaTransactionTypeDetails';
-import {
-    PredictedSolanaTransactionSolanaTransactionTypeDetailsFromJSON,
-    PredictedSolanaTransactionSolanaTransactionTypeDetailsFromJSONTyped,
-    PredictedSolanaTransactionSolanaTransactionTypeDetailsToJSON,
-} from './PredictedSolanaTransactionSolanaTransactionTypeDetails';
-import type { Signature } from './Signature';
-import {
-    SignatureFromJSON,
-    SignatureFromJSONTyped,
-    SignatureToJSON,
-} from './Signature';
-import type { SimulationStatusResult } from './SimulationStatusResult';
-import {
-    SimulationStatusResultFromJSON,
-    SimulationStatusResultFromJSONTyped,
-    SimulationStatusResultToJSON,
-} from './SimulationStatusResult';
-import type { SolanaBlockData } from './SolanaBlockData';
-import {
-    SolanaBlockDataFromJSON,
-    SolanaBlockDataFromJSONTyped,
-    SolanaBlockDataToJSON,
-} from './SolanaBlockData';
 import type { SolanaCompiledInstruction } from './SolanaCompiledInstruction';
 import {
     SolanaCompiledInstructionFromJSON,
     SolanaCompiledInstructionFromJSONTyped,
     SolanaCompiledInstructionToJSON,
+    SolanaCompiledInstructionToJSONTyped,
 } from './SolanaCompiledInstruction';
-import type { SolanaEnrichedMessageAddressTableLookup } from './SolanaEnrichedMessageAddressTableLookup';
+import type { PushableTransactionStateChange } from './PushableTransactionStateChange';
 import {
-    SolanaEnrichedMessageAddressTableLookupFromJSON,
-    SolanaEnrichedMessageAddressTableLookupFromJSONTyped,
-    SolanaEnrichedMessageAddressTableLookupToJSON,
-} from './SolanaEnrichedMessageAddressTableLookup';
-import type { SolanaMessageVersion } from './SolanaMessageVersion';
+    PushableTransactionStateChangeFromJSON,
+    PushableTransactionStateChangeFromJSONTyped,
+    PushableTransactionStateChangeToJSON,
+    PushableTransactionStateChangeToJSONTyped,
+} from './PushableTransactionStateChange';
+import type { PushableTransactionState } from './PushableTransactionState';
 import {
-    SolanaMessageVersionFromJSON,
-    SolanaMessageVersionFromJSONTyped,
-    SolanaMessageVersionToJSON,
-} from './SolanaMessageVersion';
+    PushableTransactionStateFromJSON,
+    PushableTransactionStateFromJSONTyped,
+    PushableTransactionStateToJSON,
+    PushableTransactionStateToJSONTyped,
+} from './PushableTransactionState';
 import type { SolanaTransactionAccount } from './SolanaTransactionAccount';
 import {
     SolanaTransactionAccountFromJSON,
     SolanaTransactionAccountFromJSONTyped,
     SolanaTransactionAccountToJSON,
+    SolanaTransactionAccountToJSONTyped,
 } from './SolanaTransactionAccount';
-import type { SolanaTransactionResult } from './SolanaTransactionResult';
+import type { AmlPolicyMatchIncoming } from './AmlPolicyMatchIncoming';
 import {
-    SolanaTransactionResultFromJSON,
-    SolanaTransactionResultFromJSONTyped,
-    SolanaTransactionResultToJSON,
-} from './SolanaTransactionResult';
-import type { SolanaTransactionState } from './SolanaTransactionState';
-import {
-    SolanaTransactionStateFromJSON,
-    SolanaTransactionStateFromJSONTyped,
-    SolanaTransactionStateToJSON,
-} from './SolanaTransactionState';
-import type { SolanaTransactionStateChange } from './SolanaTransactionStateChange';
-import {
-    SolanaTransactionStateChangeFromJSON,
-    SolanaTransactionStateChangeFromJSONTyped,
-    SolanaTransactionStateChangeToJSON,
-} from './SolanaTransactionStateChange';
-import type { TransactionDirection } from './TransactionDirection';
-import {
-    TransactionDirectionFromJSON,
-    TransactionDirectionFromJSONTyped,
-    TransactionDirectionToJSON,
-} from './TransactionDirection';
+    AmlPolicyMatchIncomingFromJSON,
+    AmlPolicyMatchIncomingFromJSONTyped,
+    AmlPolicyMatchIncomingToJSON,
+    AmlPolicyMatchIncomingToJSONTyped,
+} from './AmlPolicyMatchIncoming';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
     TransactionSpamStateFromJSONTyped,
     TransactionSpamStateToJSON,
+    TransactionSpamStateToJSONTyped,
 } from './TransactionSpamState';
+import type { TransactionDirection } from './TransactionDirection';
+import {
+    TransactionDirectionFromJSON,
+    TransactionDirectionFromJSONTyped,
+    TransactionDirectionToJSON,
+    TransactionDirectionToJSONTyped,
+} from './TransactionDirection';
+import type { SolanaMessageVersion } from './SolanaMessageVersion';
+import {
+    SolanaMessageVersionFromJSON,
+    SolanaMessageVersionFromJSONTyped,
+    SolanaMessageVersionToJSON,
+    SolanaMessageVersionToJSONTyped,
+} from './SolanaMessageVersion';
+import type { EnrichedSolanaAddress } from './EnrichedSolanaAddress';
+import {
+    EnrichedSolanaAddressFromJSON,
+    EnrichedSolanaAddressFromJSONTyped,
+    EnrichedSolanaAddressToJSON,
+    EnrichedSolanaAddressToJSONTyped,
+} from './EnrichedSolanaAddress';
+import type { Signature } from './Signature';
+import {
+    SignatureFromJSON,
+    SignatureFromJSONTyped,
+    SignatureToJSON,
+    SignatureToJSONTyped,
+} from './Signature';
+import type { SolanaTransactionResult } from './SolanaTransactionResult';
+import {
+    SolanaTransactionResultFromJSON,
+    SolanaTransactionResultFromJSONTyped,
+    SolanaTransactionResultToJSON,
+    SolanaTransactionResultToJSONTyped,
+} from './SolanaTransactionResult';
+import type { EnrichedSolanaChain } from './EnrichedSolanaChain';
+import {
+    EnrichedSolanaChainFromJSON,
+    EnrichedSolanaChainFromJSONTyped,
+    EnrichedSolanaChainToJSON,
+    EnrichedSolanaChainToJSONTyped,
+} from './EnrichedSolanaChain';
+import type { SimulationStatusResult } from './SimulationStatusResult';
+import {
+    SimulationStatusResultFromJSON,
+    SimulationStatusResultFromJSONTyped,
+    SimulationStatusResultToJSON,
+    SimulationStatusResultToJSONTyped,
+} from './SimulationStatusResult';
+import type { SolanaEnrichedMessageAddressTableLookup } from './SolanaEnrichedMessageAddressTableLookup';
+import {
+    SolanaEnrichedMessageAddressTableLookupFromJSON,
+    SolanaEnrichedMessageAddressTableLookupFromJSONTyped,
+    SolanaEnrichedMessageAddressTableLookupToJSON,
+    SolanaEnrichedMessageAddressTableLookupToJSONTyped,
+} from './SolanaEnrichedMessageAddressTableLookup';
+import type { SolanaTransactionSolanaTransactionTypeDetails } from './SolanaTransactionSolanaTransactionTypeDetails';
+import {
+    SolanaTransactionSolanaTransactionTypeDetailsFromJSON,
+    SolanaTransactionSolanaTransactionTypeDetailsFromJSONTyped,
+    SolanaTransactionSolanaTransactionTypeDetailsToJSON,
+    SolanaTransactionSolanaTransactionTypeDetailsToJSONTyped,
+} from './SolanaTransactionSolanaTransactionTypeDetails';
+import type { SolanaBlockData } from './SolanaBlockData';
+import {
+    SolanaBlockDataFromJSON,
+    SolanaBlockDataFromJSONTyped,
+    SolanaBlockDataToJSON,
+    SolanaBlockDataToJSONTyped,
+} from './SolanaBlockData';
+import type { AmlResults } from './AmlResults';
+import {
+    AmlResultsFromJSON,
+    AmlResultsFromJSONTyped,
+    AmlResultsToJSON,
+    AmlResultsToJSONTyped,
+} from './AmlResults';
 
 /**
  * 
@@ -166,34 +196,52 @@ export interface SolanaTransaction {
     direction: TransactionDirection;
     /**
      * 
+     * @type {boolean}
+     * @memberof SolanaTransaction
+     */
+    signedExternally?: boolean;
+    /**
+     * 
+     * @type {PushableTransactionState}
+     * @memberof SolanaTransaction
+     */
+    state: PushableTransactionState;
+    /**
+     * 
+     * @type {Array<PushableTransactionStateChange>}
+     * @memberof SolanaTransaction
+     */
+    stateChanges: Array<PushableTransactionStateChange>;
+    /**
+     * 
+     * @type {AmlResults}
+     * @memberof SolanaTransaction
+     */
+    amlResults?: AmlResults;
+    /**
+     * 
+     * @type {AmlPolicyMatchIncoming}
+     * @memberof SolanaTransaction
+     */
+    incomingAmlPolicyMatch?: AmlPolicyMatchIncoming;
+    /**
+     * 
      * @type {string}
      * @memberof SolanaTransaction
      */
     type: SolanaTransactionTypeEnum;
     /**
      * 
-     * @type {PredictedSolanaTransactionSolanaTransactionTypeDetails}
+     * @type {SolanaTransactionSolanaTransactionTypeDetails}
      * @memberof SolanaTransaction
      */
-    solanaTransactionTypeDetails: PredictedSolanaTransactionSolanaTransactionTypeDetails;
+    solanaTransactionTypeDetails: SolanaTransactionSolanaTransactionTypeDetails;
     /**
      * 
      * @type {EnrichedSolanaChain}
      * @memberof SolanaTransaction
      */
     chain: EnrichedSolanaChain;
-    /**
-     * 
-     * @type {SolanaTransactionState}
-     * @memberof SolanaTransaction
-     */
-    state: SolanaTransactionState;
-    /**
-     * 
-     * @type {Array<SolanaTransactionStateChange>}
-     * @memberof SolanaTransaction
-     */
-    stateChanges: Array<SolanaTransactionStateChange>;
     /**
      * 
      * @type {SolanaMessageVersion}
@@ -272,6 +320,12 @@ export interface SolanaTransaction {
      * @memberof SolanaTransaction
      */
     explorerUrl?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SolanaTransaction
+     */
+    wasFeeSetInRequest: boolean;
 }
 
 
@@ -287,26 +341,25 @@ export type SolanaTransactionTypeEnum = typeof SolanaTransactionTypeEnum[keyof t
 /**
  * Check if a given object implements the SolanaTransaction interface.
  */
-export function instanceOfSolanaTransaction(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "signatures" in value;
-    isInstance = isInstance && "direction" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "solanaTransactionTypeDetails" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "stateChanges" in value;
-    isInstance = isInstance && "version" in value;
-    isInstance = isInstance && "instructions" in value;
-    isInstance = isInstance && "accounts" in value;
-    isInstance = isInstance && "addressTableLookups" in value;
-    isInstance = isInstance && "sender" in value;
-    isInstance = isInstance && "simulationStatusResult" in value;
-
-    return isInstance;
+export function instanceOfSolanaTransaction(value: object): value is SolanaTransaction {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('signatures' in value) || value['signatures'] === undefined) return false;
+    if (!('direction' in value) || value['direction'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('stateChanges' in value) || value['stateChanges'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('solanaTransactionTypeDetails' in value) || value['solanaTransactionTypeDetails'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('instructions' in value) || value['instructions'] === undefined) return false;
+    if (!('accounts' in value) || value['accounts'] === undefined) return false;
+    if (!('addressTableLookups' in value) || value['addressTableLookups'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    if (!('simulationStatusResult' in value) || value['simulationStatusResult'] === undefined) return false;
+    if (!('wasFeeSetInRequest' in value) || value['wasFeeSetInRequest'] === undefined) return false;
+    return true;
 }
 
 export function SolanaTransactionFromJSON(json: any): SolanaTransaction {
@@ -314,7 +367,7 @@ export function SolanaTransactionFromJSON(json: any): SolanaTransaction {
 }
 
 export function SolanaTransactionFromJSONTyped(json: any, ignoreDiscriminator: boolean): SolanaTransaction {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -322,67 +375,77 @@ export function SolanaTransactionFromJSONTyped(json: any, ignoreDiscriminator: b
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
-        'managedTransactionData': !exists(json, 'managed_transaction_data') ? undefined : ManagedTransactionDataFromJSON(json['managed_transaction_data']),
+        'managedTransactionData': json['managed_transaction_data'] == null ? undefined : ManagedTransactionDataFromJSON(json['managed_transaction_data']),
         'signatures': ((json['signatures'] as Array<any>).map(SignatureFromJSON)),
-        'note': !exists(json, 'note') ? undefined : json['note'],
-        'spamState': !exists(json, 'spam_state') ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
+        'note': json['note'] == null ? undefined : json['note'],
+        'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
+        'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'state': PushableTransactionStateFromJSON(json['state']),
+        'stateChanges': ((json['state_changes'] as Array<any>).map(PushableTransactionStateChangeFromJSON)),
+        'amlResults': json['aml_results'] == null ? undefined : AmlResultsFromJSON(json['aml_results']),
+        'incomingAmlPolicyMatch': json['incoming_aml_policy_match'] == null ? undefined : AmlPolicyMatchIncomingFromJSON(json['incoming_aml_policy_match']),
         'type': json['type'],
-        'solanaTransactionTypeDetails': PredictedSolanaTransactionSolanaTransactionTypeDetailsFromJSON(json['solana_transaction_type_details']),
+        'solanaTransactionTypeDetails': SolanaTransactionSolanaTransactionTypeDetailsFromJSON(json['solana_transaction_type_details']),
         'chain': EnrichedSolanaChainFromJSON(json['chain']),
-        'state': SolanaTransactionStateFromJSON(json['state']),
-        'stateChanges': ((json['state_changes'] as Array<any>).map(SolanaTransactionStateChangeFromJSON)),
         'version': SolanaMessageVersionFromJSON(json['version']),
         'instructions': ((json['instructions'] as Array<any>).map(SolanaCompiledInstructionFromJSON)),
         'accounts': ((json['accounts'] as Array<any>).map(SolanaTransactionAccountFromJSON)),
         'addressTableLookups': ((json['address_table_lookups'] as Array<any>).map(SolanaEnrichedMessageAddressTableLookupFromJSON)),
         'sender': EnrichedSolanaAddressFromJSON(json['sender']),
-        'rawTransaction': !exists(json, 'raw_transaction') ? undefined : json['raw_transaction'],
-        'hash': !exists(json, 'hash') ? undefined : json['hash'],
-        'recentBlockhash': !exists(json, 'recent_blockhash') ? undefined : json['recent_blockhash'],
-        'block': !exists(json, 'block') ? undefined : SolanaBlockDataFromJSON(json['block']),
-        'expectedResult': !exists(json, 'expected_result') ? undefined : SolanaTransactionResultFromJSON(json['expected_result']),
+        'rawTransaction': json['raw_transaction'] == null ? undefined : json['raw_transaction'],
+        'hash': json['hash'] == null ? undefined : json['hash'],
+        'recentBlockhash': json['recent_blockhash'] == null ? undefined : json['recent_blockhash'],
+        'block': json['block'] == null ? undefined : SolanaBlockDataFromJSON(json['block']),
+        'expectedResult': json['expected_result'] == null ? undefined : SolanaTransactionResultFromJSON(json['expected_result']),
         'simulationStatusResult': SimulationStatusResultFromJSON(json['simulation_status_result']),
-        'minedResult': !exists(json, 'mined_result') ? undefined : SolanaTransactionResultFromJSON(json['mined_result']),
-        'explorerUrl': !exists(json, 'explorer_url') ? undefined : json['explorer_url'],
+        'minedResult': json['mined_result'] == null ? undefined : SolanaTransactionResultFromJSON(json['mined_result']),
+        'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
+        'wasFeeSetInRequest': json['was_fee_set_in_request'],
     };
 }
 
-export function SolanaTransactionToJSON(value?: SolanaTransaction | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SolanaTransactionToJSON(json: any): SolanaTransaction {
+    return SolanaTransactionToJSONTyped(json, false);
+}
+
+export function SolanaTransactionToJSONTyped(value?: SolanaTransaction | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'managed_transaction_data': ManagedTransactionDataToJSON(value.managedTransactionData),
-        'signatures': ((value.signatures as Array<any>).map(SignatureToJSON)),
-        'note': value.note,
-        'spam_state': TransactionSpamStateToJSON(value.spamState),
-        'direction': TransactionDirectionToJSON(value.direction),
-        'type': value.type,
-        'solana_transaction_type_details': PredictedSolanaTransactionSolanaTransactionTypeDetailsToJSON(value.solanaTransactionTypeDetails),
-        'chain': EnrichedSolanaChainToJSON(value.chain),
-        'state': SolanaTransactionStateToJSON(value.state),
-        'state_changes': ((value.stateChanges as Array<any>).map(SolanaTransactionStateChangeToJSON)),
-        'version': SolanaMessageVersionToJSON(value.version),
-        'instructions': ((value.instructions as Array<any>).map(SolanaCompiledInstructionToJSON)),
-        'accounts': ((value.accounts as Array<any>).map(SolanaTransactionAccountToJSON)),
-        'address_table_lookups': ((value.addressTableLookups as Array<any>).map(SolanaEnrichedMessageAddressTableLookupToJSON)),
-        'sender': EnrichedSolanaAddressToJSON(value.sender),
-        'raw_transaction': value.rawTransaction,
-        'hash': value.hash,
-        'recent_blockhash': value.recentBlockhash,
-        'block': SolanaBlockDataToJSON(value.block),
-        'expected_result': SolanaTransactionResultToJSON(value.expectedResult),
-        'simulation_status_result': SimulationStatusResultToJSON(value.simulationStatusResult),
-        'mined_result': SolanaTransactionResultToJSON(value.minedResult),
-        'explorer_url': value.explorerUrl,
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'managed_transaction_data': ManagedTransactionDataToJSON(value['managedTransactionData']),
+        'signatures': ((value['signatures'] as Array<any>).map(SignatureToJSON)),
+        'note': value['note'],
+        'spam_state': TransactionSpamStateToJSON(value['spamState']),
+        'direction': TransactionDirectionToJSON(value['direction']),
+        'signed_externally': value['signedExternally'],
+        'state': PushableTransactionStateToJSON(value['state']),
+        'state_changes': ((value['stateChanges'] as Array<any>).map(PushableTransactionStateChangeToJSON)),
+        'aml_results': AmlResultsToJSON(value['amlResults']),
+        'incoming_aml_policy_match': AmlPolicyMatchIncomingToJSON(value['incomingAmlPolicyMatch']),
+        'type': value['type'],
+        'solana_transaction_type_details': SolanaTransactionSolanaTransactionTypeDetailsToJSON(value['solanaTransactionTypeDetails']),
+        'chain': EnrichedSolanaChainToJSON(value['chain']),
+        'version': SolanaMessageVersionToJSON(value['version']),
+        'instructions': ((value['instructions'] as Array<any>).map(SolanaCompiledInstructionToJSON)),
+        'accounts': ((value['accounts'] as Array<any>).map(SolanaTransactionAccountToJSON)),
+        'address_table_lookups': ((value['addressTableLookups'] as Array<any>).map(SolanaEnrichedMessageAddressTableLookupToJSON)),
+        'sender': EnrichedSolanaAddressToJSON(value['sender']),
+        'raw_transaction': value['rawTransaction'],
+        'hash': value['hash'],
+        'recent_blockhash': value['recentBlockhash'],
+        'block': SolanaBlockDataToJSON(value['block']),
+        'expected_result': SolanaTransactionResultToJSON(value['expectedResult']),
+        'simulation_status_result': SimulationStatusResultToJSON(value['simulationStatusResult']),
+        'mined_result': SolanaTransactionResultToJSON(value['minedResult']),
+        'explorer_url': value['explorerUrl'],
+        'was_fee_set_in_request': value['wasFeeSetInRequest'],
     };
 }
 

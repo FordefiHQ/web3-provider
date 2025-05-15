@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type MinedMessagesListFormatEnum = typeof MinedMessagesListFormatEnum[key
 /**
  * Check if a given object implements the MinedMessagesList interface.
  */
-export function instanceOfMinedMessagesList(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "format" in value;
-    isInstance = isInstance && "messages" in value;
-
-    return isInstance;
+export function instanceOfMinedMessagesList(value: object): value is MinedMessagesList {
+    if (!('format' in value) || value['format'] === undefined) return false;
+    if (!('messages' in value) || value['messages'] === undefined) return false;
+    return true;
 }
 
 export function MinedMessagesListFromJSON(json: any): MinedMessagesList {
@@ -59,7 +57,7 @@ export function MinedMessagesListFromJSON(json: any): MinedMessagesList {
 }
 
 export function MinedMessagesListFromJSONTyped(json: any, ignoreDiscriminator: boolean): MinedMessagesList {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function MinedMessagesListFromJSONTyped(json: any, ignoreDiscriminator: b
     };
 }
 
-export function MinedMessagesListToJSON(value?: MinedMessagesList | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MinedMessagesListToJSON(json: any): MinedMessagesList {
+    return MinedMessagesListToJSONTyped(json, false);
+}
+
+export function MinedMessagesListToJSONTyped(value?: MinedMessagesList | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'format': value.format,
-        'messages': value.messages,
+        'format': value['format'],
+        'messages': value['messages'],
     };
 }
 

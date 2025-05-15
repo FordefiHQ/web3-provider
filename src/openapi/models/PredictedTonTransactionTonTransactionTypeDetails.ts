@@ -12,22 +12,22 @@
  * Do not edit the class manually.
  */
 
+import type { TonJettonTransferDetails } from './TonJettonTransferDetails';
 import {
-    TonJettonTransferDetails,
     instanceOfTonJettonTransferDetails,
     TonJettonTransferDetailsFromJSON,
     TonJettonTransferDetailsFromJSONTyped,
     TonJettonTransferDetailsToJSON,
 } from './TonJettonTransferDetails';
+import type { TonNativeTransferDetails } from './TonNativeTransferDetails';
 import {
-    TonNativeTransferDetails,
     instanceOfTonNativeTransferDetails,
     TonNativeTransferDetailsFromJSON,
     TonNativeTransferDetailsFromJSONTyped,
     TonNativeTransferDetailsToJSON,
 } from './TonNativeTransferDetails';
+import type { TonRawTransactionDetails } from './TonRawTransactionDetails';
 import {
-    TonRawTransactionDetails,
     instanceOfTonRawTransactionDetails,
     TonRawTransactionDetailsFromJSON,
     TonRawTransactionDetailsFromJSONTyped,
@@ -46,35 +46,36 @@ export function PredictedTonTransactionTonTransactionTypeDetailsFromJSON(json: a
 }
 
 export function PredictedTonTransactionTonTransactionTypeDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): PredictedTonTransactionTonTransactionTypeDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'jetton_transfer':
-            return {...TonJettonTransferDetailsFromJSONTyped(json, true), type: 'jetton_transfer'};
+            return Object.assign({}, TonJettonTransferDetailsFromJSONTyped(json, true), { type: 'jetton_transfer' } as const);
         case 'native_transfer':
-            return {...TonNativeTransferDetailsFromJSONTyped(json, true), type: 'native_transfer'};
+            return Object.assign({}, TonNativeTransferDetailsFromJSONTyped(json, true), { type: 'native_transfer' } as const);
         case 'raw_transaction':
-            return {...TonRawTransactionDetailsFromJSONTyped(json, true), type: 'raw_transaction'};
+            return Object.assign({}, TonRawTransactionDetailsFromJSONTyped(json, true), { type: 'raw_transaction' } as const);
         default:
             throw new Error(`No variant of PredictedTonTransactionTonTransactionTypeDetails exists with 'type=${json['type']}'`);
     }
 }
 
-export function PredictedTonTransactionTonTransactionTypeDetailsToJSON(value?: PredictedTonTransactionTonTransactionTypeDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function PredictedTonTransactionTonTransactionTypeDetailsToJSON(json: any): any {
+    return PredictedTonTransactionTonTransactionTypeDetailsToJSONTyped(json, false);
+}
+
+export function PredictedTonTransactionTonTransactionTypeDetailsToJSONTyped(value?: PredictedTonTransactionTonTransactionTypeDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'jetton_transfer':
-            return TonJettonTransferDetailsToJSON(value);
+            return Object.assign({}, TonJettonTransferDetailsToJSON(value), { type: 'jetton_transfer' } as const);
         case 'native_transfer':
-            return TonNativeTransferDetailsToJSON(value);
+            return Object.assign({}, TonNativeTransferDetailsToJSON(value), { type: 'native_transfer' } as const);
         case 'raw_transaction':
-            return TonRawTransactionDetailsToJSON(value);
+            return Object.assign({}, TonRawTransactionDetailsToJSON(value), { type: 'raw_transaction' } as const);
         default:
             throw new Error(`No variant of PredictedTonTransactionTonTransactionTypeDetails exists with 'type=${value['type']}'`);
     }

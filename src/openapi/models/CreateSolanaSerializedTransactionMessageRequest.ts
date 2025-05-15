@@ -12,31 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { PushMode } from './PushMode';
-import {
-    PushModeFromJSON,
-    PushModeFromJSONTyped,
-    PushModeToJSON,
-} from './PushMode';
+import { mapValues } from '../runtime';
 import type { SolanaChainUniqueId } from './SolanaChainUniqueId';
 import {
     SolanaChainUniqueIdFromJSON,
     SolanaChainUniqueIdFromJSONTyped,
     SolanaChainUniqueIdToJSON,
+    SolanaChainUniqueIdToJSONTyped,
 } from './SolanaChainUniqueId';
 import type { SolanaSecretKeyRequest } from './SolanaSecretKeyRequest';
 import {
     SolanaSecretKeyRequestFromJSON,
     SolanaSecretKeyRequestFromJSONTyped,
     SolanaSecretKeyRequestToJSON,
+    SolanaSecretKeyRequestToJSONTyped,
 } from './SolanaSecretKeyRequest';
 import type { SolanaTransactionSignaturesRequest } from './SolanaTransactionSignaturesRequest';
 import {
     SolanaTransactionSignaturesRequestFromJSON,
     SolanaTransactionSignaturesRequestFromJSONTyped,
     SolanaTransactionSignaturesRequestToJSON,
+    SolanaTransactionSignaturesRequestToJSONTyped,
 } from './SolanaTransactionSignaturesRequest';
+import type { BatchSolanaTransactionRequestDetailsFee } from './BatchSolanaTransactionRequestDetailsFee';
+import {
+    BatchSolanaTransactionRequestDetailsFeeFromJSON,
+    BatchSolanaTransactionRequestDetailsFeeFromJSONTyped,
+    BatchSolanaTransactionRequestDetailsFeeToJSON,
+    BatchSolanaTransactionRequestDetailsFeeToJSONTyped,
+} from './BatchSolanaTransactionRequestDetailsFee';
+import type { PushMode } from './PushMode';
+import {
+    PushModeFromJSON,
+    PushModeFromJSONTyped,
+    PushModeToJSON,
+    PushModeToJSONTyped,
+} from './PushMode';
 
 /**
  * 
@@ -44,6 +55,12 @@ import {
  * @interface CreateSolanaSerializedTransactionMessageRequest
  */
 export interface CreateSolanaSerializedTransactionMessageRequest {
+    /**
+     * 
+     * @type {BatchSolanaTransactionRequestDetailsFee}
+     * @memberof CreateSolanaSerializedTransactionMessageRequest
+     */
+    fee?: BatchSolanaTransactionRequestDetailsFee;
     /**
      * 
      * @type {string}
@@ -107,13 +124,11 @@ export type CreateSolanaSerializedTransactionMessageRequestTypeEnum = typeof Cre
 /**
  * Check if a given object implements the CreateSolanaSerializedTransactionMessageRequest interface.
  */
-export function instanceOfCreateSolanaSerializedTransactionMessageRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "data" in value;
-
-    return isInstance;
+export function instanceOfCreateSolanaSerializedTransactionMessageRequest(value: object): value is CreateSolanaSerializedTransactionMessageRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('data' in value) || value['data'] === undefined) return false;
+    return true;
 }
 
 export function CreateSolanaSerializedTransactionMessageRequestFromJSON(json: any): CreateSolanaSerializedTransactionMessageRequest {
@@ -121,39 +136,43 @@ export function CreateSolanaSerializedTransactionMessageRequestFromJSON(json: an
 }
 
 export function CreateSolanaSerializedTransactionMessageRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateSolanaSerializedTransactionMessageRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
+        'fee': json['fee'] == null ? undefined : BatchSolanaTransactionRequestDetailsFeeFromJSON(json['fee']),
         'type': json['type'],
-        'failOnPredictionFailure': !exists(json, 'fail_on_prediction_failure') ? undefined : json['fail_on_prediction_failure'],
-        'pushMode': !exists(json, 'push_mode') ? undefined : PushModeFromJSON(json['push_mode']),
-        'skipPrediction': !exists(json, 'skip_prediction') ? undefined : json['skip_prediction'],
+        'failOnPredictionFailure': json['fail_on_prediction_failure'] == null ? undefined : json['fail_on_prediction_failure'],
+        'pushMode': json['push_mode'] == null ? undefined : PushModeFromJSON(json['push_mode']),
+        'skipPrediction': json['skip_prediction'] == null ? undefined : json['skip_prediction'],
         'chain': SolanaChainUniqueIdFromJSON(json['chain']),
         'data': json['data'],
-        'signatures': !exists(json, 'signatures') ? undefined : ((json['signatures'] as Array<any>).map(SolanaTransactionSignaturesRequestFromJSON)),
-        'ephemeralKeys': !exists(json, 'ephemeral_keys') ? undefined : ((json['ephemeral_keys'] as Array<any>).map(SolanaSecretKeyRequestFromJSON)),
+        'signatures': json['signatures'] == null ? undefined : ((json['signatures'] as Array<any>).map(SolanaTransactionSignaturesRequestFromJSON)),
+        'ephemeralKeys': json['ephemeral_keys'] == null ? undefined : ((json['ephemeral_keys'] as Array<any>).map(SolanaSecretKeyRequestFromJSON)),
     };
 }
 
-export function CreateSolanaSerializedTransactionMessageRequestToJSON(value?: CreateSolanaSerializedTransactionMessageRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateSolanaSerializedTransactionMessageRequestToJSON(json: any): CreateSolanaSerializedTransactionMessageRequest {
+    return CreateSolanaSerializedTransactionMessageRequestToJSONTyped(json, false);
+}
+
+export function CreateSolanaSerializedTransactionMessageRequestToJSONTyped(value?: CreateSolanaSerializedTransactionMessageRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'fail_on_prediction_failure': value.failOnPredictionFailure,
-        'push_mode': PushModeToJSON(value.pushMode),
-        'skip_prediction': value.skipPrediction,
-        'chain': SolanaChainUniqueIdToJSON(value.chain),
-        'data': value.data,
-        'signatures': value.signatures === undefined ? undefined : ((value.signatures as Array<any>).map(SolanaTransactionSignaturesRequestToJSON)),
-        'ephemeral_keys': value.ephemeralKeys === undefined ? undefined : ((value.ephemeralKeys as Array<any>).map(SolanaSecretKeyRequestToJSON)),
+        'fee': BatchSolanaTransactionRequestDetailsFeeToJSON(value['fee']),
+        'type': value['type'],
+        'fail_on_prediction_failure': value['failOnPredictionFailure'],
+        'push_mode': PushModeToJSON(value['pushMode']),
+        'skip_prediction': value['skipPrediction'],
+        'chain': SolanaChainUniqueIdToJSON(value['chain']),
+        'data': value['data'],
+        'signatures': value['signatures'] == null ? undefined : ((value['signatures'] as Array<any>).map(SolanaTransactionSignaturesRequestToJSON)),
+        'ephemeral_keys': value['ephemeralKeys'] == null ? undefined : ((value['ephemeralKeys'] as Array<any>).map(SolanaSecretKeyRequestToJSON)),
     };
 }
 

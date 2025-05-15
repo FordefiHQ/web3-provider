@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -52,13 +52,11 @@ export type DynamicGasRequestTypeEnum = typeof DynamicGasRequestTypeEnum[keyof t
 /**
  * Check if a given object implements the DynamicGasRequest interface.
  */
-export function instanceOfDynamicGasRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "maxPriorityFeePerGas" in value;
-    isInstance = isInstance && "maxFeePerGas" in value;
-
-    return isInstance;
+export function instanceOfDynamicGasRequest(value: object): value is DynamicGasRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('maxPriorityFeePerGas' in value) || value['maxPriorityFeePerGas'] === undefined) return false;
+    if (!('maxFeePerGas' in value) || value['maxFeePerGas'] === undefined) return false;
+    return true;
 }
 
 export function DynamicGasRequestFromJSON(json: any): DynamicGasRequest {
@@ -66,7 +64,7 @@ export function DynamicGasRequestFromJSON(json: any): DynamicGasRequest {
 }
 
 export function DynamicGasRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): DynamicGasRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -77,18 +75,20 @@ export function DynamicGasRequestFromJSONTyped(json: any, ignoreDiscriminator: b
     };
 }
 
-export function DynamicGasRequestToJSON(value?: DynamicGasRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function DynamicGasRequestToJSON(json: any): DynamicGasRequest {
+    return DynamicGasRequestToJSONTyped(json, false);
+}
+
+export function DynamicGasRequestToJSONTyped(value?: DynamicGasRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'max_priority_fee_per_gas': value.maxPriorityFeePerGas,
-        'max_fee_per_gas': value.maxFeePerGas,
+        'type': value['type'],
+        'max_priority_fee_per_gas': value['maxPriorityFeePerGas'],
+        'max_fee_per_gas': value['maxFeePerGas'],
     };
 }
 

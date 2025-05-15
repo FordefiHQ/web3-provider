@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { SuiCoinTypeRequest } from './SuiCoinTypeRequest';
 import {
     SuiCoinTypeRequestFromJSON,
     SuiCoinTypeRequestFromJSONTyped,
     SuiCoinTypeRequestToJSON,
+    SuiCoinTypeRequestToJSONTyped,
 } from './SuiCoinTypeRequest';
 
 /**
@@ -53,12 +54,10 @@ export type SuiCoinAssetIdentifierRequestTypeEnum = typeof SuiCoinAssetIdentifie
 /**
  * Check if a given object implements the SuiCoinAssetIdentifierRequest interface.
  */
-export function instanceOfSuiCoinAssetIdentifierRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "coinType" in value;
-
-    return isInstance;
+export function instanceOfSuiCoinAssetIdentifierRequest(value: object): value is SuiCoinAssetIdentifierRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('coinType' in value) || value['coinType'] === undefined) return false;
+    return true;
 }
 
 export function SuiCoinAssetIdentifierRequestFromJSON(json: any): SuiCoinAssetIdentifierRequest {
@@ -66,7 +65,7 @@ export function SuiCoinAssetIdentifierRequestFromJSON(json: any): SuiCoinAssetId
 }
 
 export function SuiCoinAssetIdentifierRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiCoinAssetIdentifierRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function SuiCoinAssetIdentifierRequestFromJSONTyped(json: any, ignoreDisc
     };
 }
 
-export function SuiCoinAssetIdentifierRequestToJSON(value?: SuiCoinAssetIdentifierRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiCoinAssetIdentifierRequestToJSON(json: any): SuiCoinAssetIdentifierRequest {
+    return SuiCoinAssetIdentifierRequestToJSONTyped(json, false);
+}
+
+export function SuiCoinAssetIdentifierRequestToJSONTyped(value?: SuiCoinAssetIdentifierRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'coin_type': SuiCoinTypeRequestToJSON(value.coinType),
+        'type': value['type'],
+        'coin_type': SuiCoinTypeRequestToJSON(value['coinType']),
     };
 }
 

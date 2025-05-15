@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { DefaultActionDiff } from './DefaultActionDiff';
-import {
-    DefaultActionDiffFromJSON,
-    DefaultActionDiffFromJSONTyped,
-    DefaultActionDiffToJSON,
-} from './DefaultActionDiff';
+import { mapValues } from '../runtime';
 import type { RuleAction } from './RuleAction';
 import {
     RuleActionFromJSON,
     RuleActionFromJSONTyped,
     RuleActionToJSON,
+    RuleActionToJSONTyped,
 } from './RuleAction';
+import type { DefaultActionDiff } from './DefaultActionDiff';
+import {
+    DefaultActionDiffFromJSON,
+    DefaultActionDiffFromJSONTyped,
+    DefaultActionDiffToJSON,
+    DefaultActionDiffToJSONTyped,
+} from './DefaultActionDiff';
 
 /**
  * 
@@ -46,15 +48,15 @@ export interface ProposedDefaultAction {
     diff: DefaultActionDiff;
 }
 
+
+
 /**
  * Check if a given object implements the ProposedDefaultAction interface.
  */
-export function instanceOfProposedDefaultAction(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "action" in value;
-    isInstance = isInstance && "diff" in value;
-
-    return isInstance;
+export function instanceOfProposedDefaultAction(value: object): value is ProposedDefaultAction {
+    if (!('action' in value) || value['action'] === undefined) return false;
+    if (!('diff' in value) || value['diff'] === undefined) return false;
+    return true;
 }
 
 export function ProposedDefaultActionFromJSON(json: any): ProposedDefaultAction {
@@ -62,7 +64,7 @@ export function ProposedDefaultActionFromJSON(json: any): ProposedDefaultAction 
 }
 
 export function ProposedDefaultActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): ProposedDefaultAction {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -72,17 +74,19 @@ export function ProposedDefaultActionFromJSONTyped(json: any, ignoreDiscriminato
     };
 }
 
-export function ProposedDefaultActionToJSON(value?: ProposedDefaultAction | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ProposedDefaultActionToJSON(json: any): ProposedDefaultAction {
+    return ProposedDefaultActionToJSONTyped(json, false);
+}
+
+export function ProposedDefaultActionToJSONTyped(value?: ProposedDefaultAction | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'action': RuleActionToJSON(value.action),
-        'diff': DefaultActionDiffToJSON(value.diff),
+        'action': RuleActionToJSON(value['action']),
+        'diff': DefaultActionDiffToJSON(value['diff']),
     };
 }
 

@@ -12,12 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { PartialErrorResponse } from './PartialErrorResponse';
+import {
+    PartialErrorResponseFromJSON,
+    PartialErrorResponseFromJSONTyped,
+    PartialErrorResponseToJSON,
+    PartialErrorResponseToJSONTyped,
+} from './PartialErrorResponse';
 import type { AuthToken } from './AuthToken';
 import {
     AuthTokenFromJSON,
     AuthTokenFromJSONTyped,
     AuthTokenToJSON,
+    AuthTokenToJSONTyped,
 } from './AuthToken';
 
 /**
@@ -26,6 +34,12 @@ import {
  * @interface ListAuthTokensResponse
  */
 export interface ListAuthTokensResponse {
+    /**
+     * 
+     * @type {PartialErrorResponse}
+     * @memberof ListAuthTokensResponse
+     */
+    partialError?: PartialErrorResponse;
     /**
      * 
      * @type {number}
@@ -55,14 +69,12 @@ export interface ListAuthTokensResponse {
 /**
  * Check if a given object implements the ListAuthTokensResponse interface.
  */
-export function instanceOfListAuthTokensResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "total" in value;
-    isInstance = isInstance && "page" in value;
-    isInstance = isInstance && "size" in value;
-    isInstance = isInstance && "authTokens" in value;
-
-    return isInstance;
+export function instanceOfListAuthTokensResponse(value: object): value is ListAuthTokensResponse {
+    if (!('total' in value) || value['total'] === undefined) return false;
+    if (!('page' in value) || value['page'] === undefined) return false;
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('authTokens' in value) || value['authTokens'] === undefined) return false;
+    return true;
 }
 
 export function ListAuthTokensResponseFromJSON(json: any): ListAuthTokensResponse {
@@ -70,11 +82,12 @@ export function ListAuthTokensResponseFromJSON(json: any): ListAuthTokensRespons
 }
 
 export function ListAuthTokensResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): ListAuthTokensResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
+        'partialError': json['partial_error'] == null ? undefined : PartialErrorResponseFromJSON(json['partial_error']),
         'total': json['total'],
         'page': json['page'],
         'size': json['size'],
@@ -82,19 +95,22 @@ export function ListAuthTokensResponseFromJSONTyped(json: any, ignoreDiscriminat
     };
 }
 
-export function ListAuthTokensResponseToJSON(value?: ListAuthTokensResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ListAuthTokensResponseToJSON(json: any): ListAuthTokensResponse {
+    return ListAuthTokensResponseToJSONTyped(json, false);
+}
+
+export function ListAuthTokensResponseToJSONTyped(value?: ListAuthTokensResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'total': value.total,
-        'page': value.page,
-        'size': value.size,
-        'auth_tokens': ((value.authTokens as Array<any>).map(AuthTokenToJSON)),
+        'partial_error': PartialErrorResponseToJSON(value['partialError']),
+        'total': value['total'],
+        'page': value['page'],
+        'size': value['size'],
+        'auth_tokens': ((value['authTokens'] as Array<any>).map(AuthTokenToJSON)),
     };
 }
 

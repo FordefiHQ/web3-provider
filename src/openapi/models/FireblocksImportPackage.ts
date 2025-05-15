@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -30,13 +30,19 @@ export interface FireblocksImportPackage {
      * @type {string}
      * @memberof FireblocksImportPackage
      */
+    keyName: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FireblocksImportPackage
+     */
     backupZipContent: string;
     /**
      * 
      * @type {string}
      * @memberof FireblocksImportPackage
      */
-    rsaPem: string;
+    rsaPem?: string;
     /**
      * 
      * @type {string}
@@ -58,13 +64,11 @@ export type FireblocksImportPackageTypeEnum = typeof FireblocksImportPackageType
 /**
  * Check if a given object implements the FireblocksImportPackage interface.
  */
-export function instanceOfFireblocksImportPackage(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "backupZipContent" in value;
-    isInstance = isInstance && "rsaPem" in value;
-
-    return isInstance;
+export function instanceOfFireblocksImportPackage(value: object): value is FireblocksImportPackage {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('keyName' in value) || value['keyName'] === undefined) return false;
+    if (!('backupZipContent' in value) || value['backupZipContent'] === undefined) return false;
+    return true;
 }
 
 export function FireblocksImportPackageFromJSON(json: any): FireblocksImportPackage {
@@ -72,31 +76,35 @@ export function FireblocksImportPackageFromJSON(json: any): FireblocksImportPack
 }
 
 export function FireblocksImportPackageFromJSONTyped(json: any, ignoreDiscriminator: boolean): FireblocksImportPackage {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
+        'keyName': json['key_name'],
         'backupZipContent': json['backup_zip_content'],
-        'rsaPem': json['rsa_pem'],
-        'rsaPemPassword': !exists(json, 'rsa_pem_password') ? undefined : json['rsa_pem_password'],
+        'rsaPem': json['rsa_pem'] == null ? undefined : json['rsa_pem'],
+        'rsaPemPassword': json['rsa_pem_password'] == null ? undefined : json['rsa_pem_password'],
     };
 }
 
-export function FireblocksImportPackageToJSON(value?: FireblocksImportPackage | null): any {
-    if (value === undefined) {
-        return undefined;
+export function FireblocksImportPackageToJSON(json: any): FireblocksImportPackage {
+    return FireblocksImportPackageToJSONTyped(json, false);
+}
+
+export function FireblocksImportPackageToJSONTyped(value?: FireblocksImportPackage | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'backup_zip_content': value.backupZipContent,
-        'rsa_pem': value.rsaPem,
-        'rsa_pem_password': value.rsaPemPassword,
+        'type': value['type'],
+        'key_name': value['keyName'],
+        'backup_zip_content': value['backupZipContent'],
+        'rsa_pem': value['rsaPem'],
+        'rsa_pem_password': value['rsaPemPassword'],
     };
 }
 

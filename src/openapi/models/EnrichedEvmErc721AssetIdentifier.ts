@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
-import {
-    EnrichedEvmAddressFromJSON,
-    EnrichedEvmAddressFromJSONTyped,
-    EnrichedEvmAddressToJSON,
-} from './EnrichedEvmAddress';
+import { mapValues } from '../runtime';
 import type { EnrichedEvmChain } from './EnrichedEvmChain';
 import {
     EnrichedEvmChainFromJSON,
     EnrichedEvmChainFromJSONTyped,
     EnrichedEvmChainToJSON,
+    EnrichedEvmChainToJSONTyped,
 } from './EnrichedEvmChain';
+import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
+import {
+    EnrichedEvmAddressFromJSON,
+    EnrichedEvmAddressFromJSONTyped,
+    EnrichedEvmAddressToJSON,
+    EnrichedEvmAddressToJSONTyped,
+} from './EnrichedEvmAddress';
 
 /**
  * 
@@ -71,14 +73,12 @@ export type EnrichedEvmErc721AssetIdentifierTypeEnum = typeof EnrichedEvmErc721A
 /**
  * Check if a given object implements the EnrichedEvmErc721AssetIdentifier interface.
  */
-export function instanceOfEnrichedEvmErc721AssetIdentifier(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "token" in value;
-    isInstance = isInstance && "tokenId" in value;
-
-    return isInstance;
+export function instanceOfEnrichedEvmErc721AssetIdentifier(value: object): value is EnrichedEvmErc721AssetIdentifier {
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('token' in value) || value['token'] === undefined) return false;
+    if (!('tokenId' in value) || value['tokenId'] === undefined) return false;
+    return true;
 }
 
 export function EnrichedEvmErc721AssetIdentifierFromJSON(json: any): EnrichedEvmErc721AssetIdentifier {
@@ -86,7 +86,7 @@ export function EnrichedEvmErc721AssetIdentifierFromJSON(json: any): EnrichedEvm
 }
 
 export function EnrichedEvmErc721AssetIdentifierFromJSONTyped(json: any, ignoreDiscriminator: boolean): EnrichedEvmErc721AssetIdentifier {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -98,19 +98,21 @@ export function EnrichedEvmErc721AssetIdentifierFromJSONTyped(json: any, ignoreD
     };
 }
 
-export function EnrichedEvmErc721AssetIdentifierToJSON(value?: EnrichedEvmErc721AssetIdentifier | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EnrichedEvmErc721AssetIdentifierToJSON(json: any): EnrichedEvmErc721AssetIdentifier {
+    return EnrichedEvmErc721AssetIdentifierToJSONTyped(json, false);
+}
+
+export function EnrichedEvmErc721AssetIdentifierToJSONTyped(value?: EnrichedEvmErc721AssetIdentifier | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain': EnrichedEvmChainToJSON(value.chain),
-        'type': value.type,
-        'token': EnrichedEvmAddressToJSON(value.token),
-        'token_id': value.tokenId,
+        'chain': EnrichedEvmChainToJSON(value['chain']),
+        'type': value['type'],
+        'token': EnrichedEvmAddressToJSON(value['token']),
+        'token_id': value['tokenId'],
     };
 }
 

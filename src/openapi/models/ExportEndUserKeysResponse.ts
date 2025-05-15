@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { KeyBackup } from './KeyBackup';
 import {
     KeyBackupFromJSON,
     KeyBackupFromJSONTyped,
     KeyBackupToJSON,
+    KeyBackupToJSONTyped,
 } from './KeyBackup';
 
 /**
@@ -37,11 +38,9 @@ export interface ExportEndUserKeysResponse {
 /**
  * Check if a given object implements the ExportEndUserKeysResponse interface.
  */
-export function instanceOfExportEndUserKeysResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "keys" in value;
-
-    return isInstance;
+export function instanceOfExportEndUserKeysResponse(value: object): value is ExportEndUserKeysResponse {
+    if (!('keys' in value) || value['keys'] === undefined) return false;
+    return true;
 }
 
 export function ExportEndUserKeysResponseFromJSON(json: any): ExportEndUserKeysResponse {
@@ -49,7 +48,7 @@ export function ExportEndUserKeysResponseFromJSON(json: any): ExportEndUserKeysR
 }
 
 export function ExportEndUserKeysResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): ExportEndUserKeysResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -58,16 +57,18 @@ export function ExportEndUserKeysResponseFromJSONTyped(json: any, ignoreDiscrimi
     };
 }
 
-export function ExportEndUserKeysResponseToJSON(value?: ExportEndUserKeysResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ExportEndUserKeysResponseToJSON(json: any): ExportEndUserKeysResponse {
+    return ExportEndUserKeysResponseToJSONTyped(json, false);
+}
+
+export function ExportEndUserKeysResponseToJSONTyped(value?: ExportEndUserKeysResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'keys': ((value.keys as Array<any>).map(KeyBackupToJSON)),
+        'keys': ((value['keys'] as Array<any>).map(KeyBackupToJSON)),
     };
 }
 

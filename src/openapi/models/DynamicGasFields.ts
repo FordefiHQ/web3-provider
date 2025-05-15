@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -36,12 +36,10 @@ export interface DynamicGasFields {
 /**
  * Check if a given object implements the DynamicGasFields interface.
  */
-export function instanceOfDynamicGasFields(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "maxPriorityFeePerGas" in value;
-    isInstance = isInstance && "maxFeePerGas" in value;
-
-    return isInstance;
+export function instanceOfDynamicGasFields(value: object): value is DynamicGasFields {
+    if (!('maxPriorityFeePerGas' in value) || value['maxPriorityFeePerGas'] === undefined) return false;
+    if (!('maxFeePerGas' in value) || value['maxFeePerGas'] === undefined) return false;
+    return true;
 }
 
 export function DynamicGasFieldsFromJSON(json: any): DynamicGasFields {
@@ -49,7 +47,7 @@ export function DynamicGasFieldsFromJSON(json: any): DynamicGasFields {
 }
 
 export function DynamicGasFieldsFromJSONTyped(json: any, ignoreDiscriminator: boolean): DynamicGasFields {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -59,17 +57,19 @@ export function DynamicGasFieldsFromJSONTyped(json: any, ignoreDiscriminator: bo
     };
 }
 
-export function DynamicGasFieldsToJSON(value?: DynamicGasFields | null): any {
-    if (value === undefined) {
-        return undefined;
+export function DynamicGasFieldsToJSON(json: any): DynamicGasFields {
+    return DynamicGasFieldsToJSONTyped(json, false);
+}
+
+export function DynamicGasFieldsToJSONTyped(value?: DynamicGasFields | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'max_priority_fee_per_gas': value.maxPriorityFeePerGas,
-        'max_fee_per_gas': value.maxFeePerGas,
+        'max_priority_fee_per_gas': value['maxPriorityFeePerGas'],
+        'max_fee_per_gas': value['maxFeePerGas'],
     };
 }
 

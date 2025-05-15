@@ -24,6 +24,17 @@ export const WebhookState = {
 export type WebhookState = typeof WebhookState[keyof typeof WebhookState];
 
 
+export function instanceOfWebhookState(value: any): boolean {
+    for (const key in WebhookState) {
+        if (Object.prototype.hasOwnProperty.call(WebhookState, key)) {
+            if (WebhookState[key as keyof typeof WebhookState] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function WebhookStateFromJSON(json: any): WebhookState {
     return WebhookStateFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function WebhookStateFromJSONTyped(json: any, ignoreDiscriminator: boolea
 
 export function WebhookStateToJSON(value?: WebhookState | null): any {
     return value as any;
+}
+
+export function WebhookStateToJSONTyped(value: any, ignoreDiscriminator: boolean): WebhookState {
+    return value as WebhookState;
 }
 

@@ -36,6 +36,17 @@ export const ActionType = {
 export type ActionType = typeof ActionType[keyof typeof ActionType];
 
 
+export function instanceOfActionType(value: any): boolean {
+    for (const key in ActionType) {
+        if (Object.prototype.hasOwnProperty.call(ActionType, key)) {
+            if (ActionType[key as keyof typeof ActionType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function ActionTypeFromJSON(json: any): ActionType {
     return ActionTypeFromJSONTyped(json, false);
 }
@@ -46,5 +57,9 @@ export function ActionTypeFromJSONTyped(json: any, ignoreDiscriminator: boolean)
 
 export function ActionTypeToJSON(value?: ActionType | null): any {
     return value as any;
+}
+
+export function ActionTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): ActionType {
+    return value as ActionType;
 }
 

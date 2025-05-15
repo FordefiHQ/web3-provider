@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EncryptionData } from './EncryptionData';
 import {
     EncryptionDataFromJSON,
     EncryptionDataFromJSONTyped,
     EncryptionDataToJSON,
+    EncryptionDataToJSONTyped,
 } from './EncryptionData';
 
 /**
@@ -43,12 +44,10 @@ export interface CompleteOnboardingApiSignerRequest {
 /**
  * Check if a given object implements the CompleteOnboardingApiSignerRequest interface.
  */
-export function instanceOfCompleteOnboardingApiSignerRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "publicKey" in value;
-    isInstance = isInstance && "encryptedPinMessage" in value;
-
-    return isInstance;
+export function instanceOfCompleteOnboardingApiSignerRequest(value: object): value is CompleteOnboardingApiSignerRequest {
+    if (!('publicKey' in value) || value['publicKey'] === undefined) return false;
+    if (!('encryptedPinMessage' in value) || value['encryptedPinMessage'] === undefined) return false;
+    return true;
 }
 
 export function CompleteOnboardingApiSignerRequestFromJSON(json: any): CompleteOnboardingApiSignerRequest {
@@ -56,7 +55,7 @@ export function CompleteOnboardingApiSignerRequestFromJSON(json: any): CompleteO
 }
 
 export function CompleteOnboardingApiSignerRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CompleteOnboardingApiSignerRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -66,17 +65,19 @@ export function CompleteOnboardingApiSignerRequestFromJSONTyped(json: any, ignor
     };
 }
 
-export function CompleteOnboardingApiSignerRequestToJSON(value?: CompleteOnboardingApiSignerRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CompleteOnboardingApiSignerRequestToJSON(json: any): CompleteOnboardingApiSignerRequest {
+    return CompleteOnboardingApiSignerRequestToJSONTyped(json, false);
+}
+
+export function CompleteOnboardingApiSignerRequestToJSONTyped(value?: CompleteOnboardingApiSignerRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'public_key': value.publicKey,
-        'encrypted_pin_message': EncryptionDataToJSON(value.encryptedPinMessage),
+        'public_key': value['publicKey'],
+        'encrypted_pin_message': EncryptionDataToJSON(value['encryptedPinMessage']),
     };
 }
 

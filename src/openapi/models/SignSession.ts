@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { KeyDerivationArgs } from './KeyDerivationArgs';
 import {
     KeyDerivationArgsFromJSON,
     KeyDerivationArgsFromJSONTyped,
     KeyDerivationArgsToJSON,
+    KeyDerivationArgsToJSONTyped,
 } from './KeyDerivationArgs';
 
 /**
@@ -49,13 +50,11 @@ export interface SignSession {
 /**
  * Check if a given object implements the SignSession interface.
  */
-export function instanceOfSignSession(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "sessionId" in value;
-    isInstance = isInstance && "payloadToSign" in value;
-    isInstance = isInstance && "keyDerivationArgs" in value;
-
-    return isInstance;
+export function instanceOfSignSession(value: object): value is SignSession {
+    if (!('sessionId' in value) || value['sessionId'] === undefined) return false;
+    if (!('payloadToSign' in value) || value['payloadToSign'] === undefined) return false;
+    if (!('keyDerivationArgs' in value) || value['keyDerivationArgs'] === undefined) return false;
+    return true;
 }
 
 export function SignSessionFromJSON(json: any): SignSession {
@@ -63,7 +62,7 @@ export function SignSessionFromJSON(json: any): SignSession {
 }
 
 export function SignSessionFromJSONTyped(json: any, ignoreDiscriminator: boolean): SignSession {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -74,18 +73,20 @@ export function SignSessionFromJSONTyped(json: any, ignoreDiscriminator: boolean
     };
 }
 
-export function SignSessionToJSON(value?: SignSession | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SignSessionToJSON(json: any): SignSession {
+    return SignSessionToJSONTyped(json, false);
+}
+
+export function SignSessionToJSONTyped(value?: SignSession | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'session_id': value.sessionId,
-        'payload_to_sign': value.payloadToSign,
-        'key_derivation_args': KeyDerivationArgsToJSON(value.keyDerivationArgs),
+        'session_id': value['sessionId'],
+        'payload_to_sign': value['payloadToSign'],
+        'key_derivation_args': KeyDerivationArgsToJSON(value['keyDerivationArgs']),
     };
 }
 

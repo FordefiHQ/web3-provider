@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { TransactionsPolicyProposal } from './TransactionsPolicyProposal';
 import {
     TransactionsPolicyProposalFromJSON,
     TransactionsPolicyProposalFromJSONTyped,
     TransactionsPolicyProposalToJSON,
+    TransactionsPolicyProposalToJSONTyped,
 } from './TransactionsPolicyProposal';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
     UserRefFromJSONTyped,
     UserRefToJSON,
+    UserRefToJSONTyped,
 } from './UserRef';
 
 /**
@@ -52,16 +54,16 @@ export interface TransactionsPolicyAction {
     modifiedAt: Date;
     /**
      * 
-     * @type {string}
-     * @memberof TransactionsPolicyAction
-     */
-    type: TransactionsPolicyActionTypeEnum;
-    /**
-     * 
      * @type {boolean}
      * @memberof TransactionsPolicyAction
      */
     isPending: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransactionsPolicyAction
+     */
+    type: TransactionsPolicyActionTypeEnum;
     /**
      * 
      * @type {UserRef}
@@ -101,6 +103,8 @@ export type TransactionsPolicyActionTypeEnum = typeof TransactionsPolicyActionTy
  * @export
  */
 export const TransactionsPolicyActionStateEnum = {
+    pendingVerification: 'pending_verification',
+    pendingApproval: 'pending_approval',
     created: 'created',
     completed: 'completed',
     aborted: 'aborted',
@@ -112,18 +116,16 @@ export type TransactionsPolicyActionStateEnum = typeof TransactionsPolicyActionS
 /**
  * Check if a given object implements the TransactionsPolicyAction interface.
  */
-export function instanceOfTransactionsPolicyAction(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "isPending" in value;
-    isInstance = isInstance && "createdBy" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "proposal" in value;
-
-    return isInstance;
+export function instanceOfTransactionsPolicyAction(value: object): value is TransactionsPolicyAction {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('isPending' in value) || value['isPending'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('createdBy' in value) || value['createdBy'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('proposal' in value) || value['proposal'] === undefined) return false;
+    return true;
 }
 
 export function TransactionsPolicyActionFromJSON(json: any): TransactionsPolicyAction {
@@ -131,7 +133,7 @@ export function TransactionsPolicyActionFromJSON(json: any): TransactionsPolicyA
 }
 
 export function TransactionsPolicyActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): TransactionsPolicyAction {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -139,33 +141,35 @@ export function TransactionsPolicyActionFromJSONTyped(json: any, ignoreDiscrimin
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
-        'type': json['type'],
         'isPending': json['is_pending'],
+        'type': json['type'],
         'createdBy': UserRefFromJSON(json['created_by']),
-        'abortedBy': !exists(json, 'aborted_by') ? undefined : UserRefFromJSON(json['aborted_by']),
+        'abortedBy': json['aborted_by'] == null ? undefined : UserRefFromJSON(json['aborted_by']),
         'state': json['state'],
         'proposal': TransactionsPolicyProposalFromJSON(json['proposal']),
     };
 }
 
-export function TransactionsPolicyActionToJSON(value?: TransactionsPolicyAction | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TransactionsPolicyActionToJSON(json: any): TransactionsPolicyAction {
+    return TransactionsPolicyActionToJSONTyped(json, false);
+}
+
+export function TransactionsPolicyActionToJSONTyped(value?: TransactionsPolicyAction | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'type': value.type,
-        'is_pending': value.isPending,
-        'created_by': UserRefToJSON(value.createdBy),
-        'aborted_by': UserRefToJSON(value.abortedBy),
-        'state': value.state,
-        'proposal': TransactionsPolicyProposalToJSON(value.proposal),
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'is_pending': value['isPending'],
+        'type': value['type'],
+        'created_by': UserRefToJSON(value['createdBy']),
+        'aborted_by': UserRefToJSON(value['abortedBy']),
+        'state': value['state'],
+        'proposal': TransactionsPolicyProposalToJSON(value['proposal']),
     };
 }
 

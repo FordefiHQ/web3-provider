@@ -12,25 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { PushMode } from './PushMode';
-import {
-    PushModeFromJSON,
-    PushModeFromJSONTyped,
-    PushModeToJSON,
-} from './PushMode';
+import { mapValues } from '../runtime';
 import type { StarknetCallDataRequest } from './StarknetCallDataRequest';
 import {
     StarknetCallDataRequestFromJSON,
     StarknetCallDataRequestFromJSONTyped,
     StarknetCallDataRequestToJSON,
+    StarknetCallDataRequestToJSONTyped,
 } from './StarknetCallDataRequest';
 import type { StarknetChainUniqueId } from './StarknetChainUniqueId';
 import {
     StarknetChainUniqueIdFromJSON,
     StarknetChainUniqueIdFromJSONTyped,
     StarknetChainUniqueIdToJSON,
+    StarknetChainUniqueIdToJSONTyped,
 } from './StarknetChainUniqueId';
+import type { PushMode } from './PushMode';
+import {
+    PushModeFromJSON,
+    PushModeFromJSONTyped,
+    PushModeToJSON,
+    PushModeToJSONTyped,
+} from './PushMode';
 
 /**
  * 
@@ -89,13 +92,11 @@ export type CreateStarknetTransactionInvokeRequestTypeEnum = typeof CreateStarkn
 /**
  * Check if a given object implements the CreateStarknetTransactionInvokeRequest interface.
  */
-export function instanceOfCreateStarknetTransactionInvokeRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "callData" in value;
-
-    return isInstance;
+export function instanceOfCreateStarknetTransactionInvokeRequest(value: object): value is CreateStarknetTransactionInvokeRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('callData' in value) || value['callData'] === undefined) return false;
+    return true;
 }
 
 export function CreateStarknetTransactionInvokeRequestFromJSON(json: any): CreateStarknetTransactionInvokeRequest {
@@ -103,35 +104,37 @@ export function CreateStarknetTransactionInvokeRequestFromJSON(json: any): Creat
 }
 
 export function CreateStarknetTransactionInvokeRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateStarknetTransactionInvokeRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
-        'failOnPredictionFailure': !exists(json, 'fail_on_prediction_failure') ? undefined : json['fail_on_prediction_failure'],
-        'skipPrediction': !exists(json, 'skip_prediction') ? undefined : json['skip_prediction'],
-        'pushMode': !exists(json, 'push_mode') ? undefined : PushModeFromJSON(json['push_mode']),
+        'failOnPredictionFailure': json['fail_on_prediction_failure'] == null ? undefined : json['fail_on_prediction_failure'],
+        'skipPrediction': json['skip_prediction'] == null ? undefined : json['skip_prediction'],
+        'pushMode': json['push_mode'] == null ? undefined : PushModeFromJSON(json['push_mode']),
         'chain': StarknetChainUniqueIdFromJSON(json['chain']),
         'callData': ((json['call_data'] as Array<any>).map(StarknetCallDataRequestFromJSON)),
     };
 }
 
-export function CreateStarknetTransactionInvokeRequestToJSON(value?: CreateStarknetTransactionInvokeRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateStarknetTransactionInvokeRequestToJSON(json: any): CreateStarknetTransactionInvokeRequest {
+    return CreateStarknetTransactionInvokeRequestToJSONTyped(json, false);
+}
+
+export function CreateStarknetTransactionInvokeRequestToJSONTyped(value?: CreateStarknetTransactionInvokeRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'fail_on_prediction_failure': value.failOnPredictionFailure,
-        'skip_prediction': value.skipPrediction,
-        'push_mode': PushModeToJSON(value.pushMode),
-        'chain': StarknetChainUniqueIdToJSON(value.chain),
-        'call_data': ((value.callData as Array<any>).map(StarknetCallDataRequestToJSON)),
+        'type': value['type'],
+        'fail_on_prediction_failure': value['failOnPredictionFailure'],
+        'skip_prediction': value['skipPrediction'],
+        'push_mode': PushModeToJSON(value['pushMode']),
+        'chain': StarknetChainUniqueIdToJSON(value['chain']),
+        'call_data': ((value['callData'] as Array<any>).map(StarknetCallDataRequestToJSON)),
     };
 }
 

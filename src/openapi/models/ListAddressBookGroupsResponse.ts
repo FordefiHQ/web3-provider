@@ -12,13 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AddressBookGroup } from './AddressBookGroup';
 import {
     AddressBookGroupFromJSON,
     AddressBookGroupFromJSONTyped,
     AddressBookGroupToJSON,
+    AddressBookGroupToJSONTyped,
 } from './AddressBookGroup';
+import type { PartialErrorResponse } from './PartialErrorResponse';
+import {
+    PartialErrorResponseFromJSON,
+    PartialErrorResponseFromJSONTyped,
+    PartialErrorResponseToJSON,
+    PartialErrorResponseToJSONTyped,
+} from './PartialErrorResponse';
 
 /**
  * 
@@ -26,6 +34,12 @@ import {
  * @interface ListAddressBookGroupsResponse
  */
 export interface ListAddressBookGroupsResponse {
+    /**
+     * 
+     * @type {PartialErrorResponse}
+     * @memberof ListAddressBookGroupsResponse
+     */
+    partialError?: PartialErrorResponse;
     /**
      * 
      * @type {number}
@@ -55,14 +69,12 @@ export interface ListAddressBookGroupsResponse {
 /**
  * Check if a given object implements the ListAddressBookGroupsResponse interface.
  */
-export function instanceOfListAddressBookGroupsResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "total" in value;
-    isInstance = isInstance && "page" in value;
-    isInstance = isInstance && "size" in value;
-    isInstance = isInstance && "groups" in value;
-
-    return isInstance;
+export function instanceOfListAddressBookGroupsResponse(value: object): value is ListAddressBookGroupsResponse {
+    if (!('total' in value) || value['total'] === undefined) return false;
+    if (!('page' in value) || value['page'] === undefined) return false;
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('groups' in value) || value['groups'] === undefined) return false;
+    return true;
 }
 
 export function ListAddressBookGroupsResponseFromJSON(json: any): ListAddressBookGroupsResponse {
@@ -70,11 +82,12 @@ export function ListAddressBookGroupsResponseFromJSON(json: any): ListAddressBoo
 }
 
 export function ListAddressBookGroupsResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): ListAddressBookGroupsResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
+        'partialError': json['partial_error'] == null ? undefined : PartialErrorResponseFromJSON(json['partial_error']),
         'total': json['total'],
         'page': json['page'],
         'size': json['size'],
@@ -82,19 +95,22 @@ export function ListAddressBookGroupsResponseFromJSONTyped(json: any, ignoreDisc
     };
 }
 
-export function ListAddressBookGroupsResponseToJSON(value?: ListAddressBookGroupsResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ListAddressBookGroupsResponseToJSON(json: any): ListAddressBookGroupsResponse {
+    return ListAddressBookGroupsResponseToJSONTyped(json, false);
+}
+
+export function ListAddressBookGroupsResponseToJSONTyped(value?: ListAddressBookGroupsResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'total': value.total,
-        'page': value.page,
-        'size': value.size,
-        'groups': ((value.groups as Array<any>).map(AddressBookGroupToJSON)),
+        'partial_error': PartialErrorResponseToJSON(value['partialError']),
+        'total': value['total'],
+        'page': value['page'],
+        'size': value['size'],
+        'groups': ((value['groups'] as Array<any>).map(AddressBookGroupToJSON)),
     };
 }
 

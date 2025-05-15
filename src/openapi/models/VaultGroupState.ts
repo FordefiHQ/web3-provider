@@ -24,6 +24,17 @@ export const VaultGroupState = {
 export type VaultGroupState = typeof VaultGroupState[keyof typeof VaultGroupState];
 
 
+export function instanceOfVaultGroupState(value: any): boolean {
+    for (const key in VaultGroupState) {
+        if (Object.prototype.hasOwnProperty.call(VaultGroupState, key)) {
+            if (VaultGroupState[key as keyof typeof VaultGroupState] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function VaultGroupStateFromJSON(json: any): VaultGroupState {
     return VaultGroupStateFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function VaultGroupStateFromJSONTyped(json: any, ignoreDiscriminator: boo
 
 export function VaultGroupStateToJSON(value?: VaultGroupState | null): any {
     return value as any;
+}
+
+export function VaultGroupStateToJSONTyped(value: any, ignoreDiscriminator: boolean): VaultGroupState {
+    return value as VaultGroupState;
 }
 

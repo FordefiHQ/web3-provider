@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -58,14 +58,12 @@ export type ScriptPayloadTypeEnum = typeof ScriptPayloadTypeEnum[keyof typeof Sc
 /**
  * Check if a given object implements the ScriptPayload interface.
  */
-export function instanceOfScriptPayload(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "typedArguments" in value;
-    isInstance = isInstance && "arguments" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "code" in value;
-
-    return isInstance;
+export function instanceOfScriptPayload(value: object): value is ScriptPayload {
+    if (!('typedArguments' in value) || value['typedArguments'] === undefined) return false;
+    if (!('arguments' in value) || value['arguments'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('code' in value) || value['code'] === undefined) return false;
+    return true;
 }
 
 export function ScriptPayloadFromJSON(json: any): ScriptPayload {
@@ -73,7 +71,7 @@ export function ScriptPayloadFromJSON(json: any): ScriptPayload {
 }
 
 export function ScriptPayloadFromJSONTyped(json: any, ignoreDiscriminator: boolean): ScriptPayload {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -85,19 +83,21 @@ export function ScriptPayloadFromJSONTyped(json: any, ignoreDiscriminator: boole
     };
 }
 
-export function ScriptPayloadToJSON(value?: ScriptPayload | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ScriptPayloadToJSON(json: any): ScriptPayload {
+    return ScriptPayloadToJSONTyped(json, false);
+}
+
+export function ScriptPayloadToJSONTyped(value?: ScriptPayload | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'typed_arguments': value.typedArguments,
-        'arguments': value.arguments,
-        'type': value.type,
-        'code': value.code,
+        'typed_arguments': value['typedArguments'],
+        'arguments': value['arguments'],
+        'type': value['type'],
+        'code': value['code'],
     };
 }
 

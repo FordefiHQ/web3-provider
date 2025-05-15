@@ -19,10 +19,23 @@
  */
 export const AptosChainUniqueId = {
     mainnet: 'aptos_mainnet',
-    testnet: 'aptos_testnet'
+    testnet: 'aptos_testnet',
+    movementMainnet: 'aptos_movement_mainnet',
+    movementTestnet: 'aptos_movement_testnet'
 } as const;
 export type AptosChainUniqueId = typeof AptosChainUniqueId[keyof typeof AptosChainUniqueId];
 
+
+export function instanceOfAptosChainUniqueId(value: any): boolean {
+    for (const key in AptosChainUniqueId) {
+        if (Object.prototype.hasOwnProperty.call(AptosChainUniqueId, key)) {
+            if (AptosChainUniqueId[key as keyof typeof AptosChainUniqueId] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 export function AptosChainUniqueIdFromJSON(json: any): AptosChainUniqueId {
     return AptosChainUniqueIdFromJSONTyped(json, false);
@@ -34,5 +47,9 @@ export function AptosChainUniqueIdFromJSONTyped(json: any, ignoreDiscriminator: 
 
 export function AptosChainUniqueIdToJSON(value?: AptosChainUniqueId | null): any {
     return value as any;
+}
+
+export function AptosChainUniqueIdToJSONTyped(value: any, ignoreDiscriminator: boolean): AptosChainUniqueId {
+    return value as AptosChainUniqueId;
 }
 

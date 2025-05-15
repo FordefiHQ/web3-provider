@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type CreateUserKeyCallbackResponseTypeEnum = typeof CreateUserKeyCallback
 /**
  * Check if a given object implements the CreateUserKeyCallbackResponse interface.
  */
-export function instanceOfCreateUserKeyCallbackResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "authPublicKeySignature" in value;
-
-    return isInstance;
+export function instanceOfCreateUserKeyCallbackResponse(value: object): value is CreateUserKeyCallbackResponse {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('authPublicKeySignature' in value) || value['authPublicKeySignature'] === undefined) return false;
+    return true;
 }
 
 export function CreateUserKeyCallbackResponseFromJSON(json: any): CreateUserKeyCallbackResponse {
@@ -59,7 +57,7 @@ export function CreateUserKeyCallbackResponseFromJSON(json: any): CreateUserKeyC
 }
 
 export function CreateUserKeyCallbackResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateUserKeyCallbackResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function CreateUserKeyCallbackResponseFromJSONTyped(json: any, ignoreDisc
     };
 }
 
-export function CreateUserKeyCallbackResponseToJSON(value?: CreateUserKeyCallbackResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateUserKeyCallbackResponseToJSON(json: any): CreateUserKeyCallbackResponse {
+    return CreateUserKeyCallbackResponseToJSONTyped(json, false);
+}
+
+export function CreateUserKeyCallbackResponseToJSONTyped(value?: CreateUserKeyCallbackResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'auth_public_key_signature': value.authPublicKeySignature,
+        'type': value['type'],
+        'auth_public_key_signature': value['authPublicKeySignature'],
     };
 }
 

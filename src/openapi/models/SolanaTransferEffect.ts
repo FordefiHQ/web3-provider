@@ -12,37 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { EnrichedSolanaAddress } from './EnrichedSolanaAddress';
-import {
-    EnrichedSolanaAddressFromJSON,
-    EnrichedSolanaAddressFromJSONTyped,
-    EnrichedSolanaAddressToJSON,
-} from './EnrichedSolanaAddress';
-import type { Price } from './Price';
-import {
-    PriceFromJSON,
-    PriceFromJSONTyped,
-    PriceToJSON,
-} from './Price';
+import { mapValues } from '../runtime';
 import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
     PricedAssetFromJSONTyped,
     PricedAssetToJSON,
+    PricedAssetToJSONTyped,
 } from './PricedAsset';
-import type { SolanaTransferEffectType } from './SolanaTransferEffectType';
+import type { Price } from './Price';
 import {
-    SolanaTransferEffectTypeFromJSON,
-    SolanaTransferEffectTypeFromJSONTyped,
-    SolanaTransferEffectTypeToJSON,
-} from './SolanaTransferEffectType';
+    PriceFromJSON,
+    PriceFromJSONTyped,
+    PriceToJSON,
+    PriceToJSONTyped,
+} from './Price';
+import type { EnrichedSolanaAddress } from './EnrichedSolanaAddress';
+import {
+    EnrichedSolanaAddressFromJSON,
+    EnrichedSolanaAddressFromJSONTyped,
+    EnrichedSolanaAddressToJSON,
+    EnrichedSolanaAddressToJSONTyped,
+} from './EnrichedSolanaAddress';
 import type { SplTokenContract } from './SplTokenContract';
 import {
     SplTokenContractFromJSON,
     SplTokenContractFromJSONTyped,
     SplTokenContractToJSON,
+    SplTokenContractToJSONTyped,
 } from './SplTokenContract';
+import type { SolanaTransferEffectType } from './SolanaTransferEffectType';
+import {
+    SolanaTransferEffectTypeFromJSON,
+    SolanaTransferEffectTypeFromJSONTyped,
+    SolanaTransferEffectTypeToJSON,
+    SolanaTransferEffectTypeToJSONTyped,
+} from './SolanaTransferEffectType';
 
 /**
  * 
@@ -94,18 +99,18 @@ export interface SolanaTransferEffect {
     tokenContract?: SplTokenContract;
 }
 
+
+
 /**
  * Check if a given object implements the SolanaTransferEffect interface.
  */
-export function instanceOfSolanaTransferEffect(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "pricedAsset" in value;
-    isInstance = isInstance && "amount" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "from" in value;
-    isInstance = isInstance && "to" in value;
-
-    return isInstance;
+export function instanceOfSolanaTransferEffect(value: object): value is SolanaTransferEffect {
+    if (!('pricedAsset' in value) || value['pricedAsset'] === undefined) return false;
+    if (!('amount' in value) || value['amount'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('from' in value) || value['from'] === undefined) return false;
+    if (!('to' in value) || value['to'] === undefined) return false;
+    return true;
 }
 
 export function SolanaTransferEffectFromJSON(json: any): SolanaTransferEffect {
@@ -113,7 +118,7 @@ export function SolanaTransferEffectFromJSON(json: any): SolanaTransferEffect {
 }
 
 export function SolanaTransferEffectFromJSONTyped(json: any, ignoreDiscriminator: boolean): SolanaTransferEffect {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -123,27 +128,29 @@ export function SolanaTransferEffectFromJSONTyped(json: any, ignoreDiscriminator
         'type': SolanaTransferEffectTypeFromJSON(json['type']),
         'from': EnrichedSolanaAddressFromJSON(json['from']),
         'to': EnrichedSolanaAddressFromJSON(json['to']),
-        'price': !exists(json, 'price') ? undefined : PriceFromJSON(json['price']),
-        'tokenContract': !exists(json, 'token_contract') ? undefined : SplTokenContractFromJSON(json['token_contract']),
+        'price': json['price'] == null ? undefined : PriceFromJSON(json['price']),
+        'tokenContract': json['token_contract'] == null ? undefined : SplTokenContractFromJSON(json['token_contract']),
     };
 }
 
-export function SolanaTransferEffectToJSON(value?: SolanaTransferEffect | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SolanaTransferEffectToJSON(json: any): SolanaTransferEffect {
+    return SolanaTransferEffectToJSONTyped(json, false);
+}
+
+export function SolanaTransferEffectToJSONTyped(value?: SolanaTransferEffect | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'priced_asset': PricedAssetToJSON(value.pricedAsset),
-        'amount': value.amount,
-        'type': SolanaTransferEffectTypeToJSON(value.type),
-        'from': EnrichedSolanaAddressToJSON(value.from),
-        'to': EnrichedSolanaAddressToJSON(value.to),
-        'price': PriceToJSON(value.price),
-        'token_contract': SplTokenContractToJSON(value.tokenContract),
+        'priced_asset': PricedAssetToJSON(value['pricedAsset']),
+        'amount': value['amount'],
+        'type': SolanaTransferEffectTypeToJSON(value['type']),
+        'from': EnrichedSolanaAddressToJSON(value['from']),
+        'to': EnrichedSolanaAddressToJSON(value['to']),
+        'price': PriceToJSON(value['price']),
+        'token_contract': SplTokenContractToJSON(value['tokenContract']),
     };
 }
 

@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { CustomFeeRequest } from './CustomFeeRequest';
 import {
-    CustomFeeRequest,
     instanceOfCustomFeeRequest,
     CustomFeeRequestFromJSON,
     CustomFeeRequestFromJSONTyped,
     CustomFeeRequestToJSON,
 } from './CustomFeeRequest';
+import type { FeePriorityRequest } from './FeePriorityRequest';
 import {
-    FeePriorityRequest,
     instanceOfFeePriorityRequest,
     FeePriorityRequestFromJSON,
     FeePriorityRequestFromJSONTyped,
@@ -39,31 +39,32 @@ export function TransactionDetailsUtxoTransferRequestFeePerByteFromJSON(json: an
 }
 
 export function TransactionDetailsUtxoTransferRequestFeePerByteFromJSONTyped(json: any, ignoreDiscriminator: boolean): TransactionDetailsUtxoTransferRequestFeePerByte {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'custom':
-            return {...CustomFeeRequestFromJSONTyped(json, true), type: 'custom'};
+            return Object.assign({}, CustomFeeRequestFromJSONTyped(json, true), { type: 'custom' } as const);
         case 'priority':
-            return {...FeePriorityRequestFromJSONTyped(json, true), type: 'priority'};
+            return Object.assign({}, FeePriorityRequestFromJSONTyped(json, true), { type: 'priority' } as const);
         default:
             throw new Error(`No variant of TransactionDetailsUtxoTransferRequestFeePerByte exists with 'type=${json['type']}'`);
     }
 }
 
-export function TransactionDetailsUtxoTransferRequestFeePerByteToJSON(value?: TransactionDetailsUtxoTransferRequestFeePerByte | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function TransactionDetailsUtxoTransferRequestFeePerByteToJSON(json: any): any {
+    return TransactionDetailsUtxoTransferRequestFeePerByteToJSONTyped(json, false);
+}
+
+export function TransactionDetailsUtxoTransferRequestFeePerByteToJSONTyped(value?: TransactionDetailsUtxoTransferRequestFeePerByte | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'custom':
-            return CustomFeeRequestToJSON(value);
+            return Object.assign({}, CustomFeeRequestToJSON(value), { type: 'custom' } as const);
         case 'priority':
-            return FeePriorityRequestToJSON(value);
+            return Object.assign({}, FeePriorityRequestToJSON(value), { type: 'priority' } as const);
         default:
             throw new Error(`No variant of TransactionDetailsUtxoTransferRequestFeePerByte exists with 'type=${value['type']}'`);
     }

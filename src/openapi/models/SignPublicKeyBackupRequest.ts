@@ -12,19 +12,14 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EncryptionData } from './EncryptionData';
 import {
     EncryptionDataFromJSON,
     EncryptionDataFromJSONTyped,
     EncryptionDataToJSON,
+    EncryptionDataToJSONTyped,
 } from './EncryptionData';
-import type { KeyType } from './KeyType';
-import {
-    KeyTypeFromJSON,
-    KeyTypeFromJSONTyped,
-    KeyTypeToJSON,
-} from './KeyType';
 
 /**
  * 
@@ -46,22 +41,19 @@ export interface SignPublicKeyBackupRequest {
     encryptedDeviceShare: EncryptionData;
     /**
      * 
-     * @type {Array<KeyType>}
+     * @type {Array<string>}
      * @memberof SignPublicKeyBackupRequest
      */
-    deviceSharesIncluded: Array<KeyType>;
+    keyIdsIncluded?: Array<string>;
 }
 
 /**
  * Check if a given object implements the SignPublicKeyBackupRequest interface.
  */
-export function instanceOfSignPublicKeyBackupRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "signature" in value;
-    isInstance = isInstance && "encryptedDeviceShare" in value;
-    isInstance = isInstance && "deviceSharesIncluded" in value;
-
-    return isInstance;
+export function instanceOfSignPublicKeyBackupRequest(value: object): value is SignPublicKeyBackupRequest {
+    if (!('signature' in value) || value['signature'] === undefined) return false;
+    if (!('encryptedDeviceShare' in value) || value['encryptedDeviceShare'] === undefined) return false;
+    return true;
 }
 
 export function SignPublicKeyBackupRequestFromJSON(json: any): SignPublicKeyBackupRequest {
@@ -69,29 +61,31 @@ export function SignPublicKeyBackupRequestFromJSON(json: any): SignPublicKeyBack
 }
 
 export function SignPublicKeyBackupRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): SignPublicKeyBackupRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'signature': json['signature'],
         'encryptedDeviceShare': EncryptionDataFromJSON(json['encrypted_device_share']),
-        'deviceSharesIncluded': ((json['device_shares_included'] as Array<any>).map(KeyTypeFromJSON)),
+        'keyIdsIncluded': json['key_ids_included'] == null ? undefined : json['key_ids_included'],
     };
 }
 
-export function SignPublicKeyBackupRequestToJSON(value?: SignPublicKeyBackupRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SignPublicKeyBackupRequestToJSON(json: any): SignPublicKeyBackupRequest {
+    return SignPublicKeyBackupRequestToJSONTyped(json, false);
+}
+
+export function SignPublicKeyBackupRequestToJSONTyped(value?: SignPublicKeyBackupRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'signature': value.signature,
-        'encrypted_device_share': EncryptionDataToJSON(value.encryptedDeviceShare),
-        'device_shares_included': ((value.deviceSharesIncluded as Array<any>).map(KeyTypeToJSON)),
+        'signature': value['signature'],
+        'encrypted_device_share': EncryptionDataToJSON(value['encryptedDeviceShare']),
+        'key_ids_included': value['keyIdsIncluded'],
     };
 }
 

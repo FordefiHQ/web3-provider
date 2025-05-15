@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { SuiCommandArgument } from './SuiCommandArgument';
 import {
     SuiCommandArgumentFromJSON,
     SuiCommandArgumentFromJSONTyped,
     SuiCommandArgumentToJSON,
+    SuiCommandArgumentToJSONTyped,
 } from './SuiCommandArgument';
 
 /**
@@ -65,14 +66,12 @@ export type SuiMoveCallCommandTypeEnum = typeof SuiMoveCallCommandTypeEnum[keyof
 /**
  * Check if a given object implements the SuiMoveCallCommand interface.
  */
-export function instanceOfSuiMoveCallCommand(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "arguments" in value;
-    isInstance = isInstance && "target" in value;
-    isInstance = isInstance && "typeArguments" in value;
-
-    return isInstance;
+export function instanceOfSuiMoveCallCommand(value: object): value is SuiMoveCallCommand {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('arguments' in value) || value['arguments'] === undefined) return false;
+    if (!('target' in value) || value['target'] === undefined) return false;
+    if (!('typeArguments' in value) || value['typeArguments'] === undefined) return false;
+    return true;
 }
 
 export function SuiMoveCallCommandFromJSON(json: any): SuiMoveCallCommand {
@@ -80,7 +79,7 @@ export function SuiMoveCallCommandFromJSON(json: any): SuiMoveCallCommand {
 }
 
 export function SuiMoveCallCommandFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiMoveCallCommand {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -92,19 +91,21 @@ export function SuiMoveCallCommandFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-export function SuiMoveCallCommandToJSON(value?: SuiMoveCallCommand | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiMoveCallCommandToJSON(json: any): SuiMoveCallCommand {
+    return SuiMoveCallCommandToJSONTyped(json, false);
+}
+
+export function SuiMoveCallCommandToJSONTyped(value?: SuiMoveCallCommand | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'arguments': ((value.arguments as Array<any>).map(SuiCommandArgumentToJSON)),
-        'target': value.target,
-        'type_arguments': value.typeArguments,
+        'type': value['type'],
+        'arguments': ((value['arguments'] as Array<any>).map(SuiCommandArgumentToJSON)),
+        'target': value['target'],
+        'type_arguments': value['typeArguments'],
     };
 }
 

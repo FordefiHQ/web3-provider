@@ -12,37 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { SuiChain } from './SuiChain';
 import {
     SuiChainFromJSON,
     SuiChainFromJSONTyped,
     SuiChainToJSON,
+    SuiChainToJSONTyped,
 } from './SuiChain';
-import type { SuiTransactionState } from './SuiTransactionState';
-import {
-    SuiTransactionStateFromJSON,
-    SuiTransactionStateFromJSONTyped,
-    SuiTransactionStateToJSON,
-} from './SuiTransactionState';
-import type { SuiTransactionType } from './SuiTransactionType';
-import {
-    SuiTransactionTypeFromJSON,
-    SuiTransactionTypeFromJSONTyped,
-    SuiTransactionTypeToJSON,
-} from './SuiTransactionType';
-import type { TransactionDirection } from './TransactionDirection';
-import {
-    TransactionDirectionFromJSON,
-    TransactionDirectionFromJSONTyped,
-    TransactionDirectionToJSON,
-} from './TransactionDirection';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
     TransactionSpamStateFromJSONTyped,
     TransactionSpamStateToJSON,
+    TransactionSpamStateToJSONTyped,
 } from './TransactionSpamState';
+import type { TransactionDirection } from './TransactionDirection';
+import {
+    TransactionDirectionFromJSON,
+    TransactionDirectionFromJSONTyped,
+    TransactionDirectionToJSON,
+    TransactionDirectionToJSONTyped,
+} from './TransactionDirection';
+import type { PushableTransactionState } from './PushableTransactionState';
+import {
+    PushableTransactionStateFromJSON,
+    PushableTransactionStateFromJSONTyped,
+    PushableTransactionStateToJSON,
+    PushableTransactionStateToJSONTyped,
+} from './PushableTransactionState';
+import type { SuiTransactionType } from './SuiTransactionType';
+import {
+    SuiTransactionTypeFromJSON,
+    SuiTransactionTypeFromJSONTyped,
+    SuiTransactionTypeToJSON,
+    SuiTransactionTypeToJSONTyped,
+} from './SuiTransactionType';
 
 /**
  * 
@@ -83,6 +88,12 @@ export interface WebhookSuiTransactionStatusChangeEvent {
     spamState: TransactionSpamState;
     /**
      * 
+     * @type {PushableTransactionState}
+     * @memberof WebhookSuiTransactionStatusChangeEvent
+     */
+    state: PushableTransactionState;
+    /**
+     * 
      * @type {string}
      * @memberof WebhookSuiTransactionStatusChangeEvent
      */
@@ -93,12 +104,6 @@ export interface WebhookSuiTransactionStatusChangeEvent {
      * @memberof WebhookSuiTransactionStatusChangeEvent
      */
     suiTransactionType: SuiTransactionType;
-    /**
-     * 
-     * @type {SuiTransactionState}
-     * @memberof WebhookSuiTransactionStatusChangeEvent
-     */
-    state: SuiTransactionState;
     /**
      * 
      * @type {string}
@@ -132,18 +137,16 @@ export type WebhookSuiTransactionStatusChangeEventTypeEnum = typeof WebhookSuiTr
 /**
  * Check if a given object implements the WebhookSuiTransactionStatusChangeEvent interface.
  */
-export function instanceOfWebhookSuiTransactionStatusChangeEvent(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "transactionId" in value;
-    isInstance = isInstance && "isManagedTransaction" in value;
-    isInstance = isInstance && "direction" in value;
-    isInstance = isInstance && "spamState" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "suiTransactionType" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfWebhookSuiTransactionStatusChangeEvent(value: object): value is WebhookSuiTransactionStatusChangeEvent {
+    if (!('transactionId' in value) || value['transactionId'] === undefined) return false;
+    if (!('isManagedTransaction' in value) || value['isManagedTransaction'] === undefined) return false;
+    if (!('direction' in value) || value['direction'] === undefined) return false;
+    if (!('spamState' in value) || value['spamState'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('suiTransactionType' in value) || value['suiTransactionType'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function WebhookSuiTransactionStatusChangeEventFromJSON(json: any): WebhookSuiTransactionStatusChangeEvent {
@@ -151,7 +154,7 @@ export function WebhookSuiTransactionStatusChangeEventFromJSON(json: any): Webho
 }
 
 export function WebhookSuiTransactionStatusChangeEventFromJSONTyped(json: any, ignoreDiscriminator: boolean): WebhookSuiTransactionStatusChangeEvent {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -159,37 +162,39 @@ export function WebhookSuiTransactionStatusChangeEventFromJSONTyped(json: any, i
         'transactionId': json['transaction_id'],
         'isManagedTransaction': json['is_managed_transaction'],
         'direction': TransactionDirectionFromJSON(json['direction']),
-        'note': !exists(json, 'note') ? undefined : json['note'],
+        'note': json['note'] == null ? undefined : json['note'],
         'spamState': TransactionSpamStateFromJSON(json['spam_state']),
+        'state': PushableTransactionStateFromJSON(json['state']),
         'type': json['type'],
         'suiTransactionType': SuiTransactionTypeFromJSON(json['sui_transaction_type']),
-        'state': SuiTransactionStateFromJSON(json['state']),
-        'digest': !exists(json, 'digest') ? undefined : json['digest'],
-        'txBytes': !exists(json, 'tx_bytes') ? undefined : json['tx_bytes'],
+        'digest': json['digest'] == null ? undefined : json['digest'],
+        'txBytes': json['tx_bytes'] == null ? undefined : json['tx_bytes'],
         'chain': SuiChainFromJSON(json['chain']),
     };
 }
 
-export function WebhookSuiTransactionStatusChangeEventToJSON(value?: WebhookSuiTransactionStatusChangeEvent | null): any {
-    if (value === undefined) {
-        return undefined;
+export function WebhookSuiTransactionStatusChangeEventToJSON(json: any): WebhookSuiTransactionStatusChangeEvent {
+    return WebhookSuiTransactionStatusChangeEventToJSONTyped(json, false);
+}
+
+export function WebhookSuiTransactionStatusChangeEventToJSONTyped(value?: WebhookSuiTransactionStatusChangeEvent | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'transaction_id': value.transactionId,
-        'is_managed_transaction': value.isManagedTransaction,
-        'direction': TransactionDirectionToJSON(value.direction),
-        'note': value.note,
-        'spam_state': TransactionSpamStateToJSON(value.spamState),
-        'type': value.type,
-        'sui_transaction_type': SuiTransactionTypeToJSON(value.suiTransactionType),
-        'state': SuiTransactionStateToJSON(value.state),
-        'digest': value.digest,
-        'tx_bytes': value.txBytes,
-        'chain': SuiChainToJSON(value.chain),
+        'transaction_id': value['transactionId'],
+        'is_managed_transaction': value['isManagedTransaction'],
+        'direction': TransactionDirectionToJSON(value['direction']),
+        'note': value['note'],
+        'spam_state': TransactionSpamStateToJSON(value['spamState']),
+        'state': PushableTransactionStateToJSON(value['state']),
+        'type': value['type'],
+        'sui_transaction_type': SuiTransactionTypeToJSON(value['suiTransactionType']),
+        'digest': value['digest'],
+        'tx_bytes': value['txBytes'],
+        'chain': SuiChainToJSON(value['chain']),
     };
 }
 

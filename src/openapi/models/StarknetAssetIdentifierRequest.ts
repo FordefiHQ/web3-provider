@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { StarknetAssetIdentifierDetails } from './StarknetAssetIdentifierDetails';
 import {
     StarknetAssetIdentifierDetailsFromJSON,
     StarknetAssetIdentifierDetailsFromJSONTyped,
     StarknetAssetIdentifierDetailsToJSON,
+    StarknetAssetIdentifierDetailsToJSONTyped,
 } from './StarknetAssetIdentifierDetails';
 
 /**
@@ -53,12 +54,10 @@ export type StarknetAssetIdentifierRequestTypeEnum = typeof StarknetAssetIdentif
 /**
  * Check if a given object implements the StarknetAssetIdentifierRequest interface.
  */
-export function instanceOfStarknetAssetIdentifierRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "details" in value;
-
-    return isInstance;
+export function instanceOfStarknetAssetIdentifierRequest(value: object): value is StarknetAssetIdentifierRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    return true;
 }
 
 export function StarknetAssetIdentifierRequestFromJSON(json: any): StarknetAssetIdentifierRequest {
@@ -66,7 +65,7 @@ export function StarknetAssetIdentifierRequestFromJSON(json: any): StarknetAsset
 }
 
 export function StarknetAssetIdentifierRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): StarknetAssetIdentifierRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function StarknetAssetIdentifierRequestFromJSONTyped(json: any, ignoreDis
     };
 }
 
-export function StarknetAssetIdentifierRequestToJSON(value?: StarknetAssetIdentifierRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function StarknetAssetIdentifierRequestToJSON(json: any): StarknetAssetIdentifierRequest {
+    return StarknetAssetIdentifierRequestToJSONTyped(json, false);
+}
+
+export function StarknetAssetIdentifierRequestToJSONTyped(value?: StarknetAssetIdentifierRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'details': StarknetAssetIdentifierDetailsToJSON(value.details),
+        'type': value['type'],
+        'details': StarknetAssetIdentifierDetailsToJSON(value['details']),
     };
 }
 

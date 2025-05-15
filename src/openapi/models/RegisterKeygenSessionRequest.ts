@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { KeyType } from './KeyType';
 import {
     KeyTypeFromJSON,
     KeyTypeFromJSONTyped,
     KeyTypeToJSON,
+    KeyTypeToJSONTyped,
 } from './KeyType';
 import type { MpcMessage } from './MpcMessage';
 import {
     MpcMessageFromJSON,
     MpcMessageFromJSONTyped,
     MpcMessageToJSON,
+    MpcMessageToJSONTyped,
 } from './MpcMessage';
 
 /**
@@ -64,15 +66,15 @@ export interface RegisterKeygenSessionRequest {
     firstMpcProtocolMessage?: MpcMessage;
 }
 
+
+
 /**
  * Check if a given object implements the RegisterKeygenSessionRequest interface.
  */
-export function instanceOfRegisterKeygenSessionRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "keyType" in value;
-    isInstance = isInstance && "protocolVersion" in value;
-
-    return isInstance;
+export function instanceOfRegisterKeygenSessionRequest(value: object): value is RegisterKeygenSessionRequest {
+    if (!('keyType' in value) || value['keyType'] === undefined) return false;
+    if (!('protocolVersion' in value) || value['protocolVersion'] === undefined) return false;
+    return true;
 }
 
 export function RegisterKeygenSessionRequestFromJSON(json: any): RegisterKeygenSessionRequest {
@@ -80,33 +82,35 @@ export function RegisterKeygenSessionRequestFromJSON(json: any): RegisterKeygenS
 }
 
 export function RegisterKeygenSessionRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): RegisterKeygenSessionRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'keyType': KeyTypeFromJSON(json['key_type']),
         'protocolVersion': json['protocol_version'],
-        'keysetId': !exists(json, 'keyset_id') ? undefined : json['keyset_id'],
-        'sessionSeed': !exists(json, 'session_seed') ? undefined : json['session_seed'],
-        'firstMpcProtocolMessage': !exists(json, 'first_mpc_protocol_message') ? undefined : MpcMessageFromJSON(json['first_mpc_protocol_message']),
+        'keysetId': json['keyset_id'] == null ? undefined : json['keyset_id'],
+        'sessionSeed': json['session_seed'] == null ? undefined : json['session_seed'],
+        'firstMpcProtocolMessage': json['first_mpc_protocol_message'] == null ? undefined : MpcMessageFromJSON(json['first_mpc_protocol_message']),
     };
 }
 
-export function RegisterKeygenSessionRequestToJSON(value?: RegisterKeygenSessionRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function RegisterKeygenSessionRequestToJSON(json: any): RegisterKeygenSessionRequest {
+    return RegisterKeygenSessionRequestToJSONTyped(json, false);
+}
+
+export function RegisterKeygenSessionRequestToJSONTyped(value?: RegisterKeygenSessionRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'key_type': KeyTypeToJSON(value.keyType),
-        'protocol_version': value.protocolVersion,
-        'keyset_id': value.keysetId,
-        'session_seed': value.sessionSeed,
-        'first_mpc_protocol_message': MpcMessageToJSON(value.firstMpcProtocolMessage),
+        'key_type': KeyTypeToJSON(value['keyType']),
+        'protocol_version': value['protocolVersion'],
+        'keyset_id': value['keysetId'],
+        'session_seed': value['sessionSeed'],
+        'first_mpc_protocol_message': MpcMessageToJSON(value['firstMpcProtocolMessage']),
     };
 }
 

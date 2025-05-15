@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedEvmAssetIdentifierDetails } from './EnrichedEvmAssetIdentifierDetails';
 import {
     EnrichedEvmAssetIdentifierDetailsFromJSON,
     EnrichedEvmAssetIdentifierDetailsFromJSONTyped,
     EnrichedEvmAssetIdentifierDetailsToJSON,
+    EnrichedEvmAssetIdentifierDetailsToJSONTyped,
 } from './EnrichedEvmAssetIdentifierDetails';
 
 /**
@@ -53,12 +54,10 @@ export type EnrichedEvmAssetIdentifierTypeEnum = typeof EnrichedEvmAssetIdentifi
 /**
  * Check if a given object implements the EnrichedEvmAssetIdentifier interface.
  */
-export function instanceOfEnrichedEvmAssetIdentifier(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "details" in value;
-
-    return isInstance;
+export function instanceOfEnrichedEvmAssetIdentifier(value: object): value is EnrichedEvmAssetIdentifier {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    return true;
 }
 
 export function EnrichedEvmAssetIdentifierFromJSON(json: any): EnrichedEvmAssetIdentifier {
@@ -66,7 +65,7 @@ export function EnrichedEvmAssetIdentifierFromJSON(json: any): EnrichedEvmAssetI
 }
 
 export function EnrichedEvmAssetIdentifierFromJSONTyped(json: any, ignoreDiscriminator: boolean): EnrichedEvmAssetIdentifier {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function EnrichedEvmAssetIdentifierFromJSONTyped(json: any, ignoreDiscrim
     };
 }
 
-export function EnrichedEvmAssetIdentifierToJSON(value?: EnrichedEvmAssetIdentifier | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EnrichedEvmAssetIdentifierToJSON(json: any): EnrichedEvmAssetIdentifier {
+    return EnrichedEvmAssetIdentifierToJSONTyped(json, false);
+}
+
+export function EnrichedEvmAssetIdentifierToJSONTyped(value?: EnrichedEvmAssetIdentifier | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'details': EnrichedEvmAssetIdentifierDetailsToJSON(value.details),
+        'type': value['type'],
+        'details': EnrichedEvmAssetIdentifierDetailsToJSON(value['details']),
     };
 }
 

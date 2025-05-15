@@ -12,18 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { DklsRolloutStatus } from './DklsRolloutStatus';
-import {
-    DklsRolloutStatusFromJSON,
-    DklsRolloutStatusFromJSONTyped,
-    DklsRolloutStatusToJSON,
-} from './DklsRolloutStatus';
+import { mapValues } from '../runtime';
 import type { OrganizationType } from './OrganizationType';
 import {
     OrganizationTypeFromJSON,
     OrganizationTypeFromJSONTyped,
     OrganizationTypeToJSON,
+    OrganizationTypeToJSONTyped,
 } from './OrganizationType';
 
 /**
@@ -58,29 +53,29 @@ export interface StartOnboardingRequest {
     shouldSupportEndUsers: boolean;
     /**
      * 
-     * @type {DklsRolloutStatus}
-     * @memberof StartOnboardingRequest
-     */
-    dklsRolloutStatus?: DklsRolloutStatus;
-    /**
-     * 
      * @type {boolean}
      * @memberof StartOnboardingRequest
      */
     isImportOrganization?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof StartOnboardingRequest
+     */
+    crmId?: string;
 }
+
+
 
 /**
  * Check if a given object implements the StartOnboardingRequest interface.
  */
-export function instanceOfStartOnboardingRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "organizationName" in value;
-    isInstance = isInstance && "organizationType" in value;
-    isInstance = isInstance && "adminEmail" in value;
-    isInstance = isInstance && "shouldSupportEndUsers" in value;
-
-    return isInstance;
+export function instanceOfStartOnboardingRequest(value: object): value is StartOnboardingRequest {
+    if (!('organizationName' in value) || value['organizationName'] === undefined) return false;
+    if (!('organizationType' in value) || value['organizationType'] === undefined) return false;
+    if (!('adminEmail' in value) || value['adminEmail'] === undefined) return false;
+    if (!('shouldSupportEndUsers' in value) || value['shouldSupportEndUsers'] === undefined) return false;
+    return true;
 }
 
 export function StartOnboardingRequestFromJSON(json: any): StartOnboardingRequest {
@@ -88,7 +83,7 @@ export function StartOnboardingRequestFromJSON(json: any): StartOnboardingReques
 }
 
 export function StartOnboardingRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): StartOnboardingRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -97,26 +92,28 @@ export function StartOnboardingRequestFromJSONTyped(json: any, ignoreDiscriminat
         'organizationType': OrganizationTypeFromJSON(json['organization_type']),
         'adminEmail': json['admin_email'],
         'shouldSupportEndUsers': json['should_support_end_users'],
-        'dklsRolloutStatus': !exists(json, 'dkls_rollout_status') ? undefined : DklsRolloutStatusFromJSON(json['dkls_rollout_status']),
-        'isImportOrganization': !exists(json, 'is_import_organization') ? undefined : json['is_import_organization'],
+        'isImportOrganization': json['is_import_organization'] == null ? undefined : json['is_import_organization'],
+        'crmId': json['crm_id'] == null ? undefined : json['crm_id'],
     };
 }
 
-export function StartOnboardingRequestToJSON(value?: StartOnboardingRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function StartOnboardingRequestToJSON(json: any): StartOnboardingRequest {
+    return StartOnboardingRequestToJSONTyped(json, false);
+}
+
+export function StartOnboardingRequestToJSONTyped(value?: StartOnboardingRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'organization_name': value.organizationName,
-        'organization_type': OrganizationTypeToJSON(value.organizationType),
-        'admin_email': value.adminEmail,
-        'should_support_end_users': value.shouldSupportEndUsers,
-        'dkls_rollout_status': DklsRolloutStatusToJSON(value.dklsRolloutStatus),
-        'is_import_organization': value.isImportOrganization,
+        'organization_name': value['organizationName'],
+        'organization_type': OrganizationTypeToJSON(value['organizationType']),
+        'admin_email': value['adminEmail'],
+        'should_support_end_users': value['shouldSupportEndUsers'],
+        'is_import_organization': value['isImportOrganization'],
+        'crm_id': value['crmId'],
     };
 }
 

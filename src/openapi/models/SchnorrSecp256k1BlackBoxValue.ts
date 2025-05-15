@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -40,11 +40,9 @@ export type SchnorrSecp256k1BlackBoxValueTypeEnum = typeof SchnorrSecp256k1Black
 /**
  * Check if a given object implements the SchnorrSecp256k1BlackBoxValue interface.
  */
-export function instanceOfSchnorrSecp256k1BlackBoxValue(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfSchnorrSecp256k1BlackBoxValue(value: object): value is SchnorrSecp256k1BlackBoxValue {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function SchnorrSecp256k1BlackBoxValueFromJSON(json: any): SchnorrSecp256k1BlackBoxValue {
@@ -52,7 +50,7 @@ export function SchnorrSecp256k1BlackBoxValueFromJSON(json: any): SchnorrSecp256
 }
 
 export function SchnorrSecp256k1BlackBoxValueFromJSONTyped(json: any, ignoreDiscriminator: boolean): SchnorrSecp256k1BlackBoxValue {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -61,16 +59,18 @@ export function SchnorrSecp256k1BlackBoxValueFromJSONTyped(json: any, ignoreDisc
     };
 }
 
-export function SchnorrSecp256k1BlackBoxValueToJSON(value?: SchnorrSecp256k1BlackBoxValue | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SchnorrSecp256k1BlackBoxValueToJSON(json: any): SchnorrSecp256k1BlackBoxValue {
+    return SchnorrSecp256k1BlackBoxValueToJSONTyped(json, false);
+}
+
+export function SchnorrSecp256k1BlackBoxValueToJSONTyped(value?: SchnorrSecp256k1BlackBoxValue | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
+        'type': value['type'],
     };
 }
 

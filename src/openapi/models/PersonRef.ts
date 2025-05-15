@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { UserRole } from './UserRole';
-import {
-    UserRoleFromJSON,
-    UserRoleFromJSONTyped,
-    UserRoleToJSON,
-} from './UserRole';
+import { mapValues } from '../runtime';
 import type { UserState } from './UserState';
 import {
     UserStateFromJSON,
     UserStateFromJSONTyped,
     UserStateToJSON,
+    UserStateToJSONTyped,
 } from './UserState';
+import type { UserRole } from './UserRole';
+import {
+    UserRoleFromJSON,
+    UserRoleFromJSONTyped,
+    UserRoleToJSON,
+    UserRoleToJSONTyped,
+} from './UserRole';
 
 /**
  * 
@@ -83,15 +85,13 @@ export type PersonRefUserTypeEnum = typeof PersonRefUserTypeEnum[keyof typeof Pe
 /**
  * Check if a given object implements the PersonRef interface.
  */
-export function instanceOfPersonRef(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "userType" in value;
-    isInstance = isInstance && "email" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "role" in value;
-
-    return isInstance;
+export function instanceOfPersonRef(value: object): value is PersonRef {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('userType' in value) || value['userType'] === undefined) return false;
+    if (!('email' in value) || value['email'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('role' in value) || value['role'] === undefined) return false;
+    return true;
 }
 
 export function PersonRefFromJSON(json: any): PersonRef {
@@ -99,35 +99,37 @@ export function PersonRefFromJSON(json: any): PersonRef {
 }
 
 export function PersonRefFromJSONTyped(json: any, ignoreDiscriminator: boolean): PersonRef {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'id': json['id'],
         'userType': json['user_type'],
-        'name': !exists(json, 'name') ? undefined : json['name'],
+        'name': json['name'] == null ? undefined : json['name'],
         'email': json['email'],
         'state': UserStateFromJSON(json['state']),
         'role': UserRoleFromJSON(json['role']),
     };
 }
 
-export function PersonRefToJSON(value?: PersonRef | null): any {
-    if (value === undefined) {
-        return undefined;
+export function PersonRefToJSON(json: any): PersonRef {
+    return PersonRefToJSONTyped(json, false);
+}
+
+export function PersonRefToJSONTyped(value?: PersonRef | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'user_type': value.userType,
-        'name': value.name,
-        'email': value.email,
-        'state': UserStateToJSON(value.state),
-        'role': UserRoleToJSON(value.role),
+        'id': value['id'],
+        'user_type': value['userType'],
+        'name': value['name'],
+        'email': value['email'],
+        'state': UserStateToJSON(value['state']),
+        'role': UserRoleToJSON(value['role']),
     };
 }
 

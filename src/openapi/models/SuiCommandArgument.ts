@@ -12,29 +12,29 @@
  * Do not edit the class manually.
  */
 
+import type { SuiCommandGasCoinArgument } from './SuiCommandGasCoinArgument';
 import {
-    SuiCommandGasCoinArgument,
     instanceOfSuiCommandGasCoinArgument,
     SuiCommandGasCoinArgumentFromJSON,
     SuiCommandGasCoinArgumentFromJSONTyped,
     SuiCommandGasCoinArgumentToJSON,
 } from './SuiCommandGasCoinArgument';
+import type { SuiCommandInputArgument } from './SuiCommandInputArgument';
 import {
-    SuiCommandInputArgument,
     instanceOfSuiCommandInputArgument,
     SuiCommandInputArgumentFromJSON,
     SuiCommandInputArgumentFromJSONTyped,
     SuiCommandInputArgumentToJSON,
 } from './SuiCommandInputArgument';
+import type { SuiCommandNestedResultArgument } from './SuiCommandNestedResultArgument';
 import {
-    SuiCommandNestedResultArgument,
     instanceOfSuiCommandNestedResultArgument,
     SuiCommandNestedResultArgumentFromJSON,
     SuiCommandNestedResultArgumentFromJSONTyped,
     SuiCommandNestedResultArgumentToJSON,
 } from './SuiCommandNestedResultArgument';
+import type { SuiCommandResultArgument } from './SuiCommandResultArgument';
 import {
-    SuiCommandResultArgument,
     instanceOfSuiCommandResultArgument,
     SuiCommandResultArgumentFromJSON,
     SuiCommandResultArgumentFromJSONTyped,
@@ -53,39 +53,40 @@ export function SuiCommandArgumentFromJSON(json: any): SuiCommandArgument {
 }
 
 export function SuiCommandArgumentFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiCommandArgument {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'gas_coin':
-            return {...SuiCommandGasCoinArgumentFromJSONTyped(json, true), type: 'gas_coin'};
+            return Object.assign({}, SuiCommandGasCoinArgumentFromJSONTyped(json, true), { type: 'gas_coin' } as const);
         case 'input':
-            return {...SuiCommandInputArgumentFromJSONTyped(json, true), type: 'input'};
+            return Object.assign({}, SuiCommandInputArgumentFromJSONTyped(json, true), { type: 'input' } as const);
         case 'nested_result':
-            return {...SuiCommandNestedResultArgumentFromJSONTyped(json, true), type: 'nested_result'};
+            return Object.assign({}, SuiCommandNestedResultArgumentFromJSONTyped(json, true), { type: 'nested_result' } as const);
         case 'result':
-            return {...SuiCommandResultArgumentFromJSONTyped(json, true), type: 'result'};
+            return Object.assign({}, SuiCommandResultArgumentFromJSONTyped(json, true), { type: 'result' } as const);
         default:
             throw new Error(`No variant of SuiCommandArgument exists with 'type=${json['type']}'`);
     }
 }
 
-export function SuiCommandArgumentToJSON(value?: SuiCommandArgument | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function SuiCommandArgumentToJSON(json: any): any {
+    return SuiCommandArgumentToJSONTyped(json, false);
+}
+
+export function SuiCommandArgumentToJSONTyped(value?: SuiCommandArgument | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'gas_coin':
-            return SuiCommandGasCoinArgumentToJSON(value);
+            return Object.assign({}, SuiCommandGasCoinArgumentToJSON(value), { type: 'gas_coin' } as const);
         case 'input':
-            return SuiCommandInputArgumentToJSON(value);
+            return Object.assign({}, SuiCommandInputArgumentToJSON(value), { type: 'input' } as const);
         case 'nested_result':
-            return SuiCommandNestedResultArgumentToJSON(value);
+            return Object.assign({}, SuiCommandNestedResultArgumentToJSON(value), { type: 'nested_result' } as const);
         case 'result':
-            return SuiCommandResultArgumentToJSON(value);
+            return Object.assign({}, SuiCommandResultArgumentToJSON(value), { type: 'result' } as const);
         default:
             throw new Error(`No variant of SuiCommandArgument exists with 'type=${value['type']}'`);
     }

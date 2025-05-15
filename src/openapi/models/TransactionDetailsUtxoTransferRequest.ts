@@ -12,25 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { UtxoOutputRequest } from './UtxoOutputRequest';
+import {
+    UtxoOutputRequestFromJSON,
+    UtxoOutputRequestFromJSONTyped,
+    UtxoOutputRequestToJSON,
+    UtxoOutputRequestToJSONTyped,
+} from './UtxoOutputRequest';
 import type { PushMode } from './PushMode';
 import {
     PushModeFromJSON,
     PushModeFromJSONTyped,
     PushModeToJSON,
+    PushModeToJSONTyped,
 } from './PushMode';
 import type { TransactionDetailsUtxoTransferRequestFeePerByte } from './TransactionDetailsUtxoTransferRequestFeePerByte';
 import {
     TransactionDetailsUtxoTransferRequestFeePerByteFromJSON,
     TransactionDetailsUtxoTransferRequestFeePerByteFromJSONTyped,
     TransactionDetailsUtxoTransferRequestFeePerByteToJSON,
+    TransactionDetailsUtxoTransferRequestFeePerByteToJSONTyped,
 } from './TransactionDetailsUtxoTransferRequestFeePerByte';
-import type { UtxoOutputRequest } from './UtxoOutputRequest';
-import {
-    UtxoOutputRequestFromJSON,
-    UtxoOutputRequestFromJSONTyped,
-    UtxoOutputRequestToJSON,
-} from './UtxoOutputRequest';
 
 /**
  * 
@@ -55,13 +58,19 @@ export interface TransactionDetailsUtxoTransferRequest {
      * @type {TransactionDetailsUtxoTransferRequestFeePerByte}
      * @memberof TransactionDetailsUtxoTransferRequest
      */
-    feePerByte: TransactionDetailsUtxoTransferRequestFeePerByte;
+    feePerByte?: TransactionDetailsUtxoTransferRequestFeePerByte;
     /**
      * 
      * @type {PushMode}
      * @memberof TransactionDetailsUtxoTransferRequest
      */
     pushMode?: PushMode;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof TransactionDetailsUtxoTransferRequest
+     */
+    memos?: Array<string>;
 }
 
 
@@ -77,13 +86,10 @@ export type TransactionDetailsUtxoTransferRequestTypeEnum = typeof TransactionDe
 /**
  * Check if a given object implements the TransactionDetailsUtxoTransferRequest interface.
  */
-export function instanceOfTransactionDetailsUtxoTransferRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "outputs" in value;
-    isInstance = isInstance && "feePerByte" in value;
-
-    return isInstance;
+export function instanceOfTransactionDetailsUtxoTransferRequest(value: object): value is TransactionDetailsUtxoTransferRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('outputs' in value) || value['outputs'] === undefined) return false;
+    return true;
 }
 
 export function TransactionDetailsUtxoTransferRequestFromJSON(json: any): TransactionDetailsUtxoTransferRequest {
@@ -91,31 +97,35 @@ export function TransactionDetailsUtxoTransferRequestFromJSON(json: any): Transa
 }
 
 export function TransactionDetailsUtxoTransferRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): TransactionDetailsUtxoTransferRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
         'outputs': ((json['outputs'] as Array<any>).map(UtxoOutputRequestFromJSON)),
-        'feePerByte': TransactionDetailsUtxoTransferRequestFeePerByteFromJSON(json['fee_per_byte']),
-        'pushMode': !exists(json, 'push_mode') ? undefined : PushModeFromJSON(json['push_mode']),
+        'feePerByte': json['fee_per_byte'] == null ? undefined : TransactionDetailsUtxoTransferRequestFeePerByteFromJSON(json['fee_per_byte']),
+        'pushMode': json['push_mode'] == null ? undefined : PushModeFromJSON(json['push_mode']),
+        'memos': json['memos'] == null ? undefined : json['memos'],
     };
 }
 
-export function TransactionDetailsUtxoTransferRequestToJSON(value?: TransactionDetailsUtxoTransferRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TransactionDetailsUtxoTransferRequestToJSON(json: any): TransactionDetailsUtxoTransferRequest {
+    return TransactionDetailsUtxoTransferRequestToJSONTyped(json, false);
+}
+
+export function TransactionDetailsUtxoTransferRequestToJSONTyped(value?: TransactionDetailsUtxoTransferRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'outputs': ((value.outputs as Array<any>).map(UtxoOutputRequestToJSON)),
-        'fee_per_byte': TransactionDetailsUtxoTransferRequestFeePerByteToJSON(value.feePerByte),
-        'push_mode': PushModeToJSON(value.pushMode),
+        'type': value['type'],
+        'outputs': ((value['outputs'] as Array<any>).map(UtxoOutputRequestToJSON)),
+        'fee_per_byte': TransactionDetailsUtxoTransferRequestFeePerByteToJSON(value['feePerByte']),
+        'push_mode': PushModeToJSON(value['pushMode']),
+        'memos': value['memos'],
     };
 }
 

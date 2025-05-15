@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { SuiObjectInputArgumentDetails } from './SuiObjectInputArgumentDetails';
 import {
     SuiObjectInputArgumentDetailsFromJSON,
     SuiObjectInputArgumentDetailsFromJSONTyped,
     SuiObjectInputArgumentDetailsToJSON,
+    SuiObjectInputArgumentDetailsToJSONTyped,
 } from './SuiObjectInputArgumentDetails';
 
 /**
@@ -53,12 +54,10 @@ export type SuiObjectInputArgumentTypeEnum = typeof SuiObjectInputArgumentTypeEn
 /**
  * Check if a given object implements the SuiObjectInputArgument interface.
  */
-export function instanceOfSuiObjectInputArgument(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "details" in value;
-
-    return isInstance;
+export function instanceOfSuiObjectInputArgument(value: object): value is SuiObjectInputArgument {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    return true;
 }
 
 export function SuiObjectInputArgumentFromJSON(json: any): SuiObjectInputArgument {
@@ -66,7 +65,7 @@ export function SuiObjectInputArgumentFromJSON(json: any): SuiObjectInputArgumen
 }
 
 export function SuiObjectInputArgumentFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiObjectInputArgument {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function SuiObjectInputArgumentFromJSONTyped(json: any, ignoreDiscriminat
     };
 }
 
-export function SuiObjectInputArgumentToJSON(value?: SuiObjectInputArgument | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiObjectInputArgumentToJSON(json: any): SuiObjectInputArgument {
+    return SuiObjectInputArgumentToJSONTyped(json, false);
+}
+
+export function SuiObjectInputArgumentToJSONTyped(value?: SuiObjectInputArgument | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'details': SuiObjectInputArgumentDetailsToJSON(value.details),
+        'type': value['type'],
+        'details': SuiObjectInputArgumentDetailsToJSON(value['details']),
     };
 }
 

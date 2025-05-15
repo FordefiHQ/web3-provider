@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { TonChain } from './TonChain';
 import {
     TonChainFromJSON,
     TonChainFromJSONTyped,
     TonChainToJSON,
+    TonChainToJSONTyped,
 } from './TonChain';
 
 /**
@@ -59,13 +60,11 @@ export type TonAddressBookContactAddressRefChainTypeEnum = typeof TonAddressBook
 /**
  * Check if a given object implements the TonAddressBookContactAddressRef interface.
  */
-export function instanceOfTonAddressBookContactAddressRef(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chainType" in value;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "chains" in value;
-
-    return isInstance;
+export function instanceOfTonAddressBookContactAddressRef(value: object): value is TonAddressBookContactAddressRef {
+    if (!('chainType' in value) || value['chainType'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('chains' in value) || value['chains'] === undefined) return false;
+    return true;
 }
 
 export function TonAddressBookContactAddressRefFromJSON(json: any): TonAddressBookContactAddressRef {
@@ -73,7 +72,7 @@ export function TonAddressBookContactAddressRefFromJSON(json: any): TonAddressBo
 }
 
 export function TonAddressBookContactAddressRefFromJSONTyped(json: any, ignoreDiscriminator: boolean): TonAddressBookContactAddressRef {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -84,18 +83,20 @@ export function TonAddressBookContactAddressRefFromJSONTyped(json: any, ignoreDi
     };
 }
 
-export function TonAddressBookContactAddressRefToJSON(value?: TonAddressBookContactAddressRef | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TonAddressBookContactAddressRefToJSON(json: any): TonAddressBookContactAddressRef {
+    return TonAddressBookContactAddressRefToJSONTyped(json, false);
+}
+
+export function TonAddressBookContactAddressRefToJSONTyped(value?: TonAddressBookContactAddressRef | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain_type': value.chainType,
-        'address': value.address,
-        'chains': ((value.chains as Array<any>).map(TonChainToJSON)),
+        'chain_type': value['chainType'],
+        'address': value['address'],
+        'chains': ((value['chains'] as Array<any>).map(TonChainToJSON)),
     };
 }
 

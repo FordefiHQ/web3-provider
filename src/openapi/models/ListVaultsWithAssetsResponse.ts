@@ -12,12 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { PartialErrorResponse } from './PartialErrorResponse';
+import {
+    PartialErrorResponseFromJSON,
+    PartialErrorResponseFromJSONTyped,
+    PartialErrorResponseToJSON,
+    PartialErrorResponseToJSONTyped,
+} from './PartialErrorResponse';
 import type { VaultWithAssets } from './VaultWithAssets';
 import {
     VaultWithAssetsFromJSON,
     VaultWithAssetsFromJSONTyped,
     VaultWithAssetsToJSON,
+    VaultWithAssetsToJSONTyped,
 } from './VaultWithAssets';
 
 /**
@@ -26,6 +34,12 @@ import {
  * @interface ListVaultsWithAssetsResponse
  */
 export interface ListVaultsWithAssetsResponse {
+    /**
+     * 
+     * @type {PartialErrorResponse}
+     * @memberof ListVaultsWithAssetsResponse
+     */
+    partialError?: PartialErrorResponse;
     /**
      * 
      * @type {number}
@@ -55,14 +69,12 @@ export interface ListVaultsWithAssetsResponse {
 /**
  * Check if a given object implements the ListVaultsWithAssetsResponse interface.
  */
-export function instanceOfListVaultsWithAssetsResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "total" in value;
-    isInstance = isInstance && "page" in value;
-    isInstance = isInstance && "size" in value;
-    isInstance = isInstance && "vaults" in value;
-
-    return isInstance;
+export function instanceOfListVaultsWithAssetsResponse(value: object): value is ListVaultsWithAssetsResponse {
+    if (!('total' in value) || value['total'] === undefined) return false;
+    if (!('page' in value) || value['page'] === undefined) return false;
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('vaults' in value) || value['vaults'] === undefined) return false;
+    return true;
 }
 
 export function ListVaultsWithAssetsResponseFromJSON(json: any): ListVaultsWithAssetsResponse {
@@ -70,11 +82,12 @@ export function ListVaultsWithAssetsResponseFromJSON(json: any): ListVaultsWithA
 }
 
 export function ListVaultsWithAssetsResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): ListVaultsWithAssetsResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
+        'partialError': json['partial_error'] == null ? undefined : PartialErrorResponseFromJSON(json['partial_error']),
         'total': json['total'],
         'page': json['page'],
         'size': json['size'],
@@ -82,19 +95,22 @@ export function ListVaultsWithAssetsResponseFromJSONTyped(json: any, ignoreDiscr
     };
 }
 
-export function ListVaultsWithAssetsResponseToJSON(value?: ListVaultsWithAssetsResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ListVaultsWithAssetsResponseToJSON(json: any): ListVaultsWithAssetsResponse {
+    return ListVaultsWithAssetsResponseToJSONTyped(json, false);
+}
+
+export function ListVaultsWithAssetsResponseToJSONTyped(value?: ListVaultsWithAssetsResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'total': value.total,
-        'page': value.page,
-        'size': value.size,
-        'vaults': ((value.vaults as Array<any>).map(VaultWithAssetsToJSON)),
+        'partial_error': PartialErrorResponseToJSON(value['partialError']),
+        'total': value['total'],
+        'page': value['page'],
+        'size': value['size'],
+        'vaults': ((value['vaults'] as Array<any>).map(VaultWithAssetsToJSON)),
     };
 }
 

@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EncryptionData } from './EncryptionData';
 import {
     EncryptionDataFromJSON,
     EncryptionDataFromJSONTyped,
     EncryptionDataToJSON,
+    EncryptionDataToJSONTyped,
 } from './EncryptionData';
 
 /**
@@ -67,16 +68,14 @@ export interface RegisterApiSignerInviteRequest {
 /**
  * Check if a given object implements the RegisterApiSignerInviteRequest interface.
  */
-export function instanceOfRegisterApiSignerInviteRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "encryptedPinMessage" in value;
-    isInstance = isInstance && "signature" in value;
-    isInstance = isInstance && "encryptedMpcKey" in value;
-    isInstance = isInstance && "inviteId" in value;
-    isInstance = isInstance && "encryptedInvite" in value;
-    isInstance = isInstance && "credentialsEncryptionKey" in value;
-
-    return isInstance;
+export function instanceOfRegisterApiSignerInviteRequest(value: object): value is RegisterApiSignerInviteRequest {
+    if (!('encryptedPinMessage' in value) || value['encryptedPinMessage'] === undefined) return false;
+    if (!('signature' in value) || value['signature'] === undefined) return false;
+    if (!('encryptedMpcKey' in value) || value['encryptedMpcKey'] === undefined) return false;
+    if (!('inviteId' in value) || value['inviteId'] === undefined) return false;
+    if (!('encryptedInvite' in value) || value['encryptedInvite'] === undefined) return false;
+    if (!('credentialsEncryptionKey' in value) || value['credentialsEncryptionKey'] === undefined) return false;
+    return true;
 }
 
 export function RegisterApiSignerInviteRequestFromJSON(json: any): RegisterApiSignerInviteRequest {
@@ -84,7 +83,7 @@ export function RegisterApiSignerInviteRequestFromJSON(json: any): RegisterApiSi
 }
 
 export function RegisterApiSignerInviteRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): RegisterApiSignerInviteRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -98,21 +97,23 @@ export function RegisterApiSignerInviteRequestFromJSONTyped(json: any, ignoreDis
     };
 }
 
-export function RegisterApiSignerInviteRequestToJSON(value?: RegisterApiSignerInviteRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function RegisterApiSignerInviteRequestToJSON(json: any): RegisterApiSignerInviteRequest {
+    return RegisterApiSignerInviteRequestToJSONTyped(json, false);
+}
+
+export function RegisterApiSignerInviteRequestToJSONTyped(value?: RegisterApiSignerInviteRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'encrypted_pin_message': EncryptionDataToJSON(value.encryptedPinMessage),
-        'signature': value.signature,
-        'encrypted_mpc_key': value.encryptedMpcKey,
-        'invite_id': value.inviteId,
-        'encrypted_invite': value.encryptedInvite,
-        'credentials_encryption_key': value.credentialsEncryptionKey,
+        'encrypted_pin_message': EncryptionDataToJSON(value['encryptedPinMessage']),
+        'signature': value['signature'],
+        'encrypted_mpc_key': value['encryptedMpcKey'],
+        'invite_id': value['inviteId'],
+        'encrypted_invite': value['encryptedInvite'],
+        'credentials_encryption_key': value['credentialsEncryptionKey'],
     };
 }
 

@@ -21,13 +21,28 @@ export const ChainType = {
     aptos: 'aptos',
     cosmos: 'cosmos',
     evm: 'evm',
+    exchange: 'exchange',
     solana: 'solana',
+    stacks: 'stacks',
+    starknet: 'starknet',
     sui: 'sui',
     ton: 'ton',
+    tron: 'tron',
     utxo: 'utxo'
 } as const;
 export type ChainType = typeof ChainType[keyof typeof ChainType];
 
+
+export function instanceOfChainType(value: any): boolean {
+    for (const key in ChainType) {
+        if (Object.prototype.hasOwnProperty.call(ChainType, key)) {
+            if (ChainType[key as keyof typeof ChainType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 export function ChainTypeFromJSON(json: any): ChainType {
     return ChainTypeFromJSONTyped(json, false);
@@ -39,5 +54,9 @@ export function ChainTypeFromJSONTyped(json: any, ignoreDiscriminator: boolean):
 
 export function ChainTypeToJSON(value?: ChainType | null): any {
     return value as any;
+}
+
+export function ChainTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): ChainType {
+    return value as ChainType;
 }
 

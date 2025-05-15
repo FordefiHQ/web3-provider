@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type IntegerHashPayloadFormatEnum = typeof IntegerHashPayloadFormatEnum[k
 /**
  * Check if a given object implements the IntegerHashPayload interface.
  */
-export function instanceOfIntegerHashPayload(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "format" in value;
-    isInstance = isInstance && "hashInteger" in value;
-
-    return isInstance;
+export function instanceOfIntegerHashPayload(value: object): value is IntegerHashPayload {
+    if (!('format' in value) || value['format'] === undefined) return false;
+    if (!('hashInteger' in value) || value['hashInteger'] === undefined) return false;
+    return true;
 }
 
 export function IntegerHashPayloadFromJSON(json: any): IntegerHashPayload {
@@ -59,7 +57,7 @@ export function IntegerHashPayloadFromJSON(json: any): IntegerHashPayload {
 }
 
 export function IntegerHashPayloadFromJSONTyped(json: any, ignoreDiscriminator: boolean): IntegerHashPayload {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function IntegerHashPayloadFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-export function IntegerHashPayloadToJSON(value?: IntegerHashPayload | null): any {
-    if (value === undefined) {
-        return undefined;
+export function IntegerHashPayloadToJSON(json: any): IntegerHashPayload {
+    return IntegerHashPayloadToJSONTyped(json, false);
+}
+
+export function IntegerHashPayloadToJSONTyped(value?: IntegerHashPayload | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'format': value.format,
-        'hash_integer': value.hashInteger,
+        'format': value['format'],
+        'hash_integer': value['hashInteger'],
     };
 }
 

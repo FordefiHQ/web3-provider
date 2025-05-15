@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -40,11 +40,9 @@ export type CreateMasterKeyCallbackResponseTypeEnum = typeof CreateMasterKeyCall
 /**
  * Check if a given object implements the CreateMasterKeyCallbackResponse interface.
  */
-export function instanceOfCreateMasterKeyCallbackResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfCreateMasterKeyCallbackResponse(value: object): value is CreateMasterKeyCallbackResponse {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function CreateMasterKeyCallbackResponseFromJSON(json: any): CreateMasterKeyCallbackResponse {
@@ -52,7 +50,7 @@ export function CreateMasterKeyCallbackResponseFromJSON(json: any): CreateMaster
 }
 
 export function CreateMasterKeyCallbackResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateMasterKeyCallbackResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -61,16 +59,18 @@ export function CreateMasterKeyCallbackResponseFromJSONTyped(json: any, ignoreDi
     };
 }
 
-export function CreateMasterKeyCallbackResponseToJSON(value?: CreateMasterKeyCallbackResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateMasterKeyCallbackResponseToJSON(json: any): CreateMasterKeyCallbackResponse {
+    return CreateMasterKeyCallbackResponseToJSONTyped(json, false);
+}
+
+export function CreateMasterKeyCallbackResponseToJSONTyped(value?: CreateMasterKeyCallbackResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
+        'type': value['type'],
     };
 }
 

@@ -32,6 +32,17 @@ export const OwnedAssetsSortableFields = {
 export type OwnedAssetsSortableFields = typeof OwnedAssetsSortableFields[keyof typeof OwnedAssetsSortableFields];
 
 
+export function instanceOfOwnedAssetsSortableFields(value: any): boolean {
+    for (const key in OwnedAssetsSortableFields) {
+        if (Object.prototype.hasOwnProperty.call(OwnedAssetsSortableFields, key)) {
+            if (OwnedAssetsSortableFields[key as keyof typeof OwnedAssetsSortableFields] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function OwnedAssetsSortableFieldsFromJSON(json: any): OwnedAssetsSortableFields {
     return OwnedAssetsSortableFieldsFromJSONTyped(json, false);
 }
@@ -42,5 +53,9 @@ export function OwnedAssetsSortableFieldsFromJSONTyped(json: any, ignoreDiscrimi
 
 export function OwnedAssetsSortableFieldsToJSON(value?: OwnedAssetsSortableFields | null): any {
     return value as any;
+}
+
+export function OwnedAssetsSortableFieldsToJSONTyped(value: any, ignoreDiscriminator: boolean): OwnedAssetsSortableFields {
+    return value as OwnedAssetsSortableFields;
 }
 

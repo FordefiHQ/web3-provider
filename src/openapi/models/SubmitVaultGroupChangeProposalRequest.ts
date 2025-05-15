@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -42,10 +42,8 @@ export interface SubmitVaultGroupChangeProposalRequest {
 /**
  * Check if a given object implements the SubmitVaultGroupChangeProposalRequest interface.
  */
-export function instanceOfSubmitVaultGroupChangeProposalRequest(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfSubmitVaultGroupChangeProposalRequest(value: object): value is SubmitVaultGroupChangeProposalRequest {
+    return true;
 }
 
 export function SubmitVaultGroupChangeProposalRequestFromJSON(json: any): SubmitVaultGroupChangeProposalRequest {
@@ -53,29 +51,31 @@ export function SubmitVaultGroupChangeProposalRequestFromJSON(json: any): Submit
 }
 
 export function SubmitVaultGroupChangeProposalRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): SubmitVaultGroupChangeProposalRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'newName': !exists(json, 'new_name') ? undefined : json['new_name'],
-        'addedVaultIds': !exists(json, 'added_vault_ids') ? undefined : json['added_vault_ids'],
-        'removedVaultIds': !exists(json, 'removed_vault_ids') ? undefined : json['removed_vault_ids'],
+        'newName': json['new_name'] == null ? undefined : json['new_name'],
+        'addedVaultIds': json['added_vault_ids'] == null ? undefined : json['added_vault_ids'],
+        'removedVaultIds': json['removed_vault_ids'] == null ? undefined : json['removed_vault_ids'],
     };
 }
 
-export function SubmitVaultGroupChangeProposalRequestToJSON(value?: SubmitVaultGroupChangeProposalRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SubmitVaultGroupChangeProposalRequestToJSON(json: any): SubmitVaultGroupChangeProposalRequest {
+    return SubmitVaultGroupChangeProposalRequestToJSONTyped(json, false);
+}
+
+export function SubmitVaultGroupChangeProposalRequestToJSONTyped(value?: SubmitVaultGroupChangeProposalRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'new_name': value.newName,
-        'added_vault_ids': value.addedVaultIds,
-        'removed_vault_ids': value.removedVaultIds,
+        'new_name': value['newName'],
+        'added_vault_ids': value['addedVaultIds'],
+        'removed_vault_ids': value['removedVaultIds'],
     };
 }
 

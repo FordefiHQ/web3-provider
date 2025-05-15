@@ -12,37 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { TonChain } from './TonChain';
 import {
     TonChainFromJSON,
     TonChainFromJSONTyped,
     TonChainToJSON,
+    TonChainToJSONTyped,
 } from './TonChain';
-import type { TonTransactionState } from './TonTransactionState';
-import {
-    TonTransactionStateFromJSON,
-    TonTransactionStateFromJSONTyped,
-    TonTransactionStateToJSON,
-} from './TonTransactionState';
-import type { TonTransactionType } from './TonTransactionType';
-import {
-    TonTransactionTypeFromJSON,
-    TonTransactionTypeFromJSONTyped,
-    TonTransactionTypeToJSON,
-} from './TonTransactionType';
-import type { TransactionDirection } from './TransactionDirection';
-import {
-    TransactionDirectionFromJSON,
-    TransactionDirectionFromJSONTyped,
-    TransactionDirectionToJSON,
-} from './TransactionDirection';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
     TransactionSpamStateFromJSONTyped,
     TransactionSpamStateToJSON,
+    TransactionSpamStateToJSONTyped,
 } from './TransactionSpamState';
+import type { TransactionDirection } from './TransactionDirection';
+import {
+    TransactionDirectionFromJSON,
+    TransactionDirectionFromJSONTyped,
+    TransactionDirectionToJSON,
+    TransactionDirectionToJSONTyped,
+} from './TransactionDirection';
+import type { TonTransactionType } from './TonTransactionType';
+import {
+    TonTransactionTypeFromJSON,
+    TonTransactionTypeFromJSONTyped,
+    TonTransactionTypeToJSON,
+    TonTransactionTypeToJSONTyped,
+} from './TonTransactionType';
+import type { PushableTransactionState } from './PushableTransactionState';
+import {
+    PushableTransactionStateFromJSON,
+    PushableTransactionStateFromJSONTyped,
+    PushableTransactionStateToJSON,
+    PushableTransactionStateToJSONTyped,
+} from './PushableTransactionState';
 
 /**
  * 
@@ -83,6 +88,12 @@ export interface WebhookTonTransactionStatusChangeEvent {
     spamState: TransactionSpamState;
     /**
      * 
+     * @type {PushableTransactionState}
+     * @memberof WebhookTonTransactionStatusChangeEvent
+     */
+    state: PushableTransactionState;
+    /**
+     * 
      * @type {string}
      * @memberof WebhookTonTransactionStatusChangeEvent
      */
@@ -93,12 +104,6 @@ export interface WebhookTonTransactionStatusChangeEvent {
      * @memberof WebhookTonTransactionStatusChangeEvent
      */
     tonTransactionType: TonTransactionType;
-    /**
-     * 
-     * @type {TonTransactionState}
-     * @memberof WebhookTonTransactionStatusChangeEvent
-     */
-    state: TonTransactionState;
     /**
      * 
      * @type {string}
@@ -132,18 +137,16 @@ export type WebhookTonTransactionStatusChangeEventTypeEnum = typeof WebhookTonTr
 /**
  * Check if a given object implements the WebhookTonTransactionStatusChangeEvent interface.
  */
-export function instanceOfWebhookTonTransactionStatusChangeEvent(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "transactionId" in value;
-    isInstance = isInstance && "isManagedTransaction" in value;
-    isInstance = isInstance && "direction" in value;
-    isInstance = isInstance && "spamState" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "tonTransactionType" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfWebhookTonTransactionStatusChangeEvent(value: object): value is WebhookTonTransactionStatusChangeEvent {
+    if (!('transactionId' in value) || value['transactionId'] === undefined) return false;
+    if (!('isManagedTransaction' in value) || value['isManagedTransaction'] === undefined) return false;
+    if (!('direction' in value) || value['direction'] === undefined) return false;
+    if (!('spamState' in value) || value['spamState'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('tonTransactionType' in value) || value['tonTransactionType'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function WebhookTonTransactionStatusChangeEventFromJSON(json: any): WebhookTonTransactionStatusChangeEvent {
@@ -151,7 +154,7 @@ export function WebhookTonTransactionStatusChangeEventFromJSON(json: any): Webho
 }
 
 export function WebhookTonTransactionStatusChangeEventFromJSONTyped(json: any, ignoreDiscriminator: boolean): WebhookTonTransactionStatusChangeEvent {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -159,37 +162,39 @@ export function WebhookTonTransactionStatusChangeEventFromJSONTyped(json: any, i
         'transactionId': json['transaction_id'],
         'isManagedTransaction': json['is_managed_transaction'],
         'direction': TransactionDirectionFromJSON(json['direction']),
-        'note': !exists(json, 'note') ? undefined : json['note'],
+        'note': json['note'] == null ? undefined : json['note'],
         'spamState': TransactionSpamStateFromJSON(json['spam_state']),
+        'state': PushableTransactionStateFromJSON(json['state']),
         'type': json['type'],
         'tonTransactionType': TonTransactionTypeFromJSON(json['ton_transaction_type']),
-        'state': TonTransactionStateFromJSON(json['state']),
-        'hash': !exists(json, 'hash') ? undefined : json['hash'],
-        'serializedSignedTransaction': !exists(json, 'serialized_signed_transaction') ? undefined : json['serialized_signed_transaction'],
+        'hash': json['hash'] == null ? undefined : json['hash'],
+        'serializedSignedTransaction': json['serialized_signed_transaction'] == null ? undefined : json['serialized_signed_transaction'],
         'chain': TonChainFromJSON(json['chain']),
     };
 }
 
-export function WebhookTonTransactionStatusChangeEventToJSON(value?: WebhookTonTransactionStatusChangeEvent | null): any {
-    if (value === undefined) {
-        return undefined;
+export function WebhookTonTransactionStatusChangeEventToJSON(json: any): WebhookTonTransactionStatusChangeEvent {
+    return WebhookTonTransactionStatusChangeEventToJSONTyped(json, false);
+}
+
+export function WebhookTonTransactionStatusChangeEventToJSONTyped(value?: WebhookTonTransactionStatusChangeEvent | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'transaction_id': value.transactionId,
-        'is_managed_transaction': value.isManagedTransaction,
-        'direction': TransactionDirectionToJSON(value.direction),
-        'note': value.note,
-        'spam_state': TransactionSpamStateToJSON(value.spamState),
-        'type': value.type,
-        'ton_transaction_type': TonTransactionTypeToJSON(value.tonTransactionType),
-        'state': TonTransactionStateToJSON(value.state),
-        'hash': value.hash,
-        'serialized_signed_transaction': value.serializedSignedTransaction,
-        'chain': TonChainToJSON(value.chain),
+        'transaction_id': value['transactionId'],
+        'is_managed_transaction': value['isManagedTransaction'],
+        'direction': TransactionDirectionToJSON(value['direction']),
+        'note': value['note'],
+        'spam_state': TransactionSpamStateToJSON(value['spamState']),
+        'state': PushableTransactionStateToJSON(value['state']),
+        'type': value['type'],
+        'ton_transaction_type': TonTransactionTypeToJSON(value['tonTransactionType']),
+        'hash': value['hash'],
+        'serialized_signed_transaction': value['serializedSignedTransaction'],
+        'chain': TonChainToJSON(value['chain']),
     };
 }
 

@@ -12,12 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { CosmosAssetIdentifierRequest } from './CosmosAssetIdentifierRequest';
+import {
+    CosmosAssetIdentifierRequestFromJSON,
+    CosmosAssetIdentifierRequestFromJSONTyped,
+    CosmosAssetIdentifierRequestToJSON,
+    CosmosAssetIdentifierRequestToJSONTyped,
+} from './CosmosAssetIdentifierRequest';
 import type { CosmosChainUniqueId } from './CosmosChainUniqueId';
 import {
     CosmosChainUniqueIdFromJSON,
     CosmosChainUniqueIdFromJSONTyped,
     CosmosChainUniqueIdToJSON,
+    CosmosChainUniqueIdToJSONTyped,
 } from './CosmosChainUniqueId';
 
 /**
@@ -50,6 +58,18 @@ export interface CreateCosmosContactRequest {
      * @memberof CreateCosmosContactRequest
      */
     chain: CosmosChainUniqueId;
+    /**
+     * 
+     * @type {Array<CosmosAssetIdentifierRequest>}
+     * @memberof CreateCosmosContactRequest
+     */
+    assetsIdentifiers?: Array<CosmosAssetIdentifierRequest>;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateCosmosContactRequest
+     */
+    memo?: string;
 }
 
 
@@ -65,14 +85,12 @@ export type CreateCosmosContactRequestTypeEnum = typeof CreateCosmosContactReque
 /**
  * Check if a given object implements the CreateCosmosContactRequest interface.
  */
-export function instanceOfCreateCosmosContactRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfCreateCosmosContactRequest(value: object): value is CreateCosmosContactRequest {
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function CreateCosmosContactRequestFromJSON(json: any): CreateCosmosContactRequest {
@@ -80,7 +98,7 @@ export function CreateCosmosContactRequestFromJSON(json: any): CreateCosmosConta
 }
 
 export function CreateCosmosContactRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateCosmosContactRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -89,22 +107,28 @@ export function CreateCosmosContactRequestFromJSONTyped(json: any, ignoreDiscrim
         'type': json['type'],
         'address': json['address'],
         'chain': CosmosChainUniqueIdFromJSON(json['chain']),
+        'assetsIdentifiers': json['assets_identifiers'] == null ? undefined : ((json['assets_identifiers'] as Array<any>).map(CosmosAssetIdentifierRequestFromJSON)),
+        'memo': json['memo'] == null ? undefined : json['memo'],
     };
 }
 
-export function CreateCosmosContactRequestToJSON(value?: CreateCosmosContactRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateCosmosContactRequestToJSON(json: any): CreateCosmosContactRequest {
+    return CreateCosmosContactRequestToJSONTyped(json, false);
+}
+
+export function CreateCosmosContactRequestToJSONTyped(value?: CreateCosmosContactRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'type': value.type,
-        'address': value.address,
-        'chain': CosmosChainUniqueIdToJSON(value.chain),
+        'name': value['name'],
+        'type': value['type'],
+        'address': value['address'],
+        'chain': CosmosChainUniqueIdToJSON(value['chain']),
+        'assets_identifiers': value['assetsIdentifiers'] == null ? undefined : ((value['assetsIdentifiers'] as Array<any>).map(CosmosAssetIdentifierRequestToJSON)),
+        'memo': value['memo'],
     };
 }
 

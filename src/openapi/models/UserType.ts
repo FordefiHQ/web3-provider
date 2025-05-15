@@ -20,10 +20,22 @@
 export const UserType = {
     person: 'person',
     apiSigner: 'api_signer',
-    apiUser: 'api_user'
+    apiUser: 'api_user',
+    system: 'system'
 } as const;
 export type UserType = typeof UserType[keyof typeof UserType];
 
+
+export function instanceOfUserType(value: any): boolean {
+    for (const key in UserType) {
+        if (Object.prototype.hasOwnProperty.call(UserType, key)) {
+            if (UserType[key as keyof typeof UserType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 export function UserTypeFromJSON(json: any): UserType {
     return UserTypeFromJSONTyped(json, false);
@@ -35,5 +47,9 @@ export function UserTypeFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
 
 export function UserTypeToJSON(value?: UserType | null): any {
     return value as any;
+}
+
+export function UserTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): UserType {
+    return value as UserType;
 }
 

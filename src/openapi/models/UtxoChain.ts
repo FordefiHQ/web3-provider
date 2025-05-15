@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { UtxoChainUniqueId } from './UtxoChainUniqueId';
 import {
     UtxoChainUniqueIdFromJSON,
     UtxoChainUniqueIdFromJSONTyped,
     UtxoChainUniqueIdToJSON,
+    UtxoChainUniqueIdToJSONTyped,
 } from './UtxoChainUniqueId';
 
 /**
@@ -53,12 +54,10 @@ export type UtxoChainChainTypeEnum = typeof UtxoChainChainTypeEnum[keyof typeof 
 /**
  * Check if a given object implements the UtxoChain interface.
  */
-export function instanceOfUtxoChain(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chainType" in value;
-    isInstance = isInstance && "uniqueId" in value;
-
-    return isInstance;
+export function instanceOfUtxoChain(value: object): value is UtxoChain {
+    if (!('chainType' in value) || value['chainType'] === undefined) return false;
+    if (!('uniqueId' in value) || value['uniqueId'] === undefined) return false;
+    return true;
 }
 
 export function UtxoChainFromJSON(json: any): UtxoChain {
@@ -66,7 +65,7 @@ export function UtxoChainFromJSON(json: any): UtxoChain {
 }
 
 export function UtxoChainFromJSONTyped(json: any, ignoreDiscriminator: boolean): UtxoChain {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function UtxoChainFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     };
 }
 
-export function UtxoChainToJSON(value?: UtxoChain | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UtxoChainToJSON(json: any): UtxoChain {
+    return UtxoChainToJSONTyped(json, false);
+}
+
+export function UtxoChainToJSONTyped(value?: UtxoChain | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain_type': value.chainType,
-        'unique_id': UtxoChainUniqueIdToJSON(value.uniqueId),
+        'chain_type': value['chainType'],
+        'unique_id': UtxoChainUniqueIdToJSON(value['uniqueId']),
     };
 }
 

@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -96,16 +96,14 @@ export type CosmosNativeCoinTypeEnum = typeof CosmosNativeCoinTypeEnum[keyof typ
 /**
  * Check if a given object implements the CosmosNativeCoin interface.
  */
-export function instanceOfCosmosNativeCoin(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "symbol" in value;
-    isInstance = isInstance && "baseDenom" in value;
-    isInstance = isInstance && "denom" in value;
-    isInstance = isInstance && "decimals" in value;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfCosmosNativeCoin(value: object): value is CosmosNativeCoin {
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('symbol' in value) || value['symbol'] === undefined) return false;
+    if (!('baseDenom' in value) || value['baseDenom'] === undefined) return false;
+    if (!('denom' in value) || value['denom'] === undefined) return false;
+    if (!('decimals' in value) || value['decimals'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function CosmosNativeCoinFromJSON(json: any): CosmosNativeCoin {
@@ -113,43 +111,45 @@ export function CosmosNativeCoinFromJSON(json: any): CosmosNativeCoin {
 }
 
 export function CosmosNativeCoinFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosNativeCoin {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'name': json['name'],
         'symbol': json['symbol'],
-        'display': !exists(json, 'display') ? undefined : json['display'],
-        'description': !exists(json, 'description') ? undefined : json['description'],
+        'display': json['display'] == null ? undefined : json['display'],
+        'description': json['description'] == null ? undefined : json['description'],
         'baseDenom': json['base_denom'],
         'denom': json['denom'],
         'decimals': json['decimals'],
-        'logoUrl': !exists(json, 'logo_url') ? undefined : json['logo_url'],
-        'explorerUrl': !exists(json, 'explorer_url') ? undefined : json['explorer_url'],
+        'logoUrl': json['logo_url'] == null ? undefined : json['logo_url'],
+        'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
         'type': json['type'],
     };
 }
 
-export function CosmosNativeCoinToJSON(value?: CosmosNativeCoin | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosNativeCoinToJSON(json: any): CosmosNativeCoin {
+    return CosmosNativeCoinToJSONTyped(json, false);
+}
+
+export function CosmosNativeCoinToJSONTyped(value?: CosmosNativeCoin | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'symbol': value.symbol,
-        'display': value.display,
-        'description': value.description,
-        'base_denom': value.baseDenom,
-        'denom': value.denom,
-        'decimals': value.decimals,
-        'logo_url': value.logoUrl,
-        'explorer_url': value.explorerUrl,
-        'type': value.type,
+        'name': value['name'],
+        'symbol': value['symbol'],
+        'display': value['display'],
+        'description': value['description'],
+        'base_denom': value['baseDenom'],
+        'denom': value['denom'],
+        'decimals': value['decimals'],
+        'logo_url': value['logoUrl'],
+        'explorer_url': value['explorerUrl'],
+        'type': value['type'],
     };
 }
 

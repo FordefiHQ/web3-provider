@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { UtxoNativeTransferDetails } from './UtxoNativeTransferDetails';
 import {
-    UtxoNativeTransferDetails,
     instanceOfUtxoNativeTransferDetails,
     UtxoNativeTransferDetailsFromJSON,
     UtxoNativeTransferDetailsFromJSONTyped,
     UtxoNativeTransferDetailsToJSON,
 } from './UtxoNativeTransferDetails';
+import type { UtxoPsbtDetails } from './UtxoPsbtDetails';
 import {
-    UtxoPsbtDetails,
     instanceOfUtxoPsbtDetails,
     UtxoPsbtDetailsFromJSON,
     UtxoPsbtDetailsFromJSONTyped,
@@ -39,31 +39,32 @@ export function PredictedUtxoTransactionUtxoTransactionTypeDetailsFromJSON(json:
 }
 
 export function PredictedUtxoTransactionUtxoTransactionTypeDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): PredictedUtxoTransactionUtxoTransactionTypeDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'native_transfer':
-            return {...UtxoNativeTransferDetailsFromJSONTyped(json, true), type: 'native_transfer'};
+            return Object.assign({}, UtxoNativeTransferDetailsFromJSONTyped(json, true), { type: 'native_transfer' } as const);
         case 'partially_signed_bitcoin_transaction':
-            return {...UtxoPsbtDetailsFromJSONTyped(json, true), type: 'partially_signed_bitcoin_transaction'};
+            return Object.assign({}, UtxoPsbtDetailsFromJSONTyped(json, true), { type: 'partially_signed_bitcoin_transaction' } as const);
         default:
             throw new Error(`No variant of PredictedUtxoTransactionUtxoTransactionTypeDetails exists with 'type=${json['type']}'`);
     }
 }
 
-export function PredictedUtxoTransactionUtxoTransactionTypeDetailsToJSON(value?: PredictedUtxoTransactionUtxoTransactionTypeDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function PredictedUtxoTransactionUtxoTransactionTypeDetailsToJSON(json: any): any {
+    return PredictedUtxoTransactionUtxoTransactionTypeDetailsToJSONTyped(json, false);
+}
+
+export function PredictedUtxoTransactionUtxoTransactionTypeDetailsToJSONTyped(value?: PredictedUtxoTransactionUtxoTransactionTypeDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'native_transfer':
-            return UtxoNativeTransferDetailsToJSON(value);
+            return Object.assign({}, UtxoNativeTransferDetailsToJSON(value), { type: 'native_transfer' } as const);
         case 'partially_signed_bitcoin_transaction':
-            return UtxoPsbtDetailsToJSON(value);
+            return Object.assign({}, UtxoPsbtDetailsToJSON(value), { type: 'partially_signed_bitcoin_transaction' } as const);
         default:
             throw new Error(`No variant of PredictedUtxoTransactionUtxoTransactionTypeDetails exists with 'type=${value['type']}'`);
     }

@@ -12,37 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { UserRef } from './UserRef';
-import {
-    UserRefFromJSON,
-    UserRefFromJSONTyped,
-    UserRefToJSON,
-} from './UserRef';
+import { mapValues } from '../runtime';
 import type { VaultGroupOwner } from './VaultGroupOwner';
 import {
     VaultGroupOwnerFromJSON,
     VaultGroupOwnerFromJSONTyped,
     VaultGroupOwnerToJSON,
+    VaultGroupOwnerToJSONTyped,
 } from './VaultGroupOwner';
-import type { VaultGroupPendingChangeRequestInfo } from './VaultGroupPendingChangeRequestInfo';
-import {
-    VaultGroupPendingChangeRequestInfoFromJSON,
-    VaultGroupPendingChangeRequestInfoFromJSONTyped,
-    VaultGroupPendingChangeRequestInfoToJSON,
-} from './VaultGroupPendingChangeRequestInfo';
 import type { VaultGroupPermissions } from './VaultGroupPermissions';
 import {
     VaultGroupPermissionsFromJSON,
     VaultGroupPermissionsFromJSONTyped,
     VaultGroupPermissionsToJSON,
+    VaultGroupPermissionsToJSONTyped,
 } from './VaultGroupPermissions';
+import type { VaultGroupPendingChangeRequestInfo } from './VaultGroupPendingChangeRequestInfo';
+import {
+    VaultGroupPendingChangeRequestInfoFromJSON,
+    VaultGroupPendingChangeRequestInfoFromJSONTyped,
+    VaultGroupPendingChangeRequestInfoToJSON,
+    VaultGroupPendingChangeRequestInfoToJSONTyped,
+} from './VaultGroupPendingChangeRequestInfo';
 import type { VaultGroupState } from './VaultGroupState';
 import {
     VaultGroupStateFromJSON,
     VaultGroupStateFromJSONTyped,
     VaultGroupStateToJSON,
+    VaultGroupStateToJSONTyped,
 } from './VaultGroupState';
+import type { UserRef } from './UserRef';
+import {
+    UserRefFromJSON,
+    UserRefFromJSONTyped,
+    UserRefToJSON,
+    UserRefToJSONTyped,
+} from './UserRef';
 
 /**
  * 
@@ -118,21 +123,21 @@ export interface CreateVaultGroupResponse {
     state: VaultGroupState;
 }
 
+
+
 /**
  * Check if a given object implements the CreateVaultGroupResponse interface.
  */
-export function instanceOfCreateVaultGroupResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "vaultCount" in value;
-    isInstance = isInstance && "permissions" in value;
-    isInstance = isInstance && "owner" in value;
-    isInstance = isInstance && "state" in value;
-
-    return isInstance;
+export function instanceOfCreateVaultGroupResponse(value: object): value is CreateVaultGroupResponse {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('vaultCount' in value) || value['vaultCount'] === undefined) return false;
+    if (!('permissions' in value) || value['permissions'] === undefined) return false;
+    if (!('owner' in value) || value['owner'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    return true;
 }
 
 export function CreateVaultGroupResponseFromJSON(json: any): CreateVaultGroupResponse {
@@ -140,7 +145,7 @@ export function CreateVaultGroupResponseFromJSON(json: any): CreateVaultGroupRes
 }
 
 export function CreateVaultGroupResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateVaultGroupResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -149,36 +154,38 @@ export function CreateVaultGroupResponseFromJSONTyped(json: any, ignoreDiscrimin
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
         'name': json['name'],
-        'createdBy': !exists(json, 'created_by') ? undefined : UserRefFromJSON(json['created_by']),
+        'createdBy': json['created_by'] == null ? undefined : UserRefFromJSON(json['created_by']),
         'vaultCount': json['vault_count'],
         'permissions': VaultGroupPermissionsFromJSON(json['permissions']),
         'owner': VaultGroupOwnerFromJSON(json['owner']),
-        'modifiedBy': !exists(json, 'modified_by') ? undefined : UserRefFromJSON(json['modified_by']),
-        'pendingChangeRequest': !exists(json, 'pending_change_request') ? undefined : VaultGroupPendingChangeRequestInfoFromJSON(json['pending_change_request']),
+        'modifiedBy': json['modified_by'] == null ? undefined : UserRefFromJSON(json['modified_by']),
+        'pendingChangeRequest': json['pending_change_request'] == null ? undefined : VaultGroupPendingChangeRequestInfoFromJSON(json['pending_change_request']),
         'state': VaultGroupStateFromJSON(json['state']),
     };
 }
 
-export function CreateVaultGroupResponseToJSON(value?: CreateVaultGroupResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateVaultGroupResponseToJSON(json: any): CreateVaultGroupResponse {
+    return CreateVaultGroupResponseToJSONTyped(json, false);
+}
+
+export function CreateVaultGroupResponseToJSONTyped(value?: CreateVaultGroupResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'name': value.name,
-        'created_by': UserRefToJSON(value.createdBy),
-        'vault_count': value.vaultCount,
-        'permissions': VaultGroupPermissionsToJSON(value.permissions),
-        'owner': VaultGroupOwnerToJSON(value.owner),
-        'modified_by': UserRefToJSON(value.modifiedBy),
-        'pending_change_request': VaultGroupPendingChangeRequestInfoToJSON(value.pendingChangeRequest),
-        'state': VaultGroupStateToJSON(value.state),
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'name': value['name'],
+        'created_by': UserRefToJSON(value['createdBy']),
+        'vault_count': value['vaultCount'],
+        'permissions': VaultGroupPermissionsToJSON(value['permissions']),
+        'owner': VaultGroupOwnerToJSON(value['owner']),
+        'modified_by': UserRefToJSON(value['modifiedBy']),
+        'pending_change_request': VaultGroupPendingChangeRequestInfoToJSON(value['pendingChangeRequest']),
+        'state': VaultGroupStateToJSON(value['state']),
     };
 }
 

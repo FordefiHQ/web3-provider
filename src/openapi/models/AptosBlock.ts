@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -42,13 +42,11 @@ export interface AptosBlock {
 /**
  * Check if a given object implements the AptosBlock interface.
  */
-export function instanceOfAptosBlock(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "height" in value;
-    isInstance = isInstance && "hash" in value;
-    isInstance = isInstance && "minedAt" in value;
-
-    return isInstance;
+export function instanceOfAptosBlock(value: object): value is AptosBlock {
+    if (!('height' in value) || value['height'] === undefined) return false;
+    if (!('hash' in value) || value['hash'] === undefined) return false;
+    if (!('minedAt' in value) || value['minedAt'] === undefined) return false;
+    return true;
 }
 
 export function AptosBlockFromJSON(json: any): AptosBlock {
@@ -56,7 +54,7 @@ export function AptosBlockFromJSON(json: any): AptosBlock {
 }
 
 export function AptosBlockFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosBlock {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -67,18 +65,20 @@ export function AptosBlockFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     };
 }
 
-export function AptosBlockToJSON(value?: AptosBlock | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AptosBlockToJSON(json: any): AptosBlock {
+    return AptosBlockToJSONTyped(json, false);
+}
+
+export function AptosBlockToJSONTyped(value?: AptosBlock | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'height': value.height,
-        'hash': value.hash,
-        'mined_at': (value.minedAt.toISOString()),
+        'height': value['height'],
+        'hash': value['hash'],
+        'mined_at': ((value['minedAt']).toISOString()),
     };
 }
 

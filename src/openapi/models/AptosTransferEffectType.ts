@@ -24,6 +24,17 @@ export const AptosTransferEffectType = {
 export type AptosTransferEffectType = typeof AptosTransferEffectType[keyof typeof AptosTransferEffectType];
 
 
+export function instanceOfAptosTransferEffectType(value: any): boolean {
+    for (const key in AptosTransferEffectType) {
+        if (Object.prototype.hasOwnProperty.call(AptosTransferEffectType, key)) {
+            if (AptosTransferEffectType[key as keyof typeof AptosTransferEffectType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function AptosTransferEffectTypeFromJSON(json: any): AptosTransferEffectType {
     return AptosTransferEffectTypeFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function AptosTransferEffectTypeFromJSONTyped(json: any, ignoreDiscrimina
 
 export function AptosTransferEffectTypeToJSON(value?: AptosTransferEffectType | null): any {
     return value as any;
+}
+
+export function AptosTransferEffectTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): AptosTransferEffectType {
+    return value as AptosTransferEffectType;
 }
 

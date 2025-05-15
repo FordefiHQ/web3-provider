@@ -12,22 +12,22 @@
  * Do not edit the class manually.
  */
 
+import type { Erc1155 } from './Erc1155';
 import {
-    Erc1155,
     instanceOfErc1155,
     Erc1155FromJSON,
     Erc1155FromJSONTyped,
     Erc1155ToJSON,
 } from './Erc1155';
+import type { Erc20 } from './Erc20';
 import {
-    Erc20,
     instanceOfErc20,
     Erc20FromJSON,
     Erc20FromJSONTyped,
     Erc20ToJSON,
 } from './Erc20';
+import type { Erc721 } from './Erc721';
 import {
-    Erc721,
     instanceOfErc721,
     Erc721FromJSON,
     Erc721FromJSONTyped,
@@ -46,35 +46,36 @@ export function EvmContractMetadataTokenFromJSON(json: any): EvmContractMetadata
 }
 
 export function EvmContractMetadataTokenFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmContractMetadataToken {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'erc1155':
-            return {...Erc1155FromJSONTyped(json, true), type: 'erc1155'};
+            return Object.assign({}, Erc1155FromJSONTyped(json, true), { type: 'erc1155' } as const);
         case 'erc20':
-            return {...Erc20FromJSONTyped(json, true), type: 'erc20'};
+            return Object.assign({}, Erc20FromJSONTyped(json, true), { type: 'erc20' } as const);
         case 'erc721':
-            return {...Erc721FromJSONTyped(json, true), type: 'erc721'};
+            return Object.assign({}, Erc721FromJSONTyped(json, true), { type: 'erc721' } as const);
         default:
             throw new Error(`No variant of EvmContractMetadataToken exists with 'type=${json['type']}'`);
     }
 }
 
-export function EvmContractMetadataTokenToJSON(value?: EvmContractMetadataToken | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function EvmContractMetadataTokenToJSON(json: any): any {
+    return EvmContractMetadataTokenToJSONTyped(json, false);
+}
+
+export function EvmContractMetadataTokenToJSONTyped(value?: EvmContractMetadataToken | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'erc1155':
-            return Erc1155ToJSON(value);
+            return Object.assign({}, Erc1155ToJSON(value), { type: 'erc1155' } as const);
         case 'erc20':
-            return Erc20ToJSON(value);
+            return Object.assign({}, Erc20ToJSON(value), { type: 'erc20' } as const);
         case 'erc721':
-            return Erc721ToJSON(value);
+            return Object.assign({}, Erc721ToJSON(value), { type: 'erc721' } as const);
         default:
             throw new Error(`No variant of EvmContractMetadataToken exists with 'type=${value['type']}'`);
     }

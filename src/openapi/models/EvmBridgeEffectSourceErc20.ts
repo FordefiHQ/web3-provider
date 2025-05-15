@@ -12,31 +12,35 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
+import { mapValues } from '../runtime';
+import type { PricedAsset } from './PricedAsset';
 import {
-    EnrichedEvmAddressFromJSON,
-    EnrichedEvmAddressFromJSONTyped,
-    EnrichedEvmAddressToJSON,
-} from './EnrichedEvmAddress';
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+    PricedAssetToJSONTyped,
+} from './PricedAsset';
 import type { Erc20 } from './Erc20';
 import {
     Erc20FromJSON,
     Erc20FromJSONTyped,
     Erc20ToJSON,
+    Erc20ToJSONTyped,
 } from './Erc20';
 import type { Price } from './Price';
 import {
     PriceFromJSON,
     PriceFromJSONTyped,
     PriceToJSON,
+    PriceToJSONTyped,
 } from './Price';
-import type { PricedAsset } from './PricedAsset';
+import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
 import {
-    PricedAssetFromJSON,
-    PricedAssetFromJSONTyped,
-    PricedAssetToJSON,
-} from './PricedAsset';
+    EnrichedEvmAddressFromJSON,
+    EnrichedEvmAddressFromJSONTyped,
+    EnrichedEvmAddressToJSON,
+    EnrichedEvmAddressToJSONTyped,
+} from './EnrichedEvmAddress';
 
 /**
  * 
@@ -89,14 +93,12 @@ export type EvmBridgeEffectSourceErc20TypeEnum = typeof EvmBridgeEffectSourceErc
 /**
  * Check if a given object implements the EvmBridgeEffectSourceErc20 interface.
  */
-export function instanceOfEvmBridgeEffectSourceErc20(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "pricedAsset" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "sourceAddress" in value;
-    isInstance = isInstance && "token" in value;
-
-    return isInstance;
+export function instanceOfEvmBridgeEffectSourceErc20(value: object): value is EvmBridgeEffectSourceErc20 {
+    if (!('pricedAsset' in value) || value['pricedAsset'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('sourceAddress' in value) || value['sourceAddress'] === undefined) return false;
+    if (!('token' in value) || value['token'] === undefined) return false;
+    return true;
 }
 
 export function EvmBridgeEffectSourceErc20FromJSON(json: any): EvmBridgeEffectSourceErc20 {
@@ -104,7 +106,7 @@ export function EvmBridgeEffectSourceErc20FromJSON(json: any): EvmBridgeEffectSo
 }
 
 export function EvmBridgeEffectSourceErc20FromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmBridgeEffectSourceErc20 {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -113,24 +115,26 @@ export function EvmBridgeEffectSourceErc20FromJSONTyped(json: any, ignoreDiscrim
         'type': json['type'],
         'sourceAddress': EnrichedEvmAddressFromJSON(json['source_address']),
         'token': Erc20FromJSON(json['token']),
-        'price': !exists(json, 'price') ? undefined : PriceFromJSON(json['price']),
+        'price': json['price'] == null ? undefined : PriceFromJSON(json['price']),
     };
 }
 
-export function EvmBridgeEffectSourceErc20ToJSON(value?: EvmBridgeEffectSourceErc20 | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EvmBridgeEffectSourceErc20ToJSON(json: any): EvmBridgeEffectSourceErc20 {
+    return EvmBridgeEffectSourceErc20ToJSONTyped(json, false);
+}
+
+export function EvmBridgeEffectSourceErc20ToJSONTyped(value?: EvmBridgeEffectSourceErc20 | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'priced_asset': PricedAssetToJSON(value.pricedAsset),
-        'type': value.type,
-        'source_address': EnrichedEvmAddressToJSON(value.sourceAddress),
-        'token': Erc20ToJSON(value.token),
-        'price': PriceToJSON(value.price),
+        'priced_asset': PricedAssetToJSON(value['pricedAsset']),
+        'type': value['type'],
+        'source_address': EnrichedEvmAddressToJSON(value['sourceAddress']),
+        'token': Erc20ToJSON(value['token']),
+        'price': PriceToJSON(value['price']),
     };
 }
 

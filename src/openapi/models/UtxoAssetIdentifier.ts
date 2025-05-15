@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedUtxoChain } from './EnrichedUtxoChain';
 import {
     EnrichedUtxoChainFromJSON,
     EnrichedUtxoChainFromJSONTyped,
     EnrichedUtxoChainToJSON,
+    EnrichedUtxoChainToJSONTyped,
 } from './EnrichedUtxoChain';
 import type { UtxoNativeAssetIdentifierRequest } from './UtxoNativeAssetIdentifierRequest';
 import {
     UtxoNativeAssetIdentifierRequestFromJSON,
     UtxoNativeAssetIdentifierRequestFromJSONTyped,
     UtxoNativeAssetIdentifierRequestToJSON,
+    UtxoNativeAssetIdentifierRequestToJSONTyped,
 } from './UtxoNativeAssetIdentifierRequest';
 
 /**
@@ -65,13 +67,11 @@ export type UtxoAssetIdentifierTypeEnum = typeof UtxoAssetIdentifierTypeEnum[key
 /**
  * Check if a given object implements the UtxoAssetIdentifier interface.
  */
-export function instanceOfUtxoAssetIdentifier(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "details" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfUtxoAssetIdentifier(value: object): value is UtxoAssetIdentifier {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function UtxoAssetIdentifierFromJSON(json: any): UtxoAssetIdentifier {
@@ -79,7 +79,7 @@ export function UtxoAssetIdentifierFromJSON(json: any): UtxoAssetIdentifier {
 }
 
 export function UtxoAssetIdentifierFromJSONTyped(json: any, ignoreDiscriminator: boolean): UtxoAssetIdentifier {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -90,18 +90,20 @@ export function UtxoAssetIdentifierFromJSONTyped(json: any, ignoreDiscriminator:
     };
 }
 
-export function UtxoAssetIdentifierToJSON(value?: UtxoAssetIdentifier | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UtxoAssetIdentifierToJSON(json: any): UtxoAssetIdentifier {
+    return UtxoAssetIdentifierToJSONTyped(json, false);
+}
+
+export function UtxoAssetIdentifierToJSONTyped(value?: UtxoAssetIdentifier | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'details': UtxoNativeAssetIdentifierRequestToJSON(value.details),
-        'chain': EnrichedUtxoChainToJSON(value.chain),
+        'type': value['type'],
+        'details': UtxoNativeAssetIdentifierRequestToJSON(value['details']),
+        'chain': EnrichedUtxoChainToJSON(value['chain']),
     };
 }
 

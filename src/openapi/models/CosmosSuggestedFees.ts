@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { CosmosChainUniqueId } from './CosmosChainUniqueId';
 import {
     CosmosChainUniqueIdFromJSON,
     CosmosChainUniqueIdFromJSONTyped,
     CosmosChainUniqueIdToJSON,
+    CosmosChainUniqueIdToJSONTyped,
 } from './CosmosChainUniqueId';
 
 /**
@@ -59,12 +60,10 @@ export type CosmosSuggestedFeesTypeEnum = typeof CosmosSuggestedFeesTypeEnum[key
 /**
  * Check if a given object implements the CosmosSuggestedFees interface.
  */
-export function instanceOfCosmosSuggestedFees(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chainUniqueId" in value;
-
-    return isInstance;
+export function instanceOfCosmosSuggestedFees(value: object): value is CosmosSuggestedFees {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chainUniqueId' in value) || value['chainUniqueId'] === undefined) return false;
+    return true;
 }
 
 export function CosmosSuggestedFeesFromJSON(json: any): CosmosSuggestedFees {
@@ -72,29 +71,31 @@ export function CosmosSuggestedFeesFromJSON(json: any): CosmosSuggestedFees {
 }
 
 export function CosmosSuggestedFeesFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosSuggestedFees {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
         'chainUniqueId': CosmosChainUniqueIdFromJSON(json['chain_unique_id']),
-        'feePerSignature': !exists(json, 'fee_per_signature') ? undefined : json['fee_per_signature'],
+        'feePerSignature': json['fee_per_signature'] == null ? undefined : json['fee_per_signature'],
     };
 }
 
-export function CosmosSuggestedFeesToJSON(value?: CosmosSuggestedFees | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosSuggestedFeesToJSON(json: any): CosmosSuggestedFees {
+    return CosmosSuggestedFeesToJSONTyped(json, false);
+}
+
+export function CosmosSuggestedFeesToJSONTyped(value?: CosmosSuggestedFees | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'chain_unique_id': CosmosChainUniqueIdToJSON(value.chainUniqueId),
-        'fee_per_signature': value.feePerSignature,
+        'type': value['type'],
+        'chain_unique_id': CosmosChainUniqueIdToJSON(value['chainUniqueId']),
+        'fee_per_signature': value['feePerSignature'],
     };
 }
 

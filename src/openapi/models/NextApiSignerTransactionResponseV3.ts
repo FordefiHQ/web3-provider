@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { NextApiSignerTransactionResponseV3Body } from './NextApiSignerTransactionResponseV3Body';
 import {
     NextApiSignerTransactionResponseV3BodyFromJSON,
     NextApiSignerTransactionResponseV3BodyFromJSONTyped,
     NextApiSignerTransactionResponseV3BodyToJSON,
+    NextApiSignerTransactionResponseV3BodyToJSONTyped,
 } from './NextApiSignerTransactionResponseV3Body';
 
 /**
@@ -37,10 +38,8 @@ export interface NextApiSignerTransactionResponseV3 {
 /**
  * Check if a given object implements the NextApiSignerTransactionResponseV3 interface.
  */
-export function instanceOfNextApiSignerTransactionResponseV3(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfNextApiSignerTransactionResponseV3(value: object): value is NextApiSignerTransactionResponseV3 {
+    return true;
 }
 
 export function NextApiSignerTransactionResponseV3FromJSON(json: any): NextApiSignerTransactionResponseV3 {
@@ -48,25 +47,27 @@ export function NextApiSignerTransactionResponseV3FromJSON(json: any): NextApiSi
 }
 
 export function NextApiSignerTransactionResponseV3FromJSONTyped(json: any, ignoreDiscriminator: boolean): NextApiSignerTransactionResponseV3 {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'body': !exists(json, 'body') ? undefined : NextApiSignerTransactionResponseV3BodyFromJSON(json['body']),
+        'body': json['body'] == null ? undefined : NextApiSignerTransactionResponseV3BodyFromJSON(json['body']),
     };
 }
 
-export function NextApiSignerTransactionResponseV3ToJSON(value?: NextApiSignerTransactionResponseV3 | null): any {
-    if (value === undefined) {
-        return undefined;
+export function NextApiSignerTransactionResponseV3ToJSON(json: any): NextApiSignerTransactionResponseV3 {
+    return NextApiSignerTransactionResponseV3ToJSONTyped(json, false);
+}
+
+export function NextApiSignerTransactionResponseV3ToJSONTyped(value?: NextApiSignerTransactionResponseV3 | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'body': NextApiSignerTransactionResponseV3BodyToJSON(value.body),
+        'body': NextApiSignerTransactionResponseV3BodyToJSON(value['body']),
     };
 }
 

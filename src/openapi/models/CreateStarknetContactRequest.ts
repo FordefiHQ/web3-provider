@@ -12,12 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { StarknetAssetIdentifierRequest } from './StarknetAssetIdentifierRequest';
+import {
+    StarknetAssetIdentifierRequestFromJSON,
+    StarknetAssetIdentifierRequestFromJSONTyped,
+    StarknetAssetIdentifierRequestToJSON,
+    StarknetAssetIdentifierRequestToJSONTyped,
+} from './StarknetAssetIdentifierRequest';
 import type { StarknetChainUniqueId } from './StarknetChainUniqueId';
 import {
     StarknetChainUniqueIdFromJSON,
     StarknetChainUniqueIdFromJSONTyped,
     StarknetChainUniqueIdToJSON,
+    StarknetChainUniqueIdToJSONTyped,
 } from './StarknetChainUniqueId';
 
 /**
@@ -49,7 +57,13 @@ export interface CreateStarknetContactRequest {
      * @type {Array<StarknetChainUniqueId>}
      * @memberof CreateStarknetContactRequest
      */
-    chains: Array<StarknetChainUniqueId>;
+    chains?: Array<StarknetChainUniqueId>;
+    /**
+     * 
+     * @type {Array<StarknetAssetIdentifierRequest>}
+     * @memberof CreateStarknetContactRequest
+     */
+    assetsIdentifiers?: Array<StarknetAssetIdentifierRequest>;
 }
 
 
@@ -65,14 +79,11 @@ export type CreateStarknetContactRequestTypeEnum = typeof CreateStarknetContactR
 /**
  * Check if a given object implements the CreateStarknetContactRequest interface.
  */
-export function instanceOfCreateStarknetContactRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "chains" in value;
-
-    return isInstance;
+export function instanceOfCreateStarknetContactRequest(value: object): value is CreateStarknetContactRequest {
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    return true;
 }
 
 export function CreateStarknetContactRequestFromJSON(json: any): CreateStarknetContactRequest {
@@ -80,7 +91,7 @@ export function CreateStarknetContactRequestFromJSON(json: any): CreateStarknetC
 }
 
 export function CreateStarknetContactRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateStarknetContactRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -88,23 +99,27 @@ export function CreateStarknetContactRequestFromJSONTyped(json: any, ignoreDiscr
         'name': json['name'],
         'type': json['type'],
         'address': json['address'],
-        'chains': ((json['chains'] as Array<any>).map(StarknetChainUniqueIdFromJSON)),
+        'chains': json['chains'] == null ? undefined : ((json['chains'] as Array<any>).map(StarknetChainUniqueIdFromJSON)),
+        'assetsIdentifiers': json['assets_identifiers'] == null ? undefined : ((json['assets_identifiers'] as Array<any>).map(StarknetAssetIdentifierRequestFromJSON)),
     };
 }
 
-export function CreateStarknetContactRequestToJSON(value?: CreateStarknetContactRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateStarknetContactRequestToJSON(json: any): CreateStarknetContactRequest {
+    return CreateStarknetContactRequestToJSONTyped(json, false);
+}
+
+export function CreateStarknetContactRequestToJSONTyped(value?: CreateStarknetContactRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'type': value.type,
-        'address': value.address,
-        'chains': ((value.chains as Array<any>).map(StarknetChainUniqueIdToJSON)),
+        'name': value['name'],
+        'type': value['type'],
+        'address': value['address'],
+        'chains': value['chains'] == null ? undefined : ((value['chains'] as Array<any>).map(StarknetChainUniqueIdToJSON)),
+        'assets_identifiers': value['assetsIdentifiers'] == null ? undefined : ((value['assetsIdentifiers'] as Array<any>).map(StarknetAssetIdentifierRequestToJSON)),
     };
 }
 

@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type SuiPartialObjectRefInputArgumentTypeEnum = typeof SuiPartialObjectRe
 /**
  * Check if a given object implements the SuiPartialObjectRefInputArgument interface.
  */
-export function instanceOfSuiPartialObjectRefInputArgument(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "objectId" in value;
-
-    return isInstance;
+export function instanceOfSuiPartialObjectRefInputArgument(value: object): value is SuiPartialObjectRefInputArgument {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('objectId' in value) || value['objectId'] === undefined) return false;
+    return true;
 }
 
 export function SuiPartialObjectRefInputArgumentFromJSON(json: any): SuiPartialObjectRefInputArgument {
@@ -59,7 +57,7 @@ export function SuiPartialObjectRefInputArgumentFromJSON(json: any): SuiPartialO
 }
 
 export function SuiPartialObjectRefInputArgumentFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiPartialObjectRefInputArgument {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function SuiPartialObjectRefInputArgumentFromJSONTyped(json: any, ignoreD
     };
 }
 
-export function SuiPartialObjectRefInputArgumentToJSON(value?: SuiPartialObjectRefInputArgument | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiPartialObjectRefInputArgumentToJSON(json: any): SuiPartialObjectRefInputArgument {
+    return SuiPartialObjectRefInputArgumentToJSONTyped(json, false);
+}
+
+export function SuiPartialObjectRefInputArgumentToJSONTyped(value?: SuiPartialObjectRefInputArgument | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'object_id': value.objectId,
+        'type': value['type'],
+        'object_id': value['objectId'],
     };
 }
 

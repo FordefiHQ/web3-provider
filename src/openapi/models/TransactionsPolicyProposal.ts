@@ -12,37 +12,49 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { ApprovalRequest } from './ApprovalRequest';
-import {
-    ApprovalRequestFromJSON,
-    ApprovalRequestFromJSONTyped,
-    ApprovalRequestToJSON,
-} from './ApprovalRequest';
-import type { ProposedDefaultAction } from './ProposedDefaultAction';
-import {
-    ProposedDefaultActionFromJSON,
-    ProposedDefaultActionFromJSONTyped,
-    ProposedDefaultActionToJSON,
-} from './ProposedDefaultAction';
-import type { ProposedTransactionRule } from './ProposedTransactionRule';
-import {
-    ProposedTransactionRuleFromJSON,
-    ProposedTransactionRuleFromJSONTyped,
-    ProposedTransactionRuleToJSON,
-} from './ProposedTransactionRule';
+import { mapValues } from '../runtime';
 import type { TransactionsPolicyProposalState } from './TransactionsPolicyProposalState';
 import {
     TransactionsPolicyProposalStateFromJSON,
     TransactionsPolicyProposalStateFromJSONTyped,
     TransactionsPolicyProposalStateToJSON,
+    TransactionsPolicyProposalStateToJSONTyped,
 } from './TransactionsPolicyProposalState';
+import type { ProposedDefaultAction } from './ProposedDefaultAction';
+import {
+    ProposedDefaultActionFromJSON,
+    ProposedDefaultActionFromJSONTyped,
+    ProposedDefaultActionToJSON,
+    ProposedDefaultActionToJSONTyped,
+} from './ProposedDefaultAction';
+import type { ApprovalRequest } from './ApprovalRequest';
+import {
+    ApprovalRequestFromJSON,
+    ApprovalRequestFromJSONTyped,
+    ApprovalRequestToJSON,
+    ApprovalRequestToJSONTyped,
+} from './ApprovalRequest';
+import type { ProposedTransactionRule } from './ProposedTransactionRule';
+import {
+    ProposedTransactionRuleFromJSON,
+    ProposedTransactionRuleFromJSONTyped,
+    ProposedTransactionRuleToJSON,
+    ProposedTransactionRuleToJSONTyped,
+} from './ProposedTransactionRule';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
     UserRefFromJSONTyped,
     UserRefToJSON,
+    UserRefToJSONTyped,
 } from './UserRef';
+import type { VerificationRequest } from './VerificationRequest';
+import {
+    VerificationRequestFromJSON,
+    VerificationRequestFromJSONTyped,
+    VerificationRequestToJSON,
+    VerificationRequestToJSONTyped,
+} from './VerificationRequest';
 
 /**
  * 
@@ -103,24 +115,29 @@ export interface TransactionsPolicyProposal {
      * @type {ApprovalRequest}
      * @memberof TransactionsPolicyProposal
      */
-    approvalRequest: ApprovalRequest;
+    approvalRequest?: ApprovalRequest;
+    /**
+     * 
+     * @type {VerificationRequest}
+     * @memberof TransactionsPolicyProposal
+     */
+    verificationRequest?: VerificationRequest;
 }
+
+
 
 /**
  * Check if a given object implements the TransactionsPolicyProposal interface.
  */
-export function instanceOfTransactionsPolicyProposal(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "createdBy" in value;
-    isInstance = isInstance && "defaultAction" in value;
-    isInstance = isInstance && "rules" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "approvalRequest" in value;
-
-    return isInstance;
+export function instanceOfTransactionsPolicyProposal(value: object): value is TransactionsPolicyProposal {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('createdBy' in value) || value['createdBy'] === undefined) return false;
+    if (!('defaultAction' in value) || value['defaultAction'] === undefined) return false;
+    if (!('rules' in value) || value['rules'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    return true;
 }
 
 export function TransactionsPolicyProposalFromJSON(json: any): TransactionsPolicyProposal {
@@ -128,7 +145,7 @@ export function TransactionsPolicyProposalFromJSON(json: any): TransactionsPolic
 }
 
 export function TransactionsPolicyProposalFromJSONTyped(json: any, ignoreDiscriminator: boolean): TransactionsPolicyProposal {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -137,32 +154,36 @@ export function TransactionsPolicyProposalFromJSONTyped(json: any, ignoreDiscrim
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
         'createdBy': UserRefFromJSON(json['created_by']),
-        'abortedBy': !exists(json, 'aborted_by') ? undefined : UserRefFromJSON(json['aborted_by']),
+        'abortedBy': json['aborted_by'] == null ? undefined : UserRefFromJSON(json['aborted_by']),
         'defaultAction': ProposedDefaultActionFromJSON(json['default_action']),
         'rules': ((json['rules'] as Array<any>).map(ProposedTransactionRuleFromJSON)),
         'state': TransactionsPolicyProposalStateFromJSON(json['state']),
-        'approvalRequest': ApprovalRequestFromJSON(json['approval_request']),
+        'approvalRequest': json['approval_request'] == null ? undefined : ApprovalRequestFromJSON(json['approval_request']),
+        'verificationRequest': json['verification_request'] == null ? undefined : VerificationRequestFromJSON(json['verification_request']),
     };
 }
 
-export function TransactionsPolicyProposalToJSON(value?: TransactionsPolicyProposal | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TransactionsPolicyProposalToJSON(json: any): TransactionsPolicyProposal {
+    return TransactionsPolicyProposalToJSONTyped(json, false);
+}
+
+export function TransactionsPolicyProposalToJSONTyped(value?: TransactionsPolicyProposal | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'created_by': UserRefToJSON(value.createdBy),
-        'aborted_by': UserRefToJSON(value.abortedBy),
-        'default_action': ProposedDefaultActionToJSON(value.defaultAction),
-        'rules': ((value.rules as Array<any>).map(ProposedTransactionRuleToJSON)),
-        'state': TransactionsPolicyProposalStateToJSON(value.state),
-        'approval_request': ApprovalRequestToJSON(value.approvalRequest),
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'created_by': UserRefToJSON(value['createdBy']),
+        'aborted_by': UserRefToJSON(value['abortedBy']),
+        'default_action': ProposedDefaultActionToJSON(value['defaultAction']),
+        'rules': ((value['rules'] as Array<any>).map(ProposedTransactionRuleToJSON)),
+        'state': TransactionsPolicyProposalStateToJSON(value['state']),
+        'approval_request': ApprovalRequestToJSON(value['approvalRequest']),
+        'verification_request': VerificationRequestToJSON(value['verificationRequest']),
     };
 }
 

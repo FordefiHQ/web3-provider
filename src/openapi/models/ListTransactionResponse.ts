@@ -12,13 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { Transaction } from './Transaction';
 import {
     TransactionFromJSON,
     TransactionFromJSONTyped,
     TransactionToJSON,
+    TransactionToJSONTyped,
 } from './Transaction';
+import type { PartialErrorResponse } from './PartialErrorResponse';
+import {
+    PartialErrorResponseFromJSON,
+    PartialErrorResponseFromJSONTyped,
+    PartialErrorResponseToJSON,
+    PartialErrorResponseToJSONTyped,
+} from './PartialErrorResponse';
 
 /**
  * 
@@ -26,6 +34,12 @@ import {
  * @interface ListTransactionResponse
  */
 export interface ListTransactionResponse {
+    /**
+     * 
+     * @type {PartialErrorResponse}
+     * @memberof ListTransactionResponse
+     */
+    partialError?: PartialErrorResponse;
     /**
      * 
      * @type {number}
@@ -55,14 +69,12 @@ export interface ListTransactionResponse {
 /**
  * Check if a given object implements the ListTransactionResponse interface.
  */
-export function instanceOfListTransactionResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "total" in value;
-    isInstance = isInstance && "page" in value;
-    isInstance = isInstance && "size" in value;
-    isInstance = isInstance && "transactions" in value;
-
-    return isInstance;
+export function instanceOfListTransactionResponse(value: object): value is ListTransactionResponse {
+    if (!('total' in value) || value['total'] === undefined) return false;
+    if (!('page' in value) || value['page'] === undefined) return false;
+    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('transactions' in value) || value['transactions'] === undefined) return false;
+    return true;
 }
 
 export function ListTransactionResponseFromJSON(json: any): ListTransactionResponse {
@@ -70,11 +82,12 @@ export function ListTransactionResponseFromJSON(json: any): ListTransactionRespo
 }
 
 export function ListTransactionResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): ListTransactionResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
+        'partialError': json['partial_error'] == null ? undefined : PartialErrorResponseFromJSON(json['partial_error']),
         'total': json['total'],
         'page': json['page'],
         'size': json['size'],
@@ -82,19 +95,22 @@ export function ListTransactionResponseFromJSONTyped(json: any, ignoreDiscrimina
     };
 }
 
-export function ListTransactionResponseToJSON(value?: ListTransactionResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ListTransactionResponseToJSON(json: any): ListTransactionResponse {
+    return ListTransactionResponseToJSONTyped(json, false);
+}
+
+export function ListTransactionResponseToJSONTyped(value?: ListTransactionResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'total': value.total,
-        'page': value.page,
-        'size': value.size,
-        'transactions': ((value.transactions as Array<any>).map(TransactionToJSON)),
+        'partial_error': PartialErrorResponseToJSON(value['partialError']),
+        'total': value['total'],
+        'page': value['page'],
+        'size': value['size'],
+        'transactions': ((value['transactions'] as Array<any>).map(TransactionToJSON)),
     };
 }
 

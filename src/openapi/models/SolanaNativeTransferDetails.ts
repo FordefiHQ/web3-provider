@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { EnrichedSolanaAddress } from './EnrichedSolanaAddress';
-import {
-    EnrichedSolanaAddressFromJSON,
-    EnrichedSolanaAddressFromJSONTyped,
-    EnrichedSolanaAddressToJSON,
-} from './EnrichedSolanaAddress';
+import { mapValues } from '../runtime';
 import type { TransferDirection } from './TransferDirection';
 import {
     TransferDirectionFromJSON,
     TransferDirectionFromJSONTyped,
     TransferDirectionToJSON,
+    TransferDirectionToJSONTyped,
 } from './TransferDirection';
+import type { EnrichedSolanaAddress } from './EnrichedSolanaAddress';
+import {
+    EnrichedSolanaAddressFromJSON,
+    EnrichedSolanaAddressFromJSONTyped,
+    EnrichedSolanaAddressToJSON,
+    EnrichedSolanaAddressToJSONTyped,
+} from './EnrichedSolanaAddress';
 
 /**
  * 
@@ -77,14 +79,12 @@ export type SolanaNativeTransferDetailsTypeEnum = typeof SolanaNativeTransferDet
 /**
  * Check if a given object implements the SolanaNativeTransferDetails interface.
  */
-export function instanceOfSolanaNativeTransferDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "direction" in value;
-    isInstance = isInstance && "sender" in value;
-    isInstance = isInstance && "recipient" in value;
-
-    return isInstance;
+export function instanceOfSolanaNativeTransferDetails(value: object): value is SolanaNativeTransferDetails {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('direction' in value) || value['direction'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    if (!('recipient' in value) || value['recipient'] === undefined) return false;
+    return true;
 }
 
 export function SolanaNativeTransferDetailsFromJSON(json: any): SolanaNativeTransferDetails {
@@ -92,7 +92,7 @@ export function SolanaNativeTransferDetailsFromJSON(json: any): SolanaNativeTran
 }
 
 export function SolanaNativeTransferDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): SolanaNativeTransferDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -101,24 +101,26 @@ export function SolanaNativeTransferDetailsFromJSONTyped(json: any, ignoreDiscri
         'direction': TransferDirectionFromJSON(json['direction']),
         'sender': EnrichedSolanaAddressFromJSON(json['sender']),
         'recipient': EnrichedSolanaAddressFromJSON(json['recipient']),
-        'isInternal': !exists(json, 'is_internal') ? undefined : json['is_internal'],
+        'isInternal': json['is_internal'] == null ? undefined : json['is_internal'],
     };
 }
 
-export function SolanaNativeTransferDetailsToJSON(value?: SolanaNativeTransferDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SolanaNativeTransferDetailsToJSON(json: any): SolanaNativeTransferDetails {
+    return SolanaNativeTransferDetailsToJSONTyped(json, false);
+}
+
+export function SolanaNativeTransferDetailsToJSONTyped(value?: SolanaNativeTransferDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'direction': TransferDirectionToJSON(value.direction),
-        'sender': EnrichedSolanaAddressToJSON(value.sender),
-        'recipient': EnrichedSolanaAddressToJSON(value.recipient),
-        'is_internal': value.isInternal,
+        'type': value['type'],
+        'direction': TransferDirectionToJSON(value['direction']),
+        'sender': EnrichedSolanaAddressToJSON(value['sender']),
+        'recipient': EnrichedSolanaAddressToJSON(value['recipient']),
+        'is_internal': value['isInternal'],
     };
 }
 

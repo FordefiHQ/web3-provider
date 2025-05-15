@@ -24,6 +24,17 @@ export const KeysetScope = {
 export type KeysetScope = typeof KeysetScope[keyof typeof KeysetScope];
 
 
+export function instanceOfKeysetScope(value: any): boolean {
+    for (const key in KeysetScope) {
+        if (Object.prototype.hasOwnProperty.call(KeysetScope, key)) {
+            if (KeysetScope[key as keyof typeof KeysetScope] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function KeysetScopeFromJSON(json: any): KeysetScope {
     return KeysetScopeFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function KeysetScopeFromJSONTyped(json: any, ignoreDiscriminator: boolean
 
 export function KeysetScopeToJSON(value?: KeysetScope | null): any {
     return value as any;
+}
+
+export function KeysetScopeToJSONTyped(value: any, ignoreDiscriminator: boolean): KeysetScope {
+    return value as KeysetScope;
 }
 

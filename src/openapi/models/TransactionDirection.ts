@@ -24,6 +24,17 @@ export const TransactionDirection = {
 export type TransactionDirection = typeof TransactionDirection[keyof typeof TransactionDirection];
 
 
+export function instanceOfTransactionDirection(value: any): boolean {
+    for (const key in TransactionDirection) {
+        if (Object.prototype.hasOwnProperty.call(TransactionDirection, key)) {
+            if (TransactionDirection[key as keyof typeof TransactionDirection] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function TransactionDirectionFromJSON(json: any): TransactionDirection {
     return TransactionDirectionFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function TransactionDirectionFromJSONTyped(json: any, ignoreDiscriminator
 
 export function TransactionDirectionToJSON(value?: TransactionDirection | null): any {
     return value as any;
+}
+
+export function TransactionDirectionToJSONTyped(value: any, ignoreDiscriminator: boolean): TransactionDirection {
+    return value as TransactionDirection;
 }
 

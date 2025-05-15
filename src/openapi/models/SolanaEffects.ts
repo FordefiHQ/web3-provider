@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { SolanaBalanceChangeEffect } from './SolanaBalanceChangeEffect';
-import {
-    SolanaBalanceChangeEffectFromJSON,
-    SolanaBalanceChangeEffectFromJSONTyped,
-    SolanaBalanceChangeEffectToJSON,
-} from './SolanaBalanceChangeEffect';
+import { mapValues } from '../runtime';
 import type { SolanaTransferEffect } from './SolanaTransferEffect';
 import {
     SolanaTransferEffectFromJSON,
     SolanaTransferEffectFromJSONTyped,
     SolanaTransferEffectToJSON,
+    SolanaTransferEffectToJSONTyped,
 } from './SolanaTransferEffect';
+import type { SolanaBalanceChangeEffect } from './SolanaBalanceChangeEffect';
+import {
+    SolanaBalanceChangeEffectFromJSON,
+    SolanaBalanceChangeEffectFromJSONTyped,
+    SolanaBalanceChangeEffectToJSON,
+    SolanaBalanceChangeEffectToJSONTyped,
+} from './SolanaBalanceChangeEffect';
 
 /**
  * 
@@ -49,12 +51,10 @@ export interface SolanaEffects {
 /**
  * Check if a given object implements the SolanaEffects interface.
  */
-export function instanceOfSolanaEffects(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "balanceChanges" in value;
-    isInstance = isInstance && "transfers" in value;
-
-    return isInstance;
+export function instanceOfSolanaEffects(value: object): value is SolanaEffects {
+    if (!('balanceChanges' in value) || value['balanceChanges'] === undefined) return false;
+    if (!('transfers' in value) || value['transfers'] === undefined) return false;
+    return true;
 }
 
 export function SolanaEffectsFromJSON(json: any): SolanaEffects {
@@ -62,7 +62,7 @@ export function SolanaEffectsFromJSON(json: any): SolanaEffects {
 }
 
 export function SolanaEffectsFromJSONTyped(json: any, ignoreDiscriminator: boolean): SolanaEffects {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -72,17 +72,19 @@ export function SolanaEffectsFromJSONTyped(json: any, ignoreDiscriminator: boole
     };
 }
 
-export function SolanaEffectsToJSON(value?: SolanaEffects | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SolanaEffectsToJSON(json: any): SolanaEffects {
+    return SolanaEffectsToJSONTyped(json, false);
+}
+
+export function SolanaEffectsToJSONTyped(value?: SolanaEffects | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'balance_changes': ((value.balanceChanges as Array<any>).map(SolanaBalanceChangeEffectToJSON)),
-        'transfers': ((value.transfers as Array<any>).map(SolanaTransferEffectToJSON)),
+        'balance_changes': ((value['balanceChanges'] as Array<any>).map(SolanaBalanceChangeEffectToJSON)),
+        'transfers': ((value['transfers'] as Array<any>).map(SolanaTransferEffectToJSON)),
     };
 }
 

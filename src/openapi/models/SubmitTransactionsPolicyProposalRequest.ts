@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { RuleActionRequest } from './RuleActionRequest';
-import {
-    RuleActionRequestFromJSON,
-    RuleActionRequestFromJSONTyped,
-    RuleActionRequestToJSON,
-} from './RuleActionRequest';
+import { mapValues } from '../runtime';
 import type { TransactionRuleRequest } from './TransactionRuleRequest';
 import {
     TransactionRuleRequestFromJSON,
     TransactionRuleRequestFromJSONTyped,
     TransactionRuleRequestToJSON,
+    TransactionRuleRequestToJSONTyped,
 } from './TransactionRuleRequest';
+import type { RuleActionRequest } from './RuleActionRequest';
+import {
+    RuleActionRequestFromJSON,
+    RuleActionRequestFromJSONTyped,
+    RuleActionRequestToJSON,
+    RuleActionRequestToJSONTyped,
+} from './RuleActionRequest';
 
 /**
  * 
@@ -49,11 +51,9 @@ export interface SubmitTransactionsPolicyProposalRequest {
 /**
  * Check if a given object implements the SubmitTransactionsPolicyProposalRequest interface.
  */
-export function instanceOfSubmitTransactionsPolicyProposalRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "defaultAction" in value;
-
-    return isInstance;
+export function instanceOfSubmitTransactionsPolicyProposalRequest(value: object): value is SubmitTransactionsPolicyProposalRequest {
+    if (!('defaultAction' in value) || value['defaultAction'] === undefined) return false;
+    return true;
 }
 
 export function SubmitTransactionsPolicyProposalRequestFromJSON(json: any): SubmitTransactionsPolicyProposalRequest {
@@ -61,27 +61,29 @@ export function SubmitTransactionsPolicyProposalRequestFromJSON(json: any): Subm
 }
 
 export function SubmitTransactionsPolicyProposalRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): SubmitTransactionsPolicyProposalRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'rules': !exists(json, 'rules') ? undefined : ((json['rules'] as Array<any>).map(TransactionRuleRequestFromJSON)),
+        'rules': json['rules'] == null ? undefined : ((json['rules'] as Array<any>).map(TransactionRuleRequestFromJSON)),
         'defaultAction': RuleActionRequestFromJSON(json['default_action']),
     };
 }
 
-export function SubmitTransactionsPolicyProposalRequestToJSON(value?: SubmitTransactionsPolicyProposalRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SubmitTransactionsPolicyProposalRequestToJSON(json: any): SubmitTransactionsPolicyProposalRequest {
+    return SubmitTransactionsPolicyProposalRequestToJSONTyped(json, false);
+}
+
+export function SubmitTransactionsPolicyProposalRequestToJSONTyped(value?: SubmitTransactionsPolicyProposalRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'rules': value.rules === undefined ? undefined : ((value.rules as Array<any>).map(TransactionRuleRequestToJSON)),
-        'default_action': RuleActionRequestToJSON(value.defaultAction),
+        'rules': value['rules'] == null ? undefined : ((value['rules'] as Array<any>).map(TransactionRuleRequestToJSON)),
+        'default_action': RuleActionRequestToJSON(value['defaultAction']),
     };
 }
 

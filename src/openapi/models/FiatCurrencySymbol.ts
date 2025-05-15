@@ -23,6 +23,17 @@ export const FiatCurrencySymbol = {
 export type FiatCurrencySymbol = typeof FiatCurrencySymbol[keyof typeof FiatCurrencySymbol];
 
 
+export function instanceOfFiatCurrencySymbol(value: any): boolean {
+    for (const key in FiatCurrencySymbol) {
+        if (Object.prototype.hasOwnProperty.call(FiatCurrencySymbol, key)) {
+            if (FiatCurrencySymbol[key as keyof typeof FiatCurrencySymbol] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function FiatCurrencySymbolFromJSON(json: any): FiatCurrencySymbol {
     return FiatCurrencySymbolFromJSONTyped(json, false);
 }
@@ -33,5 +44,9 @@ export function FiatCurrencySymbolFromJSONTyped(json: any, ignoreDiscriminator: 
 
 export function FiatCurrencySymbolToJSON(value?: FiatCurrencySymbol | null): any {
     return value as any;
+}
+
+export function FiatCurrencySymbolToJSONTyped(value: any, ignoreDiscriminator: boolean): FiatCurrencySymbol {
+    return value as FiatCurrencySymbol;
 }
 

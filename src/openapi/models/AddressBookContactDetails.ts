@@ -12,13 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { AddressBookContactDetailsAddress } from './AddressBookContactDetailsAddress';
 import {
     AddressBookContactDetailsAddressFromJSON,
     AddressBookContactDetailsAddressFromJSONTyped,
     AddressBookContactDetailsAddressToJSON,
+    AddressBookContactDetailsAddressToJSONTyped,
 } from './AddressBookContactDetailsAddress';
+import type { AssetInfo } from './AssetInfo';
+import {
+    AssetInfoFromJSON,
+    AssetInfoFromJSONTyped,
+    AssetInfoToJSON,
+    AssetInfoToJSONTyped,
+} from './AssetInfo';
 
 /**
  * 
@@ -38,17 +46,22 @@ export interface AddressBookContactDetails {
      * @memberof AddressBookContactDetails
      */
     name: string;
+    /**
+     * 
+     * @type {Array<AssetInfo>}
+     * @memberof AddressBookContactDetails
+     */
+    assetInfos: Array<AssetInfo>;
 }
 
 /**
  * Check if a given object implements the AddressBookContactDetails interface.
  */
-export function instanceOfAddressBookContactDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "name" in value;
-
-    return isInstance;
+export function instanceOfAddressBookContactDetails(value: object): value is AddressBookContactDetails {
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('assetInfos' in value) || value['assetInfos'] === undefined) return false;
+    return true;
 }
 
 export function AddressBookContactDetailsFromJSON(json: any): AddressBookContactDetails {
@@ -56,27 +69,31 @@ export function AddressBookContactDetailsFromJSON(json: any): AddressBookContact
 }
 
 export function AddressBookContactDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): AddressBookContactDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'address': AddressBookContactDetailsAddressFromJSON(json['address']),
         'name': json['name'],
+        'assetInfos': ((json['asset_infos'] as Array<any>).map(AssetInfoFromJSON)),
     };
 }
 
-export function AddressBookContactDetailsToJSON(value?: AddressBookContactDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AddressBookContactDetailsToJSON(json: any): AddressBookContactDetails {
+    return AddressBookContactDetailsToJSONTyped(json, false);
+}
+
+export function AddressBookContactDetailsToJSONTyped(value?: AddressBookContactDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'address': AddressBookContactDetailsAddressToJSON(value.address),
-        'name': value.name,
+        'address': AddressBookContactDetailsAddressToJSON(value['address']),
+        'name': value['name'],
+        'asset_infos': ((value['assetInfos'] as Array<any>).map(AssetInfoToJSON)),
     };
 }
 

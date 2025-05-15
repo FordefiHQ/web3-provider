@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { SolanaChainUniqueId } from './SolanaChainUniqueId';
 import {
     SolanaChainUniqueIdFromJSON,
     SolanaChainUniqueIdFromJSONTyped,
     SolanaChainUniqueIdToJSON,
+    SolanaChainUniqueIdToJSONTyped,
 } from './SolanaChainUniqueId';
 
 /**
@@ -53,12 +54,10 @@ export type SolanaNativeAssetIdentifierRequestTypeEnum = typeof SolanaNativeAsse
 /**
  * Check if a given object implements the SolanaNativeAssetIdentifierRequest interface.
  */
-export function instanceOfSolanaNativeAssetIdentifierRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfSolanaNativeAssetIdentifierRequest(value: object): value is SolanaNativeAssetIdentifierRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function SolanaNativeAssetIdentifierRequestFromJSON(json: any): SolanaNativeAssetIdentifierRequest {
@@ -66,7 +65,7 @@ export function SolanaNativeAssetIdentifierRequestFromJSON(json: any): SolanaNat
 }
 
 export function SolanaNativeAssetIdentifierRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): SolanaNativeAssetIdentifierRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function SolanaNativeAssetIdentifierRequestFromJSONTyped(json: any, ignor
     };
 }
 
-export function SolanaNativeAssetIdentifierRequestToJSON(value?: SolanaNativeAssetIdentifierRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SolanaNativeAssetIdentifierRequestToJSON(json: any): SolanaNativeAssetIdentifierRequest {
+    return SolanaNativeAssetIdentifierRequestToJSONTyped(json, false);
+}
+
+export function SolanaNativeAssetIdentifierRequestToJSONTyped(value?: SolanaNativeAssetIdentifierRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'chain': SolanaChainUniqueIdToJSON(value.chain),
+        'type': value['type'],
+        'chain': SolanaChainUniqueIdToJSON(value['chain']),
     };
 }
 

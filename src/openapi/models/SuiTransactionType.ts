@@ -25,6 +25,17 @@ export const SuiTransactionType = {
 export type SuiTransactionType = typeof SuiTransactionType[keyof typeof SuiTransactionType];
 
 
+export function instanceOfSuiTransactionType(value: any): boolean {
+    for (const key in SuiTransactionType) {
+        if (Object.prototype.hasOwnProperty.call(SuiTransactionType, key)) {
+            if (SuiTransactionType[key as keyof typeof SuiTransactionType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function SuiTransactionTypeFromJSON(json: any): SuiTransactionType {
     return SuiTransactionTypeFromJSONTyped(json, false);
 }
@@ -35,5 +46,9 @@ export function SuiTransactionTypeFromJSONTyped(json: any, ignoreDiscriminator: 
 
 export function SuiTransactionTypeToJSON(value?: SuiTransactionType | null): any {
     return value as any;
+}
+
+export function SuiTransactionTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): SuiTransactionType {
+    return value as SuiTransactionType;
 }
 

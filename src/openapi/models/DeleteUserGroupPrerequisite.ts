@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { DeletePrerequisiteSeverity } from './DeletePrerequisiteSeverity';
-import {
-    DeletePrerequisiteSeverityFromJSON,
-    DeletePrerequisiteSeverityFromJSONTyped,
-    DeletePrerequisiteSeverityToJSON,
-} from './DeletePrerequisiteSeverity';
+import { mapValues } from '../runtime';
 import type { DeleteUserGroupPrerequisiteType } from './DeleteUserGroupPrerequisiteType';
 import {
     DeleteUserGroupPrerequisiteTypeFromJSON,
     DeleteUserGroupPrerequisiteTypeFromJSONTyped,
     DeleteUserGroupPrerequisiteTypeToJSON,
+    DeleteUserGroupPrerequisiteTypeToJSONTyped,
 } from './DeleteUserGroupPrerequisiteType';
+import type { DeletePrerequisiteSeverity } from './DeletePrerequisiteSeverity';
+import {
+    DeletePrerequisiteSeverityFromJSON,
+    DeletePrerequisiteSeverityFromJSONTyped,
+    DeletePrerequisiteSeverityToJSON,
+    DeletePrerequisiteSeverityToJSONTyped,
+} from './DeletePrerequisiteSeverity';
 
 /**
  * 
@@ -46,15 +48,15 @@ export interface DeleteUserGroupPrerequisite {
     severity: DeletePrerequisiteSeverity;
 }
 
+
+
 /**
  * Check if a given object implements the DeleteUserGroupPrerequisite interface.
  */
-export function instanceOfDeleteUserGroupPrerequisite(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "severity" in value;
-
-    return isInstance;
+export function instanceOfDeleteUserGroupPrerequisite(value: object): value is DeleteUserGroupPrerequisite {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('severity' in value) || value['severity'] === undefined) return false;
+    return true;
 }
 
 export function DeleteUserGroupPrerequisiteFromJSON(json: any): DeleteUserGroupPrerequisite {
@@ -62,7 +64,7 @@ export function DeleteUserGroupPrerequisiteFromJSON(json: any): DeleteUserGroupP
 }
 
 export function DeleteUserGroupPrerequisiteFromJSONTyped(json: any, ignoreDiscriminator: boolean): DeleteUserGroupPrerequisite {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -72,17 +74,19 @@ export function DeleteUserGroupPrerequisiteFromJSONTyped(json: any, ignoreDiscri
     };
 }
 
-export function DeleteUserGroupPrerequisiteToJSON(value?: DeleteUserGroupPrerequisite | null): any {
-    if (value === undefined) {
-        return undefined;
+export function DeleteUserGroupPrerequisiteToJSON(json: any): DeleteUserGroupPrerequisite {
+    return DeleteUserGroupPrerequisiteToJSONTyped(json, false);
+}
+
+export function DeleteUserGroupPrerequisiteToJSONTyped(value?: DeleteUserGroupPrerequisite | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': DeleteUserGroupPrerequisiteTypeToJSON(value.type),
-        'severity': DeletePrerequisiteSeverityToJSON(value.severity),
+        'type': DeleteUserGroupPrerequisiteTypeToJSON(value['type']),
+        'severity': DeletePrerequisiteSeverityToJSON(value['severity']),
     };
 }
 

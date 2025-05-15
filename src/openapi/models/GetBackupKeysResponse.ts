@@ -12,25 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { BackupPublicKeyByDevice } from './BackupPublicKeyByDevice';
-import {
-    BackupPublicKeyByDeviceFromJSON,
-    BackupPublicKeyByDeviceFromJSONTyped,
-    BackupPublicKeyByDeviceToJSON,
-} from './BackupPublicKeyByDevice';
-import type { KeyType } from './KeyType';
-import {
-    KeyTypeFromJSON,
-    KeyTypeFromJSONTyped,
-    KeyTypeToJSON,
-} from './KeyType';
+import { mapValues } from '../runtime';
 import type { TimestampedSignature } from './TimestampedSignature';
 import {
     TimestampedSignatureFromJSON,
     TimestampedSignatureFromJSONTyped,
     TimestampedSignatureToJSON,
+    TimestampedSignatureToJSONTyped,
 } from './TimestampedSignature';
+import type { BackupPublicKeyByDevice } from './BackupPublicKeyByDevice';
+import {
+    BackupPublicKeyByDeviceFromJSON,
+    BackupPublicKeyByDeviceFromJSONTyped,
+    BackupPublicKeyByDeviceToJSON,
+    BackupPublicKeyByDeviceToJSONTyped,
+} from './BackupPublicKeyByDevice';
 
 /**
  * 
@@ -58,23 +54,21 @@ export interface GetBackupKeysResponse {
     timestampedSignature: TimestampedSignature;
     /**
      * 
-     * @type {Array<KeyType>}
+     * @type {Array<string>}
      * @memberof GetBackupKeysResponse
      */
-    deviceSharesIncluded: Array<KeyType>;
+    keyIdsIncluded: Array<string>;
 }
 
 /**
  * Check if a given object implements the GetBackupKeysResponse interface.
  */
-export function instanceOfGetBackupKeysResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "hasBackup" in value;
-    isInstance = isInstance && "devicesPublicKeys" in value;
-    isInstance = isInstance && "timestampedSignature" in value;
-    isInstance = isInstance && "deviceSharesIncluded" in value;
-
-    return isInstance;
+export function instanceOfGetBackupKeysResponse(value: object): value is GetBackupKeysResponse {
+    if (!('hasBackup' in value) || value['hasBackup'] === undefined) return false;
+    if (!('devicesPublicKeys' in value) || value['devicesPublicKeys'] === undefined) return false;
+    if (!('timestampedSignature' in value) || value['timestampedSignature'] === undefined) return false;
+    if (!('keyIdsIncluded' in value) || value['keyIdsIncluded'] === undefined) return false;
+    return true;
 }
 
 export function GetBackupKeysResponseFromJSON(json: any): GetBackupKeysResponse {
@@ -82,7 +76,7 @@ export function GetBackupKeysResponseFromJSON(json: any): GetBackupKeysResponse 
 }
 
 export function GetBackupKeysResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetBackupKeysResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -90,23 +84,25 @@ export function GetBackupKeysResponseFromJSONTyped(json: any, ignoreDiscriminato
         'hasBackup': json['has_backup'],
         'devicesPublicKeys': ((json['devices_public_keys'] as Array<any>).map(BackupPublicKeyByDeviceFromJSON)),
         'timestampedSignature': TimestampedSignatureFromJSON(json['timestamped_signature']),
-        'deviceSharesIncluded': ((json['device_shares_included'] as Array<any>).map(KeyTypeFromJSON)),
+        'keyIdsIncluded': json['key_ids_included'],
     };
 }
 
-export function GetBackupKeysResponseToJSON(value?: GetBackupKeysResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function GetBackupKeysResponseToJSON(json: any): GetBackupKeysResponse {
+    return GetBackupKeysResponseToJSONTyped(json, false);
+}
+
+export function GetBackupKeysResponseToJSONTyped(value?: GetBackupKeysResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'has_backup': value.hasBackup,
-        'devices_public_keys': ((value.devicesPublicKeys as Array<any>).map(BackupPublicKeyByDeviceToJSON)),
-        'timestamped_signature': TimestampedSignatureToJSON(value.timestampedSignature),
-        'device_shares_included': ((value.deviceSharesIncluded as Array<any>).map(KeyTypeToJSON)),
+        'has_backup': value['hasBackup'],
+        'devices_public_keys': ((value['devicesPublicKeys'] as Array<any>).map(BackupPublicKeyByDeviceToJSON)),
+        'timestamped_signature': TimestampedSignatureToJSON(value['timestampedSignature']),
+        'key_ids_included': value['keyIdsIncluded'],
     };
 }
 

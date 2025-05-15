@@ -12,43 +12,56 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { ApprovalRequest } from './ApprovalRequest';
+import { mapValues } from '../runtime';
+import type { AmlPolicyMatchOutgoing } from './AmlPolicyMatchOutgoing';
 import {
-    ApprovalRequestFromJSON,
-    ApprovalRequestFromJSONTyped,
-    ApprovalRequestToJSON,
-} from './ApprovalRequest';
+    AmlPolicyMatchOutgoingFromJSON,
+    AmlPolicyMatchOutgoingFromJSONTyped,
+    AmlPolicyMatchOutgoingToJSON,
+    AmlPolicyMatchOutgoingToJSONTyped,
+} from './AmlPolicyMatchOutgoing';
+import type { TransactionRisk } from './TransactionRisk';
+import {
+    TransactionRiskFromJSON,
+    TransactionRiskFromJSONTyped,
+    TransactionRiskToJSON,
+    TransactionRiskToJSONTyped,
+} from './TransactionRisk';
+import type { SolanaMessageType } from './SolanaMessageType';
+import {
+    SolanaMessageTypeFromJSON,
+    SolanaMessageTypeFromJSONTyped,
+    SolanaMessageTypeToJSON,
+    SolanaMessageTypeToJSONTyped,
+} from './SolanaMessageType';
 import type { EnrichedSolanaAddress } from './EnrichedSolanaAddress';
 import {
     EnrichedSolanaAddressFromJSON,
     EnrichedSolanaAddressFromJSONTyped,
     EnrichedSolanaAddressToJSON,
+    EnrichedSolanaAddressToJSONTyped,
 } from './EnrichedSolanaAddress';
+import type { ApprovalRequest } from './ApprovalRequest';
+import {
+    ApprovalRequestFromJSON,
+    ApprovalRequestFromJSONTyped,
+    ApprovalRequestToJSON,
+    ApprovalRequestToJSONTyped,
+} from './ApprovalRequest';
 import type { EnrichedSolanaChain } from './EnrichedSolanaChain';
 import {
     EnrichedSolanaChainFromJSON,
     EnrichedSolanaChainFromJSONTyped,
     EnrichedSolanaChainToJSON,
+    EnrichedSolanaChainToJSONTyped,
 } from './EnrichedSolanaChain';
 import type { PolicyMatch } from './PolicyMatch';
 import {
     PolicyMatchFromJSON,
     PolicyMatchFromJSONTyped,
     PolicyMatchToJSON,
+    PolicyMatchToJSONTyped,
 } from './PolicyMatch';
-import type { SolanaMessageType } from './SolanaMessageType';
-import {
-    SolanaMessageTypeFromJSON,
-    SolanaMessageTypeFromJSONTyped,
-    SolanaMessageTypeToJSON,
-} from './SolanaMessageType';
-import type { TransactionRisk } from './TransactionRisk';
-import {
-    TransactionRiskFromJSON,
-    TransactionRiskFromJSONTyped,
-    TransactionRiskToJSON,
-} from './TransactionRisk';
 
 /**
  * 
@@ -56,6 +69,12 @@ import {
  * @interface PredictedSolanaMessage
  */
 export interface PredictedSolanaMessage {
+    /**
+     * 
+     * @type {AmlPolicyMatchOutgoing}
+     * @memberof PredictedSolanaMessage
+     */
+    amlPolicyMatch?: AmlPolicyMatchOutgoing;
     /**
      * 
      * @type {PolicyMatch}
@@ -74,6 +93,12 @@ export interface PredictedSolanaMessage {
      * @memberof PredictedSolanaMessage
      */
     risks: Array<TransactionRisk>;
+    /**
+     * 
+     * @type {string}
+     * @memberof PredictedSolanaMessage
+     */
+    note?: string;
     /**
      * 
      * @type {string}
@@ -119,17 +144,15 @@ export type PredictedSolanaMessageTypeEnum = typeof PredictedSolanaMessageTypeEn
 /**
  * Check if a given object implements the PredictedSolanaMessage interface.
  */
-export function instanceOfPredictedSolanaMessage(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "policyMatch" in value;
-    isInstance = isInstance && "risks" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "sender" in value;
-    isInstance = isInstance && "solanaMessageType" in value;
-    isInstance = isInstance && "messageToDisplay" in value;
-
-    return isInstance;
+export function instanceOfPredictedSolanaMessage(value: object): value is PredictedSolanaMessage {
+    if (!('policyMatch' in value) || value['policyMatch'] === undefined) return false;
+    if (!('risks' in value) || value['risks'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    if (!('solanaMessageType' in value) || value['solanaMessageType'] === undefined) return false;
+    if (!('messageToDisplay' in value) || value['messageToDisplay'] === undefined) return false;
+    return true;
 }
 
 export function PredictedSolanaMessageFromJSON(json: any): PredictedSolanaMessage {
@@ -137,14 +160,16 @@ export function PredictedSolanaMessageFromJSON(json: any): PredictedSolanaMessag
 }
 
 export function PredictedSolanaMessageFromJSONTyped(json: any, ignoreDiscriminator: boolean): PredictedSolanaMessage {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
+        'amlPolicyMatch': json['aml_policy_match'] == null ? undefined : AmlPolicyMatchOutgoingFromJSON(json['aml_policy_match']),
         'policyMatch': PolicyMatchFromJSON(json['policy_match']),
-        'approvalRequest': !exists(json, 'approval_request') ? undefined : ApprovalRequestFromJSON(json['approval_request']),
+        'approvalRequest': json['approval_request'] == null ? undefined : ApprovalRequestFromJSON(json['approval_request']),
         'risks': ((json['risks'] as Array<any>).map(TransactionRiskFromJSON)),
+        'note': json['note'] == null ? undefined : json['note'],
         'type': json['type'],
         'chain': EnrichedSolanaChainFromJSON(json['chain']),
         'sender': EnrichedSolanaAddressFromJSON(json['sender']),
@@ -153,23 +178,27 @@ export function PredictedSolanaMessageFromJSONTyped(json: any, ignoreDiscriminat
     };
 }
 
-export function PredictedSolanaMessageToJSON(value?: PredictedSolanaMessage | null): any {
-    if (value === undefined) {
-        return undefined;
+export function PredictedSolanaMessageToJSON(json: any): PredictedSolanaMessage {
+    return PredictedSolanaMessageToJSONTyped(json, false);
+}
+
+export function PredictedSolanaMessageToJSONTyped(value?: PredictedSolanaMessage | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'policy_match': PolicyMatchToJSON(value.policyMatch),
-        'approval_request': ApprovalRequestToJSON(value.approvalRequest),
-        'risks': ((value.risks as Array<any>).map(TransactionRiskToJSON)),
-        'type': value.type,
-        'chain': EnrichedSolanaChainToJSON(value.chain),
-        'sender': EnrichedSolanaAddressToJSON(value.sender),
-        'solana_message_type': SolanaMessageTypeToJSON(value.solanaMessageType),
-        'message_to_display': value.messageToDisplay,
+        'aml_policy_match': AmlPolicyMatchOutgoingToJSON(value['amlPolicyMatch']),
+        'policy_match': PolicyMatchToJSON(value['policyMatch']),
+        'approval_request': ApprovalRequestToJSON(value['approvalRequest']),
+        'risks': ((value['risks'] as Array<any>).map(TransactionRiskToJSON)),
+        'note': value['note'],
+        'type': value['type'],
+        'chain': EnrichedSolanaChainToJSON(value['chain']),
+        'sender': EnrichedSolanaAddressToJSON(value['sender']),
+        'solana_message_type': SolanaMessageTypeToJSON(value['solanaMessageType']),
+        'message_to_display': value['messageToDisplay'],
     };
 }
 

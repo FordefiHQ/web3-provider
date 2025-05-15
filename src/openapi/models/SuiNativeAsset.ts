@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedSuiChain } from './EnrichedSuiChain';
 import {
     EnrichedSuiChainFromJSON,
     EnrichedSuiChainFromJSONTyped,
     EnrichedSuiChainToJSON,
+    EnrichedSuiChainToJSONTyped,
 } from './EnrichedSuiChain';
 
 /**
@@ -53,12 +54,10 @@ export type SuiNativeAssetTypeEnum = typeof SuiNativeAssetTypeEnum[keyof typeof 
 /**
  * Check if a given object implements the SuiNativeAsset interface.
  */
-export function instanceOfSuiNativeAsset(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfSuiNativeAsset(value: object): value is SuiNativeAsset {
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function SuiNativeAssetFromJSON(json: any): SuiNativeAsset {
@@ -66,7 +65,7 @@ export function SuiNativeAssetFromJSON(json: any): SuiNativeAsset {
 }
 
 export function SuiNativeAssetFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiNativeAsset {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function SuiNativeAssetFromJSONTyped(json: any, ignoreDiscriminator: bool
     };
 }
 
-export function SuiNativeAssetToJSON(value?: SuiNativeAsset | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiNativeAssetToJSON(json: any): SuiNativeAsset {
+    return SuiNativeAssetToJSONTyped(json, false);
+}
+
+export function SuiNativeAssetToJSONTyped(value?: SuiNativeAsset | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain': EnrichedSuiChainToJSON(value.chain),
-        'type': value.type,
+        'chain': EnrichedSuiChainToJSON(value['chain']),
+        'type': value['type'],
     };
 }
 

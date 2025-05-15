@@ -24,6 +24,17 @@ export const SuiBalanceChangeEffectType = {
 export type SuiBalanceChangeEffectType = typeof SuiBalanceChangeEffectType[keyof typeof SuiBalanceChangeEffectType];
 
 
+export function instanceOfSuiBalanceChangeEffectType(value: any): boolean {
+    for (const key in SuiBalanceChangeEffectType) {
+        if (Object.prototype.hasOwnProperty.call(SuiBalanceChangeEffectType, key)) {
+            if (SuiBalanceChangeEffectType[key as keyof typeof SuiBalanceChangeEffectType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function SuiBalanceChangeEffectTypeFromJSON(json: any): SuiBalanceChangeEffectType {
     return SuiBalanceChangeEffectTypeFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function SuiBalanceChangeEffectTypeFromJSONTyped(json: any, ignoreDiscrim
 
 export function SuiBalanceChangeEffectTypeToJSON(value?: SuiBalanceChangeEffectType | null): any {
     return value as any;
+}
+
+export function SuiBalanceChangeEffectTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): SuiBalanceChangeEffectType {
+    return value as SuiBalanceChangeEffectType;
 }
 

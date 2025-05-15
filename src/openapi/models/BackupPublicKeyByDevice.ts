@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -36,12 +36,10 @@ export interface BackupPublicKeyByDevice {
 /**
  * Check if a given object implements the BackupPublicKeyByDevice interface.
  */
-export function instanceOfBackupPublicKeyByDevice(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "deviceId" in value;
-    isInstance = isInstance && "publicKey" in value;
-
-    return isInstance;
+export function instanceOfBackupPublicKeyByDevice(value: object): value is BackupPublicKeyByDevice {
+    if (!('deviceId' in value) || value['deviceId'] === undefined) return false;
+    if (!('publicKey' in value) || value['publicKey'] === undefined) return false;
+    return true;
 }
 
 export function BackupPublicKeyByDeviceFromJSON(json: any): BackupPublicKeyByDevice {
@@ -49,7 +47,7 @@ export function BackupPublicKeyByDeviceFromJSON(json: any): BackupPublicKeyByDev
 }
 
 export function BackupPublicKeyByDeviceFromJSONTyped(json: any, ignoreDiscriminator: boolean): BackupPublicKeyByDevice {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -59,17 +57,19 @@ export function BackupPublicKeyByDeviceFromJSONTyped(json: any, ignoreDiscrimina
     };
 }
 
-export function BackupPublicKeyByDeviceToJSON(value?: BackupPublicKeyByDevice | null): any {
-    if (value === undefined) {
-        return undefined;
+export function BackupPublicKeyByDeviceToJSON(json: any): BackupPublicKeyByDevice {
+    return BackupPublicKeyByDeviceToJSONTyped(json, false);
+}
+
+export function BackupPublicKeyByDeviceToJSONTyped(value?: BackupPublicKeyByDevice | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'device_id': value.deviceId,
-        'public_key': value.publicKey,
+        'device_id': value['deviceId'],
+        'public_key': value['publicKey'],
     };
 }
 

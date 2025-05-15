@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -36,10 +36,8 @@ export interface KeyShares {
 /**
  * Check if a given object implements the KeyShares interface.
  */
-export function instanceOfKeyShares(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfKeyShares(value: object): value is KeyShares {
+    return true;
 }
 
 export function KeySharesFromJSON(json: any): KeyShares {
@@ -47,27 +45,29 @@ export function KeySharesFromJSON(json: any): KeyShares {
 }
 
 export function KeySharesFromJSONTyped(json: any, ignoreDiscriminator: boolean): KeyShares {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'device': !exists(json, 'device') ? undefined : json['device'],
-        'platform': !exists(json, 'platform') ? undefined : json['platform'],
+        'device': json['device'] == null ? undefined : json['device'],
+        'platform': json['platform'] == null ? undefined : json['platform'],
     };
 }
 
-export function KeySharesToJSON(value?: KeyShares | null): any {
-    if (value === undefined) {
-        return undefined;
+export function KeySharesToJSON(json: any): KeyShares {
+    return KeySharesToJSONTyped(json, false);
+}
+
+export function KeySharesToJSONTyped(value?: KeyShares | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'device': value.device,
-        'platform': value.platform,
+        'device': value['device'],
+        'platform': value['platform'],
     };
 }
 

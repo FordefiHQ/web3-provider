@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -48,13 +48,11 @@ export interface SolanaTransactionAccountRequest {
 /**
  * Check if a given object implements the SolanaTransactionAccountRequest interface.
  */
-export function instanceOfSolanaTransactionAccountRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "writable" in value;
-    isInstance = isInstance && "signer" in value;
-
-    return isInstance;
+export function instanceOfSolanaTransactionAccountRequest(value: object): value is SolanaTransactionAccountRequest {
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('writable' in value) || value['writable'] === undefined) return false;
+    if (!('signer' in value) || value['signer'] === undefined) return false;
+    return true;
 }
 
 export function SolanaTransactionAccountRequestFromJSON(json: any): SolanaTransactionAccountRequest {
@@ -62,7 +60,7 @@ export function SolanaTransactionAccountRequestFromJSON(json: any): SolanaTransa
 }
 
 export function SolanaTransactionAccountRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): SolanaTransactionAccountRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -70,23 +68,25 @@ export function SolanaTransactionAccountRequestFromJSONTyped(json: any, ignoreDi
         'address': json['address'],
         'writable': json['writable'],
         'signer': json['signer'],
-        'ephemeralKey': !exists(json, 'ephemeral_key') ? undefined : json['ephemeral_key'],
+        'ephemeralKey': json['ephemeral_key'] == null ? undefined : json['ephemeral_key'],
     };
 }
 
-export function SolanaTransactionAccountRequestToJSON(value?: SolanaTransactionAccountRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SolanaTransactionAccountRequestToJSON(json: any): SolanaTransactionAccountRequest {
+    return SolanaTransactionAccountRequestToJSONTyped(json, false);
+}
+
+export function SolanaTransactionAccountRequestToJSONTyped(value?: SolanaTransactionAccountRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'address': value.address,
-        'writable': value.writable,
-        'signer': value.signer,
-        'ephemeral_key': value.ephemeralKey,
+        'address': value['address'],
+        'writable': value['writable'],
+        'signer': value['signer'],
+        'ephemeral_key': value['ephemeralKey'],
     };
 }
 

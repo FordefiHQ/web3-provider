@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EnrichedAptosAddress } from './EnrichedAptosAddress';
 import {
     EnrichedAptosAddressFromJSON,
     EnrichedAptosAddressFromJSONTyped,
     EnrichedAptosAddressToJSON,
+    EnrichedAptosAddressToJSONTyped,
 } from './EnrichedAptosAddress';
 
 /**
@@ -83,17 +84,15 @@ export type AptosEntryFunctionPayloadTypeEnum = typeof AptosEntryFunctionPayload
 /**
  * Check if a given object implements the AptosEntryFunctionPayload interface.
  */
-export function instanceOfAptosEntryFunctionPayload(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "typedArguments" in value;
-    isInstance = isInstance && "arguments" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "functionId" in value;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "module" in value;
-    isInstance = isInstance && "functionName" in value;
-
-    return isInstance;
+export function instanceOfAptosEntryFunctionPayload(value: object): value is AptosEntryFunctionPayload {
+    if (!('typedArguments' in value) || value['typedArguments'] === undefined) return false;
+    if (!('arguments' in value) || value['arguments'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('functionId' in value) || value['functionId'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('module' in value) || value['module'] === undefined) return false;
+    if (!('functionName' in value) || value['functionName'] === undefined) return false;
+    return true;
 }
 
 export function AptosEntryFunctionPayloadFromJSON(json: any): AptosEntryFunctionPayload {
@@ -101,7 +100,7 @@ export function AptosEntryFunctionPayloadFromJSON(json: any): AptosEntryFunction
 }
 
 export function AptosEntryFunctionPayloadFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosEntryFunctionPayload {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -116,22 +115,24 @@ export function AptosEntryFunctionPayloadFromJSONTyped(json: any, ignoreDiscrimi
     };
 }
 
-export function AptosEntryFunctionPayloadToJSON(value?: AptosEntryFunctionPayload | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AptosEntryFunctionPayloadToJSON(json: any): AptosEntryFunctionPayload {
+    return AptosEntryFunctionPayloadToJSONTyped(json, false);
+}
+
+export function AptosEntryFunctionPayloadToJSONTyped(value?: AptosEntryFunctionPayload | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'typed_arguments': value.typedArguments,
-        'arguments': value.arguments,
-        'type': value.type,
-        'function_id': value.functionId,
-        'address': EnrichedAptosAddressToJSON(value.address),
-        'module': value.module,
-        'function_name': value.functionName,
+        'typed_arguments': value['typedArguments'],
+        'arguments': value['arguments'],
+        'type': value['type'],
+        'function_id': value['functionId'],
+        'address': EnrichedAptosAddressToJSON(value['address']),
+        'module': value['module'],
+        'function_name': value['functionName'],
     };
 }
 

@@ -12,13 +12,35 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+    PricedAssetToJSONTyped,
+} from './PricedAsset';
+import type { SolanaFeeType } from './SolanaFeeType';
+import {
+    SolanaFeeTypeFromJSON,
+    SolanaFeeTypeFromJSONTyped,
+    SolanaFeeTypeToJSON,
+    SolanaFeeTypeToJSONTyped,
+} from './SolanaFeeType';
 import type { Price } from './Price';
 import {
     PriceFromJSON,
     PriceFromJSONTyped,
     PriceToJSON,
+    PriceToJSONTyped,
 } from './Price';
+import type { FeePriorityLevel } from './FeePriorityLevel';
+import {
+    FeePriorityLevelFromJSON,
+    FeePriorityLevelFromJSONTyped,
+    FeePriorityLevelToJSON,
+    FeePriorityLevelToJSONTyped,
+} from './FeePriorityLevel';
 
 /**
  * 
@@ -28,26 +50,61 @@ import {
 export interface SolanaFee {
     /**
      * 
+     * @type {FeePriorityLevel}
+     * @memberof SolanaFee
+     */
+    priorityLevel: FeePriorityLevel;
+    /**
+     * 
+     * @type {string}
+     * @memberof SolanaFee
+     */
+    baseFee: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SolanaFee
+     */
+    priorityFee: string;
+    /**
+     * 
      * @type {string}
      * @memberof SolanaFee
      */
     fee: string;
     /**
      * 
+     * @type {SolanaFeeType}
+     * @memberof SolanaFee
+     */
+    feeType: SolanaFeeType;
+    /**
+     * 
      * @type {Price}
      * @memberof SolanaFee
      */
     fiatPrice?: Price;
+    /**
+     * 
+     * @type {PricedAsset}
+     * @memberof SolanaFee
+     */
+    pricedAsset: PricedAsset;
 }
+
+
 
 /**
  * Check if a given object implements the SolanaFee interface.
  */
-export function instanceOfSolanaFee(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "fee" in value;
-
-    return isInstance;
+export function instanceOfSolanaFee(value: object): value is SolanaFee {
+    if (!('priorityLevel' in value) || value['priorityLevel'] === undefined) return false;
+    if (!('baseFee' in value) || value['baseFee'] === undefined) return false;
+    if (!('priorityFee' in value) || value['priorityFee'] === undefined) return false;
+    if (!('fee' in value) || value['fee'] === undefined) return false;
+    if (!('feeType' in value) || value['feeType'] === undefined) return false;
+    if (!('pricedAsset' in value) || value['pricedAsset'] === undefined) return false;
+    return true;
 }
 
 export function SolanaFeeFromJSON(json: any): SolanaFee {
@@ -55,27 +112,39 @@ export function SolanaFeeFromJSON(json: any): SolanaFee {
 }
 
 export function SolanaFeeFromJSONTyped(json: any, ignoreDiscriminator: boolean): SolanaFee {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
+        'priorityLevel': FeePriorityLevelFromJSON(json['priority_level']),
+        'baseFee': json['base_fee'],
+        'priorityFee': json['priority_fee'],
         'fee': json['fee'],
-        'fiatPrice': !exists(json, 'fiat_price') ? undefined : PriceFromJSON(json['fiat_price']),
+        'feeType': SolanaFeeTypeFromJSON(json['fee_type']),
+        'fiatPrice': json['fiat_price'] == null ? undefined : PriceFromJSON(json['fiat_price']),
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }
 
-export function SolanaFeeToJSON(value?: SolanaFee | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SolanaFeeToJSON(json: any): SolanaFee {
+    return SolanaFeeToJSONTyped(json, false);
+}
+
+export function SolanaFeeToJSONTyped(value?: SolanaFee | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'fee': value.fee,
-        'fiat_price': PriceToJSON(value.fiatPrice),
+        'priority_level': FeePriorityLevelToJSON(value['priorityLevel']),
+        'base_fee': value['baseFee'],
+        'priority_fee': value['priorityFee'],
+        'fee': value['fee'],
+        'fee_type': SolanaFeeTypeToJSON(value['feeType']),
+        'fiat_price': PriceToJSON(value['fiatPrice']),
+        'priced_asset': PricedAssetToJSON(value['pricedAsset']),
     };
 }
 

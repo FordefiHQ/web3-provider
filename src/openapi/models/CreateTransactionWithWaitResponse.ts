@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { CreateTransactionWithWaitResponseState } from './CreateTransactionWithWaitResponseState';
 import {
     CreateTransactionWithWaitResponseStateFromJSON,
     CreateTransactionWithWaitResponseStateFromJSONTyped,
     CreateTransactionWithWaitResponseStateToJSON,
+    CreateTransactionWithWaitResponseStateToJSONTyped,
 } from './CreateTransactionWithWaitResponseState';
 
 /**
@@ -67,16 +68,14 @@ export interface CreateTransactionWithWaitResponse {
 /**
  * Check if a given object implements the CreateTransactionWithWaitResponse interface.
  */
-export function instanceOfCreateTransactionWithWaitResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "signatures" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "hasTimedOut" in value;
-
-    return isInstance;
+export function instanceOfCreateTransactionWithWaitResponse(value: object): value is CreateTransactionWithWaitResponse {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('signatures' in value) || value['signatures'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('hasTimedOut' in value) || value['hasTimedOut'] === undefined) return false;
+    return true;
 }
 
 export function CreateTransactionWithWaitResponseFromJSON(json: any): CreateTransactionWithWaitResponse {
@@ -84,7 +83,7 @@ export function CreateTransactionWithWaitResponseFromJSON(json: any): CreateTran
 }
 
 export function CreateTransactionWithWaitResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateTransactionWithWaitResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -98,21 +97,23 @@ export function CreateTransactionWithWaitResponseFromJSONTyped(json: any, ignore
     };
 }
 
-export function CreateTransactionWithWaitResponseToJSON(value?: CreateTransactionWithWaitResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateTransactionWithWaitResponseToJSON(json: any): CreateTransactionWithWaitResponse {
+    return CreateTransactionWithWaitResponseToJSONTyped(json, false);
+}
+
+export function CreateTransactionWithWaitResponseToJSONTyped(value?: CreateTransactionWithWaitResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'signatures': value.signatures,
-        'state': CreateTransactionWithWaitResponseStateToJSON(value.state),
-        'has_timed_out': value.hasTimedOut,
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'signatures': value['signatures'],
+        'state': CreateTransactionWithWaitResponseStateToJSON(value['state']),
+        'has_timed_out': value['hasTimedOut'],
     };
 }
 

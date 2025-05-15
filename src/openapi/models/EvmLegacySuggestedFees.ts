@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { LegacyGasFields } from './LegacyGasFields';
 import {
     LegacyGasFieldsFromJSON,
     LegacyGasFieldsFromJSONTyped,
     LegacyGasFieldsToJSON,
+    LegacyGasFieldsToJSONTyped,
 } from './LegacyGasFields';
 
 /**
@@ -65,14 +66,12 @@ export type EvmLegacySuggestedFeesTypeEnum = typeof EvmLegacySuggestedFeesTypeEn
 /**
  * Check if a given object implements the EvmLegacySuggestedFees interface.
  */
-export function instanceOfEvmLegacySuggestedFees(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "low" in value;
-    isInstance = isInstance && "medium" in value;
-    isInstance = isInstance && "high" in value;
-
-    return isInstance;
+export function instanceOfEvmLegacySuggestedFees(value: object): value is EvmLegacySuggestedFees {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('low' in value) || value['low'] === undefined) return false;
+    if (!('medium' in value) || value['medium'] === undefined) return false;
+    if (!('high' in value) || value['high'] === undefined) return false;
+    return true;
 }
 
 export function EvmLegacySuggestedFeesFromJSON(json: any): EvmLegacySuggestedFees {
@@ -80,7 +79,7 @@ export function EvmLegacySuggestedFeesFromJSON(json: any): EvmLegacySuggestedFee
 }
 
 export function EvmLegacySuggestedFeesFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmLegacySuggestedFees {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -92,19 +91,21 @@ export function EvmLegacySuggestedFeesFromJSONTyped(json: any, ignoreDiscriminat
     };
 }
 
-export function EvmLegacySuggestedFeesToJSON(value?: EvmLegacySuggestedFees | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EvmLegacySuggestedFeesToJSON(json: any): EvmLegacySuggestedFees {
+    return EvmLegacySuggestedFeesToJSONTyped(json, false);
+}
+
+export function EvmLegacySuggestedFeesToJSONTyped(value?: EvmLegacySuggestedFees | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'low': LegacyGasFieldsToJSON(value.low),
-        'medium': LegacyGasFieldsToJSON(value.medium),
-        'high': LegacyGasFieldsToJSON(value.high),
+        'type': value['type'],
+        'low': LegacyGasFieldsToJSON(value['low']),
+        'medium': LegacyGasFieldsToJSON(value['medium']),
+        'high': LegacyGasFieldsToJSON(value['high']),
     };
 }
 

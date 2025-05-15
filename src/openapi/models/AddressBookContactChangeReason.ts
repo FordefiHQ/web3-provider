@@ -24,6 +24,17 @@ export const AddressBookContactChangeReason = {
 export type AddressBookContactChangeReason = typeof AddressBookContactChangeReason[keyof typeof AddressBookContactChangeReason];
 
 
+export function instanceOfAddressBookContactChangeReason(value: any): boolean {
+    for (const key in AddressBookContactChangeReason) {
+        if (Object.prototype.hasOwnProperty.call(AddressBookContactChangeReason, key)) {
+            if (AddressBookContactChangeReason[key as keyof typeof AddressBookContactChangeReason] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function AddressBookContactChangeReasonFromJSON(json: any): AddressBookContactChangeReason {
     return AddressBookContactChangeReasonFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function AddressBookContactChangeReasonFromJSONTyped(json: any, ignoreDis
 
 export function AddressBookContactChangeReasonToJSON(value?: AddressBookContactChangeReason | null): any {
     return value as any;
+}
+
+export function AddressBookContactChangeReasonToJSONTyped(value: any, ignoreDiscriminator: boolean): AddressBookContactChangeReason {
+    return value as AddressBookContactChangeReason;
 }
 

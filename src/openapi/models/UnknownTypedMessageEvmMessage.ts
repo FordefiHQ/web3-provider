@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EvmMessageDomainData } from './EvmMessageDomainData';
 import {
     EvmMessageDomainDataFromJSON,
     EvmMessageDomainDataFromJSONTyped,
     EvmMessageDomainDataToJSON,
+    EvmMessageDomainDataToJSONTyped,
 } from './EvmMessageDomainData';
 
 /**
@@ -32,6 +33,12 @@ export interface UnknownTypedMessageEvmMessage {
      * @memberof UnknownTypedMessageEvmMessage
      */
     domain: EvmMessageDomainData;
+    /**
+     * 
+     * @type {string}
+     * @memberof UnknownTypedMessageEvmMessage
+     */
+    primaryType: string;
     /**
      * 
      * @type {string}
@@ -53,12 +60,11 @@ export type UnknownTypedMessageEvmMessageTypeEnum = typeof UnknownTypedMessageEv
 /**
  * Check if a given object implements the UnknownTypedMessageEvmMessage interface.
  */
-export function instanceOfUnknownTypedMessageEvmMessage(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "domain" in value;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfUnknownTypedMessageEvmMessage(value: object): value is UnknownTypedMessageEvmMessage {
+    if (!('domain' in value) || value['domain'] === undefined) return false;
+    if (!('primaryType' in value) || value['primaryType'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function UnknownTypedMessageEvmMessageFromJSON(json: any): UnknownTypedMessageEvmMessage {
@@ -66,27 +72,31 @@ export function UnknownTypedMessageEvmMessageFromJSON(json: any): UnknownTypedMe
 }
 
 export function UnknownTypedMessageEvmMessageFromJSONTyped(json: any, ignoreDiscriminator: boolean): UnknownTypedMessageEvmMessage {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'domain': EvmMessageDomainDataFromJSON(json['domain']),
+        'primaryType': json['primary_type'],
         'type': json['type'],
     };
 }
 
-export function UnknownTypedMessageEvmMessageToJSON(value?: UnknownTypedMessageEvmMessage | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UnknownTypedMessageEvmMessageToJSON(json: any): UnknownTypedMessageEvmMessage {
+    return UnknownTypedMessageEvmMessageToJSONTyped(json, false);
+}
+
+export function UnknownTypedMessageEvmMessageToJSONTyped(value?: UnknownTypedMessageEvmMessage | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'domain': EvmMessageDomainDataToJSON(value.domain),
-        'type': value.type,
+        'domain': EvmMessageDomainDataToJSON(value['domain']),
+        'primary_type': value['primaryType'],
+        'type': value['type'],
     };
 }
 

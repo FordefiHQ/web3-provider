@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EvmAddress } from './EvmAddress';
 import {
     EvmAddressFromJSON,
     EvmAddressFromJSONTyped,
     EvmAddressToJSON,
+    EvmAddressToJSONTyped,
 } from './EvmAddress';
 
 /**
@@ -65,14 +66,12 @@ export type Erc721TypeEnum = typeof Erc721TypeEnum[keyof typeof Erc721TypeEnum];
 /**
  * Check if a given object implements the Erc721 interface.
  */
-export function instanceOfErc721(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "symbol" in value;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfErc721(value: object): value is Erc721 {
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('symbol' in value) || value['symbol'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function Erc721FromJSON(json: any): Erc721 {
@@ -80,7 +79,7 @@ export function Erc721FromJSON(json: any): Erc721 {
 }
 
 export function Erc721FromJSONTyped(json: any, ignoreDiscriminator: boolean): Erc721 {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -92,19 +91,21 @@ export function Erc721FromJSONTyped(json: any, ignoreDiscriminator: boolean): Er
     };
 }
 
-export function Erc721ToJSON(value?: Erc721 | null): any {
-    if (value === undefined) {
-        return undefined;
+export function Erc721ToJSON(json: any): Erc721 {
+    return Erc721ToJSONTyped(json, false);
+}
+
+export function Erc721ToJSONTyped(value?: Erc721 | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'address': EvmAddressToJSON(value.address),
-        'name': value.name,
-        'symbol': value.symbol,
-        'type': value.type,
+        'address': EvmAddressToJSON(value['address']),
+        'name': value['name'],
+        'symbol': value['symbol'],
+        'type': value['type'],
     };
 }
 

@@ -23,6 +23,17 @@ export const AptosMessageType = {
 export type AptosMessageType = typeof AptosMessageType[keyof typeof AptosMessageType];
 
 
+export function instanceOfAptosMessageType(value: any): boolean {
+    for (const key in AptosMessageType) {
+        if (Object.prototype.hasOwnProperty.call(AptosMessageType, key)) {
+            if (AptosMessageType[key as keyof typeof AptosMessageType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function AptosMessageTypeFromJSON(json: any): AptosMessageType {
     return AptosMessageTypeFromJSONTyped(json, false);
 }
@@ -33,5 +44,9 @@ export function AptosMessageTypeFromJSONTyped(json: any, ignoreDiscriminator: bo
 
 export function AptosMessageTypeToJSON(value?: AptosMessageType | null): any {
     return value as any;
+}
+
+export function AptosMessageTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): AptosMessageType {
+    return value as AptosMessageType;
 }
 

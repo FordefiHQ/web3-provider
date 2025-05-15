@@ -12,12 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { AptosAssetIdentifierRequest } from './AptosAssetIdentifierRequest';
+import {
+    AptosAssetIdentifierRequestFromJSON,
+    AptosAssetIdentifierRequestFromJSONTyped,
+    AptosAssetIdentifierRequestToJSON,
+    AptosAssetIdentifierRequestToJSONTyped,
+} from './AptosAssetIdentifierRequest';
 import type { AptosChainUniqueId } from './AptosChainUniqueId';
 import {
     AptosChainUniqueIdFromJSON,
     AptosChainUniqueIdFromJSONTyped,
     AptosChainUniqueIdToJSON,
+    AptosChainUniqueIdToJSONTyped,
 } from './AptosChainUniqueId';
 
 /**
@@ -49,7 +57,13 @@ export interface CreateAptosContactRequest {
      * @type {Array<AptosChainUniqueId>}
      * @memberof CreateAptosContactRequest
      */
-    chains: Array<AptosChainUniqueId>;
+    chains?: Array<AptosChainUniqueId>;
+    /**
+     * 
+     * @type {Array<AptosAssetIdentifierRequest>}
+     * @memberof CreateAptosContactRequest
+     */
+    assetsIdentifiers?: Array<AptosAssetIdentifierRequest>;
 }
 
 
@@ -65,14 +79,11 @@ export type CreateAptosContactRequestTypeEnum = typeof CreateAptosContactRequest
 /**
  * Check if a given object implements the CreateAptosContactRequest interface.
  */
-export function instanceOfCreateAptosContactRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "chains" in value;
-
-    return isInstance;
+export function instanceOfCreateAptosContactRequest(value: object): value is CreateAptosContactRequest {
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    return true;
 }
 
 export function CreateAptosContactRequestFromJSON(json: any): CreateAptosContactRequest {
@@ -80,7 +91,7 @@ export function CreateAptosContactRequestFromJSON(json: any): CreateAptosContact
 }
 
 export function CreateAptosContactRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateAptosContactRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -88,23 +99,27 @@ export function CreateAptosContactRequestFromJSONTyped(json: any, ignoreDiscrimi
         'name': json['name'],
         'type': json['type'],
         'address': json['address'],
-        'chains': ((json['chains'] as Array<any>).map(AptosChainUniqueIdFromJSON)),
+        'chains': json['chains'] == null ? undefined : ((json['chains'] as Array<any>).map(AptosChainUniqueIdFromJSON)),
+        'assetsIdentifiers': json['assets_identifiers'] == null ? undefined : ((json['assets_identifiers'] as Array<any>).map(AptosAssetIdentifierRequestFromJSON)),
     };
 }
 
-export function CreateAptosContactRequestToJSON(value?: CreateAptosContactRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateAptosContactRequestToJSON(json: any): CreateAptosContactRequest {
+    return CreateAptosContactRequestToJSONTyped(json, false);
+}
+
+export function CreateAptosContactRequestToJSONTyped(value?: CreateAptosContactRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'name': value.name,
-        'type': value.type,
-        'address': value.address,
-        'chains': ((value.chains as Array<any>).map(AptosChainUniqueIdToJSON)),
+        'name': value['name'],
+        'type': value['type'],
+        'address': value['address'],
+        'chains': value['chains'] == null ? undefined : ((value['chains'] as Array<any>).map(AptosChainUniqueIdToJSON)),
+        'assets_identifiers': value['assetsIdentifiers'] == null ? undefined : ((value['assetsIdentifiers'] as Array<any>).map(AptosAssetIdentifierRequestToJSON)),
     };
 }
 

@@ -12,25 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { TonAddressFee } from './TonAddressFee';
-import {
-    TonAddressFeeFromJSON,
-    TonAddressFeeFromJSONTyped,
-    TonAddressFeeToJSON,
-} from './TonAddressFee';
+import { mapValues } from '../runtime';
 import type { TonEffects } from './TonEffects';
 import {
     TonEffectsFromJSON,
     TonEffectsFromJSONTyped,
     TonEffectsToJSON,
+    TonEffectsToJSONTyped,
 } from './TonEffects';
 import type { TonReversion } from './TonReversion';
 import {
     TonReversionFromJSON,
     TonReversionFromJSONTyped,
     TonReversionToJSON,
+    TonReversionToJSONTyped,
 } from './TonReversion';
+import type { TonAddressFee } from './TonAddressFee';
+import {
+    TonAddressFeeFromJSON,
+    TonAddressFeeFromJSONTyped,
+    TonAddressFeeToJSON,
+    TonAddressFeeToJSONTyped,
+} from './TonAddressFee';
 
 /**
  * 
@@ -61,13 +64,11 @@ export interface TonTransactionResult {
 /**
  * Check if a given object implements the TonTransactionResult interface.
  */
-export function instanceOfTonTransactionResult(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "reversion" in value;
-    isInstance = isInstance && "addressFees" in value;
-    isInstance = isInstance && "effects" in value;
-
-    return isInstance;
+export function instanceOfTonTransactionResult(value: object): value is TonTransactionResult {
+    if (!('reversion' in value) || value['reversion'] === undefined) return false;
+    if (!('addressFees' in value) || value['addressFees'] === undefined) return false;
+    if (!('effects' in value) || value['effects'] === undefined) return false;
+    return true;
 }
 
 export function TonTransactionResultFromJSON(json: any): TonTransactionResult {
@@ -75,7 +76,7 @@ export function TonTransactionResultFromJSON(json: any): TonTransactionResult {
 }
 
 export function TonTransactionResultFromJSONTyped(json: any, ignoreDiscriminator: boolean): TonTransactionResult {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -86,18 +87,20 @@ export function TonTransactionResultFromJSONTyped(json: any, ignoreDiscriminator
     };
 }
 
-export function TonTransactionResultToJSON(value?: TonTransactionResult | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TonTransactionResultToJSON(json: any): TonTransactionResult {
+    return TonTransactionResultToJSONTyped(json, false);
+}
+
+export function TonTransactionResultToJSONTyped(value?: TonTransactionResult | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'reversion': TonReversionToJSON(value.reversion),
-        'address_fees': ((value.addressFees as Array<any>).map(TonAddressFeeToJSON)),
-        'effects': TonEffectsToJSON(value.effects),
+        'reversion': TonReversionToJSON(value['reversion']),
+        'address_fees': ((value['addressFees'] as Array<any>).map(TonAddressFeeToJSON)),
+        'effects': TonEffectsToJSON(value['effects']),
     };
 }
 

@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -30,11 +30,9 @@ export interface TestWebhookRequest {
 /**
  * Check if a given object implements the TestWebhookRequest interface.
  */
-export function instanceOfTestWebhookRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "url" in value;
-
-    return isInstance;
+export function instanceOfTestWebhookRequest(value: object): value is TestWebhookRequest {
+    if (!('url' in value) || value['url'] === undefined) return false;
+    return true;
 }
 
 export function TestWebhookRequestFromJSON(json: any): TestWebhookRequest {
@@ -42,7 +40,7 @@ export function TestWebhookRequestFromJSON(json: any): TestWebhookRequest {
 }
 
 export function TestWebhookRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): TestWebhookRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -51,16 +49,18 @@ export function TestWebhookRequestFromJSONTyped(json: any, ignoreDiscriminator: 
     };
 }
 
-export function TestWebhookRequestToJSON(value?: TestWebhookRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TestWebhookRequestToJSON(json: any): TestWebhookRequest {
+    return TestWebhookRequestToJSONTyped(json, false);
+}
+
+export function TestWebhookRequestToJSONTyped(value?: TestWebhookRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'url': value.url,
+        'url': value['url'],
     };
 }
 

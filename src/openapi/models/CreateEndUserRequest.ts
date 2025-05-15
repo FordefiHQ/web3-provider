@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -30,11 +30,9 @@ export interface CreateEndUserRequest {
 /**
  * Check if a given object implements the CreateEndUserRequest interface.
  */
-export function instanceOfCreateEndUserRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "externalId" in value;
-
-    return isInstance;
+export function instanceOfCreateEndUserRequest(value: object): value is CreateEndUserRequest {
+    if (!('externalId' in value) || value['externalId'] === undefined) return false;
+    return true;
 }
 
 export function CreateEndUserRequestFromJSON(json: any): CreateEndUserRequest {
@@ -42,7 +40,7 @@ export function CreateEndUserRequestFromJSON(json: any): CreateEndUserRequest {
 }
 
 export function CreateEndUserRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateEndUserRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -51,16 +49,18 @@ export function CreateEndUserRequestFromJSONTyped(json: any, ignoreDiscriminator
     };
 }
 
-export function CreateEndUserRequestToJSON(value?: CreateEndUserRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateEndUserRequestToJSON(json: any): CreateEndUserRequest {
+    return CreateEndUserRequestToJSONTyped(json, false);
+}
+
+export function CreateEndUserRequestToJSONTyped(value?: CreateEndUserRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'external_id': value.externalId,
+        'external_id': value['externalId'],
     };
 }
 

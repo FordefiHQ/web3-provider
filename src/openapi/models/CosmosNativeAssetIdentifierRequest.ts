@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { CosmosChainUniqueId } from './CosmosChainUniqueId';
 import {
     CosmosChainUniqueIdFromJSON,
     CosmosChainUniqueIdFromJSONTyped,
     CosmosChainUniqueIdToJSON,
+    CosmosChainUniqueIdToJSONTyped,
 } from './CosmosChainUniqueId';
 
 /**
@@ -53,12 +54,10 @@ export type CosmosNativeAssetIdentifierRequestTypeEnum = typeof CosmosNativeAsse
 /**
  * Check if a given object implements the CosmosNativeAssetIdentifierRequest interface.
  */
-export function instanceOfCosmosNativeAssetIdentifierRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfCosmosNativeAssetIdentifierRequest(value: object): value is CosmosNativeAssetIdentifierRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function CosmosNativeAssetIdentifierRequestFromJSON(json: any): CosmosNativeAssetIdentifierRequest {
@@ -66,7 +65,7 @@ export function CosmosNativeAssetIdentifierRequestFromJSON(json: any): CosmosNat
 }
 
 export function CosmosNativeAssetIdentifierRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosNativeAssetIdentifierRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function CosmosNativeAssetIdentifierRequestFromJSONTyped(json: any, ignor
     };
 }
 
-export function CosmosNativeAssetIdentifierRequestToJSON(value?: CosmosNativeAssetIdentifierRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosNativeAssetIdentifierRequestToJSON(json: any): CosmosNativeAssetIdentifierRequest {
+    return CosmosNativeAssetIdentifierRequestToJSONTyped(json, false);
+}
+
+export function CosmosNativeAssetIdentifierRequestToJSONTyped(value?: CosmosNativeAssetIdentifierRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'chain': CosmosChainUniqueIdToJSON(value.chain),
+        'type': value['type'],
+        'chain': CosmosChainUniqueIdToJSON(value['chain']),
     };
 }
 

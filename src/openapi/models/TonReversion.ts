@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { TonReversionState } from './TonReversionState';
 import {
     TonReversionStateFromJSON,
     TonReversionStateFromJSONTyped,
     TonReversionStateToJSON,
+    TonReversionStateToJSONTyped,
 } from './TonReversionState';
 
 /**
@@ -40,14 +41,14 @@ export interface TonReversion {
     reason?: string;
 }
 
+
+
 /**
  * Check if a given object implements the TonReversion interface.
  */
-export function instanceOfTonReversion(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "state" in value;
-
-    return isInstance;
+export function instanceOfTonReversion(value: object): value is TonReversion {
+    if (!('state' in value) || value['state'] === undefined) return false;
+    return true;
 }
 
 export function TonReversionFromJSON(json: any): TonReversion {
@@ -55,27 +56,29 @@ export function TonReversionFromJSON(json: any): TonReversion {
 }
 
 export function TonReversionFromJSONTyped(json: any, ignoreDiscriminator: boolean): TonReversion {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'state': TonReversionStateFromJSON(json['state']),
-        'reason': !exists(json, 'reason') ? undefined : json['reason'],
+        'reason': json['reason'] == null ? undefined : json['reason'],
     };
 }
 
-export function TonReversionToJSON(value?: TonReversion | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TonReversionToJSON(json: any): TonReversion {
+    return TonReversionToJSONTyped(json, false);
+}
+
+export function TonReversionToJSONTyped(value?: TonReversion | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'state': TonReversionStateToJSON(value.state),
-        'reason': value.reason,
+        'state': TonReversionStateToJSON(value['state']),
+        'reason': value['reason'],
     };
 }
 

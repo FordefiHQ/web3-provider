@@ -25,6 +25,17 @@ export const TransactionPolicyMatchActionType = {
 export type TransactionPolicyMatchActionType = typeof TransactionPolicyMatchActionType[keyof typeof TransactionPolicyMatchActionType];
 
 
+export function instanceOfTransactionPolicyMatchActionType(value: any): boolean {
+    for (const key in TransactionPolicyMatchActionType) {
+        if (Object.prototype.hasOwnProperty.call(TransactionPolicyMatchActionType, key)) {
+            if (TransactionPolicyMatchActionType[key as keyof typeof TransactionPolicyMatchActionType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function TransactionPolicyMatchActionTypeFromJSON(json: any): TransactionPolicyMatchActionType {
     return TransactionPolicyMatchActionTypeFromJSONTyped(json, false);
 }
@@ -35,5 +46,9 @@ export function TransactionPolicyMatchActionTypeFromJSONTyped(json: any, ignoreD
 
 export function TransactionPolicyMatchActionTypeToJSON(value?: TransactionPolicyMatchActionType | null): any {
     return value as any;
+}
+
+export function TransactionPolicyMatchActionTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): TransactionPolicyMatchActionType {
+    return value as TransactionPolicyMatchActionType;
 }
 

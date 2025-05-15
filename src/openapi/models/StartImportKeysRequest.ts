@@ -12,47 +12,59 @@
  * Do not edit the class manually.
  */
 
+import type { FireblocksImportPackage } from './FireblocksImportPackage';
 import {
-    FireblocksImportPackage,
     instanceOfFireblocksImportPackage,
     FireblocksImportPackageFromJSON,
     FireblocksImportPackageFromJSONTyped,
     FireblocksImportPackageToJSON,
 } from './FireblocksImportPackage';
+import type { StandaloneImportPackage } from './StandaloneImportPackage';
+import {
+    instanceOfStandaloneImportPackage,
+    StandaloneImportPackageFromJSON,
+    StandaloneImportPackageFromJSONTyped,
+    StandaloneImportPackageToJSON,
+} from './StandaloneImportPackage';
 
 /**
  * @type StartImportKeysRequest
  * 
  * @export
  */
-export type StartImportKeysRequest = { type: 'fireblocks' } & FireblocksImportPackage;
+export type StartImportKeysRequest = { type: 'fireblocks' } & FireblocksImportPackage | { type: 'standalone' } & StandaloneImportPackage;
 
 export function StartImportKeysRequestFromJSON(json: any): StartImportKeysRequest {
     return StartImportKeysRequestFromJSONTyped(json, false);
 }
 
 export function StartImportKeysRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): StartImportKeysRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'fireblocks':
-            return {...FireblocksImportPackageFromJSONTyped(json, true), type: 'fireblocks'};
+            return Object.assign({}, FireblocksImportPackageFromJSONTyped(json, true), { type: 'fireblocks' } as const);
+        case 'standalone':
+            return Object.assign({}, StandaloneImportPackageFromJSONTyped(json, true), { type: 'standalone' } as const);
         default:
             throw new Error(`No variant of StartImportKeysRequest exists with 'type=${json['type']}'`);
     }
 }
 
-export function StartImportKeysRequestToJSON(value?: StartImportKeysRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function StartImportKeysRequestToJSON(json: any): any {
+    return StartImportKeysRequestToJSONTyped(json, false);
+}
+
+export function StartImportKeysRequestToJSONTyped(value?: StartImportKeysRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'fireblocks':
-            return FireblocksImportPackageToJSON(value);
+            return Object.assign({}, FireblocksImportPackageToJSON(value), { type: 'fireblocks' } as const);
+        case 'standalone':
+            return Object.assign({}, StandaloneImportPackageToJSON(value), { type: 'standalone' } as const);
         default:
             throw new Error(`No variant of StartImportKeysRequest exists with 'type=${value['type']}'`);
     }

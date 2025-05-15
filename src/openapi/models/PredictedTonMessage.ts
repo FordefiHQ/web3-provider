@@ -12,43 +12,56 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { ApprovalRequest } from './ApprovalRequest';
-import {
-    ApprovalRequestFromJSON,
-    ApprovalRequestFromJSONTyped,
-    ApprovalRequestToJSON,
-} from './ApprovalRequest';
+import { mapValues } from '../runtime';
 import type { EnrichedTonAddress } from './EnrichedTonAddress';
 import {
     EnrichedTonAddressFromJSON,
     EnrichedTonAddressFromJSONTyped,
     EnrichedTonAddressToJSON,
+    EnrichedTonAddressToJSONTyped,
 } from './EnrichedTonAddress';
+import type { AmlPolicyMatchOutgoing } from './AmlPolicyMatchOutgoing';
+import {
+    AmlPolicyMatchOutgoingFromJSON,
+    AmlPolicyMatchOutgoingFromJSONTyped,
+    AmlPolicyMatchOutgoingToJSON,
+    AmlPolicyMatchOutgoingToJSONTyped,
+} from './AmlPolicyMatchOutgoing';
 import type { EnrichedTonChain } from './EnrichedTonChain';
 import {
     EnrichedTonChainFromJSON,
     EnrichedTonChainFromJSONTyped,
     EnrichedTonChainToJSON,
+    EnrichedTonChainToJSONTyped,
 } from './EnrichedTonChain';
-import type { PolicyMatch } from './PolicyMatch';
-import {
-    PolicyMatchFromJSON,
-    PolicyMatchFromJSONTyped,
-    PolicyMatchToJSON,
-} from './PolicyMatch';
 import type { TonMessageType } from './TonMessageType';
 import {
     TonMessageTypeFromJSON,
     TonMessageTypeFromJSONTyped,
     TonMessageTypeToJSON,
+    TonMessageTypeToJSONTyped,
 } from './TonMessageType';
 import type { TransactionRisk } from './TransactionRisk';
 import {
     TransactionRiskFromJSON,
     TransactionRiskFromJSONTyped,
     TransactionRiskToJSON,
+    TransactionRiskToJSONTyped,
 } from './TransactionRisk';
+import type { ApprovalRequest } from './ApprovalRequest';
+import {
+    ApprovalRequestFromJSON,
+    ApprovalRequestFromJSONTyped,
+    ApprovalRequestToJSON,
+    ApprovalRequestToJSONTyped,
+} from './ApprovalRequest';
+import type { PolicyMatch } from './PolicyMatch';
+import {
+    PolicyMatchFromJSON,
+    PolicyMatchFromJSONTyped,
+    PolicyMatchToJSON,
+    PolicyMatchToJSONTyped,
+} from './PolicyMatch';
 
 /**
  * 
@@ -56,6 +69,12 @@ import {
  * @interface PredictedTonMessage
  */
 export interface PredictedTonMessage {
+    /**
+     * 
+     * @type {AmlPolicyMatchOutgoing}
+     * @memberof PredictedTonMessage
+     */
+    amlPolicyMatch?: AmlPolicyMatchOutgoing;
     /**
      * 
      * @type {PolicyMatch}
@@ -74,6 +93,12 @@ export interface PredictedTonMessage {
      * @memberof PredictedTonMessage
      */
     risks: Array<TransactionRisk>;
+    /**
+     * 
+     * @type {string}
+     * @memberof PredictedTonMessage
+     */
+    note?: string;
     /**
      * 
      * @type {string}
@@ -119,17 +144,15 @@ export type PredictedTonMessageTypeEnum = typeof PredictedTonMessageTypeEnum[key
 /**
  * Check if a given object implements the PredictedTonMessage interface.
  */
-export function instanceOfPredictedTonMessage(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "policyMatch" in value;
-    isInstance = isInstance && "risks" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "sender" in value;
-    isInstance = isInstance && "tonMessageType" in value;
-    isInstance = isInstance && "messageToDisplay" in value;
-
-    return isInstance;
+export function instanceOfPredictedTonMessage(value: object): value is PredictedTonMessage {
+    if (!('policyMatch' in value) || value['policyMatch'] === undefined) return false;
+    if (!('risks' in value) || value['risks'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    if (!('tonMessageType' in value) || value['tonMessageType'] === undefined) return false;
+    if (!('messageToDisplay' in value) || value['messageToDisplay'] === undefined) return false;
+    return true;
 }
 
 export function PredictedTonMessageFromJSON(json: any): PredictedTonMessage {
@@ -137,14 +160,16 @@ export function PredictedTonMessageFromJSON(json: any): PredictedTonMessage {
 }
 
 export function PredictedTonMessageFromJSONTyped(json: any, ignoreDiscriminator: boolean): PredictedTonMessage {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
+        'amlPolicyMatch': json['aml_policy_match'] == null ? undefined : AmlPolicyMatchOutgoingFromJSON(json['aml_policy_match']),
         'policyMatch': PolicyMatchFromJSON(json['policy_match']),
-        'approvalRequest': !exists(json, 'approval_request') ? undefined : ApprovalRequestFromJSON(json['approval_request']),
+        'approvalRequest': json['approval_request'] == null ? undefined : ApprovalRequestFromJSON(json['approval_request']),
         'risks': ((json['risks'] as Array<any>).map(TransactionRiskFromJSON)),
+        'note': json['note'] == null ? undefined : json['note'],
         'type': json['type'],
         'chain': EnrichedTonChainFromJSON(json['chain']),
         'sender': EnrichedTonAddressFromJSON(json['sender']),
@@ -153,23 +178,27 @@ export function PredictedTonMessageFromJSONTyped(json: any, ignoreDiscriminator:
     };
 }
 
-export function PredictedTonMessageToJSON(value?: PredictedTonMessage | null): any {
-    if (value === undefined) {
-        return undefined;
+export function PredictedTonMessageToJSON(json: any): PredictedTonMessage {
+    return PredictedTonMessageToJSONTyped(json, false);
+}
+
+export function PredictedTonMessageToJSONTyped(value?: PredictedTonMessage | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'policy_match': PolicyMatchToJSON(value.policyMatch),
-        'approval_request': ApprovalRequestToJSON(value.approvalRequest),
-        'risks': ((value.risks as Array<any>).map(TransactionRiskToJSON)),
-        'type': value.type,
-        'chain': EnrichedTonChainToJSON(value.chain),
-        'sender': EnrichedTonAddressToJSON(value.sender),
-        'ton_message_type': TonMessageTypeToJSON(value.tonMessageType),
-        'message_to_display': value.messageToDisplay,
+        'aml_policy_match': AmlPolicyMatchOutgoingToJSON(value['amlPolicyMatch']),
+        'policy_match': PolicyMatchToJSON(value['policyMatch']),
+        'approval_request': ApprovalRequestToJSON(value['approvalRequest']),
+        'risks': ((value['risks'] as Array<any>).map(TransactionRiskToJSON)),
+        'note': value['note'],
+        'type': value['type'],
+        'chain': EnrichedTonChainToJSON(value['chain']),
+        'sender': EnrichedTonAddressToJSON(value['sender']),
+        'ton_message_type': TonMessageTypeToJSON(value['tonMessageType']),
+        'message_to_display': value['messageToDisplay'],
     };
 }
 

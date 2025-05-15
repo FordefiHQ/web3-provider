@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -40,11 +40,9 @@ export type CreateMpcSetupCallbackResponseTypeEnum = typeof CreateMpcSetupCallba
 /**
  * Check if a given object implements the CreateMpcSetupCallbackResponse interface.
  */
-export function instanceOfCreateMpcSetupCallbackResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfCreateMpcSetupCallbackResponse(value: object): value is CreateMpcSetupCallbackResponse {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function CreateMpcSetupCallbackResponseFromJSON(json: any): CreateMpcSetupCallbackResponse {
@@ -52,7 +50,7 @@ export function CreateMpcSetupCallbackResponseFromJSON(json: any): CreateMpcSetu
 }
 
 export function CreateMpcSetupCallbackResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateMpcSetupCallbackResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -61,16 +59,18 @@ export function CreateMpcSetupCallbackResponseFromJSONTyped(json: any, ignoreDis
     };
 }
 
-export function CreateMpcSetupCallbackResponseToJSON(value?: CreateMpcSetupCallbackResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateMpcSetupCallbackResponseToJSON(json: any): CreateMpcSetupCallbackResponse {
+    return CreateMpcSetupCallbackResponseToJSONTyped(json, false);
+}
+
+export function CreateMpcSetupCallbackResponseToJSONTyped(value?: CreateMpcSetupCallbackResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
+        'type': value['type'],
     };
 }
 

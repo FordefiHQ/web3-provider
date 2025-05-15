@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { EvmContractMetadata } from './EvmContractMetadata';
 import {
     EvmContractMetadataFromJSON,
     EvmContractMetadataFromJSONTyped,
     EvmContractMetadataToJSON,
+    EvmContractMetadataToJSONTyped,
 } from './EvmContractMetadata';
 
 /**
@@ -37,11 +38,9 @@ export interface UpdateContractResponse {
 /**
  * Check if a given object implements the UpdateContractResponse interface.
  */
-export function instanceOfUpdateContractResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "updatedContract" in value;
-
-    return isInstance;
+export function instanceOfUpdateContractResponse(value: object): value is UpdateContractResponse {
+    if (!('updatedContract' in value) || value['updatedContract'] === undefined) return false;
+    return true;
 }
 
 export function UpdateContractResponseFromJSON(json: any): UpdateContractResponse {
@@ -49,7 +48,7 @@ export function UpdateContractResponseFromJSON(json: any): UpdateContractRespons
 }
 
 export function UpdateContractResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): UpdateContractResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -58,16 +57,18 @@ export function UpdateContractResponseFromJSONTyped(json: any, ignoreDiscriminat
     };
 }
 
-export function UpdateContractResponseToJSON(value?: UpdateContractResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UpdateContractResponseToJSON(json: any): UpdateContractResponse {
+    return UpdateContractResponseToJSONTyped(json, false);
+}
+
+export function UpdateContractResponseToJSONTyped(value?: UpdateContractResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'updated_contract': EvmContractMetadataToJSON(value.updatedContract),
+        'updated_contract': EvmContractMetadataToJSON(value['updatedContract']),
     };
 }
 

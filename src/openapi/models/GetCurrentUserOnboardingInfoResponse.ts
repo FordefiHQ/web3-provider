@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { OrganizationOnboarding } from './OrganizationOnboarding';
 import {
     OrganizationOnboardingFromJSON,
     OrganizationOnboardingFromJSONTyped,
     OrganizationOnboardingToJSON,
+    OrganizationOnboardingToJSONTyped,
 } from './OrganizationOnboarding';
 
 /**
@@ -37,11 +38,9 @@ export interface GetCurrentUserOnboardingInfoResponse {
 /**
  * Check if a given object implements the GetCurrentUserOnboardingInfoResponse interface.
  */
-export function instanceOfGetCurrentUserOnboardingInfoResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "onboardings" in value;
-
-    return isInstance;
+export function instanceOfGetCurrentUserOnboardingInfoResponse(value: object): value is GetCurrentUserOnboardingInfoResponse {
+    if (!('onboardings' in value) || value['onboardings'] === undefined) return false;
+    return true;
 }
 
 export function GetCurrentUserOnboardingInfoResponseFromJSON(json: any): GetCurrentUserOnboardingInfoResponse {
@@ -49,7 +48,7 @@ export function GetCurrentUserOnboardingInfoResponseFromJSON(json: any): GetCurr
 }
 
 export function GetCurrentUserOnboardingInfoResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetCurrentUserOnboardingInfoResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -58,16 +57,18 @@ export function GetCurrentUserOnboardingInfoResponseFromJSONTyped(json: any, ign
     };
 }
 
-export function GetCurrentUserOnboardingInfoResponseToJSON(value?: GetCurrentUserOnboardingInfoResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function GetCurrentUserOnboardingInfoResponseToJSON(json: any): GetCurrentUserOnboardingInfoResponse {
+    return GetCurrentUserOnboardingInfoResponseToJSONTyped(json, false);
+}
+
+export function GetCurrentUserOnboardingInfoResponseToJSONTyped(value?: GetCurrentUserOnboardingInfoResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'onboardings': ((value.onboardings as Array<any>).map(OrganizationOnboardingToJSON)),
+        'onboardings': ((value['onboardings'] as Array<any>).map(OrganizationOnboardingToJSON)),
     };
 }
 

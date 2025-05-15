@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -86,16 +86,14 @@ export type ApiSignerStateEnum = typeof ApiSignerStateEnum[keyof typeof ApiSigne
 /**
  * Check if a given object implements the ApiSigner interface.
  */
-export function instanceOfApiSigner(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "userType" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "state" in value;
-
-    return isInstance;
+export function instanceOfApiSigner(value: object): value is ApiSigner {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('userType' in value) || value['userType'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    return true;
 }
 
 export function ApiSignerFromJSON(json: any): ApiSigner {
@@ -103,7 +101,7 @@ export function ApiSignerFromJSON(json: any): ApiSigner {
 }
 
 export function ApiSignerFromJSONTyped(json: any, ignoreDiscriminator: boolean): ApiSigner {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -114,26 +112,28 @@ export function ApiSignerFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         'userType': json['user_type'],
         'name': json['name'],
         'state': json['state'],
-        'lastKeepAliveAt': !exists(json, 'last_keep_alive_at') ? undefined : (new Date(json['last_keep_alive_at'])),
+        'lastKeepAliveAt': json['last_keep_alive_at'] == null ? undefined : (new Date(json['last_keep_alive_at'])),
     };
 }
 
-export function ApiSignerToJSON(value?: ApiSigner | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ApiSignerToJSON(json: any): ApiSigner {
+    return ApiSignerToJSONTyped(json, false);
+}
+
+export function ApiSignerToJSONTyped(value?: ApiSigner | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'user_type': value.userType,
-        'name': value.name,
-        'state': value.state,
-        'last_keep_alive_at': value.lastKeepAliveAt === undefined ? undefined : (value.lastKeepAliveAt.toISOString()),
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'user_type': value['userType'],
+        'name': value['name'],
+        'state': value['state'],
+        'last_keep_alive_at': value['lastKeepAliveAt'] == null ? undefined : ((value['lastKeepAliveAt']).toISOString()),
     };
 }
 

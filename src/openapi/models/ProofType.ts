@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -46,12 +46,10 @@ export type ProofTypeTypeEnum = typeof ProofTypeTypeEnum[keyof typeof ProofTypeT
 /**
  * Check if a given object implements the ProofType interface.
  */
-export function instanceOfProofType(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "proof" in value;
-
-    return isInstance;
+export function instanceOfProofType(value: object): value is ProofType {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('proof' in value) || value['proof'] === undefined) return false;
+    return true;
 }
 
 export function ProofTypeFromJSON(json: any): ProofType {
@@ -59,7 +57,7 @@ export function ProofTypeFromJSON(json: any): ProofType {
 }
 
 export function ProofTypeFromJSONTyped(json: any, ignoreDiscriminator: boolean): ProofType {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -69,17 +67,19 @@ export function ProofTypeFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     };
 }
 
-export function ProofTypeToJSON(value?: ProofType | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ProofTypeToJSON(json: any): ProofType {
+    return ProofTypeToJSONTyped(json, false);
+}
+
+export function ProofTypeToJSONTyped(value?: ProofType | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'proof': value.proof,
+        'type': value['type'],
+        'proof': value['proof'],
     };
 }
 

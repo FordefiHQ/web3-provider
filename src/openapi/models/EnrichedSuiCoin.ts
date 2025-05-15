@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -70,15 +70,13 @@ export type EnrichedSuiCoinTypeEnum = typeof EnrichedSuiCoinTypeEnum[keyof typeo
 /**
  * Check if a given object implements the EnrichedSuiCoin interface.
  */
-export function instanceOfEnrichedSuiCoin(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "coinType" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "symbol" in value;
-    isInstance = isInstance && "decimals" in value;
-
-    return isInstance;
+export function instanceOfEnrichedSuiCoin(value: object): value is EnrichedSuiCoin {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('coinType' in value) || value['coinType'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('symbol' in value) || value['symbol'] === undefined) return false;
+    if (!('decimals' in value) || value['decimals'] === undefined) return false;
+    return true;
 }
 
 export function EnrichedSuiCoinFromJSON(json: any): EnrichedSuiCoin {
@@ -86,7 +84,7 @@ export function EnrichedSuiCoinFromJSON(json: any): EnrichedSuiCoin {
 }
 
 export function EnrichedSuiCoinFromJSONTyped(json: any, ignoreDiscriminator: boolean): EnrichedSuiCoin {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -96,25 +94,27 @@ export function EnrichedSuiCoinFromJSONTyped(json: any, ignoreDiscriminator: boo
         'name': json['name'],
         'symbol': json['symbol'],
         'decimals': json['decimals'],
-        'logoUrl': !exists(json, 'logo_url') ? undefined : json['logo_url'],
+        'logoUrl': json['logo_url'] == null ? undefined : json['logo_url'],
     };
 }
 
-export function EnrichedSuiCoinToJSON(value?: EnrichedSuiCoin | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EnrichedSuiCoinToJSON(json: any): EnrichedSuiCoin {
+    return EnrichedSuiCoinToJSONTyped(json, false);
+}
+
+export function EnrichedSuiCoinToJSONTyped(value?: EnrichedSuiCoin | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'coin_type': value.coinType,
-        'name': value.name,
-        'symbol': value.symbol,
-        'decimals': value.decimals,
-        'logo_url': value.logoUrl,
+        'type': value['type'],
+        'coin_type': value['coinType'],
+        'name': value['name'],
+        'symbol': value['symbol'],
+        'decimals': value['decimals'],
+        'logo_url': value['logoUrl'],
     };
 }
 

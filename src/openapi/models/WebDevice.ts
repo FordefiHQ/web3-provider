@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { OrganizationRef } from './OrganizationRef';
 import {
     OrganizationRefFromJSON,
     OrganizationRefFromJSONTyped,
     OrganizationRefToJSON,
+    OrganizationRefToJSONTyped,
 } from './OrganizationRef';
 
 /**
@@ -67,16 +68,14 @@ export interface WebDevice {
 /**
  * Check if a given object implements the WebDevice interface.
  */
-export function instanceOfWebDevice(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "apiKeyId" in value;
-    isInstance = isInstance && "userAgent" in value;
-    isInstance = isInstance && "organizations" in value;
-
-    return isInstance;
+export function instanceOfWebDevice(value: object): value is WebDevice {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('apiKeyId' in value) || value['apiKeyId'] === undefined) return false;
+    if (!('userAgent' in value) || value['userAgent'] === undefined) return false;
+    if (!('organizations' in value) || value['organizations'] === undefined) return false;
+    return true;
 }
 
 export function WebDeviceFromJSON(json: any): WebDevice {
@@ -84,7 +83,7 @@ export function WebDeviceFromJSON(json: any): WebDevice {
 }
 
 export function WebDeviceFromJSONTyped(json: any, ignoreDiscriminator: boolean): WebDevice {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -98,21 +97,23 @@ export function WebDeviceFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     };
 }
 
-export function WebDeviceToJSON(value?: WebDevice | null): any {
-    if (value === undefined) {
-        return undefined;
+export function WebDeviceToJSON(json: any): WebDevice {
+    return WebDeviceToJSONTyped(json, false);
+}
+
+export function WebDeviceToJSONTyped(value?: WebDevice | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'api_key_id': value.apiKeyId,
-        'user_agent': value.userAgent,
-        'organizations': ((value.organizations as Array<any>).map(OrganizationRefToJSON)),
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'api_key_id': value['apiKeyId'],
+        'user_agent': value['userAgent'],
+        'organizations': ((value['organizations'] as Array<any>).map(OrganizationRefToJSON)),
     };
 }
 

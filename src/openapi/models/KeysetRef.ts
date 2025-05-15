@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { KeysetScope } from './KeysetScope';
 import {
     KeysetScopeFromJSON,
     KeysetScopeFromJSONTyped,
     KeysetScopeToJSON,
+    KeysetScopeToJSONTyped,
 } from './KeysetScope';
 
 /**
@@ -46,16 +47,16 @@ export interface KeysetRef {
     scope: KeysetScope;
 }
 
+
+
 /**
  * Check if a given object implements the KeysetRef interface.
  */
-export function instanceOfKeysetRef(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "scope" in value;
-
-    return isInstance;
+export function instanceOfKeysetRef(value: object): value is KeysetRef {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('scope' in value) || value['scope'] === undefined) return false;
+    return true;
 }
 
 export function KeysetRefFromJSON(json: any): KeysetRef {
@@ -63,7 +64,7 @@ export function KeysetRefFromJSON(json: any): KeysetRef {
 }
 
 export function KeysetRefFromJSONTyped(json: any, ignoreDiscriminator: boolean): KeysetRef {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -74,18 +75,20 @@ export function KeysetRefFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     };
 }
 
-export function KeysetRefToJSON(value?: KeysetRef | null): any {
-    if (value === undefined) {
-        return undefined;
+export function KeysetRefToJSON(json: any): KeysetRef {
+    return KeysetRefToJSONTyped(json, false);
+}
+
+export function KeysetRefToJSONTyped(value?: KeysetRef | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'name': value.name,
-        'scope': KeysetScopeToJSON(value.scope),
+        'id': value['id'],
+        'name': value['name'],
+        'scope': KeysetScopeToJSON(value['scope']),
     };
 }
 

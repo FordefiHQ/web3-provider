@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -36,12 +36,10 @@ export interface MasterPublicKey {
 /**
  * Check if a given object implements the MasterPublicKey interface.
  */
-export function instanceOfMasterPublicKey(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "xpub" in value;
-
-    return isInstance;
+export function instanceOfMasterPublicKey(value: object): value is MasterPublicKey {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('xpub' in value) || value['xpub'] === undefined) return false;
+    return true;
 }
 
 export function MasterPublicKeyFromJSON(json: any): MasterPublicKey {
@@ -49,7 +47,7 @@ export function MasterPublicKeyFromJSON(json: any): MasterPublicKey {
 }
 
 export function MasterPublicKeyFromJSONTyped(json: any, ignoreDiscriminator: boolean): MasterPublicKey {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -59,17 +57,19 @@ export function MasterPublicKeyFromJSONTyped(json: any, ignoreDiscriminator: boo
     };
 }
 
-export function MasterPublicKeyToJSON(value?: MasterPublicKey | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MasterPublicKeyToJSON(json: any): MasterPublicKey {
+    return MasterPublicKeyToJSONTyped(json, false);
+}
+
+export function MasterPublicKeyToJSONTyped(value?: MasterPublicKey | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'xpub': value.xpub,
+        'id': value['id'],
+        'xpub': value['xpub'],
     };
 }
 

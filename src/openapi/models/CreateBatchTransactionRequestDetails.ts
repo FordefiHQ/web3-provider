@@ -12,25 +12,35 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { CreateBatchTransactionInstanceDetails } from './CreateBatchTransactionInstanceDetails';
-import {
-    CreateBatchTransactionInstanceDetailsFromJSON,
-    CreateBatchTransactionInstanceDetailsFromJSONTyped,
-    CreateBatchTransactionInstanceDetailsToJSON,
-} from './CreateBatchTransactionInstanceDetails';
-import type { PushMode } from './PushMode';
-import {
-    PushModeFromJSON,
-    PushModeFromJSONTyped,
-    PushModeToJSON,
-} from './PushMode';
+import { mapValues } from '../runtime';
 import type { SolanaChainUniqueId } from './SolanaChainUniqueId';
 import {
     SolanaChainUniqueIdFromJSON,
     SolanaChainUniqueIdFromJSONTyped,
     SolanaChainUniqueIdToJSON,
+    SolanaChainUniqueIdToJSONTyped,
 } from './SolanaChainUniqueId';
+import type { CreateBatchTransactionInstanceDetails } from './CreateBatchTransactionInstanceDetails';
+import {
+    CreateBatchTransactionInstanceDetailsFromJSON,
+    CreateBatchTransactionInstanceDetailsFromJSONTyped,
+    CreateBatchTransactionInstanceDetailsToJSON,
+    CreateBatchTransactionInstanceDetailsToJSONTyped,
+} from './CreateBatchTransactionInstanceDetails';
+import type { BatchSolanaTransactionRequestDetailsFee } from './BatchSolanaTransactionRequestDetailsFee';
+import {
+    BatchSolanaTransactionRequestDetailsFeeFromJSON,
+    BatchSolanaTransactionRequestDetailsFeeFromJSONTyped,
+    BatchSolanaTransactionRequestDetailsFeeToJSON,
+    BatchSolanaTransactionRequestDetailsFeeToJSONTyped,
+} from './BatchSolanaTransactionRequestDetailsFee';
+import type { PushMode } from './PushMode';
+import {
+    PushModeFromJSON,
+    PushModeFromJSONTyped,
+    PushModeToJSON,
+    PushModeToJSONTyped,
+} from './PushMode';
 
 /**
  * 
@@ -38,6 +48,12 @@ import {
  * @interface CreateBatchTransactionRequestDetails
  */
 export interface CreateBatchTransactionRequestDetails {
+    /**
+     * 
+     * @type {BatchSolanaTransactionRequestDetailsFee}
+     * @memberof CreateBatchTransactionRequestDetails
+     */
+    fee?: BatchSolanaTransactionRequestDetailsFee;
     /**
      * 
      * @type {string}
@@ -89,13 +105,11 @@ export type CreateBatchTransactionRequestDetailsTypeEnum = typeof CreateBatchTra
 /**
  * Check if a given object implements the CreateBatchTransactionRequestDetails interface.
  */
-export function instanceOfCreateBatchTransactionRequestDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "transactions" in value;
-
-    return isInstance;
+export function instanceOfCreateBatchTransactionRequestDetails(value: object): value is CreateBatchTransactionRequestDetails {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('transactions' in value) || value['transactions'] === undefined) return false;
+    return true;
 }
 
 export function CreateBatchTransactionRequestDetailsFromJSON(json: any): CreateBatchTransactionRequestDetails {
@@ -103,35 +117,39 @@ export function CreateBatchTransactionRequestDetailsFromJSON(json: any): CreateB
 }
 
 export function CreateBatchTransactionRequestDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateBatchTransactionRequestDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
+        'fee': json['fee'] == null ? undefined : BatchSolanaTransactionRequestDetailsFeeFromJSON(json['fee']),
         'type': json['type'],
-        'failOnPredictionFailure': !exists(json, 'fail_on_prediction_failure') ? undefined : json['fail_on_prediction_failure'],
-        'pushMode': !exists(json, 'push_mode') ? undefined : PushModeFromJSON(json['push_mode']),
-        'skipPrediction': !exists(json, 'skip_prediction') ? undefined : json['skip_prediction'],
+        'failOnPredictionFailure': json['fail_on_prediction_failure'] == null ? undefined : json['fail_on_prediction_failure'],
+        'pushMode': json['push_mode'] == null ? undefined : PushModeFromJSON(json['push_mode']),
+        'skipPrediction': json['skip_prediction'] == null ? undefined : json['skip_prediction'],
         'chain': SolanaChainUniqueIdFromJSON(json['chain']),
         'transactions': ((json['transactions'] as Array<any>).map(CreateBatchTransactionInstanceDetailsFromJSON)),
     };
 }
 
-export function CreateBatchTransactionRequestDetailsToJSON(value?: CreateBatchTransactionRequestDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateBatchTransactionRequestDetailsToJSON(json: any): CreateBatchTransactionRequestDetails {
+    return CreateBatchTransactionRequestDetailsToJSONTyped(json, false);
+}
+
+export function CreateBatchTransactionRequestDetailsToJSONTyped(value?: CreateBatchTransactionRequestDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'fail_on_prediction_failure': value.failOnPredictionFailure,
-        'push_mode': PushModeToJSON(value.pushMode),
-        'skip_prediction': value.skipPrediction,
-        'chain': SolanaChainUniqueIdToJSON(value.chain),
-        'transactions': ((value.transactions as Array<any>).map(CreateBatchTransactionInstanceDetailsToJSON)),
+        'fee': BatchSolanaTransactionRequestDetailsFeeToJSON(value['fee']),
+        'type': value['type'],
+        'fail_on_prediction_failure': value['failOnPredictionFailure'],
+        'push_mode': PushModeToJSON(value['pushMode']),
+        'skip_prediction': value['skipPrediction'],
+        'chain': SolanaChainUniqueIdToJSON(value['chain']),
+        'transactions': ((value['transactions'] as Array<any>).map(CreateBatchTransactionInstanceDetailsToJSON)),
     };
 }
 

@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { EnrichedSuiChain } from './EnrichedSuiChain';
-import {
-    EnrichedSuiChainFromJSON,
-    EnrichedSuiChainFromJSONTyped,
-    EnrichedSuiChainToJSON,
-} from './EnrichedSuiChain';
+import { mapValues } from '../runtime';
 import type { EnrichedSuiCoin } from './EnrichedSuiCoin';
 import {
     EnrichedSuiCoinFromJSON,
     EnrichedSuiCoinFromJSONTyped,
     EnrichedSuiCoinToJSON,
+    EnrichedSuiCoinToJSONTyped,
 } from './EnrichedSuiCoin';
+import type { EnrichedSuiChain } from './EnrichedSuiChain';
+import {
+    EnrichedSuiChainFromJSON,
+    EnrichedSuiChainFromJSONTyped,
+    EnrichedSuiChainToJSON,
+    EnrichedSuiChainToJSONTyped,
+} from './EnrichedSuiChain';
 
 /**
  * 
@@ -65,13 +67,11 @@ export type EnrichedSuiCoinAssetIdentifierTypeEnum = typeof EnrichedSuiCoinAsset
 /**
  * Check if a given object implements the EnrichedSuiCoinAssetIdentifier interface.
  */
-export function instanceOfEnrichedSuiCoinAssetIdentifier(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "coin" in value;
-
-    return isInstance;
+export function instanceOfEnrichedSuiCoinAssetIdentifier(value: object): value is EnrichedSuiCoinAssetIdentifier {
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('coin' in value) || value['coin'] === undefined) return false;
+    return true;
 }
 
 export function EnrichedSuiCoinAssetIdentifierFromJSON(json: any): EnrichedSuiCoinAssetIdentifier {
@@ -79,7 +79,7 @@ export function EnrichedSuiCoinAssetIdentifierFromJSON(json: any): EnrichedSuiCo
 }
 
 export function EnrichedSuiCoinAssetIdentifierFromJSONTyped(json: any, ignoreDiscriminator: boolean): EnrichedSuiCoinAssetIdentifier {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -90,18 +90,20 @@ export function EnrichedSuiCoinAssetIdentifierFromJSONTyped(json: any, ignoreDis
     };
 }
 
-export function EnrichedSuiCoinAssetIdentifierToJSON(value?: EnrichedSuiCoinAssetIdentifier | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EnrichedSuiCoinAssetIdentifierToJSON(json: any): EnrichedSuiCoinAssetIdentifier {
+    return EnrichedSuiCoinAssetIdentifierToJSONTyped(json, false);
+}
+
+export function EnrichedSuiCoinAssetIdentifierToJSONTyped(value?: EnrichedSuiCoinAssetIdentifier | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain': EnrichedSuiChainToJSON(value.chain),
-        'type': value.type,
-        'coin': EnrichedSuiCoinToJSON(value.coin),
+        'chain': EnrichedSuiChainToJSON(value['chain']),
+        'type': value['type'],
+        'coin': EnrichedSuiCoinToJSON(value['coin']),
     };
 }
 

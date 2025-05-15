@@ -12,37 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { PushMode } from './PushMode';
-import {
-    PushModeFromJSON,
-    PushModeFromJSONTyped,
-    PushModeToJSON,
-} from './PushMode';
-import type { SuiChainUniqueId } from './SuiChainUniqueId';
-import {
-    SuiChainUniqueIdFromJSON,
-    SuiChainUniqueIdFromJSONTyped,
-    SuiChainUniqueIdToJSON,
-} from './SuiChainUniqueId';
+import { mapValues } from '../runtime';
 import type { SuiCommand } from './SuiCommand';
 import {
     SuiCommandFromJSON,
     SuiCommandFromJSONTyped,
     SuiCommandToJSON,
+    SuiCommandToJSONTyped,
 } from './SuiCommand';
-import type { SuiGasConfig } from './SuiGasConfig';
+import type { SuiChainUniqueId } from './SuiChainUniqueId';
 import {
-    SuiGasConfigFromJSON,
-    SuiGasConfigFromJSONTyped,
-    SuiGasConfigToJSON,
-} from './SuiGasConfig';
+    SuiChainUniqueIdFromJSON,
+    SuiChainUniqueIdFromJSONTyped,
+    SuiChainUniqueIdToJSON,
+    SuiChainUniqueIdToJSONTyped,
+} from './SuiChainUniqueId';
 import type { SuiInput } from './SuiInput';
 import {
     SuiInputFromJSON,
     SuiInputFromJSONTyped,
     SuiInputToJSON,
+    SuiInputToJSONTyped,
 } from './SuiInput';
+import type { PushMode } from './PushMode';
+import {
+    PushModeFromJSON,
+    PushModeFromJSONTyped,
+    PushModeToJSON,
+    PushModeToJSONTyped,
+} from './PushMode';
+import type { SuiGasConfig } from './SuiGasConfig';
+import {
+    SuiGasConfigFromJSON,
+    SuiGasConfigFromJSONTyped,
+    SuiGasConfigToJSON,
+    SuiGasConfigToJSONTyped,
+} from './SuiGasConfig';
 
 /**
  * 
@@ -85,7 +90,7 @@ export interface CreateSuiProgrammableTransactionBlockRequest {
      * @type {SuiGasConfig}
      * @memberof CreateSuiProgrammableTransactionBlockRequest
      */
-    gasConfig: SuiGasConfig;
+    gasConfig?: SuiGasConfig;
     /**
      * 
      * @type {Array<SuiInput>}
@@ -113,15 +118,12 @@ export type CreateSuiProgrammableTransactionBlockRequestTypeEnum = typeof Create
 /**
  * Check if a given object implements the CreateSuiProgrammableTransactionBlockRequest interface.
  */
-export function instanceOfCreateSuiProgrammableTransactionBlockRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "gasConfig" in value;
-    isInstance = isInstance && "inputs" in value;
-    isInstance = isInstance && "commands" in value;
-
-    return isInstance;
+export function instanceOfCreateSuiProgrammableTransactionBlockRequest(value: object): value is CreateSuiProgrammableTransactionBlockRequest {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('inputs' in value) || value['inputs'] === undefined) return false;
+    if (!('commands' in value) || value['commands'] === undefined) return false;
+    return true;
 }
 
 export function CreateSuiProgrammableTransactionBlockRequestFromJSON(json: any): CreateSuiProgrammableTransactionBlockRequest {
@@ -129,39 +131,41 @@ export function CreateSuiProgrammableTransactionBlockRequestFromJSON(json: any):
 }
 
 export function CreateSuiProgrammableTransactionBlockRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateSuiProgrammableTransactionBlockRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'type': json['type'],
-        'failOnPredictionFailure': !exists(json, 'fail_on_prediction_failure') ? undefined : json['fail_on_prediction_failure'],
-        'pushMode': !exists(json, 'push_mode') ? undefined : PushModeFromJSON(json['push_mode']),
-        'skipPrediction': !exists(json, 'skip_prediction') ? undefined : json['skip_prediction'],
+        'failOnPredictionFailure': json['fail_on_prediction_failure'] == null ? undefined : json['fail_on_prediction_failure'],
+        'pushMode': json['push_mode'] == null ? undefined : PushModeFromJSON(json['push_mode']),
+        'skipPrediction': json['skip_prediction'] == null ? undefined : json['skip_prediction'],
         'chain': SuiChainUniqueIdFromJSON(json['chain']),
-        'gasConfig': SuiGasConfigFromJSON(json['gas_config']),
+        'gasConfig': json['gas_config'] == null ? undefined : SuiGasConfigFromJSON(json['gas_config']),
         'inputs': ((json['inputs'] as Array<any>).map(SuiInputFromJSON)),
         'commands': ((json['commands'] as Array<any>).map(SuiCommandFromJSON)),
     };
 }
 
-export function CreateSuiProgrammableTransactionBlockRequestToJSON(value?: CreateSuiProgrammableTransactionBlockRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateSuiProgrammableTransactionBlockRequestToJSON(json: any): CreateSuiProgrammableTransactionBlockRequest {
+    return CreateSuiProgrammableTransactionBlockRequestToJSONTyped(json, false);
+}
+
+export function CreateSuiProgrammableTransactionBlockRequestToJSONTyped(value?: CreateSuiProgrammableTransactionBlockRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'fail_on_prediction_failure': value.failOnPredictionFailure,
-        'push_mode': PushModeToJSON(value.pushMode),
-        'skip_prediction': value.skipPrediction,
-        'chain': SuiChainUniqueIdToJSON(value.chain),
-        'gas_config': SuiGasConfigToJSON(value.gasConfig),
-        'inputs': ((value.inputs as Array<any>).map(SuiInputToJSON)),
-        'commands': ((value.commands as Array<any>).map(SuiCommandToJSON)),
+        'type': value['type'],
+        'fail_on_prediction_failure': value['failOnPredictionFailure'],
+        'push_mode': PushModeToJSON(value['pushMode']),
+        'skip_prediction': value['skipPrediction'],
+        'chain': SuiChainUniqueIdToJSON(value['chain']),
+        'gas_config': SuiGasConfigToJSON(value['gasConfig']),
+        'inputs': ((value['inputs'] as Array<any>).map(SuiInputToJSON)),
+        'commands': ((value['commands'] as Array<any>).map(SuiCommandToJSON)),
     };
 }
 

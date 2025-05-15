@@ -12,61 +12,70 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { AptosMessageState } from './AptosMessageState';
-import {
-    AptosMessageStateFromJSON,
-    AptosMessageStateFromJSONTyped,
-    AptosMessageStateToJSON,
-} from './AptosMessageState';
-import type { AptosMessageStateChange } from './AptosMessageStateChange';
-import {
-    AptosMessageStateChangeFromJSON,
-    AptosMessageStateChangeFromJSONTyped,
-    AptosMessageStateChangeToJSON,
-} from './AptosMessageStateChange';
-import type { AptosMessageType } from './AptosMessageType';
-import {
-    AptosMessageTypeFromJSON,
-    AptosMessageTypeFromJSONTyped,
-    AptosMessageTypeToJSON,
-} from './AptosMessageType';
-import type { EnrichedAptosAddress } from './EnrichedAptosAddress';
-import {
-    EnrichedAptosAddressFromJSON,
-    EnrichedAptosAddressFromJSONTyped,
-    EnrichedAptosAddressToJSON,
-} from './EnrichedAptosAddress';
+import { mapValues } from '../runtime';
 import type { EnrichedAptosChain } from './EnrichedAptosChain';
 import {
     EnrichedAptosChainFromJSON,
     EnrichedAptosChainFromJSONTyped,
     EnrichedAptosChainToJSON,
+    EnrichedAptosChainToJSONTyped,
 } from './EnrichedAptosChain';
 import type { ManagedTransactionData } from './ManagedTransactionData';
 import {
     ManagedTransactionDataFromJSON,
     ManagedTransactionDataFromJSONTyped,
     ManagedTransactionDataToJSON,
+    ManagedTransactionDataToJSONTyped,
 } from './ManagedTransactionData';
-import type { Signature } from './Signature';
-import {
-    SignatureFromJSON,
-    SignatureFromJSONTyped,
-    SignatureToJSON,
-} from './Signature';
-import type { TransactionDirection } from './TransactionDirection';
-import {
-    TransactionDirectionFromJSON,
-    TransactionDirectionFromJSONTyped,
-    TransactionDirectionToJSON,
-} from './TransactionDirection';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
     TransactionSpamStateFromJSONTyped,
     TransactionSpamStateToJSON,
+    TransactionSpamStateToJSONTyped,
 } from './TransactionSpamState';
+import type { TransactionDirection } from './TransactionDirection';
+import {
+    TransactionDirectionFromJSON,
+    TransactionDirectionFromJSONTyped,
+    TransactionDirectionToJSON,
+    TransactionDirectionToJSONTyped,
+} from './TransactionDirection';
+import type { Signature } from './Signature';
+import {
+    SignatureFromJSON,
+    SignatureFromJSONTyped,
+    SignatureToJSON,
+    SignatureToJSONTyped,
+} from './Signature';
+import type { EnrichedAptosAddress } from './EnrichedAptosAddress';
+import {
+    EnrichedAptosAddressFromJSON,
+    EnrichedAptosAddressFromJSONTyped,
+    EnrichedAptosAddressToJSON,
+    EnrichedAptosAddressToJSONTyped,
+} from './EnrichedAptosAddress';
+import type { NonPushableTransactionStateChange } from './NonPushableTransactionStateChange';
+import {
+    NonPushableTransactionStateChangeFromJSON,
+    NonPushableTransactionStateChangeFromJSONTyped,
+    NonPushableTransactionStateChangeToJSON,
+    NonPushableTransactionStateChangeToJSONTyped,
+} from './NonPushableTransactionStateChange';
+import type { AptosMessageType } from './AptosMessageType';
+import {
+    AptosMessageTypeFromJSON,
+    AptosMessageTypeFromJSONTyped,
+    AptosMessageTypeToJSON,
+    AptosMessageTypeToJSONTyped,
+} from './AptosMessageType';
+import type { NonPushableTransactionState } from './NonPushableTransactionState';
+import {
+    NonPushableTransactionStateFromJSON,
+    NonPushableTransactionStateFromJSONTyped,
+    NonPushableTransactionStateToJSON,
+    NonPushableTransactionStateToJSONTyped,
+} from './NonPushableTransactionState';
 
 /**
  * 
@@ -124,6 +133,24 @@ export interface AptosMessage {
     direction: TransactionDirection;
     /**
      * 
+     * @type {boolean}
+     * @memberof AptosMessage
+     */
+    signedExternally?: boolean;
+    /**
+     * 
+     * @type {NonPushableTransactionState}
+     * @memberof AptosMessage
+     */
+    state: NonPushableTransactionState;
+    /**
+     * 
+     * @type {Array<NonPushableTransactionStateChange>}
+     * @memberof AptosMessage
+     */
+    stateChanges: Array<NonPushableTransactionStateChange>;
+    /**
+     * 
      * @type {string}
      * @memberof AptosMessage
      */
@@ -134,18 +161,6 @@ export interface AptosMessage {
      * @memberof AptosMessage
      */
     aptosMessageType: AptosMessageType;
-    /**
-     * 
-     * @type {AptosMessageState}
-     * @memberof AptosMessage
-     */
-    state: AptosMessageState;
-    /**
-     * 
-     * @type {Array<AptosMessageStateChange>}
-     * @memberof AptosMessage
-     */
-    stateChanges: Array<AptosMessageStateChange>;
     /**
      * 
      * @type {string}
@@ -197,25 +212,23 @@ export type AptosMessageTypeEnum = typeof AptosMessageTypeEnum[keyof typeof Apto
 /**
  * Check if a given object implements the AptosMessage interface.
  */
-export function instanceOfAptosMessage(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "signatures" in value;
-    isInstance = isInstance && "direction" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "aptosMessageType" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "stateChanges" in value;
-    isInstance = isInstance && "rawOriginalMessageToSign" in value;
-    isInstance = isInstance && "stringOriginalMessageToSign" in value;
-    isInstance = isInstance && "rawFullMessageToSign" in value;
-    isInstance = isInstance && "stringFullMessageToSign" in value;
-    isInstance = isInstance && "chain" in value;
-    isInstance = isInstance && "sender" in value;
-
-    return isInstance;
+export function instanceOfAptosMessage(value: object): value is AptosMessage {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('signatures' in value) || value['signatures'] === undefined) return false;
+    if (!('direction' in value) || value['direction'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('stateChanges' in value) || value['stateChanges'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('aptosMessageType' in value) || value['aptosMessageType'] === undefined) return false;
+    if (!('rawOriginalMessageToSign' in value) || value['rawOriginalMessageToSign'] === undefined) return false;
+    if (!('stringOriginalMessageToSign' in value) || value['stringOriginalMessageToSign'] === undefined) return false;
+    if (!('rawFullMessageToSign' in value) || value['rawFullMessageToSign'] === undefined) return false;
+    if (!('stringFullMessageToSign' in value) || value['stringFullMessageToSign'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    if (!('sender' in value) || value['sender'] === undefined) return false;
+    return true;
 }
 
 export function AptosMessageFromJSON(json: any): AptosMessage {
@@ -223,7 +236,7 @@ export function AptosMessageFromJSON(json: any): AptosMessage {
 }
 
 export function AptosMessageFromJSONTyped(json: any, ignoreDiscriminator: boolean): AptosMessage {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -231,15 +244,16 @@ export function AptosMessageFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
-        'managedTransactionData': !exists(json, 'managed_transaction_data') ? undefined : ManagedTransactionDataFromJSON(json['managed_transaction_data']),
+        'managedTransactionData': json['managed_transaction_data'] == null ? undefined : ManagedTransactionDataFromJSON(json['managed_transaction_data']),
         'signatures': ((json['signatures'] as Array<any>).map(SignatureFromJSON)),
-        'note': !exists(json, 'note') ? undefined : json['note'],
-        'spamState': !exists(json, 'spam_state') ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
+        'note': json['note'] == null ? undefined : json['note'],
+        'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
+        'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'state': NonPushableTransactionStateFromJSON(json['state']),
+        'stateChanges': ((json['state_changes'] as Array<any>).map(NonPushableTransactionStateChangeFromJSON)),
         'type': json['type'],
         'aptosMessageType': AptosMessageTypeFromJSON(json['aptos_message_type']),
-        'state': AptosMessageStateFromJSON(json['state']),
-        'stateChanges': ((json['state_changes'] as Array<any>).map(AptosMessageStateChangeFromJSON)),
         'rawOriginalMessageToSign': json['raw_original_message_to_sign'],
         'stringOriginalMessageToSign': json['string_original_message_to_sign'],
         'rawFullMessageToSign': json['raw_full_message_to_sign'],
@@ -249,33 +263,36 @@ export function AptosMessageFromJSONTyped(json: any, ignoreDiscriminator: boolea
     };
 }
 
-export function AptosMessageToJSON(value?: AptosMessage | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AptosMessageToJSON(json: any): AptosMessage {
+    return AptosMessageToJSONTyped(json, false);
+}
+
+export function AptosMessageToJSONTyped(value?: AptosMessage | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'managed_transaction_data': ManagedTransactionDataToJSON(value.managedTransactionData),
-        'signatures': ((value.signatures as Array<any>).map(SignatureToJSON)),
-        'note': value.note,
-        'spam_state': TransactionSpamStateToJSON(value.spamState),
-        'direction': TransactionDirectionToJSON(value.direction),
-        'type': value.type,
-        'aptos_message_type': AptosMessageTypeToJSON(value.aptosMessageType),
-        'state': AptosMessageStateToJSON(value.state),
-        'state_changes': ((value.stateChanges as Array<any>).map(AptosMessageStateChangeToJSON)),
-        'raw_original_message_to_sign': value.rawOriginalMessageToSign,
-        'string_original_message_to_sign': value.stringOriginalMessageToSign,
-        'raw_full_message_to_sign': value.rawFullMessageToSign,
-        'string_full_message_to_sign': value.stringFullMessageToSign,
-        'chain': EnrichedAptosChainToJSON(value.chain),
-        'sender': EnrichedAptosAddressToJSON(value.sender),
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'managed_transaction_data': ManagedTransactionDataToJSON(value['managedTransactionData']),
+        'signatures': ((value['signatures'] as Array<any>).map(SignatureToJSON)),
+        'note': value['note'],
+        'spam_state': TransactionSpamStateToJSON(value['spamState']),
+        'direction': TransactionDirectionToJSON(value['direction']),
+        'signed_externally': value['signedExternally'],
+        'state': NonPushableTransactionStateToJSON(value['state']),
+        'state_changes': ((value['stateChanges'] as Array<any>).map(NonPushableTransactionStateChangeToJSON)),
+        'type': value['type'],
+        'aptos_message_type': AptosMessageTypeToJSON(value['aptosMessageType']),
+        'raw_original_message_to_sign': value['rawOriginalMessageToSign'],
+        'string_original_message_to_sign': value['stringOriginalMessageToSign'],
+        'raw_full_message_to_sign': value['rawFullMessageToSign'],
+        'string_full_message_to_sign': value['stringFullMessageToSign'],
+        'chain': EnrichedAptosChainToJSON(value['chain']),
+        'sender': EnrichedAptosAddressToJSON(value['sender']),
     };
 }
 

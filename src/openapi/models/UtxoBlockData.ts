@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -42,13 +42,11 @@ export interface UtxoBlockData {
 /**
  * Check if a given object implements the UtxoBlockData interface.
  */
-export function instanceOfUtxoBlockData(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "number" in value;
-    isInstance = isInstance && "hash" in value;
-    isInstance = isInstance && "minedAt" in value;
-
-    return isInstance;
+export function instanceOfUtxoBlockData(value: object): value is UtxoBlockData {
+    if (!('number' in value) || value['number'] === undefined) return false;
+    if (!('hash' in value) || value['hash'] === undefined) return false;
+    if (!('minedAt' in value) || value['minedAt'] === undefined) return false;
+    return true;
 }
 
 export function UtxoBlockDataFromJSON(json: any): UtxoBlockData {
@@ -56,7 +54,7 @@ export function UtxoBlockDataFromJSON(json: any): UtxoBlockData {
 }
 
 export function UtxoBlockDataFromJSONTyped(json: any, ignoreDiscriminator: boolean): UtxoBlockData {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -67,18 +65,20 @@ export function UtxoBlockDataFromJSONTyped(json: any, ignoreDiscriminator: boole
     };
 }
 
-export function UtxoBlockDataToJSON(value?: UtxoBlockData | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UtxoBlockDataToJSON(json: any): UtxoBlockData {
+    return UtxoBlockDataToJSONTyped(json, false);
+}
+
+export function UtxoBlockDataToJSONTyped(value?: UtxoBlockData | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'number': value.number,
-        'hash': value.hash,
-        'mined_at': (value.minedAt.toISOString()),
+        'number': value['number'],
+        'hash': value['hash'],
+        'mined_at': ((value['minedAt']).toISOString()),
     };
 }
 

@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { SolanaChainUniqueId } from './SolanaChainUniqueId';
 import {
     SolanaChainUniqueIdFromJSON,
     SolanaChainUniqueIdFromJSONTyped,
     SolanaChainUniqueIdToJSON,
+    SolanaChainUniqueIdToJSONTyped,
 } from './SolanaChainUniqueId';
 
 /**
@@ -53,12 +54,10 @@ export type SolanaChainChainTypeEnum = typeof SolanaChainChainTypeEnum[keyof typ
 /**
  * Check if a given object implements the SolanaChain interface.
  */
-export function instanceOfSolanaChain(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chainType" in value;
-    isInstance = isInstance && "uniqueId" in value;
-
-    return isInstance;
+export function instanceOfSolanaChain(value: object): value is SolanaChain {
+    if (!('chainType' in value) || value['chainType'] === undefined) return false;
+    if (!('uniqueId' in value) || value['uniqueId'] === undefined) return false;
+    return true;
 }
 
 export function SolanaChainFromJSON(json: any): SolanaChain {
@@ -66,7 +65,7 @@ export function SolanaChainFromJSON(json: any): SolanaChain {
 }
 
 export function SolanaChainFromJSONTyped(json: any, ignoreDiscriminator: boolean): SolanaChain {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function SolanaChainFromJSONTyped(json: any, ignoreDiscriminator: boolean
     };
 }
 
-export function SolanaChainToJSON(value?: SolanaChain | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SolanaChainToJSON(json: any): SolanaChain {
+    return SolanaChainToJSONTyped(json, false);
+}
+
+export function SolanaChainToJSONTyped(value?: SolanaChain | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain_type': value.chainType,
-        'unique_id': SolanaChainUniqueIdToJSON(value.uniqueId),
+        'chain_type': value['chainType'],
+        'unique_id': SolanaChainUniqueIdToJSON(value['uniqueId']),
     };
 }
 

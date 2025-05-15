@@ -12,31 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { CreateStarknetTransactionRequestDetails } from './CreateStarknetTransactionRequestDetails';
+import { mapValues } from '../runtime';
+import type { DappInfo } from './DappInfo';
 import {
-    CreateStarknetTransactionRequestDetailsFromJSON,
-    CreateStarknetTransactionRequestDetailsFromJSONTyped,
-    CreateStarknetTransactionRequestDetailsToJSON,
-} from './CreateStarknetTransactionRequestDetails';
+    DappInfoFromJSON,
+    DappInfoFromJSONTyped,
+    DappInfoToJSON,
+    DappInfoToJSONTyped,
+} from './DappInfo';
 import type { SignMode } from './SignMode';
 import {
     SignModeFromJSON,
     SignModeFromJSONTyped,
     SignModeToJSON,
+    SignModeToJSONTyped,
 } from './SignMode';
+import type { CreateStarknetTransactionRequestDetails } from './CreateStarknetTransactionRequestDetails';
+import {
+    CreateStarknetTransactionRequestDetailsFromJSON,
+    CreateStarknetTransactionRequestDetailsFromJSONTyped,
+    CreateStarknetTransactionRequestDetailsToJSON,
+    CreateStarknetTransactionRequestDetailsToJSONTyped,
+} from './CreateStarknetTransactionRequestDetails';
+import type { PushableTransactionState } from './PushableTransactionState';
+import {
+    PushableTransactionStateFromJSON,
+    PushableTransactionStateFromJSONTyped,
+    PushableTransactionStateToJSON,
+    PushableTransactionStateToJSONTyped,
+} from './PushableTransactionState';
 import type { SignerType } from './SignerType';
 import {
     SignerTypeFromJSON,
     SignerTypeFromJSONTyped,
     SignerTypeToJSON,
+    SignerTypeToJSONTyped,
 } from './SignerType';
-import type { StarknetTransactionState } from './StarknetTransactionState';
-import {
-    StarknetTransactionStateFromJSON,
-    StarknetTransactionStateFromJSONTyped,
-    StarknetTransactionStateToJSON,
-} from './StarknetTransactionState';
 
 /**
  * 
@@ -70,6 +81,12 @@ export interface CreateStarknetTransactionWithWaitRequest {
     signMode?: SignMode;
     /**
      * 
+     * @type {DappInfo}
+     * @memberof CreateStarknetTransactionWithWaitRequest
+     */
+    dappInfo?: DappInfo;
+    /**
+     * 
      * @type {string}
      * @memberof CreateStarknetTransactionWithWaitRequest
      */
@@ -88,10 +105,10 @@ export interface CreateStarknetTransactionWithWaitRequest {
     timeout?: number;
     /**
      * 
-     * @type {StarknetTransactionState}
+     * @type {PushableTransactionState}
      * @memberof CreateStarknetTransactionWithWaitRequest
      */
-    waitForState: StarknetTransactionState;
+    waitForState: PushableTransactionState;
 }
 
 
@@ -107,14 +124,12 @@ export type CreateStarknetTransactionWithWaitRequestTypeEnum = typeof CreateStar
 /**
  * Check if a given object implements the CreateStarknetTransactionWithWaitRequest interface.
  */
-export function instanceOfCreateStarknetTransactionWithWaitRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "vaultId" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "details" in value;
-    isInstance = isInstance && "waitForState" in value;
-
-    return isInstance;
+export function instanceOfCreateStarknetTransactionWithWaitRequest(value: object): value is CreateStarknetTransactionWithWaitRequest {
+    if (!('vaultId' in value) || value['vaultId'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('details' in value) || value['details'] === undefined) return false;
+    if (!('waitForState' in value) || value['waitForState'] === undefined) return false;
+    return true;
 }
 
 export function CreateStarknetTransactionWithWaitRequestFromJSON(json: any): CreateStarknetTransactionWithWaitRequest {
@@ -122,39 +137,43 @@ export function CreateStarknetTransactionWithWaitRequestFromJSON(json: any): Cre
 }
 
 export function CreateStarknetTransactionWithWaitRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateStarknetTransactionWithWaitRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
         'vaultId': json['vault_id'],
-        'note': !exists(json, 'note') ? undefined : json['note'],
-        'signerType': !exists(json, 'signer_type') ? undefined : SignerTypeFromJSON(json['signer_type']),
-        'signMode': !exists(json, 'sign_mode') ? undefined : SignModeFromJSON(json['sign_mode']),
+        'note': json['note'] == null ? undefined : json['note'],
+        'signerType': json['signer_type'] == null ? undefined : SignerTypeFromJSON(json['signer_type']),
+        'signMode': json['sign_mode'] == null ? undefined : SignModeFromJSON(json['sign_mode']),
+        'dappInfo': json['dapp_info'] == null ? undefined : DappInfoFromJSON(json['dapp_info']),
         'type': json['type'],
         'details': CreateStarknetTransactionRequestDetailsFromJSON(json['details']),
-        'timeout': !exists(json, 'timeout') ? undefined : json['timeout'],
-        'waitForState': StarknetTransactionStateFromJSON(json['wait_for_state']),
+        'timeout': json['timeout'] == null ? undefined : json['timeout'],
+        'waitForState': PushableTransactionStateFromJSON(json['wait_for_state']),
     };
 }
 
-export function CreateStarknetTransactionWithWaitRequestToJSON(value?: CreateStarknetTransactionWithWaitRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateStarknetTransactionWithWaitRequestToJSON(json: any): CreateStarknetTransactionWithWaitRequest {
+    return CreateStarknetTransactionWithWaitRequestToJSONTyped(json, false);
+}
+
+export function CreateStarknetTransactionWithWaitRequestToJSONTyped(value?: CreateStarknetTransactionWithWaitRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'vault_id': value.vaultId,
-        'note': value.note,
-        'signer_type': SignerTypeToJSON(value.signerType),
-        'sign_mode': SignModeToJSON(value.signMode),
-        'type': value.type,
-        'details': CreateStarknetTransactionRequestDetailsToJSON(value.details),
-        'timeout': value.timeout,
-        'wait_for_state': StarknetTransactionStateToJSON(value.waitForState),
+        'vault_id': value['vaultId'],
+        'note': value['note'],
+        'signer_type': SignerTypeToJSON(value['signerType']),
+        'sign_mode': SignModeToJSON(value['signMode']),
+        'dapp_info': DappInfoToJSON(value['dappInfo']),
+        'type': value['type'],
+        'details': CreateStarknetTransactionRequestDetailsToJSON(value['details']),
+        'timeout': value['timeout'],
+        'wait_for_state': PushableTransactionStateToJSON(value['waitForState']),
     };
 }
 

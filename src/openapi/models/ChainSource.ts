@@ -24,6 +24,17 @@ export const ChainSource = {
 export type ChainSource = typeof ChainSource[keyof typeof ChainSource];
 
 
+export function instanceOfChainSource(value: any): boolean {
+    for (const key in ChainSource) {
+        if (Object.prototype.hasOwnProperty.call(ChainSource, key)) {
+            if (ChainSource[key as keyof typeof ChainSource] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function ChainSourceFromJSON(json: any): ChainSource {
     return ChainSourceFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function ChainSourceFromJSONTyped(json: any, ignoreDiscriminator: boolean
 
 export function ChainSourceToJSON(value?: ChainSource | null): any {
     return value as any;
+}
+
+export function ChainSourceToJSONTyped(value: any, ignoreDiscriminator: boolean): ChainSource {
+    return value as ChainSource;
 }
 

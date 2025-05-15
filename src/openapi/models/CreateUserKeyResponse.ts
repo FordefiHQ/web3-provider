@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -30,11 +30,9 @@ export interface CreateUserKeyResponse {
 /**
  * Check if a given object implements the CreateUserKeyResponse interface.
  */
-export function instanceOfCreateUserKeyResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "authPublicKeySignature" in value;
-
-    return isInstance;
+export function instanceOfCreateUserKeyResponse(value: object): value is CreateUserKeyResponse {
+    if (!('authPublicKeySignature' in value) || value['authPublicKeySignature'] === undefined) return false;
+    return true;
 }
 
 export function CreateUserKeyResponseFromJSON(json: any): CreateUserKeyResponse {
@@ -42,7 +40,7 @@ export function CreateUserKeyResponseFromJSON(json: any): CreateUserKeyResponse 
 }
 
 export function CreateUserKeyResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateUserKeyResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -51,16 +49,18 @@ export function CreateUserKeyResponseFromJSONTyped(json: any, ignoreDiscriminato
     };
 }
 
-export function CreateUserKeyResponseToJSON(value?: CreateUserKeyResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CreateUserKeyResponseToJSON(json: any): CreateUserKeyResponse {
+    return CreateUserKeyResponseToJSONTyped(json, false);
+}
+
+export function CreateUserKeyResponseToJSONTyped(value?: CreateUserKeyResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'auth_public_key_signature': value.authPublicKeySignature,
+        'auth_public_key_signature': value['authPublicKeySignature'],
     };
 }
 

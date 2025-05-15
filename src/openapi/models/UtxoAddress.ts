@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { UtxoAddressType } from './UtxoAddressType';
 import {
     UtxoAddressTypeFromJSON,
     UtxoAddressTypeFromJSONTyped,
     UtxoAddressTypeToJSON,
+    UtxoAddressTypeToJSONTyped,
 } from './UtxoAddressType';
 import type { UtxoChain } from './UtxoChain';
 import {
     UtxoChainFromJSON,
     UtxoChainFromJSONTyped,
     UtxoChainToJSON,
+    UtxoChainToJSONTyped,
 } from './UtxoChain';
 
 /**
@@ -52,16 +54,16 @@ export interface UtxoAddress {
     chain: UtxoChain;
 }
 
+
+
 /**
  * Check if a given object implements the UtxoAddress interface.
  */
-export function instanceOfUtxoAddress(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "addressType" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfUtxoAddress(value: object): value is UtxoAddress {
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('addressType' in value) || value['addressType'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function UtxoAddressFromJSON(json: any): UtxoAddress {
@@ -69,7 +71,7 @@ export function UtxoAddressFromJSON(json: any): UtxoAddress {
 }
 
 export function UtxoAddressFromJSONTyped(json: any, ignoreDiscriminator: boolean): UtxoAddress {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -80,18 +82,20 @@ export function UtxoAddressFromJSONTyped(json: any, ignoreDiscriminator: boolean
     };
 }
 
-export function UtxoAddressToJSON(value?: UtxoAddress | null): any {
-    if (value === undefined) {
-        return undefined;
+export function UtxoAddressToJSON(json: any): UtxoAddress {
+    return UtxoAddressToJSONTyped(json, false);
+}
+
+export function UtxoAddressToJSONTyped(value?: UtxoAddress | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'address': value.address,
-        'address_type': UtxoAddressTypeToJSON(value.addressType),
-        'chain': UtxoChainToJSON(value.chain),
+        'address': value['address'],
+        'address_type': UtxoAddressTypeToJSON(value['addressType']),
+        'chain': UtxoChainToJSON(value['chain']),
     };
 }
 

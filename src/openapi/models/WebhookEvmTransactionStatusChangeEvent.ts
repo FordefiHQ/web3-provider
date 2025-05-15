@@ -12,37 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { EvmChain } from './EvmChain';
-import {
-    EvmChainFromJSON,
-    EvmChainFromJSONTyped,
-    EvmChainToJSON,
-} from './EvmChain';
-import type { EvmTransactionState } from './EvmTransactionState';
-import {
-    EvmTransactionStateFromJSON,
-    EvmTransactionStateFromJSONTyped,
-    EvmTransactionStateToJSON,
-} from './EvmTransactionState';
-import type { EvmTransactionType } from './EvmTransactionType';
-import {
-    EvmTransactionTypeFromJSON,
-    EvmTransactionTypeFromJSONTyped,
-    EvmTransactionTypeToJSON,
-} from './EvmTransactionType';
-import type { TransactionDirection } from './TransactionDirection';
-import {
-    TransactionDirectionFromJSON,
-    TransactionDirectionFromJSONTyped,
-    TransactionDirectionToJSON,
-} from './TransactionDirection';
+import { mapValues } from '../runtime';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
     TransactionSpamStateFromJSONTyped,
     TransactionSpamStateToJSON,
+    TransactionSpamStateToJSONTyped,
 } from './TransactionSpamState';
+import type { TransactionDirection } from './TransactionDirection';
+import {
+    TransactionDirectionFromJSON,
+    TransactionDirectionFromJSONTyped,
+    TransactionDirectionToJSON,
+    TransactionDirectionToJSONTyped,
+} from './TransactionDirection';
+import type { EvmChain } from './EvmChain';
+import {
+    EvmChainFromJSON,
+    EvmChainFromJSONTyped,
+    EvmChainToJSON,
+    EvmChainToJSONTyped,
+} from './EvmChain';
+import type { EvmTransactionType } from './EvmTransactionType';
+import {
+    EvmTransactionTypeFromJSON,
+    EvmTransactionTypeFromJSONTyped,
+    EvmTransactionTypeToJSON,
+    EvmTransactionTypeToJSONTyped,
+} from './EvmTransactionType';
+import type { PushableTransactionState } from './PushableTransactionState';
+import {
+    PushableTransactionStateFromJSON,
+    PushableTransactionStateFromJSONTyped,
+    PushableTransactionStateToJSON,
+    PushableTransactionStateToJSONTyped,
+} from './PushableTransactionState';
 
 /**
  * 
@@ -83,6 +88,12 @@ export interface WebhookEvmTransactionStatusChangeEvent {
     spamState: TransactionSpamState;
     /**
      * 
+     * @type {PushableTransactionState}
+     * @memberof WebhookEvmTransactionStatusChangeEvent
+     */
+    state: PushableTransactionState;
+    /**
+     * 
      * @type {string}
      * @memberof WebhookEvmTransactionStatusChangeEvent
      */
@@ -93,12 +104,6 @@ export interface WebhookEvmTransactionStatusChangeEvent {
      * @memberof WebhookEvmTransactionStatusChangeEvent
      */
     evmTransactionType: EvmTransactionType;
-    /**
-     * 
-     * @type {EvmTransactionState}
-     * @memberof WebhookEvmTransactionStatusChangeEvent
-     */
-    state: EvmTransactionState;
     /**
      * 
      * @type {string}
@@ -132,18 +137,16 @@ export type WebhookEvmTransactionStatusChangeEventTypeEnum = typeof WebhookEvmTr
 /**
  * Check if a given object implements the WebhookEvmTransactionStatusChangeEvent interface.
  */
-export function instanceOfWebhookEvmTransactionStatusChangeEvent(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "transactionId" in value;
-    isInstance = isInstance && "isManagedTransaction" in value;
-    isInstance = isInstance && "direction" in value;
-    isInstance = isInstance && "spamState" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "evmTransactionType" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfWebhookEvmTransactionStatusChangeEvent(value: object): value is WebhookEvmTransactionStatusChangeEvent {
+    if (!('transactionId' in value) || value['transactionId'] === undefined) return false;
+    if (!('isManagedTransaction' in value) || value['isManagedTransaction'] === undefined) return false;
+    if (!('direction' in value) || value['direction'] === undefined) return false;
+    if (!('spamState' in value) || value['spamState'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('evmTransactionType' in value) || value['evmTransactionType'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function WebhookEvmTransactionStatusChangeEventFromJSON(json: any): WebhookEvmTransactionStatusChangeEvent {
@@ -151,7 +154,7 @@ export function WebhookEvmTransactionStatusChangeEventFromJSON(json: any): Webho
 }
 
 export function WebhookEvmTransactionStatusChangeEventFromJSONTyped(json: any, ignoreDiscriminator: boolean): WebhookEvmTransactionStatusChangeEvent {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -159,37 +162,39 @@ export function WebhookEvmTransactionStatusChangeEventFromJSONTyped(json: any, i
         'transactionId': json['transaction_id'],
         'isManagedTransaction': json['is_managed_transaction'],
         'direction': TransactionDirectionFromJSON(json['direction']),
-        'note': !exists(json, 'note') ? undefined : json['note'],
+        'note': json['note'] == null ? undefined : json['note'],
         'spamState': TransactionSpamStateFromJSON(json['spam_state']),
+        'state': PushableTransactionStateFromJSON(json['state']),
         'type': json['type'],
         'evmTransactionType': EvmTransactionTypeFromJSON(json['evm_transaction_type']),
-        'state': EvmTransactionStateFromJSON(json['state']),
-        'hash': !exists(json, 'hash') ? undefined : json['hash'],
-        'rawTransaction': !exists(json, 'raw_transaction') ? undefined : json['raw_transaction'],
+        'hash': json['hash'] == null ? undefined : json['hash'],
+        'rawTransaction': json['raw_transaction'] == null ? undefined : json['raw_transaction'],
         'chain': EvmChainFromJSON(json['chain']),
     };
 }
 
-export function WebhookEvmTransactionStatusChangeEventToJSON(value?: WebhookEvmTransactionStatusChangeEvent | null): any {
-    if (value === undefined) {
-        return undefined;
+export function WebhookEvmTransactionStatusChangeEventToJSON(json: any): WebhookEvmTransactionStatusChangeEvent {
+    return WebhookEvmTransactionStatusChangeEventToJSONTyped(json, false);
+}
+
+export function WebhookEvmTransactionStatusChangeEventToJSONTyped(value?: WebhookEvmTransactionStatusChangeEvent | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'transaction_id': value.transactionId,
-        'is_managed_transaction': value.isManagedTransaction,
-        'direction': TransactionDirectionToJSON(value.direction),
-        'note': value.note,
-        'spam_state': TransactionSpamStateToJSON(value.spamState),
-        'type': value.type,
-        'evm_transaction_type': EvmTransactionTypeToJSON(value.evmTransactionType),
-        'state': EvmTransactionStateToJSON(value.state),
-        'hash': value.hash,
-        'raw_transaction': value.rawTransaction,
-        'chain': EvmChainToJSON(value.chain),
+        'transaction_id': value['transactionId'],
+        'is_managed_transaction': value['isManagedTransaction'],
+        'direction': TransactionDirectionToJSON(value['direction']),
+        'note': value['note'],
+        'spam_state': TransactionSpamStateToJSON(value['spamState']),
+        'state': PushableTransactionStateToJSON(value['state']),
+        'type': value['type'],
+        'evm_transaction_type': EvmTransactionTypeToJSON(value['evmTransactionType']),
+        'hash': value['hash'],
+        'raw_transaction': value['rawTransaction'],
+        'chain': EvmChainToJSON(value['chain']),
     };
 }
 

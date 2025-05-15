@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { StdSignDoc } from './StdSignDoc';
 import {
     StdSignDocFromJSON,
     StdSignDocFromJSONTyped,
     StdSignDocToJSON,
+    StdSignDocToJSONTyped,
 } from './StdSignDoc';
 
 /**
@@ -53,12 +54,10 @@ export type AminoSignDocFormatEnum = typeof AminoSignDocFormatEnum[keyof typeof 
 /**
  * Check if a given object implements the AminoSignDoc interface.
  */
-export function instanceOfAminoSignDoc(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "format" in value;
-    isInstance = isInstance && "signDoc" in value;
-
-    return isInstance;
+export function instanceOfAminoSignDoc(value: object): value is AminoSignDoc {
+    if (!('format' in value) || value['format'] === undefined) return false;
+    if (!('signDoc' in value) || value['signDoc'] === undefined) return false;
+    return true;
 }
 
 export function AminoSignDocFromJSON(json: any): AminoSignDoc {
@@ -66,7 +65,7 @@ export function AminoSignDocFromJSON(json: any): AminoSignDoc {
 }
 
 export function AminoSignDocFromJSONTyped(json: any, ignoreDiscriminator: boolean): AminoSignDoc {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -76,17 +75,19 @@ export function AminoSignDocFromJSONTyped(json: any, ignoreDiscriminator: boolea
     };
 }
 
-export function AminoSignDocToJSON(value?: AminoSignDoc | null): any {
-    if (value === undefined) {
-        return undefined;
+export function AminoSignDocToJSON(json: any): AminoSignDoc {
+    return AminoSignDocToJSONTyped(json, false);
+}
+
+export function AminoSignDocToJSONTyped(value?: AminoSignDoc | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'format': value.format,
-        'sign_doc': StdSignDocToJSON(value.signDoc),
+        'format': value['format'],
+        'sign_doc': StdSignDocToJSON(value['signDoc']),
     };
 }
 

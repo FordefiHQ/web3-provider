@@ -12,31 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { ActionSigningRequest } from './ActionSigningRequest';
 import {
     ActionSigningRequestFromJSON,
     ActionSigningRequestFromJSONTyped,
     ActionSigningRequestToJSON,
+    ActionSigningRequestToJSONTyped,
 } from './ActionSigningRequest';
-import type { AddressBookContactDetails } from './AddressBookContactDetails';
-import {
-    AddressBookContactDetailsFromJSON,
-    AddressBookContactDetailsFromJSONTyped,
-    AddressBookContactDetailsToJSON,
-} from './AddressBookContactDetails';
 import type { ApprovalRequest } from './ApprovalRequest';
 import {
     ApprovalRequestFromJSON,
     ApprovalRequestFromJSONTyped,
     ApprovalRequestToJSON,
+    ApprovalRequestToJSONTyped,
 } from './ApprovalRequest';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
     UserRefFromJSONTyped,
     UserRefToJSON,
+    UserRefToJSONTyped,
 } from './UserRef';
+import type { VerificationRequest } from './VerificationRequest';
+import {
+    VerificationRequestFromJSON,
+    VerificationRequestFromJSONTyped,
+    VerificationRequestToJSON,
+    VerificationRequestToJSONTyped,
+} from './VerificationRequest';
+import type { AddressBookContactDetails } from './AddressBookContactDetails';
+import {
+    AddressBookContactDetailsFromJSON,
+    AddressBookContactDetailsFromJSONTyped,
+    AddressBookContactDetailsToJSON,
+    AddressBookContactDetailsToJSONTyped,
+} from './AddressBookContactDetails';
 
 /**
  * 
@@ -64,16 +75,16 @@ export interface ContactChangeAction {
     modifiedAt: Date;
     /**
      * 
-     * @type {string}
-     * @memberof ContactChangeAction
-     */
-    type: ContactChangeActionTypeEnum;
-    /**
-     * 
      * @type {boolean}
      * @memberof ContactChangeAction
      */
     isPending: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactChangeAction
+     */
+    type: ContactChangeActionTypeEnum;
     /**
      * 
      * @type {UserRef}
@@ -121,13 +132,19 @@ export interface ContactChangeAction {
      * @type {ApprovalRequest}
      * @memberof ContactChangeAction
      */
-    approvalRequest: ApprovalRequest;
+    approvalRequest?: ApprovalRequest;
+    /**
+     * 
+     * @type {VerificationRequest}
+     * @memberof ContactChangeAction
+     */
+    verificationRequest?: VerificationRequest;
     /**
      * 
      * @type {ActionSigningRequest}
      * @memberof ContactChangeAction
      */
-    deviceSigningRequest: ActionSigningRequest;
+    deviceSigningRequest?: ActionSigningRequest;
 }
 
 
@@ -143,6 +160,8 @@ export type ContactChangeActionTypeEnum = typeof ContactChangeActionTypeEnum[key
  * @export
  */
 export const ContactChangeActionStateEnum = {
+    pendingVerification: 'pending_verification',
+    pendingApproval: 'pending_approval',
     created: 'created',
     signed: 'signed',
     completed: 'completed',
@@ -154,22 +173,18 @@ export type ContactChangeActionStateEnum = typeof ContactChangeActionStateEnum[k
 /**
  * Check if a given object implements the ContactChangeAction interface.
  */
-export function instanceOfContactChangeAction(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "isPending" in value;
-    isInstance = isInstance && "createdBy" in value;
-    isInstance = isInstance && "contactId" in value;
-    isInstance = isInstance && "contactInfo" in value;
-    isInstance = isInstance && "changeRequestId" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "approvalRequest" in value;
-    isInstance = isInstance && "deviceSigningRequest" in value;
-
-    return isInstance;
+export function instanceOfContactChangeAction(value: object): value is ContactChangeAction {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('isPending' in value) || value['isPending'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('createdBy' in value) || value['createdBy'] === undefined) return false;
+    if (!('contactId' in value) || value['contactId'] === undefined) return false;
+    if (!('contactInfo' in value) || value['contactInfo'] === undefined) return false;
+    if (!('changeRequestId' in value) || value['changeRequestId'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    return true;
 }
 
 export function ContactChangeActionFromJSON(json: any): ContactChangeAction {
@@ -177,7 +192,7 @@ export function ContactChangeActionFromJSON(json: any): ContactChangeAction {
 }
 
 export function ContactChangeActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): ContactChangeAction {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -185,43 +200,47 @@ export function ContactChangeActionFromJSONTyped(json: any, ignoreDiscriminator:
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
-        'type': json['type'],
         'isPending': json['is_pending'],
+        'type': json['type'],
         'createdBy': UserRefFromJSON(json['created_by']),
-        'abortedBy': !exists(json, 'aborted_by') ? undefined : UserRefFromJSON(json['aborted_by']),
+        'abortedBy': json['aborted_by'] == null ? undefined : UserRefFromJSON(json['aborted_by']),
         'contactId': json['contact_id'],
         'contactInfo': AddressBookContactDetailsFromJSON(json['contact_info']),
-        'previousContactInfo': !exists(json, 'previous_contact_info') ? undefined : AddressBookContactDetailsFromJSON(json['previous_contact_info']),
+        'previousContactInfo': json['previous_contact_info'] == null ? undefined : AddressBookContactDetailsFromJSON(json['previous_contact_info']),
         'changeRequestId': json['change_request_id'],
         'state': json['state'],
-        'approvalRequest': ApprovalRequestFromJSON(json['approval_request']),
-        'deviceSigningRequest': ActionSigningRequestFromJSON(json['device_signing_request']),
+        'approvalRequest': json['approval_request'] == null ? undefined : ApprovalRequestFromJSON(json['approval_request']),
+        'verificationRequest': json['verification_request'] == null ? undefined : VerificationRequestFromJSON(json['verification_request']),
+        'deviceSigningRequest': json['device_signing_request'] == null ? undefined : ActionSigningRequestFromJSON(json['device_signing_request']),
     };
 }
 
-export function ContactChangeActionToJSON(value?: ContactChangeAction | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ContactChangeActionToJSON(json: any): ContactChangeAction {
+    return ContactChangeActionToJSONTyped(json, false);
+}
+
+export function ContactChangeActionToJSONTyped(value?: ContactChangeAction | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'type': value.type,
-        'is_pending': value.isPending,
-        'created_by': UserRefToJSON(value.createdBy),
-        'aborted_by': UserRefToJSON(value.abortedBy),
-        'contact_id': value.contactId,
-        'contact_info': AddressBookContactDetailsToJSON(value.contactInfo),
-        'previous_contact_info': AddressBookContactDetailsToJSON(value.previousContactInfo),
-        'change_request_id': value.changeRequestId,
-        'state': value.state,
-        'approval_request': ApprovalRequestToJSON(value.approvalRequest),
-        'device_signing_request': ActionSigningRequestToJSON(value.deviceSigningRequest),
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'is_pending': value['isPending'],
+        'type': value['type'],
+        'created_by': UserRefToJSON(value['createdBy']),
+        'aborted_by': UserRefToJSON(value['abortedBy']),
+        'contact_id': value['contactId'],
+        'contact_info': AddressBookContactDetailsToJSON(value['contactInfo']),
+        'previous_contact_info': AddressBookContactDetailsToJSON(value['previousContactInfo']),
+        'change_request_id': value['changeRequestId'],
+        'state': value['state'],
+        'approval_request': ApprovalRequestToJSON(value['approvalRequest']),
+        'verification_request': VerificationRequestToJSON(value['verificationRequest']),
+        'device_signing_request': ActionSigningRequestToJSON(value['deviceSigningRequest']),
     };
 }
 

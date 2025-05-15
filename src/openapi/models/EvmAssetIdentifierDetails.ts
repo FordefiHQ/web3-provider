@@ -12,29 +12,36 @@
  * Do not edit the class manually.
  */
 
+import type { EvmErc1155AssetIdentifierRequest } from './EvmErc1155AssetIdentifierRequest';
 import {
-    EvmErc1155AssetIdentifierRequest,
     instanceOfEvmErc1155AssetIdentifierRequest,
     EvmErc1155AssetIdentifierRequestFromJSON,
     EvmErc1155AssetIdentifierRequestFromJSONTyped,
     EvmErc1155AssetIdentifierRequestToJSON,
 } from './EvmErc1155AssetIdentifierRequest';
+import type { EvmErc20AssetIdentifierRequest } from './EvmErc20AssetIdentifierRequest';
 import {
-    EvmErc20AssetIdentifierRequest,
     instanceOfEvmErc20AssetIdentifierRequest,
     EvmErc20AssetIdentifierRequestFromJSON,
     EvmErc20AssetIdentifierRequestFromJSONTyped,
     EvmErc20AssetIdentifierRequestToJSON,
 } from './EvmErc20AssetIdentifierRequest';
+import type { EvmErc721AssetIdentifierRequest } from './EvmErc721AssetIdentifierRequest';
 import {
-    EvmErc721AssetIdentifierRequest,
     instanceOfEvmErc721AssetIdentifierRequest,
     EvmErc721AssetIdentifierRequestFromJSON,
     EvmErc721AssetIdentifierRequestFromJSONTyped,
     EvmErc721AssetIdentifierRequestToJSON,
 } from './EvmErc721AssetIdentifierRequest';
+import type { EvmHyperLiquidAssetIdentifierRequest } from './EvmHyperLiquidAssetIdentifierRequest';
 import {
-    EvmNativeAssetIdentifierRequest,
+    instanceOfEvmHyperLiquidAssetIdentifierRequest,
+    EvmHyperLiquidAssetIdentifierRequestFromJSON,
+    EvmHyperLiquidAssetIdentifierRequestFromJSONTyped,
+    EvmHyperLiquidAssetIdentifierRequestToJSON,
+} from './EvmHyperLiquidAssetIdentifierRequest';
+import type { EvmNativeAssetIdentifierRequest } from './EvmNativeAssetIdentifierRequest';
+import {
     instanceOfEvmNativeAssetIdentifierRequest,
     EvmNativeAssetIdentifierRequestFromJSON,
     EvmNativeAssetIdentifierRequestFromJSONTyped,
@@ -46,46 +53,51 @@ import {
  * 
  * @export
  */
-export type EvmAssetIdentifierDetails = { type: 'erc1155' } & EvmErc1155AssetIdentifierRequest | { type: 'erc20' } & EvmErc20AssetIdentifierRequest | { type: 'erc721' } & EvmErc721AssetIdentifierRequest | { type: 'native' } & EvmNativeAssetIdentifierRequest;
+export type EvmAssetIdentifierDetails = { type: 'erc1155' } & EvmErc1155AssetIdentifierRequest | { type: 'erc20' } & EvmErc20AssetIdentifierRequest | { type: 'erc721' } & EvmErc721AssetIdentifierRequest | { type: 'hyperliquid' } & EvmHyperLiquidAssetIdentifierRequest | { type: 'native' } & EvmNativeAssetIdentifierRequest;
 
 export function EvmAssetIdentifierDetailsFromJSON(json: any): EvmAssetIdentifierDetails {
     return EvmAssetIdentifierDetailsFromJSONTyped(json, false);
 }
 
 export function EvmAssetIdentifierDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmAssetIdentifierDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'erc1155':
-            return {...EvmErc1155AssetIdentifierRequestFromJSONTyped(json, true), type: 'erc1155'};
+            return Object.assign({}, EvmErc1155AssetIdentifierRequestFromJSONTyped(json, true), { type: 'erc1155' } as const);
         case 'erc20':
-            return {...EvmErc20AssetIdentifierRequestFromJSONTyped(json, true), type: 'erc20'};
+            return Object.assign({}, EvmErc20AssetIdentifierRequestFromJSONTyped(json, true), { type: 'erc20' } as const);
         case 'erc721':
-            return {...EvmErc721AssetIdentifierRequestFromJSONTyped(json, true), type: 'erc721'};
+            return Object.assign({}, EvmErc721AssetIdentifierRequestFromJSONTyped(json, true), { type: 'erc721' } as const);
+        case 'hyperliquid':
+            return Object.assign({}, EvmHyperLiquidAssetIdentifierRequestFromJSONTyped(json, true), { type: 'hyperliquid' } as const);
         case 'native':
-            return {...EvmNativeAssetIdentifierRequestFromJSONTyped(json, true), type: 'native'};
+            return Object.assign({}, EvmNativeAssetIdentifierRequestFromJSONTyped(json, true), { type: 'native' } as const);
         default:
             throw new Error(`No variant of EvmAssetIdentifierDetails exists with 'type=${json['type']}'`);
     }
 }
 
-export function EvmAssetIdentifierDetailsToJSON(value?: EvmAssetIdentifierDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function EvmAssetIdentifierDetailsToJSON(json: any): any {
+    return EvmAssetIdentifierDetailsToJSONTyped(json, false);
+}
+
+export function EvmAssetIdentifierDetailsToJSONTyped(value?: EvmAssetIdentifierDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'erc1155':
-            return EvmErc1155AssetIdentifierRequestToJSON(value);
+            return Object.assign({}, EvmErc1155AssetIdentifierRequestToJSON(value), { type: 'erc1155' } as const);
         case 'erc20':
-            return EvmErc20AssetIdentifierRequestToJSON(value);
+            return Object.assign({}, EvmErc20AssetIdentifierRequestToJSON(value), { type: 'erc20' } as const);
         case 'erc721':
-            return EvmErc721AssetIdentifierRequestToJSON(value);
+            return Object.assign({}, EvmErc721AssetIdentifierRequestToJSON(value), { type: 'erc721' } as const);
+        case 'hyperliquid':
+            return Object.assign({}, EvmHyperLiquidAssetIdentifierRequestToJSON(value), { type: 'hyperliquid' } as const);
         case 'native':
-            return EvmNativeAssetIdentifierRequestToJSON(value);
+            return Object.assign({}, EvmNativeAssetIdentifierRequestToJSON(value), { type: 'native' } as const);
         default:
             throw new Error(`No variant of EvmAssetIdentifierDetails exists with 'type=${value['type']}'`);
     }

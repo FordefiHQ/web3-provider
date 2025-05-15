@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { Price } from './Price';
-import {
-    PriceFromJSON,
-    PriceFromJSONTyped,
-    PriceToJSON,
-} from './Price';
+import { mapValues } from '../runtime';
 import type { PricedErc20 } from './PricedErc20';
 import {
     PricedErc20FromJSON,
     PricedErc20FromJSONTyped,
     PricedErc20ToJSON,
+    PricedErc20ToJSONTyped,
 } from './PricedErc20';
+import type { Price } from './Price';
+import {
+    PriceFromJSON,
+    PriceFromJSONTyped,
+    PriceToJSON,
+    PriceToJSONTyped,
+} from './Price';
 
 /**
  * 
@@ -50,10 +52,8 @@ export interface EvmPrices {
 /**
  * Check if a given object implements the EvmPrices interface.
  */
-export function instanceOfEvmPrices(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfEvmPrices(value: object): value is EvmPrices {
+    return true;
 }
 
 export function EvmPricesFromJSON(json: any): EvmPrices {
@@ -61,27 +61,29 @@ export function EvmPricesFromJSON(json: any): EvmPrices {
 }
 
 export function EvmPricesFromJSONTyped(json: any, ignoreDiscriminator: boolean): EvmPrices {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
-        'nativeCurrencyPrice': !exists(json, 'native_currency_price') ? undefined : PriceFromJSON(json['native_currency_price']),
-        'tokenPrices': !exists(json, 'token_prices') ? undefined : ((json['token_prices'] as Array<any>).map(PricedErc20FromJSON)),
+        'nativeCurrencyPrice': json['native_currency_price'] == null ? undefined : PriceFromJSON(json['native_currency_price']),
+        'tokenPrices': json['token_prices'] == null ? undefined : ((json['token_prices'] as Array<any>).map(PricedErc20FromJSON)),
     };
 }
 
-export function EvmPricesToJSON(value?: EvmPrices | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EvmPricesToJSON(json: any): EvmPrices {
+    return EvmPricesToJSONTyped(json, false);
+}
+
+export function EvmPricesToJSONTyped(value?: EvmPrices | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'native_currency_price': PriceToJSON(value.nativeCurrencyPrice),
-        'token_prices': value.tokenPrices === undefined ? undefined : ((value.tokenPrices as Array<any>).map(PricedErc20ToJSON)),
+        'native_currency_price': PriceToJSON(value['nativeCurrencyPrice']),
+        'token_prices': value['tokenPrices'] == null ? undefined : ((value['tokenPrices'] as Array<any>).map(PricedErc20ToJSON)),
     };
 }
 

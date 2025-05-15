@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -36,12 +36,10 @@ export interface GetImpersonationResponse {
 /**
  * Check if a given object implements the GetImpersonationResponse interface.
  */
-export function instanceOfGetImpersonationResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "impersonatorUserEmail" in value;
-    isInstance = isInstance && "impersonatedUserEmail" in value;
-
-    return isInstance;
+export function instanceOfGetImpersonationResponse(value: object): value is GetImpersonationResponse {
+    if (!('impersonatorUserEmail' in value) || value['impersonatorUserEmail'] === undefined) return false;
+    if (!('impersonatedUserEmail' in value) || value['impersonatedUserEmail'] === undefined) return false;
+    return true;
 }
 
 export function GetImpersonationResponseFromJSON(json: any): GetImpersonationResponse {
@@ -49,7 +47,7 @@ export function GetImpersonationResponseFromJSON(json: any): GetImpersonationRes
 }
 
 export function GetImpersonationResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetImpersonationResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -59,17 +57,19 @@ export function GetImpersonationResponseFromJSONTyped(json: any, ignoreDiscrimin
     };
 }
 
-export function GetImpersonationResponseToJSON(value?: GetImpersonationResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function GetImpersonationResponseToJSON(json: any): GetImpersonationResponse {
+    return GetImpersonationResponseToJSONTyped(json, false);
+}
+
+export function GetImpersonationResponseToJSONTyped(value?: GetImpersonationResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'impersonator_user_email': value.impersonatorUserEmail,
-        'impersonated_user_email': value.impersonatedUserEmail,
+        'impersonator_user_email': value['impersonatorUserEmail'],
+        'impersonated_user_email': value['impersonatedUserEmail'],
     };
 }
 

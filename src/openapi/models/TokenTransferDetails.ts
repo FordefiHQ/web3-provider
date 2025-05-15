@@ -12,19 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
-import {
-    EnrichedEvmAddressFromJSON,
-    EnrichedEvmAddressFromJSONTyped,
-    EnrichedEvmAddressToJSON,
-} from './EnrichedEvmAddress';
+import { mapValues } from '../runtime';
 import type { TransferDirection } from './TransferDirection';
 import {
     TransferDirectionFromJSON,
     TransferDirectionFromJSONTyped,
     TransferDirectionToJSON,
+    TransferDirectionToJSONTyped,
 } from './TransferDirection';
+import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
+import {
+    EnrichedEvmAddressFromJSON,
+    EnrichedEvmAddressFromJSONTyped,
+    EnrichedEvmAddressToJSON,
+    EnrichedEvmAddressToJSONTyped,
+} from './EnrichedEvmAddress';
 
 /**
  * 
@@ -71,13 +73,11 @@ export type TokenTransferDetailsTypeEnum = typeof TokenTransferDetailsTypeEnum[k
 /**
  * Check if a given object implements the TokenTransferDetails interface.
  */
-export function instanceOfTokenTransferDetails(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "direction" in value;
-    isInstance = isInstance && "recipient" in value;
-
-    return isInstance;
+export function instanceOfTokenTransferDetails(value: object): value is TokenTransferDetails {
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('direction' in value) || value['direction'] === undefined) return false;
+    if (!('recipient' in value) || value['recipient'] === undefined) return false;
+    return true;
 }
 
 export function TokenTransferDetailsFromJSON(json: any): TokenTransferDetails {
@@ -85,7 +85,7 @@ export function TokenTransferDetailsFromJSON(json: any): TokenTransferDetails {
 }
 
 export function TokenTransferDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): TokenTransferDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -93,23 +93,25 @@ export function TokenTransferDetailsFromJSONTyped(json: any, ignoreDiscriminator
         'type': json['type'],
         'direction': TransferDirectionFromJSON(json['direction']),
         'recipient': EnrichedEvmAddressFromJSON(json['recipient']),
-        'isInternal': !exists(json, 'is_internal') ? undefined : json['is_internal'],
+        'isInternal': json['is_internal'] == null ? undefined : json['is_internal'],
     };
 }
 
-export function TokenTransferDetailsToJSON(value?: TokenTransferDetails | null): any {
-    if (value === undefined) {
-        return undefined;
+export function TokenTransferDetailsToJSON(json: any): TokenTransferDetails {
+    return TokenTransferDetailsToJSONTyped(json, false);
+}
+
+export function TokenTransferDetailsToJSONTyped(value?: TokenTransferDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'type': value.type,
-        'direction': TransferDirectionToJSON(value.direction),
-        'recipient': EnrichedEvmAddressToJSON(value.recipient),
-        'is_internal': value.isInternal,
+        'type': value['type'],
+        'direction': TransferDirectionToJSON(value['direction']),
+        'recipient': EnrichedEvmAddressToJSON(value['recipient']),
+        'is_internal': value['isInternal'],
     };
 }
 

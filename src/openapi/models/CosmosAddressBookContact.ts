@@ -12,37 +12,49 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { AddressBookContactChanges } from './AddressBookContactChanges';
-import {
-    AddressBookContactChangesFromJSON,
-    AddressBookContactChangesFromJSONTyped,
-    AddressBookContactChangesToJSON,
-} from './AddressBookContactChanges';
-import type { AddressBookContactState } from './AddressBookContactState';
-import {
-    AddressBookContactStateFromJSON,
-    AddressBookContactStateFromJSONTyped,
-    AddressBookContactStateToJSON,
-} from './AddressBookContactState';
+import { mapValues } from '../runtime';
 import type { EnrichedCosmosChain } from './EnrichedCosmosChain';
 import {
     EnrichedCosmosChainFromJSON,
     EnrichedCosmosChainFromJSONTyped,
     EnrichedCosmosChainToJSON,
+    EnrichedCosmosChainToJSONTyped,
 } from './EnrichedCosmosChain';
-import type { GroupRef } from './GroupRef';
+import type { AddressBookContactChanges } from './AddressBookContactChanges';
 import {
-    GroupRefFromJSON,
-    GroupRefFromJSONTyped,
-    GroupRefToJSON,
-} from './GroupRef';
+    AddressBookContactChangesFromJSON,
+    AddressBookContactChangesFromJSONTyped,
+    AddressBookContactChangesToJSON,
+    AddressBookContactChangesToJSONTyped,
+} from './AddressBookContactChanges';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
     UserRefFromJSONTyped,
     UserRefToJSON,
+    UserRefToJSONTyped,
 } from './UserRef';
+import type { AssetInfo } from './AssetInfo';
+import {
+    AssetInfoFromJSON,
+    AssetInfoFromJSONTyped,
+    AssetInfoToJSON,
+    AssetInfoToJSONTyped,
+} from './AssetInfo';
+import type { GroupRef } from './GroupRef';
+import {
+    GroupRefFromJSON,
+    GroupRefFromJSONTyped,
+    GroupRefToJSON,
+    GroupRefToJSONTyped,
+} from './GroupRef';
+import type { AddressBookContactState } from './AddressBookContactState';
+import {
+    AddressBookContactStateFromJSON,
+    AddressBookContactStateFromJSONTyped,
+    AddressBookContactStateToJSON,
+    AddressBookContactStateToJSONTyped,
+} from './AddressBookContactState';
 
 /**
  * 
@@ -100,6 +112,12 @@ export interface CosmosAddressBookContact {
     pendingChanges?: AddressBookContactChanges;
     /**
      * 
+     * @type {Array<AssetInfo>}
+     * @memberof CosmosAddressBookContact
+     */
+    assetInfos: Array<AssetInfo>;
+    /**
+     * 
      * @type {string}
      * @memberof CosmosAddressBookContact
      */
@@ -116,6 +134,12 @@ export interface CosmosAddressBookContact {
      * @memberof CosmosAddressBookContact
      */
     chain: EnrichedCosmosChain;
+    /**
+     * 
+     * @type {string}
+     * @memberof CosmosAddressBookContact
+     */
+    memo?: string;
 }
 
 
@@ -131,20 +155,19 @@ export type CosmosAddressBookContactChainTypeEnum = typeof CosmosAddressBookCont
 /**
  * Check if a given object implements the CosmosAddressBookContact interface.
  */
-export function instanceOfCosmosAddressBookContact(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "modifiedBy" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "groups" in value;
-    isInstance = isInstance && "chainType" in value;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "chain" in value;
-
-    return isInstance;
+export function instanceOfCosmosAddressBookContact(value: object): value is CosmosAddressBookContact {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('modifiedBy' in value) || value['modifiedBy'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('groups' in value) || value['groups'] === undefined) return false;
+    if (!('assetInfos' in value) || value['assetInfos'] === undefined) return false;
+    if (!('chainType' in value) || value['chainType'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    if (!('chain' in value) || value['chain'] === undefined) return false;
+    return true;
 }
 
 export function CosmosAddressBookContactFromJSON(json: any): CosmosAddressBookContact {
@@ -152,7 +175,7 @@ export function CosmosAddressBookContactFromJSON(json: any): CosmosAddressBookCo
 }
 
 export function CosmosAddressBookContactFromJSONTyped(json: any, ignoreDiscriminator: boolean): CosmosAddressBookContact {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -164,33 +187,39 @@ export function CosmosAddressBookContactFromJSONTyped(json: any, ignoreDiscrimin
         'modifiedBy': UserRefFromJSON(json['modified_by']),
         'state': AddressBookContactStateFromJSON(json['state']),
         'groups': ((json['groups'] as Array<any>).map(GroupRefFromJSON)),
-        'pendingChanges': !exists(json, 'pending_changes') ? undefined : AddressBookContactChangesFromJSON(json['pending_changes']),
+        'pendingChanges': json['pending_changes'] == null ? undefined : AddressBookContactChangesFromJSON(json['pending_changes']),
+        'assetInfos': ((json['asset_infos'] as Array<any>).map(AssetInfoFromJSON)),
         'chainType': json['chain_type'],
         'address': json['address'],
         'chain': EnrichedCosmosChainFromJSON(json['chain']),
+        'memo': json['memo'] == null ? undefined : json['memo'],
     };
 }
 
-export function CosmosAddressBookContactToJSON(value?: CosmosAddressBookContact | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CosmosAddressBookContactToJSON(json: any): CosmosAddressBookContact {
+    return CosmosAddressBookContactToJSONTyped(json, false);
+}
+
+export function CosmosAddressBookContactToJSONTyped(value?: CosmosAddressBookContact | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'created_at': (value.createdAt.toISOString()),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'name': value.name,
-        'modified_by': UserRefToJSON(value.modifiedBy),
-        'state': AddressBookContactStateToJSON(value.state),
-        'groups': ((value.groups as Array<any>).map(GroupRefToJSON)),
-        'pending_changes': AddressBookContactChangesToJSON(value.pendingChanges),
-        'chain_type': value.chainType,
-        'address': value.address,
-        'chain': EnrichedCosmosChainToJSON(value.chain),
+        'id': value['id'],
+        'created_at': ((value['createdAt']).toISOString()),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'name': value['name'],
+        'modified_by': UserRefToJSON(value['modifiedBy']),
+        'state': AddressBookContactStateToJSON(value['state']),
+        'groups': ((value['groups'] as Array<any>).map(GroupRefToJSON)),
+        'pending_changes': AddressBookContactChangesToJSON(value['pendingChanges']),
+        'asset_infos': ((value['assetInfos'] as Array<any>).map(AssetInfoToJSON)),
+        'chain_type': value['chainType'],
+        'address': value['address'],
+        'chain': EnrichedCosmosChainToJSON(value['chain']),
+        'memo': value['memo'],
     };
 }
 

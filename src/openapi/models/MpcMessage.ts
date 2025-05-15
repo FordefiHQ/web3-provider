@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -60,15 +60,13 @@ export interface MpcMessage {
 /**
  * Check if a given object implements the MpcMessage interface.
  */
-export function instanceOfMpcMessage(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "message" in value;
-    isInstance = isInstance && "signature" in value;
-    isInstance = isInstance && "messageNumber" in value;
-    isInstance = isInstance && "protocolName" in value;
-    isInstance = isInstance && "isLastMessage" in value;
-
-    return isInstance;
+export function instanceOfMpcMessage(value: object): value is MpcMessage {
+    if (!('message' in value) || value['message'] === undefined) return false;
+    if (!('signature' in value) || value['signature'] === undefined) return false;
+    if (!('messageNumber' in value) || value['messageNumber'] === undefined) return false;
+    if (!('protocolName' in value) || value['protocolName'] === undefined) return false;
+    if (!('isLastMessage' in value) || value['isLastMessage'] === undefined) return false;
+    return true;
 }
 
 export function MpcMessageFromJSON(json: any): MpcMessage {
@@ -76,7 +74,7 @@ export function MpcMessageFromJSON(json: any): MpcMessage {
 }
 
 export function MpcMessageFromJSONTyped(json: any, ignoreDiscriminator: boolean): MpcMessage {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -86,25 +84,27 @@ export function MpcMessageFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'messageNumber': json['message_number'],
         'protocolName': json['protocol_name'],
         'isLastMessage': json['is_last_message'],
-        'sessionId': !exists(json, 'session_id') ? undefined : json['session_id'],
+        'sessionId': json['session_id'] == null ? undefined : json['session_id'],
     };
 }
 
-export function MpcMessageToJSON(value?: MpcMessage | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MpcMessageToJSON(json: any): MpcMessage {
+    return MpcMessageToJSONTyped(json, false);
+}
+
+export function MpcMessageToJSONTyped(value?: MpcMessage | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'message': value.message,
-        'signature': value.signature,
-        'message_number': value.messageNumber,
-        'protocol_name': value.protocolName,
-        'is_last_message': value.isLastMessage,
-        'session_id': value.sessionId,
+        'message': value['message'],
+        'signature': value['signature'],
+        'message_number': value['messageNumber'],
+        'protocol_name': value['protocolName'],
+        'is_last_message': value['isLastMessage'],
+        'session_id': value['sessionId'],
     };
 }
 

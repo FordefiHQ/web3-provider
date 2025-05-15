@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { DevicePlatform } from './DevicePlatform';
 import {
     DevicePlatformFromJSON,
     DevicePlatformFromJSONTyped,
     DevicePlatformToJSON,
+    DevicePlatformToJSONTyped,
 } from './DevicePlatform';
 
 /**
@@ -46,16 +47,16 @@ export interface DeviceSystemInfo {
     pushToken: string;
 }
 
+
+
 /**
  * Check if a given object implements the DeviceSystemInfo interface.
  */
-export function instanceOfDeviceSystemInfo(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "platform" in value;
-    isInstance = isInstance && "model" in value;
-    isInstance = isInstance && "pushToken" in value;
-
-    return isInstance;
+export function instanceOfDeviceSystemInfo(value: object): value is DeviceSystemInfo {
+    if (!('platform' in value) || value['platform'] === undefined) return false;
+    if (!('model' in value) || value['model'] === undefined) return false;
+    if (!('pushToken' in value) || value['pushToken'] === undefined) return false;
+    return true;
 }
 
 export function DeviceSystemInfoFromJSON(json: any): DeviceSystemInfo {
@@ -63,7 +64,7 @@ export function DeviceSystemInfoFromJSON(json: any): DeviceSystemInfo {
 }
 
 export function DeviceSystemInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean): DeviceSystemInfo {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -74,18 +75,20 @@ export function DeviceSystemInfoFromJSONTyped(json: any, ignoreDiscriminator: bo
     };
 }
 
-export function DeviceSystemInfoToJSON(value?: DeviceSystemInfo | null): any {
-    if (value === undefined) {
-        return undefined;
+export function DeviceSystemInfoToJSON(json: any): DeviceSystemInfo {
+    return DeviceSystemInfoToJSONTyped(json, false);
+}
+
+export function DeviceSystemInfoToJSONTyped(value?: DeviceSystemInfo | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'platform': DevicePlatformToJSON(value.platform),
-        'model': value.model,
-        'push_token': value.pushToken,
+        'platform': DevicePlatformToJSON(value['platform']),
+        'model': value['model'],
+        'push_token': value['pushToken'],
     };
 }
 

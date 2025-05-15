@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { UserWithOrganization } from './UserWithOrganization';
 import {
     UserWithOrganizationFromJSON,
     UserWithOrganizationFromJSONTyped,
     UserWithOrganizationToJSON,
+    UserWithOrganizationToJSONTyped,
 } from './UserWithOrganization';
 
 /**
@@ -37,11 +38,9 @@ export interface CompleteDeviceOnboardingResponse {
 /**
  * Check if a given object implements the CompleteDeviceOnboardingResponse interface.
  */
-export function instanceOfCompleteDeviceOnboardingResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "userInfo" in value;
-
-    return isInstance;
+export function instanceOfCompleteDeviceOnboardingResponse(value: object): value is CompleteDeviceOnboardingResponse {
+    if (!('userInfo' in value) || value['userInfo'] === undefined) return false;
+    return true;
 }
 
 export function CompleteDeviceOnboardingResponseFromJSON(json: any): CompleteDeviceOnboardingResponse {
@@ -49,7 +48,7 @@ export function CompleteDeviceOnboardingResponseFromJSON(json: any): CompleteDev
 }
 
 export function CompleteDeviceOnboardingResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): CompleteDeviceOnboardingResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -58,16 +57,18 @@ export function CompleteDeviceOnboardingResponseFromJSONTyped(json: any, ignoreD
     };
 }
 
-export function CompleteDeviceOnboardingResponseToJSON(value?: CompleteDeviceOnboardingResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function CompleteDeviceOnboardingResponseToJSON(json: any): CompleteDeviceOnboardingResponse {
+    return CompleteDeviceOnboardingResponseToJSONTyped(json, false);
+}
+
+export function CompleteDeviceOnboardingResponseToJSONTyped(value?: CompleteDeviceOnboardingResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'user_info': UserWithOrganizationToJSON(value.userInfo),
+        'user_info': UserWithOrganizationToJSON(value['userInfo']),
     };
 }
 

@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
+import type { PredictedSolanaTransaction } from './PredictedSolanaTransaction';
 import {
-    PredictedSolanaTransaction,
     instanceOfPredictedSolanaTransaction,
     PredictedSolanaTransactionFromJSON,
     PredictedSolanaTransactionFromJSONTyped,
@@ -32,27 +32,28 @@ export function PredictBatchTransactionResponseFromJSON(json: any): PredictBatch
 }
 
 export function PredictBatchTransactionResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): PredictBatchTransactionResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'solana_transaction':
-            return {...PredictedSolanaTransactionFromJSONTyped(json, true), type: 'solana_transaction'};
+            return Object.assign({}, PredictedSolanaTransactionFromJSONTyped(json, true), { type: 'solana_transaction' } as const);
         default:
             throw new Error(`No variant of PredictBatchTransactionResponse exists with 'type=${json['type']}'`);
     }
 }
 
-export function PredictBatchTransactionResponseToJSON(value?: PredictBatchTransactionResponse | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function PredictBatchTransactionResponseToJSON(json: any): any {
+    return PredictBatchTransactionResponseToJSONTyped(json, false);
+}
+
+export function PredictBatchTransactionResponseToJSONTyped(value?: PredictBatchTransactionResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'solana_transaction':
-            return PredictedSolanaTransactionToJSON(value);
+            return Object.assign({}, PredictedSolanaTransactionToJSON(value), { type: 'solana_transaction' } as const);
         default:
             throw new Error(`No variant of PredictBatchTransactionResponse exists with 'type=${value['type']}'`);
     }

@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -30,11 +30,9 @@ export interface GetWebhooksVerificationKeyResponse {
 /**
  * Check if a given object implements the GetWebhooksVerificationKeyResponse interface.
  */
-export function instanceOfGetWebhooksVerificationKeyResponse(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "key" in value;
-
-    return isInstance;
+export function instanceOfGetWebhooksVerificationKeyResponse(value: object): value is GetWebhooksVerificationKeyResponse {
+    if (!('key' in value) || value['key'] === undefined) return false;
+    return true;
 }
 
 export function GetWebhooksVerificationKeyResponseFromJSON(json: any): GetWebhooksVerificationKeyResponse {
@@ -42,7 +40,7 @@ export function GetWebhooksVerificationKeyResponseFromJSON(json: any): GetWebhoo
 }
 
 export function GetWebhooksVerificationKeyResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetWebhooksVerificationKeyResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -51,16 +49,18 @@ export function GetWebhooksVerificationKeyResponseFromJSONTyped(json: any, ignor
     };
 }
 
-export function GetWebhooksVerificationKeyResponseToJSON(value?: GetWebhooksVerificationKeyResponse | null): any {
-    if (value === undefined) {
-        return undefined;
+export function GetWebhooksVerificationKeyResponseToJSON(json: any): GetWebhooksVerificationKeyResponse {
+    return GetWebhooksVerificationKeyResponseToJSONTyped(json, false);
+}
+
+export function GetWebhooksVerificationKeyResponseToJSONTyped(value?: GetWebhooksVerificationKeyResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'key': value.key,
+        'key': value['key'],
     };
 }
 

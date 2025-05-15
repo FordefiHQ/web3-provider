@@ -12,13 +12,33 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
+import type { KeyType } from './KeyType';
+import {
+    KeyTypeFromJSON,
+    KeyTypeFromJSONTyped,
+    KeyTypeToJSON,
+    KeyTypeToJSONTyped,
+} from './KeyType';
+
 /**
  * 
  * @export
  * @interface MobileKeyImportArgs
  */
 export interface MobileKeyImportArgs {
+    /**
+     * 
+     * @type {string}
+     * @memberof MobileKeyImportArgs
+     */
+    keyId: string;
+    /**
+     * 
+     * @type {KeyType}
+     * @memberof MobileKeyImportArgs
+     */
+    keyType: KeyType;
     /**
      * 
      * @type {string}
@@ -45,17 +65,19 @@ export interface MobileKeyImportArgs {
     publicKey: string;
 }
 
+
+
 /**
  * Check if a given object implements the MobileKeyImportArgs interface.
  */
-export function instanceOfMobileKeyImportArgs(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "encryptedAdditiveShare" in value;
-    isInstance = isInstance && "coefficient" in value;
-    isInstance = isInstance && "chainCode" in value;
-    isInstance = isInstance && "publicKey" in value;
-
-    return isInstance;
+export function instanceOfMobileKeyImportArgs(value: object): value is MobileKeyImportArgs {
+    if (!('keyId' in value) || value['keyId'] === undefined) return false;
+    if (!('keyType' in value) || value['keyType'] === undefined) return false;
+    if (!('encryptedAdditiveShare' in value) || value['encryptedAdditiveShare'] === undefined) return false;
+    if (!('coefficient' in value) || value['coefficient'] === undefined) return false;
+    if (!('chainCode' in value) || value['chainCode'] === undefined) return false;
+    if (!('publicKey' in value) || value['publicKey'] === undefined) return false;
+    return true;
 }
 
 export function MobileKeyImportArgsFromJSON(json: any): MobileKeyImportArgs {
@@ -63,11 +85,13 @@ export function MobileKeyImportArgsFromJSON(json: any): MobileKeyImportArgs {
 }
 
 export function MobileKeyImportArgsFromJSONTyped(json: any, ignoreDiscriminator: boolean): MobileKeyImportArgs {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
         
+        'keyId': json['key_id'],
+        'keyType': KeyTypeFromJSON(json['key_type']),
         'encryptedAdditiveShare': json['encrypted_additive_share'],
         'coefficient': json['coefficient'],
         'chainCode': json['chain_code'],
@@ -75,19 +99,23 @@ export function MobileKeyImportArgsFromJSONTyped(json: any, ignoreDiscriminator:
     };
 }
 
-export function MobileKeyImportArgsToJSON(value?: MobileKeyImportArgs | null): any {
-    if (value === undefined) {
-        return undefined;
+export function MobileKeyImportArgsToJSON(json: any): MobileKeyImportArgs {
+    return MobileKeyImportArgsToJSONTyped(json, false);
+}
+
+export function MobileKeyImportArgsToJSONTyped(value?: MobileKeyImportArgs | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'encrypted_additive_share': value.encryptedAdditiveShare,
-        'coefficient': value.coefficient,
-        'chain_code': value.chainCode,
-        'public_key': value.publicKey,
+        'key_id': value['keyId'],
+        'key_type': KeyTypeToJSON(value['keyType']),
+        'encrypted_additive_share': value['encryptedAdditiveShare'],
+        'coefficient': value['coefficient'],
+        'chain_code': value['chainCode'],
+        'public_key': value['publicKey'],
     };
 }
 

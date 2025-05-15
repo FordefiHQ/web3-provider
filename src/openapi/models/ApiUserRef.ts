@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { UserRole } from './UserRole';
 import {
     UserRoleFromJSON,
     UserRoleFromJSONTyped,
     UserRoleToJSON,
+    UserRoleToJSONTyped,
 } from './UserRole';
 
 /**
@@ -80,15 +81,13 @@ export type ApiUserRefStateEnum = typeof ApiUserRefStateEnum[keyof typeof ApiUse
 /**
  * Check if a given object implements the ApiUserRef interface.
  */
-export function instanceOfApiUserRef(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "userType" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "state" in value;
-    isInstance = isInstance && "role" in value;
-
-    return isInstance;
+export function instanceOfApiUserRef(value: object): value is ApiUserRef {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('userType' in value) || value['userType'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('state' in value) || value['state'] === undefined) return false;
+    if (!('role' in value) || value['role'] === undefined) return false;
+    return true;
 }
 
 export function ApiUserRefFromJSON(json: any): ApiUserRef {
@@ -96,7 +95,7 @@ export function ApiUserRefFromJSON(json: any): ApiUserRef {
 }
 
 export function ApiUserRefFromJSONTyped(json: any, ignoreDiscriminator: boolean): ApiUserRef {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -109,20 +108,22 @@ export function ApiUserRefFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     };
 }
 
-export function ApiUserRefToJSON(value?: ApiUserRef | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ApiUserRefToJSON(json: any): ApiUserRef {
+    return ApiUserRefToJSONTyped(json, false);
+}
+
+export function ApiUserRefToJSONTyped(value?: ApiUserRef | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'id': value.id,
-        'user_type': value.userType,
-        'name': value.name,
-        'state': value.state,
-        'role': UserRoleToJSON(value.role),
+        'id': value['id'],
+        'user_type': value['userType'],
+        'name': value['name'],
+        'state': value['state'],
+        'role': UserRoleToJSON(value['role']),
     };
 }
 

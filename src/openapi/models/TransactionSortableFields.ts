@@ -34,6 +34,17 @@ export const TransactionSortableFields = {
 export type TransactionSortableFields = typeof TransactionSortableFields[keyof typeof TransactionSortableFields];
 
 
+export function instanceOfTransactionSortableFields(value: any): boolean {
+    for (const key in TransactionSortableFields) {
+        if (Object.prototype.hasOwnProperty.call(TransactionSortableFields, key)) {
+            if (TransactionSortableFields[key as keyof typeof TransactionSortableFields] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function TransactionSortableFieldsFromJSON(json: any): TransactionSortableFields {
     return TransactionSortableFieldsFromJSONTyped(json, false);
 }
@@ -44,5 +55,9 @@ export function TransactionSortableFieldsFromJSONTyped(json: any, ignoreDiscrimi
 
 export function TransactionSortableFieldsToJSON(value?: TransactionSortableFields | null): any {
     return value as any;
+}
+
+export function TransactionSortableFieldsToJSONTyped(value: any, ignoreDiscriminator: boolean): TransactionSortableFields {
+    return value as TransactionSortableFields;
 }
 

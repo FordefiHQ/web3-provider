@@ -12,50 +12,71 @@
  * Do not edit the class manually.
  */
 
+import type { EditAptosContactRequest } from './EditAptosContactRequest';
 import {
-    EditAptosContactRequest,
     instanceOfEditAptosContactRequest,
     EditAptosContactRequestFromJSON,
     EditAptosContactRequestFromJSONTyped,
     EditAptosContactRequestToJSON,
 } from './EditAptosContactRequest';
+import type { EditCosmosContactRequest } from './EditCosmosContactRequest';
 import {
-    EditCosmosContactRequest,
     instanceOfEditCosmosContactRequest,
     EditCosmosContactRequestFromJSON,
     EditCosmosContactRequestFromJSONTyped,
     EditCosmosContactRequestToJSON,
 } from './EditCosmosContactRequest';
+import type { EditEvmContactRequest } from './EditEvmContactRequest';
 import {
-    EditEvmContactRequest,
     instanceOfEditEvmContactRequest,
     EditEvmContactRequestFromJSON,
     EditEvmContactRequestFromJSONTyped,
     EditEvmContactRequestToJSON,
 } from './EditEvmContactRequest';
+import type { EditSolanaContactRequest } from './EditSolanaContactRequest';
 import {
-    EditSolanaContactRequest,
     instanceOfEditSolanaContactRequest,
     EditSolanaContactRequestFromJSON,
     EditSolanaContactRequestFromJSONTyped,
     EditSolanaContactRequestToJSON,
 } from './EditSolanaContactRequest';
+import type { EditStacksContactRequest } from './EditStacksContactRequest';
 import {
-    EditSuiContactRequest,
+    instanceOfEditStacksContactRequest,
+    EditStacksContactRequestFromJSON,
+    EditStacksContactRequestFromJSONTyped,
+    EditStacksContactRequestToJSON,
+} from './EditStacksContactRequest';
+import type { EditStarknetContactRequest } from './EditStarknetContactRequest';
+import {
+    instanceOfEditStarknetContactRequest,
+    EditStarknetContactRequestFromJSON,
+    EditStarknetContactRequestFromJSONTyped,
+    EditStarknetContactRequestToJSON,
+} from './EditStarknetContactRequest';
+import type { EditSuiContactRequest } from './EditSuiContactRequest';
+import {
     instanceOfEditSuiContactRequest,
     EditSuiContactRequestFromJSON,
     EditSuiContactRequestFromJSONTyped,
     EditSuiContactRequestToJSON,
 } from './EditSuiContactRequest';
+import type { EditTonContactRequest } from './EditTonContactRequest';
 import {
-    EditTonContactRequest,
     instanceOfEditTonContactRequest,
     EditTonContactRequestFromJSON,
     EditTonContactRequestFromJSONTyped,
     EditTonContactRequestToJSON,
 } from './EditTonContactRequest';
+import type { EditTronContactRequest } from './EditTronContactRequest';
 import {
-    EditUtxoContactRequest,
+    instanceOfEditTronContactRequest,
+    EditTronContactRequestFromJSON,
+    EditTronContactRequestFromJSONTyped,
+    EditTronContactRequestToJSON,
+} from './EditTronContactRequest';
+import type { EditUtxoContactRequest } from './EditUtxoContactRequest';
+import {
     instanceOfEditUtxoContactRequest,
     EditUtxoContactRequestFromJSON,
     EditUtxoContactRequestFromJSONTyped,
@@ -67,58 +88,71 @@ import {
  * 
  * @export
  */
-export type EditContactRequest = { type: 'aptos' } & EditAptosContactRequest | { type: 'cosmos' } & EditCosmosContactRequest | { type: 'evm' } & EditEvmContactRequest | { type: 'solana' } & EditSolanaContactRequest | { type: 'sui' } & EditSuiContactRequest | { type: 'ton' } & EditTonContactRequest | { type: 'utxo' } & EditUtxoContactRequest;
+export type EditContactRequest = { type: 'aptos' } & EditAptosContactRequest | { type: 'cosmos' } & EditCosmosContactRequest | { type: 'evm' } & EditEvmContactRequest | { type: 'solana' } & EditSolanaContactRequest | { type: 'stacks' } & EditStacksContactRequest | { type: 'starknet' } & EditStarknetContactRequest | { type: 'sui' } & EditSuiContactRequest | { type: 'ton' } & EditTonContactRequest | { type: 'tron' } & EditTronContactRequest | { type: 'utxo' } & EditUtxoContactRequest;
 
 export function EditContactRequestFromJSON(json: any): EditContactRequest {
     return EditContactRequestFromJSONTyped(json, false);
 }
 
 export function EditContactRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): EditContactRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'aptos':
-            return {...EditAptosContactRequestFromJSONTyped(json, true), type: 'aptos'};
+            return Object.assign({}, EditAptosContactRequestFromJSONTyped(json, true), { type: 'aptos' } as const);
         case 'cosmos':
-            return {...EditCosmosContactRequestFromJSONTyped(json, true), type: 'cosmos'};
+            return Object.assign({}, EditCosmosContactRequestFromJSONTyped(json, true), { type: 'cosmos' } as const);
         case 'evm':
-            return {...EditEvmContactRequestFromJSONTyped(json, true), type: 'evm'};
+            return Object.assign({}, EditEvmContactRequestFromJSONTyped(json, true), { type: 'evm' } as const);
         case 'solana':
-            return {...EditSolanaContactRequestFromJSONTyped(json, true), type: 'solana'};
+            return Object.assign({}, EditSolanaContactRequestFromJSONTyped(json, true), { type: 'solana' } as const);
+        case 'stacks':
+            return Object.assign({}, EditStacksContactRequestFromJSONTyped(json, true), { type: 'stacks' } as const);
+        case 'starknet':
+            return Object.assign({}, EditStarknetContactRequestFromJSONTyped(json, true), { type: 'starknet' } as const);
         case 'sui':
-            return {...EditSuiContactRequestFromJSONTyped(json, true), type: 'sui'};
+            return Object.assign({}, EditSuiContactRequestFromJSONTyped(json, true), { type: 'sui' } as const);
         case 'ton':
-            return {...EditTonContactRequestFromJSONTyped(json, true), type: 'ton'};
+            return Object.assign({}, EditTonContactRequestFromJSONTyped(json, true), { type: 'ton' } as const);
+        case 'tron':
+            return Object.assign({}, EditTronContactRequestFromJSONTyped(json, true), { type: 'tron' } as const);
         case 'utxo':
-            return {...EditUtxoContactRequestFromJSONTyped(json, true), type: 'utxo'};
+            return Object.assign({}, EditUtxoContactRequestFromJSONTyped(json, true), { type: 'utxo' } as const);
         default:
             throw new Error(`No variant of EditContactRequest exists with 'type=${json['type']}'`);
     }
 }
 
-export function EditContactRequestToJSON(value?: EditContactRequest | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function EditContactRequestToJSON(json: any): any {
+    return EditContactRequestToJSONTyped(json, false);
+}
+
+export function EditContactRequestToJSONTyped(value?: EditContactRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'aptos':
-            return EditAptosContactRequestToJSON(value);
+            return Object.assign({}, EditAptosContactRequestToJSON(value), { type: 'aptos' } as const);
         case 'cosmos':
-            return EditCosmosContactRequestToJSON(value);
+            return Object.assign({}, EditCosmosContactRequestToJSON(value), { type: 'cosmos' } as const);
         case 'evm':
-            return EditEvmContactRequestToJSON(value);
+            return Object.assign({}, EditEvmContactRequestToJSON(value), { type: 'evm' } as const);
         case 'solana':
-            return EditSolanaContactRequestToJSON(value);
+            return Object.assign({}, EditSolanaContactRequestToJSON(value), { type: 'solana' } as const);
+        case 'stacks':
+            return Object.assign({}, EditStacksContactRequestToJSON(value), { type: 'stacks' } as const);
+        case 'starknet':
+            return Object.assign({}, EditStarknetContactRequestToJSON(value), { type: 'starknet' } as const);
         case 'sui':
-            return EditSuiContactRequestToJSON(value);
+            return Object.assign({}, EditSuiContactRequestToJSON(value), { type: 'sui' } as const);
         case 'ton':
-            return EditTonContactRequestToJSON(value);
+            return Object.assign({}, EditTonContactRequestToJSON(value), { type: 'ton' } as const);
+        case 'tron':
+            return Object.assign({}, EditTronContactRequestToJSON(value), { type: 'tron' } as const);
         case 'utxo':
-            return EditUtxoContactRequestToJSON(value);
+            return Object.assign({}, EditUtxoContactRequestToJSON(value), { type: 'utxo' } as const);
         default:
             throw new Error(`No variant of EditContactRequest exists with 'type=${value['type']}'`);
     }

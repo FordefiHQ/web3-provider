@@ -12,12 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
     UserRefFromJSONTyped,
     UserRefToJSON,
+    UserRefToJSONTyped,
 } from './UserRef';
 
 /**
@@ -49,13 +50,11 @@ export interface ActionSigner {
 /**
  * Check if a given object implements the ActionSigner interface.
  */
-export function instanceOfActionSigner(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "user" in value;
-    isInstance = isInstance && "modifiedAt" in value;
-    isInstance = isInstance && "hasSigned" in value;
-
-    return isInstance;
+export function instanceOfActionSigner(value: object): value is ActionSigner {
+    if (!('user' in value) || value['user'] === undefined) return false;
+    if (!('modifiedAt' in value) || value['modifiedAt'] === undefined) return false;
+    if (!('hasSigned' in value) || value['hasSigned'] === undefined) return false;
+    return true;
 }
 
 export function ActionSignerFromJSON(json: any): ActionSigner {
@@ -63,7 +62,7 @@ export function ActionSignerFromJSON(json: any): ActionSigner {
 }
 
 export function ActionSignerFromJSONTyped(json: any, ignoreDiscriminator: boolean): ActionSigner {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -74,18 +73,20 @@ export function ActionSignerFromJSONTyped(json: any, ignoreDiscriminator: boolea
     };
 }
 
-export function ActionSignerToJSON(value?: ActionSigner | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ActionSignerToJSON(json: any): ActionSigner {
+    return ActionSignerToJSONTyped(json, false);
+}
+
+export function ActionSignerToJSONTyped(value?: ActionSigner | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'user': UserRefToJSON(value.user),
-        'modified_at': (value.modifiedAt.toISOString()),
-        'has_signed': value.hasSigned,
+        'user': UserRefToJSON(value['user']),
+        'modified_at': ((value['modifiedAt']).toISOString()),
+        'has_signed': value['hasSigned'],
     };
 }
 

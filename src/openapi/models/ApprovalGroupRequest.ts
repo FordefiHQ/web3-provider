@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -42,13 +42,11 @@ export interface ApprovalGroupRequest {
 /**
  * Check if a given object implements the ApprovalGroupRequest interface.
  */
-export function instanceOfApprovalGroupRequest(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "threshold" in value;
-    isInstance = isInstance && "userIds" in value;
-    isInstance = isInstance && "userGroupIds" in value;
-
-    return isInstance;
+export function instanceOfApprovalGroupRequest(value: object): value is ApprovalGroupRequest {
+    if (!('threshold' in value) || value['threshold'] === undefined) return false;
+    if (!('userIds' in value) || value['userIds'] === undefined) return false;
+    if (!('userGroupIds' in value) || value['userGroupIds'] === undefined) return false;
+    return true;
 }
 
 export function ApprovalGroupRequestFromJSON(json: any): ApprovalGroupRequest {
@@ -56,7 +54,7 @@ export function ApprovalGroupRequestFromJSON(json: any): ApprovalGroupRequest {
 }
 
 export function ApprovalGroupRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): ApprovalGroupRequest {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -67,18 +65,20 @@ export function ApprovalGroupRequestFromJSONTyped(json: any, ignoreDiscriminator
     };
 }
 
-export function ApprovalGroupRequestToJSON(value?: ApprovalGroupRequest | null): any {
-    if (value === undefined) {
-        return undefined;
+export function ApprovalGroupRequestToJSON(json: any): ApprovalGroupRequest {
+    return ApprovalGroupRequestToJSONTyped(json, false);
+}
+
+export function ApprovalGroupRequestToJSONTyped(value?: ApprovalGroupRequest | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'threshold': value.threshold,
-        'user_ids': value.userIds,
-        'user_group_ids': value.userGroupIds,
+        'threshold': value['threshold'],
+        'user_ids': value['userIds'],
+        'user_group_ids': value['userGroupIds'],
     };
 }
 

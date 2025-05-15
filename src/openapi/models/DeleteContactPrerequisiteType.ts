@@ -26,6 +26,17 @@ export const DeleteContactPrerequisiteType = {
 export type DeleteContactPrerequisiteType = typeof DeleteContactPrerequisiteType[keyof typeof DeleteContactPrerequisiteType];
 
 
+export function instanceOfDeleteContactPrerequisiteType(value: any): boolean {
+    for (const key in DeleteContactPrerequisiteType) {
+        if (Object.prototype.hasOwnProperty.call(DeleteContactPrerequisiteType, key)) {
+            if (DeleteContactPrerequisiteType[key as keyof typeof DeleteContactPrerequisiteType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function DeleteContactPrerequisiteTypeFromJSON(json: any): DeleteContactPrerequisiteType {
     return DeleteContactPrerequisiteTypeFromJSONTyped(json, false);
 }
@@ -36,5 +47,9 @@ export function DeleteContactPrerequisiteTypeFromJSONTyped(json: any, ignoreDisc
 
 export function DeleteContactPrerequisiteTypeToJSON(value?: DeleteContactPrerequisiteType | null): any {
     return value as any;
+}
+
+export function DeleteContactPrerequisiteTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): DeleteContactPrerequisiteType {
+    return value as DeleteContactPrerequisiteType;
 }
 

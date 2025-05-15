@@ -25,6 +25,17 @@ export const ListVaultGroupsFilterByAccessLevel = {
 export type ListVaultGroupsFilterByAccessLevel = typeof ListVaultGroupsFilterByAccessLevel[keyof typeof ListVaultGroupsFilterByAccessLevel];
 
 
+export function instanceOfListVaultGroupsFilterByAccessLevel(value: any): boolean {
+    for (const key in ListVaultGroupsFilterByAccessLevel) {
+        if (Object.prototype.hasOwnProperty.call(ListVaultGroupsFilterByAccessLevel, key)) {
+            if (ListVaultGroupsFilterByAccessLevel[key as keyof typeof ListVaultGroupsFilterByAccessLevel] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function ListVaultGroupsFilterByAccessLevelFromJSON(json: any): ListVaultGroupsFilterByAccessLevel {
     return ListVaultGroupsFilterByAccessLevelFromJSONTyped(json, false);
 }
@@ -35,5 +46,9 @@ export function ListVaultGroupsFilterByAccessLevelFromJSONTyped(json: any, ignor
 
 export function ListVaultGroupsFilterByAccessLevelToJSON(value?: ListVaultGroupsFilterByAccessLevel | null): any {
     return value as any;
+}
+
+export function ListVaultGroupsFilterByAccessLevelToJSONTyped(value: any, ignoreDiscriminator: boolean): ListVaultGroupsFilterByAccessLevel {
+    return value as ListVaultGroupsFilterByAccessLevel;
 }
 

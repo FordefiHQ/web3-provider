@@ -21,10 +21,23 @@ export const DeleteUserGroupPrerequisiteType = {
     userGroupHasAPendingProposal: 'user_group_has_a_pending_proposal',
     userGroupHasOnboardingUsersPendingAddition: 'user_group_has_onboarding_users_pending_addition',
     policyRuleNamedUserGroup: 'policy_rule_named_user_group',
-    policyDraftNamedUserGroup: 'policy_draft_named_user_group'
+    policyDraftNamedUserGroup: 'policy_draft_named_user_group',
+    userGroupPartOfQuorum: 'user_group_part_of_quorum',
+    userGroupPartOfVaultGroupPermissions: 'user_group_part_of_vault_group_permissions'
 } as const;
 export type DeleteUserGroupPrerequisiteType = typeof DeleteUserGroupPrerequisiteType[keyof typeof DeleteUserGroupPrerequisiteType];
 
+
+export function instanceOfDeleteUserGroupPrerequisiteType(value: any): boolean {
+    for (const key in DeleteUserGroupPrerequisiteType) {
+        if (Object.prototype.hasOwnProperty.call(DeleteUserGroupPrerequisiteType, key)) {
+            if (DeleteUserGroupPrerequisiteType[key as keyof typeof DeleteUserGroupPrerequisiteType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 export function DeleteUserGroupPrerequisiteTypeFromJSON(json: any): DeleteUserGroupPrerequisiteType {
     return DeleteUserGroupPrerequisiteTypeFromJSONTyped(json, false);
@@ -36,5 +49,9 @@ export function DeleteUserGroupPrerequisiteTypeFromJSONTyped(json: any, ignoreDi
 
 export function DeleteUserGroupPrerequisiteTypeToJSON(value?: DeleteUserGroupPrerequisiteType | null): any {
     return value as any;
+}
+
+export function DeleteUserGroupPrerequisiteTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): DeleteUserGroupPrerequisiteType {
+    return value as DeleteUserGroupPrerequisiteType;
 }
 

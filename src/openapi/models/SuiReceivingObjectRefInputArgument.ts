@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -58,14 +58,12 @@ export type SuiReceivingObjectRefInputArgumentTypeEnum = typeof SuiReceivingObje
 /**
  * Check if a given object implements the SuiReceivingObjectRefInputArgument interface.
  */
-export function instanceOfSuiReceivingObjectRefInputArgument(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "digest" in value;
-    isInstance = isInstance && "objectId" in value;
-    isInstance = isInstance && "version" in value;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
+export function instanceOfSuiReceivingObjectRefInputArgument(value: object): value is SuiReceivingObjectRefInputArgument {
+    if (!('digest' in value) || value['digest'] === undefined) return false;
+    if (!('objectId' in value) || value['objectId'] === undefined) return false;
+    if (!('version' in value) || value['version'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    return true;
 }
 
 export function SuiReceivingObjectRefInputArgumentFromJSON(json: any): SuiReceivingObjectRefInputArgument {
@@ -73,7 +71,7 @@ export function SuiReceivingObjectRefInputArgumentFromJSON(json: any): SuiReceiv
 }
 
 export function SuiReceivingObjectRefInputArgumentFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiReceivingObjectRefInputArgument {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -85,19 +83,21 @@ export function SuiReceivingObjectRefInputArgumentFromJSONTyped(json: any, ignor
     };
 }
 
-export function SuiReceivingObjectRefInputArgumentToJSON(value?: SuiReceivingObjectRefInputArgument | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SuiReceivingObjectRefInputArgumentToJSON(json: any): SuiReceivingObjectRefInputArgument {
+    return SuiReceivingObjectRefInputArgumentToJSONTyped(json, false);
+}
+
+export function SuiReceivingObjectRefInputArgumentToJSONTyped(value?: SuiReceivingObjectRefInputArgument | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'digest': value.digest,
-        'object_id': value.objectId,
-        'version': value.version,
-        'type': value.type,
+        'digest': value['digest'],
+        'object_id': value['objectId'],
+        'version': value['version'],
+        'type': value['type'],
     };
 }
 

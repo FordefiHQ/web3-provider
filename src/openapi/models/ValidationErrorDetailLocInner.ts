@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 /**
  * 
  * @export
@@ -24,10 +24,8 @@ export interface ValidationErrorDetailLocInner {
 /**
  * Check if a given object implements the ValidationErrorDetailLocInner interface.
  */
-export function instanceOfValidationErrorDetailLocInner(value: object): boolean {
-    let isInstance = true;
-
-    return isInstance;
+export function instanceOfValidationErrorDetailLocInner(value: object): value is ValidationErrorDetailLocInner {
+    return true;
 }
 
 export function ValidationErrorDetailLocInnerFromJSON(json: any): ValidationErrorDetailLocInner {
@@ -38,7 +36,11 @@ export function ValidationErrorDetailLocInnerFromJSONTyped(json: any, ignoreDisc
     return json;
 }
 
-export function ValidationErrorDetailLocInnerToJSON(value?: ValidationErrorDetailLocInner | null): any {
+export function ValidationErrorDetailLocInnerToJSON(json: any): ValidationErrorDetailLocInner {
+    return ValidationErrorDetailLocInnerToJSONTyped(json, false);
+}
+
+export function ValidationErrorDetailLocInnerToJSONTyped(value?: ValidationErrorDetailLocInner | null, ignoreDiscriminator: boolean = false): any {
     return value;
 }
 

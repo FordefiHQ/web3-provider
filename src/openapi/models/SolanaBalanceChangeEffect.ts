@@ -12,36 +12,41 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { EnrichedSolanaAddress } from './EnrichedSolanaAddress';
-import {
-    EnrichedSolanaAddressFromJSON,
-    EnrichedSolanaAddressFromJSONTyped,
-    EnrichedSolanaAddressToJSON,
-} from './EnrichedSolanaAddress';
-import type { Price } from './Price';
-import {
-    PriceFromJSON,
-    PriceFromJSONTyped,
-    PriceToJSON,
-} from './Price';
-import type { PricedAsset } from './PricedAsset';
-import {
-    PricedAssetFromJSON,
-    PricedAssetFromJSONTyped,
-    PricedAssetToJSON,
-} from './PricedAsset';
+import { mapValues } from '../runtime';
 import type { SolanaBalanceChangeEffectType } from './SolanaBalanceChangeEffectType';
 import {
     SolanaBalanceChangeEffectTypeFromJSON,
     SolanaBalanceChangeEffectTypeFromJSONTyped,
     SolanaBalanceChangeEffectTypeToJSON,
+    SolanaBalanceChangeEffectTypeToJSONTyped,
 } from './SolanaBalanceChangeEffectType';
+import type { PricedAsset } from './PricedAsset';
+import {
+    PricedAssetFromJSON,
+    PricedAssetFromJSONTyped,
+    PricedAssetToJSON,
+    PricedAssetToJSONTyped,
+} from './PricedAsset';
+import type { Price } from './Price';
+import {
+    PriceFromJSON,
+    PriceFromJSONTyped,
+    PriceToJSON,
+    PriceToJSONTyped,
+} from './Price';
+import type { EnrichedSolanaAddress } from './EnrichedSolanaAddress';
+import {
+    EnrichedSolanaAddressFromJSON,
+    EnrichedSolanaAddressFromJSONTyped,
+    EnrichedSolanaAddressToJSON,
+    EnrichedSolanaAddressToJSONTyped,
+} from './EnrichedSolanaAddress';
 import type { SplTokenContract } from './SplTokenContract';
 import {
     SplTokenContractFromJSON,
     SplTokenContractFromJSONTyped,
     SplTokenContractToJSON,
+    SplTokenContractToJSONTyped,
 } from './SplTokenContract';
 
 /**
@@ -94,17 +99,17 @@ export interface SolanaBalanceChangeEffect {
     tokenContract?: SplTokenContract;
 }
 
+
+
 /**
  * Check if a given object implements the SolanaBalanceChangeEffect interface.
  */
-export function instanceOfSolanaBalanceChangeEffect(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "pricedAsset" in value;
-    isInstance = isInstance && "diff" in value;
-    isInstance = isInstance && "type" in value;
-    isInstance = isInstance && "address" in value;
-
-    return isInstance;
+export function instanceOfSolanaBalanceChangeEffect(value: object): value is SolanaBalanceChangeEffect {
+    if (!('pricedAsset' in value) || value['pricedAsset'] === undefined) return false;
+    if (!('diff' in value) || value['diff'] === undefined) return false;
+    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('address' in value) || value['address'] === undefined) return false;
+    return true;
 }
 
 export function SolanaBalanceChangeEffectFromJSON(json: any): SolanaBalanceChangeEffect {
@@ -112,7 +117,7 @@ export function SolanaBalanceChangeEffectFromJSON(json: any): SolanaBalanceChang
 }
 
 export function SolanaBalanceChangeEffectFromJSONTyped(json: any, ignoreDiscriminator: boolean): SolanaBalanceChangeEffect {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -121,28 +126,30 @@ export function SolanaBalanceChangeEffectFromJSONTyped(json: any, ignoreDiscrimi
         'diff': json['diff'],
         'type': SolanaBalanceChangeEffectTypeFromJSON(json['type']),
         'address': EnrichedSolanaAddressFromJSON(json['address']),
-        'owner': !exists(json, 'owner') ? undefined : EnrichedSolanaAddressFromJSON(json['owner']),
-        'price': !exists(json, 'price') ? undefined : PriceFromJSON(json['price']),
-        'tokenContract': !exists(json, 'token_contract') ? undefined : SplTokenContractFromJSON(json['token_contract']),
+        'owner': json['owner'] == null ? undefined : EnrichedSolanaAddressFromJSON(json['owner']),
+        'price': json['price'] == null ? undefined : PriceFromJSON(json['price']),
+        'tokenContract': json['token_contract'] == null ? undefined : SplTokenContractFromJSON(json['token_contract']),
     };
 }
 
-export function SolanaBalanceChangeEffectToJSON(value?: SolanaBalanceChangeEffect | null): any {
-    if (value === undefined) {
-        return undefined;
+export function SolanaBalanceChangeEffectToJSON(json: any): SolanaBalanceChangeEffect {
+    return SolanaBalanceChangeEffectToJSONTyped(json, false);
+}
+
+export function SolanaBalanceChangeEffectToJSONTyped(value?: SolanaBalanceChangeEffect | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'priced_asset': PricedAssetToJSON(value.pricedAsset),
-        'diff': value.diff,
-        'type': SolanaBalanceChangeEffectTypeToJSON(value.type),
-        'address': EnrichedSolanaAddressToJSON(value.address),
-        'owner': EnrichedSolanaAddressToJSON(value.owner),
-        'price': PriceToJSON(value.price),
-        'token_contract': SplTokenContractToJSON(value.tokenContract),
+        'priced_asset': PricedAssetToJSON(value['pricedAsset']),
+        'diff': value['diff'],
+        'type': SolanaBalanceChangeEffectTypeToJSON(value['type']),
+        'address': EnrichedSolanaAddressToJSON(value['address']),
+        'owner': EnrichedSolanaAddressToJSON(value['owner']),
+        'price': PriceToJSON(value['price']),
+        'token_contract': SplTokenContractToJSON(value['tokenContract']),
     };
 }
 

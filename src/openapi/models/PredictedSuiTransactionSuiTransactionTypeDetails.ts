@@ -12,22 +12,22 @@
  * Do not edit the class manually.
  */
 
+import type { SuiCoinTransferDetails } from './SuiCoinTransferDetails';
 import {
-    SuiCoinTransferDetails,
     instanceOfSuiCoinTransferDetails,
     SuiCoinTransferDetailsFromJSON,
     SuiCoinTransferDetailsFromJSONTyped,
     SuiCoinTransferDetailsToJSON,
 } from './SuiCoinTransferDetails';
+import type { SuiNativeTransferDetails } from './SuiNativeTransferDetails';
 import {
-    SuiNativeTransferDetails,
     instanceOfSuiNativeTransferDetails,
     SuiNativeTransferDetailsFromJSON,
     SuiNativeTransferDetailsFromJSONTyped,
     SuiNativeTransferDetailsToJSON,
 } from './SuiNativeTransferDetails';
+import type { SuiProgrammableTransactionBlockDetails } from './SuiProgrammableTransactionBlockDetails';
 import {
-    SuiProgrammableTransactionBlockDetails,
     instanceOfSuiProgrammableTransactionBlockDetails,
     SuiProgrammableTransactionBlockDetailsFromJSON,
     SuiProgrammableTransactionBlockDetailsFromJSONTyped,
@@ -46,35 +46,36 @@ export function PredictedSuiTransactionSuiTransactionTypeDetailsFromJSON(json: a
 }
 
 export function PredictedSuiTransactionSuiTransactionTypeDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean): PredictedSuiTransactionSuiTransactionTypeDetails {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'coin_transfer':
-            return {...SuiCoinTransferDetailsFromJSONTyped(json, true), type: 'coin_transfer'};
+            return Object.assign({}, SuiCoinTransferDetailsFromJSONTyped(json, true), { type: 'coin_transfer' } as const);
         case 'native_transfer':
-            return {...SuiNativeTransferDetailsFromJSONTyped(json, true), type: 'native_transfer'};
+            return Object.assign({}, SuiNativeTransferDetailsFromJSONTyped(json, true), { type: 'native_transfer' } as const);
         case 'programmable_transaction_block':
-            return {...SuiProgrammableTransactionBlockDetailsFromJSONTyped(json, true), type: 'programmable_transaction_block'};
+            return Object.assign({}, SuiProgrammableTransactionBlockDetailsFromJSONTyped(json, true), { type: 'programmable_transaction_block' } as const);
         default:
             throw new Error(`No variant of PredictedSuiTransactionSuiTransactionTypeDetails exists with 'type=${json['type']}'`);
     }
 }
 
-export function PredictedSuiTransactionSuiTransactionTypeDetailsToJSON(value?: PredictedSuiTransactionSuiTransactionTypeDetails | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function PredictedSuiTransactionSuiTransactionTypeDetailsToJSON(json: any): any {
+    return PredictedSuiTransactionSuiTransactionTypeDetailsToJSONTyped(json, false);
+}
+
+export function PredictedSuiTransactionSuiTransactionTypeDetailsToJSONTyped(value?: PredictedSuiTransactionSuiTransactionTypeDetails | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'coin_transfer':
-            return SuiCoinTransferDetailsToJSON(value);
+            return Object.assign({}, SuiCoinTransferDetailsToJSON(value), { type: 'coin_transfer' } as const);
         case 'native_transfer':
-            return SuiNativeTransferDetailsToJSON(value);
+            return Object.assign({}, SuiNativeTransferDetailsToJSON(value), { type: 'native_transfer' } as const);
         case 'programmable_transaction_block':
-            return SuiProgrammableTransactionBlockDetailsToJSON(value);
+            return Object.assign({}, SuiProgrammableTransactionBlockDetailsToJSON(value), { type: 'programmable_transaction_block' } as const);
         default:
             throw new Error(`No variant of PredictedSuiTransactionSuiTransactionTypeDetails exists with 'type=${value['type']}'`);
     }

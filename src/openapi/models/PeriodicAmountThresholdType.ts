@@ -24,6 +24,17 @@ export const PeriodicAmountThresholdType = {
 export type PeriodicAmountThresholdType = typeof PeriodicAmountThresholdType[keyof typeof PeriodicAmountThresholdType];
 
 
+export function instanceOfPeriodicAmountThresholdType(value: any): boolean {
+    for (const key in PeriodicAmountThresholdType) {
+        if (Object.prototype.hasOwnProperty.call(PeriodicAmountThresholdType, key)) {
+            if (PeriodicAmountThresholdType[key as keyof typeof PeriodicAmountThresholdType] === value) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 export function PeriodicAmountThresholdTypeFromJSON(json: any): PeriodicAmountThresholdType {
     return PeriodicAmountThresholdTypeFromJSONTyped(json, false);
 }
@@ -34,5 +45,9 @@ export function PeriodicAmountThresholdTypeFromJSONTyped(json: any, ignoreDiscri
 
 export function PeriodicAmountThresholdTypeToJSON(value?: PeriodicAmountThresholdType | null): any {
     return value as any;
+}
+
+export function PeriodicAmountThresholdTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): PeriodicAmountThresholdType {
+    return value as PeriodicAmountThresholdType;
 }
 

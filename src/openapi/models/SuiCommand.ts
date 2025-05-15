@@ -12,36 +12,36 @@
  * Do not edit the class manually.
  */
 
+import type { SuiMakeMoveVecCommand } from './SuiMakeMoveVecCommand';
 import {
-    SuiMakeMoveVecCommand,
     instanceOfSuiMakeMoveVecCommand,
     SuiMakeMoveVecCommandFromJSON,
     SuiMakeMoveVecCommandFromJSONTyped,
     SuiMakeMoveVecCommandToJSON,
 } from './SuiMakeMoveVecCommand';
+import type { SuiMergeCoinsCommand } from './SuiMergeCoinsCommand';
 import {
-    SuiMergeCoinsCommand,
     instanceOfSuiMergeCoinsCommand,
     SuiMergeCoinsCommandFromJSON,
     SuiMergeCoinsCommandFromJSONTyped,
     SuiMergeCoinsCommandToJSON,
 } from './SuiMergeCoinsCommand';
+import type { SuiMoveCallCommand } from './SuiMoveCallCommand';
 import {
-    SuiMoveCallCommand,
     instanceOfSuiMoveCallCommand,
     SuiMoveCallCommandFromJSON,
     SuiMoveCallCommandFromJSONTyped,
     SuiMoveCallCommandToJSON,
 } from './SuiMoveCallCommand';
+import type { SuiSplitCoinsCommand } from './SuiSplitCoinsCommand';
 import {
-    SuiSplitCoinsCommand,
     instanceOfSuiSplitCoinsCommand,
     SuiSplitCoinsCommandFromJSON,
     SuiSplitCoinsCommandFromJSONTyped,
     SuiSplitCoinsCommandToJSON,
 } from './SuiSplitCoinsCommand';
+import type { SuiTransferObjectsCommand } from './SuiTransferObjectsCommand';
 import {
-    SuiTransferObjectsCommand,
     instanceOfSuiTransferObjectsCommand,
     SuiTransferObjectsCommandFromJSON,
     SuiTransferObjectsCommandFromJSONTyped,
@@ -60,43 +60,44 @@ export function SuiCommandFromJSON(json: any): SuiCommand {
 }
 
 export function SuiCommandFromJSONTyped(json: any, ignoreDiscriminator: boolean): SuiCommand {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'make_move_vec':
-            return {...SuiMakeMoveVecCommandFromJSONTyped(json, true), type: 'make_move_vec'};
+            return Object.assign({}, SuiMakeMoveVecCommandFromJSONTyped(json, true), { type: 'make_move_vec' } as const);
         case 'merge_coins':
-            return {...SuiMergeCoinsCommandFromJSONTyped(json, true), type: 'merge_coins'};
+            return Object.assign({}, SuiMergeCoinsCommandFromJSONTyped(json, true), { type: 'merge_coins' } as const);
         case 'move_call':
-            return {...SuiMoveCallCommandFromJSONTyped(json, true), type: 'move_call'};
+            return Object.assign({}, SuiMoveCallCommandFromJSONTyped(json, true), { type: 'move_call' } as const);
         case 'split_coins':
-            return {...SuiSplitCoinsCommandFromJSONTyped(json, true), type: 'split_coins'};
+            return Object.assign({}, SuiSplitCoinsCommandFromJSONTyped(json, true), { type: 'split_coins' } as const);
         case 'transfer_objects':
-            return {...SuiTransferObjectsCommandFromJSONTyped(json, true), type: 'transfer_objects'};
+            return Object.assign({}, SuiTransferObjectsCommandFromJSONTyped(json, true), { type: 'transfer_objects' } as const);
         default:
             throw new Error(`No variant of SuiCommand exists with 'type=${json['type']}'`);
     }
 }
 
-export function SuiCommandToJSON(value?: SuiCommand | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function SuiCommandToJSON(json: any): any {
+    return SuiCommandToJSONTyped(json, false);
+}
+
+export function SuiCommandToJSONTyped(value?: SuiCommand | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'make_move_vec':
-            return SuiMakeMoveVecCommandToJSON(value);
+            return Object.assign({}, SuiMakeMoveVecCommandToJSON(value), { type: 'make_move_vec' } as const);
         case 'merge_coins':
-            return SuiMergeCoinsCommandToJSON(value);
+            return Object.assign({}, SuiMergeCoinsCommandToJSON(value), { type: 'merge_coins' } as const);
         case 'move_call':
-            return SuiMoveCallCommandToJSON(value);
+            return Object.assign({}, SuiMoveCallCommandToJSON(value), { type: 'move_call' } as const);
         case 'split_coins':
-            return SuiSplitCoinsCommandToJSON(value);
+            return Object.assign({}, SuiSplitCoinsCommandToJSON(value), { type: 'split_coins' } as const);
         case 'transfer_objects':
-            return SuiTransferObjectsCommandToJSON(value);
+            return Object.assign({}, SuiTransferObjectsCommandToJSON(value), { type: 'transfer_objects' } as const);
         default:
             throw new Error(`No variant of SuiCommand exists with 'type=${value['type']}'`);
     }

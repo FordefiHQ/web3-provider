@@ -12,18 +12,20 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
+import { mapValues } from '../runtime';
 import type { BlockchainExplorer } from './BlockchainExplorer';
 import {
     BlockchainExplorerFromJSON,
     BlockchainExplorerFromJSONTyped,
     BlockchainExplorerToJSON,
+    BlockchainExplorerToJSONTyped,
 } from './BlockchainExplorer';
 import type { SuiChainUniqueId } from './SuiChainUniqueId';
 import {
     SuiChainUniqueIdFromJSON,
     SuiChainUniqueIdFromJSONTyped,
     SuiChainUniqueIdToJSON,
+    SuiChainUniqueIdToJSONTyped,
 } from './SuiChainUniqueId';
 
 /**
@@ -74,6 +76,18 @@ export interface EnrichedSuiChain {
      * @memberof EnrichedSuiChain
      */
     logoUrl: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EnrichedSuiChain
+     */
+    isTestnet: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EnrichedSuiChain
+     */
+    isEnabled: boolean;
 }
 
 
@@ -89,16 +103,16 @@ export type EnrichedSuiChainChainTypeEnum = typeof EnrichedSuiChainChainTypeEnum
 /**
  * Check if a given object implements the EnrichedSuiChain interface.
  */
-export function instanceOfEnrichedSuiChain(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "chainType" in value;
-    isInstance = isInstance && "uniqueId" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "nativeCurrencySymbol" in value;
-    isInstance = isInstance && "nativeCurrencyName" in value;
-    isInstance = isInstance && "logoUrl" in value;
-
-    return isInstance;
+export function instanceOfEnrichedSuiChain(value: object): value is EnrichedSuiChain {
+    if (!('chainType' in value) || value['chainType'] === undefined) return false;
+    if (!('uniqueId' in value) || value['uniqueId'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('nativeCurrencySymbol' in value) || value['nativeCurrencySymbol'] === undefined) return false;
+    if (!('nativeCurrencyName' in value) || value['nativeCurrencyName'] === undefined) return false;
+    if (!('logoUrl' in value) || value['logoUrl'] === undefined) return false;
+    if (!('isTestnet' in value) || value['isTestnet'] === undefined) return false;
+    if (!('isEnabled' in value) || value['isEnabled'] === undefined) return false;
+    return true;
 }
 
 export function EnrichedSuiChainFromJSON(json: any): EnrichedSuiChain {
@@ -106,7 +120,7 @@ export function EnrichedSuiChainFromJSON(json: any): EnrichedSuiChain {
 }
 
 export function EnrichedSuiChainFromJSONTyped(json: any, ignoreDiscriminator: boolean): EnrichedSuiChain {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     return {
@@ -116,27 +130,33 @@ export function EnrichedSuiChainFromJSONTyped(json: any, ignoreDiscriminator: bo
         'name': json['name'],
         'nativeCurrencySymbol': json['native_currency_symbol'],
         'nativeCurrencyName': json['native_currency_name'],
-        'blockchainExplorer': !exists(json, 'blockchain_explorer') ? undefined : BlockchainExplorerFromJSON(json['blockchain_explorer']),
+        'blockchainExplorer': json['blockchain_explorer'] == null ? undefined : BlockchainExplorerFromJSON(json['blockchain_explorer']),
         'logoUrl': json['logo_url'],
+        'isTestnet': json['is_testnet'],
+        'isEnabled': json['is_enabled'],
     };
 }
 
-export function EnrichedSuiChainToJSON(value?: EnrichedSuiChain | null): any {
-    if (value === undefined) {
-        return undefined;
+export function EnrichedSuiChainToJSON(json: any): EnrichedSuiChain {
+    return EnrichedSuiChainToJSONTyped(json, false);
+}
+
+export function EnrichedSuiChainToJSONTyped(value?: EnrichedSuiChain | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
-    if (value === null) {
-        return null;
-    }
+
     return {
         
-        'chain_type': value.chainType,
-        'unique_id': SuiChainUniqueIdToJSON(value.uniqueId),
-        'name': value.name,
-        'native_currency_symbol': value.nativeCurrencySymbol,
-        'native_currency_name': value.nativeCurrencyName,
-        'blockchain_explorer': BlockchainExplorerToJSON(value.blockchainExplorer),
-        'logo_url': value.logoUrl,
+        'chain_type': value['chainType'],
+        'unique_id': SuiChainUniqueIdToJSON(value['uniqueId']),
+        'name': value['name'],
+        'native_currency_symbol': value['nativeCurrencySymbol'],
+        'native_currency_name': value['nativeCurrencyName'],
+        'blockchain_explorer': BlockchainExplorerToJSON(value['blockchainExplorer']),
+        'logo_url': value['logoUrl'],
+        'is_testnet': value['isTestnet'],
+        'is_enabled': value['isEnabled'],
     };
 }
 

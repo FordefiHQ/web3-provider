@@ -12,15 +12,15 @@
  * Do not edit the class manually.
  */
 
+import type { InvalidAssetRequest } from './InvalidAssetRequest';
 import {
-    InvalidAssetRequest,
     instanceOfInvalidAssetRequest,
     InvalidAssetRequestFromJSON,
     InvalidAssetRequestFromJSONTyped,
     InvalidAssetRequestToJSON,
 } from './InvalidAssetRequest';
+import type { PricedAsset } from './PricedAsset';
 import {
-    PricedAsset,
     instanceOfPricedAsset,
     PricedAssetFromJSON,
     PricedAssetFromJSONTyped,
@@ -39,31 +39,32 @@ export function PricedAssetResponseFromJSON(json: any): PricedAssetResponse {
 }
 
 export function PricedAssetResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): PricedAssetResponse {
-    if ((json === undefined) || (json === null)) {
+    if (json == null) {
         return json;
     }
     switch (json['type']) {
         case 'asset_price':
-            return {...PricedAssetFromJSONTyped(json, true), type: 'asset_price'};
+            return Object.assign({}, PricedAssetFromJSONTyped(json, true), { type: 'asset_price' } as const);
         case 'invalid_asset':
-            return {...InvalidAssetRequestFromJSONTyped(json, true), type: 'invalid_asset'};
+            return Object.assign({}, InvalidAssetRequestFromJSONTyped(json, true), { type: 'invalid_asset' } as const);
         default:
             throw new Error(`No variant of PricedAssetResponse exists with 'type=${json['type']}'`);
     }
 }
 
-export function PricedAssetResponseToJSON(value?: PricedAssetResponse | null): any {
-    if (value === undefined) {
-        return undefined;
-    }
-    if (value === null) {
-        return null;
+export function PricedAssetResponseToJSON(json: any): any {
+    return PricedAssetResponseToJSONTyped(json, false);
+}
+
+export function PricedAssetResponseToJSONTyped(value?: PricedAssetResponse | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
     }
     switch (value['type']) {
         case 'asset_price':
-            return PricedAssetToJSON(value);
+            return Object.assign({}, PricedAssetToJSON(value), { type: 'asset_price' } as const);
         case 'invalid_asset':
-            return InvalidAssetRequestToJSON(value);
+            return Object.assign({}, InvalidAssetRequestToJSON(value), { type: 'invalid_asset' } as const);
         default:
             throw new Error(`No variant of PricedAssetResponse exists with 'type=${value['type']}'`);
     }
