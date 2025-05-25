@@ -38,6 +38,7 @@
     "test": "jest",
     "publish:dev": "yarn build && yarn typedoc:gen:html && yarn publish --no-git-tag-version --tag beta",
     "publish:latest": "yarn build && yarn typedoc:gen:html && yarn publish --tag latest",
+    "version:current": "echo ${npm_package_version}",
     "version:beta": "echo \"${npm_package_version}-dev.$(git rev-parse --short HEAD)\"",
     "typedoc:gen:html": "typedoc --options typedoc-html.json",
     "typedoc:gen:md": "typedoc --options typedoc-md.json",
