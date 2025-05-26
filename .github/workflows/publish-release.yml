@@ -1,86 +1,144 @@
 name: Publish Release
 
 on:
-  workflow_dispatch:
   pull_request:
-    branches:
-      - main
-    types:
-     - closed
+    types: [closed]
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (optional - will use package.json if not provided)'
+        required: false
+        type: string
 
 permissions:
   contents: write
+  id-token: write # for npm provenance
 
-concurrency: "${{ github.workflow }}-${{ github.ref }}"
+concurrency: 
+  group: "release-${{ github.ref }}"
+  cancel-in-progress: false
 
 env:
-  NODE_VERSION: "18.19.1"
-  SLACK_CHANNEL_ID: "C072BEST4AC" # channel #web3-provider-releases
+  NODE_VERSION: "20"
+  SLACK_CHANNEL_ID: "C072BEST4AC"
   PACKAGE_NAME: "@fordefi/web3-provider"
   WORKFLOW_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-  GITHUB_PR_URL: ${{ github.event.pull_request.html_url }}
 
 jobs:
+  validate-release:
+    name: Validate Release
+    runs-on: ubuntu-latest
+    if: ${{ (github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'release/')) || github.event_name == 'workflow_dispatch' }}
+    outputs:
+      should-release: ${{ steps.check.outputs.should-release }}
+      version: ${{ steps.version.outputs.version }}
+      version-tag: ${{ steps.version.outputs.version-tag }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'yarn'
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install Dependencies
+        run: yarn install --immutable
+
+      - name: Get Version
+        id: version
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" && -n "${{ inputs.version }}" ]]; then
+            VERSION="${{ inputs.version }}"
+          else
+            VERSION="$(yarn --silent version:current)"
+          fi
+          
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "version-tag=v$VERSION" >> $GITHUB_OUTPUT
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Validate Release
+        id: check
+        run: |
+          # Check if version already exists on NPM
+          if npm view ${{ env.PACKAGE_NAME }}@$VERSION > /dev/null 2>&1; then
+            echo "❌ Version $VERSION already exists on NPM"
+            echo "should-release=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+          
+          # Check if git tag already exists
+          if git tag -l "v$VERSION" | grep -q "v$VERSION"; then
+            echo "❌ Git tag v$VERSION already exists"
+            echo "should-release=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+          
+          echo "✅ Version $VERSION is ready for release"
+          echo "should-release=true" >> $GITHUB_OUTPUT
+
+      - name: Type checks
+        run: yarn ts:check
+
+      - name: Build Package
+        run: yarn build
+
   publish-to-npm:
     name: Publish to NPM
     runs-on: ubuntu-latest
-    if: ${{ github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'release/') }}
+    needs: validate-release
+    if: needs.validate-release.outputs.should-release == 'true'
+    environment: production
     outputs:
-      NEW_VERSION_TAG: ${{ steps.get-release-version.outputs.NEW_VERSION_TAG }}
+      version: ${{ needs.validate-release.outputs.version }}
+      version-tag: ${{ needs.validate-release.outputs.version-tag }}
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0  # fetch all history for all tags and branches
+      - uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
+
         with:
           node-version: ${{ env.NODE_VERSION }}
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'yarn'
 
-      - name: Install Yarn
-        run: npm install -g yarn
+      - name: Enable Corepack
+        run: corepack enable
 
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install --immutable
 
-      - name: Create .npmrc
+      - name: Build Package
+        run: yarn build
+
+      - name: Verify NPM Token
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          cat << EOF > "$HOME/.npmrc"
-            //registry.npmjs.org/:_authToken=$NPM_TOKEN
-          EOF
-
-      - name: Get Release Version and Tag
-        id: get-release-version
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           set -e
-
-          NEW_VERSION="$(yarn --silent version:current)"
-          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
-
-          NEW_VERSION_TAG="v${NEW_VERSION}"
-          echo "NEW_VERSION_TAG=$NEW_VERSION_TAG" >> $GITHUB_ENV
-          echo "NEW_VERSION_TAG=$NEW_VERSION_TAG" >> $GITHUB_OUTPUT
+          npm whoami
 
       - name: Publish to NPM
-        id: publish-to-npm
-        run: |
-          set -e
-
-          echo "Publishing version $NEW_VERSION to NPM..."
-          yarn publish:latest
+        run: yarn publish:latest --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Notify Slack on Success
         if: success()
         uses: slackapi/slack-github-action@v1.26.0
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-          GITHUB_TAG_URL: "${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ env.NEW_VERSION_TAG }}"
-          NPM_RELEASE_URL: "https://www.npmjs.com/package/${{ env.PACKAGE_NAME }}/v/${{ env.NEW_VERSION }}"
+          NPM_RELEASE_URL: "https://www.npmjs.com/package/${{ env.PACKAGE_NAME }}/v/${{ needs.validate-release.outputs.version }}"
         with:
           channel-id: ${{ env.SLACK_CHANNEL_ID }}
-          # Slack Block Kit API: https://api.slack.com/reference/block-kit
           payload: |
             {
               "blocks": [
@@ -88,7 +146,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "*Release `${{ env.NEW_VERSION_TAG }}` was successfully published to NPM*   |   <${{ env.NPM_RELEASE_URL }}|NPM>   |   <${{ env.GITHUB_TAG_URL }}|Tag>   |   <${{ env.WORKFLOW_URL }}|Workflow>   |   <${{ env.GITHUB_PR_URL }}|Pull Request>"
+                    "text": "*Release `${{ needs.validate-release.outputs.version-tag }}` was successfully published to NPM* 📦\n<${{ env.NPM_RELEASE_URL }}|View on NPM> | <${{ env.WORKFLOW_URL }}|Workflow>"
                   }
                 }
               ]
@@ -101,7 +159,6 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         with:
           channel-id: ${{ env.SLACK_CHANNEL_ID }}
-          # Slack Block Kit API: https://api.slack.com/reference/block-kit
           payload: |
             {
               "blocks": [
@@ -109,64 +166,53 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "*Release `${{ env.NEW_VERSION_TAG }}` failed to publish to NPM*   |   <${{ env.WORKFLOW_URL }}|Workflow>   |   <${{ env.GITHUB_PR_URL }}|Pull Request>"
+                    "text": "*Release `${{ needs.validate-release.outputs.version-tag }}` failed to publish to NPM* ❌\n<${{ env.WORKFLOW_URL }}|View Workflow>"
                   }
                 }
               ]
             }
 
-  create-tag:
-    name: Create Tag
-    needs: publish-to-npm
+  create-release:
+    name: Create GitHub Release
+    needs: [validate-release, publish-to-npm]
     runs-on: ubuntu-latest
-    if: ${{ github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'release/') }}
-    env:
-      NEW_VERSION_TAG: ${{ needs.publish-to-npm.outputs.NEW_VERSION_TAG }}
+    if: needs.validate-release.outputs.should-release == 'true'
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # fetch all history for all tags and branches
+          fetch-depth: 0
 
       - name: Generate Github API Token
         id: generate-gh-token
-        # this action outputs `token`
         uses: actions/create-github-app-token@v1
-        env:
-          # The app is owned by @gilmeir-arnac, settings: https://github.com/settings/apps/create-pr-from-github-actions
-          GITHUB_CREATE_PR_APP_ID: "896608"
-          GITHUB_CREATE_PR_APP_PRIVATE_KEY: ${{ secrets.CREATE_PR_APP_PRIVATE_KEY }}
         with:
-          app-id: ${{ env.GITHUB_CREATE_PR_APP_ID }}
-          private-key: ${{ env.GITHUB_CREATE_PR_APP_PRIVATE_KEY }}
+          app-id: ${{ secrets.CREATE_PR_APP_ID }}
+          private-key: ${{ secrets.CREATE_PR_APP_PRIVATE_KEY }}
 
-      - name: Create Tag
+      - name: Make Sure The Token Is Valid
         env:
           GH_TOKEN: ${{ steps.generate-gh-token.outputs.token }}
         run: |
           set -e
+          gh auth status
 
-          # verify token works
-          gh api octocat
-
-          echo "Creating tag ${{ env.NEW_VERSION_TAG }} at commit $HEAD_COMMIT_HASH"
-
-          HEAD_COMMIT_HASH=$(git rev-parse HEAD)
-          DATA='{"ref": "refs/tags/${{ env.NEW_VERSION_TAG }}","sha": "'$HEAD_COMMIT_HASH'"}'
-
-          curl -X POST \
-            -H "Authorization: Bearer ${{ env.GH_TOKEN }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            -d "$DATA" \
-            https://api.github.com/repos/${{ github.repository }}/git/refs
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ steps.generate-gh-token.outputs.token }}
+        run: |
+          gh release create ${{ needs.validate-release.outputs.version-tag }} \
+            --title "Release ${{ needs.validate-release.outputs.version-tag }}" \
+            --generate-notes \
+            --verify-tag
 
       - name: Notify Slack on Success
         if: success()
         uses: slackapi/slack-github-action@v1.26.0
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          GITHUB_RELEASE_URL: "${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ needs.validate-release.outputs.version-tag }}"
         with:
           channel-id: ${{ env.SLACK_CHANNEL_ID }}
-          # Slack Block Kit API: https://api.slack.com/reference/block-kit
           payload: |
             {
               "blocks": [
@@ -174,7 +220,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Tag `${{ env.NEW_VERSION_TAG }}` was successfully created"
+                    "text": "*GitHub Release `${{ needs.validate-release.outputs.version-tag }}` created successfully* 🚀\n<${{ env.GITHUB_RELEASE_URL }}|View Release>"
                   }
                 }
               ]
@@ -187,7 +233,6 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         with:
           channel-id: ${{ env.SLACK_CHANNEL_ID }}
-          # Slack Block Kit API: https://api.slack.com/reference/block-kit
           payload: |
             {
               "blocks": [
@@ -195,8 +240,8 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Tag `${{ env.NEW_VERSION_TAG }}` failed to be published*   |   <${{ env.WORKFLOW_URL }}|Workflow>"
+                    "text": "*GitHub Release creation failed for `${{ needs.validate-release.outputs.version-tag }}`* ❌\n<${{ env.WORKFLOW_URL }}|View Workflow>"
                   }
                 }
               ]
-            }
+            } 
