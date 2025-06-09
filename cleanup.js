@@ -64,12 +64,12 @@ function removeLinterDisableComments() {
   }
 
   walkDir(srcDir);
-  log('✅ Finished removing linter disable comments\n', 'green');
+  log('✅ Finished removing linter disable comments', 'green');
 }
 
 function runKnip(iteration) {
   try {
-    log(`🧹 Running knip --fix --allow-remove-files ... #${iteration}`, 'yellow');
+    log(`🧹 Running knip ... #${iteration}`, 'yellow');
     const output = execSync('knip --fix --allow-remove-files', execSyncOptions);
     return !!output && !output.includes('Excellent, Knip found no issues.');
   } catch (error) {
@@ -87,9 +87,9 @@ function runTsr(iteration) {
   }
 }
 
-function runEslint() {
+function runEslint(iteration) {
   try {
-    log(`🧹 Running eslint ...`, 'yellow');
+    log(`🧹 Running eslint ... #${iteration}`, 'yellow');
     const output = execSync(
       'eslint "src/**/*.ts" "test/**/*.ts" --fix --rule "no-unused-vars: off" --rule "no-duplicate-imports: off" --rule "@typescript-eslint/no-unused-vars: off"',
       execSyncOptions,
@@ -100,9 +100,9 @@ function runEslint() {
   }
 }
 
-function runBiome() {
+function runBiome(iteration) {
   try {
-    log(`🧹 Running remove unused vars with Biome...`, 'yellow');
+    log(`🧹 Running biome ... #${iteration}`, 'yellow');
     const firstOutput = execSync(
       'biome lint --only correctness/noUnusedFunctionParameters src test --fix --unsafe --reporter json',
       execSyncOptions,
@@ -127,17 +127,26 @@ function runBiome() {
       !!firstOutputJson.summary.changed || !!secondOutputJson.summary.errors || !!secondOutputJson.summary.warnings
     );
   } catch (error) {
-    console.log('%c+++ RoiD', 'background: #ff0000; color: #ffffff', error);
     return false;
   }
 }
 
 function runCleanup() {
-  const eslintHasChanges = runEslint();
-  log('✅ Finished running eslint\n', 'green');
+  let eslintHasChanges = true;
+  let eslintIteration = 0;
 
-  const biomeHasChanges = runBiome();
-  log('✅ Finished running biome\n', 'green');
+  while (eslintHasChanges) {
+    eslintIteration++;
+    eslintHasChanges = runEslint(eslintIteration);
+  }
+
+  let biomeHasChanges = true;
+  let biomeIteration = 0;
+
+  while (biomeHasChanges) {
+    biomeIteration++;
+    biomeHasChanges = runBiome(biomeIteration);
+  }
 
   let knipHasChanges = true;
   let knipIteration = 0;
@@ -146,7 +155,6 @@ function runCleanup() {
     knipIteration++;
     knipHasChanges = runKnip(knipIteration);
   }
-  log('✅ Finished running knip\n', 'green');
 
   let tsrHasChanges = true;
   let tsrIteration = 0;
@@ -155,9 +163,13 @@ function runCleanup() {
     tsrIteration++;
     tsrHasChanges = runTsr(tsrIteration);
   }
-  log('✅ Finished running tsr\n', 'green');
 
-  return eslintHasChanges || biomeHasChanges || knipIteration > 1 || tsrIteration > 1;
+  eslintHasChanges = runEslint(eslintIteration + 1);
+  biomeHasChanges = runBiome(biomeIteration + 1);
+  knipHasChanges = runKnip(knipIteration + 1);
+  tsrHasChanges = runTsr(tsrIteration + 1);
+
+  return eslintHasChanges || biomeHasChanges || knipHasChanges || tsrHasChanges;
 }
 
 function cleanup() {
@@ -168,7 +180,7 @@ function cleanup() {
   let iteration = 0;
   while (hasChanges) {
     iteration++;
-    log(`🧹 Running cleanup... #${iteration}\n`, 'blue');
+    log(`\n🧹 Running cleanup iteration #${iteration}`, 'blue');
     hasChanges = runCleanup();
   }
 
