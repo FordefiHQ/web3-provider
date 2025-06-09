@@ -13,6 +13,7 @@ const srcConfig = {
     jsRecommended: eslintJs.configs.recommended,
     importRecommended: tsImport.configs.recommended,
     import: tsImport,
+    '@typescript-eslint': eslintPluginTs,
     'unused-imports': unusedImports,
   },
   languageOptions: {
@@ -30,9 +31,9 @@ const srcConfig = {
     'import/no-unused-modules': 'error',
     'import/no-cycle': 'error',
     'import/no-unresolved': 'error',
-    'no-duplicate-imports': 'error',
-    'no-unused-vars': 'error',
-    '@typescript-eslint/no-unused-vars': 'error',
+    'no-duplicate-imports': 'off',
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     'import/no-duplicates': 'error',
     'unused-imports/no-unused-imports': 'error',
   },
@@ -64,15 +65,10 @@ export default [
       ...srcConfig.plugins,
       tsEslint: tsEslint.configs.recommended,
       importTypescript: tsImport.configs.typescript,
-      '@typescript-eslint': eslintPluginTs,
     },
     languageOptions: {
       ...srcConfig.languageOptions,
       parser: tsEslint.parser,
-    },
-    rules: {
-      ...srcConfig.rules,
-      '@typescript-eslint/no-unused-vars': 'error',
     },
   },
   {
@@ -101,6 +97,7 @@ export default [
     rules: {
       'no-console': 'off',
       'import/no-unresolved': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
     },
   },
   {
