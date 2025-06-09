@@ -1,0 +1,20 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "entry": ["src/index.{ts,js}", "src/provider/index.{ts,js}", "test/**/*.test.{ts,js}"],
+  "rules": {
+    "binaries": "error",
+    "classMembers": "error",
+    "enumMembers": "error",
+    "exports": "error",
+    "files": "error",
+    "nsExports": "error",
+    "nsTypes": "error",
+    "types": "error",
+    "unlisted": "error",
+    "unresolved": "error",
+    "duplicates": "off"
+  },
+  "ignore": ["**/node_modules/**"],
+  "ignoreBinaries": ["publish"],
+  "ignoreDependencies": [".*"]
+}

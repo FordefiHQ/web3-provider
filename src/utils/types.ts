@@ -8,6 +8,7 @@ export type OmitFromArray<T extends RpcSchema, Condition extends T[number]['Meth
   ? { [K in keyof R]: R[K] }
   : never;
 
-export const assertUnreachable = (x: never): never => {
+export const assertUnreachable = (x: any): never => {
+  console.error('Unreachable', x);
   throw new Error('Unreachable');
 };

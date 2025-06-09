@@ -39,7 +39,6 @@ import {
   base64SignatureToHex,
   DEFAULT_POLLING_INTERVAL,
   DEFAULT_TIMEOUT_DURATION,
-  ONE_DAY_MS,
   waitForEmittedEvent,
 } from '../utils';
 import { assertUnreachable } from '../utils/types';
@@ -406,7 +405,6 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
 
     this.status = 'connecting';
 
-    const re = await this.request({ method: 'eth_accounts' });
     await Promise.all([this.request({ method: 'eth_accounts' }), this.request({ method: 'eth_chainId' })]).then(
       ([_address, chainId]) => {
         // verify disconnect wasn't called while waiting for the responses
