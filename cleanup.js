@@ -2,6 +2,11 @@ const { execSync } = require('child_process');
 const path = require('path');
 const fs = require('fs');
 
+const execSyncOptions = {
+  encoding: 'utf8',
+  stdio: 'pipe',
+};
+
 const colors = {
   reset: '\x1b[0m',
   red: '\x1b[31m',
@@ -65,7 +70,7 @@ function removeLinterDisableComments() {
 function runKnip(iteration) {
   try {
     log(`🧹 Running knip --fix --allow-remove-files ... #${iteration}`, 'yellow');
-    const output = execSync('knip --fix --allow-remove-files', { encoding: 'utf8', stdio: 'pipe' });
+    const output = execSync('knip --fix --allow-remove-files', execSyncOptions);
     return !!output && !output.includes('Excellent, Knip found no issues.');
   } catch (error) {
     return true;
@@ -75,10 +80,7 @@ function runKnip(iteration) {
 function runTsr(iteration) {
   try {
     log(`🧹 Running tsr ... #${iteration}`, 'yellow');
-    const output = execSync('tsr "src/index.ts" "src/provider/index.ts" "test/.*\\.test\\.ts$" -r -w', {
-      encoding: 'utf8',
-      stdio: 'pipe',
-    });
+    const output = execSync('tsr "src/index.ts" "src/provider/index.ts" "test/.*\\.test\\.ts$" -r -w', execSyncOptions);
     return !!output && !output.includes('all good!');
   } catch (error) {
     return true;
@@ -88,11 +90,11 @@ function runTsr(iteration) {
 function runEslint() {
   try {
     log(`🧹 Running eslint ...`, 'yellow');
-    execSync('eslint "src/**/*.ts" "test/**/*.ts" --fix', {
-      encoding: 'utf8',
-      stdio: 'pipe',
-    });
-    return false;
+    const output = execSync(
+      'eslint "src/**/*.ts" "test/**/*.ts" --fix --rule "no-unused-vars: off" --rule "no-duplicate-imports: off" --rule "@typescript-eslint/no-unused-vars: off"',
+      execSyncOptions,
+    );
+    return !!output;
   } catch (error) {
     return true;
   }
@@ -101,28 +103,41 @@ function runEslint() {
 function runBiome() {
   try {
     log(`🧹 Running remove unused vars with Biome...`, 'yellow');
-    execSync('biome lint --only correctness/noUnusedFunctionParameters src test --fix --unsafe', {
-      encoding: 'utf8',
-      stdio: 'pipe',
-    });
-    execSync('biome lint --only correctness/noUnusedVariables src test --reporter json | remove-unused-vars', {
-      encoding: 'utf8',
-      stdio: 'pipe',
-    });
-    return false;
+    const firstOutput = execSync(
+      'biome lint --only correctness/noUnusedFunctionParameters src test --fix --unsafe --reporter json',
+      execSyncOptions,
+    );
+    const firstOutputJson = JSON.parse(firstOutput);
+
+    let secondOutputJson;
+    try {
+      const secondOutput = execSync(
+        'biome lint --only correctness/noUnusedVariables src test --reporter json',
+        execSyncOptions,
+      );
+      secondOutputJson = JSON.parse(secondOutput);
+    } catch (error) {
+      secondOutputJson = { summary: { errors: 1 } };
+    }
+    execSync(
+      'biome lint --only correctness/noUnusedVariables src test --reporter json | remove-unused-vars',
+      execSyncOptions,
+    );
+    return (
+      !!firstOutputJson.summary.changed || !!secondOutputJson.summary.errors || !!secondOutputJson.summary.warnings
+    );
   } catch (error) {
-    return true;
+    console.log('%c+++ RoiD', 'background: #ff0000; color: #ffffff', error);
+    return false;
   }
 }
 
 function runCleanup() {
   const eslintHasChanges = runEslint();
-  const eslintHasChangesText = eslintHasChanges ? 'With changes' : 'Without changes';
-  log(`✅ Finished running eslint: ${eslintHasChangesText}\n`, 'green');
+  log('✅ Finished running eslint\n', 'green');
 
   const biomeHasChanges = runBiome();
-  const biomeHasChangesText = biomeHasChanges ? 'With changes' : 'Without changes';
-  log(`✅ Finished running biome: ${biomeHasChangesText}\n`, 'green');
+  log('✅ Finished running biome\n', 'green');
 
   let knipHasChanges = true;
   let knipIteration = 0;
@@ -142,7 +157,7 @@ function runCleanup() {
   }
   log('✅ Finished running tsr\n', 'green');
 
-  return knipIteration > 1 || tsrIteration > 1;
+  return eslintHasChanges || biomeHasChanges || knipIteration > 1 || tsrIteration > 1;
 }
 
 function cleanup() {
@@ -156,8 +171,6 @@ function cleanup() {
     log(`🧹 Running cleanup... #${iteration}\n`, 'blue');
     hasChanges = runCleanup();
   }
-  log(`🧹 Running cleanup... #${iteration + 1}\n`, 'blue');
-  runCleanup();
 
   log('✨ Cleanup completed!', 'blue');
 }

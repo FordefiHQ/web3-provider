@@ -46,7 +46,7 @@
     "cleanup": "node cleanup.js"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
+    "@biomejs/biome": "1.9.4",
     "@eslint/eslintrc": "^3.0.2",
     "@eslint/js": "^9.0.0",
     "@types/eslint": "^8.56.8",
