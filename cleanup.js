@@ -9,10 +9,14 @@ const execSyncOptions = {
 
 const colors = {
   reset: '\x1b[0m',
+  gray: '\x1b[30m',
   red: '\x1b[31m',
   green: '\x1b[32m',
   yellow: '\x1b[33m',
   blue: '\x1b[34m',
+  magenta: '\x1b[35m',
+  cyan: '\x1b[36m',
+  white: '\x1b[37m',
 };
 
 function log(message, color = 'reset') {
@@ -64,27 +68,6 @@ function removeLinterDisableComments() {
   }
 
   walkDir(srcDir);
-  log('✅ Finished removing linter disable comments', 'green');
-}
-
-function runKnip(iteration) {
-  try {
-    log(`🧹 Running knip ... #${iteration}`, 'yellow');
-    const output = execSync('knip --fix --allow-remove-files', execSyncOptions);
-    return !!output && !output.includes('Excellent, Knip found no issues.');
-  } catch (error) {
-    return true;
-  }
-}
-
-function runTsr(iteration) {
-  try {
-    log(`🧹 Running tsr ... #${iteration}`, 'yellow');
-    const output = execSync('tsr "src/index.ts" "src/provider/index.ts" "test/.*\\.test\\.ts$" -r -w', execSyncOptions);
-    return !!output && !output.includes('all good!');
-  } catch (error) {
-    return true;
-  }
 }
 
 function runEslint(iteration) {
@@ -131,6 +114,26 @@ function runBiome(iteration) {
   }
 }
 
+function runKnip(iteration) {
+  try {
+    log(`🧹 Running knip ... #${iteration}`, 'yellow');
+    const output = execSync('knip --fix --allow-remove-files', execSyncOptions);
+    return !!output && !output.includes('Excellent, Knip found no issues.');
+  } catch (error) {
+    return true;
+  }
+}
+
+function runTsr(iteration) {
+  try {
+    log(`🧹 Running tsr ... #${iteration}`, 'yellow');
+    const output = execSync('tsr "src/index.ts" "src/provider/index.ts" "test/.*\\.test\\.ts$" -r -w', execSyncOptions);
+    return !!output && !output.includes('all good!');
+  } catch (error) {
+    return true;
+  }
+}
+
 function runCleanup() {
   let eslintHasChanges = true;
   let eslintIteration = 0;
@@ -173,7 +176,7 @@ function runCleanup() {
 }
 
 function cleanup() {
-  log('\nRunning cleanup...', 'blue');
+  log('\nRunning cleanup...', 'cyan');
   removeLinterDisableComments();
 
   let hasChanges = true;
@@ -184,7 +187,7 @@ function cleanup() {
     hasChanges = runCleanup();
   }
 
-  log('✨ Cleanup completed!', 'blue');
+  log('\n✨ Cleanup completed!\n', 'green');
 }
 
 cleanup();
