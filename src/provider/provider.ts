@@ -1,4 +1,5 @@
 import { EventEmitter } from 'events';
+/* eslint-disable */
 import {
   Address,
   EIP1193Events,
@@ -17,6 +18,7 @@ import {
   RpcSchema,
   UnsupportedProviderMethodError,
 } from 'viem';
+/* eslint-enable */
 import { AnyCreateEvmRequest, AnyEvmTx, EvmVault, FordefiProviderConfig } from '../types';
 import {
   ChainType,

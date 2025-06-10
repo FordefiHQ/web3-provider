@@ -29,7 +29,7 @@ function log(message, color = 'reset') {
 
 function removeLinterDisableComments() {
   log('\n🧹 Removing linter disable comments...', 'yellow');
-  const srcDir = path.join(process.cwd(), 'src');
+  const srcDir = path.join(process.cwd(), 'src/openapi');
 
   function processFile(filePath) {
     try {
@@ -127,7 +127,10 @@ function runKnip(iteration) {
 function runTsr(iteration) {
   try {
     log(`🧹 Running tsr ... #${iteration}`, 'yellow');
-    const output = execSync('tsr "src/index.ts" "src/provider/index.ts" "test/.*\\.test\\.ts$" -r -w', execSyncOptions);
+    const output = execSync(
+      'tsr "src/index.ts" "src/provider/index.ts" "test/.*\\.test\\.ts$" "test/env.ts" -r -w',
+      execSyncOptions,
+    );
     return !!output && !output.includes('all good!');
   } catch (error) {
     return true;
