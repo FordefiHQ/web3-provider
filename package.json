@@ -43,7 +43,10 @@
     "typedoc:gen:html": "typedoc --options typedoc-html.json",
     "typedoc:gen:md": "typedoc --options typedoc-md.json",
     "typedoc:watch": "yarn yarn-run-all 'typedoc:gen:html --watch' 'typedoc:gen:md --watch'",
-    "cleanup": "node cleanup.js"
+    "cleanup": "node scripts/cleanup.js"
+  },
+  "dependencies": {
+    "viem": "^2.8.6"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
@@ -83,9 +86,6 @@
   },
   "engines": {
     "node": ">=18"
-  },
-  "dependencies": {
-    "viem": "^2.8.6"
   },
   "lint-staged": {
     "*": "yarn lint:fix"
