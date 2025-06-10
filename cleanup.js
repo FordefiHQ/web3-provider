@@ -117,7 +117,7 @@ function runBiome(iteration) {
 function runKnip(iteration) {
   try {
     log(`🧹 Running knip ... #${iteration}`, 'yellow');
-    const output = execSync('knip --fix --allow-remove-files', execSyncOptions);
+    const output = execSync('knip --include classMembers --fix --allow-remove-files', execSyncOptions);
     return !!output && !output.includes('Excellent, Knip found no issues.');
   } catch (error) {
     return true;
@@ -134,7 +134,11 @@ function runTsr(iteration) {
   }
 }
 
-function runCleanup() {
+function runCleanup(cleanupIteration) {
+  if (cleanupIteration === 1) {
+    log('   First iteration may take a while, just wait...', 'magenta');
+  }
+
   let eslintHasChanges = true;
   let eslintIteration = 0;
 
@@ -184,10 +188,12 @@ function cleanup() {
   while (hasChanges) {
     iteration++;
     log(`\n🧹 Running cleanup iteration #${iteration}`, 'blue');
-    hasChanges = runCleanup();
+    hasChanges = runCleanup(iteration);
   }
 
   log('\n✨ Cleanup completed!\n', 'green');
+
+  log('   Please manully clean left over comments in src/openapi/apis files\n', 'magenta');
 }
 
 cleanup();

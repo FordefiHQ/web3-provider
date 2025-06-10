@@ -14,7 +14,7 @@
     "unresolved": "error",
     "duplicates": "off"
   },
-  "ignore": ["**/node_modules/**"],
+  "ignore": ["**/node_modules/**", "src/openapi/runtime.ts"],
   "ignoreBinaries": ["publish"],
   "ignoreDependencies": [".*"]
 }
