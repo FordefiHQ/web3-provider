@@ -22,7 +22,7 @@ export const TEST_PROVIDER_CONFIG: FordefiProviderConfig = {
   rpcUrl: `https://sepolia.infura.io/v3/${env.INFURA_API_KEY}`,
 };
 
-export const GWEI = BigInt(10 ** 9);
+const GWEI = BigInt(10 ** 9);
 
 export const testFixtures = {
   toAddress,
