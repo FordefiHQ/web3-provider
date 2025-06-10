@@ -28,7 +28,7 @@ function log(message, color = 'reset') {
 }
 
 function removeLinterDisableComments() {
-  log('\n🧹 Removing linter disable comments...', 'yellow');
+  log('\n🧹 Removing linter disable comments ...', 'yellow');
   const srcDir = path.join(process.cwd(), 'src/openapi');
 
   function processFile(filePath) {
@@ -45,6 +45,132 @@ function removeLinterDisableComments() {
       content = content.replace(/^(\s*)\/\* tslint:disable.*?\*\/(\s*)(\n)?/gm, '');
       content = content.replace(/^(\s*)\/\/ tslint:disable-next-line.*(\n)?/gm, '');
       content = content.replace(/^(\s*)\/\/ tslint:disable.*(\n)?/gm, '');
+
+      if (content !== originalContent) {
+        fs.writeFileSync(filePath, content);
+      }
+    } catch (error) {
+      log(`Error processing ${filePath}: ${error.message}`, 'red');
+    }
+  }
+
+  function walkDir(dir) {
+    const files = fs.readdirSync(dir);
+    files.forEach((file) => {
+      const filePath = path.join(dir, file);
+      const stat = fs.statSync(filePath);
+      if (stat.isDirectory()) {
+        walkDir(filePath);
+      } else if (file.endsWith('.ts') || file.endsWith('.tsx') || file.endsWith('.js') || file.endsWith('.jsx')) {
+        processFile(filePath);
+      }
+    });
+  }
+
+  walkDir(srcDir);
+}
+
+function removeExportTagsLeftOvers() {
+  log('\n🧹 Removing @export tags left overs ...', 'yellow');
+  const srcDir = path.join(process.cwd(), 'src/openapi');
+
+  function processFile(filePath) {
+    try {
+      let content = fs.readFileSync(filePath, 'utf8');
+      const originalContent = content;
+
+      // Match the exact pattern of a comment with only @export followed by a non-export statement
+      content = content.replace(/\/\*\*\n \* @export\n \*\/(\n\s*\n|\n\s*)(?!\s*export\s)/g, '/**\n * \n */$1');
+
+      // Reorder @type tags to appear after @export tags
+      content = content.replace(
+        /\/\*\*\s*\n\s*\*\s*@type\s*([^\n]*)\s*\n\s*\*\s*\n\s*\*\s*@export\s*\n\s*\*\//g,
+        '/**\n * \n * @export\n * @type $1\n */',
+      );
+
+      // Remove empty lines between /** and @export
+      content = content.replace(/\/\*\*\n \* \n \* @export\n \*\//g, '/**\n * @export\n */');
+
+      if (content !== originalContent) {
+        fs.writeFileSync(filePath, content);
+      }
+    } catch (error) {
+      log(`Error processing ${filePath}: ${error.message}`, 'red');
+    }
+  }
+
+  function walkDir(dir) {
+    const files = fs.readdirSync(dir);
+    files.forEach((file) => {
+      const filePath = path.join(dir, file);
+      const stat = fs.statSync(filePath);
+      if (stat.isDirectory()) {
+        walkDir(filePath);
+      } else if (file.endsWith('.ts') || file.endsWith('.tsx') || file.endsWith('.js') || file.endsWith('.jsx')) {
+        processFile(filePath);
+      }
+    });
+  }
+
+  walkDir(srcDir);
+}
+
+function removeCommentsLeftOvers() {
+  log('\n🧹 Removing comments left overs ...', 'yellow');
+  const srcDir = path.join(process.cwd(), 'src/openapi/apis');
+
+  function processFile(filePath) {
+    try {
+      let content = fs.readFileSync(filePath, 'utf8');
+      const originalContent = content;
+
+      // Split content into lines
+      const lines = content.split(/\r\n|\r|\n/);
+      const newLines = [];
+      let skipNextLine = false;
+
+      // Always keep the first line
+      if (lines.length > 0) {
+        newLines.push(lines[0]);
+      }
+
+      for (let i = 1; i < lines.length; i++) {
+        const line = lines[i];
+        const trimmedLine = line.trim();
+
+        // Skip this line if it's an empty line after a removed comment
+        if (skipNextLine) {
+          skipNextLine = false;
+          continue;
+        }
+
+        // Check if this is the start of a comment block
+        if (trimmedLine.startsWith('/**')) {
+          // Find the end of the comment block
+          let j = i;
+          while (j < lines.length && !lines[j].trim().endsWith('*/')) {
+            j++;
+          }
+
+          // If we found the end of the comment block
+          if (j < lines.length) {
+            // Check if next line is empty
+            const nextLine = j + 1 < lines.length ? lines[j + 1].trim() : '';
+            if (nextLine === '') {
+              // Skip the comment block and the empty line after it
+              i = j + 1;
+              skipNextLine = true;
+              continue;
+            }
+          }
+        }
+
+        // Add the line if we haven't skipped it
+        newLines.push(line);
+      }
+
+      // Join lines back together
+      content = newLines.join('\n');
 
       if (content !== originalContent) {
         fs.writeFileSync(filePath, content);
@@ -184,6 +310,7 @@ function runCleanup(cleanupIteration) {
 
 function cleanup() {
   log('\nRunning cleanup...', 'cyan');
+
   removeLinterDisableComments();
 
   let hasChanges = true;
@@ -194,9 +321,11 @@ function cleanup() {
     hasChanges = runCleanup(iteration);
   }
 
-  log('\n✨ Cleanup completed!\n', 'green');
+  removeExportTagsLeftOvers();
 
-  log('   Please manully clean left over comments in src/openapi/apis files\n', 'magenta');
+  removeCommentsLeftOvers();
+
+  log('\n✨ Cleanup completed!\n', 'green');
 }
 
 cleanup();
