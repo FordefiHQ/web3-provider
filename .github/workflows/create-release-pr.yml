@@ -12,7 +12,7 @@ permissions:
 concurrency: "${{ github.workflow }}-${{ github.ref }}"
 
 env:
-  NODE_VERSION: "18.19.1"
+  NODE_VERSION: "20.19.0"
   SLACK_CHANNEL_ID: "C072BEST4AC" # channel #web3-provider-releases
 
 jobs:

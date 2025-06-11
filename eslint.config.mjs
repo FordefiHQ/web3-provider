@@ -3,14 +3,18 @@ import markdown from 'eslint-plugin-markdown';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import eslintJs from '@eslint/js';
 import tsEslint from 'typescript-eslint';
+import eslintPluginTs from '@typescript-eslint/eslint-plugin';
 import jest from 'eslint-plugin-jest';
 import tsImport from 'eslint-plugin-import';
+import unusedImports from 'eslint-plugin-unused-imports';
 
 const srcConfig = {
   plugins: {
     jsRecommended: eslintJs.configs.recommended,
     importRecommended: tsImport.configs.recommended,
     import: tsImport,
+    '@typescript-eslint': eslintPluginTs,
+    'unused-imports': unusedImports,
   },
   languageOptions: {
     ecmaVersion: 2020,
@@ -27,7 +31,11 @@ const srcConfig = {
     'import/no-unused-modules': 'error',
     'import/no-cycle': 'error',
     'import/no-unresolved': 'error',
-    'no-duplicate-imports': 'error',
+    'no-duplicate-imports': 'off',
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    'import/no-duplicates': 'error',
+    'unused-imports/no-unused-imports': 'error',
   },
   settings: {
     'import/resolver': {
@@ -89,9 +97,10 @@ export default [
     rules: {
       'no-console': 'off',
       'import/no-unresolved': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
     },
   },
   {
-    ignores: ['node_modules', 'src/openapi', 'dist', 'docs'],
+    ignores: ['node_modules', 'dist', 'docs'],
   },
 ];
