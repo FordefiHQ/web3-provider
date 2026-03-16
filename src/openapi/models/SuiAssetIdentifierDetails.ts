@@ -22,9 +22,9 @@ import {
 } from './SuiNativeAssetIdentifierRequest';
 
 /**
+ * @type SuiAssetIdentifierDetails
  * 
  * @export
- * @type SuiAssetIdentifierDetails
  */
 export type SuiAssetIdentifierDetails = { type: 'coin' } & SuiCoinAssetIdentifierRequest | { type: 'native' } & SuiNativeAssetIdentifierRequest;
 
@@ -42,7 +42,7 @@ function SuiAssetIdentifierDetailsFromJSONTyped(json: any, _ignoreDiscriminator:
         case 'native':
             return Object.assign({}, SuiNativeAssetIdentifierRequestFromJSONTyped(json, true), { type: 'native' } as const);
         default:
-            throw new Error(`No variant of SuiAssetIdentifierDetails exists with 'type=${json['type']}'`);
+            return json;
     }
 }
 
@@ -60,8 +60,6 @@ function SuiAssetIdentifierDetailsToJSONTyped(value?: SuiAssetIdentifierDetails 
         case 'native':
             return Object.assign({}, SuiNativeAssetIdentifierRequestToJSON(value), { type: 'native' } as const);
         default:
-            throw new Error(`No variant of SuiAssetIdentifierDetails exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

@@ -20,9 +20,9 @@ import {
 } from './TransactionDetailsUtxoTransferRequest';
 
 /**
- * 
- * @export
  * @type CreateUtxoTransactionRequestDetails
+ * Transaction details.
+ * @export
  */
 export type CreateUtxoTransactionRequestDetails = { type: 'utxo_partially_signed_bitcoin_transaction' } & TransactionDetailsUtxoPsbtRequest | { type: 'utxo_transfer' } & TransactionDetailsUtxoTransferRequest;
 
@@ -40,8 +40,6 @@ function CreateUtxoTransactionRequestDetailsToJSONTyped(value?: CreateUtxoTransa
         case 'utxo_transfer':
             return Object.assign({}, TransactionDetailsUtxoTransferRequestToJSON(value), { type: 'utxo_transfer' } as const);
         default:
-            throw new Error(`No variant of CreateUtxoTransactionRequestDetails exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

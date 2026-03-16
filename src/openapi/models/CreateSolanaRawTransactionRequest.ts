@@ -50,41 +50,29 @@ import {
  */
 export interface CreateSolanaRawTransactionRequest {
     /**
-     * 
-     * @type {SolanaMessageVersion}
+     * A Solana raw transaction is for any operation.
+     * @type {CreateSolanaRawTransactionRequestTypeEnum}
      * @memberof CreateSolanaRawTransactionRequest
      */
-    version: SolanaMessageVersion;
+    type: CreateSolanaRawTransactionRequestTypeEnum;
     /**
-     * 
-     * @type {Array<SolanaCompiledInstructionRequest>}
+     * `True` if the request should fail in case simulation failed, `False` otherwise. <br> In case simulation has failed upon continuation, the expected result of the transaction will be partial and policy will be applied on information that can be extracted statically from the transaction only. This might result in falling back to the default policy rule. 
+     * @type {boolean}
      * @memberof CreateSolanaRawTransactionRequest
      */
-    instructions: Array<SolanaCompiledInstructionRequest>;
+    failOnPredictionFailure?: boolean;
     /**
-     * 
-     * @type {Array<SolanaTransactionAccountRequest>}
+     * `True` to create a transaction without prediction, `False` otherwise. <br> In case of skipping simulation, the simulation status will be skipped and the expected result of the transaction will be empty. The policy will be applied on information that can be extracted statically from the transaction only. This might result in falling back to the default policy rule. <br> Note, it is recommended to use the default setting for this field and to turn off `fail_on_prediction_failure` instead - unless you wish to save time by omitting the prediction phase entirely. 
+     * @type {boolean}
      * @memberof CreateSolanaRawTransactionRequest
      */
-    accounts: Array<SolanaTransactionAccountRequest>;
+    skipPrediction?: boolean;
     /**
-     * 
-     * @type {Array<SolanaMessageAddressTableLookupRequest>}
+     * The push mode of the transaction when sending it to the node. It can be one of the following:<ul><li>`auto`: The transaction is pushed automatically by Fordefi. <li>`manual`: The transaction should be pushed manually by the user using a 3rd party.<li>`deferred`: The transaction is pushed by Fordefi after a certain time, if by that time it wasn't pushed manually by the client.</ul></ul> 
+     * @type {PushMode}
      * @memberof CreateSolanaRawTransactionRequest
      */
-    addressTableLookups: Array<SolanaMessageAddressTableLookupRequest>;
-    /**
-     * 
-     * @type {Array<SolanaTransactionSignaturesRequest>}
-     * @memberof CreateSolanaRawTransactionRequest
-     */
-    signatures?: Array<SolanaTransactionSignaturesRequest>;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateSolanaRawTransactionRequest
-     */
-    recentBlockhash?: string;
+    pushMode?: PushMode;
     /**
      * 
      * @type {BatchSolanaTransactionRequestDetailsFee}
@@ -93,39 +81,51 @@ export interface CreateSolanaRawTransactionRequest {
     fee?: BatchSolanaTransactionRequestDetailsFee;
     /**
      * 
-     * @type {string}
-     * @memberof CreateSolanaRawTransactionRequest
-     */
-    type: CreateSolanaRawTransactionRequestTypeEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CreateSolanaRawTransactionRequest
-     */
-    failOnPredictionFailure?: boolean;
-    /**
-     * 
-     * @type {PushMode}
-     * @memberof CreateSolanaRawTransactionRequest
-     */
-    pushMode?: PushMode;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CreateSolanaRawTransactionRequest
-     */
-    skipPrediction?: boolean;
-    /**
-     * 
      * @type {SolanaChainUniqueId}
      * @memberof CreateSolanaRawTransactionRequest
      */
     chain: SolanaChainUniqueId;
+    /**
+     * The version of the transaction message.
+     * @type {SolanaMessageVersion}
+     * @memberof CreateSolanaRawTransactionRequest
+     */
+    version: SolanaMessageVersion;
+    /**
+     * The instructions of the transaction.
+     * @type {Array<SolanaCompiledInstructionRequest>}
+     * @memberof CreateSolanaRawTransactionRequest
+     */
+    instructions: Array<SolanaCompiledInstructionRequest>;
+    /**
+     * Accounts used in the transaction.
+     * @type {Array<SolanaTransactionAccountRequest>}
+     * @memberof CreateSolanaRawTransactionRequest
+     */
+    accounts: Array<SolanaTransactionAccountRequest>;
+    /**
+     * Lookup tables of accounts used in the transaction.
+     * @type {Array<SolanaMessageAddressTableLookupRequest>}
+     * @memberof CreateSolanaRawTransactionRequest
+     */
+    addressTableLookups: Array<SolanaMessageAddressTableLookupRequest>;
+    /**
+     * Any partial signatures on the transaction.
+     * @type {Array<SolanaTransactionSignaturesRequest>}
+     * @memberof CreateSolanaRawTransactionRequest
+     */
+    signatures?: Array<SolanaTransactionSignaturesRequest>;
+    /**
+     * The transaction nonce (a recently processed blockhash).
+     * @type {string}
+     * @memberof CreateSolanaRawTransactionRequest
+     */
+    recentBlockhash?: string;
 }
 
 
 /**
- * 
+ * @export
  */
 const CreateSolanaRawTransactionRequestTypeEnum = {
     solanaRawTransaction: 'solana_raw_transaction'
@@ -143,17 +143,17 @@ function CreateSolanaRawTransactionRequestToJSONTyped(value?: CreateSolanaRawTra
 
     return {
         
+        'type': value['type'],
+        'fail_on_prediction_failure': value['failOnPredictionFailure'],
+        'skip_prediction': value['skipPrediction'],
+        'push_mode': PushModeToJSON(value['pushMode']),
+        'fee': BatchSolanaTransactionRequestDetailsFeeToJSON(value['fee']),
+        'chain': SolanaChainUniqueIdToJSON(value['chain']),
         'version': SolanaMessageVersionToJSON(value['version']),
         'instructions': ((value['instructions'] as Array<any>).map(SolanaCompiledInstructionRequestToJSON)),
         'accounts': ((value['accounts'] as Array<any>).map(SolanaTransactionAccountRequestToJSON)),
         'address_table_lookups': ((value['addressTableLookups'] as Array<any>).map(SolanaMessageAddressTableLookupRequestToJSON)),
         'signatures': value['signatures'] == null ? undefined : ((value['signatures'] as Array<any>).map(SolanaTransactionSignaturesRequestToJSON)),
         'recent_blockhash': value['recentBlockhash'],
-        'fee': BatchSolanaTransactionRequestDetailsFeeToJSON(value['fee']),
-        'type': value['type'],
-        'fail_on_prediction_failure': value['failOnPredictionFailure'],
-        'push_mode': PushModeToJSON(value['pushMode']),
-        'skip_prediction': value['skipPrediction'],
-        'chain': SolanaChainUniqueIdToJSON(value['chain']),
     };
 }

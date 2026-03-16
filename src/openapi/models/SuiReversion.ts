@@ -22,13 +22,13 @@ import {
  */
 export interface SuiReversion {
     /**
-     * 
+     * The state of the reversion. Is one of the following:<ul><li>`not_reverted`: No reversion, meaning, completed successfully.<li>`unknown_revert`: Fordefi does not know the reason for the reversion.<li>`contract_asserted`: Insufficient coin balance.<li>`insufficient_funds_gas_and_value`: A transaction was sent for which there were insufficient funds.<li>`invalid_input`: The input data was invalid.<li>`transaction_failed_to_reach_finality`: The transaction failed to reach finality state.<li>`out_of_gas`: The transaction ran out of gas.<li>`transaction_locked_objects_failure`: The transaction failed due to locked objects on validator.</ul>
      * @type {SuiReversionState}
      * @memberof SuiReversion
      */
     state: SuiReversionState;
     /**
-     * 
+     * The reason for the reversion (additional information).
      * @type {string}
      * @memberof SuiReversion
      */
@@ -49,4 +49,3 @@ function SuiReversionFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Su
         'reason': json['reason'] == null ? undefined : json['reason'],
     };
 }
-

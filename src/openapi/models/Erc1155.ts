@@ -22,26 +22,26 @@ import {
  */
 export interface Erc1155 {
     /**
-     * 
+     * The token address
      * @type {EvmAddress}
      * @memberof Erc1155
      */
     address: EvmAddress;
     /**
-     * 
+     * The token name
      * @type {string}
      * @memberof Erc1155
      */
     name: string;
     /**
-     * 
+     * The token symbol or ticker
      * @type {string}
      * @memberof Erc1155
      */
     symbol: string;
     /**
-     * 
-     * @type {string}
+     * The type of the token
+     * @type {Erc1155TypeEnum}
      * @memberof Erc1155
      */
     type: Erc1155TypeEnum;
@@ -49,16 +49,12 @@ export interface Erc1155 {
 
 
 /**
- * 
+ * @export
  */
 const Erc1155TypeEnum = {
     erc1155: 'erc1155'
 } as const;
 type Erc1155TypeEnum = typeof Erc1155TypeEnum[keyof typeof Erc1155TypeEnum];
-
-export function Erc1155FromJSON(json: any): Erc1155 {
-    return Erc1155FromJSONTyped(json, false);
-}
 
 export function Erc1155FromJSONTyped(json: any, _ignoreDiscriminator: boolean): Erc1155 {
     if (json == null) {

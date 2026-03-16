@@ -53,4 +53,3 @@ function ExchangeEffectsFromJSONTyped(json: any, _ignoreDiscriminator: boolean):
         'transfers': ((json['transfers'] as Array<any>).map(ExchangeTransferEffectFromJSON)),
     };
 }
-

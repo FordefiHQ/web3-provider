@@ -23,13 +23,13 @@ import {
  */
 export interface UtxoChain {
     /**
-     * 
-     * @type {string}
+     * The type of the chain.
+     * @type {UtxoChainChainTypeEnum}
      * @memberof UtxoChain
      */
     chainType: UtxoChainChainTypeEnum;
     /**
-     * 
+     * The UTXO chain unique ID.
      * @type {UtxoChainUniqueId}
      * @memberof UtxoChain
      */
@@ -38,7 +38,7 @@ export interface UtxoChain {
 
 
 /**
- * 
+ * @export
  */
 const UtxoChainChainTypeEnum = {
     utxo: 'utxo'

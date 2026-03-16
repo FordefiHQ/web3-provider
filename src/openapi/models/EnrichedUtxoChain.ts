@@ -26,31 +26,31 @@ import {
  */
 export interface EnrichedUtxoChain {
     /**
-     * 
-     * @type {string}
+     * The type of the chain.
+     * @type {EnrichedUtxoChainChainTypeEnum}
      * @memberof EnrichedUtxoChain
      */
     chainType: EnrichedUtxoChainChainTypeEnum;
     /**
-     * 
+     * The UTXO chain unique ID.
      * @type {UtxoChainUniqueId}
      * @memberof EnrichedUtxoChain
      */
     uniqueId: UtxoChainUniqueId;
     /**
-     * 
+     * The full blockchain name.
      * @type {string}
      * @memberof EnrichedUtxoChain
      */
     name: string;
     /**
-     * 
+     * The native currency symbol.
      * @type {string}
      * @memberof EnrichedUtxoChain
      */
     nativeCurrencySymbol: string;
     /**
-     * 
+     * The native currency name.
      * @type {string}
      * @memberof EnrichedUtxoChain
      */
@@ -62,19 +62,19 @@ export interface EnrichedUtxoChain {
      */
     blockchainExplorer?: BlockchainExplorer;
     /**
-     * 
+     * The logo URL of the chain.
      * @type {string}
      * @memberof EnrichedUtxoChain
      */
     logoUrl: string;
     /**
-     * 
+     * Whether the chain is on a testnet.
      * @type {boolean}
      * @memberof EnrichedUtxoChain
      */
     isTestnet: boolean;
     /**
-     * 
+     * Whether the chain is enabled.
      * @type {boolean}
      * @memberof EnrichedUtxoChain
      */
@@ -83,7 +83,7 @@ export interface EnrichedUtxoChain {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedUtxoChainChainTypeEnum = {
     utxo: 'utxo'

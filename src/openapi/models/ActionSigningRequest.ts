@@ -10,19 +10,29 @@
  * Do not edit the class manually.
  */
 
+import type { UserRef } from './UserRef';
+import {
+    UserRefFromJSON,
+} from './UserRef';
 import type { ActionSigner } from './ActionSigner';
 import {
     ActionSignerFromJSON,
 } from './ActionSigner';
 
 /**
- * 
+ * Represents a device sign request for an action in the Foredefi platform
  * @export
  * @interface ActionSigningRequest
  */
 export interface ActionSigningRequest {
     /**
-     * 
+     * The user who created the action.
+     * @type {UserRef}
+     * @memberof ActionSigningRequest
+     */
+    createdBy: UserRef;
+    /**
+     * A list of required signers. A signer can be a person or an API Signer.
      * @type {Array<ActionSigner>}
      * @memberof ActionSigningRequest
      */
@@ -39,7 +49,7 @@ function ActionSigningRequestFromJSONTyped(json: any, _ignoreDiscriminator: bool
     }
     return {
         
+        'createdBy': UserRefFromJSON(json['created_by']),
         'signers': ((json['signers'] as Array<any>).map(ActionSignerFromJSON)),
     };
 }
-

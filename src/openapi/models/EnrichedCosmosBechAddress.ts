@@ -30,31 +30,31 @@ import {
  */
 export interface EnrichedCosmosBechAddress {
     /**
-     * 
+     * The vault corresponding to this address.
      * @type {VaultRef}
      * @memberof EnrichedCosmosBechAddress
      */
     vault?: VaultRef;
     /**
-     * 
+     * The URL of a blockchain explorer that provides real-time information about the address.
      * @type {string}
      * @memberof EnrichedCosmosBechAddress
      */
     explorerUrl?: string;
     /**
-     * 
+     * The contact details of this address.
      * @type {ContactRef}
      * @memberof EnrichedCosmosBechAddress
      */
     contact?: ContactRef;
     /**
      * 
-     * @type {string}
+     * @type {EnrichedCosmosBechAddressTypeEnum}
      * @memberof EnrichedCosmosBechAddress
      */
     type: EnrichedCosmosBechAddressTypeEnum;
     /**
-     * 
+     * The Bech32 address.
      * @type {CosmosBechAddress}
      * @memberof EnrichedCosmosBechAddress
      */
@@ -63,7 +63,7 @@ export interface EnrichedCosmosBechAddress {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedCosmosBechAddressTypeEnum = {
     cosmos: 'cosmos'

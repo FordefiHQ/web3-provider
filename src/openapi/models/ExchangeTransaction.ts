@@ -14,6 +14,10 @@ import type { ExchangeTransactionState } from './ExchangeTransactionState';
 import {
     ExchangeTransactionStateFromJSON,
 } from './ExchangeTransactionState';
+import type { VaultRef } from './VaultRef';
+import {
+    VaultRefFromJSON,
+} from './VaultRef';
 import type { ManagedTransactionData } from './ManagedTransactionData';
 import {
     ManagedTransactionDataFromJSON,
@@ -34,6 +38,10 @@ import type { Signature } from './Signature';
 import {
     SignatureFromJSON,
 } from './Signature';
+import type { RelatedTransaction } from './RelatedTransaction';
+import {
+    RelatedTransactionFromJSON,
+} from './RelatedTransaction';
 import type { SimulationStatusResult } from './SimulationStatusResult';
 import {
     SimulationStatusResultFromJSON,
@@ -54,74 +62,98 @@ import {
  */
 export interface ExchangeTransaction {
     /**
-     * 
+     * The unique identifier of the object in the Fordefi platform.
      * @type {string}
      * @memberof ExchangeTransaction
      */
     id: string;
     /**
-     * 
+     * The date and time when the object was created.
      * @type {Date}
      * @memberof ExchangeTransaction
      */
     createdAt: Date;
     /**
-     * 
+     * The date and time when the object was last modified. Any change to any field of the resource is considered a modification.
      * @type {Date}
      * @memberof ExchangeTransaction
      */
     modifiedAt: Date;
     /**
-     * 
+     * Managed transaction data. Presented if the transaction was initiated from the Fordefi system itself, in contrast to unmanaged transactions (which are, for example, transfers of funds into a vault visible to Fordefi). 
      * @type {ManagedTransactionData}
      * @memberof ExchangeTransaction
      */
     managedTransactionData?: ManagedTransactionData;
     /**
-     * 
+     * The transaction signatures.
      * @type {Array<Signature>}
      * @memberof ExchangeTransaction
      */
     signatures: Array<Signature>;
     /**
-     * 
+     * An optional transaction note.
      * @type {string}
      * @memberof ExchangeTransaction
      */
     note?: string;
     /**
-     * 
+     * `automatically_set` if the transaction was automatically set as spam by Fordefi, `manually_set` if the transaction was manually set as spam by a user, and `unset` if the transaction was not set as spam.
      * @type {TransactionSpamState}
      * @memberof ExchangeTransaction
      */
     spamState?: TransactionSpamState;
     /**
-     * 
+     * The direction of the transaction.
      * @type {TransactionDirection}
      * @memberof ExchangeTransaction
      */
     direction: TransactionDirection;
     /**
-     * 
+     * Whether the transaction was signed by an external user (for example in case of imported vault).
      * @type {boolean}
      * @memberof ExchangeTransaction
      */
     signedExternally?: boolean;
     /**
-     * 
+     * The vaults that interacted with the transaction.
+     * @type {Array<VaultRef>}
+     * @memberof ExchangeTransaction
+     */
+    interactedVaults: Array<VaultRef>;
+    /**
+     * The related transactions.
+     * @type {Array<RelatedTransaction>}
+     * @memberof ExchangeTransaction
+     */
+    relatedTransactions?: Array<RelatedTransaction>;
+    /**
+     * The organization that the transaction belongs to.
+     * @type {string}
+     * @memberof ExchangeTransaction
+     */
+    organizationId: string;
+    /**
+     * The state of the exchange transaction.
      * @type {ExchangeTransactionState}
      * @memberof ExchangeTransaction
      */
     state: ExchangeTransactionState;
     /**
-     * 
+     * The state changes of the exchange transaction.
      * @type {Array<ExchangeTransactionStateChange>}
      * @memberof ExchangeTransaction
      */
     stateChanges: Array<ExchangeTransactionStateChange>;
     /**
-     * 
-     * @type {string}
+     * Whether simulation succeeded, reverted or failed.
+     * @type {SimulationStatusResult}
+     * @memberof ExchangeTransaction
+     */
+    simulationStatusResult?: SimulationStatusResult;
+    /**
+     * The type of the transaction.
+     * @type {ExchangeTransactionTypeEnum}
      * @memberof ExchangeTransaction
      */
     type: ExchangeTransactionTypeEnum;
@@ -132,54 +164,34 @@ export interface ExchangeTransaction {
      */
     exchangeTransactionTypeDetails: ExchangeTransactionExchangeTransactionTypeDetails;
     /**
-     * 
+     * The nonce of the transaction. `None` if not required by the exchange
      * @type {string}
      * @memberof ExchangeTransaction
      */
     exchangeNonce?: string;
     /**
-     * 
+     * The ID of the transaction as returned by the exchange
      * @type {string}
      * @memberof ExchangeTransaction
      */
     exchangeTransactionId?: string;
     /**
-     * 
-     * @type {string}
-     * @memberof ExchangeTransaction
-     * @deprecated
-     */
-    hash?: string;
-    /**
-     * 
+     * The expected result of the transaction in case it's executed.
      * @type {ExchangeTransactionResult}
      * @memberof ExchangeTransaction
      */
     expectedResult?: ExchangeTransactionResult;
     /**
-     * 
-     * @type {SimulationStatusResult}
-     * @memberof ExchangeTransaction
-     */
-    simulationStatusResult: SimulationStatusResult;
-    /**
-     * 
+     * The result of the transaction after it was mined.
      * @type {ExchangeTransactionResult}
      * @memberof ExchangeTransaction
      */
     minedResult?: ExchangeTransactionResult;
-    /**
-     * 
-     * @type {string}
-     * @memberof ExchangeTransaction
-     * @deprecated
-     */
-    explorerUrl?: string;
 }
 
 
 /**
- * 
+ * @export
  */
 const ExchangeTransactionTypeEnum = {
     exchangeTransaction: 'exchange_transaction'
@@ -201,16 +213,17 @@ export function ExchangeTransactionFromJSONTyped(json: any, _ignoreDiscriminator
         'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
         'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'interactedVaults': ((json['interacted_vaults'] as Array<any>).map(VaultRefFromJSON)),
+        'relatedTransactions': json['related_transactions'] == null ? undefined : ((json['related_transactions'] as Array<any>).map(RelatedTransactionFromJSON)),
+        'organizationId': json['organization_id'],
         'state': ExchangeTransactionStateFromJSON(json['state']),
         'stateChanges': ((json['state_changes'] as Array<any>).map(ExchangeTransactionStateChangeFromJSON)),
+        'simulationStatusResult': json['simulation_status_result'] == null ? undefined : SimulationStatusResultFromJSON(json['simulation_status_result']),
         'type': json['type'],
         'exchangeTransactionTypeDetails': ExchangeTransactionExchangeTransactionTypeDetailsFromJSON(json['exchange_transaction_type_details']),
         'exchangeNonce': json['exchange_nonce'] == null ? undefined : json['exchange_nonce'],
         'exchangeTransactionId': json['exchange_transaction_id'] == null ? undefined : json['exchange_transaction_id'],
-        'hash': json['hash'] == null ? undefined : json['hash'],
         'expectedResult': json['expected_result'] == null ? undefined : ExchangeTransactionResultFromJSON(json['expected_result']),
-        'simulationStatusResult': SimulationStatusResultFromJSON(json['simulation_status_result']),
         'minedResult': json['mined_result'] == null ? undefined : ExchangeTransactionResultFromJSON(json['mined_result']),
-        'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
     };
 }

@@ -26,31 +26,31 @@ import {
  */
 export interface EnrichedTronAddress {
     /**
-     * 
+     * The vault corresponding to this address.
      * @type {VaultRef}
      * @memberof EnrichedTronAddress
      */
     vault?: VaultRef;
     /**
-     * 
+     * The URL of a blockchain explorer that provides real-time information about the address.
      * @type {string}
      * @memberof EnrichedTronAddress
      */
     explorerUrl?: string;
     /**
-     * 
+     * The contact details of this address.
      * @type {ContactRef}
      * @memberof EnrichedTronAddress
      */
     contact?: ContactRef;
     /**
      * 
-     * @type {string}
+     * @type {EnrichedTronAddressTypeEnum}
      * @memberof EnrichedTronAddress
      */
     type: EnrichedTronAddressTypeEnum;
     /**
-     * 
+     * The TRON address represented in base58 format.
      * @type {string}
      * @memberof EnrichedTronAddress
      */
@@ -59,7 +59,7 @@ export interface EnrichedTronAddress {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedTronAddressTypeEnum = {
     tron: 'tron'

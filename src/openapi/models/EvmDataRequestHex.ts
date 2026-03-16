@@ -17,13 +17,13 @@
  */
 export interface EvmDataRequestHex {
     /**
-     * 
-     * @type {string}
+     * Hex raw format.
+     * @type {EvmDataRequestHexTypeEnum}
      * @memberof EvmDataRequestHex
      */
     type: EvmDataRequestHexTypeEnum;
     /**
-     * 
+     * The contract call data, as a serialized method-call with its arguments, encoded in hex.See [data field format for transactions on Ethereum](https://ethereum.org/en/developers/docs/transactions/#the-data-field).
      * @type {string}
      * @memberof EvmDataRequestHex
      */
@@ -54,4 +54,3 @@ function EvmDataRequestHexToJSONTyped(value?: EvmDataRequestHex | null, _ignoreD
         'hex_data': value['hexData'],
     };
 }
-

@@ -20,9 +20,9 @@ import {
 } from './AptosPriorityGasPriceRequest';
 
 /**
- * 
- * @export
  * @type AptosGasConfigRequestPrice
+ * The price details per gas unit.
+ * @export
  */
 export type AptosGasConfigRequestPrice = { type: 'custom' } & AptosCustomGasPriceRequest | { type: 'priority' } & AptosPriorityGasPriceRequest;
 
@@ -40,8 +40,6 @@ function AptosGasConfigRequestPriceToJSONTyped(value?: AptosGasConfigRequestPric
         case 'priority':
             return Object.assign({}, AptosPriorityGasPriceRequestToJSON(value), { type: 'priority' } as const);
         default:
-            throw new Error(`No variant of AptosGasConfigRequestPrice exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

@@ -22,19 +22,19 @@ import {
  */
 export interface UtxoInput {
     /**
-     * 
+     * The address of the input.
      * @type {EnrichedUtxoAddress}
      * @memberof UtxoInput
      */
     address: EnrichedUtxoAddress;
     /**
-     * 
+     * The value of the input.
      * @type {string}
      * @memberof UtxoInput
      */
     value: string;
     /**
-     * 
+     * `True` if this is signed by the creating vault (relevant for PSBT), `False` otherwise.
      * @type {boolean}
      * @memberof UtxoInput
      */
@@ -56,4 +56,3 @@ function UtxoInputFromJSONTyped(json: any, _ignoreDiscriminator: boolean): UtxoI
         'shouldSign': json['should_sign'] == null ? undefined : json['should_sign'],
     };
 }
-

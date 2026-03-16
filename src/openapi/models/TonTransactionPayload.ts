@@ -28,19 +28,19 @@ import {
  */
 export interface TonTransactionPayload {
     /**
-     * 
+     * The expiration time of the transaction.
      * @type {number}
      * @memberof TonTransactionPayload
      */
     validUntil?: number;
     /**
-     * 
+     * The transaction's network.
      * @type {TonNetwork}
      * @memberof TonTransactionPayload
      */
     network?: TonNetwork;
     /**
-     * 
+     * The messages of the transaction.
      * @type {Array<TonTransactionMessage>}
      * @memberof TonTransactionPayload
      */
@@ -79,4 +79,3 @@ function TonTransactionPayloadToJSONTyped(value?: TonTransactionPayload | null, 
         'messages': ((value['messages'] as Array<any>).map(TonTransactionMessageToJSON)),
     };
 }
-

@@ -17,25 +17,25 @@ import {
 } from './SuiCommandArgument';
 
 /**
- * 
+ * Transfer objects from one account to another.
  * @export
  * @interface SuiTransferObjectsCommand
  */
 export interface SuiTransferObjectsCommand {
     /**
-     * 
-     * @type {string}
+     * The type of the command.
+     * @type {SuiTransferObjectsCommandTypeEnum}
      * @memberof SuiTransferObjectsCommand
      */
     type: SuiTransferObjectsCommandTypeEnum;
     /**
-     * 
+     * The objects to transfer.
      * @type {Array<SuiCommandArgument>}
      * @memberof SuiTransferObjectsCommand
      */
     objects: Array<SuiCommandArgument>;
     /**
-     * 
+     * The destination address of the transfer.
      * @type {SuiCommandArgument}
      * @memberof SuiTransferObjectsCommand
      */
@@ -44,7 +44,7 @@ export interface SuiTransferObjectsCommand {
 
 
 /**
- * 
+ * @export
  */
 const SuiTransferObjectsCommandTypeEnum = {
     transferObjects: 'transfer_objects'

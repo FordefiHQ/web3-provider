@@ -22,8 +22,8 @@ import {
  */
 export interface EnrichedSolanaAssetIdentifier {
     /**
-     * 
-     * @type {string}
+     * Asset identifier type.
+     * @type {EnrichedSolanaAssetIdentifierTypeEnum}
      * @memberof EnrichedSolanaAssetIdentifier
      */
     type: EnrichedSolanaAssetIdentifierTypeEnum;
@@ -37,7 +37,7 @@ export interface EnrichedSolanaAssetIdentifier {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedSolanaAssetIdentifierTypeEnum = {
     solana: 'solana'

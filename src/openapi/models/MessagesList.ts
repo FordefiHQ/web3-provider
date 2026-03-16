@@ -24,9 +24,9 @@ import {
 } from './MinedMessagesList';
 
 /**
+ * @type MessagesList
  * 
  * @export
- * @type MessagesList
  */
 export type MessagesList = { format: 'amino' } & AminoMessagesList | { format: 'direct' } & DirectMessagesList | { format: 'mined' } & MinedMessagesList;
 
@@ -46,7 +46,6 @@ function MessagesListFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Me
         case 'mined':
             return Object.assign({}, MinedMessagesListFromJSONTyped(json, true), { format: 'mined' } as const);
         default:
-            throw new Error(`No variant of MessagesList exists with 'format=${json['format']}'`);
+            return json;
     }
 }
-

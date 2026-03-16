@@ -30,25 +30,25 @@ import {
  */
 export interface ExchangeTransferEffect {
     /**
-     * 
+     * The asset information.
      * @type {PricedAsset}
      * @memberof ExchangeTransferEffect
      */
     pricedAsset: PricedAsset;
     /**
-     * 
+     * The amount of the transfer.
      * @type {string}
      * @memberof ExchangeTransferEffect
      */
     amount: string;
     /**
-     * 
+     * The sender of the transfer.
      * @type {EnrichedExchangeAddress}
      * @memberof ExchangeTransferEffect
      */
     from: EnrichedExchangeAddress;
     /**
-     * 
+     * The receiver of the transfer.
      * @type {EnrichedAddress}
      * @memberof ExchangeTransferEffect
      */
@@ -71,4 +71,3 @@ function ExchangeTransferEffectFromJSONTyped(json: any, _ignoreDiscriminator: bo
         'to': EnrichedAddressFromJSON(json['to']),
     };
 }
-

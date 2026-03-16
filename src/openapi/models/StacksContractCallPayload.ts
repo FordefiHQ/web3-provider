@@ -22,25 +22,25 @@ import {
  */
 export interface StacksContractCallPayload {
     /**
-     * 
+     * The address of the contract to call.
      * @type {EnrichedStacksAddress}
      * @memberof StacksContractCallPayload
      */
     contractAddress: EnrichedStacksAddress;
     /**
-     * 
+     * The name of the contract being called.
      * @type {string}
      * @memberof StacksContractCallPayload
      */
     contractName: string;
     /**
-     * 
+     * The name of the function to call.
      * @type {string}
      * @memberof StacksContractCallPayload
      */
     functionName: string;
     /**
-     * 
+     * The arguments of the function to call.
      * @type {Array<string>}
      * @memberof StacksContractCallPayload
      */
@@ -63,4 +63,3 @@ function StacksContractCallPayloadFromJSONTyped(json: any, _ignoreDiscriminator:
         'functionArguments': json['function_arguments'],
     };
 }
-

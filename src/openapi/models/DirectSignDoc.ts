@@ -23,42 +23,42 @@ import {
 export interface DirectSignDoc {
     /**
      * 
-     * @type {string}
+     * @type {DirectSignDocFormatEnum}
      * @memberof DirectSignDoc
      */
     format: DirectSignDocFormatEnum;
     /**
-     * 
+     * Body bytes, encoded in base64 format.
      * @type {string}
      * @memberof DirectSignDoc
      */
     body: string;
     /**
-     * 
+     * Auth info bytes, encoded in base64 format.
      * @type {string}
      * @memberof DirectSignDoc
      */
     authInfo: string;
     /**
-     * 
+     * The chain the transaction is signed on.
      * @type {EnrichedCosmosChain}
      * @memberof DirectSignDoc
      */
     chain: EnrichedCosmosChain;
     /**
-     * 
+     * The account number.
      * @type {string}
      * @memberof DirectSignDoc
      */
     accountNumber: string;
     /**
-     * 
+     * Actual body bytes that were used when signing the transaction, encoded in base64 format.
      * @type {string}
      * @memberof DirectSignDoc
      */
     signedBody: string;
     /**
-     * 
+     * Actual auth info that was used when signing the transaction, encoded in base64 format.
      * @type {string}
      * @memberof DirectSignDoc
      */
@@ -67,7 +67,7 @@ export interface DirectSignDoc {
 
 
 /**
- * 
+ * @export
  */
 const DirectSignDocFormatEnum = {
     direct: 'direct'

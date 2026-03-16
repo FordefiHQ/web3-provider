@@ -30,19 +30,19 @@ import {
  */
 export interface TonTransactionResult {
     /**
-     * 
+     * Details whether the transaction was reverted or not.
      * @type {TonReversion}
      * @memberof TonTransactionResult
      */
     reversion: TonReversion;
     /**
-     * 
+     * The fees paid for this transaction by managed addresses.
      * @type {Array<TonAddressFee>}
      * @memberof TonTransactionResult
      */
     addressFees: Array<TonAddressFee>;
     /**
-     * 
+     * The effects of the transaction.
      * @type {TonEffects}
      * @memberof TonTransactionResult
      */
@@ -64,4 +64,3 @@ function TonTransactionResultFromJSONTyped(json: any, _ignoreDiscriminator: bool
         'effects': TonEffectsFromJSON(json['effects']),
     };
 }
-

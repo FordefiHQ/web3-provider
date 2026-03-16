@@ -12,11 +12,15 @@
 
 
 /**
+ * 
  * @export
  */
 export const UserState = {
     active: 'active',
-    onboarding: 'onboarding',
+    onboardingPendingCodeGeneration: 'onboarding_pending_code_generation',
+    onboardingPendingActivation: 'onboarding_pending_activation',
+    resetDevicePendingCodeGeneration: 'reset_device_pending_code_generation',
+    resetDevicePendingActivation: 'reset_device_pending_activation',
     pendingApproval: 'pending_approval',
     deleted: 'deleted'
 } as const;
@@ -29,4 +33,3 @@ export function UserStateFromJSON(json: any): UserState {
 function UserStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): UserState {
     return json as UserState;
 }
-

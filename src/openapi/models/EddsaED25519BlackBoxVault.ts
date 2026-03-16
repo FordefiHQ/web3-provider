@@ -17,8 +17,8 @@
  */
 export interface EddsaED25519BlackBoxVault {
     /**
-     * 
-     * @type {string}
+     * Ed25519 signing scheme.
+     * @type {EddsaED25519BlackBoxVaultTypeEnum}
      * @memberof EddsaED25519BlackBoxVault
      */
     type: EddsaED25519BlackBoxVaultTypeEnum;
@@ -26,7 +26,7 @@ export interface EddsaED25519BlackBoxVault {
 
 
 /**
- * 
+ * @export
  */
 const EddsaED25519BlackBoxVaultTypeEnum = {
     eddsaEd25519: 'eddsa_ed25519'

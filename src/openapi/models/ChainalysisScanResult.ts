@@ -22,19 +22,19 @@ import {
  */
 export interface ChainalysisScanResult {
     /**
-     * 
-     * @type {string}
+     * The type of the policy.
+     * @type {ChainalysisScanResultTypeEnum}
      * @memberof ChainalysisScanResult
      */
     type: ChainalysisScanResultTypeEnum;
     /**
-     * 
+     * The list of alerts.
      * @type {Array<ChainalysisAlert>}
      * @memberof ChainalysisScanResult
      */
     alerts: Array<ChainalysisAlert>;
     /**
-     * 
+     * A unique identifier of the scan.
      * @type {string}
      * @memberof ChainalysisScanResult
      */
@@ -43,14 +43,18 @@ export interface ChainalysisScanResult {
 
 
 /**
- * 
+ * @export
  */
 const ChainalysisScanResultTypeEnum = {
     chainalysis: 'chainalysis'
 } as const;
 type ChainalysisScanResultTypeEnum = typeof ChainalysisScanResultTypeEnum[keyof typeof ChainalysisScanResultTypeEnum];
 
-export function ChainalysisScanResultFromJSONTyped(json: any, _ignoreDiscriminator: boolean): ChainalysisScanResult {
+export function ChainalysisScanResultFromJSON(json: any): ChainalysisScanResult {
+    return ChainalysisScanResultFromJSONTyped(json, false);
+}
+
+function ChainalysisScanResultFromJSONTyped(json: any, _ignoreDiscriminator: boolean): ChainalysisScanResult {
     if (json == null) {
         return json;
     }

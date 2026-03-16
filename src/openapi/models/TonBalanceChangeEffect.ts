@@ -26,19 +26,19 @@ import {
  */
 export interface TonBalanceChangeEffect {
     /**
-     * 
+     * The asset information.
      * @type {PricedAsset}
      * @memberof TonBalanceChangeEffect
      */
     pricedAsset: PricedAsset;
     /**
-     * 
+     * The amount of that was added to or deducted from the owner's balance. If the amount was deducted, the value is negative; if the amount was added, the value is positive.
      * @type {string}
      * @memberof TonBalanceChangeEffect
      */
     diff: string;
     /**
-     * 
+     * The address affected by the balance change.
      * @type {EnrichedTonAddress}
      * @memberof TonBalanceChangeEffect
      */
@@ -60,4 +60,3 @@ function TonBalanceChangeEffectFromJSONTyped(json: any, _ignoreDiscriminator: bo
         'address': EnrichedTonAddressFromJSON(json['address']),
     };
 }
-

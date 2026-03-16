@@ -22,19 +22,19 @@ import {
  */
 export interface StarknetAddressBookContactAddressRef {
     /**
-     * 
-     * @type {string}
+     * The type of the chain.
+     * @type {StarknetAddressBookContactAddressRefChainTypeEnum}
      * @memberof StarknetAddressBookContactAddressRef
      */
     chainType: StarknetAddressBookContactAddressRefChainTypeEnum;
     /**
-     * 
+     * The address on the Starknet chain.
      * @type {string}
      * @memberof StarknetAddressBookContactAddressRef
      */
     address: string;
     /**
-     * 
+     * The chains the contact belongs to.
      * @type {Array<StarknetChain>}
      * @memberof StarknetAddressBookContactAddressRef
      */
@@ -43,7 +43,7 @@ export interface StarknetAddressBookContactAddressRef {
 
 
 /**
- * 
+ * @export
  */
 const StarknetAddressBookContactAddressRefChainTypeEnum = {
     starknet: 'starknet'

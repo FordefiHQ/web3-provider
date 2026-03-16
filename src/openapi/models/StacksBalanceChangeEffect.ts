@@ -26,19 +26,19 @@ import {
  */
 export interface StacksBalanceChangeEffect {
     /**
-     * 
+     * The asset information.
      * @type {PricedAsset}
      * @memberof StacksBalanceChangeEffect
      */
     pricedAsset: PricedAsset;
     /**
-     * 
+     * The amount of that was added to or deducted from the owner's balance. If the amount was deducted, the value is negative; if the amount was added, the value is positive.
      * @type {string}
      * @memberof StacksBalanceChangeEffect
      */
     diff: string;
     /**
-     * 
+     * The address affected by the balance change.
      * @type {EnrichedStacksAddress}
      * @memberof StacksBalanceChangeEffect
      */
@@ -60,4 +60,3 @@ function StacksBalanceChangeEffectFromJSONTyped(json: any, _ignoreDiscriminator:
         'address': EnrichedStacksAddressFromJSON(json['address']),
     };
 }
-

@@ -22,23 +22,29 @@ import {
  */
 export interface UtxoOutput {
     /**
-     * 
+     * The address of the output.
      * @type {EnrichedUtxoAddress}
      * @memberof UtxoOutput
      */
     address: EnrichedUtxoAddress;
     /**
-     * 
+     * The value of the output.
      * @type {string}
      * @memberof UtxoOutput
      */
     value: string;
     /**
-     * 
+     * Whether the output is a change address.
      * @type {boolean}
      * @memberof UtxoOutput
      */
     isChangeAddress?: boolean;
+    /**
+     * Whether the output is a send-max output.
+     * @type {boolean}
+     * @memberof UtxoOutput
+     */
+    isSendMax?: boolean;
 }
 
 export function UtxoOutputFromJSON(json: any): UtxoOutput {
@@ -54,6 +60,6 @@ function UtxoOutputFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Utxo
         'address': EnrichedUtxoAddressFromJSON(json['address']),
         'value': json['value'],
         'isChangeAddress': json['is_change_address'] == null ? undefined : json['is_change_address'],
+        'isSendMax': json['is_send_max'] == null ? undefined : json['is_send_max'],
     };
 }
-

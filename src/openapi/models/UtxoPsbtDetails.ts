@@ -22,31 +22,31 @@ import {
  */
 export interface UtxoPsbtDetails {
     /**
-     * 
-     * @type {string}
+     * A partially signed bitcoin transaction (PSBT).
+     * @type {UtxoPsbtDetailsTypeEnum}
      * @memberof UtxoPsbtDetails
      */
     type: UtxoPsbtDetailsTypeEnum;
     /**
-     * 
+     * Partially signed bitcoin transaction data encoded as a hex string.
      * @type {string}
      * @memberof UtxoPsbtDetails
      */
     psbtRawData: string;
     /**
-     * 
+     * Partially signed bitcoin transaction data encoded as a hex string.
      * @type {string}
      * @memberof UtxoPsbtDetails
      */
     signedPsbtRawData?: string;
     /**
-     * 
+     * The address that signed the inputs.
      * @type {EnrichedUtxoAddress}
      * @memberof UtxoPsbtDetails
      */
     sender: EnrichedUtxoAddress;
     /**
-     * 
+     * Json representation of the PSBT.
      * @type {string}
      * @memberof UtxoPsbtDetails
      */
@@ -55,7 +55,7 @@ export interface UtxoPsbtDetails {
 
 
 /**
- * 
+ * @export
  */
 const UtxoPsbtDetailsTypeEnum = {
     partiallySignedBitcoinTransaction: 'partially_signed_bitcoin_transaction'

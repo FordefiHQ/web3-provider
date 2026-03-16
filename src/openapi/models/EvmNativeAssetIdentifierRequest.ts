@@ -17,13 +17,13 @@
  */
 export interface EvmNativeAssetIdentifierRequest {
     /**
-     * 
-     * @type {string}
+     * EVM asset identifier type.
+     * @type {EvmNativeAssetIdentifierRequestTypeEnum}
      * @memberof EvmNativeAssetIdentifierRequest
      */
     type: EvmNativeAssetIdentifierRequestTypeEnum;
     /**
-     * 
+     * The details of the chain of the native asset.
      * @type {string}
      * @memberof EvmNativeAssetIdentifierRequest
      */
@@ -32,7 +32,7 @@ export interface EvmNativeAssetIdentifierRequest {
 
 
 /**
- * 
+ * @export
  */
 const EvmNativeAssetIdentifierRequestTypeEnum = {
     native: 'native'

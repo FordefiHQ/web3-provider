@@ -18,12 +18,12 @@
 export interface MinedMessagesList {
     /**
      * 
-     * @type {string}
+     * @type {MinedMessagesListFormatEnum}
      * @memberof MinedMessagesList
      */
     format: MinedMessagesListFormatEnum;
     /**
-     * 
+     * List of messages of non-managed transaction.
      * @type {string}
      * @memberof MinedMessagesList
      */
@@ -32,7 +32,7 @@ export interface MinedMessagesList {
 
 
 /**
- * 
+ * @export
  */
 const MinedMessagesListFormatEnum = {
     mined: 'mined'

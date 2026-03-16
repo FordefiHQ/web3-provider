@@ -18,7 +18,7 @@
 export interface CreateExchangeTransferRequestMaxAmount {
     /**
      * 
-     * @type {string}
+     * @type {CreateExchangeTransferRequestMaxAmountTypeEnum}
      * @memberof CreateExchangeTransferRequestMaxAmount
      */
     type: CreateExchangeTransferRequestMaxAmountTypeEnum;
@@ -26,7 +26,7 @@ export interface CreateExchangeTransferRequestMaxAmount {
 
 
 /**
- * 
+ * @export
  */
 const CreateExchangeTransferRequestMaxAmountTypeEnum = {
     max: 'max'

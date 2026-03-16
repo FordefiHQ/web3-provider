@@ -30,19 +30,19 @@ import {
  */
 export interface TronTransactionResult {
     /**
-     * 
+     * Details whether the transaction was reverted or not.
      * @type {TronReversion}
      * @memberof TronTransactionResult
      */
     reversion: TronReversion;
     /**
-     * 
+     * The fees of the transaction.
      * @type {TronFee}
      * @memberof TronTransactionResult
      */
     fee: TronFee;
     /**
-     * 
+     * The effects of the transaction.
      * @type {TronEffects}
      * @memberof TronTransactionResult
      */
@@ -64,4 +64,3 @@ function TronTransactionResultFromJSONTyped(json: any, _ignoreDiscriminator: boo
         'effects': TronEffectsFromJSON(json['effects']),
     };
 }
-

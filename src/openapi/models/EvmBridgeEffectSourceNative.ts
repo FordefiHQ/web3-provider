@@ -14,10 +14,6 @@ import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
 } from './PricedAsset';
-import type { Price } from './Price';
-import {
-    PriceFromJSON,
-} from './Price';
 import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
 import {
     EnrichedEvmAddressFromJSON,
@@ -30,34 +26,28 @@ import {
  */
 export interface EvmBridgeEffectSourceNative {
     /**
-     * 
+     * The asset information.
      * @type {PricedAsset}
      * @memberof EvmBridgeEffectSourceNative
      */
     pricedAsset: PricedAsset;
     /**
-     * 
-     * @type {string}
+     * The type of bridge effect.
+     * @type {EvmBridgeEffectSourceNativeTypeEnum}
      * @memberof EvmBridgeEffectSourceNative
      */
     type: EvmBridgeEffectSourceNativeTypeEnum;
     /**
-     * 
+     * The source address of the bridge transaction.
      * @type {EnrichedEvmAddress}
      * @memberof EvmBridgeEffectSourceNative
      */
     sourceAddress: EnrichedEvmAddress;
-    /**
-     * 
-     * @type {Price}
-     * @memberof EvmBridgeEffectSourceNative
-     */
-    price?: Price;
 }
 
 
 /**
- * 
+ * @export
  */
 const EvmBridgeEffectSourceNativeTypeEnum = {
     native: 'native'
@@ -73,6 +63,5 @@ export function EvmBridgeEffectSourceNativeFromJSONTyped(json: any, _ignoreDiscr
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
         'type': json['type'],
         'sourceAddress': EnrichedEvmAddressFromJSON(json['source_address']),
-        'price': json['price'] == null ? undefined : PriceFromJSON(json['price']),
     };
 }

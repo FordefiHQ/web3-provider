@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const FeePriorityLevelRequest = {
@@ -24,4 +25,3 @@ export type FeePriorityLevelRequest = typeof FeePriorityLevelRequest[keyof typeo
 export function FeePriorityLevelRequestToJSON(value?: FeePriorityLevelRequest | null): any {
     return value as any;
 }
-

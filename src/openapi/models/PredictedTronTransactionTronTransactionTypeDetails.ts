@@ -10,21 +10,41 @@
  * Do not edit the class manually.
  */
 
+import type { TronContractCallDetails } from './TronContractCallDetails';
+import {
+    TronContractCallDetailsFromJSONTyped,
+} from './TronContractCallDetails';
+import type { TronDelegateDetails } from './TronDelegateDetails';
+import {
+    TronDelegateDetailsFromJSONTyped,
+} from './TronDelegateDetails';
 import type { TronNativeTransferDetails } from './TronNativeTransferDetails';
 import {
     TronNativeTransferDetailsFromJSONTyped,
 } from './TronNativeTransferDetails';
+import type { TronStakeDetails } from './TronStakeDetails';
+import {
+    TronStakeDetailsFromJSONTyped,
+} from './TronStakeDetails';
 import type { TronTokenTransferDetails } from './TronTokenTransferDetails';
 import {
     TronTokenTransferDetailsFromJSONTyped,
 } from './TronTokenTransferDetails';
+import type { TronUndelegateDetails } from './TronUndelegateDetails';
+import {
+    TronUndelegateDetailsFromJSONTyped,
+} from './TronUndelegateDetails';
+import type { TronUnstakeDetails } from './TronUnstakeDetails';
+import {
+    TronUnstakeDetailsFromJSONTyped,
+} from './TronUnstakeDetails';
 
 /**
- * 
- * @export
  * @type PredictedTronTransactionTronTransactionTypeDetails
+ * Details of the tron transaction based on its type.
+ * @export
  */
-export type PredictedTronTransactionTronTransactionTypeDetails = { type: 'native_transfer' } & TronNativeTransferDetails | { type: 'token_transfer' } & TronTokenTransferDetails;
+export type PredictedTronTransactionTronTransactionTypeDetails = { type: 'contract_call' } & TronContractCallDetails | { type: 'delegate' } & TronDelegateDetails | { type: 'native_transfer' } & TronNativeTransferDetails | { type: 'stake' } & TronStakeDetails | { type: 'token_transfer' } & TronTokenTransferDetails | { type: 'undelegate' } & TronUndelegateDetails | { type: 'unstake' } & TronUnstakeDetails;
 
 export function PredictedTronTransactionTronTransactionTypeDetailsFromJSON(json: any): PredictedTronTransactionTronTransactionTypeDetails {
     return PredictedTronTransactionTronTransactionTypeDetailsFromJSONTyped(json, false);
@@ -35,12 +55,21 @@ function PredictedTronTransactionTronTransactionTypeDetailsFromJSONTyped(json: a
         return json;
     }
     switch (json['type']) {
+        case 'contract_call':
+            return Object.assign({}, TronContractCallDetailsFromJSONTyped(json, true), { type: 'contract_call' } as const);
+        case 'delegate':
+            return Object.assign({}, TronDelegateDetailsFromJSONTyped(json, true), { type: 'delegate' } as const);
         case 'native_transfer':
             return Object.assign({}, TronNativeTransferDetailsFromJSONTyped(json, true), { type: 'native_transfer' } as const);
+        case 'stake':
+            return Object.assign({}, TronStakeDetailsFromJSONTyped(json, true), { type: 'stake' } as const);
         case 'token_transfer':
             return Object.assign({}, TronTokenTransferDetailsFromJSONTyped(json, true), { type: 'token_transfer' } as const);
+        case 'undelegate':
+            return Object.assign({}, TronUndelegateDetailsFromJSONTyped(json, true), { type: 'undelegate' } as const);
+        case 'unstake':
+            return Object.assign({}, TronUnstakeDetailsFromJSONTyped(json, true), { type: 'unstake' } as const);
         default:
-            throw new Error(`No variant of PredictedTronTransactionTronTransactionTypeDetails exists with 'type=${json['type']}'`);
+            return json;
     }
 }
-

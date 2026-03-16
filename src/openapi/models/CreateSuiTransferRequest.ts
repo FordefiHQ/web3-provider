@@ -14,6 +14,10 @@ import type { SuiAssetIdentifierRequest } from './SuiAssetIdentifierRequest';
 import {
     SuiAssetIdentifierRequestToJSON,
 } from './SuiAssetIdentifierRequest';
+import type { TransactionFeePayerVault } from './TransactionFeePayerVault';
+import {
+    TransactionFeePayerVaultToJSON,
+} from './TransactionFeePayerVault';
 import type { CreateAptosTransferRequestValue } from './CreateAptosTransferRequestValue';
 import {
     CreateAptosTransferRequestValueToJSON,
@@ -38,29 +42,35 @@ import {
  */
 export interface CreateSuiTransferRequest {
     /**
-     * 
-     * @type {string}
+     * The vault that pays the fee for this transaction.
+     * @type {TransactionFeePayerVault}
+     * @memberof CreateSuiTransferRequest
+     */
+    feePayer?: TransactionFeePayerVault;
+    /**
+     * Create a Sui transfer transaction. A transaction of this kind is for transferring native currency or a coin.
+     * @type {CreateSuiTransferRequestTypeEnum}
      * @memberof CreateSuiTransferRequest
      */
     type: CreateSuiTransferRequestTypeEnum;
     /**
-     * 
+     * `True` if the request should fail in case simulation failed, `False` otherwise. <br> In case simulation has failed upon continuation, the expected result of the transaction will be partial and policy will be applied on information that can be extracted statically from the transaction only. This might result in falling back to the default policy rule. 
      * @type {boolean}
      * @memberof CreateSuiTransferRequest
      */
     failOnPredictionFailure?: boolean;
     /**
-     * 
-     * @type {PushMode}
-     * @memberof CreateSuiTransferRequest
-     */
-    pushMode?: PushMode;
-    /**
-     * 
+     * `True` to create a transaction without prediction, `False` otherwise. <br> In case of skipping simulation, the simulation status will be skipped and the expected result of the transaction will be empty. The policy will be applied on information that can be extracted statically from the transaction only. This might result in falling back to the default policy rule. <br> Note, it is recommended to use the default setting for this field and to turn off `fail_on_prediction_failure` instead - unless you wish to save time by omitting the prediction phase entirely. 
      * @type {boolean}
      * @memberof CreateSuiTransferRequest
      */
     skipPrediction?: boolean;
+    /**
+     * The push mode of the transaction when sending it to the node. It can be one of the following:<ul><li>`auto`: The transaction is pushed automatically by Fordefi. <li>`manual`: The transaction should be pushed manually by the user using a 3rd party.<li>`deferred`: The transaction is pushed by Fordefi after a certain time, if by that time it wasn't pushed manually by the client.</ul></ul> 
+     * @type {PushMode}
+     * @memberof CreateSuiTransferRequest
+     */
+    pushMode?: PushMode;
     /**
      * 
      * @type {CreateSuiTransferRequestTo}
@@ -68,7 +78,7 @@ export interface CreateSuiTransferRequest {
      */
     to: CreateSuiTransferRequestTo;
     /**
-     * 
+     * The gas configuration for the transaction.
      * @type {SuiGasConfig}
      * @memberof CreateSuiTransferRequest
      */
@@ -80,7 +90,7 @@ export interface CreateSuiTransferRequest {
      */
     value: CreateAptosTransferRequestValue;
     /**
-     * 
+     * The Sui asset identifier to transfer.
      * @type {SuiAssetIdentifierRequest}
      * @memberof CreateSuiTransferRequest
      */
@@ -89,7 +99,7 @@ export interface CreateSuiTransferRequest {
 
 
 /**
- * 
+ * @export
  */
 const CreateSuiTransferRequestTypeEnum = {
     suiTransfer: 'sui_transfer'
@@ -107,10 +117,11 @@ function CreateSuiTransferRequestToJSONTyped(value?: CreateSuiTransferRequest | 
 
     return {
         
+        'fee_payer': TransactionFeePayerVaultToJSON(value['feePayer']),
         'type': value['type'],
         'fail_on_prediction_failure': value['failOnPredictionFailure'],
-        'push_mode': PushModeToJSON(value['pushMode']),
         'skip_prediction': value['skipPrediction'],
+        'push_mode': PushModeToJSON(value['pushMode']),
         'to': CreateSuiTransferRequestToToJSON(value['to']),
         'gas_config': SuiGasConfigToJSON(value['gasConfig']),
         'value': CreateAptosTransferRequestValueToJSON(value['value']),

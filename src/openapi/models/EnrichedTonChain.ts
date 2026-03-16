@@ -26,31 +26,31 @@ import {
  */
 export interface EnrichedTonChain {
     /**
-     * 
-     * @type {string}
+     * The type of the chain.
+     * @type {EnrichedTonChainChainTypeEnum}
      * @memberof EnrichedTonChain
      */
     chainType: EnrichedTonChainChainTypeEnum;
     /**
-     * 
+     * The type of the TON-based chain.
      * @type {TonChainUniqueId}
      * @memberof EnrichedTonChain
      */
     uniqueId: TonChainUniqueId;
     /**
-     * 
+     * The full blockchain name.
      * @type {string}
      * @memberof EnrichedTonChain
      */
     name: string;
     /**
-     * 
+     * The native currency symbol.
      * @type {string}
      * @memberof EnrichedTonChain
      */
     nativeCurrencySymbol: string;
     /**
-     * 
+     * The native currency name.
      * @type {string}
      * @memberof EnrichedTonChain
      */
@@ -62,19 +62,19 @@ export interface EnrichedTonChain {
      */
     blockchainExplorer?: BlockchainExplorer;
     /**
-     * 
+     * The logo URL of the chain.
      * @type {string}
      * @memberof EnrichedTonChain
      */
     logoUrl: string;
     /**
-     * 
+     * Whether the chain is on a testnet.
      * @type {boolean}
      * @memberof EnrichedTonChain
      */
     isTestnet: boolean;
     /**
-     * 
+     * Whether the chain is enabled.
      * @type {boolean}
      * @memberof EnrichedTonChain
      */
@@ -83,7 +83,7 @@ export interface EnrichedTonChain {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedTonChainChainTypeEnum = {
     ton: 'ton'

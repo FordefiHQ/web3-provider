@@ -20,9 +20,9 @@ import {
 } from './TypedCosmosTransferRequest';
 
 /**
- * 
- * @export
  * @type CreateCosmosTransactionRequestDetails
+ * Transaction details.
+ * @export
  */
 export type CreateCosmosTransactionRequestDetails = { type: 'cosmos_raw_transaction' } & TypedCosmosRawTransactionRequest | { type: 'cosmos_transfer' } & TypedCosmosTransferRequest;
 
@@ -40,8 +40,6 @@ function CreateCosmosTransactionRequestDetailsToJSONTyped(value?: CreateCosmosTr
         case 'cosmos_transfer':
             return Object.assign({}, TypedCosmosTransferRequestToJSON(value), { type: 'cosmos_transfer' } as const);
         default:
-            throw new Error(`No variant of CreateCosmosTransactionRequestDetails exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

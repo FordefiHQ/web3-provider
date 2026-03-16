@@ -24,9 +24,9 @@ import {
 } from './SuiProgrammableTransactionBlockDetails';
 
 /**
- * 
- * @export
  * @type PredictedSuiTransactionSuiTransactionTypeDetails
+ * Details of the Sui transaction based on its type.
+ * @export
  */
 export type PredictedSuiTransactionSuiTransactionTypeDetails = { type: 'coin_transfer' } & SuiCoinTransferDetails | { type: 'native_transfer' } & SuiNativeTransferDetails | { type: 'programmable_transaction_block' } & SuiProgrammableTransactionBlockDetails;
 
@@ -46,7 +46,6 @@ function PredictedSuiTransactionSuiTransactionTypeDetailsFromJSONTyped(json: any
         case 'programmable_transaction_block':
             return Object.assign({}, SuiProgrammableTransactionBlockDetailsFromJSONTyped(json, true), { type: 'programmable_transaction_block' } as const);
         default:
-            throw new Error(`No variant of PredictedSuiTransactionSuiTransactionTypeDetails exists with 'type=${json['type']}'`);
+            return json;
     }
 }
-

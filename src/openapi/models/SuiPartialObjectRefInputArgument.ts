@@ -17,13 +17,13 @@
  */
 export interface SuiPartialObjectRefInputArgument {
     /**
-     * 
-     * @type {string}
+     * The type of the object.
+     * @type {SuiPartialObjectRefInputArgumentTypeEnum}
      * @memberof SuiPartialObjectRefInputArgument
      */
     type: SuiPartialObjectRefInputArgumentTypeEnum;
     /**
-     * 
+     * The id of the object.
      * @type {string}
      * @memberof SuiPartialObjectRefInputArgument
      */
@@ -32,7 +32,7 @@ export interface SuiPartialObjectRefInputArgument {
 
 
 /**
- * 
+ * @export
  */
 const SuiPartialObjectRefInputArgumentTypeEnum = {
     partial: 'partial'

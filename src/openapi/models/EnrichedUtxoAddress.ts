@@ -34,37 +34,37 @@ import {
  */
 export interface EnrichedUtxoAddress {
     /**
-     * 
+     * The vault corresponding to this address.
      * @type {VaultRef}
      * @memberof EnrichedUtxoAddress
      */
     vault?: VaultRef;
     /**
-     * 
+     * The URL of a blockchain explorer that provides real-time information about the address.
      * @type {string}
      * @memberof EnrichedUtxoAddress
      */
     explorerUrl?: string;
     /**
-     * 
+     * The contact details of this address.
      * @type {ContactRef}
      * @memberof EnrichedUtxoAddress
      */
     contact?: ContactRef;
     /**
      * 
-     * @type {string}
+     * @type {EnrichedUtxoAddressTypeEnum}
      * @memberof EnrichedUtxoAddress
      */
     type: EnrichedUtxoAddressTypeEnum;
     /**
-     * 
+     * The UTXO address.
      * @type {UtxoAddress}
      * @memberof EnrichedUtxoAddress
      */
     address: UtxoAddress;
     /**
-     * 
+     * The vault address corresponding to this address.
      * @type {VaultAddressRef}
      * @memberof EnrichedUtxoAddress
      */
@@ -73,7 +73,7 @@ export interface EnrichedUtxoAddress {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedUtxoAddressTypeEnum = {
     utxo: 'utxo'

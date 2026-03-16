@@ -10,6 +10,10 @@
  * Do not edit the class manually.
  */
 
+import type { TransactionFeePayerVault } from './TransactionFeePayerVault';
+import {
+    TransactionFeePayerVaultToJSON,
+} from './TransactionFeePayerVault';
 import type { EvmChainRequest } from './EvmChainRequest';
 import {
     EvmChainRequestToJSON,
@@ -18,6 +22,10 @@ import type { EvmDataRequest } from './EvmDataRequest';
 import {
     EvmDataRequestToJSON,
 } from './EvmDataRequest';
+import type { CustomNonce } from './CustomNonce';
+import {
+    CustomNonceToJSON,
+} from './CustomNonce';
 import type { CreateEvmRawTransactionRequestGas } from './CreateEvmRawTransactionRequestGas';
 import {
     CreateEvmRawTransactionRequestGasToJSON,
@@ -34,15 +42,46 @@ import {
  */
 export interface CreateEvmRawTransactionRequest {
     /**
-     * 
-     * @type {string}
+     * The vault that pays the fee for this transaction.
+     * @type {TransactionFeePayerVault}
+     * @memberof CreateEvmRawTransactionRequest
+     */
+    feePayer?: TransactionFeePayerVault;
+    /**
+     * An EVM raw transaction receives raw data and is for general transactions.
+     * @type {CreateEvmRawTransactionRequestTypeEnum}
      * @memberof CreateEvmRawTransactionRequest
      */
     type: CreateEvmRawTransactionRequestTypeEnum;
     /**
-     * 
+     * `True` if the request should fail in case simulation failed, `False` otherwise. <br> In case simulation has failed upon continuation, the expected result of the transaction will be partial and policy will be applied on information that can be extracted statically from the transaction only. This might result in falling back to the default policy rule. 
      * @type {boolean}
      * @memberof CreateEvmRawTransactionRequest
+     */
+    failOnPredictionFailure?: boolean;
+    /**
+     * `True` to create a transaction without prediction, `False` otherwise. <br> In case of skipping simulation, the simulation status will be skipped and the expected result of the transaction will be empty. The policy will be applied on information that can be extracted statically from the transaction only. This might result in falling back to the default policy rule. <br> Note, it is recommended to use the default setting for this field and to turn off `fail_on_prediction_failure` instead - unless you wish to save time by omitting the prediction phase entirely. 
+     * @type {boolean}
+     * @memberof CreateEvmRawTransactionRequest
+     */
+    skipPrediction?: boolean;
+    /**
+     * The push mode of the transaction when sending it to the node. It can be one of the following:<ul><li>`auto`: The transaction is pushed automatically by Fordefi. <li>`manual`: The transaction should be pushed manually by the user using a 3rd party.<li>`deferred`: The transaction is pushed by Fordefi after a certain time, if by that time it wasn't pushed manually by the client.</ul></ul> 
+     * @type {PushMode}
+     * @memberof CreateEvmRawTransactionRequest
+     */
+    pushMode?: PushMode;
+    /**
+     * Use a MEV protected node to send the transaction. By using a MEV protected node, you avoid maximal extractable value (MEV) attacks.
+     * @type {boolean}
+     * @memberof CreateEvmRawTransactionRequest
+     */
+    useMevProtectedNode?: boolean;
+    /**
+     * Use a secure node to send the transaction. By using a secure node, you avoid maximal extractable value (MEV) attacks.
+     * @type {boolean}
+     * @memberof CreateEvmRawTransactionRequest
+     * @deprecated
      */
     useSecureNode?: boolean;
     /**
@@ -52,49 +91,38 @@ export interface CreateEvmRawTransactionRequest {
      */
     gas?: CreateEvmRawTransactionRequestGas;
     /**
-     * 
-     * @type {boolean}
-     * @memberof CreateEvmRawTransactionRequest
-     */
-    failOnPredictionFailure?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CreateEvmRawTransactionRequest
-     */
-    skipPrediction?: boolean;
-    /**
-     * 
-     * @type {PushMode}
-     * @memberof CreateEvmRawTransactionRequest
-     */
-    pushMode?: PushMode;
-    /**
-     * 
+     * The unique identifier of the vault that pays the fee for this transaction.
      * @type {string}
      * @memberof CreateEvmRawTransactionRequest
+     * @deprecated
      */
     funder?: string;
     /**
      * 
+     * @type {CustomNonce}
+     * @memberof CreateEvmRawTransactionRequest
+     */
+    customNonce?: CustomNonce;
+    /**
+     * The chain that this transaction is on. Specify either the chain name (for example `ethereum_mainnet`), the chain ID as a string (for example `evm_1`), or the chain ID as an integer (for example, `1`).
      * @type {EvmChainRequest}
      * @memberof CreateEvmRawTransactionRequest
      */
     chain: EvmChainRequest;
     /**
-     * 
+     * The address of the recipient of the transaction, or null for contract creation.
      * @type {string}
      * @memberof CreateEvmRawTransactionRequest
      */
     to?: string;
     /**
-     * 
+     * The value of native currency to send this transaction with.
      * @type {string}
      * @memberof CreateEvmRawTransactionRequest
      */
     value: string;
     /**
-     * 
+     * The format of the data request. The following formats are available:<ul><li>Base64 raw data</li><li>Hex raw data</li><li>Smart contract call of method and arguments</li></ul>
      * @type {EvmDataRequest}
      * @memberof CreateEvmRawTransactionRequest
      */
@@ -121,17 +149,19 @@ function CreateEvmRawTransactionRequestToJSONTyped(value?: CreateEvmRawTransacti
 
     return {
         
+        'fee_payer': TransactionFeePayerVaultToJSON(value['feePayer']),
         'type': value['type'],
-        'use_secure_node': value['useSecureNode'],
-        'gas': CreateEvmRawTransactionRequestGasToJSON(value['gas']),
         'fail_on_prediction_failure': value['failOnPredictionFailure'],
         'skip_prediction': value['skipPrediction'],
         'push_mode': PushModeToJSON(value['pushMode']),
+        'use_mev_protected_node': value['useMevProtectedNode'],
+        'use_secure_node': value['useSecureNode'],
+        'gas': CreateEvmRawTransactionRequestGasToJSON(value['gas']),
         'funder': value['funder'],
+        'custom_nonce': CustomNonceToJSON(value['customNonce']),
         'chain': EvmChainRequestToJSON(value['chain']),
         'to': value['to'],
         'value': value['value'],
         'data': EvmDataRequestToJSON(value['data']),
     };
 }
-

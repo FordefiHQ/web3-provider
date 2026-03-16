@@ -17,13 +17,13 @@
  */
 export interface AminoMessage {
     /**
-     * 
+     * Message type.
      * @type {string}
      * @memberof AminoMessage
      */
     type: string;
     /**
-     * 
+     * Message value.
      * @type {string}
      * @memberof AminoMessage
      */
@@ -60,4 +60,3 @@ function AminoMessageToJSONTyped(value?: AminoMessage | null, _ignoreDiscriminat
         'value': value['value'],
     };
 }
-

@@ -17,13 +17,13 @@
  */
 export interface DappInfo {
     /**
-     * 
+     * The URL of the dapp.
      * @type {string}
      * @memberof DappInfo
      */
     url: string;
     /**
-     * 
+     * The name of the dapp.
      * @type {string}
      * @memberof DappInfo
      */
@@ -45,4 +45,3 @@ function DappInfoToJSONTyped(value?: DappInfo | null, _ignoreDiscriminator: bool
         'name': value['name'],
     };
 }
-

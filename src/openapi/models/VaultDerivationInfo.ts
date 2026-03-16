@@ -22,13 +22,13 @@ import {
  */
 export interface VaultDerivationInfo {
     /**
-     * 
+     * The BIP 44 derivation path of the vault.
      * @type {string}
      * @memberof VaultDerivationInfo
      */
     derivationPath: string;
     /**
-     * 
+     * The public key of the vault.
      * @type {MasterPublicKey}
      * @memberof VaultDerivationInfo
      */
@@ -49,4 +49,3 @@ function VaultDerivationInfoFromJSONTyped(json: any, _ignoreDiscriminator: boole
         'masterPublicKey': MasterPublicKeyFromJSON(json['master_public_key']),
     };
 }
-

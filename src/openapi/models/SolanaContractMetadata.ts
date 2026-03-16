@@ -26,25 +26,25 @@ import {
  */
 export interface SolanaContractMetadata {
     /**
-     * 
+     * The name of the contract.
      * @type {string}
      * @memberof SolanaContractMetadata
      */
     name?: string;
     /**
-     * 
+     * The DApp details of the contract.
      * @type {Dapp}
      * @memberof SolanaContractMetadata
      */
     dapp?: Dapp;
     /**
-     * 
+     * `True` if the contract is verified, `False` otherwise.
      * @type {boolean}
      * @memberof SolanaContractMetadata
      */
     isVerified: boolean;
     /**
-     * 
+     * The token details of the contract.
      * @type {SplToken}
      * @memberof SolanaContractMetadata
      */
@@ -67,4 +67,3 @@ function SolanaContractMetadataFromJSONTyped(json: any, _ignoreDiscriminator: bo
         'token': json['token'] == null ? undefined : SplTokenFromJSON(json['token']),
     };
 }
-

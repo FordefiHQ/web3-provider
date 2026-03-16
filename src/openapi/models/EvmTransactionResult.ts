@@ -30,19 +30,19 @@ import {
  */
 export interface EvmTransactionResult {
     /**
-     * 
+     * Details whether the transaction was reverted or not.
      * @type {EvmReversion}
      * @memberof EvmTransactionResult
      */
     reversion: EvmReversion;
     /**
-     * 
+     * The gas debit of the transaction.
      * @type {GasDebit}
      * @memberof EvmTransactionResult
      */
     gasDebit: GasDebit;
     /**
-     * 
+     * The effects (outcomes) of the transaction. A single transaction can have multiple effects, for example, a transferral of native funds: moving X ETH from Y to Z (here the effect will have a sender, receiver and amount). A more complex example is a transfer of a token, moving X USDC from X to Z (here, the effects are sender, receiver, amount, and token). 
      * @type {EvmEffects}
      * @memberof EvmTransactionResult
      */
@@ -64,4 +64,3 @@ function EvmTransactionResultFromJSONTyped(json: any, _ignoreDiscriminator: bool
         'effects': EvmEffectsFromJSON(json['effects']),
     };
 }
-

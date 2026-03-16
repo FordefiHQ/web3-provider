@@ -26,25 +26,25 @@ import {
  */
 export interface TronTransferEffect {
     /**
-     * 
+     * The asset information.
      * @type {PricedAsset}
      * @memberof TronTransferEffect
      */
     pricedAsset: PricedAsset;
     /**
-     * 
+     * The amount of the transfer.
      * @type {string}
      * @memberof TronTransferEffect
      */
     amount: string;
     /**
-     * 
+     * The sender of the transfer.
      * @type {EnrichedTronAddress}
      * @memberof TronTransferEffect
      */
     from: EnrichedTronAddress;
     /**
-     * 
+     * The receiver of the transfer.
      * @type {EnrichedTronAddress}
      * @memberof TronTransferEffect
      */
@@ -67,4 +67,3 @@ function TronTransferEffectFromJSONTyped(json: any, _ignoreDiscriminator: boolea
         'to': EnrichedTronAddressFromJSON(json['to']),
     };
 }
-

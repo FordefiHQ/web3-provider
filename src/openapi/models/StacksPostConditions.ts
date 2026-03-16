@@ -26,13 +26,13 @@ import {
  */
 export interface StacksPostConditions {
     /**
-     * 
+     * The post condition mode of the transaction.
      * @type {StacksPostConditionMode}
      * @memberof StacksPostConditions
      */
     postConditionMode: StacksPostConditionMode;
     /**
-     * 
+     * The post conditions of the transaction.
      * @type {Array<StacksPostCondition>}
      * @memberof StacksPostConditions
      */
@@ -53,4 +53,3 @@ function StacksPostConditionsFromJSONTyped(json: any, _ignoreDiscriminator: bool
         'postConditions': ((json['post_conditions'] as Array<any>).map(StacksPostConditionFromJSON)),
     };
 }
-

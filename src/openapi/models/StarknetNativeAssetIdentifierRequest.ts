@@ -23,13 +23,13 @@ import {
  */
 export interface StarknetNativeAssetIdentifierRequest {
     /**
-     * 
-     * @type {string}
+     * Starknet asset identifier type.
+     * @type {StarknetNativeAssetIdentifierRequestTypeEnum}
      * @memberof StarknetNativeAssetIdentifierRequest
      */
     type: StarknetNativeAssetIdentifierRequestTypeEnum;
     /**
-     * 
+     * The details of the chain of the native asset.
      * @type {StarknetChainUniqueId}
      * @memberof StarknetNativeAssetIdentifierRequest
      */
@@ -38,7 +38,7 @@ export interface StarknetNativeAssetIdentifierRequest {
 
 
 /**
- * 
+ * @export
  */
 const StarknetNativeAssetIdentifierRequestTypeEnum = {
     native: 'native'

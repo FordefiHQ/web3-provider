@@ -17,13 +17,13 @@
  */
 export interface SuiPureByteArrayInput {
     /**
-     * 
-     * @type {string}
+     * The type of the pure input.
+     * @type {SuiPureByteArrayInputTypeEnum}
      * @memberof SuiPureByteArrayInput
      */
     type: SuiPureByteArrayInputTypeEnum;
     /**
-     * 
+     * The byte array value of the pure input argument, represented as a base64 string.
      * @type {string}
      * @memberof SuiPureByteArrayInput
      */
@@ -32,7 +32,7 @@ export interface SuiPureByteArrayInput {
 
 
 /**
- * 
+ * @export
  */
 const SuiPureByteArrayInputTypeEnum = {
     byteArrayPureInput: 'byte_array_pure_input'

@@ -22,25 +22,25 @@ import {
  */
 export interface EnrichedEvmHyperLiquidAssetIdentifier {
     /**
-     * 
+     * The details of the chain of the native asset.
      * @type {EnrichedEvmChain}
      * @memberof EnrichedEvmHyperLiquidAssetIdentifier
      */
     chain: EnrichedEvmChain;
     /**
-     * 
-     * @type {string}
+     * EVM asset identifier type.
+     * @type {EnrichedEvmHyperLiquidAssetIdentifierTypeEnum}
      * @memberof EnrichedEvmHyperLiquidAssetIdentifier
      */
     type: EnrichedEvmHyperLiquidAssetIdentifierTypeEnum;
     /**
-     * 
+     * The token id of the asset on Hyperliquid.
      * @type {string}
      * @memberof EnrichedEvmHyperLiquidAssetIdentifier
      */
     tokenId: string;
     /**
-     * 
+     * The index of the asset on Hyperliquid.
      * @type {number}
      * @memberof EnrichedEvmHyperLiquidAssetIdentifier
      */
@@ -49,7 +49,7 @@ export interface EnrichedEvmHyperLiquidAssetIdentifier {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedEvmHyperLiquidAssetIdentifierTypeEnum = {
     hyperliquid: 'hyperliquid'

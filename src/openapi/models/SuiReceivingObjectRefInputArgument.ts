@@ -17,26 +17,26 @@
  */
 export interface SuiReceivingObjectRefInputArgument {
     /**
-     * 
+     * The digest of the object.
      * @type {string}
      * @memberof SuiReceivingObjectRefInputArgument
      */
     digest: string;
     /**
-     * 
+     * The id of the object.
      * @type {string}
      * @memberof SuiReceivingObjectRefInputArgument
      */
     objectId: string;
     /**
-     * 
+     * The version of the object.
      * @type {string}
      * @memberof SuiReceivingObjectRefInputArgument
      */
     version: string;
     /**
-     * 
-     * @type {string}
+     * The type of the object.
+     * @type {SuiReceivingObjectRefInputArgumentTypeEnum}
      * @memberof SuiReceivingObjectRefInputArgument
      */
     type: SuiReceivingObjectRefInputArgumentTypeEnum;
@@ -44,7 +44,7 @@ export interface SuiReceivingObjectRefInputArgument {
 
 
 /**
- * 
+ * @export
  */
 const SuiReceivingObjectRefInputArgumentTypeEnum = {
     receiving: 'receiving'

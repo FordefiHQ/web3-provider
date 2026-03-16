@@ -17,13 +17,13 @@
  */
 export interface SuiPureBoolInput {
     /**
-     * 
-     * @type {string}
+     * The type of the pure input.
+     * @type {SuiPureBoolInputTypeEnum}
      * @memberof SuiPureBoolInput
      */
     type: SuiPureBoolInputTypeEnum;
     /**
-     * 
+     * The boolean value of the pure input argument.
      * @type {boolean}
      * @memberof SuiPureBoolInput
      */
@@ -32,7 +32,7 @@ export interface SuiPureBoolInput {
 
 
 /**
- * 
+ * @export
  */
 const SuiPureBoolInputTypeEnum = {
     boolPureInput: 'bool_pure_input'

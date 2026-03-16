@@ -22,13 +22,13 @@ import {
  */
 export interface StacksRawTransactionDetails {
     /**
-     * 
-     * @type {string}
+     * A transaction with contract call.
+     * @type {StacksRawTransactionDetailsTypeEnum}
      * @memberof StacksRawTransactionDetails
      */
     type: StacksRawTransactionDetailsTypeEnum;
     /**
-     * 
+     * The contract call payload.
      * @type {StacksContractCallPayload}
      * @memberof StacksRawTransactionDetails
      */
@@ -37,7 +37,7 @@ export interface StacksRawTransactionDetails {
 
 
 /**
- * 
+ * @export
  */
 const StacksRawTransactionDetailsTypeEnum = {
     rawTransaction: 'raw_transaction'

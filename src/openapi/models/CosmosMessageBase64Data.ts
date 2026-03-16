@@ -17,13 +17,13 @@
  */
 export interface CosmosMessageBase64Data {
     /**
-     * 
-     * @type {string}
+     * The type of the Cosmos message data.
+     * @type {CosmosMessageBase64DataTypeEnum}
      * @memberof CosmosMessageBase64Data
      */
     type: CosmosMessageBase64DataTypeEnum;
     /**
-     * 
+     * The data encoded in base64.
      * @type {string}
      * @memberof CosmosMessageBase64Data
      */
@@ -32,7 +32,7 @@ export interface CosmosMessageBase64Data {
 
 
 /**
- * 
+ * @export
  */
 const CosmosMessageBase64DataTypeEnum = {
     base64: 'base64'

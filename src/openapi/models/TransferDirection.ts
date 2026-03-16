@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const TransferDirection = {
@@ -28,4 +29,3 @@ export function TransferDirectionFromJSON(json: any): TransferDirection {
 function TransferDirectionFromJSONTyped(json: any, _ignoreDiscriminator: boolean): TransferDirection {
     return json as TransferDirection;
 }
-

@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const TransactionRiskSeverity = {
@@ -28,4 +29,3 @@ export function TransactionRiskSeverityFromJSON(json: any): TransactionRiskSever
 function TransactionRiskSeverityFromJSONTyped(json: any, _ignoreDiscriminator: boolean): TransactionRiskSeverity {
     return json as TransactionRiskSeverity;
 }
-

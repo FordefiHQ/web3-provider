@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const StacksPostConditionMode = {
@@ -27,4 +28,3 @@ export function StacksPostConditionModeFromJSON(json: any): StacksPostConditionM
 function StacksPostConditionModeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): StacksPostConditionMode {
     return json as StacksPostConditionMode;
 }
-

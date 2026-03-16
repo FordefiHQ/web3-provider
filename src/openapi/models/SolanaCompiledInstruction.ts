@@ -22,31 +22,31 @@ import {
  */
 export interface SolanaCompiledInstruction {
     /**
-     * 
+     * The program index.
      * @type {number}
      * @memberof SolanaCompiledInstruction
      */
     programIndex: number;
     /**
-     * 
+     * The instruction data in Base64 format.
      * @type {string}
      * @memberof SolanaCompiledInstruction
      */
     data: string;
     /**
-     * 
+     * The indexes of the instruction accounts in the transaction accounts list.
      * @type {Array<number>}
      * @memberof SolanaCompiledInstruction
      */
     accountIndexes: Array<number>;
     /**
-     * 
+     * The address of the program account.
      * @type {EnrichedSolanaAddress}
      * @memberof SolanaCompiledInstruction
      */
     program: EnrichedSolanaAddress;
     /**
-     * 
+     * The instruction data encoded in Base58 format.
      * @type {string}
      * @memberof SolanaCompiledInstruction
      */
@@ -70,4 +70,3 @@ function SolanaCompiledInstructionFromJSONTyped(json: any, _ignoreDiscriminator:
         'base58Data': json['base58_data'] == null ? undefined : json['base58_data'],
     };
 }
-

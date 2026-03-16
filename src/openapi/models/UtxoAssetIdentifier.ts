@@ -26,8 +26,8 @@ import {
  */
 export interface UtxoAssetIdentifier {
     /**
-     * 
-     * @type {string}
+     * Utxo asset identifier type.
+     * @type {UtxoAssetIdentifierTypeEnum}
      * @memberof UtxoAssetIdentifier
      */
     type: UtxoAssetIdentifierTypeEnum;
@@ -47,7 +47,7 @@ export interface UtxoAssetIdentifier {
 
 
 /**
- * 
+ * @export
  */
 const UtxoAssetIdentifierTypeEnum = {
     utxo: 'utxo'

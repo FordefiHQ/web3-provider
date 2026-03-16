@@ -26,31 +26,32 @@ import {
  */
 export interface SolanaTokenTransferDetails {
     /**
-     * 
-     * @type {string}
+     * A transaction involving the transfer of native currency from one address to another. 
+     * @type {SolanaTokenTransferDetailsTypeEnum}
      * @memberof SolanaTokenTransferDetails
      */
     type: SolanaTokenTransferDetailsTypeEnum;
     /**
-     * 
+     * The direction of the movement of funds, in case of a transfer.
      * @type {TransferDirection}
      * @memberof SolanaTokenTransferDetails
+     * @deprecated
      */
     direction: TransferDirection;
     /**
-     * 
+     * The sender of the tokens.
      * @type {EnrichedSolanaAddress}
      * @memberof SolanaTokenTransferDetails
      */
     sender: EnrichedSolanaAddress;
     /**
-     * 
+     * The recipient of the tokens.
      * @type {EnrichedSolanaAddress}
      * @memberof SolanaTokenTransferDetails
      */
     recipient: EnrichedSolanaAddress;
     /**
-     * 
+     * Is this transfer an internal transfer between two vaults. None if the transaction is incoming.
      * @type {boolean}
      * @memberof SolanaTokenTransferDetails
      */
@@ -59,7 +60,7 @@ export interface SolanaTokenTransferDetails {
 
 
 /**
- * 
+ * @export
  */
 const SolanaTokenTransferDetailsTypeEnum = {
     tokenTransfer: 'token_transfer'

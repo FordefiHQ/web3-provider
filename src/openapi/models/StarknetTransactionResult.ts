@@ -30,19 +30,19 @@ import {
  */
 export interface StarknetTransactionResult {
     /**
-     * 
+     * Details whether the transaction was reverted or not.
      * @type {StarknetReversion}
      * @memberof StarknetTransactionResult
      */
     reversion: StarknetReversion;
     /**
-     * 
+     * The total fee of the first transaction on the trace.
      * @type {StarknetFees}
      * @memberof StarknetTransactionResult
      */
     fees: StarknetFees;
     /**
-     * 
+     * The effects of the transaction.
      * @type {StarknetEffects}
      * @memberof StarknetTransactionResult
      */
@@ -64,4 +64,3 @@ function StarknetTransactionResultFromJSONTyped(json: any, _ignoreDiscriminator:
         'effects': StarknetEffectsFromJSON(json['effects']),
     };
 }
-

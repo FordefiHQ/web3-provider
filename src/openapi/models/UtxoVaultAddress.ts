@@ -30,68 +30,69 @@ import {
  */
 export interface UtxoVaultAddress {
     /**
-     * 
+     * The unique identifier of the object in the Fordefi platform.
      * @type {string}
      * @memberof UtxoVaultAddress
      */
     id: string;
     /**
-     * 
+     * The date and time when the object was created.
      * @type {Date}
      * @memberof UtxoVaultAddress
      */
     createdAt: Date;
     /**
-     * 
+     * The date and time when the object was last modified. Any change to any field of the resource is considered a modification.
      * @type {Date}
      * @memberof UtxoVaultAddress
      */
     modifiedAt: Date;
     /**
-     * 
+     * The vault this address belongs to.
      * @type {VaultRef}
      * @memberof UtxoVaultAddress
      */
     vault: VaultRef;
     /**
-     * 
+     * The name of the address.
      * @type {string}
      * @memberof UtxoVaultAddress
      */
     name: string;
     /**
-     * 
+     * The balance of the address.
      * @type {string}
      * @memberof UtxoVaultAddress
      * @deprecated
      */
     balance?: string;
     /**
-     * 
+     * The balances of the address.
      * @type {Balances}
      * @memberof UtxoVaultAddress
+     * @deprecated
      */
     balances?: Balances;
     /**
-     * 
+     * The compressed public key of the address. As defined in the SEC1 standard: https://www.secg.org/SEC1-Ver-1.0.pdf.
      * @type {string}
      * @memberof UtxoVaultAddress
      */
     publicKeyCompressed: string;
     /**
-     * 
+     * The BIP-32 derivation path of the address.
      * @type {string}
      * @memberof UtxoVaultAddress
      */
     derivationPath: string;
     /**
-     * 
-     * @type {string}
+     * The type of the vault address.
+     * @type {UtxoVaultAddressTypeEnum}
      * @memberof UtxoVaultAddress
      */
     type: UtxoVaultAddressTypeEnum;
     /**
-     * 
+     * The address on the chain.
      * @type {UtxoAddress}
      * @memberof UtxoVaultAddress
      */
@@ -100,7 +101,7 @@ export interface UtxoVaultAddress {
 
 
 /**
- * 
+ * @export
  */
 const UtxoVaultAddressTypeEnum = {
     utxo: 'utxo'

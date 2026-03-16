@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const SuiMessageVersion = {
@@ -26,4 +27,3 @@ export function SuiMessageVersionFromJSON(json: any): SuiMessageVersion {
 function SuiMessageVersionFromJSONTyped(json: any, _ignoreDiscriminator: boolean): SuiMessageVersion {
     return json as SuiMessageVersion;
 }
-

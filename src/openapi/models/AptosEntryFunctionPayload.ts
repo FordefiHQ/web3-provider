@@ -22,43 +22,43 @@ import {
  */
 export interface AptosEntryFunctionPayload {
     /**
-     * 
+     * The typed arguments of the transaction.
      * @type {Array<string>}
      * @memberof AptosEntryFunctionPayload
      */
     typedArguments: Array<string>;
     /**
-     * 
+     * The arguments of the transaction.
      * @type {Array<string>}
      * @memberof AptosEntryFunctionPayload
      */
     arguments: Array<string>;
     /**
      * 
-     * @type {string}
+     * @type {AptosEntryFunctionPayloadTypeEnum}
      * @memberof AptosEntryFunctionPayload
      */
     type: AptosEntryFunctionPayloadTypeEnum;
     /**
-     * 
+     * The entry function of the transaction.
      * @type {string}
      * @memberof AptosEntryFunctionPayload
      */
     functionId: string;
     /**
-     * 
+     * The address of the entry function.
      * @type {EnrichedAptosAddress}
      * @memberof AptosEntryFunctionPayload
      */
     address: EnrichedAptosAddress;
     /**
-     * 
+     * The module of the entry function.
      * @type {string}
      * @memberof AptosEntryFunctionPayload
      */
     module: string;
     /**
-     * 
+     * The name of the entry function.
      * @type {string}
      * @memberof AptosEntryFunctionPayload
      */
@@ -67,7 +67,7 @@ export interface AptosEntryFunctionPayload {
 
 
 /**
- * 
+ * @export
  */
 const AptosEntryFunctionPayloadTypeEnum = {
     entryPoint: 'entry_point'

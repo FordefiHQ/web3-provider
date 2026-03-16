@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const SolanaFeeType = {
@@ -27,4 +28,3 @@ export function SolanaFeeTypeFromJSON(json: any): SolanaFeeType {
 function SolanaFeeTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): SolanaFeeType {
     return json as SolanaFeeType;
 }
-

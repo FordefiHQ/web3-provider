@@ -23,19 +23,19 @@ import {
  */
 export interface CosmosTokenAssetIdentifierRequest {
     /**
-     * 
-     * @type {string}
+     * Token asset identifier type.
+     * @type {CosmosTokenAssetIdentifierRequestTypeEnum}
      * @memberof CosmosTokenAssetIdentifierRequest
      */
     type: CosmosTokenAssetIdentifierRequestTypeEnum;
     /**
-     * 
+     * The unique id of the chain of the asset.
      * @type {CosmosChainUniqueId}
      * @memberof CosmosTokenAssetIdentifierRequest
      */
     chain: CosmosChainUniqueId;
     /**
-     * 
+     * The denom of the asset.
      * @type {string}
      * @memberof CosmosTokenAssetIdentifierRequest
      */
@@ -44,7 +44,7 @@ export interface CosmosTokenAssetIdentifierRequest {
 
 
 /**
- * 
+ * @export
  */
 const CosmosTokenAssetIdentifierRequestTypeEnum = {
     token: 'token'

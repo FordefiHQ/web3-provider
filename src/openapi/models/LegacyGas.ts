@@ -22,26 +22,26 @@ import {
  */
 export interface LegacyGas {
     /**
-     * 
+     * The price of a gas unit.
      * @type {string}
      * @memberof LegacyGas
      */
     price: string;
     /**
-     * 
+     * The gas priority.
      * @type {GasPriorityLevel}
      * @memberof LegacyGas
      */
     priority: GasPriorityLevel;
     /**
-     * 
+     * The gas limit.
      * @type {string}
      * @memberof LegacyGas
      */
     limit: string;
     /**
-     * 
-     * @type {string}
+     * The type of gas data.
+     * @type {LegacyGasTypeEnum}
      * @memberof LegacyGas
      */
     type: LegacyGasTypeEnum;
@@ -68,4 +68,3 @@ export function LegacyGasFromJSONTyped(json: any, _ignoreDiscriminator: boolean)
         'type': json['type'],
     };
 }
-

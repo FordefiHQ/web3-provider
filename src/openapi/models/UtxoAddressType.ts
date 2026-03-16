@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const UtxoAddressType = {
@@ -33,4 +34,3 @@ function UtxoAddressTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean):
 export function UtxoAddressTypeToJSON(value?: UtxoAddressType | null): any {
     return value as any;
 }
-

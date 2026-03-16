@@ -23,13 +23,13 @@ import {
  */
 export interface EvmErc20AssetIdentifierRequest {
     /**
-     * 
-     * @type {string}
+     * EVM asset identifier type.
+     * @type {EvmErc20AssetIdentifierRequestTypeEnum}
      * @memberof EvmErc20AssetIdentifierRequest
      */
     type: EvmErc20AssetIdentifierRequestTypeEnum;
     /**
-     * 
+     * The ERC-20 token contract.
      * @type {EvmAddressRequest}
      * @memberof EvmErc20AssetIdentifierRequest
      */
@@ -38,7 +38,7 @@ export interface EvmErc20AssetIdentifierRequest {
 
 
 /**
- * 
+ * @export
  */
 const EvmErc20AssetIdentifierRequestTypeEnum = {
     erc20: 'erc20'

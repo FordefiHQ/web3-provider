@@ -22,13 +22,13 @@ import {
  */
 export interface AptosReversion {
     /**
-     * 
+     * The state of the reversion. Is one of the following:<ul><li>`not_reverted`: No reversion, meaning, completed successfully.<li>`unknown_revert`: Fordefi does not know the reason for the reversion.<li>`contract_asserted`: The smart contract originally made an assertion that was later rejected and the transaction was halted. <li>`insufficient_funds_gas_and_value`: A transaction was sent for which there were insufficient funds.</ul>
      * @type {AptosReversionState}
      * @memberof AptosReversion
      */
     state: AptosReversionState;
     /**
-     * 
+     * The reason for the reversion (additional information).
      * @type {string}
      * @memberof AptosReversion
      */
@@ -49,4 +49,3 @@ function AptosReversionFromJSONTyped(json: any, _ignoreDiscriminator: boolean): 
         'reason': json['reason'] == null ? undefined : json['reason'],
     };
 }
-

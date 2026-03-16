@@ -26,8 +26,8 @@ import {
  */
 export interface SuiAssetIdentifier {
     /**
-     * 
-     * @type {string}
+     * Sui asset identifier type.
+     * @type {SuiAssetIdentifierTypeEnum}
      * @memberof SuiAssetIdentifier
      */
     type: SuiAssetIdentifierTypeEnum;
@@ -47,7 +47,7 @@ export interface SuiAssetIdentifier {
 
 
 /**
- * 
+ * @export
  */
 const SuiAssetIdentifierTypeEnum = {
     sui: 'sui'

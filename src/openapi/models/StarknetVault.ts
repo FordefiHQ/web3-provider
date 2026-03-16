@@ -11,26 +11,26 @@
  */
 
 import { mapValues } from '../runtime';
-import type { AptosVaultPendingVaultGroupAction } from './AptosVaultPendingVaultGroupAction';
-import {
-    AptosVaultPendingVaultGroupActionFromJSON,
-} from './AptosVaultPendingVaultGroupAction';
 import type { EndUserRef } from './EndUserRef';
 import {
     EndUserRefFromJSON,
 } from './EndUserRef';
-import type { VaultState } from './VaultState';
+import type { MetadataValue } from './MetadataValue';
 import {
-    VaultStateFromJSON,
-} from './VaultState';
-import type { AptosVaultMetadataValue } from './AptosVaultMetadataValue';
+    MetadataValueFromJSON,
+} from './MetadataValue';
+import type { OwnedAsset } from './OwnedAsset';
 import {
-    AptosVaultMetadataValueFromJSON,
-} from './AptosVaultMetadataValue';
+    OwnedAssetFromJSON,
+} from './OwnedAsset';
 import type { VaultOriginType } from './VaultOriginType';
 import {
     VaultOriginTypeFromJSON,
 } from './VaultOriginType';
+import type { SkipIndexingReason } from './SkipIndexingReason';
+import {
+    SkipIndexingReasonFromJSON,
+} from './SkipIndexingReason';
 import type { StarknetVaultState } from './StarknetVaultState';
 import {
     StarknetVaultStateFromJSON,
@@ -39,10 +39,6 @@ import type { VaultGroupRef } from './VaultGroupRef';
 import {
     VaultGroupRefFromJSON,
 } from './VaultGroupRef';
-import type { KeysetRef } from './KeysetRef';
-import {
-    KeysetRefFromJSON,
-} from './KeysetRef';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
@@ -51,130 +47,141 @@ import type { VaultDerivationInfo } from './VaultDerivationInfo';
 import {
     VaultDerivationInfoFromJSON,
 } from './VaultDerivationInfo';
+import type { MpcVaultState } from './MpcVaultState';
+import {
+    MpcVaultStateFromJSON,
+} from './MpcVaultState';
 
 /**
- * 
+ * Represents a Starknet vault in the Fordefi platform
  * @export
  * @interface StarknetVault
  */
 export interface StarknetVault {
     /**
-     * 
+     * The unique identifier of the object in the Fordefi platform.
      * @type {string}
      * @memberof StarknetVault
      */
     id: string;
     /**
-     * 
+     * The date and time when the object was created.
      * @type {Date}
      * @memberof StarknetVault
      */
     createdAt: Date;
     /**
-     * 
+     * The date and time when the object was last modified. Any change to any field of the resource is considered a modification.
      * @type {Date}
      * @memberof StarknetVault
      */
     modifiedAt: Date;
     /**
-     * 
-     * @type {{ [key: string]: AptosVaultMetadataValue | undefined; }}
+     * Metadata in a form: <str, bool | str | int | array[str]>.
+     * @type {{ [key: string]: MetadataValue | undefined; }}
      * @memberof StarknetVault
      */
-    metadata?: { [key: string]: AptosVaultMetadataValue | undefined; };
+    metadata?: { [key: string]: MetadataValue | undefined; };
     /**
-     * 
+     * The name of the vault.
      * @type {string}
      * @memberof StarknetVault
      */
     name: string;
     /**
-     * 
+     * Details of the vault creator.
      * @type {UserRef}
      * @memberof StarknetVault
      */
     createdBy: UserRef;
     /**
-     * 
+     * The vault group this vault belongs to.
      * @type {VaultGroupRef}
      * @memberof StarknetVault
+     * @deprecated
      */
-    vaultGroup: VaultGroupRef;
+    vaultGroup?: VaultGroupRef;
     /**
-     * 
-     * @type {AptosVaultPendingVaultGroupAction}
+     * The vault groups this vault belongs to.
+     * @type {Array<VaultGroupRef>}
      * @memberof StarknetVault
      */
-    pendingVaultGroupAction?: AptosVaultPendingVaultGroupAction;
+    vaultGroups: Array<VaultGroupRef>;
     /**
-     * 
-     * @type {VaultState}
+     * Reason why the vault is not being indexed.
+     * @type {SkipIndexingReason}
      * @memberof StarknetVault
      */
-    state: VaultState;
+    skipIndexingReason?: SkipIndexingReason;
     /**
-     * 
+     * Whether the vault uses an externally imported key (external signer).
      * @type {boolean}
      * @memberof StarknetVault
      */
-    areAllChainsDisabled: boolean;
+    isExternalSigner?: boolean;
     /**
-     * 
+     * List of native asset information for requested chains. Chain info is in asset_identifier.
+     * @type {Array<OwnedAsset>}
+     * @memberof StarknetVault
+     */
+    nativeAssets?: Array<OwnedAsset>;
+    /**
+     * The BIP 44 derivation path of the vault.
      * @type {string}
      * @memberof StarknetVault
      * @deprecated
      */
     derivationPath: string;
     /**
-     * 
+     * The public key of the vault in its compressed form: <ul> <li>For ECDSA and Schnorr keys, the public key is represented as 33 bytes (0x02 or 0x03 followed by the x-coordinate) according to the [SEC1 standard](https://www.secg.org/SEC1-Ver-1.0.pdf). <li>For EdDSA, the public key is represented as a 32-byte value, as defined by [RFC 8032](https://datatracker.ietf.org/doc/html/rfc8032). </ul>
      * @type {string}
      * @memberof StarknetVault
      */
     publicKeyCompressed: string;
     /**
-     * 
+     * The derivation info of the vault.
      * @type {VaultDerivationInfo}
      * @memberof StarknetVault
      */
     derivationInfo: VaultDerivationInfo;
     /**
-     * 
-     * @type {KeysetRef}
-     * @memberof StarknetVault
-     */
-    keyset: KeysetRef;
-    /**
-     * 
+     * The user who owns the keyset of the vault. If not provided, the vault is owned by the organization.
      * @type {EndUserRef}
      * @memberof StarknetVault
      */
     keyHolder?: EndUserRef;
     /**
-     * 
+     * The origin type of the vault.
      * @type {VaultOriginType}
      * @memberof StarknetVault
      */
     originType: VaultOriginType;
     /**
-     * 
-     * @type {string}
+     * New state of the vault.
+     * @type {MpcVaultState}
+     * @memberof StarknetVault
+     */
+    state: MpcVaultState;
+    /**
+     * Starknet vault type.
+     * @type {StarknetVaultTypeEnum}
      * @memberof StarknetVault
      */
     type: StarknetVaultTypeEnum;
     /**
-     * 
+     * The address of the vault on Starknet chain types.
      * @type {string}
      * @memberof StarknetVault
      */
     address: string;
     /**
-     * 
+     * State of the vault on the Starknet chain.
      * @type {StarknetVaultState}
      * @memberof StarknetVault
      */
     activationState: StarknetVaultState;
     /**
-     * 
+     * The transaction id of the activating transaction.
      * @type {string}
      * @memberof StarknetVault
      */
@@ -183,7 +190,7 @@ export interface StarknetVault {
 
 
 /**
- * 
+ * @export
  */
 const StarknetVaultTypeEnum = {
     starknet: 'starknet'
@@ -199,19 +206,20 @@ export function StarknetVaultFromJSONTyped(json: any, _ignoreDiscriminator: bool
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
-        'metadata': json['metadata'] == null ? undefined : (mapValues(json['metadata'], AptosVaultMetadataValueFromJSON)),
+        'metadata': json['metadata'] == null ? undefined : (mapValues(json['metadata'], MetadataValueFromJSON)),
         'name': json['name'],
         'createdBy': UserRefFromJSON(json['created_by']),
-        'vaultGroup': VaultGroupRefFromJSON(json['vault_group']),
-        'pendingVaultGroupAction': json['pending_vault_group_action'] == null ? undefined : AptosVaultPendingVaultGroupActionFromJSON(json['pending_vault_group_action']),
-        'state': VaultStateFromJSON(json['state']),
-        'areAllChainsDisabled': json['are_all_chains_disabled'],
+        'vaultGroup': json['vault_group'] == null ? undefined : VaultGroupRefFromJSON(json['vault_group']),
+        'vaultGroups': ((json['vault_groups'] as Array<any>).map(VaultGroupRefFromJSON)),
+        'skipIndexingReason': json['skip_indexing_reason'] == null ? undefined : SkipIndexingReasonFromJSON(json['skip_indexing_reason']),
+        'isExternalSigner': json['is_external_signer'] == null ? undefined : json['is_external_signer'],
+        'nativeAssets': json['native_assets'] == null ? undefined : ((json['native_assets'] as Array<any>).map(OwnedAssetFromJSON)),
         'derivationPath': json['derivation_path'],
         'publicKeyCompressed': json['public_key_compressed'],
         'derivationInfo': VaultDerivationInfoFromJSON(json['derivation_info']),
-        'keyset': KeysetRefFromJSON(json['keyset']),
         'keyHolder': json['key_holder'] == null ? undefined : EndUserRefFromJSON(json['key_holder']),
         'originType': VaultOriginTypeFromJSON(json['origin_type']),
+        'state': MpcVaultStateFromJSON(json['state']),
         'type': json['type'],
         'address': json['address'],
         'activationState': StarknetVaultStateFromJSON(json['activation_state']),

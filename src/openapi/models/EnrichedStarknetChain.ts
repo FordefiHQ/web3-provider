@@ -26,31 +26,31 @@ import {
  */
 export interface EnrichedStarknetChain {
     /**
-     * 
-     * @type {string}
+     * The type of the chain.
+     * @type {EnrichedStarknetChainChainTypeEnum}
      * @memberof EnrichedStarknetChain
      */
     chainType: EnrichedStarknetChainChainTypeEnum;
     /**
-     * 
+     * The type of the Starknet-based chain.
      * @type {StarknetChainUniqueId}
      * @memberof EnrichedStarknetChain
      */
     uniqueId: StarknetChainUniqueId;
     /**
-     * 
+     * The full blockchain name.
      * @type {string}
      * @memberof EnrichedStarknetChain
      */
     name: string;
     /**
-     * 
+     * The native currency symbol.
      * @type {string}
      * @memberof EnrichedStarknetChain
      */
     nativeCurrencySymbol: string;
     /**
-     * 
+     * The native currency name.
      * @type {string}
      * @memberof EnrichedStarknetChain
      */
@@ -62,19 +62,19 @@ export interface EnrichedStarknetChain {
      */
     blockchainExplorer?: BlockchainExplorer;
     /**
-     * 
+     * The logo URL of the chain.
      * @type {string}
      * @memberof EnrichedStarknetChain
      */
     logoUrl: string;
     /**
-     * 
+     * Whether the chain is on a testnet.
      * @type {boolean}
      * @memberof EnrichedStarknetChain
      */
     isTestnet: boolean;
     /**
-     * 
+     * Whether the chain is enabled.
      * @type {boolean}
      * @memberof EnrichedStarknetChain
      */
@@ -83,7 +83,7 @@ export interface EnrichedStarknetChain {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedStarknetChainChainTypeEnum = {
     starknet: 'starknet'

@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const TransactionPolicyMatchActionType = {
@@ -28,4 +29,3 @@ export function TransactionPolicyMatchActionTypeFromJSON(json: any): Transaction
 function TransactionPolicyMatchActionTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): TransactionPolicyMatchActionType {
     return json as TransactionPolicyMatchActionType;
 }
-

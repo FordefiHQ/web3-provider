@@ -20,7 +20,7 @@ import {
 } from './RequestApproverUser';
 
 /**
- * 
+ * Represents a single approver in an approval request
  * @export
  * @interface RequestApprover
  */
@@ -32,20 +32,20 @@ export interface RequestApprover {
      */
     user: RequestApproverUser;
     /**
-     * 
+     * The date and time when this approval was modified.
      * @type {Date}
      * @memberof RequestApprover
      */
     modifiedAt: Date;
     /**
-     * 
+     * The decision of the approver.
      * @type {string}
      * @memberof RequestApprover
      * @deprecated
      */
     decision?: string;
     /**
-     * 
+     * The state of the approval request for this approver.
      * @type {ApprovalState}
      * @memberof RequestApprover
      */
@@ -68,4 +68,3 @@ function RequestApproverFromJSONTyped(json: any, _ignoreDiscriminator: boolean):
         'state': ApprovalStateFromJSON(json['state']),
     };
 }
-

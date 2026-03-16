@@ -22,13 +22,13 @@ import {
  */
 export interface TonRawTransactionDetails {
     /**
-     * 
-     * @type {string}
+     * A transaction with a contract call.
+     * @type {TonRawTransactionDetailsTypeEnum}
      * @memberof TonRawTransactionDetails
      */
     type: TonRawTransactionDetailsTypeEnum;
     /**
-     * 
+     * The called contract.
      * @type {Array<EnrichedTonAddress>}
      * @memberof TonRawTransactionDetails
      */
@@ -37,7 +37,7 @@ export interface TonRawTransactionDetails {
 
 
 /**
- * 
+ * @export
  */
 const TonRawTransactionDetailsTypeEnum = {
     rawTransaction: 'raw_transaction'

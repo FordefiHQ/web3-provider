@@ -26,31 +26,31 @@ import {
  */
 export interface EnrichedTronChain {
     /**
-     * 
-     * @type {string}
+     * The type of the chain.
+     * @type {EnrichedTronChainChainTypeEnum}
      * @memberof EnrichedTronChain
      */
     chainType: EnrichedTronChainChainTypeEnum;
     /**
-     * 
+     * The type of the Tron-based chain.
      * @type {TronChainUniqueId}
      * @memberof EnrichedTronChain
      */
     uniqueId: TronChainUniqueId;
     /**
-     * 
+     * The full blockchain name.
      * @type {string}
      * @memberof EnrichedTronChain
      */
     name: string;
     /**
-     * 
+     * The native currency symbol.
      * @type {string}
      * @memberof EnrichedTronChain
      */
     nativeCurrencySymbol: string;
     /**
-     * 
+     * The native currency name.
      * @type {string}
      * @memberof EnrichedTronChain
      */
@@ -62,19 +62,19 @@ export interface EnrichedTronChain {
      */
     blockchainExplorer?: BlockchainExplorer;
     /**
-     * 
+     * The logo URL of the chain.
      * @type {string}
      * @memberof EnrichedTronChain
      */
     logoUrl: string;
     /**
-     * 
+     * Whether the chain is on a testnet.
      * @type {boolean}
      * @memberof EnrichedTronChain
      */
     isTestnet: boolean;
     /**
-     * 
+     * Whether the chain is enabled.
      * @type {boolean}
      * @memberof EnrichedTronChain
      */
@@ -83,7 +83,7 @@ export interface EnrichedTronChain {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedTronChainChainTypeEnum = {
     tron: 'tron'

@@ -22,28 +22,34 @@ import {
  */
 export interface CosmosAddressBookContactAddressRef {
     /**
-     * 
-     * @type {string}
+     * The type of the chain.
+     * @type {CosmosAddressBookContactAddressRefChainTypeEnum}
      * @memberof CosmosAddressBookContactAddressRef
      */
     chainType: CosmosAddressBookContactAddressRefChainTypeEnum;
     /**
-     * 
+     * The address on the cosmos chain.
      * @type {string}
      * @memberof CosmosAddressBookContactAddressRef
      */
     address: string;
     /**
-     * 
+     * The chain the contact belongs to.
      * @type {CosmosChain}
      * @memberof CosmosAddressBookContactAddressRef
      */
     chain: CosmosChain;
+    /**
+     * Memo is an additional address feature used for identifying a recipient.
+     * @type {string}
+     * @memberof CosmosAddressBookContactAddressRef
+     */
+    memo?: string;
 }
 
 
 /**
- * 
+ * @export
  */
 const CosmosAddressBookContactAddressRefChainTypeEnum = {
     cosmos: 'cosmos'
@@ -59,5 +65,6 @@ export function CosmosAddressBookContactAddressRefFromJSONTyped(json: any, _igno
         'chainType': json['chain_type'],
         'address': json['address'],
         'chain': CosmosChainFromJSON(json['chain']),
+        'memo': json['memo'] == null ? undefined : json['memo'],
     };
 }

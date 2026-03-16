@@ -38,10 +38,14 @@ import type { TonTransactionResult } from './TonTransactionResult';
 import {
     TonTransactionResultFromJSON,
 } from './TonTransactionResult';
-import type { AmlPolicyMatchIncoming } from './AmlPolicyMatchIncoming';
+import type { MinedResultStatus } from './MinedResultStatus';
 import {
-    AmlPolicyMatchIncomingFromJSON,
-} from './AmlPolicyMatchIncoming';
+    MinedResultStatusFromJSON,
+} from './MinedResultStatus';
+import type { VaultRef } from './VaultRef';
+import {
+    VaultRefFromJSON,
+} from './VaultRef';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
@@ -50,22 +54,26 @@ import type { TransactionDirection } from './TransactionDirection';
 import {
     TransactionDirectionFromJSON,
 } from './TransactionDirection';
+import type { AmlCheck } from './AmlCheck';
+import {
+    AmlCheckFromJSON,
+} from './AmlCheck';
 import type { Signature } from './Signature';
 import {
     SignatureFromJSON,
 } from './Signature';
+import type { RelatedTransaction } from './RelatedTransaction';
+import {
+    RelatedTransactionFromJSON,
+} from './RelatedTransaction';
 import type { SimulationStatusResult } from './SimulationStatusResult';
 import {
     SimulationStatusResultFromJSON,
 } from './SimulationStatusResult';
-import type { TonBlock } from './TonBlock';
+import type { Block } from './Block';
 import {
-    TonBlockFromJSON,
-} from './TonBlock';
-import type { AmlResults } from './AmlResults';
-import {
-    AmlResultsFromJSON,
-} from './AmlResults';
+    BlockFromJSON,
+} from './Block';
 import type { TonTransactionPayload } from './TonTransactionPayload';
 import {
     TonTransactionPayloadFromJSON,
@@ -78,86 +86,116 @@ import {
  */
 export interface TonTransaction {
     /**
-     * 
+     * The unique identifier of the object in the Fordefi platform.
      * @type {string}
      * @memberof TonTransaction
      */
     id: string;
     /**
-     * 
+     * The date and time when the object was created.
      * @type {Date}
      * @memberof TonTransaction
      */
     createdAt: Date;
     /**
-     * 
+     * The date and time when the object was last modified. Any change to any field of the resource is considered a modification.
      * @type {Date}
      * @memberof TonTransaction
      */
     modifiedAt: Date;
     /**
-     * 
+     * Managed transaction data. Presented if the transaction was initiated from the Fordefi system itself, in contrast to unmanaged transactions (which are, for example, transfers of funds into a vault visible to Fordefi). 
      * @type {ManagedTransactionData}
      * @memberof TonTransaction
      */
     managedTransactionData?: ManagedTransactionData;
     /**
-     * 
+     * The transaction signatures.
      * @type {Array<Signature>}
      * @memberof TonTransaction
      */
     signatures: Array<Signature>;
     /**
-     * 
+     * An optional transaction note.
      * @type {string}
      * @memberof TonTransaction
      */
     note?: string;
     /**
-     * 
+     * `automatically_set` if the transaction was automatically set as spam by Fordefi, `manually_set` if the transaction was manually set as spam by a user, and `unset` if the transaction was not set as spam.
      * @type {TransactionSpamState}
      * @memberof TonTransaction
      */
     spamState?: TransactionSpamState;
     /**
-     * 
+     * The direction of the transaction.
      * @type {TransactionDirection}
      * @memberof TonTransaction
      */
     direction: TransactionDirection;
     /**
-     * 
+     * Whether the transaction was signed by an external user (for example in case of imported vault).
      * @type {boolean}
      * @memberof TonTransaction
      */
     signedExternally?: boolean;
     /**
-     * 
+     * The vaults that interacted with the transaction.
+     * @type {Array<VaultRef>}
+     * @memberof TonTransaction
+     */
+    interactedVaults: Array<VaultRef>;
+    /**
+     * The related transactions.
+     * @type {Array<RelatedTransaction>}
+     * @memberof TonTransaction
+     */
+    relatedTransactions?: Array<RelatedTransaction>;
+    /**
+     * The organization that the transaction belongs to.
+     * @type {string}
+     * @memberof TonTransaction
+     */
+    organizationId: string;
+    /**
+     * The block of the transaction.
+     * @type {Block}
+     * @memberof TonTransaction
+     */
+    block?: Block;
+    /**
+     * The state of the transaction.
      * @type {PushableTransactionState}
      * @memberof TonTransaction
      */
     state: PushableTransactionState;
     /**
-     * 
+     * The state changes of the transaction.
      * @type {Array<PushableTransactionStateChange>}
      * @memberof TonTransaction
      */
     stateChanges: Array<PushableTransactionStateChange>;
     /**
-     * 
-     * @type {AmlResults}
+     * The AML check.
+     * @type {AmlCheck}
      * @memberof TonTransaction
      */
-    amlResults?: AmlResults;
+    amlCheck?: AmlCheck;
     /**
-     * 
-     * @type {AmlPolicyMatchIncoming}
+     * The mined result status of the transaction.
+     * @type {MinedResultStatus}
      * @memberof TonTransaction
      */
-    incomingAmlPolicyMatch?: AmlPolicyMatchIncoming;
+    minedResultStatus?: MinedResultStatus;
     /**
-     * 
-     * @type {string}
+     * Whether simulation succeeded, reverted or failed.
+     * @type {SimulationStatusResult}
+     * @memberof TonTransaction
+     */
+    simulationStatusResult?: SimulationStatusResult;
+    /**
+     * TON transaction type.
+     * @type {TonTransactionTypeEnum}
      * @memberof TonTransaction
      */
     type: TonTransactionTypeEnum;
@@ -168,67 +206,55 @@ export interface TonTransaction {
      */
     tonTransactionTypeDetails: PredictedTonTransactionTonTransactionTypeDetails;
     /**
-     * 
+     * The details of the chain this transaction is on.
      * @type {EnrichedTonChain}
      * @memberof TonTransaction
      */
     chain: EnrichedTonChain;
     /**
-     * 
+     * The nonce of the transaction.
      * @type {number}
      * @memberof TonTransaction
      */
     nonce?: number;
     /**
-     * 
+     * The sender of the transaction.
      * @type {EnrichedTonAddress}
      * @memberof TonTransaction
      */
     sender: EnrichedTonAddress;
     /**
-     * 
+     * The payload of the transaction.
      * @type {TonTransactionPayload}
      * @memberof TonTransaction
      */
     payload: TonTransactionPayload;
     /**
-     * 
+     * The hash of the transaction.
      * @type {string}
      * @memberof TonTransaction
      */
     hash?: string;
     /**
-     * 
-     * @type {TonBlock}
-     * @memberof TonTransaction
-     */
-    block?: TonBlock;
-    /**
-     * 
+     * The serialized signed transaction.
      * @type {string}
      * @memberof TonTransaction
      */
     serializedSignedTransaction?: string;
     /**
-     * 
+     * The expected result of the transaction in case it is mined.
      * @type {TonTransactionResult}
      * @memberof TonTransaction
      */
     expectedResult?: TonTransactionResult;
     /**
-     * 
-     * @type {SimulationStatusResult}
-     * @memberof TonTransaction
-     */
-    simulationStatusResult?: SimulationStatusResult;
-    /**
-     * 
+     * The result of the transaction after it was mined.
      * @type {TonTransactionResult}
      * @memberof TonTransaction
      */
     minedResult?: TonTransactionResult;
     /**
-     * 
+     * The URL of this transaction in a blockchain explorer. For example, tonviewer.com
      * @type {string}
      * @memberof TonTransaction
      */
@@ -237,7 +263,7 @@ export interface TonTransaction {
 
 
 /**
- * 
+ * @export
  */
 const TonTransactionTypeEnum = {
     tonTransaction: 'ton_transaction'
@@ -259,10 +285,15 @@ export function TonTransactionFromJSONTyped(json: any, _ignoreDiscriminator: boo
         'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
         'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'interactedVaults': ((json['interacted_vaults'] as Array<any>).map(VaultRefFromJSON)),
+        'relatedTransactions': json['related_transactions'] == null ? undefined : ((json['related_transactions'] as Array<any>).map(RelatedTransactionFromJSON)),
+        'organizationId': json['organization_id'],
+        'block': json['block'] == null ? undefined : BlockFromJSON(json['block']),
         'state': PushableTransactionStateFromJSON(json['state']),
         'stateChanges': ((json['state_changes'] as Array<any>).map(PushableTransactionStateChangeFromJSON)),
-        'amlResults': json['aml_results'] == null ? undefined : AmlResultsFromJSON(json['aml_results']),
-        'incomingAmlPolicyMatch': json['incoming_aml_policy_match'] == null ? undefined : AmlPolicyMatchIncomingFromJSON(json['incoming_aml_policy_match']),
+        'amlCheck': json['aml_check'] == null ? undefined : AmlCheckFromJSON(json['aml_check']),
+        'minedResultStatus': json['mined_result_status'] == null ? undefined : MinedResultStatusFromJSON(json['mined_result_status']),
+        'simulationStatusResult': json['simulation_status_result'] == null ? undefined : SimulationStatusResultFromJSON(json['simulation_status_result']),
         'type': json['type'],
         'tonTransactionTypeDetails': PredictedTonTransactionTonTransactionTypeDetailsFromJSON(json['ton_transaction_type_details']),
         'chain': EnrichedTonChainFromJSON(json['chain']),
@@ -270,10 +301,8 @@ export function TonTransactionFromJSONTyped(json: any, _ignoreDiscriminator: boo
         'sender': EnrichedTonAddressFromJSON(json['sender']),
         'payload': TonTransactionPayloadFromJSON(json['payload']),
         'hash': json['hash'] == null ? undefined : json['hash'],
-        'block': json['block'] == null ? undefined : TonBlockFromJSON(json['block']),
         'serializedSignedTransaction': json['serialized_signed_transaction'] == null ? undefined : json['serialized_signed_transaction'],
         'expectedResult': json['expected_result'] == null ? undefined : TonTransactionResultFromJSON(json['expected_result']),
-        'simulationStatusResult': json['simulation_status_result'] == null ? undefined : SimulationStatusResultFromJSON(json['simulation_status_result']),
         'minedResult': json['mined_result'] == null ? undefined : TonTransactionResultFromJSON(json['mined_result']),
         'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
     };

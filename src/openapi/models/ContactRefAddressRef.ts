@@ -52,9 +52,9 @@ import {
 } from './UtxoAddressBookContactAddressRef';
 
 /**
+ * @type ContactRefAddressRef
  * 
  * @export
- * @type ContactRefAddressRef
  */
 export type ContactRefAddressRef = { chainType: 'aptos' } & AptosAddressBookContactAddressRef | { chainType: 'cosmos' } & CosmosAddressBookContactAddressRef | { chainType: 'evm' } & EVMAddressBookContactAddressRef | { chainType: 'solana' } & SolanaAddressBookContactAddressRef | { chainType: 'stacks' } & StacksAddressBookContactAddressRef | { chainType: 'starknet' } & StarknetAddressBookContactAddressRef | { chainType: 'sui' } & SuiAddressBookContactAddressRef | { chainType: 'ton' } & TonAddressBookContactAddressRef | { chainType: 'tron' } & TronAddressBookContactAddressRef | { chainType: 'utxo' } & UtxoAddressBookContactAddressRef;
 
@@ -88,7 +88,6 @@ function ContactRefAddressRefFromJSONTyped(json: any, _ignoreDiscriminator: bool
         case 'utxo':
             return Object.assign({}, UtxoAddressBookContactAddressRefFromJSONTyped(json, true), { chainType: 'utxo' } as const);
         default:
-            throw new Error(`No variant of ContactRefAddressRef exists with 'chainType=${json['chainType']}'`);
+            return json;
     }
 }
-

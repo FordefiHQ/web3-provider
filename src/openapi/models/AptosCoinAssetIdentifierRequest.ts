@@ -23,13 +23,13 @@ import {
  */
 export interface AptosCoinAssetIdentifierRequest {
     /**
-     * 
-     * @type {string}
+     * Legacy coin asset identifier type.
+     * @type {AptosCoinAssetIdentifierRequestTypeEnum}
      * @memberof AptosCoinAssetIdentifierRequest
      */
     type: AptosCoinAssetIdentifierRequestTypeEnum;
     /**
-     * 
+     * The legacy coin details.
      * @type {AptosCoinTypeRequest}
      * @memberof AptosCoinAssetIdentifierRequest
      */
@@ -38,7 +38,7 @@ export interface AptosCoinAssetIdentifierRequest {
 
 
 /**
- * 
+ * @export
  */
 const AptosCoinAssetIdentifierRequestTypeEnum = {
     coin: 'coin'

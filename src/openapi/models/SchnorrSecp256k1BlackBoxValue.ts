@@ -17,8 +17,8 @@
  */
 export interface SchnorrSecp256k1BlackBoxValue {
     /**
-     * 
-     * @type {string}
+     * Schnorr over the secp256k1 curve signing scheme.
+     * @type {SchnorrSecp256k1BlackBoxValueTypeEnum}
      * @memberof SchnorrSecp256k1BlackBoxValue
      */
     type: SchnorrSecp256k1BlackBoxValueTypeEnum;
@@ -26,7 +26,7 @@ export interface SchnorrSecp256k1BlackBoxValue {
 
 
 /**
- * 
+ * @export
  */
 const SchnorrSecp256k1BlackBoxValueTypeEnum = {
     schnorrSecp256k1: 'schnorr_secp256k1'

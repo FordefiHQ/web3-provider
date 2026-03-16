@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const EvmReversionState = {
@@ -35,4 +36,3 @@ export function EvmReversionStateFromJSON(json: any): EvmReversionState {
 function EvmReversionStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): EvmReversionState {
     return json as EvmReversionState;
 }
-

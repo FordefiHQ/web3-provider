@@ -26,31 +26,31 @@ import {
  */
 export interface EnrichedSolanaChain {
     /**
-     * 
-     * @type {string}
+     * The type of the chain.
+     * @type {EnrichedSolanaChainChainTypeEnum}
      * @memberof EnrichedSolanaChain
      */
     chainType: EnrichedSolanaChainChainTypeEnum;
     /**
-     * 
+     * The type of the Solana-based chain.
      * @type {SolanaChainUniqueId}
      * @memberof EnrichedSolanaChain
      */
     uniqueId: SolanaChainUniqueId;
     /**
-     * 
+     * The full blockchain name.
      * @type {string}
      * @memberof EnrichedSolanaChain
      */
     name: string;
     /**
-     * 
+     * The native currency symbol.
      * @type {string}
      * @memberof EnrichedSolanaChain
      */
     nativeCurrencySymbol: string;
     /**
-     * 
+     * The native currency name.
      * @type {string}
      * @memberof EnrichedSolanaChain
      */
@@ -62,19 +62,19 @@ export interface EnrichedSolanaChain {
      */
     blockchainExplorer?: BlockchainExplorer;
     /**
-     * 
+     * The logo URL of the chain.
      * @type {string}
      * @memberof EnrichedSolanaChain
      */
     logoUrl: string;
     /**
-     * 
+     * Whether the chain is on a testnet.
      * @type {boolean}
      * @memberof EnrichedSolanaChain
      */
     isTestnet: boolean;
     /**
-     * 
+     * Whether the chain is enabled.
      * @type {boolean}
      * @memberof EnrichedSolanaChain
      */
@@ -83,7 +83,7 @@ export interface EnrichedSolanaChain {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedSolanaChainChainTypeEnum = {
     solana: 'solana'

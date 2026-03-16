@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const SolanaSpotSwapBroadcastMode = {
@@ -27,4 +28,3 @@ export function SolanaSpotSwapBroadcastModeFromJSON(json: any): SolanaSpotSwapBr
 function SolanaSpotSwapBroadcastModeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): SolanaSpotSwapBroadcastMode {
     return json as SolanaSpotSwapBroadcastMode;
 }
-

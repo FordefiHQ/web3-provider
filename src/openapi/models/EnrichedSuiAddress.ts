@@ -26,31 +26,31 @@ import {
  */
 export interface EnrichedSuiAddress {
     /**
-     * 
+     * The vault corresponding to this address.
      * @type {VaultRef}
      * @memberof EnrichedSuiAddress
      */
     vault?: VaultRef;
     /**
-     * 
+     * The URL of a blockchain explorer that provides real-time information about the address.
      * @type {string}
      * @memberof EnrichedSuiAddress
      */
     explorerUrl?: string;
     /**
-     * 
+     * The contact details of this address.
      * @type {ContactRef}
      * @memberof EnrichedSuiAddress
      */
     contact?: ContactRef;
     /**
      * 
-     * @type {string}
+     * @type {EnrichedSuiAddressTypeEnum}
      * @memberof EnrichedSuiAddress
      */
     type: EnrichedSuiAddressTypeEnum;
     /**
-     * 
+     * The Sui address represented in hex format.
      * @type {string}
      * @memberof EnrichedSuiAddress
      */
@@ -59,7 +59,7 @@ export interface EnrichedSuiAddress {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedSuiAddressTypeEnum = {
     sui: 'sui'

@@ -20,9 +20,9 @@ import {
 } from './EnrichedSuiNativeAssetIdentifier';
 
 /**
+ * @type EnrichedSuiAssetIdentifierDetails
  * 
  * @export
- * @type EnrichedSuiAssetIdentifierDetails
  */
 export type EnrichedSuiAssetIdentifierDetails = { type: 'coin' } & EnrichedSuiCoinAssetIdentifier | { type: 'native' } & EnrichedSuiNativeAssetIdentifier;
 
@@ -40,7 +40,6 @@ function EnrichedSuiAssetIdentifierDetailsFromJSONTyped(json: any, _ignoreDiscri
         case 'native':
             return Object.assign({}, EnrichedSuiNativeAssetIdentifierFromJSONTyped(json, true), { type: 'native' } as const);
         default:
-            throw new Error(`No variant of EnrichedSuiAssetIdentifierDetails exists with 'type=${json['type']}'`);
+            return json;
     }
 }
-

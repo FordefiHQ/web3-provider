@@ -18,18 +18,6 @@ import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
 } from './PricedAsset';
-import type { CosmosBalanceChangeEffectType } from './CosmosBalanceChangeEffectType';
-import {
-    CosmosBalanceChangeEffectTypeFromJSON,
-} from './CosmosBalanceChangeEffectType';
-import type { Price } from './Price';
-import {
-    PriceFromJSON,
-} from './Price';
-import type { CosmosBalanceChangeEffectCoinInfo } from './CosmosBalanceChangeEffectCoinInfo';
-import {
-    CosmosBalanceChangeEffectCoinInfoFromJSON,
-} from './CosmosBalanceChangeEffectCoinInfo';
 
 /**
  * 
@@ -38,48 +26,23 @@ import {
  */
 export interface CosmosBalanceChangeEffect {
     /**
-     * 
+     * The asset information.
      * @type {PricedAsset}
      * @memberof CosmosBalanceChangeEffect
      */
     pricedAsset: PricedAsset;
     /**
-     * 
+     * The amount of that was added to or deducted from the owner's balance. If the amount was deducted, the value is negative; if the amount was added, the value is positive.
      * @type {string}
      * @memberof CosmosBalanceChangeEffect
      */
     diff: string;
     /**
-     * 
-     * @type {CosmosBalanceChangeEffectType}
-     * @memberof CosmosBalanceChangeEffect
-     */
-    type: CosmosBalanceChangeEffectType;
-    /**
-     * 
-     * @type {CosmosBalanceChangeEffectCoinInfo}
-     * @memberof CosmosBalanceChangeEffect
-     * @deprecated
-     */
-    coinInfo: CosmosBalanceChangeEffectCoinInfo;
-    /**
-     * 
+     * The address affected by the balance change.
      * @type {EnrichedCosmosBechAddress}
      * @memberof CosmosBalanceChangeEffect
      */
     address: EnrichedCosmosBechAddress;
-    /**
-     * 
-     * @type {EnrichedCosmosBechAddress}
-     * @memberof CosmosBalanceChangeEffect
-     */
-    owner?: EnrichedCosmosBechAddress;
-    /**
-     * 
-     * @type {Price}
-     * @memberof CosmosBalanceChangeEffect
-     */
-    price?: Price;
 }
 
 export function CosmosBalanceChangeEffectFromJSON(json: any): CosmosBalanceChangeEffect {
@@ -94,11 +57,6 @@ function CosmosBalanceChangeEffectFromJSONTyped(json: any, _ignoreDiscriminator:
         
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
         'diff': json['diff'],
-        'type': CosmosBalanceChangeEffectTypeFromJSON(json['type']),
-        'coinInfo': CosmosBalanceChangeEffectCoinInfoFromJSON(json['coin_info']),
         'address': EnrichedCosmosBechAddressFromJSON(json['address']),
-        'owner': json['owner'] == null ? undefined : EnrichedCosmosBechAddressFromJSON(json['owner']),
-        'price': json['price'] == null ? undefined : PriceFromJSON(json['price']),
     };
 }
-

@@ -14,17 +14,21 @@ import type { AptosRecipientHex } from './AptosRecipientHex';
 import {
     AptosRecipientHexToJSON,
 } from './AptosRecipientHex';
+import type { RecipientContactId } from './RecipientContactId';
+import {
+    RecipientContactIdToJSON,
+} from './RecipientContactId';
 import type { RecipientVaultId } from './RecipientVaultId';
 import {
     RecipientVaultIdToJSON,
 } from './RecipientVaultId';
 
 /**
+ * @type CreateAptosTransferRequestTo
  * 
  * @export
- * @type CreateAptosTransferRequestTo
  */
-export type CreateAptosTransferRequestTo = { type: 'hex' } & AptosRecipientHex | { type: 'vault_id' } & RecipientVaultId;
+export type CreateAptosTransferRequestTo = { type: 'contact_id' } & RecipientContactId | { type: 'hex' } & AptosRecipientHex | { type: 'vault_id' } & RecipientVaultId;
 
 export function CreateAptosTransferRequestToToJSON(json: any): any {
     return CreateAptosTransferRequestToToJSONTyped(json, false);
@@ -35,13 +39,13 @@ function CreateAptosTransferRequestToToJSONTyped(value?: CreateAptosTransferRequ
         return value;
     }
     switch (value['type']) {
+        case 'contact_id':
+            return Object.assign({}, RecipientContactIdToJSON(value), { type: 'contact_id' } as const);
         case 'hex':
             return Object.assign({}, AptosRecipientHexToJSON(value), { type: 'hex' } as const);
         case 'vault_id':
             return Object.assign({}, RecipientVaultIdToJSON(value), { type: 'vault_id' } as const);
         default:
-            throw new Error(`No variant of CreateAptosTransferRequestTo exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

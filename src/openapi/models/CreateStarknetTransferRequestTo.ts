@@ -10,6 +10,10 @@
  * Do not edit the class manually.
  */
 
+import type { RecipientContactId } from './RecipientContactId';
+import {
+    RecipientContactIdToJSON,
+} from './RecipientContactId';
 import type { RecipientVaultId } from './RecipientVaultId';
 import {
     RecipientVaultIdToJSON,
@@ -20,11 +24,11 @@ import {
 } from './StarknetRecipientHex';
 
 /**
+ * @type CreateStarknetTransferRequestTo
  * 
  * @export
- * @type CreateStarknetTransferRequestTo
  */
-export type CreateStarknetTransferRequestTo = { type: 'hex' } & StarknetRecipientHex | { type: 'vault_id' } & RecipientVaultId;
+export type CreateStarknetTransferRequestTo = { type: 'contact_id' } & RecipientContactId | { type: 'hex' } & StarknetRecipientHex | { type: 'vault_id' } & RecipientVaultId;
 
 export function CreateStarknetTransferRequestToToJSON(json: any): any {
     return CreateStarknetTransferRequestToToJSONTyped(json, false);
@@ -35,13 +39,13 @@ function CreateStarknetTransferRequestToToJSONTyped(value?: CreateStarknetTransf
         return value;
     }
     switch (value['type']) {
+        case 'contact_id':
+            return Object.assign({}, RecipientContactIdToJSON(value), { type: 'contact_id' } as const);
         case 'hex':
             return Object.assign({}, StarknetRecipientHexToJSON(value), { type: 'hex' } as const);
         case 'vault_id':
             return Object.assign({}, RecipientVaultIdToJSON(value), { type: 'vault_id' } as const);
         default:
-            throw new Error(`No variant of CreateStarknetTransferRequestTo exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

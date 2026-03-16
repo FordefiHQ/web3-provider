@@ -17,13 +17,13 @@
  */
 export interface MasterPublicKey {
     /**
-     * 
+     * The ID of the key.
      * @type {string}
      * @memberof MasterPublicKey
      */
     id: string;
     /**
-     * 
+     * The xpub encoding of the key. For more details, see https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#serialization-format
      * @type {string}
      * @memberof MasterPublicKey
      */
@@ -44,4 +44,3 @@ function MasterPublicKeyFromJSONTyped(json: any, _ignoreDiscriminator: boolean):
         'xpub': json['xpub'],
     };
 }
-

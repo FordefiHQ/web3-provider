@@ -22,8 +22,8 @@ import {
  */
 export interface EnrichedEvmAssetIdentifier {
     /**
-     * 
-     * @type {string}
+     * Asset identifier type.
+     * @type {EnrichedEvmAssetIdentifierTypeEnum}
      * @memberof EnrichedEvmAssetIdentifier
      */
     type: EnrichedEvmAssetIdentifierTypeEnum;
@@ -37,7 +37,7 @@ export interface EnrichedEvmAssetIdentifier {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedEvmAssetIdentifierTypeEnum = {
     evm: 'evm'

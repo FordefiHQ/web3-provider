@@ -14,10 +14,10 @@ import type { AmlScanStatus } from './AmlScanStatus';
 import {
     AmlScanStatusFromJSON,
 } from './AmlScanStatus';
-import type { AmlResultsScanResults } from './AmlResultsScanResults';
+import type { ChainalysisScanResult } from './ChainalysisScanResult';
 import {
-    AmlResultsScanResultsFromJSON,
-} from './AmlResultsScanResults';
+    ChainalysisScanResultFromJSON,
+} from './ChainalysisScanResult';
 
 /**
  * 
@@ -26,23 +26,23 @@ import {
  */
 export interface AmlResults {
     /**
-     * 
+     * The status of the AML scan.
      * @type {AmlScanStatus}
      * @memberof AmlResults
      */
     scanStatus: AmlScanStatus;
     /**
-     * 
+     * The error message if the scan failed.
      * @type {string}
      * @memberof AmlResults
      */
     errorMessage?: string;
     /**
      * 
-     * @type {AmlResultsScanResults}
+     * @type {ChainalysisScanResult}
      * @memberof AmlResults
      */
-    scanResults?: AmlResultsScanResults;
+    scanResults?: ChainalysisScanResult;
 }
 
 export function AmlResultsFromJSON(json: any): AmlResults {
@@ -57,7 +57,6 @@ function AmlResultsFromJSONTyped(json: any, _ignoreDiscriminator: boolean): AmlR
         
         'scanStatus': AmlScanStatusFromJSON(json['scan_status']),
         'errorMessage': json['error_message'] == null ? undefined : json['error_message'],
-        'scanResults': json['scan_results'] == null ? undefined : AmlResultsScanResultsFromJSON(json['scan_results']),
+        'scanResults': json['scan_results'] == null ? undefined : ChainalysisScanResultFromJSON(json['scan_results']),
     };
 }
-

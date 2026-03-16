@@ -58,4 +58,3 @@ function BaseSuiPureInputToJSONTyped(value?: BaseSuiPureInput | null, _ignoreDis
         'value': BaseSuiPureInputValueToJSON(value['value']),
     };
 }
-

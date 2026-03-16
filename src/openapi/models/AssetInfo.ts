@@ -22,25 +22,25 @@ import {
  */
 export interface AssetInfo {
     /**
-     * 
+     * The asset ID.
      * @type {string}
      * @memberof AssetInfo
      */
     id: string;
     /**
-     * 
+     * The asset identifier.
      * @type {AssetIdentifier}
      * @memberof AssetInfo
      */
     assetIdentifier: AssetIdentifier;
     /**
-     * 
+     * The name of the asset.
      * @type {string}
      * @memberof AssetInfo
      */
     name: string;
     /**
-     * 
+     * The symbol (ticker) of the asset.
      * @type {string}
      * @memberof AssetInfo
      */
@@ -52,31 +52,31 @@ export interface AssetInfo {
      */
     decimals: number;
     /**
-     * 
+     * `True` if this asset is verified by Fordefi, `False` otherwise.
      * @type {boolean}
      * @memberof AssetInfo
      */
     verified: boolean;
     /**
-     * 
+     * The URI of the asset metadata.
      * @type {string}
      * @memberof AssetInfo
      */
     metadataUri?: string;
     /**
-     * 
+     * `True` if this asset is spam, `False` otherwise.
      * @type {boolean}
      * @memberof AssetInfo
      */
     isSpam: boolean;
     /**
-     * 
+     * The URL of the asset logo.
      * @type {string}
      * @memberof AssetInfo
      */
     logoUrl?: string;
     /**
-     * 
+     * The URL of a blockchain explorer that provides real-time information about the asset.
      * @type {string}
      * @memberof AssetInfo
      */
@@ -105,4 +105,3 @@ function AssetInfoFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Asset
         'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
     };
 }
-

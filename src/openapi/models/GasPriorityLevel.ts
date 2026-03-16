@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const GasPriorityLevel = {
@@ -29,4 +30,3 @@ export function GasPriorityLevelFromJSON(json: any): GasPriorityLevel {
 function GasPriorityLevelFromJSONTyped(json: any, _ignoreDiscriminator: boolean): GasPriorityLevel {
     return json as GasPriorityLevel;
 }
-

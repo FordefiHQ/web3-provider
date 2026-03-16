@@ -234,11 +234,11 @@ export const waitForTransactionState = async <T extends AnyEvmTx>({
       id: transactionId,
     })) as T;
 
-    if (isErrorState(transaction.state)) {
+    if (isErrorState(transaction.state as PushableTransactionState)) {
       throw new InternalRpcError(new Error(`Transaction failed with state '${transaction.state}'`));
     }
 
-    if (didStateAlreadyOccur(transaction.state, desiredState)) {
+    if (didStateAlreadyOccur(transaction.state as PushableTransactionState, desiredState)) {
       console.debug(
         `transaction reached desired state '${desiredState}'${desiredState !== transaction.state ? ` and is now '${transaction.state}'` : ''}`,
       );

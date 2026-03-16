@@ -22,37 +22,37 @@ import {
  */
 export interface SplToken {
     /**
-     * 
-     * @type {string}
+     * The type of the token
+     * @type {SplTokenTypeEnum}
      * @memberof SplToken
      */
     type: SplTokenTypeEnum;
     /**
-     * 
+     * The token address
      * @type {SolanaAddress}
      * @memberof SplToken
      */
     address: SolanaAddress;
     /**
-     * 
+     * The token name
      * @type {string}
      * @memberof SplToken
      */
     name: string;
     /**
-     * 
+     * The token symbol or ticker
      * @type {string}
      * @memberof SplToken
      */
     symbol: string;
     /**
-     * 
+     * The token decimals
      * @type {number}
      * @memberof SplToken
      */
     decimals: number;
     /**
-     * 
+     * The token logo url
      * @type {string}
      * @memberof SplToken
      */
@@ -61,7 +61,7 @@ export interface SplToken {
 
 
 /**
- * 
+ * @export
  */
 const SplTokenTypeEnum = {
     splToken: 'spl_token'

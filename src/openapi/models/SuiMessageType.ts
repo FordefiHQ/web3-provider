@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const SuiMessageType = {
@@ -26,4 +27,3 @@ export function SuiMessageTypeFromJSON(json: any): SuiMessageType {
 function SuiMessageTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): SuiMessageType {
     return json as SuiMessageType;
 }
-

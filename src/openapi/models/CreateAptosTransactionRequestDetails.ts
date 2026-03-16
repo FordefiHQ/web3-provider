@@ -20,9 +20,9 @@ import {
 } from './CreateAptosTransferRequest';
 
 /**
+ * @type CreateAptosTransactionRequestDetails
  * 
  * @export
- * @type CreateAptosTransactionRequestDetails
  */
 export type CreateAptosTransactionRequestDetails = { type: 'aptos_serialized_entry_point_payload' } & CreateAptosSerializedRawTransactionRequest | { type: 'aptos_transfer' } & CreateAptosTransferRequest;
 
@@ -40,8 +40,6 @@ function CreateAptosTransactionRequestDetailsToJSONTyped(value?: CreateAptosTran
         case 'aptos_transfer':
             return Object.assign({}, CreateAptosTransferRequestToJSON(value), { type: 'aptos_transfer' } as const);
         default:
-            throw new Error(`No variant of CreateAptosTransactionRequestDetails exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

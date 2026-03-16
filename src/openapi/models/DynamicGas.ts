@@ -22,32 +22,32 @@ import {
  */
 export interface DynamicGas {
     /**
-     * 
+     * The maximum tip amount for mining the transaction.
      * @type {string}
      * @memberof DynamicGas
      */
     maxPriorityFeePerGas: string;
     /**
-     * 
+     * The maximum amount paid for the fee.
      * @type {string}
      * @memberof DynamicGas
      */
     maxFeePerGas: string;
     /**
-     * 
+     * The gas priority.
      * @type {GasPriorityLevel}
      * @memberof DynamicGas
      */
     priority: GasPriorityLevel;
     /**
-     * 
+     * The gas limit.
      * @type {string}
      * @memberof DynamicGas
      */
     limit: string;
     /**
-     * 
-     * @type {string}
+     * The type of gas data.
+     * @type {DynamicGasTypeEnum}
      * @memberof DynamicGas
      */
     type: DynamicGasTypeEnum;
@@ -55,7 +55,7 @@ export interface DynamicGas {
 
 
 /**
- * 
+ * @export
  */
 const DynamicGasTypeEnum = {
     dynamic: 'dynamic'

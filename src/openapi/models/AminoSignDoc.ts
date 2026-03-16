@@ -23,12 +23,12 @@ import {
 export interface AminoSignDoc {
     /**
      * 
-     * @type {string}
+     * @type {AminoSignDocFormatEnum}
      * @memberof AminoSignDoc
      */
     format: AminoSignDocFormatEnum;
     /**
-     * 
+     * Sign doc for amino format.
      * @type {StdSignDoc}
      * @memberof AminoSignDoc
      */
@@ -37,7 +37,7 @@ export interface AminoSignDoc {
 
 
 /**
- * 
+ * @export
  */
 const AminoSignDocFormatEnum = {
     amino: 'amino'

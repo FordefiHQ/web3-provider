@@ -22,19 +22,19 @@ import {
  */
 export interface BlackBoxSignatureEcdsaSecp256k1Details {
     /**
-     * 
-     * @type {string}
+     * ECDSA over the secp256k1 curve signature.
+     * @type {BlackBoxSignatureEcdsaSecp256k1DetailsTypeEnum}
      * @memberof BlackBoxSignatureEcdsaSecp256k1Details
      */
     type: BlackBoxSignatureEcdsaSecp256k1DetailsTypeEnum;
     /**
-     * 
+     * The ECDSA signature.
      * @type {EcdsaSignature}
      * @memberof BlackBoxSignatureEcdsaSecp256k1Details
      */
     signature?: EcdsaSignature;
     /**
-     * 
+     * The payload to sign, encoded in base64 format.
      * @type {string}
      * @memberof BlackBoxSignatureEcdsaSecp256k1Details
      */
@@ -43,7 +43,7 @@ export interface BlackBoxSignatureEcdsaSecp256k1Details {
 
 
 /**
- * 
+ * @export
  */
 const BlackBoxSignatureEcdsaSecp256k1DetailsTypeEnum = {
     ecdsaSecp256k1: 'ecdsa_secp256k1'

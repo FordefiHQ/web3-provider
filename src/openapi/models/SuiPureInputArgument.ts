@@ -23,8 +23,8 @@ import {
  */
 export interface SuiPureInputArgument {
     /**
-     * 
-     * @type {string}
+     * The type of the input argument.
+     * @type {SuiPureInputArgumentTypeEnum}
      * @memberof SuiPureInputArgument
      */
     type: SuiPureInputArgumentTypeEnum;
@@ -38,7 +38,7 @@ export interface SuiPureInputArgument {
 
 
 /**
- * 
+ * @export
  */
 const SuiPureInputArgumentTypeEnum = {
     pure: 'pure'

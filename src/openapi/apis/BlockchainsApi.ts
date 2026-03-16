@@ -15,21 +15,25 @@ import * as runtime from '../runtime';
 import type {
   ChainSource,
   ChainType,
+  GetSuggestedFeesResponse,
   ListBlockchainsResponse,
-  PageResponseType,
 } from '../models/index';
 import {
+    GetSuggestedFeesResponseFromJSON,
     ListBlockchainsResponseFromJSON,
 } from '../models/index';
+
+interface GetSuggestedFeesApiV1BlockchainsSuggestedFeesGetRequest {
+    chains?: Array<string>;
+    chainTypes?: Array<ChainType>;
+}
 
 interface ListChainsApiV1BlockchainsGetRequest {
     page?: number;
     size?: number;
-    responseType?: PageResponseType;
+    skipCount?: boolean;
     chainTypes?: Array<ChainType>;
     sources?: Array<ChainSource>;
-    onlyInteractedWith?: boolean;
-    search?: string;
     includeMainnets?: boolean;
     includeTestnets?: boolean;
     includeExchanges?: boolean;
@@ -42,10 +46,61 @@ interface ListChainsApiV1BlockchainsGetRequest {
 export class BlockchainsApi extends runtime.BaseAPI {
 
     /**
-     * Get a list of supported blockchains.
-     * List Chains
+     * Creates request options for getSuggestedFeesApiV1BlockchainsSuggestedFeesGet without sending the request
      */
-    async listChainsApiV1BlockchainsGetRaw(requestParameters: ListChainsApiV1BlockchainsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListBlockchainsResponse>> {
+    async getSuggestedFeesApiV1BlockchainsSuggestedFeesGetRequestOpts(requestParameters: GetSuggestedFeesApiV1BlockchainsSuggestedFeesGetRequest): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        if (requestParameters['chains'] != null) {
+            queryParameters['chains'] = requestParameters['chains'];
+        }
+
+        if (requestParameters['chainTypes'] != null) {
+            queryParameters['chain_types'] = requestParameters['chainTypes'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/api/v1/blockchains/suggested-fees`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Get the suggested fees in a specific network.
+     * Get Suggested Fees
+     */
+    async getSuggestedFeesApiV1BlockchainsSuggestedFeesGetRaw(requestParameters: GetSuggestedFeesApiV1BlockchainsSuggestedFeesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetSuggestedFeesResponse>> {
+        const requestOptions = await this.getSuggestedFeesApiV1BlockchainsSuggestedFeesGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetSuggestedFeesResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Get the suggested fees in a specific network.
+     * Get Suggested Fees
+     */
+    
+
+    /**
+     * Creates request options for listChainsApiV1BlockchainsGet without sending the request
+     */
+    async listChainsApiV1BlockchainsGetRequestOpts(requestParameters: ListChainsApiV1BlockchainsGetRequest): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         if (requestParameters['page'] != null) {
@@ -56,8 +111,8 @@ export class BlockchainsApi extends runtime.BaseAPI {
             queryParameters['size'] = requestParameters['size'];
         }
 
-        if (requestParameters['responseType'] != null) {
-            queryParameters['response_type'] = requestParameters['responseType'];
+        if (requestParameters['skipCount'] != null) {
+            queryParameters['skip_count'] = requestParameters['skipCount'];
         }
 
         if (requestParameters['chainTypes'] != null) {
@@ -66,14 +121,6 @@ export class BlockchainsApi extends runtime.BaseAPI {
 
         if (requestParameters['sources'] != null) {
             queryParameters['sources'] = requestParameters['sources'];
-        }
-
-        if (requestParameters['onlyInteractedWith'] != null) {
-            queryParameters['only_interacted_with'] = requestParameters['onlyInteractedWith'];
-        }
-
-        if (requestParameters['search'] != null) {
-            queryParameters['search'] = requestParameters['search'];
         }
 
         if (requestParameters['includeMainnets'] != null) {
@@ -102,12 +149,24 @@ export class BlockchainsApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
-        const response = await this.request({
-            path: `/api/v1/blockchains`,
+
+        let urlPath = `/api/v1/blockchains`;
+
+        return {
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get a list of supported blockchains.
+     * List Chains
+     */
+    async listChainsApiV1BlockchainsGetRaw(requestParameters: ListChainsApiV1BlockchainsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListBlockchainsResponse>> {
+        const requestOptions = await this.listChainsApiV1BlockchainsGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => ListBlockchainsResponseFromJSON(jsonValue));
     }

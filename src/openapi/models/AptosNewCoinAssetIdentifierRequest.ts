@@ -23,13 +23,13 @@ import {
  */
 export interface AptosNewCoinAssetIdentifierRequest {
     /**
-     * 
-     * @type {string}
+     * New coin asset identifier type.
+     * @type {AptosNewCoinAssetIdentifierRequestTypeEnum}
      * @memberof AptosNewCoinAssetIdentifierRequest
      */
     type: AptosNewCoinAssetIdentifierRequestTypeEnum;
     /**
-     * 
+     * The new coin details.
      * @type {AptosNewCoinTypeRequest}
      * @memberof AptosNewCoinAssetIdentifierRequest
      */
@@ -38,7 +38,7 @@ export interface AptosNewCoinAssetIdentifierRequest {
 
 
 /**
- * 
+ * @export
  */
 const AptosNewCoinAssetIdentifierRequestTypeEnum = {
     newCoin: 'new_coin'

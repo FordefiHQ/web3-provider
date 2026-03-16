@@ -17,19 +17,19 @@
  */
 export interface StarknetCallDataRequest {
     /**
-     * 
+     * The address of the contract to call.
      * @type {string}
      * @memberof StarknetCallDataRequest
      */
     to: string;
     /**
-     * 
+     * The name of the method to call.
      * @type {string}
      * @memberof StarknetCallDataRequest
      */
     methodName: string;
     /**
-     * 
+     * The arguments of the method to call.
      * @type {Array<string>}
      * @memberof StarknetCallDataRequest
      */
@@ -52,4 +52,3 @@ function StarknetCallDataRequestToJSONTyped(value?: StarknetCallDataRequest | nu
         'method_arguments': value['methodArguments'],
     };
 }
-

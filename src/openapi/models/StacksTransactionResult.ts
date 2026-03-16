@@ -30,19 +30,19 @@ import {
  */
 export interface StacksTransactionResult {
     /**
-     * 
+     * Details whether the transaction was reverted or not.
      * @type {StacksReversion}
      * @memberof StacksTransactionResult
      */
     reversion: StacksReversion;
     /**
-     * 
+     * The fees of the transaction.
      * @type {StacksFee}
      * @memberof StacksTransactionResult
      */
     fee: StacksFee;
     /**
-     * 
+     * The effects of the transaction.
      * @type {StacksEffects}
      * @memberof StacksTransactionResult
      */
@@ -64,4 +64,3 @@ function StacksTransactionResultFromJSONTyped(json: any, _ignoreDiscriminator: b
         'effects': StacksEffectsFromJSON(json['effects']),
     };
 }
-

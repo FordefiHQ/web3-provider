@@ -28,9 +28,9 @@ import {
 } from './BlackBoxSignatureSchnorrSecp256k1Details';
 
 /**
+ * @type BlackBoxSignatureDetails
  * 
  * @export
- * @type BlackBoxSignatureDetails
  */
 export type BlackBoxSignatureDetails = { type: 'ecdsa_secp256k1' } & BlackBoxSignatureEcdsaSecp256k1Details | { type: 'ecdsa_stark' } & BlackBoxSignatureEcdsaStarkDetails | { type: 'eddsa_ed25519' } & BlackBoxSignatureEddsaEd25519Details | { type: 'schnorr_secp256k1' } & BlackBoxSignatureSchnorrSecp256k1Details;
 
@@ -52,7 +52,6 @@ function BlackBoxSignatureDetailsFromJSONTyped(json: any, _ignoreDiscriminator: 
         case 'schnorr_secp256k1':
             return Object.assign({}, BlackBoxSignatureSchnorrSecp256k1DetailsFromJSONTyped(json, true), { type: 'schnorr_secp256k1' } as const);
         default:
-            throw new Error(`No variant of BlackBoxSignatureDetails exists with 'type=${json['type']}'`);
+            return json;
     }
 }
-

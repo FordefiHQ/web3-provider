@@ -17,25 +17,25 @@ import {
 } from './SuiCommandArgument';
 
 /**
- * 
+ * Split coin into smaller coins.
  * @export
  * @interface SuiSplitCoinsCommand
  */
 export interface SuiSplitCoinsCommand {
     /**
-     * 
-     * @type {string}
+     * The type of the command.
+     * @type {SuiSplitCoinsCommandTypeEnum}
      * @memberof SuiSplitCoinsCommand
      */
     type: SuiSplitCoinsCommandTypeEnum;
     /**
-     * 
+     * The coin to split.
      * @type {SuiCommandArgument}
      * @memberof SuiSplitCoinsCommand
      */
     coinObject: SuiCommandArgument;
     /**
-     * 
+     * The amounts to split the coin into.
      * @type {Array<SuiCommandArgument>}
      * @memberof SuiSplitCoinsCommand
      */
@@ -44,7 +44,7 @@ export interface SuiSplitCoinsCommand {
 
 
 /**
- * 
+ * @export
  */
 const SuiSplitCoinsCommandTypeEnum = {
     splitCoins: 'split_coins'

@@ -13,8 +13,6 @@ import {
   numberToHex,
   ProviderConnectInfo,
   ProviderDisconnectedError,
-  ProviderRpcErrorCode,
-  RpcErrorCode,
   RpcSchema,
   UnsupportedProviderMethodError,
 } from 'viem';

@@ -16,25 +16,25 @@ import {
 } from './UserRef';
 
 /**
- * 
+ * Represents a single signer in an action
  * @export
  * @interface ActionSigner
  */
 export interface ActionSigner {
     /**
-     * 
+     * Possible signer user
      * @type {UserRef}
      * @memberof ActionSigner
      */
     user: UserRef;
     /**
-     * 
+     * When the signer received/signed the action
      * @type {Date}
      * @memberof ActionSigner
      */
     modifiedAt: Date;
     /**
-     * 
+     * Whether the signer signed the action
      * @type {boolean}
      * @memberof ActionSigner
      */
@@ -56,4 +56,3 @@ function ActionSignerFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Ac
         'hasSigned': json['has_signed'],
     };
 }
-

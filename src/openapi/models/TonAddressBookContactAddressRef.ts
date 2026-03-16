@@ -22,28 +22,34 @@ import {
  */
 export interface TonAddressBookContactAddressRef {
     /**
-     * 
-     * @type {string}
+     * The type of the chain.
+     * @type {TonAddressBookContactAddressRefChainTypeEnum}
      * @memberof TonAddressBookContactAddressRef
      */
     chainType: TonAddressBookContactAddressRefChainTypeEnum;
     /**
-     * 
+     * The address on the TON chain.
      * @type {string}
      * @memberof TonAddressBookContactAddressRef
      */
     address: string;
     /**
-     * 
+     * The chains the contact belongs to.
      * @type {Array<TonChain>}
      * @memberof TonAddressBookContactAddressRef
      */
     chains: Array<TonChain>;
+    /**
+     * Comment is an additional address feature used for identifying a recipient.
+     * @type {string}
+     * @memberof TonAddressBookContactAddressRef
+     */
+    comment?: string;
 }
 
 
 /**
- * 
+ * @export
  */
 const TonAddressBookContactAddressRefChainTypeEnum = {
     ton: 'ton'
@@ -59,5 +65,6 @@ export function TonAddressBookContactAddressRefFromJSONTyped(json: any, _ignoreD
         'chainType': json['chain_type'],
         'address': json['address'],
         'chains': ((json['chains'] as Array<any>).map(TonChainFromJSON)),
+        'comment': json['comment'] == null ? undefined : json['comment'],
     };
 }

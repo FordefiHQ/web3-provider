@@ -26,13 +26,13 @@ import {
  */
 export interface CosmosEffects {
     /**
-     * 
+     * The aggregated balance changes of addresses.
      * @type {Array<CosmosBalanceChangeEffect>}
      * @memberof CosmosEffects
      */
     balanceChanges: Array<CosmosBalanceChangeEffect>;
     /**
-     * 
+     * The transfer events of the transaction.
      * @type {Array<CosmosTransferEffect>}
      * @memberof CosmosEffects
      */
@@ -53,4 +53,3 @@ function CosmosEffectsFromJSONTyped(json: any, _ignoreDiscriminator: boolean): C
         'transfers': ((json['transfers'] as Array<any>).map(CosmosTransferEffectFromJSON)),
     };
 }
-

@@ -23,13 +23,13 @@ import {
  */
 export interface SolanaSplTokenAssetIdentifierRequest {
     /**
-     * 
-     * @type {string}
+     * SPL token asset identifier type.
+     * @type {SolanaSplTokenAssetIdentifierRequestTypeEnum}
      * @memberof SolanaSplTokenAssetIdentifierRequest
      */
     type: SolanaSplTokenAssetIdentifierRequestTypeEnum;
     /**
-     * 
+     * The SPL token details.
      * @type {SolanaAddressRequest}
      * @memberof SolanaSplTokenAssetIdentifierRequest
      */
@@ -38,7 +38,7 @@ export interface SolanaSplTokenAssetIdentifierRequest {
 
 
 /**
- * 
+ * @export
  */
 const SolanaSplTokenAssetIdentifierRequestTypeEnum = {
     splToken: 'spl_token'

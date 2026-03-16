@@ -20,9 +20,9 @@ import {
 } from './EnrichedSolanaSplTokenAssetIdentifier';
 
 /**
+ * @type EnrichedSolanaAssetIdentifierDetails
  * 
  * @export
- * @type EnrichedSolanaAssetIdentifierDetails
  */
 export type EnrichedSolanaAssetIdentifierDetails = { type: 'native' } & EnrichedSolanaNativeAssetIdentifier | { type: 'spl_token' } & EnrichedSolanaSplTokenAssetIdentifier;
 
@@ -40,7 +40,6 @@ function EnrichedSolanaAssetIdentifierDetailsFromJSONTyped(json: any, _ignoreDis
         case 'spl_token':
             return Object.assign({}, EnrichedSolanaSplTokenAssetIdentifierFromJSONTyped(json, true), { type: 'spl_token' } as const);
         default:
-            throw new Error(`No variant of EnrichedSolanaAssetIdentifierDetails exists with 'type=${json['type']}'`);
+            return json;
     }
 }
-

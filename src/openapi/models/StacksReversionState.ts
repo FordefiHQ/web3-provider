@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const StacksReversionState = {
@@ -29,4 +30,3 @@ export function StacksReversionStateFromJSON(json: any): StacksReversionState {
 function StacksReversionStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): StacksReversionState {
     return json as StacksReversionState;
 }
-

@@ -14,6 +14,18 @@ import type { ManagedTransactionData } from './ManagedTransactionData';
 import {
     ManagedTransactionDataFromJSON,
 } from './ManagedTransactionData';
+import type { SolanaMessageResult } from './SolanaMessageResult';
+import {
+    SolanaMessageResultFromJSON,
+} from './SolanaMessageResult';
+import type { NonPushableTransactionState } from './NonPushableTransactionState';
+import {
+    NonPushableTransactionStateFromJSON,
+} from './NonPushableTransactionState';
+import type { VaultRef } from './VaultRef';
+import {
+    VaultRefFromJSON,
+} from './VaultRef';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
@@ -38,14 +50,18 @@ import type { EnrichedSolanaChain } from './EnrichedSolanaChain';
 import {
     EnrichedSolanaChainFromJSON,
 } from './EnrichedSolanaChain';
+import type { RelatedTransaction } from './RelatedTransaction';
+import {
+    RelatedTransactionFromJSON,
+} from './RelatedTransaction';
 import type { NonPushableTransactionStateChange } from './NonPushableTransactionStateChange';
 import {
     NonPushableTransactionStateChangeFromJSON,
 } from './NonPushableTransactionStateChange';
-import type { NonPushableTransactionState } from './NonPushableTransactionState';
+import type { PredictedSolanaMessageSolanaMessageTypeDetails } from './PredictedSolanaMessageSolanaMessageTypeDetails';
 import {
-    NonPushableTransactionStateFromJSON,
-} from './NonPushableTransactionState';
+    PredictedSolanaMessageSolanaMessageTypeDetailsFromJSON,
+} from './PredictedSolanaMessageSolanaMessageTypeDetails';
 
 /**
  * 
@@ -54,103 +70,133 @@ import {
  */
 export interface SolanaMessage {
     /**
-     * 
+     * The unique identifier of the object in the Fordefi platform.
      * @type {string}
      * @memberof SolanaMessage
      */
     id: string;
     /**
-     * 
+     * The date and time when the object was created.
      * @type {Date}
      * @memberof SolanaMessage
      */
     createdAt: Date;
     /**
-     * 
+     * The date and time when the object was last modified. Any change to any field of the resource is considered a modification.
      * @type {Date}
      * @memberof SolanaMessage
      */
     modifiedAt: Date;
     /**
-     * 
+     * Managed transaction data. Presented if the transaction was initiated from the Fordefi system itself, in contrast to unmanaged transactions (which are, for example, transfers of funds into a vault visible to Fordefi). 
      * @type {ManagedTransactionData}
      * @memberof SolanaMessage
      */
     managedTransactionData?: ManagedTransactionData;
     /**
-     * 
+     * The transaction signatures.
      * @type {Array<Signature>}
      * @memberof SolanaMessage
      */
     signatures: Array<Signature>;
     /**
-     * 
+     * An optional transaction note.
      * @type {string}
      * @memberof SolanaMessage
      */
     note?: string;
     /**
-     * 
+     * `automatically_set` if the transaction was automatically set as spam by Fordefi, `manually_set` if the transaction was manually set as spam by a user, and `unset` if the transaction was not set as spam.
      * @type {TransactionSpamState}
      * @memberof SolanaMessage
      */
     spamState?: TransactionSpamState;
     /**
-     * 
+     * The direction of the transaction.
      * @type {TransactionDirection}
      * @memberof SolanaMessage
      */
     direction: TransactionDirection;
     /**
-     * 
+     * Whether the transaction was signed by an external user (for example in case of imported vault).
      * @type {boolean}
      * @memberof SolanaMessage
      */
     signedExternally?: boolean;
     /**
-     * 
+     * The vaults that interacted with the transaction.
+     * @type {Array<VaultRef>}
+     * @memberof SolanaMessage
+     */
+    interactedVaults: Array<VaultRef>;
+    /**
+     * The related transactions.
+     * @type {Array<RelatedTransaction>}
+     * @memberof SolanaMessage
+     */
+    relatedTransactions?: Array<RelatedTransaction>;
+    /**
+     * The organization that the transaction belongs to.
+     * @type {string}
+     * @memberof SolanaMessage
+     */
+    organizationId: string;
+    /**
+     * The state of the message.
      * @type {NonPushableTransactionState}
      * @memberof SolanaMessage
      */
     state: NonPushableTransactionState;
     /**
-     * 
+     * The state changes of the message.
      * @type {Array<NonPushableTransactionStateChange>}
      * @memberof SolanaMessage
      */
     stateChanges: Array<NonPushableTransactionStateChange>;
     /**
-     * 
-     * @type {string}
+     * Solana message type.
+     * @type {SolanaMessageTypeEnum}
      * @memberof SolanaMessage
      */
     type: SolanaMessageTypeEnum;
     /**
-     * 
+     * The type of the Solana message.
      * @type {SolanaMessageType}
      * @memberof SolanaMessage
      */
     solanaMessageType: SolanaMessageType;
     /**
      * 
+     * @type {PredictedSolanaMessageSolanaMessageTypeDetails}
+     * @memberof SolanaMessage
+     */
+    solanaMessageTypeDetails: PredictedSolanaMessageSolanaMessageTypeDetails;
+    /**
+     * Predicted result of the message execution. Only available for intents that Fordefi knows how to simulate, like ERC20 allowances and swaps created in the Fordefi app.
+     * @type {SolanaMessageResult}
+     * @memberof SolanaMessage
+     */
+    expectedResult?: SolanaMessageResult;
+    /**
+     * The message as a string.
      * @type {string}
      * @memberof SolanaMessage
      */
     stringData: string;
     /**
-     * 
+     * The raw data of the message, encoded in base64
      * @type {string}
      * @memberof SolanaMessage
      */
     rawData: string;
     /**
-     * 
+     * The details of the chain that this message is on.
      * @type {EnrichedSolanaChain}
      * @memberof SolanaMessage
      */
     chain: EnrichedSolanaChain;
     /**
-     * 
+     * The sender of the message.
      * @type {EnrichedSolanaAddress}
      * @memberof SolanaMessage
      */
@@ -159,7 +205,7 @@ export interface SolanaMessage {
 
 
 /**
- * 
+ * @export
  */
 const SolanaMessageTypeEnum = {
     solanaMessage: 'solana_message'
@@ -181,10 +227,15 @@ export function SolanaMessageFromJSONTyped(json: any, _ignoreDiscriminator: bool
         'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
         'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'interactedVaults': ((json['interacted_vaults'] as Array<any>).map(VaultRefFromJSON)),
+        'relatedTransactions': json['related_transactions'] == null ? undefined : ((json['related_transactions'] as Array<any>).map(RelatedTransactionFromJSON)),
+        'organizationId': json['organization_id'],
         'state': NonPushableTransactionStateFromJSON(json['state']),
         'stateChanges': ((json['state_changes'] as Array<any>).map(NonPushableTransactionStateChangeFromJSON)),
         'type': json['type'],
         'solanaMessageType': SolanaMessageTypeFromJSON(json['solana_message_type']),
+        'solanaMessageTypeDetails': PredictedSolanaMessageSolanaMessageTypeDetailsFromJSON(json['solana_message_type_details']),
+        'expectedResult': json['expected_result'] == null ? undefined : SolanaMessageResultFromJSON(json['expected_result']),
         'stringData': json['string_data'],
         'rawData': json['raw_data'],
         'chain': EnrichedSolanaChainFromJSON(json['chain']),

@@ -17,64 +17,64 @@
  */
 export interface CosmosNativeCoin {
     /**
-     * 
+     * The name of the coin.
      * @type {string}
      * @memberof CosmosNativeCoin
      */
     name: string;
     /**
-     * 
+     * The symbol of the coin.
      * @type {string}
      * @memberof CosmosNativeCoin
      */
     symbol: string;
     /**
-     * 
+     * The display string of the coin.
      * @type {string}
      * @memberof CosmosNativeCoin
      * @deprecated
      */
     display?: string;
     /**
-     * 
+     * The description of the coin.
      * @type {string}
      * @memberof CosmosNativeCoin
      * @deprecated
      */
     description?: string;
     /**
-     * 
+     * The base denom of the coin.
      * @type {string}
      * @memberof CosmosNativeCoin
      */
     baseDenom: string;
     /**
-     * 
+     * The denom of the coin.
      * @type {string}
      * @memberof CosmosNativeCoin
      */
     denom: string;
     /**
-     * 
+     * The decimals relative to the base coin.
      * @type {number}
      * @memberof CosmosNativeCoin
      */
     decimals: number;
     /**
-     * 
+     * The coin logo url.
      * @type {string}
      * @memberof CosmosNativeCoin
      */
     logoUrl?: string;
     /**
-     * 
+     * The explorer url of the coin.
      * @type {string}
      * @memberof CosmosNativeCoin
      */
     explorerUrl?: string;
     /**
      * 
-     * @type {string}
+     * @type {CosmosNativeCoinTypeEnum}
      * @memberof CosmosNativeCoin
      */
     type: CosmosNativeCoinTypeEnum;
@@ -82,7 +82,7 @@ export interface CosmosNativeCoin {
 
 
 /**
- * 
+ * @export
  */
 const CosmosNativeCoinTypeEnum = {
     native: 'native'

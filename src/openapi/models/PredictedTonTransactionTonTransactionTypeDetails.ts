@@ -24,9 +24,9 @@ import {
 } from './TonRawTransactionDetails';
 
 /**
- * 
- * @export
  * @type PredictedTonTransactionTonTransactionTypeDetails
+ * Details of the Ton transaction based on its type.
+ * @export
  */
 export type PredictedTonTransactionTonTransactionTypeDetails = { type: 'jetton_transfer' } & TonJettonTransferDetails | { type: 'native_transfer' } & TonNativeTransferDetails | { type: 'raw_transaction' } & TonRawTransactionDetails;
 
@@ -46,7 +46,6 @@ function PredictedTonTransactionTonTransactionTypeDetailsFromJSONTyped(json: any
         case 'raw_transaction':
             return Object.assign({}, TonRawTransactionDetailsFromJSONTyped(json, true), { type: 'raw_transaction' } as const);
         default:
-            throw new Error(`No variant of PredictedTonTransactionTonTransactionTypeDetails exists with 'type=${json['type']}'`);
+            return json;
     }
 }
-

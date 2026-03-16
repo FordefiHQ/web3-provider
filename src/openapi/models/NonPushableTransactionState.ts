@@ -12,16 +12,21 @@
 
 
 /**
+ * 
  * @export
  */
 export const NonPushableTransactionState = {
     waitingForApproval: 'waiting_for_approval',
     waitingForSigningTrigger: 'waiting_for_signing_trigger',
     approved: 'approved',
+    finalizedForSigning: 'finalized_for_signing',
     signed: 'signed',
+    sentToProvider: 'sent_to_provider',
     completed: 'completed',
     errorSigning: 'error_signing',
-    aborted: 'aborted'
+    aborted: 'aborted',
+    errorSubmittingToProvider: 'error_submitting_to_provider',
+    dropped: 'dropped'
 } as const;
 export type NonPushableTransactionState = typeof NonPushableTransactionState[keyof typeof NonPushableTransactionState];
 
@@ -33,3 +38,6 @@ function NonPushableTransactionStateFromJSONTyped(json: any, _ignoreDiscriminato
     return json as NonPushableTransactionState;
 }
 
+export function NonPushableTransactionStateToJSON(value?: NonPushableTransactionState | null): any {
+    return value as any;
+}

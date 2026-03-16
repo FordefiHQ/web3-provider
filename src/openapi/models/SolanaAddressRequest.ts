@@ -17,19 +17,19 @@ import {
 } from './SolanaChainUniqueId';
 
 /**
- * 
+ * Address represents a blockchain address.
  * @export
  * @interface SolanaAddressRequest
  */
 export interface SolanaAddressRequest {
     /**
-     * 
+     * The chain details this address is of.
      * @type {SolanaChainUniqueId}
      * @memberof SolanaAddressRequest
      */
     chain: SolanaChainUniqueId;
     /**
-     * 
+     * Base58 representation of the address in the chain.
      * @type {string}
      * @memberof SolanaAddressRequest
      */
@@ -66,4 +66,3 @@ function SolanaAddressRequestToJSONTyped(value?: SolanaAddressRequest | null, _i
         'base58_repr': value['base58Repr'],
     };
 }
-

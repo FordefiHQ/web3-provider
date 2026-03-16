@@ -26,25 +26,25 @@ import {
  */
 export interface EnrichedEvmErc1155AssetIdentifier {
     /**
-     * 
+     * The details of the chain of the native asset.
      * @type {EnrichedEvmChain}
      * @memberof EnrichedEvmErc1155AssetIdentifier
      */
     chain: EnrichedEvmChain;
     /**
-     * 
-     * @type {string}
+     * EVM asset identifier type.
+     * @type {EnrichedEvmErc1155AssetIdentifierTypeEnum}
      * @memberof EnrichedEvmErc1155AssetIdentifier
      */
     type: EnrichedEvmErc1155AssetIdentifierTypeEnum;
     /**
-     * 
+     * The ERC-1155 token contract.
      * @type {EnrichedEvmAddress}
      * @memberof EnrichedEvmErc1155AssetIdentifier
      */
     token: EnrichedEvmAddress;
     /**
-     * 
+     * The token id of the ERC-1155 token.
      * @type {string}
      * @memberof EnrichedEvmErc1155AssetIdentifier
      */
@@ -53,7 +53,7 @@ export interface EnrichedEvmErc1155AssetIdentifier {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedEvmErc1155AssetIdentifierTypeEnum = {
     erc1155: 'erc1155'

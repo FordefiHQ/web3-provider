@@ -12,12 +12,15 @@
 
 
 /**
+ * 
  * @export
  */
 export const SolanaChainUniqueId = {
-    mainnet: 'solana_mainnet',
-    devnet: 'solana_devnet',
-    eclipseMainnet: 'solana_eclipse_mainnet'
+    solanaMainnet: 'solana_mainnet',
+    solanaDevnet: 'solana_devnet',
+    solanaEclipseMainnet: 'solana_eclipse_mainnet',
+    solanaFogoMainnet: 'solana_fogo_mainnet',
+    solanaFogoTestnet: 'solana_fogo_testnet'
 } as const;
 export type SolanaChainUniqueId = typeof SolanaChainUniqueId[keyof typeof SolanaChainUniqueId];
 
@@ -32,4 +35,3 @@ function SolanaChainUniqueIdFromJSONTyped(json: any, _ignoreDiscriminator: boole
 export function SolanaChainUniqueIdToJSON(value?: SolanaChainUniqueId | null): any {
     return value as any;
 }
-

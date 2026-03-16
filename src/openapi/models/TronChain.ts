@@ -22,13 +22,13 @@ import {
  */
 export interface TronChain {
     /**
-     * 
-     * @type {string}
+     * The type of the chain.
+     * @type {TronChainChainTypeEnum}
      * @memberof TronChain
      */
     chainType: TronChainChainTypeEnum;
     /**
-     * 
+     * The type of the Tron-based chain.
      * @type {TronChainUniqueId}
      * @memberof TronChain
      */
@@ -37,7 +37,7 @@ export interface TronChain {
 
 
 /**
- * 
+ * @export
  */
 const TronChainChainTypeEnum = {
     tron: 'tron'

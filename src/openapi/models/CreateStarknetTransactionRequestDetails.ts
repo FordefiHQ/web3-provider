@@ -24,9 +24,9 @@ import {
 } from './CreateStarknetTransferRequest';
 
 /**
+ * @type CreateStarknetTransactionRequestDetails
  * 
  * @export
- * @type CreateStarknetTransactionRequestDetails
  */
 export type CreateStarknetTransactionRequestDetails = { type: 'starknet_contract_call' } & CreateStarknetTransactionInvokeRequest | { type: 'starknet_contract_deployment' } & CreateStarknetContractDeploymentRequest | { type: 'starknet_transfer' } & CreateStarknetTransferRequest;
 
@@ -46,8 +46,6 @@ function CreateStarknetTransactionRequestDetailsToJSONTyped(value?: CreateStarkn
         case 'starknet_transfer':
             return Object.assign({}, CreateStarknetTransferRequestToJSON(value), { type: 'starknet_transfer' } as const);
         default:
-            throw new Error(`No variant of CreateStarknetTransactionRequestDetails exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

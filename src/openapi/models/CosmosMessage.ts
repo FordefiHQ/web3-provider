@@ -10,6 +10,10 @@
  * Do not edit the class manually.
  */
 
+import type { VaultRef } from './VaultRef';
+import {
+    VaultRefFromJSON,
+} from './VaultRef';
 import type { EnrichedCosmosBechAddress } from './EnrichedCosmosBechAddress';
 import {
     EnrichedCosmosBechAddressFromJSON,
@@ -38,6 +42,10 @@ import type { Signature } from './Signature';
 import {
     SignatureFromJSON,
 } from './Signature';
+import type { RelatedTransaction } from './RelatedTransaction';
+import {
+    RelatedTransactionFromJSON,
+} from './RelatedTransaction';
 import type { NonPushableTransactionStateChange } from './NonPushableTransactionStateChange';
 import {
     NonPushableTransactionStateChangeFromJSON,
@@ -58,97 +66,115 @@ import {
  */
 export interface CosmosMessage {
     /**
-     * 
+     * The unique identifier of the object in the Fordefi platform.
      * @type {string}
      * @memberof CosmosMessage
      */
     id: string;
     /**
-     * 
+     * The date and time when the object was created.
      * @type {Date}
      * @memberof CosmosMessage
      */
     createdAt: Date;
     /**
-     * 
+     * The date and time when the object was last modified. Any change to any field of the resource is considered a modification.
      * @type {Date}
      * @memberof CosmosMessage
      */
     modifiedAt: Date;
     /**
-     * 
+     * Managed transaction data. Presented if the transaction was initiated from the Fordefi system itself, in contrast to unmanaged transactions (which are, for example, transfers of funds into a vault visible to Fordefi). 
      * @type {ManagedTransactionData}
      * @memberof CosmosMessage
      */
     managedTransactionData?: ManagedTransactionData;
     /**
-     * 
+     * The transaction signatures.
      * @type {Array<Signature>}
      * @memberof CosmosMessage
      */
     signatures: Array<Signature>;
     /**
-     * 
+     * An optional transaction note.
      * @type {string}
      * @memberof CosmosMessage
      */
     note?: string;
     /**
-     * 
+     * `automatically_set` if the transaction was automatically set as spam by Fordefi, `manually_set` if the transaction was manually set as spam by a user, and `unset` if the transaction was not set as spam.
      * @type {TransactionSpamState}
      * @memberof CosmosMessage
      */
     spamState?: TransactionSpamState;
     /**
-     * 
+     * The direction of the transaction.
      * @type {TransactionDirection}
      * @memberof CosmosMessage
      */
     direction: TransactionDirection;
     /**
-     * 
+     * Whether the transaction was signed by an external user (for example in case of imported vault).
      * @type {boolean}
      * @memberof CosmosMessage
      */
     signedExternally?: boolean;
     /**
-     * 
+     * The vaults that interacted with the transaction.
+     * @type {Array<VaultRef>}
+     * @memberof CosmosMessage
+     */
+    interactedVaults: Array<VaultRef>;
+    /**
+     * The related transactions.
+     * @type {Array<RelatedTransaction>}
+     * @memberof CosmosMessage
+     */
+    relatedTransactions?: Array<RelatedTransaction>;
+    /**
+     * The organization that the transaction belongs to.
+     * @type {string}
+     * @memberof CosmosMessage
+     */
+    organizationId: string;
+    /**
+     * The state of the message.
      * @type {NonPushableTransactionState}
      * @memberof CosmosMessage
      */
     state: NonPushableTransactionState;
     /**
-     * 
+     * The state changes of the message.
      * @type {Array<NonPushableTransactionStateChange>}
      * @memberof CosmosMessage
      */
     stateChanges: Array<NonPushableTransactionStateChange>;
     /**
-     * 
-     * @type {string}
+     * Cosmos message type.
+     * @type {CosmosMessageTypeEnum}
      * @memberof CosmosMessage
      */
     type: CosmosMessageTypeEnum;
     /**
-     * 
+     * The type of the Cosmos message.
      * @type {CosmosMessageType}
      * @memberof CosmosMessage
      */
     cosmosMessageType: CosmosMessageType;
     /**
-     * 
+     * The raw data of the message, encoded in base64 if bytes, else plain string.
      * @type {CosmosMessageData}
      * @memberof CosmosMessage
      */
     data: CosmosMessageData;
     /**
-     * 
+     * The details of the chain that this message is on.
      * @type {EnrichedCosmosChain}
      * @memberof CosmosMessage
      */
     chain: EnrichedCosmosChain;
     /**
-     * 
+     * The sender of the message.
      * @type {EnrichedCosmosBechAddress}
      * @memberof CosmosMessage
      */
@@ -157,7 +183,7 @@ export interface CosmosMessage {
 
 
 /**
- * 
+ * @export
  */
 const CosmosMessageTypeEnum = {
     cosmosMessage: 'cosmos_message'
@@ -179,6 +205,9 @@ export function CosmosMessageFromJSONTyped(json: any, _ignoreDiscriminator: bool
         'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
         'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'interactedVaults': ((json['interacted_vaults'] as Array<any>).map(VaultRefFromJSON)),
+        'relatedTransactions': json['related_transactions'] == null ? undefined : ((json['related_transactions'] as Array<any>).map(RelatedTransactionFromJSON)),
+        'organizationId': json['organization_id'],
         'state': NonPushableTransactionStateFromJSON(json['state']),
         'stateChanges': ((json['state_changes'] as Array<any>).map(NonPushableTransactionStateChangeFromJSON)),
         'type': json['type'],

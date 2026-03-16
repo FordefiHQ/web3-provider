@@ -32,9 +32,9 @@ import {
 } from './EnrichedEvmNativeAssetIdentifier';
 
 /**
+ * @type EnrichedEvmAssetIdentifierDetails
  * 
  * @export
- * @type EnrichedEvmAssetIdentifierDetails
  */
 export type EnrichedEvmAssetIdentifierDetails = { type: 'erc1155' } & EnrichedEvmErc1155AssetIdentifier | { type: 'erc20' } & EnrichedEvmErc20AssetIdentifier | { type: 'erc721' } & EnrichedEvmErc721AssetIdentifier | { type: 'hyperliquid' } & EnrichedEvmHyperLiquidAssetIdentifier | { type: 'native' } & EnrichedEvmNativeAssetIdentifier;
 
@@ -58,7 +58,6 @@ function EnrichedEvmAssetIdentifierDetailsFromJSONTyped(json: any, _ignoreDiscri
         case 'native':
             return Object.assign({}, EnrichedEvmNativeAssetIdentifierFromJSONTyped(json, true), { type: 'native' } as const);
         default:
-            throw new Error(`No variant of EnrichedEvmAssetIdentifierDetails exists with 'type=${json['type']}'`);
+            return json;
     }
 }
-

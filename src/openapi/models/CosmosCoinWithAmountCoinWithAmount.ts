@@ -20,9 +20,9 @@ import {
 } from './CosmosTokenWithAmount';
 
 /**
- * 
- * @export
  * @type CosmosCoinWithAmountCoinWithAmount
+ * The coin info.
+ * @export
  */
 export type CosmosCoinWithAmountCoinWithAmount = { type: 'native' } & CosmosNativeCoinWithAmount | { type: 'token' } & CosmosTokenWithAmount;
 
@@ -40,7 +40,6 @@ function CosmosCoinWithAmountCoinWithAmountFromJSONTyped(json: any, _ignoreDiscr
         case 'token':
             return Object.assign({}, CosmosTokenWithAmountFromJSONTyped(json, true), { type: 'token' } as const);
         default:
-            throw new Error(`No variant of CosmosCoinWithAmountCoinWithAmount exists with 'type=${json['type']}'`);
+            return json;
     }
 }
-

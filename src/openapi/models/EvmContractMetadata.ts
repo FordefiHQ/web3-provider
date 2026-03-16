@@ -26,19 +26,19 @@ import {
  */
 export interface EvmContractMetadata {
     /**
-     * 
+     * The name of the contract.
      * @type {string}
      * @memberof EvmContractMetadata
      */
     name?: string;
     /**
-     * 
+     * The DApp details of the contract.
      * @type {Dapp}
      * @memberof EvmContractMetadata
      */
     dapp?: Dapp;
     /**
-     * 
+     * `True` if the contract is verified, `False` otherwise.
      * @type {boolean}
      * @memberof EvmContractMetadata
      */
@@ -67,4 +67,3 @@ function EvmContractMetadataFromJSONTyped(json: any, _ignoreDiscriminator: boole
         'token': json['token'] == null ? undefined : EvmContractMetadataTokenFromJSON(json['token']),
     };
 }
-

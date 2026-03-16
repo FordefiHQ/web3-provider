@@ -22,14 +22,14 @@ import {
  */
 export interface EnrichedEvmNativeAssetIdentifier {
     /**
-     * 
+     * The details of the chain of the native asset.
      * @type {EnrichedEvmChain}
      * @memberof EnrichedEvmNativeAssetIdentifier
      */
     chain: EnrichedEvmChain;
     /**
-     * 
-     * @type {string}
+     * EVM asset identifier type.
+     * @type {EnrichedEvmNativeAssetIdentifierTypeEnum}
      * @memberof EnrichedEvmNativeAssetIdentifier
      */
     type: EnrichedEvmNativeAssetIdentifierTypeEnum;
@@ -37,7 +37,7 @@ export interface EnrichedEvmNativeAssetIdentifier {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedEvmNativeAssetIdentifierTypeEnum = {
     native: 'native'

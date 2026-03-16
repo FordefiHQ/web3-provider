@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const TonNetwork = {
@@ -32,4 +33,3 @@ function TonNetworkFromJSONTyped(json: any, _ignoreDiscriminator: boolean): TonN
 export function TonNetworkToJSON(value?: TonNetwork | null): any {
     return value as any;
 }
-

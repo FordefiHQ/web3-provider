@@ -22,13 +22,13 @@ import {
  */
 export interface ApprovalRequestGroup {
     /**
-     * 
+     * The number of approvers required to approve the transaction.
      * @type {number}
      * @memberof ApprovalRequestGroup
      */
     quorumSize: number;
     /**
-     * 
+     * A list of the possible approvers.
      * @type {Array<RequestApprover>}
      * @memberof ApprovalRequestGroup
      */
@@ -49,4 +49,3 @@ function ApprovalRequestGroupFromJSONTyped(json: any, _ignoreDiscriminator: bool
         'approvers': ((json['approvers'] as Array<any>).map(RequestApproverFromJSON)),
     };
 }
-

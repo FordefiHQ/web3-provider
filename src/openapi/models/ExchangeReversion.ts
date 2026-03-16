@@ -22,13 +22,13 @@ import {
  */
 export interface ExchangeReversion {
     /**
-     * 
+     * The state of the reversion. Is one of the following:<ul><li>`not_reverted`: No reversion, meaning, completed successfully.<li>`insufficient_exchange_withdraw_funds`: Insufficient funds in exchange vault for withdraw or<li>`insufficient_exchange_deposit_minimum_amount`: Insufficient minimum amount for depositinsufficient withdraw amount to cover fee.</ul>
      * @type {ExchangeReversionState}
      * @memberof ExchangeReversion
      */
     state: ExchangeReversionState;
     /**
-     * 
+     * The reason for the reversion (additional information).
      * @type {string}
      * @memberof ExchangeReversion
      */
@@ -49,4 +49,3 @@ function ExchangeReversionFromJSONTyped(json: any, _ignoreDiscriminator: boolean
         'reason': json['reason'] == null ? undefined : json['reason'],
     };
 }
-

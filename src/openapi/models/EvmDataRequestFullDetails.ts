@@ -17,19 +17,19 @@
  */
 export interface EvmDataRequestFullDetails {
     /**
-     * 
-     * @type {string}
+     * Method-and-arguments format.
+     * @type {EvmDataRequestFullDetailsTypeEnum}
      * @memberof EvmDataRequestFullDetails
      */
     type: EvmDataRequestFullDetailsTypeEnum;
     /**
-     * 
+     * The method to call in the smart contract.
      * @type {string}
      * @memberof EvmDataRequestFullDetails
      */
     methodName: string;
     /**
-     * 
+     * The arguments to pass into the method, as `key:value` pairs.
      * @type {{ [key: string]: any | undefined; }}
      * @memberof EvmDataRequestFullDetails
      */
@@ -38,7 +38,7 @@ export interface EvmDataRequestFullDetails {
 
 
 /**
- * 
+ * @export
  */
 const EvmDataRequestFullDetailsTypeEnum = {
     fullDetails: 'full_details'

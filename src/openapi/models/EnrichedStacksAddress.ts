@@ -26,31 +26,31 @@ import {
  */
 export interface EnrichedStacksAddress {
     /**
-     * 
+     * The vault corresponding to this address.
      * @type {VaultRef}
      * @memberof EnrichedStacksAddress
      */
     vault?: VaultRef;
     /**
-     * 
+     * The URL of a blockchain explorer that provides real-time information about the address.
      * @type {string}
      * @memberof EnrichedStacksAddress
      */
     explorerUrl?: string;
     /**
-     * 
+     * The contact details of this address.
      * @type {ContactRef}
      * @memberof EnrichedStacksAddress
      */
     contact?: ContactRef;
     /**
      * 
-     * @type {string}
+     * @type {EnrichedStacksAddressTypeEnum}
      * @memberof EnrichedStacksAddress
      */
     type: EnrichedStacksAddressTypeEnum;
     /**
-     * 
+     * The Stacks address represented in hex format.
      * @type {string}
      * @memberof EnrichedStacksAddress
      */
@@ -59,7 +59,7 @@ export interface EnrichedStacksAddress {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedStacksAddressTypeEnum = {
     stacks: 'stacks'

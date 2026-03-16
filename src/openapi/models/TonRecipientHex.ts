@@ -17,13 +17,13 @@
  */
 export interface TonRecipientHex {
     /**
-     * 
-     * @type {string}
+     * The type of the recipient.
+     * @type {TonRecipientHexTypeEnum}
      * @memberof TonRecipientHex
      */
     type: TonRecipientHexTypeEnum;
     /**
-     * 
+     * The address of the recipient in any format.
      * @type {string}
      * @memberof TonRecipientHex
      */
@@ -32,7 +32,7 @@ export interface TonRecipientHex {
 
 
 /**
- * 
+ * @export
  */
 const TonRecipientHexTypeEnum = {
     hex: 'hex'

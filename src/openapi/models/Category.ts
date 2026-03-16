@@ -17,13 +17,13 @@
  */
 export interface Category {
     /**
-     * 
+     * The category ID.
      * @type {number}
      * @memberof Category
      */
     id: number;
     /**
-     * 
+     * The category name.
      * @type {string}
      * @memberof Category
      */
@@ -44,4 +44,3 @@ function CategoryFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Catego
         'name': json['name'],
     };
 }
-

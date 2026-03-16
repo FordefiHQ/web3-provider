@@ -17,19 +17,19 @@
  */
 export interface SolanaCompiledInstructionRequest {
     /**
-     * 
+     * The program index.
      * @type {number}
      * @memberof SolanaCompiledInstructionRequest
      */
     programIndex: number;
     /**
-     * 
+     * The instruction data in Base64 format.
      * @type {string}
      * @memberof SolanaCompiledInstructionRequest
      */
     data: string;
     /**
-     * 
+     * The indexes of the instruction accounts in the transaction accounts list.
      * @type {Array<number>}
      * @memberof SolanaCompiledInstructionRequest
      */
@@ -52,4 +52,3 @@ function SolanaCompiledInstructionRequestToJSONTyped(value?: SolanaCompiledInstr
         'account_indexes': value['accountIndexes'],
     };
 }
-

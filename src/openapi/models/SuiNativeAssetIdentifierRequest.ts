@@ -23,13 +23,13 @@ import {
  */
 export interface SuiNativeAssetIdentifierRequest {
     /**
-     * 
-     * @type {string}
+     * Sui asset identifier type.
+     * @type {SuiNativeAssetIdentifierRequestTypeEnum}
      * @memberof SuiNativeAssetIdentifierRequest
      */
     type: SuiNativeAssetIdentifierRequestTypeEnum;
     /**
-     * 
+     * The details of the chain of the native asset.
      * @type {SuiChainUniqueId}
      * @memberof SuiNativeAssetIdentifierRequest
      */
@@ -38,7 +38,7 @@ export interface SuiNativeAssetIdentifierRequest {
 
 
 /**
- * 
+ * @export
  */
 const SuiNativeAssetIdentifierRequestTypeEnum = {
     native: 'native'

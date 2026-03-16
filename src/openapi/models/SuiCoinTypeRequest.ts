@@ -17,19 +17,19 @@ import {
 } from './SuiChainUniqueId';
 
 /**
- * 
+ * Coin type represents a blockchain coin type.
  * @export
  * @interface SuiCoinTypeRequest
  */
 export interface SuiCoinTypeRequest {
     /**
-     * 
+     * The chain details this address is of.
      * @type {SuiChainUniqueId}
      * @memberof SuiCoinTypeRequest
      */
     chain: SuiChainUniqueId;
     /**
-     * 
+     * Coin type string representation.
      * @type {string}
      * @memberof SuiCoinTypeRequest
      */
@@ -66,4 +66,3 @@ function SuiCoinTypeRequestToJSONTyped(value?: SuiCoinTypeRequest | null, _ignor
         'coin_type_str': value['coinTypeStr'],
     };
 }
-

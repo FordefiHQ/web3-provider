@@ -17,8 +17,8 @@
  */
 export interface ContractCallDetails {
     /**
-     * 
-     * @type {string}
+     * A transaction involving a generic call to a smart contract.
+     * @type {ContractCallDetailsTypeEnum}
      * @memberof ContractCallDetails
      */
     type: ContractCallDetailsTypeEnum;
@@ -26,7 +26,7 @@ export interface ContractCallDetails {
 
 
 /**
- * 
+ * @export
  */
 const ContractCallDetailsTypeEnum = {
     contractCall: 'contract_call'

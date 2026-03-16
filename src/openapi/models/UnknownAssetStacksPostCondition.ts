@@ -26,31 +26,31 @@ import {
  */
 export interface UnknownAssetStacksPostCondition {
     /**
-     * 
+     * The address this post condition applies to.
      * @type {EnrichedStacksAddress}
      * @memberof UnknownAssetStacksPostCondition
      */
     address: EnrichedStacksAddress;
     /**
-     * 
+     * The condition code of the post condition.
      * @type {StacksPostConditionComparator}
      * @memberof UnknownAssetStacksPostCondition
      */
     conditionCode: StacksPostConditionComparator;
     /**
-     * 
+     * The amount of the asset this post condition applies to.
      * @type {string}
      * @memberof UnknownAssetStacksPostCondition
      */
     amount: string;
     /**
-     * 
-     * @type {string}
+     * The type of the post condition.
+     * @type {UnknownAssetStacksPostConditionTypeEnum}
      * @memberof UnknownAssetStacksPostCondition
      */
     type: UnknownAssetStacksPostConditionTypeEnum;
     /**
-     * 
+     * The asset name this post condition applies to
      * @type {string}
      * @memberof UnknownAssetStacksPostCondition
      */
@@ -59,7 +59,7 @@ export interface UnknownAssetStacksPostCondition {
 
 
 /**
- * 
+ * @export
  */
 const UnknownAssetStacksPostConditionTypeEnum = {
     unknownAsset: 'unknown_asset'

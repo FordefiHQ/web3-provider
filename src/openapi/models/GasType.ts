@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const GasType = {
@@ -27,4 +28,3 @@ export function GasTypeFromJSON(json: any): GasType {
 function GasTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): GasType {
     return json as GasType;
 }
-

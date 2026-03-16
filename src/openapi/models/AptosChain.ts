@@ -22,13 +22,13 @@ import {
  */
 export interface AptosChain {
     /**
-     * 
-     * @type {string}
+     * The type of the chain.
+     * @type {AptosChainChainTypeEnum}
      * @memberof AptosChain
      */
     chainType: AptosChainChainTypeEnum;
     /**
-     * 
+     * The type of the Aptos-based chain.
      * @type {AptosChainUniqueId}
      * @memberof AptosChain
      */
@@ -37,7 +37,7 @@ export interface AptosChain {
 
 
 /**
- * 
+ * @export
  */
 const AptosChainChainTypeEnum = {
     aptos: 'aptos'

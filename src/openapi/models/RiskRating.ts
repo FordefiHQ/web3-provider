@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const RiskRating = {
@@ -29,4 +30,3 @@ export function RiskRatingFromJSON(json: any): RiskRating {
 function RiskRatingFromJSONTyped(json: any, _ignoreDiscriminator: boolean): RiskRating {
     return json as RiskRating;
 }
-

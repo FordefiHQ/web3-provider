@@ -14,10 +14,6 @@ import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
 } from './PricedAsset';
-import type { Price } from './Price';
-import {
-    PriceFromJSON,
-} from './Price';
 
 /**
  * 
@@ -26,19 +22,13 @@ import {
  */
 export interface SuiGas {
     /**
-     * 
+     * The total gas fee of the transaction (in MIST).
      * @type {string}
      * @memberof SuiGas
      */
     totalGas: string;
     /**
-     * 
-     * @type {Price}
-     * @memberof SuiGas
-     */
-    fiatPrice?: Price;
-    /**
-     * 
+     * The information of the asset used to pay the fee and amount used.
      * @type {PricedAsset}
      * @memberof SuiGas
      */
@@ -56,8 +46,6 @@ function SuiGasFromJSONTyped(json: any, _ignoreDiscriminator: boolean): SuiGas {
     return {
         
         'totalGas': json['total_gas'],
-        'fiatPrice': json['fiat_price'] == null ? undefined : PriceFromJSON(json['fiat_price']),
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }
-

@@ -17,25 +17,25 @@
  */
 export interface SolanaTransactionAccountRequest {
     /**
-     * 
+     * The address of the account.
      * @type {string}
      * @memberof SolanaTransactionAccountRequest
      */
     address: string;
     /**
-     * 
+     * Indicates if this account is writable in the context of the transaction.
      * @type {boolean}
      * @memberof SolanaTransactionAccountRequest
      */
     writable: boolean;
     /**
-     * 
+     * Indicates if this account is a signer of the transaction.
      * @type {boolean}
      * @memberof SolanaTransactionAccountRequest
      */
     signer: boolean;
     /**
-     * 
+     * A 64-byte Solana secret key of the account, encoded in base-64.
      * @type {string}
      * @memberof SolanaTransactionAccountRequest
      */
@@ -59,4 +59,3 @@ function SolanaTransactionAccountRequestToJSONTyped(value?: SolanaTransactionAcc
         'ephemeral_key': value['ephemeralKey'],
     };
 }
-

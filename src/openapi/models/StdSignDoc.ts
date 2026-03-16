@@ -30,43 +30,43 @@ import {
  */
 export interface StdSignDoc {
     /**
-     * 
+     * The chain the transaction is signed on.
      * @type {EnrichedCosmosChain}
      * @memberof StdSignDoc
      */
     chain: EnrichedCosmosChain;
     /**
-     * 
+     * The account number of the signer of the transaction.
      * @type {string}
      * @memberof StdSignDoc
      */
     accountNumber: string;
     /**
-     * 
+     * The sequence of the signer of the transaction.
      * @type {string}
      * @memberof StdSignDoc
      */
     sequence: string;
     /**
-     * 
+     * The timeout height for the signed transaction.
      * @type {string}
      * @memberof StdSignDoc
      */
     timeoutHeight?: string;
     /**
-     * 
+     * The fee of the signed transaction.
      * @type {StdFee}
      * @memberof StdSignDoc
      */
     fee: StdFee;
     /**
-     * 
+     * The messages of the signed transaction.
      * @type {AminoMessagesList}
      * @memberof StdSignDoc
      */
     messages: AminoMessagesList;
     /**
-     * 
+     * The memo of the signed transaction.
      * @type {string}
      * @memberof StdSignDoc
      */
@@ -92,4 +92,3 @@ function StdSignDocFromJSONTyped(json: any, _ignoreDiscriminator: boolean): StdS
         'memo': json['memo'],
     };
 }
-

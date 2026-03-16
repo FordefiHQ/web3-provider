@@ -17,13 +17,13 @@
  */
 export interface TronRecipientHex {
     /**
-     * 
-     * @type {string}
+     * The type of the recipient.
+     * @type {TronRecipientHexTypeEnum}
      * @memberof TronRecipientHex
      */
     type: TronRecipientHexTypeEnum;
     /**
-     * 
+     * The address of the recipient.
      * @type {string}
      * @memberof TronRecipientHex
      */
@@ -32,7 +32,7 @@ export interface TronRecipientHex {
 
 
 /**
- * 
+ * @export
  */
 const TronRecipientHexTypeEnum = {
     hex: 'hex'

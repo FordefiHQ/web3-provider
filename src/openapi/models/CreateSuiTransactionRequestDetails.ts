@@ -24,9 +24,9 @@ import {
 } from './CreateSuiTransferRequest';
 
 /**
+ * @type CreateSuiTransactionRequestDetails
  * 
  * @export
- * @type CreateSuiTransactionRequestDetails
  */
 export type CreateSuiTransactionRequestDetails = { type: 'sui_binary_canonical_serialization' } & CreateSuiSerializedTransactionDataRequest | { type: 'sui_programmable_transaction_block' } & CreateSuiProgrammableTransactionBlockRequest | { type: 'sui_transfer' } & CreateSuiTransferRequest;
 
@@ -46,8 +46,6 @@ function CreateSuiTransactionRequestDetailsToJSONTyped(value?: CreateSuiTransact
         case 'sui_transfer':
             return Object.assign({}, CreateSuiTransferRequestToJSON(value), { type: 'sui_transfer' } as const);
         default:
-            throw new Error(`No variant of CreateSuiTransactionRequestDetails exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

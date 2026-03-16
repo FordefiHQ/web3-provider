@@ -14,10 +14,10 @@ import type { CosmosAssetIdentifierRequest } from './CosmosAssetIdentifierReques
 import {
     CosmosAssetIdentifierRequestToJSON,
 } from './CosmosAssetIdentifierRequest';
-import type { CreateAptosTransferRequestValue } from './CreateAptosTransferRequestValue';
+import type { CreateEvmTransferRequestValue } from './CreateEvmTransferRequestValue';
 import {
-    CreateAptosTransferRequestValueToJSON,
-} from './CreateAptosTransferRequestValue';
+    CreateEvmTransferRequestValueToJSON,
+} from './CreateEvmTransferRequestValue';
 import type { TypedCosmosTransferRequestTo } from './TypedCosmosTransferRequestTo';
 import {
     TypedCosmosTransferRequestToToJSON,
@@ -34,13 +34,13 @@ import {
  */
 export interface TypedCosmosTransferRequest {
     /**
-     * 
-     * @type {string}
+     * A Cosmos transfer transaction. A transaction of this kind is for transferring Cosmos assets.
+     * @type {TypedCosmosTransferRequestTypeEnum}
      * @memberof TypedCosmosTransferRequest
      */
     type: TypedCosmosTransferRequestTypeEnum;
     /**
-     * 
+     * The push mode of the transaction when sending it to the node. It can be one of the following:<ul><li>`auto`: The transaction is pushed automatically by Fordefi. <li>`manual`: The transaction should be pushed manually by the user using a 3rd party.<li>`deferred`: The transaction is pushed by Fordefi after a certain time, if by that time it wasn't pushed manually by the client.</ul></ul> 
      * @type {PushMode}
      * @memberof TypedCosmosTransferRequest
      */
@@ -52,19 +52,19 @@ export interface TypedCosmosTransferRequest {
      */
     to: TypedCosmosTransferRequestTo;
     /**
-     * 
+     * The asset to be transferred.
      * @type {CosmosAssetIdentifierRequest}
      * @memberof TypedCosmosTransferRequest
      */
     assetIdentifier: CosmosAssetIdentifierRequest;
     /**
      * 
-     * @type {CreateAptosTransferRequestValue}
+     * @type {CreateEvmTransferRequestValue}
      * @memberof TypedCosmosTransferRequest
      */
-    value: CreateAptosTransferRequestValue;
+    value: CreateEvmTransferRequestValue;
     /**
-     * 
+     * Transaction memo.
      * @type {string}
      * @memberof TypedCosmosTransferRequest
      */
@@ -73,7 +73,7 @@ export interface TypedCosmosTransferRequest {
 
 
 /**
- * 
+ * @export
  */
 const TypedCosmosTransferRequestTypeEnum = {
     cosmosTransfer: 'cosmos_transfer'
@@ -95,7 +95,7 @@ function TypedCosmosTransferRequestToJSONTyped(value?: TypedCosmosTransferReques
         'push_mode': PushModeToJSON(value['pushMode']),
         'to': TypedCosmosTransferRequestToToJSON(value['to']),
         'asset_identifier': CosmosAssetIdentifierRequestToJSON(value['assetIdentifier']),
-        'value': CreateAptosTransferRequestValueToJSON(value['value']),
+        'value': CreateEvmTransferRequestValueToJSON(value['value']),
         'memo': value['memo'],
     };
 }

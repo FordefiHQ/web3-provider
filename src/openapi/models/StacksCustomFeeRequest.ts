@@ -18,12 +18,12 @@
 export interface StacksCustomFeeRequest {
     /**
      * 
-     * @type {string}
+     * @type {StacksCustomFeeRequestTypeEnum}
      * @memberof StacksCustomFeeRequest
      */
     type: StacksCustomFeeRequestTypeEnum;
     /**
-     * 
+     * The total fee to use in the transaction (In microSTX).
      * @type {string}
      * @memberof StacksCustomFeeRequest
      */
@@ -32,7 +32,7 @@ export interface StacksCustomFeeRequest {
 
 
 /**
- * 
+ * @export
  */
 const StacksCustomFeeRequestTypeEnum = {
     custom: 'custom'

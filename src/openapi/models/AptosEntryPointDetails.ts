@@ -22,13 +22,13 @@ import {
  */
 export interface AptosEntryPointDetails {
     /**
-     * 
-     * @type {string}
+     * A transaction with an entry point function.
+     * @type {AptosEntryPointDetailsTypeEnum}
      * @memberof AptosEntryPointDetails
      */
     type: AptosEntryPointDetailsTypeEnum;
     /**
-     * 
+     * The recipient of the coins.
      * @type {EnrichedAptosAddress}
      * @memberof AptosEntryPointDetails
      */
@@ -37,7 +37,7 @@ export interface AptosEntryPointDetails {
 
 
 /**
- * 
+ * @export
  */
 const AptosEntryPointDetailsTypeEnum = {
     entryPoint: 'entry_point'

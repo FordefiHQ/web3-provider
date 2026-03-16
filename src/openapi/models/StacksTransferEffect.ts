@@ -26,25 +26,25 @@ import {
  */
 export interface StacksTransferEffect {
     /**
-     * 
+     * The asset information.
      * @type {PricedAsset}
      * @memberof StacksTransferEffect
      */
     pricedAsset: PricedAsset;
     /**
-     * 
+     * The amount of the transfer.
      * @type {string}
      * @memberof StacksTransferEffect
      */
     amount: string;
     /**
-     * 
+     * The sender of the transfer.
      * @type {EnrichedStacksAddress}
      * @memberof StacksTransferEffect
      */
     from: EnrichedStacksAddress;
     /**
-     * 
+     * The receiver of the transfer.
      * @type {EnrichedStacksAddress}
      * @memberof StacksTransferEffect
      */
@@ -67,4 +67,3 @@ function StacksTransferEffectFromJSONTyped(json: any, _ignoreDiscriminator: bool
         'to': EnrichedStacksAddressFromJSON(json['to']),
     };
 }
-

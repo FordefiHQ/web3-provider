@@ -32,9 +32,9 @@ import {
 } from './SuiSharedObjectRefInputArgument';
 
 /**
+ * @type SuiObjectInputArgumentDetails
  * 
  * @export
- * @type SuiObjectInputArgumentDetails
  */
 export type SuiObjectInputArgumentDetails = { type: 'imm_or_owned' } & SuiImmOrOwnedObjectRefInputArgument | { type: 'partial' } & SuiPartialObjectRefInputArgument | { type: 'receiving' } & SuiReceivingObjectRefInputArgument | { type: 'shared' } & SuiSharedObjectRefInputArgument;
 
@@ -56,7 +56,7 @@ function SuiObjectInputArgumentDetailsFromJSONTyped(json: any, _ignoreDiscrimina
         case 'shared':
             return Object.assign({}, SuiSharedObjectRefInputArgumentFromJSONTyped(json, true), { type: 'shared' } as const);
         default:
-            throw new Error(`No variant of SuiObjectInputArgumentDetails exists with 'type=${json['type']}'`);
+            return json;
     }
 }
 
@@ -78,8 +78,6 @@ function SuiObjectInputArgumentDetailsToJSONTyped(value?: SuiObjectInputArgument
         case 'shared':
             return Object.assign({}, SuiSharedObjectRefInputArgumentToJSON(value), { type: 'shared' } as const);
         default:
-            throw new Error(`No variant of SuiObjectInputArgumentDetails exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

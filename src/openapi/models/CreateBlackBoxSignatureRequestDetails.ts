@@ -20,9 +20,9 @@ import {
 } from './IntegerHashPayload';
 
 /**
+ * @type CreateBlackBoxSignatureRequestDetails
  * 
  * @export
- * @type CreateBlackBoxSignatureRequestDetails
  */
 export type CreateBlackBoxSignatureRequestDetails = { format: 'hash_binary' } & BinaryHashPayload | { format: 'hash_integer' } & IntegerHashPayload;
 
@@ -40,8 +40,6 @@ function CreateBlackBoxSignatureRequestDetailsToJSONTyped(value?: CreateBlackBox
         case 'hash_integer':
             return Object.assign({}, IntegerHashPayloadToJSON(value), { format: 'hash_integer' } as const);
         default:
-            throw new Error(`No variant of CreateBlackBoxSignatureRequestDetails exists with 'format=${value['format']}'`);
+            return value;
     }
-
 }
-

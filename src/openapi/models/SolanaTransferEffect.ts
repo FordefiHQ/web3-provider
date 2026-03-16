@@ -14,22 +14,10 @@ import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
 } from './PricedAsset';
-import type { Price } from './Price';
-import {
-    PriceFromJSON,
-} from './Price';
 import type { EnrichedSolanaAddress } from './EnrichedSolanaAddress';
 import {
     EnrichedSolanaAddressFromJSON,
 } from './EnrichedSolanaAddress';
-import type { SplTokenContract } from './SplTokenContract';
-import {
-    SplTokenContractFromJSON,
-} from './SplTokenContract';
-import type { SolanaTransferEffectType } from './SolanaTransferEffectType';
-import {
-    SolanaTransferEffectTypeFromJSON,
-} from './SolanaTransferEffectType';
 
 /**
  * 
@@ -38,47 +26,29 @@ import {
  */
 export interface SolanaTransferEffect {
     /**
-     * 
+     * The asset information.
      * @type {PricedAsset}
      * @memberof SolanaTransferEffect
      */
     pricedAsset: PricedAsset;
     /**
-     * 
+     * The amount of the transfer.
      * @type {string}
      * @memberof SolanaTransferEffect
      */
     amount: string;
     /**
-     * 
-     * @type {SolanaTransferEffectType}
-     * @memberof SolanaTransferEffect
-     */
-    type: SolanaTransferEffectType;
-    /**
-     * 
+     * The sender of the transfer.
      * @type {EnrichedSolanaAddress}
      * @memberof SolanaTransferEffect
      */
     from: EnrichedSolanaAddress;
     /**
-     * 
+     * The receiver of the transfer.
      * @type {EnrichedSolanaAddress}
      * @memberof SolanaTransferEffect
      */
     to: EnrichedSolanaAddress;
-    /**
-     * 
-     * @type {Price}
-     * @memberof SolanaTransferEffect
-     */
-    price?: Price;
-    /**
-     * 
-     * @type {SplTokenContract}
-     * @memberof SolanaTransferEffect
-     */
-    tokenContract?: SplTokenContract;
 }
 
 export function SolanaTransferEffectFromJSON(json: any): SolanaTransferEffect {
@@ -93,11 +63,7 @@ function SolanaTransferEffectFromJSONTyped(json: any, _ignoreDiscriminator: bool
         
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
         'amount': json['amount'],
-        'type': SolanaTransferEffectTypeFromJSON(json['type']),
         'from': EnrichedSolanaAddressFromJSON(json['from']),
         'to': EnrichedSolanaAddressFromJSON(json['to']),
-        'price': json['price'] == null ? undefined : PriceFromJSON(json['price']),
-        'tokenContract': json['token_contract'] == null ? undefined : SplTokenContractFromJSON(json['token_contract']),
     };
 }
-

@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const SolanaMessageVersion = {
@@ -31,4 +32,3 @@ function SolanaMessageVersionFromJSONTyped(json: any, _ignoreDiscriminator: bool
 export function SolanaMessageVersionToJSON(value?: SolanaMessageVersion | null): any {
     return value as any;
 }
-

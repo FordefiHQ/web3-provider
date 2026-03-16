@@ -18,17 +18,29 @@ import type { CreateEvmRevokeAllowanceRequest } from './CreateEvmRevokeAllowance
 import {
     CreateEvmRevokeAllowanceRequestToJSON,
 } from './CreateEvmRevokeAllowanceRequest';
+import type { CreateEvmSetCodeRequest } from './CreateEvmSetCodeRequest';
+import {
+    CreateEvmSetCodeRequestToJSON,
+} from './CreateEvmSetCodeRequest';
 import type { CreateEvmTransferRequest } from './CreateEvmTransferRequest';
 import {
     CreateEvmTransferRequestToJSON,
 } from './CreateEvmTransferRequest';
+import type { CreateEvmUnwrapNativeRequest } from './CreateEvmUnwrapNativeRequest';
+import {
+    CreateEvmUnwrapNativeRequestToJSON,
+} from './CreateEvmUnwrapNativeRequest';
+import type { CreateEvmWrapNativeRequest } from './CreateEvmWrapNativeRequest';
+import {
+    CreateEvmWrapNativeRequestToJSON,
+} from './CreateEvmWrapNativeRequest';
 
 /**
+ * @type CreateEvmTransactionRequestDetails
  * 
  * @export
- * @type CreateEvmTransactionRequestDetails
  */
-export type CreateEvmTransactionRequestDetails = { type: 'evm_raw_transaction' } & CreateEvmRawTransactionRequest | { type: 'evm_revoke_allowance' } & CreateEvmRevokeAllowanceRequest | { type: 'evm_transfer' } & CreateEvmTransferRequest;
+export type CreateEvmTransactionRequestDetails = { type: 'evm_raw_transaction' } & CreateEvmRawTransactionRequest | { type: 'evm_revoke_allowance' } & CreateEvmRevokeAllowanceRequest | { type: 'evm_set_code' } & CreateEvmSetCodeRequest | { type: 'evm_transfer' } & CreateEvmTransferRequest | { type: 'evm_unwrap_native' } & CreateEvmUnwrapNativeRequest | { type: 'evm_wrap_native' } & CreateEvmWrapNativeRequest;
 
 export function CreateEvmTransactionRequestDetailsToJSON(json: any): any {
     return CreateEvmTransactionRequestDetailsToJSONTyped(json, false);
@@ -43,11 +55,15 @@ function CreateEvmTransactionRequestDetailsToJSONTyped(value?: CreateEvmTransact
             return Object.assign({}, CreateEvmRawTransactionRequestToJSON(value), { type: 'evm_raw_transaction' } as const);
         case 'evm_revoke_allowance':
             return Object.assign({}, CreateEvmRevokeAllowanceRequestToJSON(value), { type: 'evm_revoke_allowance' } as const);
+        case 'evm_set_code':
+            return Object.assign({}, CreateEvmSetCodeRequestToJSON(value), { type: 'evm_set_code' } as const);
         case 'evm_transfer':
             return Object.assign({}, CreateEvmTransferRequestToJSON(value), { type: 'evm_transfer' } as const);
+        case 'evm_unwrap_native':
+            return Object.assign({}, CreateEvmUnwrapNativeRequestToJSON(value), { type: 'evm_unwrap_native' } as const);
+        case 'evm_wrap_native':
+            return Object.assign({}, CreateEvmWrapNativeRequestToJSON(value), { type: 'evm_wrap_native' } as const);
         default:
-            throw new Error(`No variant of CreateEvmTransactionRequestDetails exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

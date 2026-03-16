@@ -17,19 +17,19 @@ import {
 } from './TonChainUniqueId';
 
 /**
- * 
+ * Address represents a blockchain address.
  * @export
  * @interface TonAddressRequest
  */
 export interface TonAddressRequest {
     /**
-     * 
+     * The chain details this address is of.
      * @type {TonChainUniqueId}
      * @memberof TonAddressRequest
      */
     chain: TonChainUniqueId;
     /**
-     * 
+     * Contract address in a raw format.
      * @type {string}
      * @memberof TonAddressRequest
      */
@@ -66,4 +66,3 @@ function TonAddressRequestToJSONTyped(value?: TonAddressRequest | null, _ignoreD
         'address': value['address'],
     };
 }
-

@@ -30,25 +30,25 @@ import {
  */
 export interface SuiTransactionResult {
     /**
-     * 
+     * Details whether the transaction was reverted or not.
      * @type {SuiReversion}
      * @memberof SuiTransactionResult
      */
     reversion: SuiReversion;
     /**
-     * 
+     * The description of the error of the transaction.
      * @type {string}
      * @memberof SuiTransactionResult
      */
     transactionError?: string;
     /**
-     * 
+     * The gas of the transaction.
      * @type {SuiGas}
      * @memberof SuiTransactionResult
      */
     enrichedGas: SuiGas;
     /**
-     * 
+     * The effects of the transaction.
      * @type {SuiEffects}
      * @memberof SuiTransactionResult
      */
@@ -71,4 +71,3 @@ function SuiTransactionResultFromJSONTyped(json: any, _ignoreDiscriminator: bool
         'effects': SuiEffectsFromJSON(json['effects']),
     };
 }
-

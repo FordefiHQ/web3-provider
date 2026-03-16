@@ -23,12 +23,12 @@ import {
 export interface CosmosTransferToAddressRequest {
     /**
      * 
-     * @type {string}
+     * @type {CosmosTransferToAddressRequestTypeEnum}
      * @memberof CosmosTransferToAddressRequest
      */
     type: CosmosTransferToAddressRequestTypeEnum;
     /**
-     * 
+     * The cosmos bech32 to transfer to.
      * @type {CosmosBechAddress}
      * @memberof CosmosTransferToAddressRequest
      */
@@ -37,7 +37,7 @@ export interface CosmosTransferToAddressRequest {
 
 
 /**
- * 
+ * @export
  */
 const CosmosTransferToAddressRequestTypeEnum = {
     address: 'address'

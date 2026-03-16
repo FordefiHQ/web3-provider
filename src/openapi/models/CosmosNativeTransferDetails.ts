@@ -30,38 +30,39 @@ import {
  */
 export interface CosmosNativeTransferDetails {
     /**
-     * 
+     * List of transaction's messages.
      * @type {MessagesList}
      * @memberof CosmosNativeTransferDetails
      */
     transactionData: MessagesList;
     /**
-     * 
+     * The direction of the movement of funds, in case of a transfer.
      * @type {TransferDirection}
      * @memberof CosmosNativeTransferDetails
+     * @deprecated
      */
     direction: TransferDirection;
     /**
-     * 
+     * The sender.
      * @type {EnrichedCosmosBechAddress}
      * @memberof CosmosNativeTransferDetails
      */
     sender: EnrichedCosmosBechAddress;
     /**
-     * 
+     * The recipient.
      * @type {EnrichedCosmosBechAddress}
      * @memberof CosmosNativeTransferDetails
      */
     recipient: EnrichedCosmosBechAddress;
     /**
-     * 
+     * Is this transfer an internal transfer between two vaults. None if the transaction is incoming.
      * @type {boolean}
      * @memberof CosmosNativeTransferDetails
      */
     isInternal?: boolean;
     /**
-     * 
-     * @type {string}
+     * A transaction involving a native transfer from one address to another.
+     * @type {CosmosNativeTransferDetailsTypeEnum}
      * @memberof CosmosNativeTransferDetails
      */
     type: CosmosNativeTransferDetailsTypeEnum;
@@ -69,7 +70,7 @@ export interface CosmosNativeTransferDetails {
 
 
 /**
- * 
+ * @export
  */
 const CosmosNativeTransferDetailsTypeEnum = {
     nativeTransfer: 'native_transfer'

@@ -23,12 +23,12 @@ import {
 export interface SolanaPriorityFeeRequest {
     /**
      * 
-     * @type {string}
+     * @type {SolanaPriorityFeeRequestTypeEnum}
      * @memberof SolanaPriorityFeeRequest
      */
     type: SolanaPriorityFeeRequestTypeEnum;
     /**
-     * 
+     * Using the Fee Priority option, you allocate the range of fee you are willing to add: low, medium, or high. Fordefi then does its best to achieve success, based on these parameters.
      * @type {FeePriorityLevelRequest}
      * @memberof SolanaPriorityFeeRequest
      */
@@ -37,7 +37,7 @@ export interface SolanaPriorityFeeRequest {
 
 
 /**
- * 
+ * @export
  */
 const SolanaPriorityFeeRequestTypeEnum = {
     priority: 'priority'

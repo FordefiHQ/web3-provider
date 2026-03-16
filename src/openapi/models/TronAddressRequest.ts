@@ -17,19 +17,19 @@ import {
 } from './TronChainUniqueId';
 
 /**
- * 
+ * Address represents a blockchain address.
  * @export
  * @interface TronAddressRequest
  */
 export interface TronAddressRequest {
     /**
-     * 
+     * The chain details this address is of.
      * @type {TronChainUniqueId}
      * @memberof TronAddressRequest
      */
     chain: TronChainUniqueId;
     /**
-     * 
+     * Base58 representation of the address in the chain.
      * @type {string}
      * @memberof TronAddressRequest
      */
@@ -66,4 +66,3 @@ function TronAddressRequestToJSONTyped(value?: TronAddressRequest | null, _ignor
         'base58_repr': value['base58Repr'],
     };
 }
-

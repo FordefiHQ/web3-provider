@@ -22,9 +22,9 @@ import {
 } from './SolanaSplTokenAssetIdentifierRequest';
 
 /**
+ * @type SolanaAssetIdentifierDetails
  * 
  * @export
- * @type SolanaAssetIdentifierDetails
  */
 export type SolanaAssetIdentifierDetails = { type: 'native' } & SolanaNativeAssetIdentifierRequest | { type: 'spl_token' } & SolanaSplTokenAssetIdentifierRequest;
 
@@ -42,7 +42,7 @@ function SolanaAssetIdentifierDetailsFromJSONTyped(json: any, _ignoreDiscriminat
         case 'spl_token':
             return Object.assign({}, SolanaSplTokenAssetIdentifierRequestFromJSONTyped(json, true), { type: 'spl_token' } as const);
         default:
-            throw new Error(`No variant of SolanaAssetIdentifierDetails exists with 'type=${json['type']}'`);
+            return json;
     }
 }
 
@@ -60,8 +60,6 @@ function SolanaAssetIdentifierDetailsToJSONTyped(value?: SolanaAssetIdentifierDe
         case 'spl_token':
             return Object.assign({}, SolanaSplTokenAssetIdentifierRequestToJSON(value), { type: 'spl_token' } as const);
         default:
-            throw new Error(`No variant of SolanaAssetIdentifierDetails exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

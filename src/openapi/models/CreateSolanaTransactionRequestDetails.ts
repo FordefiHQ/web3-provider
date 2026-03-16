@@ -18,21 +18,17 @@ import type { CreateSolanaSerializedTransactionMessageRequest } from './CreateSo
 import {
     CreateSolanaSerializedTransactionMessageRequestToJSON,
 } from './CreateSolanaSerializedTransactionMessageRequest';
-import type { CreateSolanaSpotSwapRequest } from './CreateSolanaSpotSwapRequest';
-import {
-    CreateSolanaSpotSwapRequestToJSON,
-} from './CreateSolanaSpotSwapRequest';
 import type { CreateSolanaTransferRequest } from './CreateSolanaTransferRequest';
 import {
     CreateSolanaTransferRequestToJSON,
 } from './CreateSolanaTransferRequest';
 
 /**
+ * @type CreateSolanaTransactionRequestDetails
  * 
  * @export
- * @type CreateSolanaTransactionRequestDetails
  */
-export type CreateSolanaTransactionRequestDetails = { type: 'solana_raw_transaction' } & CreateSolanaRawTransactionRequest | { type: 'solana_serialized_transaction_message' } & CreateSolanaSerializedTransactionMessageRequest | { type: 'solana_spot_swap' } & CreateSolanaSpotSwapRequest | { type: 'solana_transfer' } & CreateSolanaTransferRequest;
+export type CreateSolanaTransactionRequestDetails = { type: 'solana_raw_transaction' } & CreateSolanaRawTransactionRequest | { type: 'solana_serialized_transaction_message' } & CreateSolanaSerializedTransactionMessageRequest | { type: 'solana_transfer' } & CreateSolanaTransferRequest;
 
 export function CreateSolanaTransactionRequestDetailsToJSON(json: any): any {
     return CreateSolanaTransactionRequestDetailsToJSONTyped(json, false);
@@ -47,13 +43,9 @@ function CreateSolanaTransactionRequestDetailsToJSONTyped(value?: CreateSolanaTr
             return Object.assign({}, CreateSolanaRawTransactionRequestToJSON(value), { type: 'solana_raw_transaction' } as const);
         case 'solana_serialized_transaction_message':
             return Object.assign({}, CreateSolanaSerializedTransactionMessageRequestToJSON(value), { type: 'solana_serialized_transaction_message' } as const);
-        case 'solana_spot_swap':
-            return Object.assign({}, CreateSolanaSpotSwapRequestToJSON(value), { type: 'solana_spot_swap' } as const);
         case 'solana_transfer':
             return Object.assign({}, CreateSolanaTransferRequestToJSON(value), { type: 'solana_transfer' } as const);
         default:
-            throw new Error(`No variant of CreateSolanaTransactionRequestDetails exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

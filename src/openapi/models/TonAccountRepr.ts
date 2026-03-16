@@ -17,13 +17,13 @@
  */
 export interface TonAccountRepr {
     /**
-     * 
-     * @type {string}
+     * The type of the chain.
+     * @type {TonAccountReprChainTypeEnum}
      * @memberof TonAccountRepr
      */
     chainType: TonAccountReprChainTypeEnum;
     /**
-     * 
+     * The address of the TON contract in any format.
      * @type {string}
      * @memberof TonAccountRepr
      */
@@ -32,7 +32,7 @@ export interface TonAccountRepr {
 
 
 /**
- * 
+ * @export
  */
 const TonAccountReprChainTypeEnum = {
     ton: 'ton'

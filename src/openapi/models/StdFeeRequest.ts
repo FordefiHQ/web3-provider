@@ -22,31 +22,31 @@ import {
  */
 export interface StdFeeRequest {
     /**
-     * 
+     * List of coins to pay for this transaction.
      * @type {Array<StdCoin>}
      * @memberof StdFeeRequest
      */
     amount: Array<StdCoin>;
     /**
-     * 
+     * Gas wanted for this transaction.
      * @type {string}
      * @memberof StdFeeRequest
      */
     gas: string;
     /**
-     * 
+     * Payer for this transaction.
      * @type {string}
      * @memberof StdFeeRequest
      */
     payer?: string;
     /**
-     * 
+     * Granter for this transaction.
      * @type {string}
      * @memberof StdFeeRequest
      */
     granter?: string;
     /**
-     * 
+     * Fee Payer for this transaction.
      * @type {string}
      * @memberof StdFeeRequest
      */
@@ -71,4 +71,3 @@ function StdFeeRequestToJSONTyped(value?: StdFeeRequest | null, _ignoreDiscrimin
         'fee_payer': value['feePayer'],
     };
 }
-

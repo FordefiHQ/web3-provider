@@ -24,9 +24,9 @@ import {
 } from './MinedSignDoc';
 
 /**
+ * @type SignDoc
  * 
  * @export
- * @type SignDoc
  */
 export type SignDoc = { format: 'amino' } & AminoSignDoc | { format: 'direct' } & DirectSignDoc | { format: 'mined' } & MinedSignDoc;
 
@@ -46,7 +46,6 @@ function SignDocFromJSONTyped(json: any, _ignoreDiscriminator: boolean): SignDoc
         case 'mined':
             return Object.assign({}, MinedSignDocFromJSONTyped(json, true), { format: 'mined' } as const);
         default:
-            throw new Error(`No variant of SignDoc exists with 'format=${json['format']}'`);
+            return json;
     }
 }
-

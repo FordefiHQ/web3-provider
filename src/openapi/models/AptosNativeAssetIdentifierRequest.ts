@@ -23,13 +23,13 @@ import {
  */
 export interface AptosNativeAssetIdentifierRequest {
     /**
-     * 
-     * @type {string}
+     * Aptos asset identifier type.
+     * @type {AptosNativeAssetIdentifierRequestTypeEnum}
      * @memberof AptosNativeAssetIdentifierRequest
      */
     type: AptosNativeAssetIdentifierRequestTypeEnum;
     /**
-     * 
+     * The details of the chain of the native asset.
      * @type {AptosChainUniqueId}
      * @memberof AptosNativeAssetIdentifierRequest
      */
@@ -38,7 +38,7 @@ export interface AptosNativeAssetIdentifierRequest {
 
 
 /**
- * 
+ * @export
  */
 const AptosNativeAssetIdentifierRequestTypeEnum = {
     native: 'native'

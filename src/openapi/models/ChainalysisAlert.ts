@@ -30,25 +30,25 @@ import {
  */
 export interface ChainalysisAlert {
     /**
-     * 
+     * The category of the AML rule.
      * @type {Category}
      * @memberof ChainalysisAlert
      */
     category: Category;
     /**
-     * 
+     * Defines the alert's risk as SEVERE, HIGH, MEDIUM, or LOW.
      * @type {RiskRating}
      * @memberof ChainalysisAlert
      */
     riskRating: RiskRating;
     /**
-     * 
+     * Defines the exposure direction as DIRECT. Currently, we don't provide indirect exposure for withdrawal attempt alerts.
      * @type {ExposureType}
      * @memberof ChainalysisAlert
      */
     exposureType: ExposureType;
     /**
-     * 
+     * The name of the service as defined by Chainalysis. If null returns, Chainalysis has not yet identified the service's name.
      * @type {string}
      * @memberof ChainalysisAlert
      */
@@ -71,4 +71,3 @@ function ChainalysisAlertFromJSONTyped(json: any, _ignoreDiscriminator: boolean)
         'service': json['service'] == null ? undefined : json['service'],
     };
 }
-

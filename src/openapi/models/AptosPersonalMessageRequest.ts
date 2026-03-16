@@ -22,49 +22,49 @@ import {
  */
 export interface AptosPersonalMessageRequest {
     /**
-     * 
-     * @type {string}
+     * Personal message standard.
+     * @type {AptosPersonalMessageRequestTypeEnum}
      * @memberof AptosPersonalMessageRequest
      */
     type: AptosPersonalMessageRequestTypeEnum;
     /**
-     * 
+     * Whether the address should be included in the signed message.
      * @type {boolean}
      * @memberof AptosPersonalMessageRequest
      */
     shouldIncludeAddress: boolean;
     /**
-     * 
+     * The application that the message is for.
      * @type {string}
      * @memberof AptosPersonalMessageRequest
      */
     application: string;
     /**
-     * 
+     * Whether the application should be included in the signed message.
      * @type {boolean}
      * @memberof AptosPersonalMessageRequest
      */
     shouldIncludeApplication: boolean;
     /**
-     * 
+     * The details of the chain of the native asset.
      * @type {AptosChainUniqueId}
      * @memberof AptosPersonalMessageRequest
      */
     chain: AptosChainUniqueId;
     /**
-     * 
+     * Whether the chain should be included in the signed message.
      * @type {boolean}
      * @memberof AptosPersonalMessageRequest
      */
     shouldIncludeChain: boolean;
     /**
-     * 
+     * The message to be signed, encoded in base64.
      * @type {string}
      * @memberof AptosPersonalMessageRequest
      */
     messageToSign: string;
     /**
-     * 
+     * The nonce of the message.
      * @type {string}
      * @memberof AptosPersonalMessageRequest
      */
@@ -73,7 +73,7 @@ export interface AptosPersonalMessageRequest {
 
 
 /**
- * 
+ * @export
  */
 const AptosPersonalMessageRequestTypeEnum = {
     personalMessageType: 'personal_message_type'

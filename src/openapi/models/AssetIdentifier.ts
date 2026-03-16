@@ -56,9 +56,9 @@ import {
 } from './UtxoAssetIdentifier';
 
 /**
+ * @type AssetIdentifier
  * 
  * @export
- * @type AssetIdentifier
  */
 export type AssetIdentifier = { type: 'aptos' } & AptosAssetIdentifier | { type: 'cosmos' } & CosmosAssetIdentifier | { type: 'evm' } & EvmAssetIdentifier | { type: 'exchange' } & ExchangeAssetIdentifier | { type: 'solana' } & SolanaAssetIdentifier | { type: 'stacks' } & StacksAssetIdentifier | { type: 'starknet' } & StarknetAssetIdentifier | { type: 'sui' } & SuiAssetIdentifier | { type: 'ton' } & TonAssetIdentifier | { type: 'tron' } & TronAssetIdentifier | { type: 'utxo' } & UtxoAssetIdentifier;
 
@@ -94,7 +94,6 @@ function AssetIdentifierFromJSONTyped(json: any, _ignoreDiscriminator: boolean):
         case 'utxo':
             return Object.assign({}, UtxoAssetIdentifierFromJSONTyped(json, true), { type: 'utxo' } as const);
         default:
-            throw new Error(`No variant of AssetIdentifier exists with 'type=${json['type']}'`);
+            return json;
     }
 }
-

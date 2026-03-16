@@ -18,21 +18,27 @@
 export interface SolanaCustomFeeRequest {
     /**
      * 
-     * @type {string}
+     * @type {SolanaCustomFeeRequestTypeEnum}
      * @memberof SolanaCustomFeeRequest
      */
     type: SolanaCustomFeeRequestTypeEnum;
     /**
-     * 
+     * The priority fee to use in the transaction (In lamports).
      * @type {string}
      * @memberof SolanaCustomFeeRequest
      */
-    priorityFee: string;
+    priorityFee?: string;
+    /**
+     * The unit price to use in the transaction (In microlamports).
+     * @type {string}
+     * @memberof SolanaCustomFeeRequest
+     */
+    unitPrice?: string;
 }
 
 
 /**
- * 
+ * @export
  */
 const SolanaCustomFeeRequestTypeEnum = {
     custom: 'custom'
@@ -52,5 +58,6 @@ function SolanaCustomFeeRequestToJSONTyped(value?: SolanaCustomFeeRequest | null
         
         'type': value['type'],
         'priority_fee': value['priorityFee'],
+        'unit_price': value['unitPrice'],
     };
 }

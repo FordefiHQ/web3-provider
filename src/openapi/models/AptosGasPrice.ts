@@ -26,19 +26,19 @@ import {
  */
 export interface AptosGasPrice {
     /**
-     * 
+     * The priority level of the gas price.
      * @type {FeePriorityLevel}
      * @memberof AptosGasPrice
      */
     priorityLevel: FeePriorityLevel;
     /**
-     * 
+     * The price per gas unit (in Octa).
      * @type {string}
      * @memberof AptosGasPrice
      */
     price: string;
     /**
-     * 
+     * The price of the asset used to pay the gas.
      * @type {Price}
      * @memberof AptosGasPrice
      */
@@ -60,4 +60,3 @@ function AptosGasPriceFromJSONTyped(json: any, _ignoreDiscriminator: boolean): A
         'fiatPrice': json['fiat_price'] == null ? undefined : PriceFromJSON(json['fiat_price']),
     };
 }
-

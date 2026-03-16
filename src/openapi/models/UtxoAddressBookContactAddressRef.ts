@@ -22,19 +22,19 @@ import {
  */
 export interface UtxoAddressBookContactAddressRef {
     /**
-     * 
-     * @type {string}
+     * The type of the chain.
+     * @type {UtxoAddressBookContactAddressRefChainTypeEnum}
      * @memberof UtxoAddressBookContactAddressRef
      */
     chainType: UtxoAddressBookContactAddressRefChainTypeEnum;
     /**
-     * 
+     * The address on the utxo chain.
      * @type {string}
      * @memberof UtxoAddressBookContactAddressRef
      */
     address: string;
     /**
-     * 
+     * The chain the contact belongs to.
      * @type {UtxoChain}
      * @memberof UtxoAddressBookContactAddressRef
      */
@@ -43,7 +43,7 @@ export interface UtxoAddressBookContactAddressRef {
 
 
 /**
- * 
+ * @export
  */
 const UtxoAddressBookContactAddressRefChainTypeEnum = {
     utxo: 'utxo'

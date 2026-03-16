@@ -17,19 +17,19 @@
  */
 export interface SystemUserRef {
     /**
-     * 
+     * The unique identifier of the user in the Fordefi platform.
      * @type {string}
      * @memberof SystemUserRef
      */
     id: string;
     /**
-     * 
-     * @type {string}
+     * The type of the user.
+     * @type {SystemUserRefUserTypeEnum}
      * @memberof SystemUserRef
      */
     userType: SystemUserRefUserTypeEnum;
     /**
-     * 
+     * The name is Fordefi CARE
      * @type {string}
      * @memberof SystemUserRef
      */
@@ -38,7 +38,7 @@ export interface SystemUserRef {
 
 
 /**
- * 
+ * @export
  */
 const SystemUserRefUserTypeEnum = {
     system: 'system'

@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const TonMessageType = {
@@ -26,4 +27,3 @@ export function TonMessageTypeFromJSON(json: any): TonMessageType {
 function TonMessageTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): TonMessageType {
     return json as TonMessageType;
 }
-

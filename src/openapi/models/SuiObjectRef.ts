@@ -17,19 +17,19 @@
  */
 export interface SuiObjectRef {
     /**
-     * 
+     * The digest of the object.
      * @type {string}
      * @memberof SuiObjectRef
      */
     digest: string;
     /**
-     * 
+     * The id of the object.
      * @type {string}
      * @memberof SuiObjectRef
      */
     objectId: string;
     /**
-     * 
+     * The version of the object.
      * @type {string}
      * @memberof SuiObjectRef
      */
@@ -68,4 +68,3 @@ function SuiObjectRefToJSONTyped(value?: SuiObjectRef | null, _ignoreDiscriminat
         'version': value['version'],
     };
 }
-

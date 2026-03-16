@@ -22,31 +22,31 @@ import {
  */
 export interface AddressLookupTableState {
     /**
-     * 
+     * The addresses that are stored in the table.
      * @type {Array<EnrichedSolanaAddress>}
      * @memberof AddressLookupTableState
      */
     addresses: Array<EnrichedSolanaAddress>;
     /**
-     * 
+     * The authority address which must sign for each modification.
      * @type {EnrichedSolanaAddress}
      * @memberof AddressLookupTableState
      */
     authority?: EnrichedSolanaAddress;
     /**
-     * 
+     * The table can be closed when the deactivation slot is no longer the recent slot.
      * @type {string}
      * @memberof AddressLookupTableState
      */
     deactivationSlot: string;
     /**
-     * 
+     * The number of the last slot in which a change constitutes an extension of the table.
      * @type {string}
      * @memberof AddressLookupTableState
      */
     lastExtendedSlot: string;
     /**
-     * 
+     * The start index where the table was last extended from during the `last_extended_slot`.
      * @type {string}
      * @memberof AddressLookupTableState
      */
@@ -70,4 +70,3 @@ function AddressLookupTableStateFromJSONTyped(json: any, _ignoreDiscriminator: b
         'lastExtendedSlotStartIndex': json['last_extended_slot_start_index'],
     };
 }
-

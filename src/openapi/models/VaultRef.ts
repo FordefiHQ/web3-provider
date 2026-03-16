@@ -24,55 +24,62 @@ import {
 } from './VaultType';
 
 /**
- * 
+ * Represents a reference to a vault in the Fordefi platform
  * @export
  * @interface VaultRef
  */
 export interface VaultRef {
     /**
-     * 
+     * The unique identifier of the vault in the Fordefi platform.
      * @type {string}
      * @memberof VaultRef
      */
     id: string;
     /**
-     * 
+     * The unique identifier of the vault group this vault belongs to.
      * @type {string}
      * @memberof VaultRef
+     * @deprecated
      */
-    vaultGroupId: string;
+    vaultGroupId?: string;
     /**
-     * 
+     * The unique identifiers of the vault groups this vault belongs to.
+     * @type {Array<string>}
+     * @memberof VaultRef
+     */
+    vaultGroupIds: Array<string>;
+    /**
+     * The name of the vault.
      * @type {string}
      * @memberof VaultRef
      */
     name: string;
     /**
-     * 
+     * The address of the vault.
      * @type {string}
      * @memberof VaultRef
      */
     address?: string;
     /**
-     * 
+     * The state of the vault.
      * @type {VaultState}
      * @memberof VaultRef
      */
     state: VaultState;
     /**
-     * 
+     * The vault type.
      * @type {VaultType}
      * @memberof VaultRef
      */
     type: VaultType;
     /**
-     * 
+     * The logo of the vault. Supported only for exchange vaults.
      * @type {string}
      * @memberof VaultRef
      */
     logoUrl?: string;
     /**
-     * 
+     * The end user that owns this vault if it is in a Consumer Wallet organization. `None` otherwise.
      * @type {EndUserRef}
      * @memberof VaultRef
      */
@@ -90,7 +97,8 @@ function VaultRefFromJSONTyped(json: any, _ignoreDiscriminator: boolean): VaultR
     return {
         
         'id': json['id'],
-        'vaultGroupId': json['vault_group_id'],
+        'vaultGroupId': json['vault_group_id'] == null ? undefined : json['vault_group_id'],
+        'vaultGroupIds': json['vault_group_ids'],
         'name': json['name'],
         'address': json['address'] == null ? undefined : json['address'],
         'state': VaultStateFromJSON(json['state']),
@@ -99,4 +107,3 @@ function VaultRefFromJSONTyped(json: any, _ignoreDiscriminator: boolean): VaultR
         'endUser': json['end_user'] == null ? undefined : EndUserRefFromJSON(json['end_user']),
     };
 }
-

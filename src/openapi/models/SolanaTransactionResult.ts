@@ -34,38 +34,31 @@ import {
  */
 export interface SolanaTransactionResult {
     /**
-     * 
+     * Details whether the transaction was reverted or not.
      * @type {SolanaReversion}
      * @memberof SolanaTransactionResult
      */
     reversion: SolanaReversion;
     /**
-     * 
+     * The description of the error of the transaction.
      * @type {string}
      * @memberof SolanaTransactionResult
      */
     transactionError?: string;
     /**
-     * 
-     * @type {string}
-     * @memberof SolanaTransactionResult
-     * @deprecated
-     */
-    fee: string;
-    /**
-     * 
+     * The fee of the transaction.
      * @type {SolanaFee}
      * @memberof SolanaTransactionResult
      */
     enrichedFee: SolanaFee;
     /**
-     * 
+     * The effects of the transaction.
      * @type {SolanaEffects}
      * @memberof SolanaTransactionResult
      */
     effects: SolanaEffects;
     /**
-     * 
+     * The description of the error of the instruction.
      * @type {InstructionError}
      * @memberof SolanaTransactionResult
      */
@@ -84,10 +77,8 @@ function SolanaTransactionResultFromJSONTyped(json: any, _ignoreDiscriminator: b
         
         'reversion': SolanaReversionFromJSON(json['reversion']),
         'transactionError': json['transaction_error'] == null ? undefined : json['transaction_error'],
-        'fee': json['fee'],
         'enrichedFee': SolanaFeeFromJSON(json['enriched_fee']),
         'effects': SolanaEffectsFromJSON(json['effects']),
         'instructionError': json['instruction_error'] == null ? undefined : InstructionErrorFromJSON(json['instruction_error']),
     };
 }
-

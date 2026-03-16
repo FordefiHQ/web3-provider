@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const ExposureType = {
@@ -27,4 +28,3 @@ export function ExposureTypeFromJSON(json: any): ExposureType {
 function ExposureTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): ExposureType {
     return json as ExposureType;
 }
-

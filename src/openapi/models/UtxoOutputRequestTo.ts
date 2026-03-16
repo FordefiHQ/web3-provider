@@ -14,6 +14,10 @@ import type { UtxoOutputToAddressRequest } from './UtxoOutputToAddressRequest';
 import {
     UtxoOutputToAddressRequestToJSON,
 } from './UtxoOutputToAddressRequest';
+import type { UtxoOutputToContactIdRequest } from './UtxoOutputToContactIdRequest';
+import {
+    UtxoOutputToContactIdRequestToJSON,
+} from './UtxoOutputToContactIdRequest';
 import type { UtxoOutputToVaultAddressIdRequest } from './UtxoOutputToVaultAddressIdRequest';
 import {
     UtxoOutputToVaultAddressIdRequestToJSON,
@@ -24,11 +28,11 @@ import {
 } from './UtxoOutputToVaultIdRequest';
 
 /**
+ * @type UtxoOutputRequestTo
  * 
  * @export
- * @type UtxoOutputRequestTo
  */
-export type UtxoOutputRequestTo = { type: 'address' } & UtxoOutputToAddressRequest | { type: 'vault_address_id' } & UtxoOutputToVaultAddressIdRequest | { type: 'vault_id' } & UtxoOutputToVaultIdRequest;
+export type UtxoOutputRequestTo = { type: 'address' } & UtxoOutputToAddressRequest | { type: 'contact_id' } & UtxoOutputToContactIdRequest | { type: 'vault_address_id' } & UtxoOutputToVaultAddressIdRequest | { type: 'vault_id' } & UtxoOutputToVaultIdRequest;
 
 export function UtxoOutputRequestToToJSON(json: any): any {
     return UtxoOutputRequestToToJSONTyped(json, false);
@@ -41,13 +45,13 @@ function UtxoOutputRequestToToJSONTyped(value?: UtxoOutputRequestTo | null, _ign
     switch (value['type']) {
         case 'address':
             return Object.assign({}, UtxoOutputToAddressRequestToJSON(value), { type: 'address' } as const);
+        case 'contact_id':
+            return Object.assign({}, UtxoOutputToContactIdRequestToJSON(value), { type: 'contact_id' } as const);
         case 'vault_address_id':
             return Object.assign({}, UtxoOutputToVaultAddressIdRequestToJSON(value), { type: 'vault_address_id' } as const);
         case 'vault_id':
             return Object.assign({}, UtxoOutputToVaultIdRequestToJSON(value), { type: 'vault_id' } as const);
         default:
-            throw new Error(`No variant of UtxoOutputRequestTo exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

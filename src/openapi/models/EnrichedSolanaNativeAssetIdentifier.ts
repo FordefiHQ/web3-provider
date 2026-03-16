@@ -22,14 +22,14 @@ import {
  */
 export interface EnrichedSolanaNativeAssetIdentifier {
     /**
-     * 
+     * The details of the chain of the native asset.
      * @type {EnrichedSolanaChain}
      * @memberof EnrichedSolanaNativeAssetIdentifier
      */
     chain: EnrichedSolanaChain;
     /**
-     * 
-     * @type {string}
+     * Solana asset type.
+     * @type {EnrichedSolanaNativeAssetIdentifierTypeEnum}
      * @memberof EnrichedSolanaNativeAssetIdentifier
      */
     type: EnrichedSolanaNativeAssetIdentifierTypeEnum;
@@ -37,7 +37,7 @@ export interface EnrichedSolanaNativeAssetIdentifier {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedSolanaNativeAssetIdentifierTypeEnum = {
     native: 'native'

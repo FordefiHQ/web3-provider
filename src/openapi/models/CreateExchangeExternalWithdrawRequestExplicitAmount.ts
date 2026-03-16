@@ -18,18 +18,18 @@
 export interface CreateExchangeExternalWithdrawRequestExplicitAmount {
     /**
      * 
-     * @type {string}
+     * @type {CreateExchangeExternalWithdrawRequestExplicitAmountTypeEnum}
      * @memberof CreateExchangeExternalWithdrawRequestExplicitAmount
      */
     type: CreateExchangeExternalWithdrawRequestExplicitAmountTypeEnum;
     /**
-     * 
+     * The amount of the transfer.
      * @type {string}
      * @memberof CreateExchangeExternalWithdrawRequestExplicitAmount
      */
     value: string;
     /**
-     * 
+     * `True` to add fee on top of transfer amount.`False` to include fee in the transfer amount.
      * @type {boolean}
      * @memberof CreateExchangeExternalWithdrawRequestExplicitAmount
      */
@@ -38,7 +38,7 @@ export interface CreateExchangeExternalWithdrawRequestExplicitAmount {
 
 
 /**
- * 
+ * @export
  */
 const CreateExchangeExternalWithdrawRequestExplicitAmountTypeEnum = {
     value: 'value'

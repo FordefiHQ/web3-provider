@@ -22,9 +22,9 @@ import {
 } from './StarknetNativeAssetIdentifierRequest';
 
 /**
+ * @type StarknetAssetIdentifierDetails
  * 
  * @export
- * @type StarknetAssetIdentifierDetails
  */
 export type StarknetAssetIdentifierDetails = { type: 'erc20' } & StarknetErc20AssetIdentifierRequest | { type: 'native' } & StarknetNativeAssetIdentifierRequest;
 
@@ -42,7 +42,7 @@ function StarknetAssetIdentifierDetailsFromJSONTyped(json: any, _ignoreDiscrimin
         case 'native':
             return Object.assign({}, StarknetNativeAssetIdentifierRequestFromJSONTyped(json, true), { type: 'native' } as const);
         default:
-            throw new Error(`No variant of StarknetAssetIdentifierDetails exists with 'type=${json['type']}'`);
+            return json;
     }
 }
 
@@ -60,8 +60,6 @@ function StarknetAssetIdentifierDetailsToJSONTyped(value?: StarknetAssetIdentifi
         case 'native':
             return Object.assign({}, StarknetNativeAssetIdentifierRequestToJSON(value), { type: 'native' } as const);
         default:
-            throw new Error(`No variant of StarknetAssetIdentifierDetails exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

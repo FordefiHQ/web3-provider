@@ -11,26 +11,34 @@
  */
 
 import { mapValues } from '../runtime';
-import type { AptosVaultPendingVaultGroupAction } from './AptosVaultPendingVaultGroupAction';
+import type { ExchangePortfolio } from './ExchangePortfolio';
 import {
-    AptosVaultPendingVaultGroupActionFromJSON,
-} from './AptosVaultPendingVaultGroupAction';
-import type { VaultState } from './VaultState';
+    ExchangePortfolioFromJSON,
+} from './ExchangePortfolio';
+import type { MetadataValue } from './MetadataValue';
 import {
-    VaultStateFromJSON,
-} from './VaultState';
-import type { AptosVaultMetadataValue } from './AptosVaultMetadataValue';
+    MetadataValueFromJSON,
+} from './MetadataValue';
+import type { ExchangeVaultAccount } from './ExchangeVaultAccount';
 import {
-    AptosVaultMetadataValueFromJSON,
-} from './AptosVaultMetadataValue';
+    ExchangeVaultAccountFromJSON,
+} from './ExchangeVaultAccount';
+import type { ExchangeVaultState } from './ExchangeVaultState';
+import {
+    ExchangeVaultStateFromJSON,
+} from './ExchangeVaultState';
+import type { OwnedAsset } from './OwnedAsset';
+import {
+    OwnedAssetFromJSON,
+} from './OwnedAsset';
+import type { SkipIndexingReason } from './SkipIndexingReason';
+import {
+    SkipIndexingReasonFromJSON,
+} from './SkipIndexingReason';
 import type { VaultGroupRef } from './VaultGroupRef';
 import {
     VaultGroupRefFromJSON,
 } from './VaultGroupRef';
-import type { ExchangeAccount } from './ExchangeAccount';
-import {
-    ExchangeAccountFromJSON,
-} from './ExchangeAccount';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
@@ -41,112 +49,131 @@ import {
 } from './ExchangeType';
 
 /**
- * 
+ * Represents an exchange account vault in the Fordefi platform
  * @export
  * @interface ExchangeVault
  */
 export interface ExchangeVault {
     /**
-     * 
+     * The unique identifier of the object in the Fordefi platform.
      * @type {string}
      * @memberof ExchangeVault
      */
     id: string;
     /**
-     * 
+     * The date and time when the object was created.
      * @type {Date}
      * @memberof ExchangeVault
      */
     createdAt: Date;
     /**
-     * 
+     * The date and time when the object was last modified. Any change to any field of the resource is considered a modification.
      * @type {Date}
      * @memberof ExchangeVault
      */
     modifiedAt: Date;
     /**
-     * 
-     * @type {{ [key: string]: AptosVaultMetadataValue | undefined; }}
+     * Metadata in a form: <str, bool | str | int | array[str]>.
+     * @type {{ [key: string]: MetadataValue | undefined; }}
      * @memberof ExchangeVault
      */
-    metadata?: { [key: string]: AptosVaultMetadataValue | undefined; };
+    metadata?: { [key: string]: MetadataValue | undefined; };
     /**
-     * 
+     * The name of the vault.
      * @type {string}
      * @memberof ExchangeVault
      */
     name: string;
     /**
-     * 
+     * Details of the vault creator.
      * @type {UserRef}
      * @memberof ExchangeVault
      */
     createdBy: UserRef;
     /**
-     * 
+     * The vault group this vault belongs to.
      * @type {VaultGroupRef}
      * @memberof ExchangeVault
+     * @deprecated
      */
-    vaultGroup: VaultGroupRef;
+    vaultGroup?: VaultGroupRef;
     /**
-     * 
-     * @type {AptosVaultPendingVaultGroupAction}
+     * The vault groups this vault belongs to.
+     * @type {Array<VaultGroupRef>}
      * @memberof ExchangeVault
      */
-    pendingVaultGroupAction?: AptosVaultPendingVaultGroupAction;
+    vaultGroups: Array<VaultGroupRef>;
     /**
-     * 
-     * @type {VaultState}
+     * Reason why the vault is not being indexed.
+     * @type {SkipIndexingReason}
      * @memberof ExchangeVault
      */
-    state: VaultState;
+    skipIndexingReason?: SkipIndexingReason;
     /**
-     * 
+     * Whether the vault uses an externally imported key (external signer).
      * @type {boolean}
      * @memberof ExchangeVault
      */
-    areAllChainsDisabled: boolean;
+    isExternalSigner?: boolean;
     /**
-     * 
-     * @type {string}
+     * List of native asset information for requested chains. Chain info is in asset_identifier.
+     * @type {Array<OwnedAsset>}
+     * @memberof ExchangeVault
+     */
+    nativeAssets?: Array<OwnedAsset>;
+    /**
+     * EXCHANGE vault type.
+     * @type {ExchangeVaultTypeEnum}
      * @memberof ExchangeVault
      */
     type: ExchangeVaultTypeEnum;
     /**
-     * 
+     * The exchange which holds this account.
      * @type {ExchangeType}
      * @memberof ExchangeVault
      */
     exchangeType: ExchangeType;
     /**
-     * 
-     * @type {string}
+     * The portfolio of the exchange.
+     * @type {ExchangePortfolio}
      * @memberof ExchangeVault
      */
-    apiKey: string;
+    portfolio?: ExchangePortfolio;
     /**
-     * 
-     * @type {ExchangeAccount}
-     * @memberof ExchangeVault
-     */
-    activeAccount?: ExchangeAccount;
-    /**
-     * 
+     * The logo of the vault.
      * @type {string}
      * @memberof ExchangeVault
      */
     logoUrl: string;
     /**
-     * 
+     * Whether the balance data is outdated.
      * @type {boolean}
      * @memberof ExchangeVault
      */
     isBalanceDataOutdated: boolean;
+    /**
+     * 
+     * @type {ExchangeVaultAccount}
+     * @memberof ExchangeVault
+     */
+    account: ExchangeVaultAccount;
+    /**
+     * State of the vault.
+     * @type {ExchangeVaultState}
+     * @memberof ExchangeVault
+     */
+    state: ExchangeVaultState;
+    /**
+     * The ID of the change request.
+     * @type {string}
+     * @memberof ExchangeVault
+     */
+    changeRequestId: string;
 }
 
 
 /**
- * 
+ * @export
  */
 const ExchangeVaultTypeEnum = {
     exchange: 'exchange'
@@ -162,18 +189,21 @@ export function ExchangeVaultFromJSONTyped(json: any, _ignoreDiscriminator: bool
         'id': json['id'],
         'createdAt': (new Date(json['created_at'])),
         'modifiedAt': (new Date(json['modified_at'])),
-        'metadata': json['metadata'] == null ? undefined : (mapValues(json['metadata'], AptosVaultMetadataValueFromJSON)),
+        'metadata': json['metadata'] == null ? undefined : (mapValues(json['metadata'], MetadataValueFromJSON)),
         'name': json['name'],
         'createdBy': UserRefFromJSON(json['created_by']),
-        'vaultGroup': VaultGroupRefFromJSON(json['vault_group']),
-        'pendingVaultGroupAction': json['pending_vault_group_action'] == null ? undefined : AptosVaultPendingVaultGroupActionFromJSON(json['pending_vault_group_action']),
-        'state': VaultStateFromJSON(json['state']),
-        'areAllChainsDisabled': json['are_all_chains_disabled'],
+        'vaultGroup': json['vault_group'] == null ? undefined : VaultGroupRefFromJSON(json['vault_group']),
+        'vaultGroups': ((json['vault_groups'] as Array<any>).map(VaultGroupRefFromJSON)),
+        'skipIndexingReason': json['skip_indexing_reason'] == null ? undefined : SkipIndexingReasonFromJSON(json['skip_indexing_reason']),
+        'isExternalSigner': json['is_external_signer'] == null ? undefined : json['is_external_signer'],
+        'nativeAssets': json['native_assets'] == null ? undefined : ((json['native_assets'] as Array<any>).map(OwnedAssetFromJSON)),
         'type': json['type'],
         'exchangeType': ExchangeTypeFromJSON(json['exchange_type']),
-        'apiKey': json['api_key'],
-        'activeAccount': json['active_account'] == null ? undefined : ExchangeAccountFromJSON(json['active_account']),
+        'portfolio': json['portfolio'] == null ? undefined : ExchangePortfolioFromJSON(json['portfolio']),
         'logoUrl': json['logo_url'],
         'isBalanceDataOutdated': json['is_balance_data_outdated'],
+        'account': ExchangeVaultAccountFromJSON(json['account']),
+        'state': ExchangeVaultStateFromJSON(json['state']),
+        'changeRequestId': json['change_request_id'],
     };
 }

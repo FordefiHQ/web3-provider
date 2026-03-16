@@ -26,31 +26,31 @@ import {
  */
 export interface EnrichedExchangeChain {
     /**
-     * 
-     * @type {string}
+     * The type of the chain.
+     * @type {EnrichedExchangeChainChainTypeEnum}
      * @memberof EnrichedExchangeChain
      */
     chainType: EnrichedExchangeChainChainTypeEnum;
     /**
-     * 
+     * The type of the Exchange-based chain.
      * @type {ExchangeChainUniqueId}
      * @memberof EnrichedExchangeChain
      */
     uniqueId: ExchangeChainUniqueId;
     /**
-     * 
+     * The full blockchain name.
      * @type {string}
      * @memberof EnrichedExchangeChain
      */
     name: string;
     /**
-     * 
+     * The native currency symbol.
      * @type {string}
      * @memberof EnrichedExchangeChain
      */
     nativeCurrencySymbol: string;
     /**
-     * 
+     * The native currency name.
      * @type {string}
      * @memberof EnrichedExchangeChain
      */
@@ -62,19 +62,19 @@ export interface EnrichedExchangeChain {
      */
     blockchainExplorer?: BlockchainExplorer;
     /**
-     * 
+     * The logo URL of the chain.
      * @type {string}
      * @memberof EnrichedExchangeChain
      */
     logoUrl: string;
     /**
-     * 
+     * Whether the chain is on a testnet.
      * @type {boolean}
      * @memberof EnrichedExchangeChain
      */
     isTestnet: boolean;
     /**
-     * 
+     * Whether the chain is enabled.
      * @type {boolean}
      * @memberof EnrichedExchangeChain
      */
@@ -83,7 +83,7 @@ export interface EnrichedExchangeChain {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedExchangeChainChainTypeEnum = {
     exchange: 'exchange'

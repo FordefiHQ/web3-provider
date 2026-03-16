@@ -23,18 +23,18 @@ import {
 export interface MinedSignDoc {
     /**
      * 
-     * @type {string}
+     * @type {MinedSignDocFormatEnum}
      * @memberof MinedSignDoc
      */
     format: MinedSignDocFormatEnum;
     /**
-     * 
+     * The messages of the transaction.
      * @type {string}
      * @memberof MinedSignDoc
      */
     messages: string;
     /**
-     * 
+     * The chain the transaction is signed on.
      * @type {EnrichedCosmosChain}
      * @memberof MinedSignDoc
      */
@@ -43,7 +43,7 @@ export interface MinedSignDoc {
 
 
 /**
- * 
+ * @export
  */
 const MinedSignDocFormatEnum = {
     mined: 'mined'

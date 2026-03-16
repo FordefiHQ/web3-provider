@@ -17,31 +17,31 @@ import {
 } from './SuiCommandArgument';
 
 /**
- * 
+ * A call to either an entry or a public Move function.
  * @export
  * @interface SuiMoveCallCommand
  */
 export interface SuiMoveCallCommand {
     /**
-     * 
-     * @type {string}
+     * The type of the command.
+     * @type {SuiMoveCallCommandTypeEnum}
      * @memberof SuiMoveCallCommand
      */
     type: SuiMoveCallCommandTypeEnum;
     /**
-     * 
+     * The arguments of the call.
      * @type {Array<SuiCommandArgument>}
      * @memberof SuiMoveCallCommand
      */
     arguments: Array<SuiCommandArgument>;
     /**
-     * 
+     * The target of the call.
      * @type {string}
      * @memberof SuiMoveCallCommand
      */
     target: string;
     /**
-     * 
+     * The types of the arguments.
      * @type {Array<string>}
      * @memberof SuiMoveCallCommand
      */
@@ -50,7 +50,7 @@ export interface SuiMoveCallCommand {
 
 
 /**
- * 
+ * @export
  */
 const SuiMoveCallCommandTypeEnum = {
     moveCall: 'move_call'

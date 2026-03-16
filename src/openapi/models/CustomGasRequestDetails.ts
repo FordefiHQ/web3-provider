@@ -20,9 +20,9 @@ import {
 } from './LegacyGasRequest';
 
 /**
- * 
- * @export
  * @type CustomGasRequestDetails
+ * Using the Custom Gas Request option, you specify `gas_limit`, as well as the following gas details: <ul><li>If you choose `legacy` (meaning a chain where gas price can be specified exactly), you must specify only the `price` of a gas unit. <li>If you choose `dynamic` (meaning a chain where gas price can be determined dynamically), you must specify two additional values: <ul><li>`max_priority_fee_per_gas`, the maximum tip amount for mining your transaction <li>`max_fee_per_gas`, the maximum amount you are willing to pay for the fee (ultimately, either you'll pay this amount, or less, depending on the network base fee). </ul></ul> <br> Note that the Legacy gas price setting is allowed on dynamic (EIP-1559) networks as well. <br> You can get information on gas fees for different chains by examining the response to a call to [List Chains](https://documentation.fordefi.com/redoc/#operation/list_chains_api_v1_blockchains_get). More information is provided in [EVM chains and their fee mechanisms](https://docs.fordefi.com/docs/evm-chains#evm-chains-and-their-fee-mechanisms). 
+ * @export
  */
 export type CustomGasRequestDetails = { type: 'dynamic' } & DynamicGasRequest | { type: 'legacy' } & LegacyGasRequest;
 
@@ -40,8 +40,6 @@ function CustomGasRequestDetailsToJSONTyped(value?: CustomGasRequestDetails | nu
         case 'legacy':
             return Object.assign({}, LegacyGasRequestToJSON(value), { type: 'legacy' } as const);
         default:
-            throw new Error(`No variant of CustomGasRequestDetails exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

@@ -22,9 +22,9 @@ import {
 } from './CosmosMessageStrData';
 
 /**
+ * @type CosmosMessageData
  * 
  * @export
- * @type CosmosMessageData
  */
 export type CosmosMessageData = { type: 'base64' } & CosmosMessageBase64Data | { type: 'string' } & CosmosMessageStrData;
 
@@ -42,7 +42,7 @@ function CosmosMessageDataFromJSONTyped(json: any, _ignoreDiscriminator: boolean
         case 'string':
             return Object.assign({}, CosmosMessageStrDataFromJSONTyped(json, true), { type: 'string' } as const);
         default:
-            throw new Error(`No variant of CosmosMessageData exists with 'type=${json['type']}'`);
+            return json;
     }
 }
 
@@ -60,8 +60,6 @@ function CosmosMessageDataToJSONTyped(value?: CosmosMessageData | null, _ignoreD
         case 'string':
             return Object.assign({}, CosmosMessageStrDataToJSON(value), { type: 'string' } as const);
         default:
-            throw new Error(`No variant of CosmosMessageData exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

@@ -23,12 +23,12 @@ import {
 export interface FeePriorityRequest {
     /**
      * 
-     * @type {string}
+     * @type {FeePriorityRequestTypeEnum}
      * @memberof FeePriorityRequest
      */
     type: FeePriorityRequestTypeEnum;
     /**
-     * 
+     * The priority level of the fee.
      * @type {FeePriorityLevelRequest}
      * @memberof FeePriorityRequest
      */
@@ -37,7 +37,7 @@ export interface FeePriorityRequest {
 
 
 /**
- * 
+ * @export
  */
 const FeePriorityRequestTypeEnum = {
     priority: 'priority'

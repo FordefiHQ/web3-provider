@@ -22,19 +22,19 @@ import {
  */
 export interface EVMAddressBookContactAddressRef {
     /**
-     * 
-     * @type {string}
+     * The type of the chain.
+     * @type {EVMAddressBookContactAddressRefChainTypeEnum}
      * @memberof EVMAddressBookContactAddressRef
      */
     chainType: EVMAddressBookContactAddressRefChainTypeEnum;
     /**
-     * 
+     * The address of the contact.
      * @type {string}
      * @memberof EVMAddressBookContactAddressRef
      */
     address: string;
     /**
-     * 
+     * The chains the contact belongs to.
      * @type {Array<EvmChain>}
      * @memberof EVMAddressBookContactAddressRef
      */
@@ -43,7 +43,7 @@ export interface EVMAddressBookContactAddressRef {
 
 
 /**
- * 
+ * @export
  */
 const EVMAddressBookContactAddressRefChainTypeEnum = {
     evm: 'evm'

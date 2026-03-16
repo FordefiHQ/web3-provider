@@ -22,13 +22,13 @@ import {
  */
 export interface EvmReversion {
     /**
-     * 
+     * The state of the reversion. Is one of the following:<ul><li>`not_reverted`: No reversion, meaning, completed successfully.<li>`unknown_revert`: Fordefi does not know the reason for the reversion.<li>`contract_asserted`: The smart contract originally made an assertion that was later rejected and the transaction was halted. <li>`out_of_gas`: Gas is insufficient for the transaction. <li>`max_fee_less_than_block_base_fee`: The input parameter `max_fee_per_gas` (under custom gas details) is lower than the current base fee of the block, so the miner cannot include the transaction in the block. <li>`base_fee_exceeds_gas_limit`: The base fee that is always paid is set to 21000 gas units in Ethereum. If a gas limit that's lower than that was set, the transaction is rejected.<li>`insufficient_funds_gas_and_value`: A transaction was sent for which there were insufficient funds.<li>`invalid_input`: A general error that might occur for many different reasons, usually because of issues on the Fordefi side and not on the client's.<li>`transaction_rejected`: As for `invalid_input`.<li>`gas_limit_exceeds_block_limit`: There's a limit on gas consumption for the whole block, which no single transaction can pass.</ul>
      * @type {EvmReversionState}
      * @memberof EvmReversion
      */
     state: EvmReversionState;
     /**
-     * 
+     * The reason for the reversion (additional information).
      * @type {string}
      * @memberof EvmReversion
      */
@@ -49,4 +49,3 @@ function EvmReversionFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Ev
         'reason': json['reason'] == null ? undefined : json['reason'],
     };
 }
-

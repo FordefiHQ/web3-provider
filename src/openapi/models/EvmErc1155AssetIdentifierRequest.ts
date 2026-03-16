@@ -23,19 +23,19 @@ import {
  */
 export interface EvmErc1155AssetIdentifierRequest {
     /**
-     * 
-     * @type {string}
+     * EVM asset identifier type.
+     * @type {EvmErc1155AssetIdentifierRequestTypeEnum}
      * @memberof EvmErc1155AssetIdentifierRequest
      */
     type: EvmErc1155AssetIdentifierRequestTypeEnum;
     /**
-     * 
+     * The ERC-1155 token contract.
      * @type {EvmAddressRequest}
      * @memberof EvmErc1155AssetIdentifierRequest
      */
     token: EvmAddressRequest;
     /**
-     * 
+     * The token id of the ERC-1155 token.
      * @type {string}
      * @memberof EvmErc1155AssetIdentifierRequest
      */
@@ -44,7 +44,7 @@ export interface EvmErc1155AssetIdentifierRequest {
 
 
 /**
- * 
+ * @export
  */
 const EvmErc1155AssetIdentifierRequestTypeEnum = {
     erc1155: 'erc1155'

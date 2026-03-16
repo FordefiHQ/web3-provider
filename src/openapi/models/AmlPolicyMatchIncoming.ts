@@ -14,10 +14,6 @@ import type { AmlPolicyMatchIncomingActionType } from './AmlPolicyMatchIncomingA
 import {
     AmlPolicyMatchIncomingActionTypeFromJSON,
 } from './AmlPolicyMatchIncomingActionType';
-import type { AmlUnfreezeApprovalRequest } from './AmlUnfreezeApprovalRequest';
-import {
-    AmlUnfreezeApprovalRequestFromJSON,
-} from './AmlUnfreezeApprovalRequest';
 
 /**
  * 
@@ -26,35 +22,29 @@ import {
  */
 export interface AmlPolicyMatchIncoming {
     /**
-     * 
+     * `True` if this is the default rule, `False` otherwise.
      * @type {boolean}
      * @memberof AmlPolicyMatchIncoming
      */
     isDefault: boolean;
     /**
-     * 
+     * The unique identifier of the rule.
      * @type {string}
      * @memberof AmlPolicyMatchIncoming
      */
     ruleId: string;
     /**
-     * 
+     * The name of the rule.
      * @type {string}
      * @memberof AmlPolicyMatchIncoming
      */
     ruleName: string;
     /**
-     * 
+     * The action taken in the event of a policy match. Can be: <ul><li> Allow automatically<li> Freeze<li> Skip</ul>
      * @type {AmlPolicyMatchIncomingActionType}
      * @memberof AmlPolicyMatchIncoming
      */
     actionType: AmlPolicyMatchIncomingActionType;
-    /**
-     * 
-     * @type {AmlUnfreezeApprovalRequest}
-     * @memberof AmlPolicyMatchIncoming
-     */
-    amlUnfreezeApprovalRequest?: AmlUnfreezeApprovalRequest;
 }
 
 export function AmlPolicyMatchIncomingFromJSON(json: any): AmlPolicyMatchIncoming {
@@ -71,7 +61,5 @@ function AmlPolicyMatchIncomingFromJSONTyped(json: any, _ignoreDiscriminator: bo
         'ruleId': json['rule_id'],
         'ruleName': json['rule_name'],
         'actionType': AmlPolicyMatchIncomingActionTypeFromJSON(json['action_type']),
-        'amlUnfreezeApprovalRequest': json['aml_unfreeze_approval_request'] == null ? undefined : AmlUnfreezeApprovalRequestFromJSON(json['aml_unfreeze_approval_request']),
     };
 }
-

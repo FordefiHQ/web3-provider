@@ -22,13 +22,13 @@ import {
  */
 export interface SimulationStatusResult {
     /**
-     * 
+     * The status of simulation result.
      * @type {SimulationStatus}
      * @memberof SimulationStatusResult
      */
     simulationStatus?: SimulationStatus;
     /**
-     * 
+     * Details about transaction reversion if occurred.
      * @type {string}
      * @memberof SimulationStatusResult
      */
@@ -49,4 +49,3 @@ function SimulationStatusResultFromJSONTyped(json: any, _ignoreDiscriminator: bo
         'details': json['details'],
     };
 }
-

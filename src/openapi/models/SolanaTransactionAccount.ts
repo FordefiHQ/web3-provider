@@ -22,19 +22,19 @@ import {
  */
 export interface SolanaTransactionAccount {
     /**
-     * 
+     * The address of the account.
      * @type {EnrichedSolanaAddress}
      * @memberof SolanaTransactionAccount
      */
     address: EnrichedSolanaAddress;
     /**
-     * 
+     * Indicates if this account is writable in the context of the transaction.
      * @type {boolean}
      * @memberof SolanaTransactionAccount
      */
     writable: boolean;
     /**
-     * 
+     * Indicates if this account is a signer of the transaction.
      * @type {boolean}
      * @memberof SolanaTransactionAccount
      */
@@ -56,4 +56,3 @@ function SolanaTransactionAccountFromJSONTyped(json: any, _ignoreDiscriminator: 
         'signer': json['signer'],
     };
 }
-

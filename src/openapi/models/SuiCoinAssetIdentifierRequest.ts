@@ -23,13 +23,13 @@ import {
  */
 export interface SuiCoinAssetIdentifierRequest {
     /**
-     * 
-     * @type {string}
+     * Coin asset identifier type.
+     * @type {SuiCoinAssetIdentifierRequestTypeEnum}
      * @memberof SuiCoinAssetIdentifierRequest
      */
     type: SuiCoinAssetIdentifierRequestTypeEnum;
     /**
-     * 
+     * The Coin details.
      * @type {SuiCoinTypeRequest}
      * @memberof SuiCoinAssetIdentifierRequest
      */
@@ -38,7 +38,7 @@ export interface SuiCoinAssetIdentifierRequest {
 
 
 /**
- * 
+ * @export
  */
 const SuiCoinAssetIdentifierRequestTypeEnum = {
     coin: 'coin'

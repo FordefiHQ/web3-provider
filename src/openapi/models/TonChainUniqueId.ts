@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const TonChainUniqueId = {
@@ -30,4 +31,3 @@ function TonChainUniqueIdFromJSONTyped(json: any, _ignoreDiscriminator: boolean)
 export function TonChainUniqueIdToJSON(value?: TonChainUniqueId | null): any {
     return value as any;
 }
-

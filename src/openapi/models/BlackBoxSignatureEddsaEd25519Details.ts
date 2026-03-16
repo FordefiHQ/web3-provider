@@ -17,19 +17,19 @@
  */
 export interface BlackBoxSignatureEddsaEd25519Details {
     /**
-     * 
-     * @type {string}
+     * EDDSA signature.
+     * @type {BlackBoxSignatureEddsaEd25519DetailsTypeEnum}
      * @memberof BlackBoxSignatureEddsaEd25519Details
      */
     type: BlackBoxSignatureEddsaEd25519DetailsTypeEnum;
     /**
-     * 
+     * The signature, encoded in base64 format.
      * @type {string}
      * @memberof BlackBoxSignatureEddsaEd25519Details
      */
     signature?: string;
     /**
-     * 
+     * The payload to sign, encoded in base64 format.
      * @type {string}
      * @memberof BlackBoxSignatureEddsaEd25519Details
      */
@@ -38,7 +38,7 @@ export interface BlackBoxSignatureEddsaEd25519Details {
 
 
 /**
- * 
+ * @export
  */
 const BlackBoxSignatureEddsaEd25519DetailsTypeEnum = {
     eddsaEd25519: 'eddsa_ed25519'

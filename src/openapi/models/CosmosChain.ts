@@ -22,13 +22,13 @@ import {
  */
 export interface CosmosChain {
     /**
-     * 
-     * @type {string}
+     * The type of the chain.
+     * @type {CosmosChainChainTypeEnum}
      * @memberof CosmosChain
      */
     chainType: CosmosChainChainTypeEnum;
     /**
-     * 
+     * The Cosmos chain unique id.
      * @type {CosmosChainUniqueId}
      * @memberof CosmosChain
      */
@@ -37,7 +37,7 @@ export interface CosmosChain {
 
 
 /**
- * 
+ * @export
  */
 const CosmosChainChainTypeEnum = {
     cosmos: 'cosmos'

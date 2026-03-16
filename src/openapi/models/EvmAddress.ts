@@ -16,7 +16,7 @@ import {
 } from './EvmChain';
 
 /**
- * 
+ * Address represents an EVM blockchain address.
  * @export
  * @interface EvmAddress
  */
@@ -28,7 +28,7 @@ export interface EvmAddress {
      */
     chain: EvmChain;
     /**
-     * 
+     * Hexadecimal representation of the address in the chain.
      * @type {string}
      * @memberof EvmAddress
      */
@@ -49,4 +49,3 @@ function EvmAddressFromJSONTyped(json: any, _ignoreDiscriminator: boolean): EvmA
         'hexRepr': json['hex_repr'],
     };
 }
-

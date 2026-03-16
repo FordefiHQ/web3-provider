@@ -14,6 +14,26 @@ import type { ManagedTransactionData } from './ManagedTransactionData';
 import {
     ManagedTransactionDataFromJSON,
 } from './ManagedTransactionData';
+import type { DlcDataResponse } from './DlcDataResponse';
+import {
+    DlcDataResponseFromJSON,
+} from './DlcDataResponse';
+import type { PushableTransactionStateChange } from './PushableTransactionStateChange';
+import {
+    PushableTransactionStateChangeFromJSON,
+} from './PushableTransactionStateChange';
+import type { PushableTransactionState } from './PushableTransactionState';
+import {
+    PushableTransactionStateFromJSON,
+} from './PushableTransactionState';
+import type { MinedResultStatus } from './MinedResultStatus';
+import {
+    MinedResultStatusFromJSON,
+} from './MinedResultStatus';
+import type { VaultRef } from './VaultRef';
+import {
+    VaultRefFromJSON,
+} from './VaultRef';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
@@ -26,38 +46,34 @@ import type { TransactionDirection } from './TransactionDirection';
 import {
     TransactionDirectionFromJSON,
 } from './TransactionDirection';
-import type { PredictedUtxoTransactionUtxoTransactionTypeDetails } from './PredictedUtxoTransactionUtxoTransactionTypeDetails';
+import type { AmlCheck } from './AmlCheck';
 import {
-    PredictedUtxoTransactionUtxoTransactionTypeDetailsFromJSON,
-} from './PredictedUtxoTransactionUtxoTransactionTypeDetails';
-import type { UtxoBlockData } from './UtxoBlockData';
-import {
-    UtxoBlockDataFromJSON,
-} from './UtxoBlockData';
-import type { PushableTransactionStateChange } from './PushableTransactionStateChange';
-import {
-    PushableTransactionStateChangeFromJSON,
-} from './PushableTransactionStateChange';
+    AmlCheckFromJSON,
+} from './AmlCheck';
 import type { Signature } from './Signature';
 import {
     SignatureFromJSON,
 } from './Signature';
+import type { RelatedTransaction } from './RelatedTransaction';
+import {
+    RelatedTransactionFromJSON,
+} from './RelatedTransaction';
+import type { SimulationStatusResult } from './SimulationStatusResult';
+import {
+    SimulationStatusResultFromJSON,
+} from './SimulationStatusResult';
+import type { Block } from './Block';
+import {
+    BlockFromJSON,
+} from './Block';
 import type { EnrichedUtxoChain } from './EnrichedUtxoChain';
 import {
     EnrichedUtxoChainFromJSON,
 } from './EnrichedUtxoChain';
-import type { PushableTransactionState } from './PushableTransactionState';
+import type { UtxoTransactionUtxoTransactionTypeDetails } from './UtxoTransactionUtxoTransactionTypeDetails';
 import {
-    PushableTransactionStateFromJSON,
-} from './PushableTransactionState';
-import type { AmlResults } from './AmlResults';
-import {
-    AmlResultsFromJSON,
-} from './AmlResults';
-import type { AmlPolicyMatchIncoming } from './AmlPolicyMatchIncoming';
-import {
-    AmlPolicyMatchIncomingFromJSON,
-} from './AmlPolicyMatchIncoming';
+    UtxoTransactionUtxoTransactionTypeDetailsFromJSON,
+} from './UtxoTransactionUtxoTransactionTypeDetails';
 
 /**
  * 
@@ -66,136 +82,190 @@ import {
  */
 export interface UtxoTransaction {
     /**
-     * 
+     * The unique identifier of the object in the Fordefi platform.
      * @type {string}
      * @memberof UtxoTransaction
      */
     id: string;
     /**
-     * 
+     * The date and time when the object was created.
      * @type {Date}
      * @memberof UtxoTransaction
      */
     createdAt: Date;
     /**
-     * 
+     * The date and time when the object was last modified. Any change to any field of the resource is considered a modification.
      * @type {Date}
      * @memberof UtxoTransaction
      */
     modifiedAt: Date;
     /**
-     * 
+     * Managed transaction data. Presented if the transaction was initiated from the Fordefi system itself, in contrast to unmanaged transactions (which are, for example, transfers of funds into a vault visible to Fordefi). 
      * @type {ManagedTransactionData}
      * @memberof UtxoTransaction
      */
     managedTransactionData?: ManagedTransactionData;
     /**
-     * 
+     * The transaction signatures.
      * @type {Array<Signature>}
      * @memberof UtxoTransaction
      */
     signatures: Array<Signature>;
     /**
-     * 
+     * An optional transaction note.
      * @type {string}
      * @memberof UtxoTransaction
      */
     note?: string;
     /**
-     * 
+     * `automatically_set` if the transaction was automatically set as spam by Fordefi, `manually_set` if the transaction was manually set as spam by a user, and `unset` if the transaction was not set as spam.
      * @type {TransactionSpamState}
      * @memberof UtxoTransaction
      */
     spamState?: TransactionSpamState;
     /**
-     * 
+     * The direction of the transaction.
      * @type {TransactionDirection}
      * @memberof UtxoTransaction
      */
     direction: TransactionDirection;
     /**
-     * 
+     * Whether the transaction was signed by an external user (for example in case of imported vault).
      * @type {boolean}
      * @memberof UtxoTransaction
      */
     signedExternally?: boolean;
     /**
-     * 
+     * The vaults that interacted with the transaction.
+     * @type {Array<VaultRef>}
+     * @memberof UtxoTransaction
+     */
+    interactedVaults: Array<VaultRef>;
+    /**
+     * The related transactions.
+     * @type {Array<RelatedTransaction>}
+     * @memberof UtxoTransaction
+     */
+    relatedTransactions?: Array<RelatedTransaction>;
+    /**
+     * The organization that the transaction belongs to.
+     * @type {string}
+     * @memberof UtxoTransaction
+     */
+    organizationId: string;
+    /**
+     * The block of the transaction.
+     * @type {Block}
+     * @memberof UtxoTransaction
+     */
+    block?: Block;
+    /**
+     * The state of the transaction.
      * @type {PushableTransactionState}
      * @memberof UtxoTransaction
      */
     state: PushableTransactionState;
     /**
-     * 
+     * The state changes of the transaction.
      * @type {Array<PushableTransactionStateChange>}
      * @memberof UtxoTransaction
      */
     stateChanges: Array<PushableTransactionStateChange>;
     /**
-     * 
-     * @type {AmlResults}
+     * The AML check.
+     * @type {AmlCheck}
      * @memberof UtxoTransaction
      */
-    amlResults?: AmlResults;
+    amlCheck?: AmlCheck;
     /**
-     * 
-     * @type {AmlPolicyMatchIncoming}
+     * The mined result status of the transaction.
+     * @type {MinedResultStatus}
      * @memberof UtxoTransaction
      */
-    incomingAmlPolicyMatch?: AmlPolicyMatchIncoming;
+    minedResultStatus?: MinedResultStatus;
     /**
-     * 
+     * Whether simulation succeeded, reverted or failed.
+     * @type {SimulationStatusResult}
+     * @memberof UtxoTransaction
+     */
+    simulationStatusResult?: SimulationStatusResult;
+    /**
+     * The unique identifier of the parent transaction. Parent and child transactions form in cases where a transaction become stuck and is then either canceled or accelerated. If, for example, the original transaction (`t1`) is the parent and the related, adjustment transaction is the child (`t2`), then relative to itself, the parent field of `t1` is `null` and the child field is `t2_id`. Compare with field `child_transaction_id`.
      * @type {string}
+     * @memberof UtxoTransaction
+     */
+    parentTransactionId?: string;
+    /**
+     * The unique identifier of the child transaction. Compare with field `parent_transaction_id`. Relative to itself, the parent field of transaction `t2` would aquire the identifier `t1_id` and the child field of `t2` would be `null`. 
+     * @type {string}
+     * @memberof UtxoTransaction
+     */
+    childTransactionId?: string;
+    /**
+     * `True` if this transaction is a cancelation of a previous transaction, `False` otherwise. 
+     * @type {boolean}
+     * @memberof UtxoTransaction
+     */
+    isCancelation: boolean;
+    /**
+     * `True` if this transaction is an acceleration of a previous transaction, `False` otherwise.
+     * @type {boolean}
+     * @memberof UtxoTransaction
+     */
+    isAcceleration: boolean;
+    /**
+     * The type of the transaction.
+     * @type {UtxoTransactionTypeEnum}
      * @memberof UtxoTransaction
      */
     type: UtxoTransactionTypeEnum;
     /**
      * 
-     * @type {PredictedUtxoTransactionUtxoTransactionTypeDetails}
+     * @type {UtxoTransactionUtxoTransactionTypeDetails}
      * @memberof UtxoTransaction
      */
-    utxoTransactionTypeDetails: PredictedUtxoTransactionUtxoTransactionTypeDetails;
+    utxoTransactionTypeDetails: UtxoTransactionUtxoTransactionTypeDetails;
     /**
-     * 
+     * Details of the chain this transaction is on.
      * @type {EnrichedUtxoChain}
      * @memberof UtxoTransaction
      */
     chain: EnrichedUtxoChain;
     /**
-     * 
+     * The hash of the transaction.
      * @type {string}
      * @memberof UtxoTransaction
      */
     hash?: string;
     /**
-     * 
+     * The URL of this transaction in a blockchain explorer.
      * @type {string}
      * @memberof UtxoTransaction
      */
     explorerUrl?: string;
     /**
-     * 
-     * @type {UtxoBlockData}
-     * @memberof UtxoTransaction
-     */
-    block?: UtxoBlockData;
-    /**
-     * 
+     * The expected result of the transaction in case it is mined.
      * @type {UtxoTransactionResult}
      * @memberof UtxoTransaction
      */
     expectedResult?: UtxoTransactionResult;
     /**
-     * 
+     * The result of the transaction after it was mined.
      * @type {UtxoTransactionResult}
      * @memberof UtxoTransaction
      */
     minedResult?: UtxoTransactionResult;
+    /**
+     * The DLC data of the transaction, if the transaction is part of a DLC contract.
+     * @type {DlcDataResponse}
+     * @memberof UtxoTransaction
+     */
+    dlcData?: DlcDataResponse;
 }
 
 
 /**
- * 
+ * @export
  */
 const UtxoTransactionTypeEnum = {
     utxoTransaction: 'utxo_transaction'
@@ -217,17 +287,26 @@ export function UtxoTransactionFromJSONTyped(json: any, _ignoreDiscriminator: bo
         'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
         'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'interactedVaults': ((json['interacted_vaults'] as Array<any>).map(VaultRefFromJSON)),
+        'relatedTransactions': json['related_transactions'] == null ? undefined : ((json['related_transactions'] as Array<any>).map(RelatedTransactionFromJSON)),
+        'organizationId': json['organization_id'],
+        'block': json['block'] == null ? undefined : BlockFromJSON(json['block']),
         'state': PushableTransactionStateFromJSON(json['state']),
         'stateChanges': ((json['state_changes'] as Array<any>).map(PushableTransactionStateChangeFromJSON)),
-        'amlResults': json['aml_results'] == null ? undefined : AmlResultsFromJSON(json['aml_results']),
-        'incomingAmlPolicyMatch': json['incoming_aml_policy_match'] == null ? undefined : AmlPolicyMatchIncomingFromJSON(json['incoming_aml_policy_match']),
+        'amlCheck': json['aml_check'] == null ? undefined : AmlCheckFromJSON(json['aml_check']),
+        'minedResultStatus': json['mined_result_status'] == null ? undefined : MinedResultStatusFromJSON(json['mined_result_status']),
+        'simulationStatusResult': json['simulation_status_result'] == null ? undefined : SimulationStatusResultFromJSON(json['simulation_status_result']),
+        'parentTransactionId': json['parent_transaction_id'] == null ? undefined : json['parent_transaction_id'],
+        'childTransactionId': json['child_transaction_id'] == null ? undefined : json['child_transaction_id'],
+        'isCancelation': json['is_cancelation'],
+        'isAcceleration': json['is_acceleration'],
         'type': json['type'],
-        'utxoTransactionTypeDetails': PredictedUtxoTransactionUtxoTransactionTypeDetailsFromJSON(json['utxo_transaction_type_details']),
+        'utxoTransactionTypeDetails': UtxoTransactionUtxoTransactionTypeDetailsFromJSON(json['utxo_transaction_type_details']),
         'chain': EnrichedUtxoChainFromJSON(json['chain']),
         'hash': json['hash'] == null ? undefined : json['hash'],
         'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
-        'block': json['block'] == null ? undefined : UtxoBlockDataFromJSON(json['block']),
         'expectedResult': json['expected_result'] == null ? undefined : UtxoTransactionResultFromJSON(json['expected_result']),
         'minedResult': json['mined_result'] == null ? undefined : UtxoTransactionResultFromJSON(json['mined_result']),
+        'dlcData': json['dlc_data'] == null ? undefined : DlcDataResponseFromJSON(json['dlc_data']),
     };
 }

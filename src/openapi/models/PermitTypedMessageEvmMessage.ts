@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from '../runtime';
 import type { EvmMessageDomainData } from './EvmMessageDomainData';
 import {
     EvmMessageDomainDataFromJSON,
@@ -34,70 +35,81 @@ import {
  */
 export interface PermitTypedMessageEvmMessage {
     /**
-     * 
+     * The domain data.
      * @type {EvmMessageDomainData}
      * @memberof PermitTypedMessageEvmMessage
      */
     domain: EvmMessageDomainData;
     /**
-     * 
+     * Used to identify the primary type of the message.
      * @type {string}
      * @memberof PermitTypedMessageEvmMessage
      */
     primaryType: string;
     /**
-     * 
-     * @type {string}
+     * Addresses that are related to this message, enriched with metadata.Please NOTE: the dictionary keys are EIP-55 checksummed addresses
+     * @type {{ [key: string]: EnrichedEvmAddress | undefined; }}
+     * @memberof PermitTypedMessageEvmMessage
+     */
+    enrichedAddresses?: { [key: string]: EnrichedEvmAddress | undefined; };
+    /**
+     * The typed message type.
+     * @type {PermitTypedMessageEvmMessageTypeEnum}
      * @memberof PermitTypedMessageEvmMessage
      */
     type: PermitTypedMessageEvmMessageTypeEnum;
     /**
-     * 
+     * The owner.
      * @type {EnrichedEvmAddress}
      * @memberof PermitTypedMessageEvmMessage
+     * @deprecated
      */
     owner: EnrichedEvmAddress;
     /**
-     * 
+     * The spender.
      * @type {EnrichedEvmAddress}
      * @memberof PermitTypedMessageEvmMessage
+     * @deprecated
      */
     spender: EnrichedEvmAddress;
     /**
-     * 
+     * The value.
      * @type {string}
      * @memberof PermitTypedMessageEvmMessage
+     * @deprecated
      */
     value: string;
     /**
-     * 
+     * The deadline.
      * @type {Date}
      * @memberof PermitTypedMessageEvmMessage
      */
     deadline: Date;
     /**
-     * 
+     * The nonce.
      * @type {number}
      * @memberof PermitTypedMessageEvmMessage
      */
     nonce: number;
     /**
-     * 
+     * The price of the asset.
      * @type {Price}
      * @memberof PermitTypedMessageEvmMessage
+     * @deprecated
      */
     price?: Price;
     /**
-     * 
+     * The asset information.
      * @type {PricedAsset}
      * @memberof PermitTypedMessageEvmMessage
+     * @deprecated
      */
     pricedAsset: PricedAsset;
 }
 
 
 /**
- * 
+ * @export
  */
 const PermitTypedMessageEvmMessageTypeEnum = {
     permit: 'permit'
@@ -112,6 +124,7 @@ export function PermitTypedMessageEvmMessageFromJSONTyped(json: any, _ignoreDisc
         
         'domain': EvmMessageDomainDataFromJSON(json['domain']),
         'primaryType': json['primary_type'],
+        'enrichedAddresses': json['enriched_addresses'] == null ? undefined : (mapValues(json['enriched_addresses'], EnrichedEvmAddressFromJSON)),
         'type': json['type'],
         'owner': EnrichedEvmAddressFromJSON(json['owner']),
         'spender': EnrichedEvmAddressFromJSON(json['spender']),

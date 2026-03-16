@@ -26,19 +26,19 @@ import {
  */
 export interface EnrichedCosmosNativeAssetIdentifier {
     /**
-     * 
+     * The details of the chain of the asset.
      * @type {EnrichedCosmosChain}
      * @memberof EnrichedCosmosNativeAssetIdentifier
      */
     chain: EnrichedCosmosChain;
     /**
-     * 
-     * @type {string}
+     * Cosmos native asset type.
+     * @type {EnrichedCosmosNativeAssetIdentifierTypeEnum}
      * @memberof EnrichedCosmosNativeAssetIdentifier
      */
     type: EnrichedCosmosNativeAssetIdentifierTypeEnum;
     /**
-     * 
+     * The details of the coin.
      * @type {CosmosNativeCoin}
      * @memberof EnrichedCosmosNativeAssetIdentifier
      */
@@ -47,7 +47,7 @@ export interface EnrichedCosmosNativeAssetIdentifier {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedCosmosNativeAssetIdentifierTypeEnum = {
     native: 'native'

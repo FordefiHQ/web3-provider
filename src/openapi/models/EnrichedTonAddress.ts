@@ -26,49 +26,49 @@ import {
  */
 export interface EnrichedTonAddress {
     /**
-     * 
+     * The vault corresponding to this address.
      * @type {VaultRef}
      * @memberof EnrichedTonAddress
      */
     vault?: VaultRef;
     /**
-     * 
+     * The URL of a blockchain explorer that provides real-time information about the address.
      * @type {string}
      * @memberof EnrichedTonAddress
      */
     explorerUrl?: string;
     /**
-     * 
+     * The contact details of this address.
      * @type {ContactRef}
      * @memberof EnrichedTonAddress
      */
     contact?: ContactRef;
     /**
      * 
-     * @type {string}
+     * @type {EnrichedTonAddressTypeEnum}
      * @memberof EnrichedTonAddress
      */
     type: EnrichedTonAddressTypeEnum;
     /**
-     * 
+     * The address TON contract in a raw format.
      * @type {string}
      * @memberof EnrichedTonAddress
      */
     rawAccount: string;
     /**
-     * 
+     * The bounceable address of the contract in base64 url format
      * @type {string}
      * @memberof EnrichedTonAddress
      */
     base64UrlBounceableAccount: string;
     /**
-     * 
+     * The non-bounceable address of the contract in base64 url format
      * @type {string}
      * @memberof EnrichedTonAddress
      */
     base64UrlNonBounceableAccount: string;
     /**
-     * 
+     * The address TON contract in the originally inserted format.
      * @type {string}
      * @memberof EnrichedTonAddress
      */
@@ -77,7 +77,7 @@ export interface EnrichedTonAddress {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedTonAddressTypeEnum = {
     ton: 'ton'

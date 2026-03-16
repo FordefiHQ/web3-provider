@@ -17,13 +17,13 @@
  */
 export interface EvmDataRequestBase64 {
     /**
-     * 
-     * @type {string}
+     * Base64 raw format.
+     * @type {EvmDataRequestBase64TypeEnum}
      * @memberof EvmDataRequestBase64
      */
     type: EvmDataRequestBase64TypeEnum;
     /**
-     * 
+     * The raw data of the transaction, as a serialized method-call with its arguments, in Base64 format. See [data field format for transactions on Ethereum](https://ethereum.org/en/developers/docs/transactions/#the-data-field).
      * @type {string}
      * @memberof EvmDataRequestBase64
      */
@@ -32,7 +32,7 @@ export interface EvmDataRequestBase64 {
 
 
 /**
- * 
+ * @export
  */
 const EvmDataRequestBase64TypeEnum = {
     base64: 'base64'

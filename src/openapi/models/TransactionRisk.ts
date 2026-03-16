@@ -27,24 +27,25 @@ import {
 export interface TransactionRisk {
     /**
      * 
+     * Fordefi has detected that one or more of the following risks are associated with the requested transaction:<ul><li>The user is transferring tokens to an ERC-20 contract (`transfer_to_erc20_contract`).<li>The allowance transaction is requesting to approve a non-contract address (`allowance_to_eoa`).<li>Allowance has been granted for an unlimited amount (`unlimited_allowance`).<li>This bridge transaction sends funds to an address that is not the sender's (`bridge_dest_differ_from_sender`).<li>This is the first time the organization is interacting with this address (`organization_not_interacted_with_address`).<li>This is the first time this vault is interacting with this address (`vault_not_interacted_with_address`).<li>Trying to interact with a contract that is not verified (`contract_not_verified`).<li>Approve for all NFT in a collection (`nft_approve_for_all`).<li>The simulation for this transaction failed (`missing_simulation`).<li>The simulation for this transaction is unsupported for this chain (`unsupported_simulation`).</ul>
      * @type {TransactionRiskType}
      * @memberof TransactionRisk
      */
     type: TransactionRiskType;
     /**
-     * 
+     * The severity of the risk.
      * @type {TransactionRiskSeverity}
      * @memberof TransactionRisk
      */
     severity: TransactionRiskSeverity;
     /**
-     * 
+     * The title of the risk.
      * @type {string}
      * @memberof TransactionRisk
      */
     title: string;
     /**
-     * 
+     * A detailed description of the risk.
      * @type {string}
      * @memberof TransactionRisk
      */
@@ -67,4 +68,3 @@ function TransactionRiskFromJSONTyped(json: any, _ignoreDiscriminator: boolean):
         'description': json['description'],
     };
 }
-

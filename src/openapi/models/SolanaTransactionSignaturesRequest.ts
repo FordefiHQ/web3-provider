@@ -17,7 +17,7 @@
  */
 export interface SolanaTransactionSignaturesRequest {
     /**
-     * 
+     * Signature on the data, encoded in base64 format.
      * @type {string}
      * @memberof SolanaTransactionSignaturesRequest
      */
@@ -38,4 +38,3 @@ function SolanaTransactionSignaturesRequestToJSONTyped(value?: SolanaTransaction
         'data': value['data'],
     };
 }
-

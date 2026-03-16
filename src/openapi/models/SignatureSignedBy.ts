@@ -24,9 +24,9 @@ import {
 } from './PersonRef';
 
 /**
- * 
- * @export
  * @type SignatureSignedBy
+ * The user who created this signature, `null` if the signature wasn't created by a Fordefi user.
+ * @export
  */
 export type SignatureSignedBy = { userType: 'api_signer' } & ApiSignerRef | { userType: 'end_user' } & EndUserRef | { userType: 'person' } & PersonRef;
 
@@ -46,7 +46,6 @@ function SignatureSignedByFromJSONTyped(json: any, _ignoreDiscriminator: boolean
         case 'person':
             return Object.assign({}, PersonRefFromJSONTyped(json, true), { userType: 'person' } as const);
         default:
-            throw new Error(`No variant of SignatureSignedBy exists with 'userType=${json['userType']}'`);
+            return json;
     }
 }
-

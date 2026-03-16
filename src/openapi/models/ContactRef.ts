@@ -16,19 +16,19 @@ import {
 } from './ContactRefAddressRef';
 
 /**
- * 
+ * Represents a reference to an address book contact in the Fordefi platform.
  * @export
  * @interface ContactRef
  */
 export interface ContactRef {
     /**
-     * 
+     * The unique identifier of the address book contact in the Fordefi platform.
      * @type {string}
      * @memberof ContactRef
      */
     id: string;
     /**
-     * 
+     * The name of the contact.
      * @type {string}
      * @memberof ContactRef
      */
@@ -56,4 +56,3 @@ function ContactRefFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Cont
         'addressRef': ContactRefAddressRefFromJSON(json['address_ref']),
     };
 }
-

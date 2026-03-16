@@ -17,16 +17,22 @@
  */
 export interface AptosScriptDetails {
     /**
-     * 
-     * @type {string}
+     * A transaction with running a move script.
+     * @type {AptosScriptDetailsTypeEnum}
      * @memberof AptosScriptDetails
      */
     type: AptosScriptDetailsTypeEnum;
+    /**
+     * The code of the script.
+     * @type {string}
+     * @memberof AptosScriptDetails
+     */
+    code: string;
 }
 
 
 /**
- * 
+ * @export
  */
 const AptosScriptDetailsTypeEnum = {
     script: 'script'
@@ -40,5 +46,6 @@ export function AptosScriptDetailsFromJSONTyped(json: any, _ignoreDiscriminator:
     return {
         
         'type': json['type'],
+        'code': json['code'],
     };
 }

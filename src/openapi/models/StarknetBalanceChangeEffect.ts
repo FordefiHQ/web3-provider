@@ -26,19 +26,19 @@ import {
  */
 export interface StarknetBalanceChangeEffect {
     /**
-     * 
+     * The asset information.
      * @type {PricedAsset}
      * @memberof StarknetBalanceChangeEffect
      */
     pricedAsset: PricedAsset;
     /**
-     * 
+     * The amount of that was added to or deducted from the owner's balance. If the amount was deducted, the value is negative; if the amount was added, the value is positive.
      * @type {string}
      * @memberof StarknetBalanceChangeEffect
      */
     diff: string;
     /**
-     * 
+     * The address affected by the balance change.
      * @type {EnrichedStarknetAddress}
      * @memberof StarknetBalanceChangeEffect
      */
@@ -60,4 +60,3 @@ function StarknetBalanceChangeEffectFromJSONTyped(json: any, _ignoreDiscriminato
         'address': EnrichedStarknetAddressFromJSON(json['address']),
     };
 }
-

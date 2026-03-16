@@ -10,32 +10,37 @@
  * Do not edit the class manually.
  */
 
+import type { BoundCount } from './BoundCount';
+import {
+    BoundCountFromJSON,
+} from './BoundCount';
+
 /**
- * 
+ * Represents a reference to a vault group in the Fordefi platform
  * @export
  * @interface VaultGroupRef
  */
 export interface VaultGroupRef {
     /**
-     * 
+     * The unique identifier of the vault group in the Fordefi platform.
      * @type {string}
      * @memberof VaultGroupRef
      */
     id: string;
     /**
-     * 
+     * The name of the vault group.
      * @type {string}
      * @memberof VaultGroupRef
      */
     name: string;
     /**
-     * 
-     * @type {number}
+     * The number of vaults in the group.
+     * @type {BoundCount}
      * @memberof VaultGroupRef
      */
-    vaultCount: number;
+    vaultsCount: BoundCount;
     /**
-     * 
+     * Can the current user create or edit vaults in the group's based on the group permissions
      * @type {boolean}
      * @memberof VaultGroupRef
      */
@@ -54,8 +59,7 @@ function VaultGroupRefFromJSONTyped(json: any, _ignoreDiscriminator: boolean): V
         
         'id': json['id'],
         'name': json['name'],
-        'vaultCount': json['vault_count'],
+        'vaultsCount': BoundCountFromJSON(json['vaults_count']),
         'canCurrentUserCreateOrEditVaults': json['can_current_user_create_or_edit_vaults'],
     };
 }
-

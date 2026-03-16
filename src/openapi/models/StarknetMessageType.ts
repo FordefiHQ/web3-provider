@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const StarknetMessageType = {
@@ -26,4 +27,3 @@ export function StarknetMessageTypeFromJSON(json: any): StarknetMessageType {
 function StarknetMessageTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): StarknetMessageType {
     return json as StarknetMessageType;
 }
-

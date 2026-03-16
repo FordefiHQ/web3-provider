@@ -22,9 +22,9 @@ import {
 } from './CosmosTokenAssetIdentifierRequest';
 
 /**
+ * @type CosmosAssetIdentifierDetails
  * 
  * @export
- * @type CosmosAssetIdentifierDetails
  */
 export type CosmosAssetIdentifierDetails = { type: 'native' } & CosmosNativeAssetIdentifierRequest | { type: 'token' } & CosmosTokenAssetIdentifierRequest;
 
@@ -42,7 +42,7 @@ function CosmosAssetIdentifierDetailsFromJSONTyped(json: any, _ignoreDiscriminat
         case 'token':
             return Object.assign({}, CosmosTokenAssetIdentifierRequestFromJSONTyped(json, true), { type: 'token' } as const);
         default:
-            throw new Error(`No variant of CosmosAssetIdentifierDetails exists with 'type=${json['type']}'`);
+            return json;
     }
 }
 
@@ -60,8 +60,6 @@ function CosmosAssetIdentifierDetailsToJSONTyped(value?: CosmosAssetIdentifierDe
         case 'token':
             return Object.assign({}, CosmosTokenAssetIdentifierRequestToJSON(value), { type: 'token' } as const);
         default:
-            throw new Error(`No variant of CosmosAssetIdentifierDetails exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

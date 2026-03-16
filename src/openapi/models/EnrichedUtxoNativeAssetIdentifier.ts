@@ -22,13 +22,13 @@ import {
  */
 export interface EnrichedUtxoNativeAssetIdentifier {
     /**
-     * 
-     * @type {string}
+     * UTXO asset type.
+     * @type {EnrichedUtxoNativeAssetIdentifierTypeEnum}
      * @memberof EnrichedUtxoNativeAssetIdentifier
      */
     type: EnrichedUtxoNativeAssetIdentifierTypeEnum;
     /**
-     * 
+     * The details of the chain of the native asset.
      * @type {EnrichedUtxoChain}
      * @memberof EnrichedUtxoNativeAssetIdentifier
      */
@@ -37,7 +37,7 @@ export interface EnrichedUtxoNativeAssetIdentifier {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedUtxoNativeAssetIdentifierTypeEnum = {
     native: 'native'

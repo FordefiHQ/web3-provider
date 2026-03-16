@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const TransactionSpamState = {
@@ -28,4 +29,3 @@ export function TransactionSpamStateFromJSON(json: any): TransactionSpamState {
 function TransactionSpamStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): TransactionSpamState {
     return json as TransactionSpamState;
 }
-

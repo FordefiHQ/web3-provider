@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const AptosReversionState = {
@@ -29,4 +30,3 @@ export function AptosReversionStateFromJSON(json: any): AptosReversionState {
 function AptosReversionStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): AptosReversionState {
     return json as AptosReversionState;
 }
-

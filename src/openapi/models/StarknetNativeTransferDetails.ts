@@ -22,25 +22,25 @@ import {
  */
 export interface StarknetNativeTransferDetails {
     /**
-     * 
-     * @type {string}
+     * A transaction involving the transfer of Starknet coin from one address to another. 
+     * @type {StarknetNativeTransferDetailsTypeEnum}
      * @memberof StarknetNativeTransferDetails
      */
     type: StarknetNativeTransferDetailsTypeEnum;
     /**
-     * 
+     * The sender of the assets.
      * @type {EnrichedStarknetAddress}
      * @memberof StarknetNativeTransferDetails
      */
     sender: EnrichedStarknetAddress;
     /**
-     * 
+     * The recipient of the assets.
      * @type {EnrichedStarknetAddress}
      * @memberof StarknetNativeTransferDetails
      */
     recipient: EnrichedStarknetAddress;
     /**
-     * 
+     * Is this transfer an internal transfer between two vaults. None if the transaction is incoming.
      * @type {boolean}
      * @memberof StarknetNativeTransferDetails
      */
@@ -49,7 +49,7 @@ export interface StarknetNativeTransferDetails {
 
 
 /**
- * 
+ * @export
  */
 const StarknetNativeTransferDetailsTypeEnum = {
     nativeTransfer: 'native_transfer'

@@ -22,9 +22,9 @@ import {
 } from './SuiPureInputArgument';
 
 /**
+ * @type SuiInput
  * 
  * @export
- * @type SuiInput
  */
 export type SuiInput = { type: 'object' } & SuiObjectInputArgument | { type: 'pure' } & SuiPureInputArgument;
 
@@ -42,7 +42,7 @@ function SuiInputFromJSONTyped(json: any, _ignoreDiscriminator: boolean): SuiInp
         case 'pure':
             return Object.assign({}, SuiPureInputArgumentFromJSONTyped(json, true), { type: 'pure' } as const);
         default:
-            throw new Error(`No variant of SuiInput exists with 'type=${json['type']}'`);
+            return json;
     }
 }
 
@@ -60,8 +60,6 @@ function SuiInputToJSONTyped(value?: SuiInput | null, _ignoreDiscriminator: bool
         case 'pure':
             return Object.assign({}, SuiPureInputArgumentToJSON(value), { type: 'pure' } as const);
         default:
-            throw new Error(`No variant of SuiInput exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

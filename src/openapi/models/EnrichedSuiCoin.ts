@@ -17,37 +17,37 @@
  */
 export interface EnrichedSuiCoin {
     /**
-     * 
-     * @type {string}
+     * The type of the coin
+     * @type {EnrichedSuiCoinTypeEnum}
      * @memberof EnrichedSuiCoin
      */
     type: EnrichedSuiCoinTypeEnum;
     /**
-     * 
+     * The coin type
      * @type {string}
      * @memberof EnrichedSuiCoin
      */
     coinType: string;
     /**
-     * 
+     * The coin name
      * @type {string}
      * @memberof EnrichedSuiCoin
      */
     name: string;
     /**
-     * 
+     * The coin symbol or ticker
      * @type {string}
      * @memberof EnrichedSuiCoin
      */
     symbol: string;
     /**
-     * 
+     * The coin decimals
      * @type {number}
      * @memberof EnrichedSuiCoin
      */
     decimals: number;
     /**
-     * 
+     * The coin logo url
      * @type {string}
      * @memberof EnrichedSuiCoin
      */
@@ -56,7 +56,7 @@ export interface EnrichedSuiCoin {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedSuiCoinTypeEnum = {
     coin: 'coin'

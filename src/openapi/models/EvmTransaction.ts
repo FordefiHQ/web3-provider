@@ -26,10 +26,6 @@ import type { EvmTransactionParsedData } from './EvmTransactionParsedData';
 import {
     EvmTransactionParsedDataFromJSON,
 } from './EvmTransactionParsedData';
-import type { EvmBlockData } from './EvmBlockData';
-import {
-    EvmBlockDataFromJSON,
-} from './EvmBlockData';
 import type { PushableTransactionStateChange } from './PushableTransactionStateChange';
 import {
     PushableTransactionStateChangeFromJSON,
@@ -42,10 +38,10 @@ import type { PushableTransactionState } from './PushableTransactionState';
 import {
     PushableTransactionStateFromJSON,
 } from './PushableTransactionState';
-import type { AmlPolicyMatchIncoming } from './AmlPolicyMatchIncoming';
+import type { MinedResultStatus } from './MinedResultStatus';
 import {
-    AmlPolicyMatchIncomingFromJSON,
-} from './AmlPolicyMatchIncoming';
+    MinedResultStatusFromJSON,
+} from './MinedResultStatus';
 import type { VaultRef } from './VaultRef';
 import {
     VaultRefFromJSON,
@@ -62,22 +58,30 @@ import type { EnrichedEvmChain } from './EnrichedEvmChain';
 import {
     EnrichedEvmChainFromJSON,
 } from './EnrichedEvmChain';
+import type { AmlCheck } from './AmlCheck';
+import {
+    AmlCheckFromJSON,
+} from './AmlCheck';
 import type { Signature } from './Signature';
 import {
     SignatureFromJSON,
 } from './Signature';
+import type { RelatedTransaction } from './RelatedTransaction';
+import {
+    RelatedTransactionFromJSON,
+} from './RelatedTransaction';
 import type { SimulationStatusResult } from './SimulationStatusResult';
 import {
     SimulationStatusResultFromJSON,
 } from './SimulationStatusResult';
+import type { Block } from './Block';
+import {
+    BlockFromJSON,
+} from './Block';
 import type { EvmTransactionEvmTransactionTypeDetails } from './EvmTransactionEvmTransactionTypeDetails';
 import {
     EvmTransactionEvmTransactionTypeDetailsFromJSON,
 } from './EvmTransactionEvmTransactionTypeDetails';
-import type { AmlResults } from './AmlResults';
-import {
-    AmlResultsFromJSON,
-} from './AmlResults';
 
 /**
  * 
@@ -86,86 +90,140 @@ import {
  */
 export interface EvmTransaction {
     /**
-     * 
+     * The unique identifier of the object in the Fordefi platform.
      * @type {string}
      * @memberof EvmTransaction
      */
     id: string;
     /**
-     * 
+     * The date and time when the object was created.
      * @type {Date}
      * @memberof EvmTransaction
      */
     createdAt: Date;
     /**
-     * 
+     * The date and time when the object was last modified. Any change to any field of the resource is considered a modification.
      * @type {Date}
      * @memberof EvmTransaction
      */
     modifiedAt: Date;
     /**
-     * 
+     * Managed transaction data. Presented if the transaction was initiated from the Fordefi system itself, in contrast to unmanaged transactions (which are, for example, transfers of funds into a vault visible to Fordefi). 
      * @type {ManagedTransactionData}
      * @memberof EvmTransaction
      */
     managedTransactionData?: ManagedTransactionData;
     /**
-     * 
+     * The transaction signatures.
      * @type {Array<Signature>}
      * @memberof EvmTransaction
      */
     signatures: Array<Signature>;
     /**
-     * 
+     * An optional transaction note.
      * @type {string}
      * @memberof EvmTransaction
      */
     note?: string;
     /**
-     * 
+     * `automatically_set` if the transaction was automatically set as spam by Fordefi, `manually_set` if the transaction was manually set as spam by a user, and `unset` if the transaction was not set as spam.
      * @type {TransactionSpamState}
      * @memberof EvmTransaction
      */
     spamState?: TransactionSpamState;
     /**
-     * 
+     * The direction of the transaction.
      * @type {TransactionDirection}
      * @memberof EvmTransaction
      */
     direction: TransactionDirection;
     /**
-     * 
+     * Whether the transaction was signed by an external user (for example in case of imported vault).
      * @type {boolean}
      * @memberof EvmTransaction
      */
     signedExternally?: boolean;
     /**
-     * 
+     * The vaults that interacted with the transaction.
+     * @type {Array<VaultRef>}
+     * @memberof EvmTransaction
+     */
+    interactedVaults: Array<VaultRef>;
+    /**
+     * The related transactions.
+     * @type {Array<RelatedTransaction>}
+     * @memberof EvmTransaction
+     */
+    relatedTransactions?: Array<RelatedTransaction>;
+    /**
+     * The organization that the transaction belongs to.
+     * @type {string}
+     * @memberof EvmTransaction
+     */
+    organizationId: string;
+    /**
+     * The block of the transaction.
+     * @type {Block}
+     * @memberof EvmTransaction
+     */
+    block?: Block;
+    /**
+     * The current status of the transaction. Can be one of the following: <ul><li>`waiting_for_approval`: If a transaction has not been auto-approved, it waits in this state until it has received all the required approvals.<li>`approved`: The transaction moves into this state on approval. Then, a notification is sent to the mobile device of the creator of the transaction for signing or to the API Signer (depending on the flow that was defined). The transaction remains in this state until it is signed.<li>`pushed_to_blockchain`: Once signed, the transaction is pushed to the blockchain, awaiting mining. From that moment, control of the transaction passes from Fordefi to the blockchain. This status resolves into one of the following: `completed`, `reverted`, `stuck`.<li>`completed`: The transaction was successfully mined into the blockchain.<li>`reverted`: The transaction was mined into the blockchain and was then reverted.<li>`stuck`: The transaction did not reach `completed` or `reverted` after 24 hours.<li>`error_pushing_to_blockchain`: Failed to push the transaction to the blockchain.<li>`aborted`: Either the transaction was not approved or the transaction was approved but the creator aborted the process.</ul> For more information about statuses in the transaction lifecycle, see: [Transaction Lifecycle](https://docs.fordefi.com/docs/transaction-lifecycle). 
      * @type {PushableTransactionState}
      * @memberof EvmTransaction
      */
     state: PushableTransactionState;
     /**
-     * 
+     * The state changes of the transaction.
      * @type {Array<PushableTransactionStateChange>}
      * @memberof EvmTransaction
      */
     stateChanges: Array<PushableTransactionStateChange>;
     /**
-     * 
-     * @type {AmlResults}
+     * The AML check.
+     * @type {AmlCheck}
      * @memberof EvmTransaction
      */
-    amlResults?: AmlResults;
+    amlCheck?: AmlCheck;
     /**
-     * 
-     * @type {AmlPolicyMatchIncoming}
+     * The mined result status of the transaction.
+     * @type {MinedResultStatus}
      * @memberof EvmTransaction
      */
-    incomingAmlPolicyMatch?: AmlPolicyMatchIncoming;
+    minedResultStatus?: MinedResultStatus;
     /**
-     * 
+     * Whether simulation succeeded, reverted or failed.
+     * @type {SimulationStatusResult}
+     * @memberof EvmTransaction
+     */
+    simulationStatusResult?: SimulationStatusResult;
+    /**
+     * The unique identifier of the parent transaction. Parent and child transactions form in cases where a transaction become stuck and is then either canceled or accelerated. If, for example, the original transaction (`t1`) is the parent and the related, adjustment transaction is the child (`t2`), then relative to itself, the parent field of `t1` is `null` and the child field is `t2_id`. Compare with field `child_transaction_id`.
      * @type {string}
+     * @memberof EvmTransaction
+     */
+    parentTransactionId?: string;
+    /**
+     * The unique identifier of the child transaction. Compare with field `parent_transaction_id`. Relative to itself, the parent field of transaction `t2` would aquire the identifier `t1_id` and the child field of `t2` would be `null`. 
+     * @type {string}
+     * @memberof EvmTransaction
+     */
+    childTransactionId?: string;
+    /**
+     * `True` if this transaction is a cancelation of a previous transaction, `False` otherwise. 
+     * @type {boolean}
+     * @memberof EvmTransaction
+     */
+    isCancelation: boolean;
+    /**
+     * `True` if this transaction is an acceleration of a previous transaction, `False` otherwise.
+     * @type {boolean}
+     * @memberof EvmTransaction
+     */
+    isAcceleration: boolean;
+    /**
+     * EVM transaction type.
+     * @type {EvmTransactionTypeEnum}
      * @memberof EvmTransaction
      */
     type: EvmTransactionTypeEnum;
@@ -176,79 +234,67 @@ export interface EvmTransaction {
      */
     evmTransactionTypeDetails: EvmTransactionEvmTransactionTypeDetails;
     /**
-     * 
+     * The details of the chain this transaction is on.
      * @type {EnrichedEvmChain}
      * @memberof EvmTransaction
      */
     chain: EnrichedEvmChain;
     /**
-     * 
+     * The sender of the transaction.
      * @type {EnrichedEvmAddress}
      * @memberof EvmTransaction
      */
     from: EnrichedEvmAddress;
     /**
-     * 
+     * The address of the recipient of the transaction.
      * @type {EnrichedEvmAddress}
      * @memberof EvmTransaction
      */
     to: EnrichedEvmAddress;
     /**
-     * 
+     * The value of native currency sent with this transaction.
      * @type {string}
      * @memberof EvmTransaction
      */
     value: string;
     /**
-     * 
+     * The data of the contract call, as a serialized method-call with its arguments, in Base64 format. See [data field format for transactions on Ethereum](https://ethereum.org/en/developers/docs/transactions/#the-data-field).
      * @type {string}
      * @memberof EvmTransaction
      */
     data: string;
     /**
-     * 
+     * The hex data of the contract call, as a serialized method-call with its arguments.
      * @type {string}
      * @memberof EvmTransaction
      */
     hexData?: string;
     /**
-     * 
+     * The parsed data of the transaction.
      * @type {EvmTransactionParsedData}
      * @memberof EvmTransaction
      */
     parsedData: EvmTransactionParsedData;
     /**
-     * 
+     * The hash of the transaction.
      * @type {string}
      * @memberof EvmTransaction
      */
     hash?: string;
     /**
-     * 
+     * The nonce of the transaction.
      * @type {number}
      * @memberof EvmTransaction
      */
     nonce?: number;
     /**
-     * 
-     * @type {EvmBlockData}
-     * @memberof EvmTransaction
-     */
-    block?: EvmBlockData;
-    /**
-     * 
+     * The expected (simulated) result of the transaction.
      * @type {EvmTransactionResult}
      * @memberof EvmTransaction
      */
     expectedResult?: EvmTransactionResult;
     /**
-     * 
-     * @type {SimulationStatusResult}
-     * @memberof EvmTransaction
-     */
-    simulationStatusResult?: SimulationStatusResult;
-    /**
-     * 
+     * The result of the transaction after it was mined.
      * @type {EvmTransactionResult}
      * @memberof EvmTransaction
      */
@@ -260,76 +306,66 @@ export interface EvmTransaction {
      */
     gasSubmitted: EvmTransactionGasSubmitted;
     /**
-     * 
-     * @type {string}
-     * @memberof EvmTransaction
-     */
-    parentTransactionId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EvmTransaction
-     */
-    childTransactionId?: string;
-    /**
-     * 
+     * Funding transaction ID.
      * @type {string}
      * @memberof EvmTransaction
      */
     fundingForTransactionId?: string;
     /**
-     * 
+     * Funded transaction ID.
      * @type {string}
      * @memberof EvmTransaction
      */
     fundedByTransactionId?: string;
     /**
-     * 
+     * Funding vault.
      * @type {VaultRef}
      * @memberof EvmTransaction
+     * @deprecated
      */
     fundedByVault?: VaultRef;
     /**
-     * 
+     * The unique identifier of the transaction that was pushed to the blockchain, In case this transaction is QUEUED.
      * @type {string}
      * @memberof EvmTransaction
      */
     currentPrecedingPushedToBlockchainTransactionId?: string;
     /**
-     * 
+     * `True` if Fordefi sends this transaction through a secure node, `False` otherwise. By using a secure node, you avoid maximal extractable value (MEV) attacks.
      * @type {boolean}
      * @memberof EvmTransaction
-     */
-    isCancelation: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof EvmTransaction
-     */
-    isAcceleration: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof EvmTransaction
+     * @deprecated
      */
     useSecureNode: boolean;
     /**
-     * 
+     * `True` if Fordefi sends this transaction through a MEV protected node, `False` otherwise. By using a MEV protected node, you avoid maximal extractable value (MEV) attacks.
+     * @type {boolean}
+     * @memberof EvmTransaction
+     */
+    useMevProtectedNode: boolean;
+    /**
+     * The URL of this transaction in a blockchain explorer.
      * @type {string}
      * @memberof EvmTransaction
      */
     explorerUrl?: string;
     /**
-     * 
+     * The raw transaction data, encoded as a hex string.
      * @type {string}
      * @memberof EvmTransaction
      */
     rawTransaction?: string;
+    /**
+     * The address that pays the fee for this transaction (from address).
+     * @type {EnrichedEvmAddress}
+     * @memberof EvmTransaction
+     */
+    feePayer?: EnrichedEvmAddress;
 }
 
 
 /**
- * 
+ * @export
  */
 const EvmTransactionTypeEnum = {
     evmTransaction: 'evm_transaction'
@@ -351,10 +387,19 @@ export function EvmTransactionFromJSONTyped(json: any, _ignoreDiscriminator: boo
         'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
         'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'interactedVaults': ((json['interacted_vaults'] as Array<any>).map(VaultRefFromJSON)),
+        'relatedTransactions': json['related_transactions'] == null ? undefined : ((json['related_transactions'] as Array<any>).map(RelatedTransactionFromJSON)),
+        'organizationId': json['organization_id'],
+        'block': json['block'] == null ? undefined : BlockFromJSON(json['block']),
         'state': PushableTransactionStateFromJSON(json['state']),
         'stateChanges': ((json['state_changes'] as Array<any>).map(PushableTransactionStateChangeFromJSON)),
-        'amlResults': json['aml_results'] == null ? undefined : AmlResultsFromJSON(json['aml_results']),
-        'incomingAmlPolicyMatch': json['incoming_aml_policy_match'] == null ? undefined : AmlPolicyMatchIncomingFromJSON(json['incoming_aml_policy_match']),
+        'amlCheck': json['aml_check'] == null ? undefined : AmlCheckFromJSON(json['aml_check']),
+        'minedResultStatus': json['mined_result_status'] == null ? undefined : MinedResultStatusFromJSON(json['mined_result_status']),
+        'simulationStatusResult': json['simulation_status_result'] == null ? undefined : SimulationStatusResultFromJSON(json['simulation_status_result']),
+        'parentTransactionId': json['parent_transaction_id'] == null ? undefined : json['parent_transaction_id'],
+        'childTransactionId': json['child_transaction_id'] == null ? undefined : json['child_transaction_id'],
+        'isCancelation': json['is_cancelation'],
+        'isAcceleration': json['is_acceleration'],
         'type': json['type'],
         'evmTransactionTypeDetails': EvmTransactionEvmTransactionTypeDetailsFromJSON(json['evm_transaction_type_details']),
         'chain': EnrichedEvmChainFromJSON(json['chain']),
@@ -366,21 +411,17 @@ export function EvmTransactionFromJSONTyped(json: any, _ignoreDiscriminator: boo
         'parsedData': EvmTransactionParsedDataFromJSON(json['parsed_data']),
         'hash': json['hash'] == null ? undefined : json['hash'],
         'nonce': json['nonce'] == null ? undefined : json['nonce'],
-        'block': json['block'] == null ? undefined : EvmBlockDataFromJSON(json['block']),
         'expectedResult': json['expected_result'] == null ? undefined : EvmTransactionResultFromJSON(json['expected_result']),
-        'simulationStatusResult': json['simulation_status_result'] == null ? undefined : SimulationStatusResultFromJSON(json['simulation_status_result']),
         'minedResult': json['mined_result'] == null ? undefined : EvmTransactionResultFromJSON(json['mined_result']),
         'gasSubmitted': EvmTransactionGasSubmittedFromJSON(json['gas_submitted']),
-        'parentTransactionId': json['parent_transaction_id'] == null ? undefined : json['parent_transaction_id'],
-        'childTransactionId': json['child_transaction_id'] == null ? undefined : json['child_transaction_id'],
         'fundingForTransactionId': json['funding_for_transaction_id'] == null ? undefined : json['funding_for_transaction_id'],
         'fundedByTransactionId': json['funded_by_transaction_id'] == null ? undefined : json['funded_by_transaction_id'],
         'fundedByVault': json['funded_by_vault'] == null ? undefined : VaultRefFromJSON(json['funded_by_vault']),
         'currentPrecedingPushedToBlockchainTransactionId': json['current_preceding_pushed_to_blockchain_transaction_id'] == null ? undefined : json['current_preceding_pushed_to_blockchain_transaction_id'],
-        'isCancelation': json['is_cancelation'],
-        'isAcceleration': json['is_acceleration'],
         'useSecureNode': json['use_secure_node'],
+        'useMevProtectedNode': json['use_mev_protected_node'],
         'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
         'rawTransaction': json['raw_transaction'] == null ? undefined : json['raw_transaction'],
+        'feePayer': json['fee_payer'] == null ? undefined : EnrichedEvmAddressFromJSON(json['fee_payer']),
     };
 }

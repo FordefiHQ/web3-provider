@@ -20,9 +20,9 @@ import {
 } from './LegacyGas';
 
 /**
- * 
- * @export
  * @type EvmTransactionGasSubmitted
+ * The gas details submitted for the transaction.
+ * @export
  */
 export type EvmTransactionGasSubmitted = { type: 'dynamic' } & DynamicGas | { type: 'legacy' } & LegacyGas;
 
@@ -40,7 +40,6 @@ function EvmTransactionGasSubmittedFromJSONTyped(json: any, _ignoreDiscriminator
         case 'legacy':
             return Object.assign({}, LegacyGasFromJSONTyped(json, true), { type: 'legacy' } as const);
         default:
-            throw new Error(`No variant of EvmTransactionGasSubmitted exists with 'type=${json['type']}'`);
+            return json;
     }
 }
-

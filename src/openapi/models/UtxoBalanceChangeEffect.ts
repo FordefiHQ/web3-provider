@@ -26,25 +26,25 @@ import {
  */
 export interface UtxoBalanceChangeEffect {
     /**
-     * 
-     * @type {string}
+     * The type of the balance change.
+     * @type {UtxoBalanceChangeEffectTypeEnum}
      * @memberof UtxoBalanceChangeEffect
      */
     type: UtxoBalanceChangeEffectTypeEnum;
     /**
-     * 
+     * The vault affected by the balance change.
      * @type {VaultRef}
      * @memberof UtxoBalanceChangeEffect
      */
     vault: VaultRef;
     /**
-     * 
+     * The amount of native currency that was added to or deducted from the owner's balance. If the amount was deducted, the value is negative; if the amount was added, the value is positive.
      * @type {string}
      * @memberof UtxoBalanceChangeEffect
      */
     diff: string;
     /**
-     * 
+     * The asset information.
      * @type {PricedAsset}
      * @memberof UtxoBalanceChangeEffect
      */
@@ -53,7 +53,7 @@ export interface UtxoBalanceChangeEffect {
 
 
 /**
- * 
+ * @export
  */
 const UtxoBalanceChangeEffectTypeEnum = {
     native: 'native'

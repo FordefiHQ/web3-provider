@@ -26,19 +26,19 @@ import {
  */
 export interface TronBalanceChangeEffect {
     /**
-     * 
+     * The asset information.
      * @type {PricedAsset}
      * @memberof TronBalanceChangeEffect
      */
     pricedAsset: PricedAsset;
     /**
-     * 
+     * The amount of that was added to or deducted from the owner's balance. If the amount was deducted, the value is negative; if the amount was added, the value is positive.
      * @type {string}
      * @memberof TronBalanceChangeEffect
      */
     diff: string;
     /**
-     * 
+     * The address affected by the balance change.
      * @type {EnrichedTronAddress}
      * @memberof TronBalanceChangeEffect
      */
@@ -60,4 +60,3 @@ function TronBalanceChangeEffectFromJSONTyped(json: any, _ignoreDiscriminator: b
         'address': EnrichedTronAddressFromJSON(json['address']),
     };
 }
-

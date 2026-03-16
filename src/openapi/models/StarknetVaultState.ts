@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const StarknetVaultState = {
@@ -28,4 +29,3 @@ export function StarknetVaultStateFromJSON(json: any): StarknetVaultState {
 function StarknetVaultStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): StarknetVaultState {
     return json as StarknetVaultState;
 }
-

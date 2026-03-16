@@ -24,9 +24,9 @@ import {
 } from './EvmDataRequestHex';
 
 /**
+ * @type EvmDataRequest
  * 
  * @export
- * @type EvmDataRequest
  */
 export type EvmDataRequest = { type: 'base64' } & EvmDataRequestBase64 | { type: 'full_details' } & EvmDataRequestFullDetails | { type: 'hex' } & EvmDataRequestHex;
 
@@ -46,8 +46,6 @@ function EvmDataRequestToJSONTyped(value?: EvmDataRequest | null, _ignoreDiscrim
         case 'hex':
             return Object.assign({}, EvmDataRequestHexToJSON(value), { type: 'hex' } as const);
         default:
-            throw new Error(`No variant of EvmDataRequest exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

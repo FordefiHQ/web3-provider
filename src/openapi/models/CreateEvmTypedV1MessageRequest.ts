@@ -22,19 +22,19 @@ import {
  */
 export interface CreateEvmTypedV1MessageRequest {
     /**
-     * 
-     * @type {string}
+     * Typed message standard (version 1).
+     * @type {CreateEvmTypedV1MessageRequestTypeEnum}
      * @memberof CreateEvmTypedV1MessageRequest
      */
     type: CreateEvmTypedV1MessageRequestTypeEnum;
     /**
-     * 
+     * The EVM chain that this message is intended for. Specify either the chain ID (for example `1` for `ethereum_mainnet`) or the chain name (for example, `ethereum_goerli`).
      * @type {EvmChainRequest}
      * @memberof CreateEvmTypedV1MessageRequest
      */
     chain: EvmChainRequest;
     /**
-     * 
+     * The raw data of the message to be signed, provided as a string or hex-encoded.
      * @type {string}
      * @memberof CreateEvmTypedV1MessageRequest
      */
@@ -43,7 +43,7 @@ export interface CreateEvmTypedV1MessageRequest {
 
 
 /**
- * 
+ * @export
  */
 const CreateEvmTypedV1MessageRequestTypeEnum = {
     typedMessageTypeV1: 'typed_message_type_v1'

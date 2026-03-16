@@ -17,19 +17,19 @@ import {
 } from './AptosChainUniqueId';
 
 /**
- * 
+ * Coin type represents a blockchain legacy coin type.
  * @export
  * @interface AptosCoinTypeRequest
  */
 export interface AptosCoinTypeRequest {
     /**
-     * 
+     * The chain details this address is of.
      * @type {AptosChainUniqueId}
      * @memberof AptosCoinTypeRequest
      */
     chain: AptosChainUniqueId;
     /**
-     * 
+     * Coin type string representation.
      * @type {string}
      * @memberof AptosCoinTypeRequest
      */
@@ -66,4 +66,3 @@ function AptosCoinTypeRequestToJSONTyped(value?: AptosCoinTypeRequest | null, _i
         'coin_type_str': value['coinTypeStr'],
     };
 }
-

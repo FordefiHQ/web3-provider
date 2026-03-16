@@ -30,49 +30,49 @@ import {
  */
 export interface ExchangeExternalWithdrawDetails {
     /**
-     * 
+     * Is this transfer an internal transfer between two vaults.
      * @type {boolean}
      * @memberof ExchangeExternalWithdrawDetails
      */
     isInternal: boolean;
     /**
-     * 
+     * The sender of the transaction.
      * @type {EnrichedExchangeAddress}
      * @memberof ExchangeExternalWithdrawDetails
      */
     sender: EnrichedExchangeAddress;
     /**
-     * 
-     * @type {string}
+     * A transaction from an exchange vault to an MPC vault or external address. 
+     * @type {ExchangeExternalWithdrawDetailsTypeEnum}
      * @memberof ExchangeExternalWithdrawDetails
      */
     type: ExchangeExternalWithdrawDetailsTypeEnum;
     /**
-     * 
+     * The recipient of the transfer.
      * @type {EnrichedAddress}
      * @memberof ExchangeExternalWithdrawDetails
      */
     recipient: EnrichedAddress;
     /**
-     * 
+     * The details of the chain this transaction is on.
      * @type {EnrichedChain}
      * @memberof ExchangeExternalWithdrawDetails
      */
     chain: EnrichedChain;
     /**
-     * 
+     * Transaction memo.
      * @type {string}
      * @memberof ExchangeExternalWithdrawDetails
      */
     memo?: string;
     /**
-     * 
+     * The hash of the transaction.
      * @type {string}
      * @memberof ExchangeExternalWithdrawDetails
      */
     hash?: string;
     /**
-     * 
+     * The URL of this transaction in a blockchain explorer. For example, Solscan.
      * @type {string}
      * @memberof ExchangeExternalWithdrawDetails
      */
@@ -81,7 +81,7 @@ export interface ExchangeExternalWithdrawDetails {
 
 
 /**
- * 
+ * @export
  */
 const ExchangeExternalWithdrawDetailsTypeEnum = {
     externalWithdraw: 'external_withdraw'

@@ -22,25 +22,25 @@ import {
  */
 export interface TonNativeTransferDetails {
     /**
-     * 
-     * @type {string}
+     * A transaction involving the transfer of TON coin from one address to another. 
+     * @type {TonNativeTransferDetailsTypeEnum}
      * @memberof TonNativeTransferDetails
      */
     type: TonNativeTransferDetailsTypeEnum;
     /**
-     * 
+     * The sender of the assets.
      * @type {EnrichedTonAddress}
      * @memberof TonNativeTransferDetails
      */
     sender: EnrichedTonAddress;
     /**
-     * 
+     * The recipient of the assets.
      * @type {EnrichedTonAddress}
      * @memberof TonNativeTransferDetails
      */
     recipient: EnrichedTonAddress;
     /**
-     * 
+     * Is this transfer an internal transfer between two vaults. None if the transaction is incoming.
      * @type {boolean}
      * @memberof TonNativeTransferDetails
      */
@@ -49,7 +49,7 @@ export interface TonNativeTransferDetails {
 
 
 /**
- * 
+ * @export
  */
 const TonNativeTransferDetailsTypeEnum = {
     nativeTransfer: 'native_transfer'

@@ -17,25 +17,25 @@
  */
 export interface ScriptPayload {
     /**
-     * 
+     * The typed arguments of the transaction.
      * @type {Array<string>}
      * @memberof ScriptPayload
      */
     typedArguments: Array<string>;
     /**
-     * 
+     * The arguments of the transaction.
      * @type {Array<string>}
      * @memberof ScriptPayload
      */
     arguments: Array<string>;
     /**
      * 
-     * @type {string}
+     * @type {ScriptPayloadTypeEnum}
      * @memberof ScriptPayload
      */
     type: ScriptPayloadTypeEnum;
     /**
-     * 
+     * The script code of the transaction.
      * @type {string}
      * @memberof ScriptPayload
      */
@@ -44,7 +44,7 @@ export interface ScriptPayload {
 
 
 /**
- * 
+ * @export
  */
 const ScriptPayloadTypeEnum = {
     script: 'script'

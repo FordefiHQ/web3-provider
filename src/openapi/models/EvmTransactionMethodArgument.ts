@@ -22,25 +22,25 @@ import {
  */
 export interface EvmTransactionMethodArgument {
     /**
-     * 
+     * The name of the argument.
      * @type {string}
      * @memberof EvmTransactionMethodArgument
      */
     name: string;
     /**
-     * 
+     * The type of the argument.
      * @type {string}
      * @memberof EvmTransactionMethodArgument
      */
     type: string;
     /**
-     * 
+     * The value of the argument.
      * @type {string}
      * @memberof EvmTransactionMethodArgument
      */
     value: string;
     /**
-     * 
+     * Details of the address if it is an address.
      * @type {EnrichedEvmAddress}
      * @memberof EvmTransactionMethodArgument
      */
@@ -63,4 +63,3 @@ function EvmTransactionMethodArgumentFromJSONTyped(json: any, _ignoreDiscriminat
         'enrichedAddress': json['enriched_address'] == null ? undefined : EnrichedEvmAddressFromJSON(json['enriched_address']),
     };
 }
-

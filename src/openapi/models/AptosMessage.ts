@@ -10,6 +10,10 @@
  * Do not edit the class manually.
  */
 
+import type { VaultRef } from './VaultRef';
+import {
+    VaultRefFromJSON,
+} from './VaultRef';
 import type { EnrichedAptosChain } from './EnrichedAptosChain';
 import {
     EnrichedAptosChainFromJSON,
@@ -30,6 +34,10 @@ import type { Signature } from './Signature';
 import {
     SignatureFromJSON,
 } from './Signature';
+import type { RelatedTransaction } from './RelatedTransaction';
+import {
+    RelatedTransactionFromJSON,
+} from './RelatedTransaction';
 import type { EnrichedAptosAddress } from './EnrichedAptosAddress';
 import {
     EnrichedAptosAddressFromJSON,
@@ -54,115 +62,133 @@ import {
  */
 export interface AptosMessage {
     /**
-     * 
+     * The unique identifier of the object in the Fordefi platform.
      * @type {string}
      * @memberof AptosMessage
      */
     id: string;
     /**
-     * 
+     * The date and time when the object was created.
      * @type {Date}
      * @memberof AptosMessage
      */
     createdAt: Date;
     /**
-     * 
+     * The date and time when the object was last modified. Any change to any field of the resource is considered a modification.
      * @type {Date}
      * @memberof AptosMessage
      */
     modifiedAt: Date;
     /**
-     * 
+     * Managed transaction data. Presented if the transaction was initiated from the Fordefi system itself, in contrast to unmanaged transactions (which are, for example, transfers of funds into a vault visible to Fordefi). 
      * @type {ManagedTransactionData}
      * @memberof AptosMessage
      */
     managedTransactionData?: ManagedTransactionData;
     /**
-     * 
+     * The transaction signatures.
      * @type {Array<Signature>}
      * @memberof AptosMessage
      */
     signatures: Array<Signature>;
     /**
-     * 
+     * An optional transaction note.
      * @type {string}
      * @memberof AptosMessage
      */
     note?: string;
     /**
-     * 
+     * `automatically_set` if the transaction was automatically set as spam by Fordefi, `manually_set` if the transaction was manually set as spam by a user, and `unset` if the transaction was not set as spam.
      * @type {TransactionSpamState}
      * @memberof AptosMessage
      */
     spamState?: TransactionSpamState;
     /**
-     * 
+     * The direction of the transaction.
      * @type {TransactionDirection}
      * @memberof AptosMessage
      */
     direction: TransactionDirection;
     /**
-     * 
+     * Whether the transaction was signed by an external user (for example in case of imported vault).
      * @type {boolean}
      * @memberof AptosMessage
      */
     signedExternally?: boolean;
     /**
-     * 
+     * The vaults that interacted with the transaction.
+     * @type {Array<VaultRef>}
+     * @memberof AptosMessage
+     */
+    interactedVaults: Array<VaultRef>;
+    /**
+     * The related transactions.
+     * @type {Array<RelatedTransaction>}
+     * @memberof AptosMessage
+     */
+    relatedTransactions?: Array<RelatedTransaction>;
+    /**
+     * The organization that the transaction belongs to.
+     * @type {string}
+     * @memberof AptosMessage
+     */
+    organizationId: string;
+    /**
+     * The state of the message.
      * @type {NonPushableTransactionState}
      * @memberof AptosMessage
      */
     state: NonPushableTransactionState;
     /**
-     * 
+     * The state changes of the message.
      * @type {Array<NonPushableTransactionStateChange>}
      * @memberof AptosMessage
      */
     stateChanges: Array<NonPushableTransactionStateChange>;
     /**
-     * 
-     * @type {string}
+     * Aptos message type.
+     * @type {AptosMessageTypeEnum}
      * @memberof AptosMessage
      */
     type: AptosMessageTypeEnum;
     /**
-     * 
+     * The type of the Aptos message.
      * @type {AptosMessageType}
      * @memberof AptosMessage
      */
     aptosMessageType: AptosMessageType;
     /**
-     * 
+     * The original message that was requested to be signed, encoded in base64.
      * @type {string}
      * @memberof AptosMessage
      */
     rawOriginalMessageToSign: string;
     /**
-     * 
+     * The original message that was requested to be signed.
      * @type {string}
      * @memberof AptosMessage
      */
     stringOriginalMessageToSign: string;
     /**
-     * 
+     * The full message to be signed, encoded in base64.
      * @type {string}
      * @memberof AptosMessage
      */
     rawFullMessageToSign: string;
     /**
-     * 
+     * The full message to be signed.
      * @type {string}
      * @memberof AptosMessage
      */
     stringFullMessageToSign: string;
     /**
-     * 
+     * The details of the chain that this message is on.
      * @type {EnrichedAptosChain}
      * @memberof AptosMessage
      */
     chain: EnrichedAptosChain;
     /**
-     * 
+     * The sender of the message.
      * @type {EnrichedAptosAddress}
      * @memberof AptosMessage
      */
@@ -171,7 +197,7 @@ export interface AptosMessage {
 
 
 /**
- * 
+ * @export
  */
 const AptosMessageTypeEnum = {
     aptosMessage: 'aptos_message'
@@ -193,6 +219,9 @@ export function AptosMessageFromJSONTyped(json: any, _ignoreDiscriminator: boole
         'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
         'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'interactedVaults': ((json['interacted_vaults'] as Array<any>).map(VaultRefFromJSON)),
+        'relatedTransactions': json['related_transactions'] == null ? undefined : ((json['related_transactions'] as Array<any>).map(RelatedTransactionFromJSON)),
+        'organizationId': json['organization_id'],
         'state': NonPushableTransactionStateFromJSON(json['state']),
         'stateChanges': ((json['state_changes'] as Array<any>).map(NonPushableTransactionStateChangeFromJSON)),
         'type': json['type'],

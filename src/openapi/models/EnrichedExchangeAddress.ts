@@ -30,26 +30,26 @@ import {
  */
 export interface EnrichedExchangeAddress {
     /**
-     * 
+     * The vault corresponding to this address.
      * @type {VaultRef}
      * @memberof EnrichedExchangeAddress
      */
     vault?: VaultRef;
     /**
-     * 
+     * The URL of a blockchain explorer that provides real-time information about the address.
      * @type {string}
      * @memberof EnrichedExchangeAddress
      */
     explorerUrl?: string;
     /**
-     * 
+     * The contact details of this address.
      * @type {ContactRef}
      * @memberof EnrichedExchangeAddress
      */
     contact?: ContactRef;
     /**
      * 
-     * @type {string}
+     * @type {EnrichedExchangeAddressTypeEnum}
      * @memberof EnrichedExchangeAddress
      */
     type: EnrichedExchangeAddressTypeEnum;
@@ -63,7 +63,7 @@ export interface EnrichedExchangeAddress {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedExchangeAddressTypeEnum = {
     exchange: 'exchange'

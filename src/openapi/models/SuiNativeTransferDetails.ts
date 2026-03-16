@@ -22,25 +22,25 @@ import {
  */
 export interface SuiNativeTransferDetails {
     /**
-     * 
-     * @type {string}
+     * A transaction involving the transfer of SUI coin from one address to another. 
+     * @type {SuiNativeTransferDetailsTypeEnum}
      * @memberof SuiNativeTransferDetails
      */
     type: SuiNativeTransferDetailsTypeEnum;
     /**
-     * 
+     * The sender of the coins.
      * @type {EnrichedSuiAddress}
      * @memberof SuiNativeTransferDetails
      */
     sender: EnrichedSuiAddress;
     /**
-     * 
+     * The recipient of the coins.
      * @type {EnrichedSuiAddress}
      * @memberof SuiNativeTransferDetails
      */
     recipient: EnrichedSuiAddress;
     /**
-     * 
+     * Is this transfer an internal transfer between two vaults. None if the transaction is incoming.
      * @type {boolean}
      * @memberof SuiNativeTransferDetails
      */
@@ -49,7 +49,7 @@ export interface SuiNativeTransferDetails {
 
 
 /**
- * 
+ * @export
  */
 const SuiNativeTransferDetailsTypeEnum = {
     nativeTransfer: 'native_transfer'

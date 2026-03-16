@@ -17,19 +17,19 @@
  */
 export interface EcdsaSignature {
     /**
-     * 
+     * The x-coordinate of the point on the curve, represented in hex format.
      * @type {string}
      * @memberof EcdsaSignature
      */
     r: string;
     /**
-     * 
+     * The scalar, known as the "signature proof", represented in hex format.
      * @type {string}
      * @memberof EcdsaSignature
      */
     s: string;
     /**
-     * 
+     * The recovery id, only relevant for Ethereum signtures.
      * @type {number}
      * @memberof EcdsaSignature
      */
@@ -51,4 +51,3 @@ function EcdsaSignatureFromJSONTyped(json: any, _ignoreDiscriminator: boolean): 
         'v': json['v'],
     };
 }
-

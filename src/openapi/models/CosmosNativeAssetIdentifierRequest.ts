@@ -23,13 +23,13 @@ import {
  */
 export interface CosmosNativeAssetIdentifierRequest {
     /**
-     * 
-     * @type {string}
+     * Cosmos asset identifier type.
+     * @type {CosmosNativeAssetIdentifierRequestTypeEnum}
      * @memberof CosmosNativeAssetIdentifierRequest
      */
     type: CosmosNativeAssetIdentifierRequestTypeEnum;
     /**
-     * 
+     * The unique id of the chain of the asset.
      * @type {CosmosChainUniqueId}
      * @memberof CosmosNativeAssetIdentifierRequest
      */
@@ -38,7 +38,7 @@ export interface CosmosNativeAssetIdentifierRequest {
 
 
 /**
- * 
+ * @export
  */
 const CosmosNativeAssetIdentifierRequestTypeEnum = {
     native: 'native'

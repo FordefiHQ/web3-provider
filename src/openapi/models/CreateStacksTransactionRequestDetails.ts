@@ -20,9 +20,9 @@ import {
 } from './CreateStacksTransferRequest';
 
 /**
+ * @type CreateStacksTransactionRequestDetails
  * 
  * @export
- * @type CreateStacksTransactionRequestDetails
  */
 export type CreateStacksTransactionRequestDetails = { type: 'stacks_serialized_transaction' } & CreateStacksTransactionSerializedRequest | { type: 'stacks_transfer' } & CreateStacksTransferRequest;
 
@@ -40,8 +40,6 @@ function CreateStacksTransactionRequestDetailsToJSONTyped(value?: CreateStacksTr
         case 'stacks_transfer':
             return Object.assign({}, CreateStacksTransferRequestToJSON(value), { type: 'stacks_transfer' } as const);
         default:
-            throw new Error(`No variant of CreateStacksTransactionRequestDetails exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

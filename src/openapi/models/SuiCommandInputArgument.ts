@@ -17,13 +17,13 @@
  */
 export interface SuiCommandInputArgument {
     /**
-     * 
-     * @type {string}
+     * The type of the command argument.
+     * @type {SuiCommandInputArgumentTypeEnum}
      * @memberof SuiCommandInputArgument
      */
     type: SuiCommandInputArgumentTypeEnum;
     /**
-     * 
+     * The index of the input in the input vector.
      * @type {number}
      * @memberof SuiCommandInputArgument
      */
@@ -32,7 +32,7 @@ export interface SuiCommandInputArgument {
 
 
 /**
- * 
+ * @export
  */
 const SuiCommandInputArgumentTypeEnum = {
     input: 'input'

@@ -17,25 +17,25 @@
  */
 export interface EvmHyperLiquidAssetIdentifierRequest {
     /**
-     * 
-     * @type {string}
+     * EVM asset identifier type.
+     * @type {EvmHyperLiquidAssetIdentifierRequestTypeEnum}
      * @memberof EvmHyperLiquidAssetIdentifierRequest
      */
     type: EvmHyperLiquidAssetIdentifierRequestTypeEnum;
     /**
-     * 
+     * Currently artificially set to Arbitrum.
      * @type {string}
      * @memberof EvmHyperLiquidAssetIdentifierRequest
      */
     chain: string;
     /**
-     * 
+     * The token id of the asset on Hyperliquid.
      * @type {string}
      * @memberof EvmHyperLiquidAssetIdentifierRequest
      */
     tokenId: string;
     /**
-     * 
+     * The index of the asset on Hyperliquid.
      * @type {number}
      * @memberof EvmHyperLiquidAssetIdentifierRequest
      */
@@ -44,7 +44,7 @@ export interface EvmHyperLiquidAssetIdentifierRequest {
 
 
 /**
- * 
+ * @export
  */
 const EvmHyperLiquidAssetIdentifierRequestTypeEnum = {
     hyperliquid: 'hyperliquid'

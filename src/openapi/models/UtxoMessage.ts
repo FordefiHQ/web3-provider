@@ -18,6 +18,10 @@ import type { UtxoMessageType } from './UtxoMessageType';
 import {
     UtxoMessageTypeFromJSON,
 } from './UtxoMessageType';
+import type { VaultRef } from './VaultRef';
+import {
+    VaultRefFromJSON,
+} from './VaultRef';
 import type { ManagedTransactionData } from './ManagedTransactionData';
 import {
     ManagedTransactionDataFromJSON,
@@ -34,6 +38,10 @@ import type { Signature } from './Signature';
 import {
     SignatureFromJSON,
 } from './Signature';
+import type { RelatedTransaction } from './RelatedTransaction';
+import {
+    RelatedTransactionFromJSON,
+} from './RelatedTransaction';
 import type { NonPushableTransactionStateChange } from './NonPushableTransactionStateChange';
 import {
     NonPushableTransactionStateChangeFromJSON,
@@ -54,103 +62,121 @@ import {
  */
 export interface UtxoMessage {
     /**
-     * 
+     * The unique identifier of the object in the Fordefi platform.
      * @type {string}
      * @memberof UtxoMessage
      */
     id: string;
     /**
-     * 
+     * The date and time when the object was created.
      * @type {Date}
      * @memberof UtxoMessage
      */
     createdAt: Date;
     /**
-     * 
+     * The date and time when the object was last modified. Any change to any field of the resource is considered a modification.
      * @type {Date}
      * @memberof UtxoMessage
      */
     modifiedAt: Date;
     /**
-     * 
+     * Managed transaction data. Presented if the transaction was initiated from the Fordefi system itself, in contrast to unmanaged transactions (which are, for example, transfers of funds into a vault visible to Fordefi). 
      * @type {ManagedTransactionData}
      * @memberof UtxoMessage
      */
     managedTransactionData?: ManagedTransactionData;
     /**
-     * 
+     * The transaction signatures.
      * @type {Array<Signature>}
      * @memberof UtxoMessage
      */
     signatures: Array<Signature>;
     /**
-     * 
+     * An optional transaction note.
      * @type {string}
      * @memberof UtxoMessage
      */
     note?: string;
     /**
-     * 
+     * `automatically_set` if the transaction was automatically set as spam by Fordefi, `manually_set` if the transaction was manually set as spam by a user, and `unset` if the transaction was not set as spam.
      * @type {TransactionSpamState}
      * @memberof UtxoMessage
      */
     spamState?: TransactionSpamState;
     /**
-     * 
+     * The direction of the transaction.
      * @type {TransactionDirection}
      * @memberof UtxoMessage
      */
     direction: TransactionDirection;
     /**
-     * 
+     * Whether the transaction was signed by an external user (for example in case of imported vault).
      * @type {boolean}
      * @memberof UtxoMessage
      */
     signedExternally?: boolean;
     /**
-     * 
+     * The vaults that interacted with the transaction.
+     * @type {Array<VaultRef>}
+     * @memberof UtxoMessage
+     */
+    interactedVaults: Array<VaultRef>;
+    /**
+     * The related transactions.
+     * @type {Array<RelatedTransaction>}
+     * @memberof UtxoMessage
+     */
+    relatedTransactions?: Array<RelatedTransaction>;
+    /**
+     * The organization that the transaction belongs to.
+     * @type {string}
+     * @memberof UtxoMessage
+     */
+    organizationId: string;
+    /**
+     * The state of the message.
      * @type {NonPushableTransactionState}
      * @memberof UtxoMessage
      */
     state: NonPushableTransactionState;
     /**
-     * 
+     * The state changes of the message.
      * @type {Array<NonPushableTransactionStateChange>}
      * @memberof UtxoMessage
      */
     stateChanges: Array<NonPushableTransactionStateChange>;
     /**
-     * 
-     * @type {string}
+     * utxo message type.
+     * @type {UtxoMessageTypeEnum}
      * @memberof UtxoMessage
      */
     type: UtxoMessageTypeEnum;
     /**
-     * 
+     * The type of the message to sign.
      * @type {UtxoMessageType}
      * @memberof UtxoMessage
      */
     utxoMessageType: UtxoMessageType;
     /**
-     * 
+     * The raw data of the message, encoded in base64
      * @type {string}
      * @memberof UtxoMessage
      */
     rawData: string;
     /**
-     * 
+     * The details of the chain that this message is on.
      * @type {EnrichedUtxoChain}
      * @memberof UtxoMessage
      */
     chain: EnrichedUtxoChain;
     /**
-     * 
+     * The message as a string.
      * @type {string}
      * @memberof UtxoMessage
      */
     stringData: string;
     /**
-     * 
+     * The sender of the message.
      * @type {EnrichedUtxoAddress}
      * @memberof UtxoMessage
      */
@@ -159,7 +185,7 @@ export interface UtxoMessage {
 
 
 /**
- * 
+ * @export
  */
 const UtxoMessageTypeEnum = {
     utxoMessage: 'utxo_message'
@@ -181,6 +207,9 @@ export function UtxoMessageFromJSONTyped(json: any, _ignoreDiscriminator: boolea
         'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
         'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'interactedVaults': ((json['interacted_vaults'] as Array<any>).map(VaultRefFromJSON)),
+        'relatedTransactions': json['related_transactions'] == null ? undefined : ((json['related_transactions'] as Array<any>).map(RelatedTransactionFromJSON)),
+        'organizationId': json['organization_id'],
         'state': NonPushableTransactionStateFromJSON(json['state']),
         'stateChanges': ((json['state_changes'] as Array<any>).map(NonPushableTransactionStateChangeFromJSON)),
         'type': json['type'],

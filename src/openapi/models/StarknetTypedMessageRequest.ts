@@ -22,19 +22,19 @@ import {
  */
 export interface StarknetTypedMessageRequest {
     /**
-     * 
-     * @type {string}
+     * EIP-712 message standard.
+     * @type {StarknetTypedMessageRequestTypeEnum}
      * @memberof StarknetTypedMessageRequest
      */
     type: StarknetTypedMessageRequestTypeEnum;
     /**
-     * 
+     * The chain that this transaction is on. Specify the chain name (for example, `starknet_mainnet`).
      * @type {StarknetChainUniqueId}
      * @memberof StarknetTypedMessageRequest
      */
     chain: StarknetChainUniqueId;
     /**
-     * 
+     * The raw data of the message to be signed, provided as a string or hex-encoded.
      * @type {string}
      * @memberof StarknetTypedMessageRequest
      */
@@ -43,7 +43,7 @@ export interface StarknetTypedMessageRequest {
 
 
 /**
- * 
+ * @export
  */
 const StarknetTypedMessageRequestTypeEnum = {
     typedMessageType: 'typed_message_type'

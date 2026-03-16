@@ -28,25 +28,25 @@ import {
  */
 export interface CosmosBechAddress {
     /**
-     * 
+     * The Cosmos chain.
      * @type {CosmosChainUniqueId}
      * @memberof CosmosBechAddress
      */
     chain: CosmosChainUniqueId;
     /**
-     * 
+     * The address as bech32.
      * @type {string}
      * @memberof CosmosBechAddress
      */
     address: string;
     /**
-     * 
+     * The hex representation of the address.
      * @type {string}
      * @memberof CosmosBechAddress
      */
     hexRepr?: string;
     /**
-     * 
+     * The type of the key that this address is derived from.
      * @type {CosmosKeyType}
      * @memberof CosmosBechAddress
      */
@@ -87,4 +87,3 @@ function CosmosBechAddressToJSONTyped(value?: CosmosBechAddress | null, _ignoreD
         'key_type': CosmosKeyTypeToJSON(value['keyType']),
     };
 }
-

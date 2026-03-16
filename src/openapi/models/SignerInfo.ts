@@ -22,25 +22,25 @@ import {
  */
 export interface SignerInfo {
     /**
-     * 
+     * The address of the signer (in bech32 format).
      * @type {EnrichedCosmosBechAddress}
      * @memberof SignerInfo
      */
     signerAddress: EnrichedCosmosBechAddress;
     /**
-     * 
+     * Public key in its compressed format
      * @type {string}
      * @memberof SignerInfo
      */
     publicKey: string;
     /**
-     * 
+     * The account number assigned by the chain.
      * @type {string}
      * @memberof SignerInfo
      */
     account: string;
     /**
-     * 
+     * The sequence of this transaction.
      * @type {string}
      * @memberof SignerInfo
      */
@@ -63,4 +63,3 @@ function SignerInfoFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Sign
         'sequence': json['sequence'],
     };
 }
-

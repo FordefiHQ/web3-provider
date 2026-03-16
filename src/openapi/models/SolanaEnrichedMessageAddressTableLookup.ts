@@ -26,25 +26,25 @@ import {
  */
 export interface SolanaEnrichedMessageAddressTableLookup {
     /**
-     * 
+     * The address of the lookup table.
      * @type {SolanaAddress}
      * @memberof SolanaEnrichedMessageAddressTableLookup
      */
     accountKey: SolanaAddress;
     /**
-     * 
+     * Indexes of writable accounts in the lookup table.
      * @type {Array<number>}
      * @memberof SolanaEnrichedMessageAddressTableLookup
      */
     writableIndexes: Array<number>;
     /**
-     * 
+     * Indexes of read-only accounts in the lookup table.
      * @type {Array<number>}
      * @memberof SolanaEnrichedMessageAddressTableLookup
      */
     readonlyIndexes: Array<number>;
     /**
-     * 
+     * The state of the lookup table.
      * @type {AddressLookupTableState}
      * @memberof SolanaEnrichedMessageAddressTableLookup
      */
@@ -67,4 +67,3 @@ function SolanaEnrichedMessageAddressTableLookupFromJSONTyped(json: any, _ignore
         'state': AddressLookupTableStateFromJSON(json['state']),
     };
 }
-

@@ -12,6 +12,7 @@
 
 
 /**
+ * Represents the whole approval request state
  * @export
  */
 export const ApprovalRequestState = {
@@ -30,4 +31,3 @@ export function ApprovalRequestStateFromJSON(json: any): ApprovalRequestState {
 function ApprovalRequestStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): ApprovalRequestState {
     return json as ApprovalRequestState;
 }
-

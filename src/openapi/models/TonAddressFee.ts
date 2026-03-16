@@ -18,10 +18,6 @@ import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
 } from './PricedAsset';
-import type { Price } from './Price';
-import {
-    PriceFromJSON,
-} from './Price';
 
 /**
  * 
@@ -30,25 +26,19 @@ import {
  */
 export interface TonAddressFee {
     /**
-     * 
+     * The address that paid the fee.
      * @type {EnrichedTonAddress}
      * @memberof TonAddressFee
      */
     address: EnrichedTonAddress;
     /**
-     * 
+     * The total fee paid by this address, in nano tons.
      * @type {number}
      * @memberof TonAddressFee
      */
     totalFee: number;
     /**
-     * 
-     * @type {Price}
-     * @memberof TonAddressFee
-     */
-    fiatPrice?: Price;
-    /**
-     * 
+     * The information of the asset used to pay the fee and amount used.
      * @type {PricedAsset}
      * @memberof TonAddressFee
      */
@@ -67,8 +57,6 @@ function TonAddressFeeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): T
         
         'address': EnrichedTonAddressFromJSON(json['address']),
         'totalFee': json['total_fee'],
-        'fiatPrice': json['fiat_price'] == null ? undefined : PriceFromJSON(json['fiat_price']),
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }
-

@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const SuiReversionState = {
@@ -33,4 +34,3 @@ export function SuiReversionStateFromJSON(json: any): SuiReversionState {
 function SuiReversionStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): SuiReversionState {
     return json as SuiReversionState;
 }
-

@@ -17,13 +17,13 @@
  */
 export interface ExchangeTransferExternalRecipientTypeAddress {
     /**
-     * 
-     * @type {string}
+     * Transfer to external address.
+     * @type {ExchangeTransferExternalRecipientTypeAddressTypeEnum}
      * @memberof ExchangeTransferExternalRecipientTypeAddress
      */
     type: ExchangeTransferExternalRecipientTypeAddressTypeEnum;
     /**
-     * 
+     * The address of the recipient in plain string.
      * @type {string}
      * @memberof ExchangeTransferExternalRecipientTypeAddress
      */
@@ -32,7 +32,7 @@ export interface ExchangeTransferExternalRecipientTypeAddress {
 
 
 /**
- * 
+ * @export
  */
 const ExchangeTransferExternalRecipientTypeAddressTypeEnum = {
     address: 'address'

@@ -17,26 +17,26 @@
  */
 export interface SuiImmOrOwnedObjectRefInputArgument {
     /**
-     * 
+     * The digest of the object.
      * @type {string}
      * @memberof SuiImmOrOwnedObjectRefInputArgument
      */
     digest: string;
     /**
-     * 
+     * The id of the object.
      * @type {string}
      * @memberof SuiImmOrOwnedObjectRefInputArgument
      */
     objectId: string;
     /**
-     * 
+     * The version of the object.
      * @type {string}
      * @memberof SuiImmOrOwnedObjectRefInputArgument
      */
     version: string;
     /**
-     * 
-     * @type {string}
+     * The type of the object.
+     * @type {SuiImmOrOwnedObjectRefInputArgumentTypeEnum}
      * @memberof SuiImmOrOwnedObjectRefInputArgument
      */
     type: SuiImmOrOwnedObjectRefInputArgumentTypeEnum;
@@ -44,7 +44,7 @@ export interface SuiImmOrOwnedObjectRefInputArgument {
 
 
 /**
- * 
+ * @export
  */
 const SuiImmOrOwnedObjectRefInputArgumentTypeEnum = {
     immOrOwned: 'imm_or_owned'

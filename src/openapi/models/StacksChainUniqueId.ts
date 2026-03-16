@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const StacksChainUniqueId = {
@@ -30,4 +31,3 @@ function StacksChainUniqueIdFromJSONTyped(json: any, _ignoreDiscriminator: boole
 export function StacksChainUniqueIdToJSON(value?: StacksChainUniqueId | null): any {
     return value as any;
 }
-

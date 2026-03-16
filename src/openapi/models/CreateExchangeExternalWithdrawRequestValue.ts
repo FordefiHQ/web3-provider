@@ -20,9 +20,9 @@ import {
 } from './CreateExchangeTransferRequestMaxAmount';
 
 /**
- * 
- * @export
  * @type CreateExchangeExternalWithdrawRequestValue
+ * The number of units of currency to transfer.
+ * @export
  */
 export type CreateExchangeExternalWithdrawRequestValue = { type: 'max' } & CreateExchangeTransferRequestMaxAmount | { type: 'value' } & CreateExchangeExternalWithdrawRequestExplicitAmount;
 
@@ -40,8 +40,6 @@ function CreateExchangeExternalWithdrawRequestValueToJSONTyped(value?: CreateExc
         case 'value':
             return Object.assign({}, CreateExchangeExternalWithdrawRequestExplicitAmountToJSON(value), { type: 'value' } as const);
         default:
-            throw new Error(`No variant of CreateExchangeExternalWithdrawRequestValue exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

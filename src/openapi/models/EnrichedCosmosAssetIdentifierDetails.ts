@@ -20,9 +20,9 @@ import {
 } from './EnrichedCosmosTokenAssetIdentifier';
 
 /**
+ * @type EnrichedCosmosAssetIdentifierDetails
  * 
  * @export
- * @type EnrichedCosmosAssetIdentifierDetails
  */
 export type EnrichedCosmosAssetIdentifierDetails = { type: 'native' } & EnrichedCosmosNativeAssetIdentifier | { type: 'token' } & EnrichedCosmosTokenAssetIdentifier;
 
@@ -40,7 +40,6 @@ function EnrichedCosmosAssetIdentifierDetailsFromJSONTyped(json: any, _ignoreDis
         case 'token':
             return Object.assign({}, EnrichedCosmosTokenAssetIdentifierFromJSONTyped(json, true), { type: 'token' } as const);
         default:
-            throw new Error(`No variant of EnrichedCosmosAssetIdentifierDetails exists with 'type=${json['type']}'`);
+            return json;
     }
 }
-

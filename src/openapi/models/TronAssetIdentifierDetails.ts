@@ -22,9 +22,9 @@ import {
 } from './TronTrc20AssetIdentifierRequest';
 
 /**
+ * @type TronAssetIdentifierDetails
  * 
  * @export
- * @type TronAssetIdentifierDetails
  */
 export type TronAssetIdentifierDetails = { type: 'native' } & TronNativeAssetIdentifierRequest | { type: 'trc20' } & TronTrc20AssetIdentifierRequest;
 
@@ -42,7 +42,7 @@ function TronAssetIdentifierDetailsFromJSONTyped(json: any, _ignoreDiscriminator
         case 'trc20':
             return Object.assign({}, TronTrc20AssetIdentifierRequestFromJSONTyped(json, true), { type: 'trc20' } as const);
         default:
-            throw new Error(`No variant of TronAssetIdentifierDetails exists with 'type=${json['type']}'`);
+            return json;
     }
 }
 
@@ -60,8 +60,6 @@ function TronAssetIdentifierDetailsToJSONTyped(value?: TronAssetIdentifierDetail
         case 'trc20':
             return Object.assign({}, TronTrc20AssetIdentifierRequestToJSON(value), { type: 'trc20' } as const);
         default:
-            throw new Error(`No variant of TronAssetIdentifierDetails exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

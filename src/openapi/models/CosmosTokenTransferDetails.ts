@@ -30,38 +30,39 @@ import {
  */
 export interface CosmosTokenTransferDetails {
     /**
-     * 
+     * List of transaction's messages.
      * @type {MessagesList}
      * @memberof CosmosTokenTransferDetails
      */
     transactionData: MessagesList;
     /**
-     * 
+     * The direction of the movement of funds, in case of a transfer.
      * @type {TransferDirection}
      * @memberof CosmosTokenTransferDetails
+     * @deprecated
      */
     direction: TransferDirection;
     /**
-     * 
+     * The sender.
      * @type {EnrichedCosmosBechAddress}
      * @memberof CosmosTokenTransferDetails
      */
     sender: EnrichedCosmosBechAddress;
     /**
-     * 
+     * The recipient.
      * @type {EnrichedCosmosBechAddress}
      * @memberof CosmosTokenTransferDetails
      */
     recipient: EnrichedCosmosBechAddress;
     /**
-     * 
+     * Is this transfer an internal transfer between two vaults. None if the transaction is incoming.
      * @type {boolean}
      * @memberof CosmosTokenTransferDetails
      */
     isInternal?: boolean;
     /**
-     * 
-     * @type {string}
+     * A transaction involving a token transfer from one address to another.
+     * @type {CosmosTokenTransferDetailsTypeEnum}
      * @memberof CosmosTokenTransferDetails
      */
     type: CosmosTokenTransferDetailsTypeEnum;
@@ -69,7 +70,7 @@ export interface CosmosTokenTransferDetails {
 
 
 /**
- * 
+ * @export
  */
 const CosmosTokenTransferDetailsTypeEnum = {
     tokenTransfer: 'token_transfer'

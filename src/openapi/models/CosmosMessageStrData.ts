@@ -17,13 +17,13 @@
  */
 export interface CosmosMessageStrData {
     /**
-     * 
-     * @type {string}
+     * The type of the Cosmos message data.
+     * @type {CosmosMessageStrDataTypeEnum}
      * @memberof CosmosMessageStrData
      */
     type: CosmosMessageStrDataTypeEnum;
     /**
-     * 
+     * The data as plain string.
      * @type {string}
      * @memberof CosmosMessageStrData
      */
@@ -32,7 +32,7 @@ export interface CosmosMessageStrData {
 
 
 /**
- * 
+ * @export
  */
 const CosmosMessageStrDataTypeEnum = {
     string: 'string'

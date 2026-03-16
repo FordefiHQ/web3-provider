@@ -14,17 +14,21 @@ import type { CosmosTransferToAddressRequest } from './CosmosTransferToAddressRe
 import {
     CosmosTransferToAddressRequestToJSON,
 } from './CosmosTransferToAddressRequest';
+import type { RecipientContactId } from './RecipientContactId';
+import {
+    RecipientContactIdToJSON,
+} from './RecipientContactId';
 import type { RecipientVaultId } from './RecipientVaultId';
 import {
     RecipientVaultIdToJSON,
 } from './RecipientVaultId';
 
 /**
- * 
- * @export
  * @type TypedCosmosTransferRequestTo
+ * The recipient of the transfer. Specify either a general address, the ID of another vault, or a contact ID.
+ * @export
  */
-export type TypedCosmosTransferRequestTo = { type: 'address' } & CosmosTransferToAddressRequest | { type: 'vault_id' } & RecipientVaultId;
+export type TypedCosmosTransferRequestTo = { type: 'address' } & CosmosTransferToAddressRequest | { type: 'contact_id' } & RecipientContactId | { type: 'vault_id' } & RecipientVaultId;
 
 export function TypedCosmosTransferRequestToToJSON(json: any): any {
     return TypedCosmosTransferRequestToToJSONTyped(json, false);
@@ -37,11 +41,11 @@ function TypedCosmosTransferRequestToToJSONTyped(value?: TypedCosmosTransferRequ
     switch (value['type']) {
         case 'address':
             return Object.assign({}, CosmosTransferToAddressRequestToJSON(value), { type: 'address' } as const);
+        case 'contact_id':
+            return Object.assign({}, RecipientContactIdToJSON(value), { type: 'contact_id' } as const);
         case 'vault_id':
             return Object.assign({}, RecipientVaultIdToJSON(value), { type: 'vault_id' } as const);
         default:
-            throw new Error(`No variant of TypedCosmosTransferRequestTo exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

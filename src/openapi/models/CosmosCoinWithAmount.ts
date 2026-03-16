@@ -42,4 +42,3 @@ function CosmosCoinWithAmountFromJSONTyped(json: any, _ignoreDiscriminator: bool
         'coinWithAmount': CosmosCoinWithAmountCoinWithAmountFromJSON(json['coin_with_amount']),
     };
 }
-

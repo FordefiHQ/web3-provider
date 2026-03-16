@@ -17,8 +17,8 @@
  */
 export interface StarknetContractCreationDetails {
     /**
-     * 
-     * @type {string}
+     * A transaction that created a contract.
+     * @type {StarknetContractCreationDetailsTypeEnum}
      * @memberof StarknetContractCreationDetails
      */
     type: StarknetContractCreationDetailsTypeEnum;
@@ -26,7 +26,7 @@ export interface StarknetContractCreationDetails {
 
 
 /**
- * 
+ * @export
  */
 const StarknetContractCreationDetailsTypeEnum = {
     contractDeployment: 'contract_deployment'

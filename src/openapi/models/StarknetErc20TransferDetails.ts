@@ -22,25 +22,25 @@ import {
  */
 export interface StarknetErc20TransferDetails {
     /**
-     * 
-     * @type {string}
+     * A transaction involving the transfer of an erc20 from one address to another. 
+     * @type {StarknetErc20TransferDetailsTypeEnum}
      * @memberof StarknetErc20TransferDetails
      */
     type: StarknetErc20TransferDetailsTypeEnum;
     /**
-     * 
+     * The sender of the assets.
      * @type {EnrichedStarknetAddress}
      * @memberof StarknetErc20TransferDetails
      */
     sender: EnrichedStarknetAddress;
     /**
-     * 
+     * The recipient of the assets.
      * @type {EnrichedStarknetAddress}
      * @memberof StarknetErc20TransferDetails
      */
     recipient: EnrichedStarknetAddress;
     /**
-     * 
+     * Is this transfer an internal transfer between two vaults. None if the transaction is incoming.
      * @type {boolean}
      * @memberof StarknetErc20TransferDetails
      */
@@ -49,7 +49,7 @@ export interface StarknetErc20TransferDetails {
 
 
 /**
- * 
+ * @export
  */
 const StarknetErc20TransferDetailsTypeEnum = {
     erc20Transfer: 'erc20_transfer'

@@ -22,25 +22,25 @@ import {
  */
 export interface TronFee {
     /**
-     * 
+     * The total TRX fee payed for the transaction.
      * @type {string}
      * @memberof TronFee
      */
     trxFee: string;
     /**
-     * 
+     * The total energy fee payed for the transaction.
      * @type {string}
      * @memberof TronFee
      */
     energyFee: string;
     /**
-     * 
+     * The total bandwidth fee payed for the transaction.
      * @type {string}
      * @memberof TronFee
      */
     bandwidthFee: string;
     /**
-     * 
+     * The information of the asset used to pay the fee and amount used.
      * @type {PricedAsset}
      * @memberof TronFee
      */
@@ -63,4 +63,3 @@ function TronFeeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): TronFee
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }
-

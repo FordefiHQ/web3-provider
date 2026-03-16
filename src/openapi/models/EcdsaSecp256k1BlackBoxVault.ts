@@ -17,8 +17,8 @@
  */
 export interface EcdsaSecp256k1BlackBoxVault {
     /**
-     * 
-     * @type {string}
+     * ECDSA over the secp256k1 curve signing scheme.
+     * @type {EcdsaSecp256k1BlackBoxVaultTypeEnum}
      * @memberof EcdsaSecp256k1BlackBoxVault
      */
     type: EcdsaSecp256k1BlackBoxVaultTypeEnum;
@@ -26,7 +26,7 @@ export interface EcdsaSecp256k1BlackBoxVault {
 
 
 /**
- * 
+ * @export
  */
 const EcdsaSecp256k1BlackBoxVaultTypeEnum = {
     ecdsaSecp256k1: 'ecdsa_secp256k1'

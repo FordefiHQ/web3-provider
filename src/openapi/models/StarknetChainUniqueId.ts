@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const StarknetChainUniqueId = {
@@ -30,4 +31,3 @@ function StarknetChainUniqueIdFromJSONTyped(json: any, _ignoreDiscriminator: boo
 export function StarknetChainUniqueIdToJSON(value?: StarknetChainUniqueId | null): any {
     return value as any;
 }
-

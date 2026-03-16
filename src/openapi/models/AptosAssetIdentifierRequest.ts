@@ -22,8 +22,8 @@ import {
  */
 export interface AptosAssetIdentifierRequest {
     /**
-     * 
-     * @type {string}
+     * Aptos asset identifier type.
+     * @type {AptosAssetIdentifierRequestTypeEnum}
      * @memberof AptosAssetIdentifierRequest
      */
     type: AptosAssetIdentifierRequestTypeEnum;
@@ -37,7 +37,7 @@ export interface AptosAssetIdentifierRequest {
 
 
 /**
- * 
+ * @export
  */
 const AptosAssetIdentifierRequestTypeEnum = {
     aptos: 'aptos'

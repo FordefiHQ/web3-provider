@@ -28,9 +28,9 @@ import {
 } from './AptosScriptDetails';
 
 /**
- * 
- * @export
  * @type AptosTransactionAptosTransactionTypeDetails
+ * Details of the Aptos transaction based on its type.
+ * @export
  */
 export type AptosTransactionAptosTransactionTypeDetails = { type: 'coin_transfer' } & AptosCoinTransferDetails | { type: 'entry_point' } & AptosEntryPointDetails | { type: 'native_transfer' } & AptosNativeTransferDetails | { type: 'script' } & AptosScriptDetails;
 
@@ -52,7 +52,6 @@ function AptosTransactionAptosTransactionTypeDetailsFromJSONTyped(json: any, _ig
         case 'script':
             return Object.assign({}, AptosScriptDetailsFromJSONTyped(json, true), { type: 'script' } as const);
         default:
-            throw new Error(`No variant of AptosTransactionAptosTransactionTypeDetails exists with 'type=${json['type']}'`);
+            return json;
     }
 }
-

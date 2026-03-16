@@ -16,20 +16,20 @@ import {
 } from './FiatCurrency';
 
 /**
- * 
+ * Price represents a price in a given FiatCurrency.
  * @export
  * @interface Price
  */
 export interface Price {
     /**
-     * 
+     * The price in the given fiat currency.
      * @type {string}
      * @memberof Price
      * @deprecated
      */
     price: string;
     /**
-     * 
+     * The price in the given fiat currency.
      * @type {string}
      * @memberof Price
      */
@@ -57,4 +57,3 @@ function PriceFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Price {
         'fiatCurrency': FiatCurrencyFromJSON(json['fiat_currency']),
     };
 }
-

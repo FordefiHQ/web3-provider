@@ -23,19 +23,25 @@ import {
  */
 export interface SuiGasConfig {
     /**
-     * 
+     * The owner of the gas config. Used for sponsored transactions.
+     * @type {string}
+     * @memberof SuiGasConfig
+     */
+    owner?: string;
+    /**
+     * The budget of the gas in the transaction (in MIST).
      * @type {string}
      * @memberof SuiGasConfig
      */
     budget?: string;
     /**
-     * 
+     * The price per gas unit (in MIST).
      * @type {string}
      * @memberof SuiGasConfig
      */
     price?: string;
     /**
-     * 
+     * The list of SUI coins used to pay for the gas.
      * @type {Array<SuiObjectRef>}
      * @memberof SuiGasConfig
      */
@@ -52,6 +58,7 @@ function SuiGasConfigFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Su
     }
     return {
         
+        'owner': json['owner'] == null ? undefined : json['owner'],
         'budget': json['budget'] == null ? undefined : json['budget'],
         'price': json['price'] == null ? undefined : json['price'],
         'payment': ((json['payment'] as Array<any>).map(SuiObjectRefFromJSON)),
@@ -69,9 +76,9 @@ function SuiGasConfigToJSONTyped(value?: SuiGasConfig | null, _ignoreDiscriminat
 
     return {
         
+        'owner': value['owner'],
         'budget': value['budget'],
         'price': value['price'],
         'payment': ((value['payment'] as Array<any>).map(SuiObjectRefToJSON)),
     };
 }
-

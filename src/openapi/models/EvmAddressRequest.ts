@@ -11,19 +11,19 @@
  */
 
 /**
- * 
+ * Address represents a blockchain address.
  * @export
  * @interface EvmAddressRequest
  */
 export interface EvmAddressRequest {
     /**
-     * 
+     * The chain details this address is of.
      * @type {string}
      * @memberof EvmAddressRequest
      */
     chain: string;
     /**
-     * 
+     * Hexadecimal representation of the address in the chain.
      * @type {string}
      * @memberof EvmAddressRequest
      */
@@ -60,4 +60,3 @@ function EvmAddressRequestToJSONTyped(value?: EvmAddressRequest | null, _ignoreD
         'hex_repr': value['hexRepr'],
     };
 }
-

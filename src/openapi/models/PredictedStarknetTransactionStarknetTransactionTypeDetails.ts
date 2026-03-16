@@ -28,9 +28,9 @@ import {
 } from './StarknetRawTransactionDetails';
 
 /**
- * 
- * @export
  * @type PredictedStarknetTransactionStarknetTransactionTypeDetails
+ * Details of the Starknet transaction based on its type.
+ * @export
  */
 export type PredictedStarknetTransactionStarknetTransactionTypeDetails = { type: 'contract_deployment' } & StarknetContractCreationDetails | { type: 'erc20_transfer' } & StarknetErc20TransferDetails | { type: 'native_transfer' } & StarknetNativeTransferDetails | { type: 'raw_transaction' } & StarknetRawTransactionDetails;
 
@@ -52,7 +52,6 @@ function PredictedStarknetTransactionStarknetTransactionTypeDetailsFromJSONTyped
         case 'raw_transaction':
             return Object.assign({}, StarknetRawTransactionDetailsFromJSONTyped(json, true), { type: 'raw_transaction' } as const);
         default:
-            throw new Error(`No variant of PredictedStarknetTransactionStarknetTransactionTypeDetails exists with 'type=${json['type']}'`);
+            return json;
     }
 }
-

@@ -23,12 +23,12 @@ import {
 export interface AminoMessagesList {
     /**
      * 
-     * @type {string}
+     * @type {AminoMessagesListFormatEnum}
      * @memberof AminoMessagesList
      */
     format: AminoMessagesListFormatEnum;
     /**
-     * 
+     * List of messages in amino format.
      * @type {Array<AminoMessage>}
      * @memberof AminoMessagesList
      */
@@ -37,7 +37,7 @@ export interface AminoMessagesList {
 
 
 /**
- * 
+ * @export
  */
 const AminoMessagesListFormatEnum = {
     amino: 'amino'

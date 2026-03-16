@@ -26,8 +26,8 @@ import {
  */
 export interface StarknetAssetIdentifier {
     /**
-     * 
-     * @type {string}
+     * Starknet asset identifier type.
+     * @type {StarknetAssetIdentifierTypeEnum}
      * @memberof StarknetAssetIdentifier
      */
     type: StarknetAssetIdentifierTypeEnum;
@@ -47,7 +47,7 @@ export interface StarknetAssetIdentifier {
 
 
 /**
- * 
+ * @export
  */
 const StarknetAssetIdentifierTypeEnum = {
     starknet: 'starknet'

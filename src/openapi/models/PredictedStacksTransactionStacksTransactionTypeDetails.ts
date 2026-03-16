@@ -24,9 +24,9 @@ import {
 } from './StacksTokenTransferDetails';
 
 /**
- * 
- * @export
  * @type PredictedStacksTransactionStacksTransactionTypeDetails
+ * Details of the stacks transaction based on its type.
+ * @export
  */
 export type PredictedStacksTransactionStacksTransactionTypeDetails = { type: 'native_transfer' } & StacksNativeTransferDetails | { type: 'raw_transaction' } & StacksRawTransactionDetails | { type: 'token_transfer' } & StacksTokenTransferDetails;
 
@@ -46,7 +46,6 @@ function PredictedStacksTransactionStacksTransactionTypeDetailsFromJSONTyped(jso
         case 'token_transfer':
             return Object.assign({}, StacksTokenTransferDetailsFromJSONTyped(json, true), { type: 'token_transfer' } as const);
         default:
-            throw new Error(`No variant of PredictedStacksTransactionStacksTransactionTypeDetails exists with 'type=${json['type']}'`);
+            return json;
     }
 }
-

@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const UserRole = {
@@ -28,4 +29,3 @@ export function UserRoleFromJSON(json: any): UserRole {
 function UserRoleFromJSONTyped(json: any, _ignoreDiscriminator: boolean): UserRole {
     return json as UserRole;
 }
-

@@ -22,8 +22,8 @@ import {
  */
 export interface ContractDeploymentDetails {
     /**
-     * 
-     * @type {string}
+     * A transaction that deploys a new contract.
+     * @type {ContractDeploymentDetailsTypeEnum}
      * @memberof ContractDeploymentDetails
      */
     type: ContractDeploymentDetailsTypeEnum;
@@ -37,7 +37,7 @@ export interface ContractDeploymentDetails {
 
 
 /**
- * 
+ * @export
  */
 const ContractDeploymentDetailsTypeEnum = {
     contractDeployment: 'contract_deployment'

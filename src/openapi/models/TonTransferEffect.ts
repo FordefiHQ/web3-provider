@@ -26,25 +26,25 @@ import {
  */
 export interface TonTransferEffect {
     /**
-     * 
+     * The asset information.
      * @type {PricedAsset}
      * @memberof TonTransferEffect
      */
     pricedAsset: PricedAsset;
     /**
-     * 
+     * The amount of the transfer.
      * @type {string}
      * @memberof TonTransferEffect
      */
     amount: string;
     /**
-     * 
+     * The sender of the transfer.
      * @type {EnrichedTonAddress}
      * @memberof TonTransferEffect
      */
     from: EnrichedTonAddress;
     /**
-     * 
+     * The receiver of the transfer.
      * @type {EnrichedTonAddress}
      * @memberof TonTransferEffect
      */
@@ -67,4 +67,3 @@ function TonTransferEffectFromJSONTyped(json: any, _ignoreDiscriminator: boolean
         'to': EnrichedTonAddressFromJSON(json['to']),
     };
 }
-

@@ -20,9 +20,9 @@ import {
 } from './DirectRequestData';
 
 /**
- * 
- * @export
  * @type TypedCosmosRawTransactionRequestRequestData
+ * Request data.
+ * @export
  */
 export type TypedCosmosRawTransactionRequestRequestData = { format: 'amino' } & AminoRequestData | { format: 'direct' } & DirectRequestData;
 
@@ -40,8 +40,6 @@ function TypedCosmosRawTransactionRequestRequestDataToJSONTyped(value?: TypedCos
         case 'direct':
             return Object.assign({}, DirectRequestDataToJSON(value), { format: 'direct' } as const);
         default:
-            throw new Error(`No variant of TypedCosmosRawTransactionRequestRequestData exists with 'format=${value['format']}'`);
+            return value;
     }
-
 }
-

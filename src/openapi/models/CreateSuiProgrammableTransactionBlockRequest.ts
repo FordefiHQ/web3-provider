@@ -38,49 +38,49 @@ import {
  */
 export interface CreateSuiProgrammableTransactionBlockRequest {
     /**
-     * 
-     * @type {string}
+     * Create a Sui programmable transaction block transaction. A transaction of this kind is for any operation.
+     * @type {CreateSuiProgrammableTransactionBlockRequestTypeEnum}
      * @memberof CreateSuiProgrammableTransactionBlockRequest
      */
     type: CreateSuiProgrammableTransactionBlockRequestTypeEnum;
     /**
-     * 
+     * `True` if the request should fail in case simulation failed, `False` otherwise. <br> In case simulation has failed upon continuation, the expected result of the transaction will be partial and policy will be applied on information that can be extracted statically from the transaction only. This might result in falling back to the default policy rule. 
      * @type {boolean}
      * @memberof CreateSuiProgrammableTransactionBlockRequest
      */
     failOnPredictionFailure?: boolean;
     /**
-     * 
-     * @type {PushMode}
-     * @memberof CreateSuiProgrammableTransactionBlockRequest
-     */
-    pushMode?: PushMode;
-    /**
-     * 
+     * `True` to create a transaction without prediction, `False` otherwise. <br> In case of skipping simulation, the simulation status will be skipped and the expected result of the transaction will be empty. The policy will be applied on information that can be extracted statically from the transaction only. This might result in falling back to the default policy rule. <br> Note, it is recommended to use the default setting for this field and to turn off `fail_on_prediction_failure` instead - unless you wish to save time by omitting the prediction phase entirely. 
      * @type {boolean}
      * @memberof CreateSuiProgrammableTransactionBlockRequest
      */
     skipPrediction?: boolean;
     /**
-     * 
+     * The push mode of the transaction when sending it to the node. It can be one of the following:<ul><li>`auto`: The transaction is pushed automatically by Fordefi. <li>`manual`: The transaction should be pushed manually by the user using a 3rd party.<li>`deferred`: The transaction is pushed by Fordefi after a certain time, if by that time it wasn't pushed manually by the client.</ul></ul> 
+     * @type {PushMode}
+     * @memberof CreateSuiProgrammableTransactionBlockRequest
+     */
+    pushMode?: PushMode;
+    /**
+     * The chain that this transaction is on. Specify the chain name (for example, `sui_mainnet`).
      * @type {SuiChainUniqueId}
      * @memberof CreateSuiProgrammableTransactionBlockRequest
      */
     chain: SuiChainUniqueId;
     /**
-     * 
+     * The gas configuration for the transaction.
      * @type {SuiGasConfig}
      * @memberof CreateSuiProgrammableTransactionBlockRequest
      */
     gasConfig?: SuiGasConfig;
     /**
-     * 
+     * The inputs of the transaction.
      * @type {Array<SuiInput>}
      * @memberof CreateSuiProgrammableTransactionBlockRequest
      */
     inputs: Array<SuiInput>;
     /**
-     * 
+     * The commands of the transaction.
      * @type {Array<SuiCommand>}
      * @memberof CreateSuiProgrammableTransactionBlockRequest
      */
@@ -89,7 +89,7 @@ export interface CreateSuiProgrammableTransactionBlockRequest {
 
 
 /**
- * 
+ * @export
  */
 const CreateSuiProgrammableTransactionBlockRequestTypeEnum = {
     suiProgrammableTransactionBlock: 'sui_programmable_transaction_block'
@@ -109,8 +109,8 @@ function CreateSuiProgrammableTransactionBlockRequestToJSONTyped(value?: CreateS
         
         'type': value['type'],
         'fail_on_prediction_failure': value['failOnPredictionFailure'],
-        'push_mode': PushModeToJSON(value['pushMode']),
         'skip_prediction': value['skipPrediction'],
+        'push_mode': PushModeToJSON(value['pushMode']),
         'chain': SuiChainUniqueIdToJSON(value['chain']),
         'gas_config': SuiGasConfigToJSON(value['gasConfig']),
         'inputs': ((value['inputs'] as Array<any>).map(SuiInputToJSON)),

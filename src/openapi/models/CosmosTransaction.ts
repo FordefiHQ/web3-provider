@@ -38,10 +38,14 @@ import type { CosmosTransactionTypeDetails } from './CosmosTransactionTypeDetail
 import {
     CosmosTransactionTypeDetailsFromJSON,
 } from './CosmosTransactionTypeDetails';
-import type { AmlPolicyMatchIncoming } from './AmlPolicyMatchIncoming';
+import type { MinedResultStatus } from './MinedResultStatus';
 import {
-    AmlPolicyMatchIncomingFromJSON,
-} from './AmlPolicyMatchIncoming';
+    MinedResultStatusFromJSON,
+} from './MinedResultStatus';
+import type { VaultRef } from './VaultRef';
+import {
+    VaultRefFromJSON,
+} from './VaultRef';
 import type { EnrichedCosmosChain } from './EnrichedCosmosChain';
 import {
     EnrichedCosmosChainFromJSON,
@@ -58,14 +62,26 @@ import type { TransactionDirection } from './TransactionDirection';
 import {
     TransactionDirectionFromJSON,
 } from './TransactionDirection';
+import type { AmlCheck } from './AmlCheck';
+import {
+    AmlCheckFromJSON,
+} from './AmlCheck';
 import type { Signature } from './Signature';
 import {
     SignatureFromJSON,
 } from './Signature';
-import type { AmlResults } from './AmlResults';
+import type { RelatedTransaction } from './RelatedTransaction';
 import {
-    AmlResultsFromJSON,
-} from './AmlResults';
+    RelatedTransactionFromJSON,
+} from './RelatedTransaction';
+import type { SimulationStatusResult } from './SimulationStatusResult';
+import {
+    SimulationStatusResultFromJSON,
+} from './SimulationStatusResult';
+import type { Block } from './Block';
+import {
+    BlockFromJSON,
+} from './Block';
 
 /**
  * 
@@ -74,151 +90,175 @@ import {
  */
 export interface CosmosTransaction {
     /**
-     * 
+     * The unique identifier of the object in the Fordefi platform.
      * @type {string}
      * @memberof CosmosTransaction
      */
     id: string;
     /**
-     * 
+     * The date and time when the object was created.
      * @type {Date}
      * @memberof CosmosTransaction
      */
     createdAt: Date;
     /**
-     * 
+     * The date and time when the object was last modified. Any change to any field of the resource is considered a modification.
      * @type {Date}
      * @memberof CosmosTransaction
      */
     modifiedAt: Date;
     /**
-     * 
+     * Managed transaction data. Presented if the transaction was initiated from the Fordefi system itself, in contrast to unmanaged transactions (which are, for example, transfers of funds into a vault visible to Fordefi). 
      * @type {ManagedTransactionData}
      * @memberof CosmosTransaction
      */
     managedTransactionData?: ManagedTransactionData;
     /**
-     * 
+     * The transaction signatures.
      * @type {Array<Signature>}
      * @memberof CosmosTransaction
      */
     signatures: Array<Signature>;
     /**
-     * 
+     * An optional transaction note.
      * @type {string}
      * @memberof CosmosTransaction
      */
     note?: string;
     /**
-     * 
+     * `automatically_set` if the transaction was automatically set as spam by Fordefi, `manually_set` if the transaction was manually set as spam by a user, and `unset` if the transaction was not set as spam.
      * @type {TransactionSpamState}
      * @memberof CosmosTransaction
      */
     spamState?: TransactionSpamState;
     /**
-     * 
+     * The direction of the transaction.
      * @type {TransactionDirection}
      * @memberof CosmosTransaction
      */
     direction: TransactionDirection;
     /**
-     * 
+     * Whether the transaction was signed by an external user (for example in case of imported vault).
      * @type {boolean}
      * @memberof CosmosTransaction
      */
     signedExternally?: boolean;
     /**
-     * 
+     * The vaults that interacted with the transaction.
+     * @type {Array<VaultRef>}
+     * @memberof CosmosTransaction
+     */
+    interactedVaults: Array<VaultRef>;
+    /**
+     * The related transactions.
+     * @type {Array<RelatedTransaction>}
+     * @memberof CosmosTransaction
+     */
+    relatedTransactions?: Array<RelatedTransaction>;
+    /**
+     * The organization that the transaction belongs to.
+     * @type {string}
+     * @memberof CosmosTransaction
+     */
+    organizationId: string;
+    /**
+     * The block of the transaction.
+     * @type {Block}
+     * @memberof CosmosTransaction
+     */
+    block?: Block;
+    /**
+     * The state of the transaction.
      * @type {PushableTransactionState}
      * @memberof CosmosTransaction
      */
     state: PushableTransactionState;
     /**
-     * 
+     * The state changes of the transaction.
      * @type {Array<PushableTransactionStateChange>}
      * @memberof CosmosTransaction
      */
     stateChanges: Array<PushableTransactionStateChange>;
     /**
-     * 
-     * @type {AmlResults}
+     * The AML check.
+     * @type {AmlCheck}
      * @memberof CosmosTransaction
      */
-    amlResults?: AmlResults;
+    amlCheck?: AmlCheck;
     /**
-     * 
-     * @type {AmlPolicyMatchIncoming}
+     * The mined result status of the transaction.
+     * @type {MinedResultStatus}
      * @memberof CosmosTransaction
      */
-    incomingAmlPolicyMatch?: AmlPolicyMatchIncoming;
+    minedResultStatus?: MinedResultStatus;
     /**
-     * 
+     * Whether simulation succeeded, reverted or failed.
+     * @type {SimulationStatusResult}
+     * @memberof CosmosTransaction
+     */
+    simulationStatusResult?: SimulationStatusResult;
+    /**
+     * Transaction details
      * @type {CosmosTransactionTypeDetails}
      * @memberof CosmosTransaction
      */
     cosmosTransactionTypeDetails: CosmosTransactionTypeDetails;
     /**
-     * 
+     * Transaction memo.
      * @type {string}
      * @memberof CosmosTransaction
      */
     memo?: string;
     /**
-     * 
+     * The details of the chain this transaction is on.
      * @type {EnrichedCosmosChain}
      * @memberof CosmosTransaction
      */
     chain: EnrichedCosmosChain;
     /**
-     * 
-     * @type {EnrichedCosmosBechAddress}
-     * @memberof CosmosTransaction
-     */
-    from: EnrichedCosmosBechAddress;
-    /**
-     * 
+     * The address that originated the transaction.
      * @type {EnrichedCosmosBechAddress}
      * @memberof CosmosTransaction
      */
     sender: EnrichedCosmosBechAddress;
     /**
-     * 
-     * @type {string}
+     * The type of the transaction.
+     * @type {CosmosTransactionTypeEnum}
      * @memberof CosmosTransaction
      */
     type: CosmosTransactionTypeEnum;
     /**
-     * 
+     * The hash of the transaction.
      * @type {string}
      * @memberof CosmosTransaction
      */
     hash?: string;
     /**
-     * 
+     * The URL of this transaction in a blockchain explorer.
      * @type {string}
      * @memberof CosmosTransaction
      */
     explorerUrl?: string;
     /**
-     * 
+     * List of signers info.
      * @type {Array<SignerInfo>}
      * @memberof CosmosTransaction
      */
     signersInfo: Array<SignerInfo>;
     /**
-     * 
+     * The expected result of the transaction in case it is mined.
      * @type {CosmosTransactionResult}
      * @memberof CosmosTransaction
      */
     expectedResult?: CosmosTransactionResult;
     /**
-     * 
+     * The result of the transaction after it was mined.
      * @type {CosmosTransactionResult}
      * @memberof CosmosTransaction
      */
     minedResult?: CosmosTransactionResult;
     /**
-     * 
+     * The signed document of the transaction.
      * @type {SignDoc}
      * @memberof CosmosTransaction
      */
@@ -227,7 +267,7 @@ export interface CosmosTransaction {
 
 
 /**
- * 
+ * @export
  */
 const CosmosTransactionTypeEnum = {
     cosmosTransaction: 'cosmos_transaction'
@@ -249,14 +289,18 @@ export function CosmosTransactionFromJSONTyped(json: any, _ignoreDiscriminator: 
         'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
         'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'interactedVaults': ((json['interacted_vaults'] as Array<any>).map(VaultRefFromJSON)),
+        'relatedTransactions': json['related_transactions'] == null ? undefined : ((json['related_transactions'] as Array<any>).map(RelatedTransactionFromJSON)),
+        'organizationId': json['organization_id'],
+        'block': json['block'] == null ? undefined : BlockFromJSON(json['block']),
         'state': PushableTransactionStateFromJSON(json['state']),
         'stateChanges': ((json['state_changes'] as Array<any>).map(PushableTransactionStateChangeFromJSON)),
-        'amlResults': json['aml_results'] == null ? undefined : AmlResultsFromJSON(json['aml_results']),
-        'incomingAmlPolicyMatch': json['incoming_aml_policy_match'] == null ? undefined : AmlPolicyMatchIncomingFromJSON(json['incoming_aml_policy_match']),
+        'amlCheck': json['aml_check'] == null ? undefined : AmlCheckFromJSON(json['aml_check']),
+        'minedResultStatus': json['mined_result_status'] == null ? undefined : MinedResultStatusFromJSON(json['mined_result_status']),
+        'simulationStatusResult': json['simulation_status_result'] == null ? undefined : SimulationStatusResultFromJSON(json['simulation_status_result']),
         'cosmosTransactionTypeDetails': CosmosTransactionTypeDetailsFromJSON(json['cosmos_transaction_type_details']),
         'memo': json['memo'] == null ? undefined : json['memo'],
         'chain': EnrichedCosmosChainFromJSON(json['chain']),
-        'from': EnrichedCosmosBechAddressFromJSON(json['from']),
         'sender': EnrichedCosmosBechAddressFromJSON(json['sender']),
         'type': json['type'],
         'hash': json['hash'] == null ? undefined : json['hash'],

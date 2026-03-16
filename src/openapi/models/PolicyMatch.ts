@@ -22,25 +22,25 @@ import {
  */
 export interface PolicyMatch {
     /**
-     * 
+     * `True` if this is the default rule, `False` otherwise.
      * @type {boolean}
      * @memberof PolicyMatch
      */
     isDefault: boolean;
     /**
-     * 
+     * The unique identifier of the rule.
      * @type {string}
      * @memberof PolicyMatch
      */
     ruleId: string;
     /**
-     * 
+     * The name of the rule.
      * @type {string}
      * @memberof PolicyMatch
      */
     ruleName: string;
     /**
-     * 
+     * The action taken in the event of a policy match. Can be: <ul><li> Allow automatically<li> Block<li> Require express approval</ul>
      * @type {TransactionPolicyMatchActionType}
      * @memberof PolicyMatch
      */
@@ -63,4 +63,3 @@ function PolicyMatchFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Pol
         'actionType': TransactionPolicyMatchActionTypeFromJSON(json['action_type']),
     };
 }
-

@@ -16,43 +16,43 @@ import {
 } from './EvmAddress';
 
 /**
- * 
+ * An ERC-20 token.
  * @export
  * @interface Erc20
  */
 export interface Erc20 {
     /**
-     * 
+     * The token address
      * @type {EvmAddress}
      * @memberof Erc20
      */
     address: EvmAddress;
     /**
-     * 
+     * The token name
      * @type {string}
      * @memberof Erc20
      */
     name: string;
     /**
-     * 
+     * The token symbol or ticker
      * @type {string}
      * @memberof Erc20
      */
     symbol: string;
     /**
-     * 
-     * @type {string}
+     * The type of the token
+     * @type {Erc20TypeEnum}
      * @memberof Erc20
      */
     type: Erc20TypeEnum;
     /**
-     * 
+     * The token decimals
      * @type {number}
      * @memberof Erc20
      */
     decimals: number;
     /**
-     * 
+     * The token logo url
      * @type {string}
      * @memberof Erc20
      */
@@ -61,16 +61,12 @@ export interface Erc20 {
 
 
 /**
- * 
+ * @export
  */
 const Erc20TypeEnum = {
     erc20: 'erc20'
 } as const;
 type Erc20TypeEnum = typeof Erc20TypeEnum[keyof typeof Erc20TypeEnum];
-
-export function Erc20FromJSON(json: any): Erc20 {
-    return Erc20FromJSONTyped(json, false);
-}
 
 export function Erc20FromJSONTyped(json: any, _ignoreDiscriminator: boolean): Erc20 {
     if (json == null) {

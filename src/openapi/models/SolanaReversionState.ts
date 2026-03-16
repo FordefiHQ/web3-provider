@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const SolanaReversionState = {
@@ -30,4 +31,3 @@ export function SolanaReversionStateFromJSON(json: any): SolanaReversionState {
 function SolanaReversionStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): SolanaReversionState {
     return json as SolanaReversionState;
 }
-

@@ -22,14 +22,14 @@ import {
  */
 export interface CustomGasRequest {
     /**
-     * 
+     * Specifies the maximum number of gas units to be used for mining the transaction. If omitted, Fordefi will automatically estimate the required gas and apply that value.
      * @type {string}
      * @memberof CustomGasRequest
      */
     gasLimit?: string;
     /**
      * 
-     * @type {string}
+     * @type {CustomGasRequestTypeEnum}
      * @memberof CustomGasRequest
      */
     type: CustomGasRequestTypeEnum;
@@ -66,4 +66,3 @@ function CustomGasRequestToJSONTyped(value?: CustomGasRequest | null, _ignoreDis
         'details': CustomGasRequestDetailsToJSON(value['details']),
     };
 }
-

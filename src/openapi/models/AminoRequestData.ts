@@ -27,30 +27,30 @@ import {
 export interface AminoRequestData {
     /**
      * 
-     * @type {string}
+     * @type {AminoRequestDataFormatEnum}
      * @memberof AminoRequestData
      */
     format: AminoRequestDataFormatEnum;
     /**
-     * 
+     * List of messages in amino format.
      * @type {Array<AminoMessage>}
      * @memberof AminoRequestData
      */
     messages: Array<AminoMessage>;
     /**
-     * 
+     * Transaction memo.
      * @type {string}
      * @memberof AminoRequestData
      */
     memo?: string;
     /**
-     * 
+     * Fee info for this transaction. Currently, only payment in the native currency is supported.
      * @type {StdFeeRequest}
      * @memberof AminoRequestData
      */
     stdFee?: StdFeeRequest;
     /**
-     * 
+     * Timeout height for this transaction.
      * @type {number}
      * @memberof AminoRequestData
      */
@@ -59,7 +59,7 @@ export interface AminoRequestData {
 
 
 /**
- * 
+ * @export
  */
 const AminoRequestDataFormatEnum = {
     amino: 'amino'

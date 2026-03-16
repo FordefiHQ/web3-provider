@@ -32,9 +32,9 @@ import {
 } from './SuiPureStringInput';
 
 /**
+ * @type BaseSuiPureInputValue
  * 
  * @export
- * @type BaseSuiPureInputValue
  */
 export type BaseSuiPureInputValue = { type: 'bool_pure_input' } & SuiPureBoolInput | { type: 'byte_array_pure_input' } & SuiPureByteArrayInput | { type: 'number_pure_input' } & SuiPureNumberInput | { type: 'string_pure_input' } & SuiPureStringInput;
 
@@ -56,7 +56,7 @@ function BaseSuiPureInputValueFromJSONTyped(json: any, _ignoreDiscriminator: boo
         case 'string_pure_input':
             return Object.assign({}, SuiPureStringInputFromJSONTyped(json, true), { type: 'string_pure_input' } as const);
         default:
-            throw new Error(`No variant of BaseSuiPureInputValue exists with 'type=${json['type']}'`);
+            return json;
     }
 }
 
@@ -78,8 +78,6 @@ function BaseSuiPureInputValueToJSONTyped(value?: BaseSuiPureInputValue | null, 
         case 'string_pure_input':
             return Object.assign({}, SuiPureStringInputToJSON(value), { type: 'string_pure_input' } as const);
         default:
-            throw new Error(`No variant of BaseSuiPureInputValue exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

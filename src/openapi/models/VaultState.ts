@@ -12,11 +12,15 @@
 
 
 /**
+ * 
  * @export
  */
 export const VaultState = {
     active: 'active',
-    archived: 'archived'
+    archived: 'archived',
+    deleted: 'deleted',
+    pending: 'pending',
+    aborted: 'aborted'
 } as const;
 export type VaultState = typeof VaultState[keyof typeof VaultState];
 
@@ -27,4 +31,3 @@ export function VaultStateFromJSON(json: any): VaultState {
 function VaultStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): VaultState {
     return json as VaultState;
 }
-

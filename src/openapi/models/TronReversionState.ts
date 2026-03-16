@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const TronReversionState = {
@@ -29,4 +30,3 @@ export function TronReversionStateFromJSON(json: any): TronReversionState {
 function TronReversionStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): TronReversionState {
     return json as TronReversionState;
 }
-

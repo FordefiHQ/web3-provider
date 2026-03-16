@@ -17,19 +17,19 @@
  */
 export interface InstructionError {
     /**
-     * 
+     * The type of the error of the instruction.
      * @type {string}
      * @memberof InstructionError
      */
     errorType: string;
     /**
-     * 
+     * The index of the instruction.
      * @type {number}
      * @memberof InstructionError
      */
     instructionIndex: number;
     /**
-     * 
+     * The description of the error of the instruction.
      * @type {string}
      * @memberof InstructionError
      */
@@ -51,4 +51,3 @@ function InstructionErrorFromJSONTyped(json: any, _ignoreDiscriminator: boolean)
         'errorDescription': json['error_description'] == null ? undefined : json['error_description'],
     };
 }
-

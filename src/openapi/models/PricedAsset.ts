@@ -31,24 +31,25 @@ import {
 export interface PricedAsset {
     /**
      * 
-     * @type {string}
+     * @type {PricedAssetTypeEnum}
      * @memberof PricedAsset
      */
     type: PricedAssetTypeEnum;
     /**
-     * 
+     * A unique asset identifier of the asset.
      * @type {EnrichedAssetIdentifier}
      * @memberof PricedAsset
+     * @deprecated
      */
     assetIdentifier?: EnrichedAssetIdentifier;
     /**
-     * 
+     * The asset info.
      * @type {AssetInfo}
      * @memberof PricedAsset
      */
     assetInfo: AssetInfo;
     /**
-     * 
+     * The price of the asset (if it exists in the system).
      * @type {Price}
      * @memberof PricedAsset
      */
@@ -57,7 +58,7 @@ export interface PricedAsset {
 
 
 /**
- * 
+ * @export
  */
 const PricedAssetTypeEnum = {
     assetPrice: 'asset_price'

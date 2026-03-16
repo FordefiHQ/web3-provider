@@ -17,13 +17,13 @@
  */
 export interface SuiPureNumberInput {
     /**
-     * 
-     * @type {string}
+     * The type of the pure input.
+     * @type {SuiPureNumberInputTypeEnum}
      * @memberof SuiPureNumberInput
      */
     type: SuiPureNumberInputTypeEnum;
     /**
-     * 
+     * The number value of the pure input argument.
      * @type {string}
      * @memberof SuiPureNumberInput
      */
@@ -32,7 +32,7 @@ export interface SuiPureNumberInput {
 
 
 /**
- * 
+ * @export
  */
 const SuiPureNumberInputTypeEnum = {
     numberPureInput: 'number_pure_input'

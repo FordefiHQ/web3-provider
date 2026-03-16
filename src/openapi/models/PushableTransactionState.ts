@@ -12,12 +12,14 @@
 
 
 /**
+ * 
  * @export
  */
 export const PushableTransactionState = {
     waitingForApproval: 'waiting_for_approval',
     waitingForSigningTrigger: 'waiting_for_signing_trigger',
     approved: 'approved',
+    finalizedForSigning: 'finalized_for_signing',
     signed: 'signed',
     pushedToBlockchain: 'pushed_to_blockchain',
     mined: 'mined',
@@ -30,7 +32,6 @@ export const PushableTransactionState = {
     stuck: 'stuck',
     dropped: 'dropped',
     queued: 'queued',
-    aborting: 'aborting',
     accelerating: 'accelerating',
     canceling: 'canceling',
     accelerated: 'accelerated',
@@ -47,3 +48,6 @@ function PushableTransactionStateFromJSONTyped(json: any, _ignoreDiscriminator: 
     return json as PushableTransactionState;
 }
 
+export function PushableTransactionStateToJSON(value?: PushableTransactionState | null): any {
+    return value as any;
+}

@@ -30,25 +30,25 @@ import {
  */
 export interface AptosTransactionResult {
     /**
-     * 
+     * Details whether the transaction was reverted or not.
      * @type {AptosReversion}
      * @memberof AptosTransactionResult
      */
     reversion: AptosReversion;
     /**
-     * 
+     * The fee statement of the transaction.
      * @type {AptosFeeStatement}
      * @memberof AptosTransactionResult
      */
     feeStatement: AptosFeeStatement;
     /**
-     * 
+     * The effects of the transaction.
      * @type {AptosEffects}
      * @memberof AptosTransactionResult
      */
     effects: AptosEffects;
     /**
-     * 
+     * The raw result of the transaction.
      * @type {string}
      * @memberof AptosTransactionResult
      */
@@ -71,4 +71,3 @@ function AptosTransactionResultFromJSONTyped(json: any, _ignoreDiscriminator: bo
         'rawResult': json['raw_result'] == null ? undefined : json['raw_result'],
     };
 }
-

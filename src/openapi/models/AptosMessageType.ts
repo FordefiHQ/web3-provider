@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const AptosMessageType = {
@@ -26,4 +27,3 @@ export function AptosMessageTypeFromJSON(json: any): AptosMessageType {
 function AptosMessageTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): AptosMessageType {
     return json as AptosMessageType;
 }
-

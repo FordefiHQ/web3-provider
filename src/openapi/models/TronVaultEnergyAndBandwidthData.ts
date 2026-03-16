@@ -11,31 +11,31 @@
  */
 
 /**
- * 
+ * Represents the energy and bandwidth data of a TRON vault
  * @export
  * @interface TronVaultEnergyAndBandwidthData
  */
 export interface TronVaultEnergyAndBandwidthData {
     /**
-     * 
+     * The amount of energy used by the vault.
      * @type {number}
      * @memberof TronVaultEnergyAndBandwidthData
      */
     energyUsed: number;
     /**
-     * 
+     * The energy limit of the vault.
      * @type {number}
      * @memberof TronVaultEnergyAndBandwidthData
      */
     energyLimit: number;
     /**
-     * 
+     * The amount of bandwidth used by the vault.
      * @type {number}
      * @memberof TronVaultEnergyAndBandwidthData
      */
     bandwidthUsed: number;
     /**
-     * 
+     * The bandwidth limit of the vault.
      * @type {number}
      * @memberof TronVaultEnergyAndBandwidthData
      */
@@ -58,4 +58,3 @@ function TronVaultEnergyAndBandwidthDataFromJSONTyped(json: any, _ignoreDiscrimi
         'bandwidthLimit': json['bandwidth_limit'],
     };
 }
-

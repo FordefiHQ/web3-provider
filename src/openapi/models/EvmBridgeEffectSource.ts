@@ -20,9 +20,9 @@ import {
 } from './EvmBridgeEffectSourceNative';
 
 /**
- * 
- * @export
  * @type EvmBridgeEffectSource
+ * The source details of the bridge transaction.
+ * @export
  */
 export type EvmBridgeEffectSource = { type: 'erc20' } & EvmBridgeEffectSourceErc20 | { type: 'native' } & EvmBridgeEffectSourceNative;
 
@@ -40,7 +40,6 @@ function EvmBridgeEffectSourceFromJSONTyped(json: any, _ignoreDiscriminator: boo
         case 'native':
             return Object.assign({}, EvmBridgeEffectSourceNativeFromJSONTyped(json, true), { type: 'native' } as const);
         default:
-            throw new Error(`No variant of EvmBridgeEffectSource exists with 'type=${json['type']}'`);
+            return json;
     }
 }
-

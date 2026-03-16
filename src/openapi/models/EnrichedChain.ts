@@ -56,9 +56,9 @@ import {
 } from './EnrichedUtxoChain';
 
 /**
- * 
- * @export
  * @type EnrichedChain
+ * A blockchain with metadata.
+ * @export
  */
 export type EnrichedChain = { chainType: 'aptos' } & EnrichedAptosChain | { chainType: 'cosmos' } & EnrichedCosmosChain | { chainType: 'evm' } & EnrichedEvmChain | { chainType: 'exchange' } & EnrichedExchangeChain | { chainType: 'solana' } & EnrichedSolanaChain | { chainType: 'stacks' } & EnrichedStacksChain | { chainType: 'starknet' } & EnrichedStarknetChain | { chainType: 'sui' } & EnrichedSuiChain | { chainType: 'ton' } & EnrichedTonChain | { chainType: 'tron' } & EnrichedTronChain | { chainType: 'utxo' } & EnrichedUtxoChain;
 
@@ -94,7 +94,6 @@ function EnrichedChainFromJSONTyped(json: any, _ignoreDiscriminator: boolean): E
         case 'utxo':
             return Object.assign({}, EnrichedUtxoChainFromJSONTyped(json, true), { chainType: 'utxo' } as const);
         default:
-            throw new Error(`No variant of EnrichedChain exists with 'chainType=${json['chainType']}'`);
+            return json;
     }
 }
-

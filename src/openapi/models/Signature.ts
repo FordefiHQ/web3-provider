@@ -22,7 +22,7 @@ import {
  */
 export interface Signature {
     /**
-     * 
+     * Signature on the transaction, encoded in base64 format.
      * @type {string}
      * @memberof Signature
      */
@@ -49,4 +49,3 @@ function SignatureFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Signa
         'signedBy': json['signed_by'] == null ? undefined : SignatureSignedByFromJSON(json['signed_by']),
     };
 }
-

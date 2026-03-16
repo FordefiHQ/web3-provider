@@ -26,19 +26,19 @@ import {
  */
 export interface CosmosTransactionResult {
     /**
-     * 
+     * In case of error, the message describes what failed.
      * @type {string}
      * @memberof CosmosTransactionResult
      */
     message?: string;
     /**
-     * 
+     * The gas debit of the transaction.
      * @type {CosmosGasDebit}
      * @memberof CosmosTransactionResult
      */
     gasDebit: CosmosGasDebit;
     /**
-     * 
+     * The effects of the transaction.
      * @type {CosmosEffects}
      * @memberof CosmosTransactionResult
      */
@@ -60,4 +60,3 @@ function CosmosTransactionResultFromJSONTyped(json: any, _ignoreDiscriminator: b
         'effects': CosmosEffectsFromJSON(json['effects']),
     };
 }
-

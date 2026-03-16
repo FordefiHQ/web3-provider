@@ -26,19 +26,19 @@ import {
  */
 export interface CosmosGasDebit {
     /**
-     * 
+     * Gas used while processing the transaction.
      * @type {string}
      * @memberof CosmosGasDebit
      */
     gasUsed: string;
     /**
-     * 
+     * The total fee paid.
      * @type {Array<CosmosCoinWithAmount>}
      * @memberof CosmosGasDebit
      */
     totalFee: Array<CosmosCoinWithAmount>;
     /**
-     * 
+     * The prices of the coins used to pay the fee.
      * @type {Array<Price>}
      * @memberof CosmosGasDebit
      */
@@ -60,4 +60,3 @@ function CosmosGasDebitFromJSONTyped(json: any, _ignoreDiscriminator: boolean): 
         'fiatPrices': ((json['fiat_prices'] as Array<any>).map(PriceFromJSON)),
     };
 }
-

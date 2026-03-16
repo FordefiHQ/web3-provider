@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const CosmosMessageType = {
@@ -26,4 +27,3 @@ export function CosmosMessageTypeFromJSON(json: any): CosmosMessageType {
 function CosmosMessageTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): CosmosMessageType {
     return json as CosmosMessageType;
 }
-

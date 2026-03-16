@@ -10,10 +10,14 @@
  * Do not edit the class manually.
  */
 
-import type { CreateAptosTransferRequestValue } from './CreateAptosTransferRequestValue';
+import type { TransactionFeePayerVault } from './TransactionFeePayerVault';
 import {
-    CreateAptosTransferRequestValueToJSON,
-} from './CreateAptosTransferRequestValue';
+    TransactionFeePayerVaultToJSON,
+} from './TransactionFeePayerVault';
+import type { CustomNonce } from './CustomNonce';
+import {
+    CustomNonceToJSON,
+} from './CustomNonce';
 import type { CreateEvmRawTransactionRequestGas } from './CreateEvmRawTransactionRequestGas';
 import {
     CreateEvmRawTransactionRequestGasToJSON,
@@ -22,6 +26,10 @@ import type { CreateEvmTransferRequestTo } from './CreateEvmTransferRequestTo';
 import {
     CreateEvmTransferRequestToToJSON,
 } from './CreateEvmTransferRequestTo';
+import type { CreateEvmTransferRequestValue } from './CreateEvmTransferRequestValue';
+import {
+    CreateEvmTransferRequestValueToJSON,
+} from './CreateEvmTransferRequestValue';
 import type { EvmAssetIdentifierRequest } from './EvmAssetIdentifierRequest';
 import {
     EvmAssetIdentifierRequestToJSON,
@@ -38,15 +46,46 @@ import {
  */
 export interface CreateEvmTransferRequest {
     /**
-     * 
-     * @type {string}
+     * The vault that pays the fee for this transaction.
+     * @type {TransactionFeePayerVault}
+     * @memberof CreateEvmTransferRequest
+     */
+    feePayer?: TransactionFeePayerVault;
+    /**
+     * An EVM transfer transaction is for transferring native currency or ERC20/721/1155 tokens.
+     * @type {CreateEvmTransferRequestTypeEnum}
      * @memberof CreateEvmTransferRequest
      */
     type: CreateEvmTransferRequestTypeEnum;
     /**
-     * 
+     * `True` if the request should fail in case simulation failed, `False` otherwise. <br> In case simulation has failed upon continuation, the expected result of the transaction will be partial and policy will be applied on information that can be extracted statically from the transaction only. This might result in falling back to the default policy rule. 
      * @type {boolean}
      * @memberof CreateEvmTransferRequest
+     */
+    failOnPredictionFailure?: boolean;
+    /**
+     * `True` to create a transaction without prediction, `False` otherwise. <br> In case of skipping simulation, the simulation status will be skipped and the expected result of the transaction will be empty. The policy will be applied on information that can be extracted statically from the transaction only. This might result in falling back to the default policy rule. <br> Note, it is recommended to use the default setting for this field and to turn off `fail_on_prediction_failure` instead - unless you wish to save time by omitting the prediction phase entirely. 
+     * @type {boolean}
+     * @memberof CreateEvmTransferRequest
+     */
+    skipPrediction?: boolean;
+    /**
+     * The push mode of the transaction when sending it to the node. It can be one of the following:<ul><li>`auto`: The transaction is pushed automatically by Fordefi. <li>`manual`: The transaction should be pushed manually by the user using a 3rd party.<li>`deferred`: The transaction is pushed by Fordefi after a certain time, if by that time it wasn't pushed manually by the client.</ul></ul> 
+     * @type {PushMode}
+     * @memberof CreateEvmTransferRequest
+     */
+    pushMode?: PushMode;
+    /**
+     * Use a MEV protected node to send the transaction. By using a MEV protected node, you avoid maximal extractable value (MEV) attacks.
+     * @type {boolean}
+     * @memberof CreateEvmTransferRequest
+     */
+    useMevProtectedNode?: boolean;
+    /**
+     * Use a secure node to send the transaction. By using a secure node, you avoid maximal extractable value (MEV) attacks.
+     * @type {boolean}
+     * @memberof CreateEvmTransferRequest
+     * @deprecated
      */
     useSecureNode?: boolean;
     /**
@@ -56,29 +95,18 @@ export interface CreateEvmTransferRequest {
      */
     gas?: CreateEvmRawTransactionRequestGas;
     /**
-     * 
-     * @type {boolean}
-     * @memberof CreateEvmTransferRequest
-     */
-    failOnPredictionFailure?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CreateEvmTransferRequest
-     */
-    skipPrediction?: boolean;
-    /**
-     * 
-     * @type {PushMode}
-     * @memberof CreateEvmTransferRequest
-     */
-    pushMode?: PushMode;
-    /**
-     * 
+     * The unique identifier of the vault that pays the fee for this transaction.
      * @type {string}
      * @memberof CreateEvmTransferRequest
+     * @deprecated
      */
     funder?: string;
+    /**
+     * 
+     * @type {CustomNonce}
+     * @memberof CreateEvmTransferRequest
+     */
+    customNonce?: CustomNonce;
     /**
      * 
      * @type {CreateEvmTransferRequestTo}
@@ -86,22 +114,22 @@ export interface CreateEvmTransferRequest {
      */
     to: CreateEvmTransferRequestTo;
     /**
-     * 
+     * The asset to be transferred.
      * @type {EvmAssetIdentifierRequest}
      * @memberof CreateEvmTransferRequest
      */
     assetIdentifier: EvmAssetIdentifierRequest;
     /**
      * 
-     * @type {CreateAptosTransferRequestValue}
+     * @type {CreateEvmTransferRequestValue}
      * @memberof CreateEvmTransferRequest
      */
-    value: CreateAptosTransferRequestValue;
+    value: CreateEvmTransferRequestValue;
 }
 
 
 /**
- * 
+ * @export
  */
 const CreateEvmTransferRequestTypeEnum = {
     evmTransfer: 'evm_transfer'
@@ -119,15 +147,18 @@ function CreateEvmTransferRequestToJSONTyped(value?: CreateEvmTransferRequest | 
 
     return {
         
+        'fee_payer': TransactionFeePayerVaultToJSON(value['feePayer']),
         'type': value['type'],
-        'use_secure_node': value['useSecureNode'],
-        'gas': CreateEvmRawTransactionRequestGasToJSON(value['gas']),
         'fail_on_prediction_failure': value['failOnPredictionFailure'],
         'skip_prediction': value['skipPrediction'],
         'push_mode': PushModeToJSON(value['pushMode']),
+        'use_mev_protected_node': value['useMevProtectedNode'],
+        'use_secure_node': value['useSecureNode'],
+        'gas': CreateEvmRawTransactionRequestGasToJSON(value['gas']),
         'funder': value['funder'],
+        'custom_nonce': CustomNonceToJSON(value['customNonce']),
         'to': CreateEvmTransferRequestToToJSON(value['to']),
         'asset_identifier': EvmAssetIdentifierRequestToJSON(value['assetIdentifier']),
-        'value': CreateAptosTransferRequestValueToJSON(value['value']),
+        'value': CreateEvmTransferRequestValueToJSON(value['value']),
     };
 }

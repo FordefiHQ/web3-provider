@@ -23,19 +23,19 @@ import {
  */
 export interface EvmErc721AssetIdentifierRequest {
     /**
-     * 
-     * @type {string}
+     * EVM asset identifier type.
+     * @type {EvmErc721AssetIdentifierRequestTypeEnum}
      * @memberof EvmErc721AssetIdentifierRequest
      */
     type: EvmErc721AssetIdentifierRequestTypeEnum;
     /**
-     * 
+     * The ERC-721 token contract.
      * @type {EvmAddressRequest}
      * @memberof EvmErc721AssetIdentifierRequest
      */
     token: EvmAddressRequest;
     /**
-     * 
+     * The token id of the ERC-721 token.
      * @type {string}
      * @memberof EvmErc721AssetIdentifierRequest
      */
@@ -44,7 +44,7 @@ export interface EvmErc721AssetIdentifierRequest {
 
 
 /**
- * 
+ * @export
  */
 const EvmErc721AssetIdentifierRequestTypeEnum = {
     erc721: 'erc721'

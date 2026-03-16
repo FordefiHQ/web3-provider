@@ -23,13 +23,13 @@ import {
  */
 export interface TronNativeAssetIdentifierRequest {
     /**
-     * 
-     * @type {string}
+     * TRON asset identifier type.
+     * @type {TronNativeAssetIdentifierRequestTypeEnum}
      * @memberof TronNativeAssetIdentifierRequest
      */
     type: TronNativeAssetIdentifierRequestTypeEnum;
     /**
-     * 
+     * The details of the chain of the native asset.
      * @type {TronChainUniqueId}
      * @memberof TronNativeAssetIdentifierRequest
      */
@@ -38,7 +38,7 @@ export interface TronNativeAssetIdentifierRequest {
 
 
 /**
- * 
+ * @export
  */
 const TronNativeAssetIdentifierRequestTypeEnum = {
     native: 'native'

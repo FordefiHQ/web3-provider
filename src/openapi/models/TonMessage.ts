@@ -14,6 +14,10 @@ import type { EnrichedTonAddress } from './EnrichedTonAddress';
 import {
     EnrichedTonAddressFromJSON,
 } from './EnrichedTonAddress';
+import type { VaultRef } from './VaultRef';
+import {
+    VaultRefFromJSON,
+} from './VaultRef';
 import type { ManagedTransactionData } from './ManagedTransactionData';
 import {
     ManagedTransactionDataFromJSON,
@@ -38,6 +42,10 @@ import type { Signature } from './Signature';
 import {
     SignatureFromJSON,
 } from './Signature';
+import type { RelatedTransaction } from './RelatedTransaction';
+import {
+    RelatedTransactionFromJSON,
+} from './RelatedTransaction';
 import type { NonPushableTransactionStateChange } from './NonPushableTransactionStateChange';
 import {
     NonPushableTransactionStateChangeFromJSON,
@@ -54,121 +62,139 @@ import {
  */
 export interface TonMessage {
     /**
-     * 
+     * The unique identifier of the object in the Fordefi platform.
      * @type {string}
      * @memberof TonMessage
      */
     id: string;
     /**
-     * 
+     * The date and time when the object was created.
      * @type {Date}
      * @memberof TonMessage
      */
     createdAt: Date;
     /**
-     * 
+     * The date and time when the object was last modified. Any change to any field of the resource is considered a modification.
      * @type {Date}
      * @memberof TonMessage
      */
     modifiedAt: Date;
     /**
-     * 
+     * Managed transaction data. Presented if the transaction was initiated from the Fordefi system itself, in contrast to unmanaged transactions (which are, for example, transfers of funds into a vault visible to Fordefi). 
      * @type {ManagedTransactionData}
      * @memberof TonMessage
      */
     managedTransactionData?: ManagedTransactionData;
     /**
-     * 
+     * The transaction signatures.
      * @type {Array<Signature>}
      * @memberof TonMessage
      */
     signatures: Array<Signature>;
     /**
-     * 
+     * An optional transaction note.
      * @type {string}
      * @memberof TonMessage
      */
     note?: string;
     /**
-     * 
+     * `automatically_set` if the transaction was automatically set as spam by Fordefi, `manually_set` if the transaction was manually set as spam by a user, and `unset` if the transaction was not set as spam.
      * @type {TransactionSpamState}
      * @memberof TonMessage
      */
     spamState?: TransactionSpamState;
     /**
-     * 
+     * The direction of the transaction.
      * @type {TransactionDirection}
      * @memberof TonMessage
      */
     direction: TransactionDirection;
     /**
-     * 
+     * Whether the transaction was signed by an external user (for example in case of imported vault).
      * @type {boolean}
      * @memberof TonMessage
      */
     signedExternally?: boolean;
     /**
-     * 
+     * The vaults that interacted with the transaction.
+     * @type {Array<VaultRef>}
+     * @memberof TonMessage
+     */
+    interactedVaults: Array<VaultRef>;
+    /**
+     * The related transactions.
+     * @type {Array<RelatedTransaction>}
+     * @memberof TonMessage
+     */
+    relatedTransactions?: Array<RelatedTransaction>;
+    /**
+     * The organization that the transaction belongs to.
+     * @type {string}
+     * @memberof TonMessage
+     */
+    organizationId: string;
+    /**
+     * The state of the message.
      * @type {NonPushableTransactionState}
      * @memberof TonMessage
      */
     state: NonPushableTransactionState;
     /**
-     * 
+     * The state changes of the message.
      * @type {Array<NonPushableTransactionStateChange>}
      * @memberof TonMessage
      */
     stateChanges: Array<NonPushableTransactionStateChange>;
     /**
-     * 
-     * @type {string}
+     * TON message type.
+     * @type {TonMessageTypeEnum}
      * @memberof TonMessage
      */
     type: TonMessageTypeEnum;
     /**
-     * 
+     * The type of the TON message.
      * @type {TonMessageType}
      * @memberof TonMessage
      */
     tonMessageType: TonMessageType;
     /**
-     * 
+     * The payload that was requested to be signed, encoded in base64.
      * @type {string}
      * @memberof TonMessage
      */
     rawPayloadToSign: string;
     /**
-     * 
+     * The payload that was requested to be signed.
      * @type {string}
      * @memberof TonMessage
      */
     stringPayloadToSign: string;
     /**
-     * 
+     * The details of the chain that this message is on.
      * @type {EnrichedTonChain}
      * @memberof TonMessage
      */
     chain: EnrichedTonChain;
     /**
-     * 
+     * The sender of the message.
      * @type {EnrichedTonAddress}
      * @memberof TonMessage
      */
     sender: EnrichedTonAddress;
     /**
-     * 
+     * The domain of the daap.
      * @type {string}
      * @memberof TonMessage
      */
     domain: string;
     /**
-     * 
+     * The daap domain's length
      * @type {number}
      * @memberof TonMessage
      */
     domainBytesLength: number;
     /**
-     * 
+     * The signing timestamp
      * @type {number}
      * @memberof TonMessage
      */
@@ -177,7 +203,7 @@ export interface TonMessage {
 
 
 /**
- * 
+ * @export
  */
 const TonMessageTypeEnum = {
     tonMessage: 'ton_message'
@@ -199,6 +225,9 @@ export function TonMessageFromJSONTyped(json: any, _ignoreDiscriminator: boolean
         'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
         'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'interactedVaults': ((json['interacted_vaults'] as Array<any>).map(VaultRefFromJSON)),
+        'relatedTransactions': json['related_transactions'] == null ? undefined : ((json['related_transactions'] as Array<any>).map(RelatedTransactionFromJSON)),
+        'organizationId': json['organization_id'],
         'state': NonPushableTransactionStateFromJSON(json['state']),
         'stateChanges': ((json['state_changes'] as Array<any>).map(NonPushableTransactionStateChangeFromJSON)),
         'type': json['type'],

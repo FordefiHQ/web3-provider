@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const ChainSource = {
@@ -27,4 +28,3 @@ export function ChainSourceFromJSON(json: any): ChainSource {
 function ChainSourceFromJSONTyped(json: any, _ignoreDiscriminator: boolean): ChainSource {
     return json as ChainSource;
 }
-

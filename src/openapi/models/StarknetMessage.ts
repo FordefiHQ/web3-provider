@@ -10,6 +10,10 @@
  * Do not edit the class manually.
  */
 
+import type { VaultRef } from './VaultRef';
+import {
+    VaultRefFromJSON,
+} from './VaultRef';
 import type { ManagedTransactionData } from './ManagedTransactionData';
 import {
     ManagedTransactionDataFromJSON,
@@ -38,6 +42,10 @@ import type { Signature } from './Signature';
 import {
     SignatureFromJSON,
 } from './Signature';
+import type { RelatedTransaction } from './RelatedTransaction';
+import {
+    RelatedTransactionFromJSON,
+} from './RelatedTransaction';
 import type { NonPushableTransactionStateChange } from './NonPushableTransactionStateChange';
 import {
     NonPushableTransactionStateChangeFromJSON,
@@ -54,109 +62,127 @@ import {
  */
 export interface StarknetMessage {
     /**
-     * 
+     * The unique identifier of the object in the Fordefi platform.
      * @type {string}
      * @memberof StarknetMessage
      */
     id: string;
     /**
-     * 
+     * The date and time when the object was created.
      * @type {Date}
      * @memberof StarknetMessage
      */
     createdAt: Date;
     /**
-     * 
+     * The date and time when the object was last modified. Any change to any field of the resource is considered a modification.
      * @type {Date}
      * @memberof StarknetMessage
      */
     modifiedAt: Date;
     /**
-     * 
+     * Managed transaction data. Presented if the transaction was initiated from the Fordefi system itself, in contrast to unmanaged transactions (which are, for example, transfers of funds into a vault visible to Fordefi). 
      * @type {ManagedTransactionData}
      * @memberof StarknetMessage
      */
     managedTransactionData?: ManagedTransactionData;
     /**
-     * 
+     * The transaction signatures.
      * @type {Array<Signature>}
      * @memberof StarknetMessage
      */
     signatures: Array<Signature>;
     /**
-     * 
+     * An optional transaction note.
      * @type {string}
      * @memberof StarknetMessage
      */
     note?: string;
     /**
-     * 
+     * `automatically_set` if the transaction was automatically set as spam by Fordefi, `manually_set` if the transaction was manually set as spam by a user, and `unset` if the transaction was not set as spam.
      * @type {TransactionSpamState}
      * @memberof StarknetMessage
      */
     spamState?: TransactionSpamState;
     /**
-     * 
+     * The direction of the transaction.
      * @type {TransactionDirection}
      * @memberof StarknetMessage
      */
     direction: TransactionDirection;
     /**
-     * 
+     * Whether the transaction was signed by an external user (for example in case of imported vault).
      * @type {boolean}
      * @memberof StarknetMessage
      */
     signedExternally?: boolean;
     /**
-     * 
+     * The vaults that interacted with the transaction.
+     * @type {Array<VaultRef>}
+     * @memberof StarknetMessage
+     */
+    interactedVaults: Array<VaultRef>;
+    /**
+     * The related transactions.
+     * @type {Array<RelatedTransaction>}
+     * @memberof StarknetMessage
+     */
+    relatedTransactions?: Array<RelatedTransaction>;
+    /**
+     * The organization that the transaction belongs to.
+     * @type {string}
+     * @memberof StarknetMessage
+     */
+    organizationId: string;
+    /**
+     * The state of the message.
      * @type {NonPushableTransactionState}
      * @memberof StarknetMessage
      */
     state: NonPushableTransactionState;
     /**
-     * 
+     * The state changes of the message.
      * @type {Array<NonPushableTransactionStateChange>}
      * @memberof StarknetMessage
      */
     stateChanges: Array<NonPushableTransactionStateChange>;
     /**
-     * 
-     * @type {string}
+     * Starknet message type.
+     * @type {StarknetMessageTypeEnum}
      * @memberof StarknetMessage
      */
     type: StarknetMessageTypeEnum;
     /**
-     * 
+     * The type of the Starknet message.
      * @type {StarknetMessageType}
      * @memberof StarknetMessage
      */
     starknetMessageType: StarknetMessageType;
     /**
-     * 
+     * The raw data of the message.
      * @type {string}
      * @memberof StarknetMessage
      */
     rawData: string;
     /**
-     * 
+     * The details of the chain that this message is on.
      * @type {EnrichedStarknetChain}
      * @memberof StarknetMessage
      */
     chain: EnrichedStarknetChain;
     /**
-     * 
+     * The sender of the message.
      * @type {EnrichedStarknetAddress}
      * @memberof StarknetMessage
      */
     sender: EnrichedStarknetAddress;
     /**
-     * 
+     * The hash of the message that was requested to be signed, in hex.
      * @type {string}
      * @memberof StarknetMessage
      */
     messageHash: string;
     /**
-     * 
+     * The signatures of the message in Starknet format.
      * @type {Array<string>}
      * @memberof StarknetMessage
      */
@@ -165,7 +191,7 @@ export interface StarknetMessage {
 
 
 /**
- * 
+ * @export
  */
 const StarknetMessageTypeEnum = {
     starknetMessage: 'starknet_message'
@@ -187,6 +213,9 @@ export function StarknetMessageFromJSONTyped(json: any, _ignoreDiscriminator: bo
         'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
         'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'interactedVaults': ((json['interacted_vaults'] as Array<any>).map(VaultRefFromJSON)),
+        'relatedTransactions': json['related_transactions'] == null ? undefined : ((json['related_transactions'] as Array<any>).map(RelatedTransactionFromJSON)),
+        'organizationId': json['organization_id'],
         'state': NonPushableTransactionStateFromJSON(json['state']),
         'stateChanges': ((json['state_changes'] as Array<any>).map(NonPushableTransactionStateChangeFromJSON)),
         'type': json['type'],

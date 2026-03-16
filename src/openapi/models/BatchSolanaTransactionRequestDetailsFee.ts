@@ -20,9 +20,9 @@ import {
 } from './SolanaPriorityFeeRequest';
 
 /**
- * 
- * @export
  * @type BatchSolanaTransactionRequestDetailsFee
+ * The fee configuration for the transaction.
+ * @export
  */
 export type BatchSolanaTransactionRequestDetailsFee = { type: 'custom' } & SolanaCustomFeeRequest | { type: 'priority' } & SolanaPriorityFeeRequest;
 
@@ -40,8 +40,6 @@ function BatchSolanaTransactionRequestDetailsFeeToJSONTyped(value?: BatchSolanaT
         case 'priority':
             return Object.assign({}, SolanaPriorityFeeRequestToJSON(value), { type: 'priority' } as const);
         default:
-            throw new Error(`No variant of BatchSolanaTransactionRequestDetailsFee exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

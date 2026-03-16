@@ -20,9 +20,9 @@ import {
 } from './UtxoPsbtDetails';
 
 /**
- * 
- * @export
  * @type PredictedUtxoTransactionUtxoTransactionTypeDetails
+ * Details of the Utxo transaction based on its type.
+ * @export
  */
 export type PredictedUtxoTransactionUtxoTransactionTypeDetails = { type: 'native_transfer' } & UtxoNativeTransferDetails | { type: 'partially_signed_bitcoin_transaction' } & UtxoPsbtDetails;
 
@@ -40,7 +40,6 @@ function PredictedUtxoTransactionUtxoTransactionTypeDetailsFromJSONTyped(json: a
         case 'partially_signed_bitcoin_transaction':
             return Object.assign({}, UtxoPsbtDetailsFromJSONTyped(json, true), { type: 'partially_signed_bitcoin_transaction' } as const);
         default:
-            throw new Error(`No variant of PredictedUtxoTransactionUtxoTransactionTypeDetails exists with 'type=${json['type']}'`);
+            return json;
     }
 }
-

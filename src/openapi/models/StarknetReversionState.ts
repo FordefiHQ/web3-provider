@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const StarknetReversionState = {
@@ -29,4 +30,3 @@ export function StarknetReversionStateFromJSON(json: any): StarknetReversionStat
 function StarknetReversionStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): StarknetReversionState {
     return json as StarknetReversionState;
 }
-

@@ -34,38 +34,38 @@ import {
  */
 export interface CreateBlackBoxSignatureRequest {
     /**
-     * 
+     * The unique identifier of the vault.
      * @type {string}
      * @memberof CreateBlackBoxSignatureRequest
      */
     vaultId: string;
     /**
-     * 
+     * An optional transaction note.
      * @type {string}
      * @memberof CreateBlackBoxSignatureRequest
      */
     note?: string;
     /**
-     * 
+     * The signer of the transaction. Can be: <ul><li>`initiator`: The creator of the transaction (default).<li>`api_signer`: A service that you run on your own network or cloud environment. <li>`end_user`: A mobile device using Fordefi's SDK.</ul>
      * @type {SignerType}
      * @memberof CreateBlackBoxSignatureRequest
      */
     signerType?: SignerType;
     /**
-     * 
+     * The sign mode of the transaction determines when the transaction will transition to the signing phase. It can be one of the following:<ul><li>`auto`: The transaction will move to signing automatically after approval.<li>`triggered`: The transaction will be in the `waiting_for_signing_trigger` state until "Trigger Transaction Signing" is called. Currently supported only for API Signer signer type.</ul>
      * @type {SignMode}
      * @memberof CreateBlackBoxSignatureRequest
      */
     signMode?: SignMode;
     /**
-     * 
+     * The DApp information.
      * @type {DappInfo}
      * @memberof CreateBlackBoxSignatureRequest
      */
     dappInfo?: DappInfo;
     /**
-     * 
-     * @type {string}
+     * Black Box signature type.
+     * @type {CreateBlackBoxSignatureRequestTypeEnum}
      * @memberof CreateBlackBoxSignatureRequest
      */
     type: CreateBlackBoxSignatureRequestTypeEnum;
@@ -79,7 +79,7 @@ export interface CreateBlackBoxSignatureRequest {
 
 
 /**
- * 
+ * @export
  */
 const CreateBlackBoxSignatureRequestTypeEnum = {
     blackBoxSignature: 'black_box_signature'

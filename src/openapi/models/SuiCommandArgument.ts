@@ -32,9 +32,9 @@ import {
 } from './SuiCommandResultArgument';
 
 /**
+ * @type SuiCommandArgument
  * 
  * @export
- * @type SuiCommandArgument
  */
 export type SuiCommandArgument = { type: 'gas_coin' } & SuiCommandGasCoinArgument | { type: 'input' } & SuiCommandInputArgument | { type: 'nested_result' } & SuiCommandNestedResultArgument | { type: 'result' } & SuiCommandResultArgument;
 
@@ -56,7 +56,7 @@ function SuiCommandArgumentFromJSONTyped(json: any, _ignoreDiscriminator: boolea
         case 'result':
             return Object.assign({}, SuiCommandResultArgumentFromJSONTyped(json, true), { type: 'result' } as const);
         default:
-            throw new Error(`No variant of SuiCommandArgument exists with 'type=${json['type']}'`);
+            return json;
     }
 }
 
@@ -78,8 +78,6 @@ function SuiCommandArgumentToJSONTyped(value?: SuiCommandArgument | null, _ignor
         case 'result':
             return Object.assign({}, SuiCommandResultArgumentToJSON(value), { type: 'result' } as const);
         default:
-            throw new Error(`No variant of SuiCommandArgument exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

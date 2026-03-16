@@ -32,9 +32,9 @@ import {
 } from './SystemUserRef';
 
 /**
- * 
- * @export
  * @type UserRef
+ * Represents a reference to a user in the Fordefi platform
+ * @export
  */
 export type UserRef = { userType: 'api_signer' } & ApiSignerRef | { userType: 'api_user' } & ApiUserRef | { userType: 'end_user' } & EndUserRef | { userType: 'person' } & PersonRef | { userType: 'system' } & SystemUserRef;
 
@@ -58,7 +58,6 @@ function UserRefFromJSONTyped(json: any, _ignoreDiscriminator: boolean): UserRef
         case 'system':
             return Object.assign({}, SystemUserRefFromJSONTyped(json, true), { userType: 'system' } as const);
         default:
-            throw new Error(`No variant of UserRef exists with 'userType=${json['userType']}'`);
+            return json;
     }
 }
-

@@ -17,13 +17,13 @@
  */
 export interface RecipientVaultId {
     /**
-     * 
-     * @type {string}
+     * The type of the recipient.
+     * @type {RecipientVaultIdTypeEnum}
      * @memberof RecipientVaultId
      */
     type: RecipientVaultIdTypeEnum;
     /**
-     * 
+     * The id of the recipient vault.
      * @type {string}
      * @memberof RecipientVaultId
      */
@@ -32,7 +32,7 @@ export interface RecipientVaultId {
 
 
 /**
- * 
+ * @export
  */
 const RecipientVaultIdTypeEnum = {
     vaultId: 'vault_id'

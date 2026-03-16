@@ -34,19 +34,25 @@ import {
  */
 export interface CreateTonTransferRequest {
     /**
-     * 
-     * @type {string}
+     * An TON transfer transaction. A transaction of this kind is for transferring native currency or a jetton.
+     * @type {CreateTonTransferRequestTypeEnum}
      * @memberof CreateTonTransferRequest
      */
     type: CreateTonTransferRequestTypeEnum;
     /**
-     * 
+     * `True` if the request should fail in case simulation failed, `False` otherwise. <br> In case simulation has failed upon continuation, the expected result of the transaction will be partial and policy will be applied on information that can be extracted statically from the transaction only. This might result in falling back to the default policy rule. 
      * @type {boolean}
      * @memberof CreateTonTransferRequest
      */
     failOnPredictionFailure?: boolean;
     /**
-     * 
+     * `True` to create a transaction without prediction, `False` otherwise. <br> In case of skipping simulation, the simulation status will be skipped and the expected result of the transaction will be empty. The policy will be applied on information that can be extracted statically from the transaction only. This might result in falling back to the default policy rule. <br> Note, it is recommended to use the default setting for this field and to turn off `fail_on_prediction_failure` instead - unless you wish to save time by omitting the prediction phase entirely. 
+     * @type {boolean}
+     * @memberof CreateTonTransferRequest
+     */
+    skipPrediction?: boolean;
+    /**
+     * The push mode of the transaction when sending it to the node. It can be one of the following:<ul><li>`auto`: The transaction is pushed automatically by Fordefi. <li>`manual`: The transaction should be pushed manually by the user using a 3rd party.<li>`deferred`: The transaction is pushed by Fordefi after a certain time, if by that time it wasn't pushed manually by the client.</ul></ul> 
      * @type {PushMode}
      * @memberof CreateTonTransferRequest
      */
@@ -64,28 +70,22 @@ export interface CreateTonTransferRequest {
      */
     value: CreateAptosTransferRequestValue;
     /**
-     * 
+     * The TON asset identifier to transfer.
      * @type {TonAssetIdentifierRequest}
      * @memberof CreateTonTransferRequest
      */
     assetIdentifier: TonAssetIdentifierRequest;
     /**
-     * 
+     * A comment to attach to the transaction.
      * @type {string}
      * @memberof CreateTonTransferRequest
      */
     comment?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CreateTonTransferRequest
-     */
-    skipPrediction?: boolean;
 }
 
 
 /**
- * 
+ * @export
  */
 const CreateTonTransferRequestTypeEnum = {
     tonTransfer: 'ton_transfer'
@@ -105,11 +105,11 @@ function CreateTonTransferRequestToJSONTyped(value?: CreateTonTransferRequest | 
         
         'type': value['type'],
         'fail_on_prediction_failure': value['failOnPredictionFailure'],
+        'skip_prediction': value['skipPrediction'],
         'push_mode': PushModeToJSON(value['pushMode']),
         'to': CreateTonTransferRequestToToJSON(value['to']),
         'value': CreateAptosTransferRequestValueToJSON(value['value']),
         'asset_identifier': TonAssetIdentifierRequestToJSON(value['assetIdentifier']),
         'comment': value['comment'],
-        'skip_prediction': value['skipPrediction'],
     };
 }

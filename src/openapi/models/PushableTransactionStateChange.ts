@@ -10,14 +10,6 @@
  * Do not edit the class manually.
  */
 
-import type { PricedAsset } from './PricedAsset';
-import {
-    PricedAssetFromJSON,
-} from './PricedAsset';
-import type { EvmPrices } from './EvmPrices';
-import {
-    EvmPricesFromJSON,
-} from './EvmPrices';
 import type { PushableTransactionState } from './PushableTransactionState';
 import {
     PushableTransactionStateFromJSON,
@@ -34,38 +26,25 @@ import {
  */
 export interface PushableTransactionStateChange {
     /**
-     * 
+     * The date and time when the state was changed.
      * @type {Date}
      * @memberof PushableTransactionStateChange
      */
     changedAt: Date;
     /**
-     * 
+     * The reason for the state change.
      * @type {StateChangeReason}
      * @memberof PushableTransactionStateChange
      */
     reason?: StateChangeReason;
     /**
-     * 
-     * @type {Array<PricedAsset>}
-     * @memberof PushableTransactionStateChange
-     * @deprecated
-     */
-    assetPrices?: Array<PricedAsset>;
-    /**
-     * 
-     * @type {EvmPrices}
-     * @memberof PushableTransactionStateChange
-     */
-    prices?: EvmPrices;
-    /**
-     * 
+     * The previous state of the transaction.
      * @type {PushableTransactionState}
      * @memberof PushableTransactionStateChange
      */
     previousState?: PushableTransactionState;
     /**
-     * 
+     * The new state of the transaction.
      * @type {PushableTransactionState}
      * @memberof PushableTransactionStateChange
      */
@@ -84,10 +63,7 @@ function PushableTransactionStateChangeFromJSONTyped(json: any, _ignoreDiscrimin
         
         'changedAt': (new Date(json['changed_at'])),
         'reason': json['reason'] == null ? undefined : StateChangeReasonFromJSON(json['reason']),
-        'assetPrices': json['asset_prices'] == null ? undefined : ((json['asset_prices'] as Array<any>).map(PricedAssetFromJSON)),
-        'prices': json['prices'] == null ? undefined : EvmPricesFromJSON(json['prices']),
         'previousState': json['previous_state'] == null ? undefined : PushableTransactionStateFromJSON(json['previous_state']),
         'newState': PushableTransactionStateFromJSON(json['new_state']),
     };
 }
-

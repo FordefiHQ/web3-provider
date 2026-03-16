@@ -22,25 +22,25 @@ import {
  */
 export interface AptosCoinTransferDetails {
     /**
-     * 
-     * @type {string}
+     * A transaction involving the transfer of non-APT coin from one address to another. 
+     * @type {AptosCoinTransferDetailsTypeEnum}
      * @memberof AptosCoinTransferDetails
      */
     type: AptosCoinTransferDetailsTypeEnum;
     /**
-     * 
+     * The sender of the coins.
      * @type {EnrichedAptosAddress}
      * @memberof AptosCoinTransferDetails
      */
     sender: EnrichedAptosAddress;
     /**
-     * 
+     * The recipient of the coins.
      * @type {EnrichedAptosAddress}
      * @memberof AptosCoinTransferDetails
      */
     recipient: EnrichedAptosAddress;
     /**
-     * 
+     * Is this transfer an internal transfer between two vaults. None if the transaction is incoming.
      * @type {boolean}
      * @memberof AptosCoinTransferDetails
      */
@@ -49,7 +49,7 @@ export interface AptosCoinTransferDetails {
 
 
 /**
- * 
+ * @export
  */
 const AptosCoinTransferDetailsTypeEnum = {
     coinTransfer: 'coin_transfer'

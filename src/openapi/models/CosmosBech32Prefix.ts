@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const CosmosBech32Prefix = {
@@ -29,6 +30,7 @@ export const CosmosBech32Prefix = {
     nillion: 'nillion',
     noble: 'noble',
     osmo: 'osmo',
+    saga: 'saga',
     sei: 'sei',
     stride: 'stride',
     thor: 'thor',
@@ -43,4 +45,3 @@ export function CosmosBech32PrefixFromJSON(json: any): CosmosBech32Prefix {
 function CosmosBech32PrefixFromJSONTyped(json: any, _ignoreDiscriminator: boolean): CosmosBech32Prefix {
     return json as CosmosBech32Prefix;
 }
-

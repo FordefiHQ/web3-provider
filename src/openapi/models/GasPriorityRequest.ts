@@ -22,19 +22,19 @@ import {
  */
 export interface GasPriorityRequest {
     /**
-     * 
+     * Specifies the maximum number of gas units to be used for mining the transaction. If omitted, Fordefi will automatically estimate the required gas and apply that value.
      * @type {string}
      * @memberof GasPriorityRequest
      */
     gasLimit?: string;
     /**
      * 
-     * @type {string}
+     * @type {GasPriorityRequestTypeEnum}
      * @memberof GasPriorityRequest
      */
     type: GasPriorityRequestTypeEnum;
     /**
-     * 
+     * Using the Gas Priority option, you allocate gas according to `gas_limit` and `priority_level`, and the range of fee you are willing to add: low, medium,  or high - Fordefi will add 10%, 20%, or 25%, respectively to the recent average gas price to mine the transaction successfully.
      * @type {GasPriorityLevelRequest}
      * @memberof GasPriorityRequest
      */
@@ -66,4 +66,3 @@ function GasPriorityRequestToJSONTyped(value?: GasPriorityRequest | null, _ignor
         'priority_level': GasPriorityLevelRequestToJSON(value['priorityLevel']),
     };
 }
-

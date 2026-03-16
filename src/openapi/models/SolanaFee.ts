@@ -18,10 +18,6 @@ import type { SolanaFeeType } from './SolanaFeeType';
 import {
     SolanaFeeTypeFromJSON,
 } from './SolanaFeeType';
-import type { Price } from './Price';
-import {
-    PriceFromJSON,
-} from './Price';
 import type { FeePriorityLevel } from './FeePriorityLevel';
 import {
     FeePriorityLevelFromJSON,
@@ -34,43 +30,43 @@ import {
  */
 export interface SolanaFee {
     /**
-     * 
+     * The priority level.
      * @type {FeePriorityLevel}
      * @memberof SolanaFee
      */
     priorityLevel: FeePriorityLevel;
     /**
-     * 
+     * The base fee of the transaction (in lamports).
      * @type {string}
      * @memberof SolanaFee
      */
     baseFee: string;
     /**
-     * 
+     * The priority fee of the transaction (in lamports).
      * @type {string}
      * @memberof SolanaFee
      */
     priorityFee: string;
     /**
-     * 
+     * The unit price of the transaction (in microlamports).
+     * @type {string}
+     * @memberof SolanaFee
+     */
+    unitPrice?: string;
+    /**
+     * The total fee of the transaction (in lamports).
      * @type {string}
      * @memberof SolanaFee
      */
     fee: string;
     /**
-     * 
+     * The type of the fee.
      * @type {SolanaFeeType}
      * @memberof SolanaFee
      */
     feeType: SolanaFeeType;
     /**
-     * 
-     * @type {Price}
-     * @memberof SolanaFee
-     */
-    fiatPrice?: Price;
-    /**
-     * 
+     * The information of the asset used to pay the fee and amount used.
      * @type {PricedAsset}
      * @memberof SolanaFee
      */
@@ -90,10 +86,9 @@ function SolanaFeeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Solan
         'priorityLevel': FeePriorityLevelFromJSON(json['priority_level']),
         'baseFee': json['base_fee'],
         'priorityFee': json['priority_fee'],
+        'unitPrice': json['unit_price'] == null ? undefined : json['unit_price'],
         'fee': json['fee'],
         'feeType': SolanaFeeTypeFromJSON(json['fee_type']),
-        'fiatPrice': json['fiat_price'] == null ? undefined : PriceFromJSON(json['fiat_price']),
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }
-

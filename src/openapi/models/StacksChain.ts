@@ -22,13 +22,13 @@ import {
  */
 export interface StacksChain {
     /**
-     * 
-     * @type {string}
+     * The type of the chain.
+     * @type {StacksChainChainTypeEnum}
      * @memberof StacksChain
      */
     chainType: StacksChainChainTypeEnum;
     /**
-     * 
+     * The type of the Stacks-based chain.
      * @type {StacksChainUniqueId}
      * @memberof StacksChain
      */
@@ -37,7 +37,7 @@ export interface StacksChain {
 
 
 /**
- * 
+ * @export
  */
 const StacksChainChainTypeEnum = {
     stacks: 'stacks'

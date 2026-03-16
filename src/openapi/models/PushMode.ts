@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const PushMode = {
@@ -32,4 +33,3 @@ function PushModeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): PushMo
 export function PushModeToJSON(value?: PushMode | null): any {
     return value as any;
 }
-

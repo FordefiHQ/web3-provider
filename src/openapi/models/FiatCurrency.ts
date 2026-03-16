@@ -22,13 +22,13 @@ import {
  */
 export interface FiatCurrency {
     /**
-     * 
+     * The symbol of the fiat currency.
      * @type {FiatCurrencySymbol}
      * @memberof FiatCurrency
      */
     currencySymbol: FiatCurrencySymbol;
     /**
-     * 
+     * The number of decimals in the fiat currency.
      * @type {number}
      * @memberof FiatCurrency
      */
@@ -49,4 +49,3 @@ function FiatCurrencyFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Fi
         'decimals': json['decimals'],
     };
 }
-

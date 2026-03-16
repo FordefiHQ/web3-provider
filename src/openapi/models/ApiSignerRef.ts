@@ -17,26 +17,26 @@
  */
 export interface ApiSignerRef {
     /**
-     * 
+     * The unique identifier of the user in the Fordefi platform.
      * @type {string}
      * @memberof ApiSignerRef
      */
     id: string;
     /**
-     * 
-     * @type {string}
+     * The type of the user.
+     * @type {ApiSignerRefUserTypeEnum}
      * @memberof ApiSignerRef
      */
     userType: ApiSignerRefUserTypeEnum;
     /**
-     * 
+     * The name of the user.
      * @type {string}
      * @memberof ApiSignerRef
      */
     name: string;
     /**
-     * 
-     * @type {string}
+     * The state of the user.
+     * @type {ApiSignerRefStateEnum}
      * @memberof ApiSignerRef
      */
     state: ApiSignerRefStateEnum;
@@ -44,7 +44,7 @@ export interface ApiSignerRef {
 
 
 /**
- * 
+ * @export
  */
 const ApiSignerRefUserTypeEnum = {
     apiSigner: 'api_signer'
@@ -52,11 +52,12 @@ const ApiSignerRefUserTypeEnum = {
 type ApiSignerRefUserTypeEnum = typeof ApiSignerRefUserTypeEnum[keyof typeof ApiSignerRefUserTypeEnum];
 
 /**
- * 
+ * @export
  */
 const ApiSignerRefStateEnum = {
     active: 'active',
-    onboarding: 'onboarding',
+    onboardingPendingCodeGeneration: 'onboarding_pending_code_generation',
+    onboardingPendingActivation: 'onboarding_pending_activation',
     deleted: 'deleted'
 } as const;
 type ApiSignerRefStateEnum = typeof ApiSignerRefStateEnum[keyof typeof ApiSignerRefStateEnum];

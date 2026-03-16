@@ -22,28 +22,34 @@ import {
  */
 export interface StacksAddressBookContactAddressRef {
     /**
-     * 
-     * @type {string}
+     * The type of the chain.
+     * @type {StacksAddressBookContactAddressRefChainTypeEnum}
      * @memberof StacksAddressBookContactAddressRef
      */
     chainType: StacksAddressBookContactAddressRefChainTypeEnum;
     /**
-     * 
+     * The address on the Stacks chain.
      * @type {string}
      * @memberof StacksAddressBookContactAddressRef
      */
     address: string;
     /**
-     * 
+     * The chains the contact belongs to.
      * @type {Array<StacksChain>}
      * @memberof StacksAddressBookContactAddressRef
      */
     chains: Array<StacksChain>;
+    /**
+     * Memo is an additional address feature used for identifying a recipient.
+     * @type {string}
+     * @memberof StacksAddressBookContactAddressRef
+     */
+    memo?: string;
 }
 
 
 /**
- * 
+ * @export
  */
 const StacksAddressBookContactAddressRefChainTypeEnum = {
     stacks: 'stacks'
@@ -59,5 +65,6 @@ export function StacksAddressBookContactAddressRefFromJSONTyped(json: any, _igno
         'chainType': json['chain_type'],
         'address': json['address'],
         'chains': ((json['chains'] as Array<any>).map(StacksChainFromJSON)),
+        'memo': json['memo'] == null ? undefined : json['memo'],
     };
 }

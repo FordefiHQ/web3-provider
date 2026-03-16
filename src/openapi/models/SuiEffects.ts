@@ -26,13 +26,13 @@ import {
  */
 export interface SuiEffects {
     /**
-     * 
+     * The aggregated balance changes of addresses.
      * @type {Array<SuiBalanceChangeEffect>}
      * @memberof SuiEffects
      */
     balanceChanges: Array<SuiBalanceChangeEffect>;
     /**
-     * 
+     * The transfer events of the transaction.
      * @type {Array<SuiTransferEffect>}
      * @memberof SuiEffects
      */
@@ -53,4 +53,3 @@ function SuiEffectsFromJSONTyped(json: any, _ignoreDiscriminator: boolean): SuiE
         'transfers': ((json['transfers'] as Array<any>).map(SuiTransferEffectFromJSON)),
     };
 }
-

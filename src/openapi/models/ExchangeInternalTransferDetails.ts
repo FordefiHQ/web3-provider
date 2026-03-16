@@ -22,25 +22,25 @@ import {
  */
 export interface ExchangeInternalTransferDetails {
     /**
-     * 
+     * Is this transfer an internal transfer between two vaults.
      * @type {boolean}
      * @memberof ExchangeInternalTransferDetails
      */
     isInternal: boolean;
     /**
-     * 
+     * The sender of the transaction.
      * @type {EnrichedExchangeAddress}
      * @memberof ExchangeInternalTransferDetails
      */
     sender: EnrichedExchangeAddress;
     /**
-     * 
-     * @type {string}
+     * A transaction from one exchange vault to another.
+     * @type {ExchangeInternalTransferDetailsTypeEnum}
      * @memberof ExchangeInternalTransferDetails
      */
     type: ExchangeInternalTransferDetailsTypeEnum;
     /**
-     * 
+     * The recipient of the transfer.
      * @type {EnrichedExchangeAddress}
      * @memberof ExchangeInternalTransferDetails
      */
@@ -49,7 +49,7 @@ export interface ExchangeInternalTransferDetails {
 
 
 /**
- * 
+ * @export
  */
 const ExchangeInternalTransferDetailsTypeEnum = {
     internalTransfer: 'internal_transfer'

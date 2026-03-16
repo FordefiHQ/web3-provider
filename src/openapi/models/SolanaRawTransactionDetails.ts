@@ -22,13 +22,13 @@ import {
  */
 export interface SolanaRawTransactionDetails {
     /**
-     * 
-     * @type {string}
+     * A transaction capable of any operation.
+     * @type {SolanaRawTransactionDetailsTypeEnum}
      * @memberof SolanaRawTransactionDetails
      */
     type: SolanaRawTransactionDetailsTypeEnum;
     /**
-     * 
+     * The recipients of the tokens.
      * @type {Array<EnrichedSolanaAddress>}
      * @memberof SolanaRawTransactionDetails
      */
@@ -37,7 +37,7 @@ export interface SolanaRawTransactionDetails {
 
 
 /**
- * 
+ * @export
  */
 const SolanaRawTransactionDetailsTypeEnum = {
     rawTransaction: 'raw_transaction'

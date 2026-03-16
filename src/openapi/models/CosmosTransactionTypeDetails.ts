@@ -24,9 +24,9 @@ import {
 } from './CosmosTokenTransferDetails';
 
 /**
+ * @type CosmosTransactionTypeDetails
  * 
  * @export
- * @type CosmosTransactionTypeDetails
  */
 export type CosmosTransactionTypeDetails = { type: 'messages' } & CosmosMultipleMessagesTransactionDetails | { type: 'native_transfer' } & CosmosNativeTransferDetails | { type: 'token_transfer' } & CosmosTokenTransferDetails;
 
@@ -46,7 +46,6 @@ function CosmosTransactionTypeDetailsFromJSONTyped(json: any, _ignoreDiscriminat
         case 'token_transfer':
             return Object.assign({}, CosmosTokenTransferDetailsFromJSONTyped(json, true), { type: 'token_transfer' } as const);
         default:
-            throw new Error(`No variant of CosmosTransactionTypeDetails exists with 'type=${json['type']}'`);
+            return json;
     }
 }
-

@@ -10,29 +10,71 @@
  * Do not edit the class manually.
  */
 
-import type { Erc1155AllowanceForAllChange } from './Erc1155AllowanceForAllChange';
+import type { AllowanceEffectType } from './AllowanceEffectType';
 import {
-    Erc1155AllowanceForAllChangeFromJSONTyped,
-} from './Erc1155AllowanceForAllChange';
-import type { Erc20AllowanceChange } from './Erc20AllowanceChange';
+    AllowanceEffectTypeFromJSON,
+} from './AllowanceEffectType';
+import type { PricedAsset } from './PricedAsset';
 import {
-    Erc20AllowanceChangeFromJSONTyped,
-} from './Erc20AllowanceChange';
-import type { Erc721AllowanceChange } from './Erc721AllowanceChange';
+    PricedAssetFromJSON,
+} from './PricedAsset';
+import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
 import {
-    Erc721AllowanceChangeFromJSONTyped,
-} from './Erc721AllowanceChange';
-import type { Erc721AllowanceForAllChange } from './Erc721AllowanceForAllChange';
-import {
-    Erc721AllowanceForAllChangeFromJSONTyped,
-} from './Erc721AllowanceForAllChange';
+    EnrichedEvmAddressFromJSON,
+} from './EnrichedEvmAddress';
 
 /**
  * 
  * @export
- * @type AllowanceEffect
+ * @interface AllowanceEffect
  */
-export type AllowanceEffect = { type: 'erc1155_for_all' } & Erc1155AllowanceForAllChange | { type: 'erc20' } & Erc20AllowanceChange | { type: 'erc721' } & Erc721AllowanceChange | { type: 'erc721_for_all' } & Erc721AllowanceForAllChange;
+export interface AllowanceEffect {
+    /**
+     * The asset information.
+     * @type {PricedAsset}
+     * @memberof AllowanceEffect
+     */
+    pricedAsset: PricedAsset;
+    /**
+     * The amount of the transfer.
+     * @type {string}
+     * @memberof AllowanceEffect
+     */
+    amount: string;
+    /**
+     * The owner giving the allowance.
+     * @type {EnrichedEvmAddress}
+     * @memberof AllowanceEffect
+     */
+    owner: EnrichedEvmAddress;
+    /**
+     * The spender receiving the allowance.
+     * @type {EnrichedEvmAddress}
+     * @memberof AllowanceEffect
+     */
+    spender: EnrichedEvmAddress;
+    /**
+     * 
+     * @type {AllowanceEffectType}
+     * @memberof AllowanceEffect
+     * @deprecated
+     */
+    type?: AllowanceEffectType;
+    /**
+     * `True` if the operator is approved to spend the tokens, `False` otherwise.
+     * @type {boolean}
+     * @memberof AllowanceEffect
+     * @deprecated
+     */
+    approved?: boolean;
+    /**
+     * The spender receiving the allowance.
+     * @type {EnrichedEvmAddress}
+     * @memberof AllowanceEffect
+     * @deprecated
+     */
+    operator?: EnrichedEvmAddress;
+}
 
 export function AllowanceEffectFromJSON(json: any): AllowanceEffect {
     return AllowanceEffectFromJSONTyped(json, false);
@@ -42,17 +84,14 @@ function AllowanceEffectFromJSONTyped(json: any, _ignoreDiscriminator: boolean):
     if (json == null) {
         return json;
     }
-    switch (json['type']) {
-        case 'erc1155_for_all':
-            return Object.assign({}, Erc1155AllowanceForAllChangeFromJSONTyped(json, true), { type: 'erc1155_for_all' } as const);
-        case 'erc20':
-            return Object.assign({}, Erc20AllowanceChangeFromJSONTyped(json, true), { type: 'erc20' } as const);
-        case 'erc721':
-            return Object.assign({}, Erc721AllowanceChangeFromJSONTyped(json, true), { type: 'erc721' } as const);
-        case 'erc721_for_all':
-            return Object.assign({}, Erc721AllowanceForAllChangeFromJSONTyped(json, true), { type: 'erc721_for_all' } as const);
-        default:
-            throw new Error(`No variant of AllowanceEffect exists with 'type=${json['type']}'`);
-    }
+    return {
+        
+        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
+        'amount': json['amount'],
+        'owner': EnrichedEvmAddressFromJSON(json['owner']),
+        'spender': EnrichedEvmAddressFromJSON(json['spender']),
+        'type': json['type'] == null ? undefined : AllowanceEffectTypeFromJSON(json['type']),
+        'approved': json['approved'] == null ? undefined : json['approved'],
+        'operator': json['operator'] == null ? undefined : EnrichedEvmAddressFromJSON(json['operator']),
+    };
 }
-

@@ -34,38 +34,38 @@ import {
  */
 export interface CreateTonTransactionRequest {
     /**
-     * 
+     * The unique identifier of the vault.
      * @type {string}
      * @memberof CreateTonTransactionRequest
      */
     vaultId: string;
     /**
-     * 
+     * An optional transaction note.
      * @type {string}
      * @memberof CreateTonTransactionRequest
      */
     note?: string;
     /**
-     * 
+     * The signer of the transaction. Can be: <ul><li>`initiator`: The creator of the transaction (default).<li>`api_signer`: A service that you run on your own network or cloud environment. <li>`end_user`: A mobile device using Fordefi's SDK.</ul>
      * @type {SignerType}
      * @memberof CreateTonTransactionRequest
      */
     signerType?: SignerType;
     /**
-     * 
+     * The sign mode of the transaction determines when the transaction will transition to the signing phase. It can be one of the following:<ul><li>`auto`: The transaction will move to signing automatically after approval.<li>`triggered`: The transaction will be in the `waiting_for_signing_trigger` state until "Trigger Transaction Signing" is called. Currently supported only for API Signer signer type.</ul>
      * @type {SignMode}
      * @memberof CreateTonTransactionRequest
      */
     signMode?: SignMode;
     /**
-     * 
+     * The DApp information.
      * @type {DappInfo}
      * @memberof CreateTonTransactionRequest
      */
     dappInfo?: DappInfo;
     /**
-     * 
-     * @type {string}
+     * TON transaction type.
+     * @type {CreateTonTransactionRequestTypeEnum}
      * @memberof CreateTonTransactionRequest
      */
     type: CreateTonTransactionRequestTypeEnum;
@@ -79,7 +79,7 @@ export interface CreateTonTransactionRequest {
 
 
 /**
- * 
+ * @export
  */
 const CreateTonTransactionRequestTypeEnum = {
     tonTransaction: 'ton_transaction'

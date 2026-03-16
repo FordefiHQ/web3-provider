@@ -22,8 +22,8 @@ import {
  */
 export interface AllowanceDetails {
     /**
-     * 
-     * @type {string}
+     * A transaction involving an allowance. 
+     * @type {AllowanceDetailsTypeEnum}
      * @memberof AllowanceDetails
      */
     type: AllowanceDetailsTypeEnum;
@@ -37,7 +37,7 @@ export interface AllowanceDetails {
 
 
 /**
- * 
+ * @export
  */
 const AllowanceDetailsTypeEnum = {
     allowance: 'allowance'

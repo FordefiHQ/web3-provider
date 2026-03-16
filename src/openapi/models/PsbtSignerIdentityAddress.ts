@@ -18,12 +18,12 @@
 export interface PsbtSignerIdentityAddress {
     /**
      * 
-     * @type {string}
+     * @type {PsbtSignerIdentityAddressTypeEnum}
      * @memberof PsbtSignerIdentityAddress
      */
     type: PsbtSignerIdentityAddressTypeEnum;
     /**
-     * 
+     * The address of the key that should sign on the input.
      * @type {string}
      * @memberof PsbtSignerIdentityAddress
      */
@@ -32,7 +32,7 @@ export interface PsbtSignerIdentityAddress {
 
 
 /**
- * 
+ * @export
  */
 const PsbtSignerIdentityAddressTypeEnum = {
     address: 'address'

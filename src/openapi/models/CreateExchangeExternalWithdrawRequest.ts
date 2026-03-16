@@ -31,30 +31,30 @@ import {
 export interface CreateExchangeExternalWithdrawRequest {
     /**
      * 
-     * @type {string}
+     * @type {CreateExchangeExternalWithdrawRequestTypeEnum}
      * @memberof CreateExchangeExternalWithdrawRequest
      */
     type: CreateExchangeExternalWithdrawRequestTypeEnum;
     /**
-     * 
+     * `True` if the request should fail in case simulation failed, `False` otherwise.
      * @type {boolean}
      * @memberof CreateExchangeExternalWithdrawRequest
      */
     failOnPredictionFailure?: boolean;
     /**
-     * 
+     * `True` to create a transaction without prediction, `False` otherwise.
      * @type {boolean}
      * @memberof CreateExchangeExternalWithdrawRequest
      */
     skipPrediction?: boolean;
     /**
-     * 
+     * The exchange asset identifier to transfer.
      * @type {ExchangeAssetIdentifierRequest}
      * @memberof CreateExchangeExternalWithdrawRequest
      */
     assetIdentifier: ExchangeAssetIdentifierRequest;
     /**
-     * 
+     * The chain on which to make the transfer.
      * @type {string}
      * @memberof CreateExchangeExternalWithdrawRequest
      */
@@ -72,7 +72,7 @@ export interface CreateExchangeExternalWithdrawRequest {
      */
     value: CreateExchangeExternalWithdrawRequestValue;
     /**
-     * 
+     * Transaction memo.
      * @type {string}
      * @memberof CreateExchangeExternalWithdrawRequest
      */
@@ -81,7 +81,7 @@ export interface CreateExchangeExternalWithdrawRequest {
 
 
 /**
- * 
+ * @export
  */
 const CreateExchangeExternalWithdrawRequestTypeEnum = {
     externalWithdraw: 'external_withdraw'

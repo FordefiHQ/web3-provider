@@ -22,19 +22,19 @@ import {
  */
 export interface SolanaAddressBookContactAddressRef {
     /**
-     * 
-     * @type {string}
+     * The type of the chain.
+     * @type {SolanaAddressBookContactAddressRefChainTypeEnum}
      * @memberof SolanaAddressBookContactAddressRef
      */
     chainType: SolanaAddressBookContactAddressRefChainTypeEnum;
     /**
-     * 
+     * The address on the Solana chain.
      * @type {string}
      * @memberof SolanaAddressBookContactAddressRef
      */
     address: string;
     /**
-     * 
+     * The chains the contact belongs to.
      * @type {Array<SolanaChain>}
      * @memberof SolanaAddressBookContactAddressRef
      */
@@ -43,7 +43,7 @@ export interface SolanaAddressBookContactAddressRef {
 
 
 /**
- * 
+ * @export
  */
 const SolanaAddressBookContactAddressRefChainTypeEnum = {
     solana: 'solana'

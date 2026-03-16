@@ -17,64 +17,64 @@
  */
 export interface CosmosToken {
     /**
-     * 
+     * The name of the coin.
      * @type {string}
      * @memberof CosmosToken
      */
     name: string;
     /**
-     * 
+     * The symbol of the coin.
      * @type {string}
      * @memberof CosmosToken
      */
     symbol: string;
     /**
-     * 
+     * The display string of the coin.
      * @type {string}
      * @memberof CosmosToken
      * @deprecated
      */
     display?: string;
     /**
-     * 
+     * The description of the coin.
      * @type {string}
      * @memberof CosmosToken
      * @deprecated
      */
     description?: string;
     /**
-     * 
+     * The base denom of the coin.
      * @type {string}
      * @memberof CosmosToken
      */
     baseDenom: string;
     /**
-     * 
+     * The denom of the coin.
      * @type {string}
      * @memberof CosmosToken
      */
     denom: string;
     /**
-     * 
+     * The decimals relative to the base coin.
      * @type {number}
      * @memberof CosmosToken
      */
     decimals: number;
     /**
-     * 
+     * The coin logo url.
      * @type {string}
      * @memberof CosmosToken
      */
     logoUrl?: string;
     /**
-     * 
+     * The explorer url of the coin.
      * @type {string}
      * @memberof CosmosToken
      */
     explorerUrl?: string;
     /**
      * 
-     * @type {string}
+     * @type {CosmosTokenTypeEnum}
      * @memberof CosmosToken
      */
     type: CosmosTokenTypeEnum;
@@ -82,7 +82,7 @@ export interface CosmosToken {
 
 
 /**
- * 
+ * @export
  */
 const CosmosTokenTypeEnum = {
     token: 'token'

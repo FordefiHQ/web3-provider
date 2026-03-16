@@ -17,13 +17,13 @@
  */
 export interface AptosRecipientHex {
     /**
-     * 
-     * @type {string}
+     * The type of the recipient.
+     * @type {AptosRecipientHexTypeEnum}
      * @memberof AptosRecipientHex
      */
     type: AptosRecipientHexTypeEnum;
     /**
-     * 
+     * The address of the recipient.
      * @type {string}
      * @memberof AptosRecipientHex
      */
@@ -32,7 +32,7 @@ export interface AptosRecipientHex {
 
 
 /**
- * 
+ * @export
  */
 const AptosRecipientHexTypeEnum = {
     hex: 'hex'

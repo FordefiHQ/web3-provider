@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const SignMode = {
@@ -31,4 +32,3 @@ function SignModeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): SignMo
 export function SignModeToJSON(value?: SignMode | null): any {
     return value as any;
 }
-

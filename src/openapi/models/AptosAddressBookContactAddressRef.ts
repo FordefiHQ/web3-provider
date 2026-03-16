@@ -22,19 +22,19 @@ import {
  */
 export interface AptosAddressBookContactAddressRef {
     /**
-     * 
-     * @type {string}
+     * The type of the chain.
+     * @type {AptosAddressBookContactAddressRefChainTypeEnum}
      * @memberof AptosAddressBookContactAddressRef
      */
     chainType: AptosAddressBookContactAddressRefChainTypeEnum;
     /**
-     * 
+     * The address on the Aptos chain.
      * @type {string}
      * @memberof AptosAddressBookContactAddressRef
      */
     address: string;
     /**
-     * 
+     * The chains the contact belongs to.
      * @type {Array<AptosChain>}
      * @memberof AptosAddressBookContactAddressRef
      */
@@ -43,7 +43,7 @@ export interface AptosAddressBookContactAddressRef {
 
 
 /**
- * 
+ * @export
  */
 const AptosAddressBookContactAddressRefChainTypeEnum = {
     aptos: 'aptos'

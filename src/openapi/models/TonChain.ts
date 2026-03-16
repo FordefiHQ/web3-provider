@@ -22,13 +22,13 @@ import {
  */
 export interface TonChain {
     /**
-     * 
-     * @type {string}
+     * The type of the chain.
+     * @type {TonChainChainTypeEnum}
      * @memberof TonChain
      */
     chainType: TonChainChainTypeEnum;
     /**
-     * 
+     * The type of the TON-based chain.
      * @type {TonChainUniqueId}
      * @memberof TonChain
      */
@@ -37,7 +37,7 @@ export interface TonChain {
 
 
 /**
- * 
+ * @export
  */
 const TonChainChainTypeEnum = {
     ton: 'ton'

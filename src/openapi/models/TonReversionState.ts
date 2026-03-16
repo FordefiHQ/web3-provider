@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const TonReversionState = {
@@ -29,4 +30,3 @@ export function TonReversionStateFromJSON(json: any): TonReversionState {
 function TonReversionStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): TonReversionState {
     return json as TonReversionState;
 }
-

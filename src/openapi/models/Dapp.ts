@@ -17,29 +17,35 @@
  */
 export interface Dapp {
     /**
-     * 
+     * The unique identifier of this DApp.
      * @type {string}
      * @memberof Dapp
      */
     id: string;
     /**
-     * 
+     * The name of the DApp.
      * @type {string}
      * @memberof Dapp
      */
     name: string;
     /**
-     * 
+     * The URL of the DApp.
      * @type {string}
      * @memberof Dapp
      */
     url?: string;
     /**
-     * 
+     * The logo URL of the DApp.
      * @type {string}
      * @memberof Dapp
      */
     logoUrl?: string;
+    /**
+     * The number of contracts associated with this DApp.
+     * @type {number}
+     * @memberof Dapp
+     */
+    contractsCount?: number;
 }
 
 export function DappFromJSON(json: any): Dapp {
@@ -56,6 +62,6 @@ function DappFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Dapp {
         'name': json['name'],
         'url': json['url'] == null ? undefined : json['url'],
         'logoUrl': json['logo_url'] == null ? undefined : json['logo_url'],
+        'contractsCount': json['contracts_count'] == null ? undefined : json['contracts_count'],
     };
 }
-

@@ -26,31 +26,31 @@ import {
  */
 export interface EnrichedAptosChain {
     /**
-     * 
-     * @type {string}
+     * The type of the chain.
+     * @type {EnrichedAptosChainChainTypeEnum}
      * @memberof EnrichedAptosChain
      */
     chainType: EnrichedAptosChainChainTypeEnum;
     /**
-     * 
+     * The type of the Aptos-based chain.
      * @type {AptosChainUniqueId}
      * @memberof EnrichedAptosChain
      */
     uniqueId: AptosChainUniqueId;
     /**
-     * 
+     * The full blockchain name.
      * @type {string}
      * @memberof EnrichedAptosChain
      */
     name: string;
     /**
-     * 
+     * The native currency symbol.
      * @type {string}
      * @memberof EnrichedAptosChain
      */
     nativeCurrencySymbol: string;
     /**
-     * 
+     * The native currency name.
      * @type {string}
      * @memberof EnrichedAptosChain
      */
@@ -62,19 +62,19 @@ export interface EnrichedAptosChain {
      */
     blockchainExplorer?: BlockchainExplorer;
     /**
-     * 
+     * The logo URL of the chain.
      * @type {string}
      * @memberof EnrichedAptosChain
      */
     logoUrl: string;
     /**
-     * 
+     * Whether the chain is on a testnet.
      * @type {boolean}
      * @memberof EnrichedAptosChain
      */
     isTestnet: boolean;
     /**
-     * 
+     * Whether the chain is enabled.
      * @type {boolean}
      * @memberof EnrichedAptosChain
      */
@@ -83,7 +83,7 @@ export interface EnrichedAptosChain {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedAptosChainChainTypeEnum = {
     aptos: 'aptos'

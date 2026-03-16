@@ -18,12 +18,12 @@
 export interface CustomFeeRequest {
     /**
      * 
-     * @type {string}
+     * @type {CustomFeeRequestTypeEnum}
      * @memberof CustomFeeRequest
      */
     type: CustomFeeRequestTypeEnum;
     /**
-     * 
+     * The fee per byte.
      * @type {string}
      * @memberof CustomFeeRequest
      */
@@ -32,7 +32,7 @@ export interface CustomFeeRequest {
 
 
 /**
- * 
+ * @export
  */
 const CustomFeeRequestTypeEnum = {
     custom: 'custom'

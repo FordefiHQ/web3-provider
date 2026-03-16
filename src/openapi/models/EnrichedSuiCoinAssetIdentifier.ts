@@ -26,19 +26,19 @@ import {
  */
 export interface EnrichedSuiCoinAssetIdentifier {
     /**
-     * 
+     * The details of the chain of the native asset.
      * @type {EnrichedSuiChain}
      * @memberof EnrichedSuiCoinAssetIdentifier
      */
     chain: EnrichedSuiChain;
     /**
-     * 
-     * @type {string}
+     * Sui asset type.
+     * @type {EnrichedSuiCoinAssetIdentifierTypeEnum}
      * @memberof EnrichedSuiCoinAssetIdentifier
      */
     type: EnrichedSuiCoinAssetIdentifierTypeEnum;
     /**
-     * 
+     * The coin.
      * @type {EnrichedSuiCoin}
      * @memberof EnrichedSuiCoinAssetIdentifier
      */
@@ -47,7 +47,7 @@ export interface EnrichedSuiCoinAssetIdentifier {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedSuiCoinAssetIdentifierTypeEnum = {
     coin: 'coin'

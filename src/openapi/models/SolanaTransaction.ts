@@ -30,10 +30,14 @@ import type { SolanaTransactionAccount } from './SolanaTransactionAccount';
 import {
     SolanaTransactionAccountFromJSON,
 } from './SolanaTransactionAccount';
-import type { AmlPolicyMatchIncoming } from './AmlPolicyMatchIncoming';
+import type { MinedResultStatus } from './MinedResultStatus';
 import {
-    AmlPolicyMatchIncomingFromJSON,
-} from './AmlPolicyMatchIncoming';
+    MinedResultStatusFromJSON,
+} from './MinedResultStatus';
+import type { VaultRef } from './VaultRef';
+import {
+    VaultRefFromJSON,
+} from './VaultRef';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
@@ -46,6 +50,10 @@ import type { SolanaMessageVersion } from './SolanaMessageVersion';
 import {
     SolanaMessageVersionFromJSON,
 } from './SolanaMessageVersion';
+import type { AmlCheck } from './AmlCheck';
+import {
+    AmlCheckFromJSON,
+} from './AmlCheck';
 import type { EnrichedSolanaAddress } from './EnrichedSolanaAddress';
 import {
     EnrichedSolanaAddressFromJSON,
@@ -62,6 +70,10 @@ import type { EnrichedSolanaChain } from './EnrichedSolanaChain';
 import {
     EnrichedSolanaChainFromJSON,
 } from './EnrichedSolanaChain';
+import type { RelatedTransaction } from './RelatedTransaction';
+import {
+    RelatedTransactionFromJSON,
+} from './RelatedTransaction';
 import type { SimulationStatusResult } from './SimulationStatusResult';
 import {
     SimulationStatusResultFromJSON,
@@ -74,14 +86,10 @@ import type { SolanaTransactionSolanaTransactionTypeDetails } from './SolanaTran
 import {
     SolanaTransactionSolanaTransactionTypeDetailsFromJSON,
 } from './SolanaTransactionSolanaTransactionTypeDetails';
-import type { SolanaBlockData } from './SolanaBlockData';
+import type { Block } from './Block';
 import {
-    SolanaBlockDataFromJSON,
-} from './SolanaBlockData';
-import type { AmlResults } from './AmlResults';
-import {
-    AmlResultsFromJSON,
-} from './AmlResults';
+    BlockFromJSON,
+} from './Block';
 
 /**
  * 
@@ -90,86 +98,116 @@ import {
  */
 export interface SolanaTransaction {
     /**
-     * 
+     * The unique identifier of the object in the Fordefi platform.
      * @type {string}
      * @memberof SolanaTransaction
      */
     id: string;
     /**
-     * 
+     * The date and time when the object was created.
      * @type {Date}
      * @memberof SolanaTransaction
      */
     createdAt: Date;
     /**
-     * 
+     * The date and time when the object was last modified. Any change to any field of the resource is considered a modification.
      * @type {Date}
      * @memberof SolanaTransaction
      */
     modifiedAt: Date;
     /**
-     * 
+     * Managed transaction data. Presented if the transaction was initiated from the Fordefi system itself, in contrast to unmanaged transactions (which are, for example, transfers of funds into a vault visible to Fordefi). 
      * @type {ManagedTransactionData}
      * @memberof SolanaTransaction
      */
     managedTransactionData?: ManagedTransactionData;
     /**
-     * 
+     * The transaction signatures.
      * @type {Array<Signature>}
      * @memberof SolanaTransaction
      */
     signatures: Array<Signature>;
     /**
-     * 
+     * An optional transaction note.
      * @type {string}
      * @memberof SolanaTransaction
      */
     note?: string;
     /**
-     * 
+     * `automatically_set` if the transaction was automatically set as spam by Fordefi, `manually_set` if the transaction was manually set as spam by a user, and `unset` if the transaction was not set as spam.
      * @type {TransactionSpamState}
      * @memberof SolanaTransaction
      */
     spamState?: TransactionSpamState;
     /**
-     * 
+     * The direction of the transaction.
      * @type {TransactionDirection}
      * @memberof SolanaTransaction
      */
     direction: TransactionDirection;
     /**
-     * 
+     * Whether the transaction was signed by an external user (for example in case of imported vault).
      * @type {boolean}
      * @memberof SolanaTransaction
      */
     signedExternally?: boolean;
     /**
-     * 
+     * The vaults that interacted with the transaction.
+     * @type {Array<VaultRef>}
+     * @memberof SolanaTransaction
+     */
+    interactedVaults: Array<VaultRef>;
+    /**
+     * The related transactions.
+     * @type {Array<RelatedTransaction>}
+     * @memberof SolanaTransaction
+     */
+    relatedTransactions?: Array<RelatedTransaction>;
+    /**
+     * The organization that the transaction belongs to.
+     * @type {string}
+     * @memberof SolanaTransaction
+     */
+    organizationId: string;
+    /**
+     * The block of the transaction.
+     * @type {Block}
+     * @memberof SolanaTransaction
+     */
+    block?: Block;
+    /**
+     * The state of the transaction.
      * @type {PushableTransactionState}
      * @memberof SolanaTransaction
      */
     state: PushableTransactionState;
     /**
-     * 
+     * The state changes of the transaction.
      * @type {Array<PushableTransactionStateChange>}
      * @memberof SolanaTransaction
      */
     stateChanges: Array<PushableTransactionStateChange>;
     /**
-     * 
-     * @type {AmlResults}
+     * The AML check.
+     * @type {AmlCheck}
      * @memberof SolanaTransaction
      */
-    amlResults?: AmlResults;
+    amlCheck?: AmlCheck;
     /**
-     * 
-     * @type {AmlPolicyMatchIncoming}
+     * The mined result status of the transaction.
+     * @type {MinedResultStatus}
      * @memberof SolanaTransaction
      */
-    incomingAmlPolicyMatch?: AmlPolicyMatchIncoming;
+    minedResultStatus?: MinedResultStatus;
     /**
-     * 
-     * @type {string}
+     * Whether simulation succeeded, reverted or failed.
+     * @type {SimulationStatusResult}
+     * @memberof SolanaTransaction
+     */
+    simulationStatusResult?: SimulationStatusResult;
+    /**
+     * The type of the transaction.
+     * @type {SolanaTransactionTypeEnum}
      * @memberof SolanaTransaction
      */
     type: SolanaTransactionTypeEnum;
@@ -180,100 +218,94 @@ export interface SolanaTransaction {
      */
     solanaTransactionTypeDetails: SolanaTransactionSolanaTransactionTypeDetails;
     /**
-     * 
+     * The details of the chain this transaction is on.
      * @type {EnrichedSolanaChain}
      * @memberof SolanaTransaction
      */
     chain: EnrichedSolanaChain;
     /**
-     * 
+     * The version of the transaction message.
      * @type {SolanaMessageVersion}
      * @memberof SolanaTransaction
      */
     version: SolanaMessageVersion;
     /**
-     * 
+     * The instructions of the transaction.
      * @type {Array<SolanaCompiledInstruction>}
      * @memberof SolanaTransaction
      */
     instructions: Array<SolanaCompiledInstruction>;
     /**
-     * 
+     * Accounts used in the transaction.
      * @type {Array<SolanaTransactionAccount>}
      * @memberof SolanaTransaction
      */
     accounts: Array<SolanaTransactionAccount>;
     /**
-     * 
+     * Lookup tables of accounts used in the transaction.
      * @type {Array<SolanaEnrichedMessageAddressTableLookup>}
      * @memberof SolanaTransaction
      */
     addressTableLookups: Array<SolanaEnrichedMessageAddressTableLookup>;
     /**
-     * 
+     * The sender of the transaction.
      * @type {EnrichedSolanaAddress}
      * @memberof SolanaTransaction
      */
     sender: EnrichedSolanaAddress;
     /**
-     * 
+     * The serialized transaction encoded as a base64 string
      * @type {string}
      * @memberof SolanaTransaction
      */
     rawTransaction?: string;
     /**
-     * 
+     * The first signature of the transaction.
      * @type {string}
      * @memberof SolanaTransaction
      */
     hash?: string;
     /**
-     * 
+     * The transaction nonce (last block hash).
      * @type {string}
      * @memberof SolanaTransaction
      */
     recentBlockhash?: string;
     /**
-     * 
-     * @type {SolanaBlockData}
-     * @memberof SolanaTransaction
-     */
-    block?: SolanaBlockData;
-    /**
-     * 
+     * The expected result of the transaction in case it is mined.
      * @type {SolanaTransactionResult}
      * @memberof SolanaTransaction
      */
     expectedResult?: SolanaTransactionResult;
     /**
-     * 
-     * @type {SimulationStatusResult}
-     * @memberof SolanaTransaction
-     */
-    simulationStatusResult: SimulationStatusResult;
-    /**
-     * 
+     * The result of the transaction after it was mined.
      * @type {SolanaTransactionResult}
      * @memberof SolanaTransaction
      */
     minedResult?: SolanaTransactionResult;
     /**
-     * 
+     * The URL of this transaction in a blockchain explorer. For example, Solscan.
      * @type {string}
      * @memberof SolanaTransaction
      */
     explorerUrl?: string;
     /**
-     * 
+     * Whether the priority fee was already set in the request with a ComputeBudget instruction.
      * @type {boolean}
      * @memberof SolanaTransaction
      */
     wasFeeSetInRequest: boolean;
+    /**
+     * The address that pays the fee for this transaction (first account in the transaction).
+     * @type {EnrichedSolanaAddress}
+     * @memberof SolanaTransaction
+     */
+    feePayer?: EnrichedSolanaAddress;
 }
 
 
 /**
- * 
+ * @export
  */
 const SolanaTransactionTypeEnum = {
     solanaTransaction: 'solana_transaction'
@@ -295,10 +327,15 @@ export function SolanaTransactionFromJSONTyped(json: any, _ignoreDiscriminator: 
         'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
         'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'interactedVaults': ((json['interacted_vaults'] as Array<any>).map(VaultRefFromJSON)),
+        'relatedTransactions': json['related_transactions'] == null ? undefined : ((json['related_transactions'] as Array<any>).map(RelatedTransactionFromJSON)),
+        'organizationId': json['organization_id'],
+        'block': json['block'] == null ? undefined : BlockFromJSON(json['block']),
         'state': PushableTransactionStateFromJSON(json['state']),
         'stateChanges': ((json['state_changes'] as Array<any>).map(PushableTransactionStateChangeFromJSON)),
-        'amlResults': json['aml_results'] == null ? undefined : AmlResultsFromJSON(json['aml_results']),
-        'incomingAmlPolicyMatch': json['incoming_aml_policy_match'] == null ? undefined : AmlPolicyMatchIncomingFromJSON(json['incoming_aml_policy_match']),
+        'amlCheck': json['aml_check'] == null ? undefined : AmlCheckFromJSON(json['aml_check']),
+        'minedResultStatus': json['mined_result_status'] == null ? undefined : MinedResultStatusFromJSON(json['mined_result_status']),
+        'simulationStatusResult': json['simulation_status_result'] == null ? undefined : SimulationStatusResultFromJSON(json['simulation_status_result']),
         'type': json['type'],
         'solanaTransactionTypeDetails': SolanaTransactionSolanaTransactionTypeDetailsFromJSON(json['solana_transaction_type_details']),
         'chain': EnrichedSolanaChainFromJSON(json['chain']),
@@ -310,11 +347,10 @@ export function SolanaTransactionFromJSONTyped(json: any, _ignoreDiscriminator: 
         'rawTransaction': json['raw_transaction'] == null ? undefined : json['raw_transaction'],
         'hash': json['hash'] == null ? undefined : json['hash'],
         'recentBlockhash': json['recent_blockhash'] == null ? undefined : json['recent_blockhash'],
-        'block': json['block'] == null ? undefined : SolanaBlockDataFromJSON(json['block']),
         'expectedResult': json['expected_result'] == null ? undefined : SolanaTransactionResultFromJSON(json['expected_result']),
-        'simulationStatusResult': SimulationStatusResultFromJSON(json['simulation_status_result']),
         'minedResult': json['mined_result'] == null ? undefined : SolanaTransactionResultFromJSON(json['mined_result']),
         'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
         'wasFeeSetInRequest': json['was_fee_set_in_request'],
+        'feePayer': json['fee_payer'] == null ? undefined : EnrichedSolanaAddressFromJSON(json['fee_payer']),
     };
 }

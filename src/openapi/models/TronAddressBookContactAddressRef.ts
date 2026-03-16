@@ -22,28 +22,34 @@ import {
  */
 export interface TronAddressBookContactAddressRef {
     /**
-     * 
-     * @type {string}
+     * The type of the chain.
+     * @type {TronAddressBookContactAddressRefChainTypeEnum}
      * @memberof TronAddressBookContactAddressRef
      */
     chainType: TronAddressBookContactAddressRefChainTypeEnum;
     /**
-     * 
+     * The address on the TRON chain.
      * @type {string}
      * @memberof TronAddressBookContactAddressRef
      */
     address: string;
     /**
-     * 
+     * The chains the contact belongs to.
      * @type {Array<TronChain>}
      * @memberof TronAddressBookContactAddressRef
      */
     chains: Array<TronChain>;
+    /**
+     * Memo is an additional address feature used for identifying a recipient.
+     * @type {string}
+     * @memberof TronAddressBookContactAddressRef
+     */
+    memo?: string;
 }
 
 
 /**
- * 
+ * @export
  */
 const TronAddressBookContactAddressRefChainTypeEnum = {
     tron: 'tron'
@@ -59,5 +65,6 @@ export function TronAddressBookContactAddressRefFromJSONTyped(json: any, _ignore
         'chainType': json['chain_type'],
         'address': json['address'],
         'chains': ((json['chains'] as Array<any>).map(TronChainFromJSON)),
+        'memo': json['memo'] == null ? undefined : json['memo'],
     };
 }

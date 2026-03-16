@@ -18,6 +18,10 @@ import type { CreateAptosTransferRequestTo } from './CreateAptosTransferRequestT
 import {
     CreateAptosTransferRequestToToJSON,
 } from './CreateAptosTransferRequestTo';
+import type { TransactionFeePayerVault } from './TransactionFeePayerVault';
+import {
+    TransactionFeePayerVaultToJSON,
+} from './TransactionFeePayerVault';
 import type { CreateAptosTransferRequestValue } from './CreateAptosTransferRequestValue';
 import {
     CreateAptosTransferRequestValueToJSON,
@@ -38,23 +42,47 @@ import {
  */
 export interface CreateAptosTransferRequest {
     /**
-     * 
-     * @type {string}
+     * The vault that pays the fee for this transaction.
+     * @type {TransactionFeePayerVault}
+     * @memberof CreateAptosTransferRequest
+     */
+    feePayer?: TransactionFeePayerVault;
+    /**
+     * An Aptos transfer transaction. A transaction of this kind is for transferring native currency or a coin.
+     * @type {CreateAptosTransferRequestTypeEnum}
      * @memberof CreateAptosTransferRequest
      */
     type: CreateAptosTransferRequestTypeEnum;
     /**
-     * 
+     * `True` if the request should fail in case simulation failed, `False` otherwise. <br> In case simulation has failed upon continuation, the expected result of the transaction will be partial and policy will be applied on information that can be extracted statically from the transaction only. This might result in falling back to the default policy rule. 
      * @type {boolean}
      * @memberof CreateAptosTransferRequest
      */
     failOnPredictionFailure?: boolean;
     /**
-     * 
+     * `True` to create a transaction without prediction, `False` otherwise. <br> In case of skipping simulation, the simulation status will be skipped and the expected result of the transaction will be empty. The policy will be applied on information that can be extracted statically from the transaction only. This might result in falling back to the default policy rule. <br> Note, it is recommended to use the default setting for this field and to turn off `fail_on_prediction_failure` instead - unless you wish to save time by omitting the prediction phase entirely. 
+     * @type {boolean}
+     * @memberof CreateAptosTransferRequest
+     */
+    skipPrediction?: boolean;
+    /**
+     * The push mode of the transaction when sending it to the node. It can be one of the following:<ul><li>`auto`: The transaction is pushed automatically by Fordefi. <li>`manual`: The transaction should be pushed manually by the user using a 3rd party.<li>`deferred`: The transaction is pushed by Fordefi after a certain time, if by that time it wasn't pushed manually by the client.</ul></ul> 
+     * @type {PushMode}
+     * @memberof CreateAptosTransferRequest
+     */
+    pushMode?: PushMode;
+    /**
+     * The gas configuration for the transaction.
      * @type {AptosGasConfigRequest}
      * @memberof CreateAptosTransferRequest
      */
     gasConfig?: AptosGasConfigRequest;
+    /**
+     * If true, the transaction's Authenticator will be configured to support an external fee payer. After Fordefi signs the transaction, the client is responsible for forwarding it to the designated fee payer for final signing and broadcasting.
+     * @type {boolean}
+     * @memberof CreateAptosTransferRequest
+     */
+    withExternalFeePayer?: boolean;
     /**
      * 
      * @type {CreateAptosTransferRequestTo}
@@ -68,28 +96,16 @@ export interface CreateAptosTransferRequest {
      */
     value: CreateAptosTransferRequestValue;
     /**
-     * 
+     * The Aptos asset identifier to transfer.
      * @type {AptosAssetIdentifierRequest}
      * @memberof CreateAptosTransferRequest
      */
     assetIdentifier: AptosAssetIdentifierRequest;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CreateAptosTransferRequest
-     */
-    skipPrediction?: boolean;
-    /**
-     * 
-     * @type {PushMode}
-     * @memberof CreateAptosTransferRequest
-     */
-    pushMode?: PushMode;
 }
 
 
 /**
- * 
+ * @export
  */
 const CreateAptosTransferRequestTypeEnum = {
     aptosTransfer: 'aptos_transfer'
@@ -107,13 +123,15 @@ function CreateAptosTransferRequestToJSONTyped(value?: CreateAptosTransferReques
 
     return {
         
+        'fee_payer': TransactionFeePayerVaultToJSON(value['feePayer']),
         'type': value['type'],
         'fail_on_prediction_failure': value['failOnPredictionFailure'],
+        'skip_prediction': value['skipPrediction'],
+        'push_mode': PushModeToJSON(value['pushMode']),
         'gas_config': AptosGasConfigRequestToJSON(value['gasConfig']),
+        'with_external_fee_payer': value['withExternalFeePayer'],
         'to': CreateAptosTransferRequestToToJSON(value['to']),
         'value': CreateAptosTransferRequestValueToJSON(value['value']),
         'asset_identifier': AptosAssetIdentifierRequestToJSON(value['assetIdentifier']),
-        'skip_prediction': value['skipPrediction'],
-        'push_mode': PushModeToJSON(value['pushMode']),
     };
 }

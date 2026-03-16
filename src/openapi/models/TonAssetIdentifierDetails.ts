@@ -22,9 +22,9 @@ import {
 } from './TonNativeAssetIdentifierRequest';
 
 /**
+ * @type TonAssetIdentifierDetails
  * 
  * @export
- * @type TonAssetIdentifierDetails
  */
 export type TonAssetIdentifierDetails = { type: 'jetton' } & TonJettonAssetIdentifierRequest | { type: 'native' } & TonNativeAssetIdentifierRequest;
 
@@ -42,7 +42,7 @@ function TonAssetIdentifierDetailsFromJSONTyped(json: any, _ignoreDiscriminator:
         case 'native':
             return Object.assign({}, TonNativeAssetIdentifierRequestFromJSONTyped(json, true), { type: 'native' } as const);
         default:
-            throw new Error(`No variant of TonAssetIdentifierDetails exists with 'type=${json['type']}'`);
+            return json;
     }
 }
 
@@ -60,8 +60,6 @@ function TonAssetIdentifierDetailsToJSONTyped(value?: TonAssetIdentifierDetails 
         case 'native':
             return Object.assign({}, TonNativeAssetIdentifierRequestToJSON(value), { type: 'native' } as const);
         default:
-            throw new Error(`No variant of TonAssetIdentifierDetails exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

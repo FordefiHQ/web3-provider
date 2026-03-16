@@ -26,19 +26,19 @@ import {
  */
 export interface CosmosArbitraryMessageRequest {
     /**
-     * 
-     * @type {string}
+     * Arbitrary message standard.
+     * @type {CosmosArbitraryMessageRequestTypeEnum}
      * @memberof CosmosArbitraryMessageRequest
      */
     type: CosmosArbitraryMessageRequestTypeEnum;
     /**
-     * 
+     * The details of the chain of the native asset.
      * @type {CosmosChainUniqueId}
      * @memberof CosmosArbitraryMessageRequest
      */
     chain: CosmosChainUniqueId;
     /**
-     * 
+     * The message to be signed.
      * @type {CosmosMessageData}
      * @memberof CosmosArbitraryMessageRequest
      */
@@ -47,7 +47,7 @@ export interface CosmosArbitraryMessageRequest {
 
 
 /**
- * 
+ * @export
  */
 const CosmosArbitraryMessageRequestTypeEnum = {
     arbitraryMessageType: 'arbitrary_message_type'

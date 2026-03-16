@@ -26,7 +26,7 @@ import {
  */
 export interface EvmBridgeEffect {
     /**
-     * 
+     * The name of the bridge.
      * @type {string}
      * @memberof EvmBridgeEffect
      */
@@ -44,7 +44,7 @@ export interface EvmBridgeEffect {
      */
     destination: EvmBridgeEffectDestination;
     /**
-     * 
+     * The amount of the bridge transaction.
      * @type {string}
      * @memberof EvmBridgeEffect
      */
@@ -67,4 +67,3 @@ function EvmBridgeEffectFromJSONTyped(json: any, _ignoreDiscriminator: boolean):
         'amount': json['amount'],
     };
 }
-

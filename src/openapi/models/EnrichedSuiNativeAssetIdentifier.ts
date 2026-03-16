@@ -22,14 +22,14 @@ import {
  */
 export interface EnrichedSuiNativeAssetIdentifier {
     /**
-     * 
+     * The details of the chain of the native asset.
      * @type {EnrichedSuiChain}
      * @memberof EnrichedSuiNativeAssetIdentifier
      */
     chain: EnrichedSuiChain;
     /**
-     * 
-     * @type {string}
+     * Sui asset type.
+     * @type {EnrichedSuiNativeAssetIdentifierTypeEnum}
      * @memberof EnrichedSuiNativeAssetIdentifier
      */
     type: EnrichedSuiNativeAssetIdentifierTypeEnum;
@@ -37,7 +37,7 @@ export interface EnrichedSuiNativeAssetIdentifier {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedSuiNativeAssetIdentifierTypeEnum = {
     native: 'native'

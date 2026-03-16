@@ -10,14 +10,30 @@
  * Do not edit the class manually.
  */
 
-import type { VaultRef } from './VaultRef';
-import {
-    VaultRefFromJSON,
-} from './VaultRef';
 import type { ManagedTransactionData } from './ManagedTransactionData';
 import {
     ManagedTransactionDataFromJSON,
 } from './ManagedTransactionData';
+import type { EvmMessageResult } from './EvmMessageResult';
+import {
+    EvmMessageResultFromJSON,
+} from './EvmMessageResult';
+import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
+import {
+    EnrichedEvmAddressFromJSON,
+} from './EnrichedEvmAddress';
+import type { EvmMessageType } from './EvmMessageType';
+import {
+    EvmMessageTypeFromJSON,
+} from './EvmMessageType';
+import type { NonPushableTransactionState } from './NonPushableTransactionState';
+import {
+    NonPushableTransactionStateFromJSON,
+} from './NonPushableTransactionState';
+import type { VaultRef } from './VaultRef';
+import {
+    VaultRefFromJSON,
+} from './VaultRef';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
@@ -38,22 +54,14 @@ import type { EvmMessageTypedData } from './EvmMessageTypedData';
 import {
     EvmMessageTypedDataFromJSON,
 } from './EvmMessageTypedData';
-import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
+import type { RelatedTransaction } from './RelatedTransaction';
 import {
-    EnrichedEvmAddressFromJSON,
-} from './EnrichedEvmAddress';
+    RelatedTransactionFromJSON,
+} from './RelatedTransaction';
 import type { NonPushableTransactionStateChange } from './NonPushableTransactionStateChange';
 import {
     NonPushableTransactionStateChangeFromJSON,
 } from './NonPushableTransactionStateChange';
-import type { EvmMessageType } from './EvmMessageType';
-import {
-    EvmMessageTypeFromJSON,
-} from './EvmMessageType';
-import type { NonPushableTransactionState } from './NonPushableTransactionState';
-import {
-    NonPushableTransactionStateFromJSON,
-} from './NonPushableTransactionState';
 
 /**
  * 
@@ -62,85 +70,103 @@ import {
  */
 export interface EvmMessage {
     /**
-     * 
+     * The unique identifier of the object in the Fordefi platform.
      * @type {string}
      * @memberof EvmMessage
      */
     id: string;
     /**
-     * 
+     * The date and time when the object was created.
      * @type {Date}
      * @memberof EvmMessage
      */
     createdAt: Date;
     /**
-     * 
+     * The date and time when the object was last modified. Any change to any field of the resource is considered a modification.
      * @type {Date}
      * @memberof EvmMessage
      */
     modifiedAt: Date;
     /**
-     * 
+     * Managed transaction data. Presented if the transaction was initiated from the Fordefi system itself, in contrast to unmanaged transactions (which are, for example, transfers of funds into a vault visible to Fordefi). 
      * @type {ManagedTransactionData}
      * @memberof EvmMessage
      */
     managedTransactionData?: ManagedTransactionData;
     /**
-     * 
+     * The transaction signatures.
      * @type {Array<Signature>}
      * @memberof EvmMessage
      */
     signatures: Array<Signature>;
     /**
-     * 
+     * An optional transaction note.
      * @type {string}
      * @memberof EvmMessage
      */
     note?: string;
     /**
-     * 
+     * `automatically_set` if the transaction was automatically set as spam by Fordefi, `manually_set` if the transaction was manually set as spam by a user, and `unset` if the transaction was not set as spam.
      * @type {TransactionSpamState}
      * @memberof EvmMessage
      */
     spamState?: TransactionSpamState;
     /**
-     * 
+     * The direction of the transaction.
      * @type {TransactionDirection}
      * @memberof EvmMessage
      */
     direction: TransactionDirection;
     /**
-     * 
+     * Whether the transaction was signed by an external user (for example in case of imported vault).
      * @type {boolean}
      * @memberof EvmMessage
      */
     signedExternally?: boolean;
     /**
-     * 
+     * The vaults that interacted with the transaction.
+     * @type {Array<VaultRef>}
+     * @memberof EvmMessage
+     */
+    interactedVaults: Array<VaultRef>;
+    /**
+     * The related transactions.
+     * @type {Array<RelatedTransaction>}
+     * @memberof EvmMessage
+     */
+    relatedTransactions?: Array<RelatedTransaction>;
+    /**
+     * The organization that the transaction belongs to.
+     * @type {string}
+     * @memberof EvmMessage
+     */
+    organizationId: string;
+    /**
+     * The state of the message.
      * @type {NonPushableTransactionState}
      * @memberof EvmMessage
      */
     state: NonPushableTransactionState;
     /**
-     * 
+     * The state changes of the message.
      * @type {Array<NonPushableTransactionStateChange>}
      * @memberof EvmMessage
      */
     stateChanges: Array<NonPushableTransactionStateChange>;
     /**
-     * 
-     * @type {string}
+     * EVM message type.
+     * @type {EvmMessageTypeEnum}
      * @memberof EvmMessage
      */
     type: EvmMessageTypeEnum;
     /**
-     * 
+     * The type of the EVM message.
      * @type {EvmMessageType}
      * @memberof EvmMessage
      */
     evmMessageType: EvmMessageType;
     /**
-     * 
+     * The raw data of the message.
      * @type {string}
      * @memberof EvmMessage
      */
@@ -152,28 +178,34 @@ export interface EvmMessage {
      */
     typedData?: EvmMessageTypedData;
     /**
-     * 
+     * The vault creating the message.
      * @type {VaultRef}
      * @memberof EvmMessage
      */
     vault: VaultRef;
     /**
-     * 
+     * The details of the chain that this message is on.
      * @type {EnrichedEvmChain}
      * @memberof EvmMessage
      */
     chain: EnrichedEvmChain;
     /**
-     * 
+     * The sender of the message.
      * @type {EnrichedEvmAddress}
      * @memberof EvmMessage
      */
     sender: EnrichedEvmAddress;
+    /**
+     * Predicted result of the message execution. Only available for intents that Fordefi knows how to simulate, like ERC20 allowances and swaps created in the Fordefi app.
+     * @type {EvmMessageResult}
+     * @memberof EvmMessage
+     */
+    expectedResult?: EvmMessageResult;
 }
 
 
 /**
- * 
+ * @export
  */
 const EvmMessageTypeEnum = {
     evmMessage: 'evm_message'
@@ -195,6 +227,9 @@ export function EvmMessageFromJSONTyped(json: any, _ignoreDiscriminator: boolean
         'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
         'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'interactedVaults': ((json['interacted_vaults'] as Array<any>).map(VaultRefFromJSON)),
+        'relatedTransactions': json['related_transactions'] == null ? undefined : ((json['related_transactions'] as Array<any>).map(RelatedTransactionFromJSON)),
+        'organizationId': json['organization_id'],
         'state': NonPushableTransactionStateFromJSON(json['state']),
         'stateChanges': ((json['state_changes'] as Array<any>).map(NonPushableTransactionStateChangeFromJSON)),
         'type': json['type'],
@@ -204,5 +239,6 @@ export function EvmMessageFromJSONTyped(json: any, _ignoreDiscriminator: boolean
         'vault': VaultRefFromJSON(json['vault']),
         'chain': EnrichedEvmChainFromJSON(json['chain']),
         'sender': EnrichedEvmAddressFromJSON(json['sender']),
+        'expectedResult': json['expected_result'] == null ? undefined : EvmMessageResultFromJSON(json['expected_result']),
     };
 }

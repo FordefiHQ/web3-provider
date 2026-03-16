@@ -20,9 +20,9 @@ import {
 } from './StacksPriorityFeeRequest';
 
 /**
- * 
- * @export
  * @type CreateStacksTransactionSerializedRequestFee
+ * The fee configuration for the transaction.
+ * @export
  */
 export type CreateStacksTransactionSerializedRequestFee = { type: 'custom' } & StacksCustomFeeRequest | { type: 'priority' } & StacksPriorityFeeRequest;
 
@@ -40,8 +40,6 @@ function CreateStacksTransactionSerializedRequestFeeToJSONTyped(value?: CreateSt
         case 'priority':
             return Object.assign({}, StacksPriorityFeeRequestToJSON(value), { type: 'priority' } as const);
         default:
-            throw new Error(`No variant of CreateStacksTransactionSerializedRequestFee exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

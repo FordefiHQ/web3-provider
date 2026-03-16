@@ -20,9 +20,9 @@ import {
 } from './ExchangeInternalTransferDetails';
 
 /**
- * 
- * @export
  * @type ExchangeTransactionExchangeTransactionTypeDetails
+ * Details of the Exchange transaction based on its type.
+ * @export
  */
 export type ExchangeTransactionExchangeTransactionTypeDetails = { type: 'external_withdraw' } & ExchangeExternalWithdrawDetails | { type: 'internal_transfer' } & ExchangeInternalTransferDetails;
 
@@ -40,7 +40,6 @@ function ExchangeTransactionExchangeTransactionTypeDetailsFromJSONTyped(json: an
         case 'internal_transfer':
             return Object.assign({}, ExchangeInternalTransferDetailsFromJSONTyped(json, true), { type: 'internal_transfer' } as const);
         default:
-            throw new Error(`No variant of ExchangeTransactionExchangeTransactionTypeDetails exists with 'type=${json['type']}'`);
+            return json;
     }
 }
-

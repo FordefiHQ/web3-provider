@@ -17,13 +17,13 @@
  */
 export interface LegacyGasRequest {
     /**
-     * 
-     * @type {string}
+     * The type of gas data.
+     * @type {LegacyGasRequestTypeEnum}
      * @memberof LegacyGasRequest
      */
     type: LegacyGasRequestTypeEnum;
     /**
-     * 
+     * The price of a gas unit.
      * @type {string}
      * @memberof LegacyGasRequest
      */
@@ -32,7 +32,7 @@ export interface LegacyGasRequest {
 
 
 /**
- * 
+ * @export
  */
 const LegacyGasRequestTypeEnum = {
     legacy: 'legacy'

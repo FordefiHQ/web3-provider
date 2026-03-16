@@ -13,33 +13,129 @@
 
 import * as runtime from '../runtime';
 import type {
+  CreateVaultAddressRequest,
+  CreateVaultAddressResponse,
+  CreateVaultRequest,
+  CreateVaultResponse,
+  Export,
+  GetOwnedAssetResponse,
+  GetVaultResponse,
+  ListOwnedAssetsResponse,
+  ListVaultAddressesResponse,
   ListVaultsResponse,
-  PageResponseType,
+  ListVaultsSortableFields,
+  OwnedAssetsSortableFields,
+  RenameVaultRequest,
+  SubmitUpdateVaultChangeProposalRequest,
+  UtxoAddressType,
+  VaultAddressSortableFields,
   VaultOriginType,
-  VaultSortableFields,
   VaultState,
   VaultType,
 } from '../models/index';
 import {
+    CreateVaultAddressRequestToJSON,
+    CreateVaultAddressResponseFromJSON,
+    CreateVaultRequestToJSON,
+    CreateVaultResponseFromJSON,
+    ExportFromJSON,
+    GetOwnedAssetResponseFromJSON,
+    GetVaultResponseFromJSON,
+    ListOwnedAssetsResponseFromJSON,
+    ListVaultAddressesResponseFromJSON,
     ListVaultsResponseFromJSON,
+    RenameVaultRequestToJSON,
+    SubmitUpdateVaultChangeProposalRequestToJSON,
 } from '../models/index';
 
-interface ListVaultsApiV1VaultsGetRequest {
-    sortBy?: Array<VaultSortableFields>;
+interface ArchiveVaultApiV1VaultsIdArchivePostRequest {
+    id: string;
+}
+
+interface CreateAddressApiV1VaultsIdAddressesPostRequest {
+    id: string;
+    createVaultAddressRequest: CreateVaultAddressRequest;
+}
+
+interface CreateVaultApiV1VaultsPostRequest {
+    createVaultRequest: CreateVaultRequest;
+}
+
+interface ExportVaultsWithAssetsAsyncApiV1VaultsExportAsyncGetRequest {
+    limit?: number;
+    vaultsIds?: Array<string>;
+    vaultTypes?: Array<VaultType>;
+}
+
+interface GetVaultApiV1VaultsIdGetRequest {
+    id: string;
+}
+
+interface GetVaultAssetApiV1VaultsIdAssetsAssetIdGetRequest {
+    id: string;
+    assetId: string;
     page?: number;
     size?: number;
-    responseType?: PageResponseType;
-    vaultIds?: Array<string>;
+    skipCount?: boolean;
+}
+
+interface GetVaultAssetsApiV1VaultsIdAssetsGetRequest {
+    id: string;
+    page?: number;
+    size?: number;
+    skipCount?: boolean;
+    chains?: Array<string>;
+    assetIds?: Array<string>;
+    isHidden?: boolean;
     search?: string;
+    sortBy?: Array<OwnedAssetsSortableFields>;
+}
+
+interface ListVaultAddressesApiV1VaultsIdAddressesGetRequest {
+    id: string;
+    sortBy?: Array<VaultAddressSortableFields>;
+    page?: number;
+    size?: number;
+    skipCount?: boolean;
+    search?: string;
+    addresses?: Array<string>;
+    addressTypes?: Array<UtxoAddressType>;
+}
+
+interface ListVaultsApiV1VaultsGetRequest {
+    sortBy?: Array<ListVaultsSortableFields>;
+    page?: number;
+    size?: number;
+    skipCount?: boolean;
+    vaultIds?: Array<string>;
     names?: Array<string>;
     vaultTypes?: Array<VaultType>;
     vaultStates?: Array<VaultState>;
-    keysetIds?: Array<string>;
     keyHolderIds?: Array<string>;
     vaultGroupIds?: Array<string>;
     excludeVaultGroupIds?: Array<string>;
     originType?: VaultOriginType;
     accountAddresses?: Array<string>;
+    positiveNativeBalanceChainIds?: Array<string>;
+}
+
+interface RenameVaultAddressApiV1VaultsAddressesIdNamePutRequest {
+    id: string;
+    renameVaultRequest: RenameVaultRequest;
+}
+
+interface RenameVaultApiV1VaultsIdNamePutRequest {
+    id: string;
+    renameVaultRequest: RenameVaultRequest;
+}
+
+interface RestoreVaultApiV1VaultsIdRestorePostRequest {
+    id: string;
+}
+
+interface SubmitUpdateVaultChangeProposalApiV1VaultsIdProposalsPostRequest {
+    id: string;
+    submitUpdateVaultChangeProposalRequest: SubmitUpdateVaultChangeProposalRequest;
 }
 
 /**
@@ -48,10 +144,448 @@ interface ListVaultsApiV1VaultsGetRequest {
 export class VaultsApi extends runtime.BaseAPI {
 
     /**
-     * Get a list of all vaults in an organization.
-     * List Vaults
+     * Creates request options for archiveVaultApiV1VaultsIdArchivePost without sending the request
      */
-    async listVaultsApiV1VaultsGetRaw(requestParameters: ListVaultsApiV1VaultsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListVaultsResponse>> {
+    async archiveVaultApiV1VaultsIdArchivePostRequestOpts(requestParameters: ArchiveVaultApiV1VaultsIdArchivePostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling archiveVaultApiV1VaultsIdArchivePost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/api/v1/vaults/{id}/archive`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Archive an existing vault.
+     * Archive Vault
+     */
+    async archiveVaultApiV1VaultsIdArchivePostRaw(requestParameters: ArchiveVaultApiV1VaultsIdArchivePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.archiveVaultApiV1VaultsIdArchivePostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Archive an existing vault.
+     * Archive Vault
+     */
+    
+
+    /**
+     * Creates request options for createAddressApiV1VaultsIdAddressesPost without sending the request
+     */
+    async createAddressApiV1VaultsIdAddressesPostRequestOpts(requestParameters: CreateAddressApiV1VaultsIdAddressesPostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling createAddressApiV1VaultsIdAddressesPost().'
+            );
+        }
+
+        if (requestParameters['createVaultAddressRequest'] == null) {
+            throw new runtime.RequiredError(
+                'createVaultAddressRequest',
+                'Required parameter "createVaultAddressRequest" was null or undefined when calling createAddressApiV1VaultsIdAddressesPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/api/v1/vaults/{id}/addresses`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateVaultAddressRequestToJSON(requestParameters['createVaultAddressRequest']),
+        };
+    }
+
+    /**
+     * Create a new address.
+     * Create Address
+     */
+    async createAddressApiV1VaultsIdAddressesPostRaw(requestParameters: CreateAddressApiV1VaultsIdAddressesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateVaultAddressResponse>> {
+        const requestOptions = await this.createAddressApiV1VaultsIdAddressesPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CreateVaultAddressResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Create a new address.
+     * Create Address
+     */
+    
+
+    /**
+     * Creates request options for createVaultApiV1VaultsPost without sending the request
+     */
+    async createVaultApiV1VaultsPostRequestOpts(requestParameters: CreateVaultApiV1VaultsPostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['createVaultRequest'] == null) {
+            throw new runtime.RequiredError(
+                'createVaultRequest',
+                'Required parameter "createVaultRequest" was null or undefined when calling createVaultApiV1VaultsPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/api/v1/vaults`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateVaultRequestToJSON(requestParameters['createVaultRequest']),
+        };
+    }
+
+    /**
+     * Create a new vault.
+     * Create Vault
+     */
+    async createVaultApiV1VaultsPostRaw(requestParameters: CreateVaultApiV1VaultsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateVaultResponse>> {
+        const requestOptions = await this.createVaultApiV1VaultsPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CreateVaultResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Create a new vault.
+     * Create Vault
+     */
+    
+
+    /**
+     * Creates request options for exportVaultsWithAssetsAsyncApiV1VaultsExportAsyncGet without sending the request
+     */
+    async exportVaultsWithAssetsAsyncApiV1VaultsExportAsyncGetRequestOpts(requestParameters: ExportVaultsWithAssetsAsyncApiV1VaultsExportAsyncGetRequest): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
+        }
+
+        if (requestParameters['vaultsIds'] != null) {
+            queryParameters['vaults_ids'] = requestParameters['vaultsIds'];
+        }
+
+        if (requestParameters['vaultTypes'] != null) {
+            queryParameters['vault_types'] = requestParameters['vaultTypes'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/api/v1/vaults/export_async`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Get a CSV-format list of balances of all vaults and their assets.
+     * Export Vaults With Assets Async
+     */
+    async exportVaultsWithAssetsAsyncApiV1VaultsExportAsyncGetRaw(requestParameters: ExportVaultsWithAssetsAsyncApiV1VaultsExportAsyncGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Export>> {
+        const requestOptions = await this.exportVaultsWithAssetsAsyncApiV1VaultsExportAsyncGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ExportFromJSON(jsonValue));
+    }
+
+    /**
+     * Get a CSV-format list of balances of all vaults and their assets.
+     * Export Vaults With Assets Async
+     */
+    
+
+    /**
+     * Creates request options for getVaultApiV1VaultsIdGet without sending the request
+     */
+    async getVaultApiV1VaultsIdGetRequestOpts(requestParameters: GetVaultApiV1VaultsIdGetRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getVaultApiV1VaultsIdGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/api/v1/vaults/{id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Retrieve vault details.
+     * Get Vault
+     */
+    async getVaultApiV1VaultsIdGetRaw(requestParameters: GetVaultApiV1VaultsIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetVaultResponse>> {
+        const requestOptions = await this.getVaultApiV1VaultsIdGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetVaultResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Retrieve vault details.
+     * Get Vault
+     */
+    
+
+    /**
+     * Creates request options for getVaultAssetApiV1VaultsIdAssetsAssetIdGet without sending the request
+     */
+    async getVaultAssetApiV1VaultsIdAssetsAssetIdGetRequestOpts(requestParameters: GetVaultAssetApiV1VaultsIdAssetsAssetIdGetRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getVaultAssetApiV1VaultsIdAssetsAssetIdGet().'
+            );
+        }
+
+        if (requestParameters['assetId'] == null) {
+            throw new runtime.RequiredError(
+                'assetId',
+                'Required parameter "assetId" was null or undefined when calling getVaultAssetApiV1VaultsIdAssetsAssetIdGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['size'] != null) {
+            queryParameters['size'] = requestParameters['size'];
+        }
+
+        if (requestParameters['skipCount'] != null) {
+            queryParameters['skip_count'] = requestParameters['skipCount'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/api/v1/vaults/{id}/assets/{asset_id}`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"asset_id"}}`, encodeURIComponent(String(requestParameters['assetId'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Get a specific asset in a vault.
+     * Get Vault Asset
+     */
+    async getVaultAssetApiV1VaultsIdAssetsAssetIdGetRaw(requestParameters: GetVaultAssetApiV1VaultsIdAssetsAssetIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetOwnedAssetResponse>> {
+        const requestOptions = await this.getVaultAssetApiV1VaultsIdAssetsAssetIdGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetOwnedAssetResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Get a specific asset in a vault.
+     * Get Vault Asset
+     */
+    
+
+    /**
+     * Creates request options for getVaultAssetsApiV1VaultsIdAssetsGet without sending the request
+     */
+    async getVaultAssetsApiV1VaultsIdAssetsGetRequestOpts(requestParameters: GetVaultAssetsApiV1VaultsIdAssetsGetRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getVaultAssetsApiV1VaultsIdAssetsGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['size'] != null) {
+            queryParameters['size'] = requestParameters['size'];
+        }
+
+        if (requestParameters['skipCount'] != null) {
+            queryParameters['skip_count'] = requestParameters['skipCount'];
+        }
+
+        if (requestParameters['chains'] != null) {
+            queryParameters['chains'] = requestParameters['chains'];
+        }
+
+        if (requestParameters['assetIds'] != null) {
+            queryParameters['asset_ids'] = requestParameters['assetIds'];
+        }
+
+        if (requestParameters['isHidden'] != null) {
+            queryParameters['is_hidden'] = requestParameters['isHidden'];
+        }
+
+        if (requestParameters['search'] != null) {
+            queryParameters['search'] = requestParameters['search'];
+        }
+
+        if (requestParameters['sortBy'] != null) {
+            queryParameters['sort_by'] = requestParameters['sortBy'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/api/v1/vaults/{id}/assets`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Get a list of all assets in a vault.
+     * Get Vault Assets
+     */
+    async getVaultAssetsApiV1VaultsIdAssetsGetRaw(requestParameters: GetVaultAssetsApiV1VaultsIdAssetsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListOwnedAssetsResponse>> {
+        const requestOptions = await this.getVaultAssetsApiV1VaultsIdAssetsGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ListOwnedAssetsResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Get a list of all assets in a vault.
+     * Get Vault Assets
+     */
+    
+
+    /**
+     * Creates request options for listVaultAddressesApiV1VaultsIdAddressesGet without sending the request
+     */
+    async listVaultAddressesApiV1VaultsIdAddressesGetRequestOpts(requestParameters: ListVaultAddressesApiV1VaultsIdAddressesGetRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling listVaultAddressesApiV1VaultsIdAddressesGet().'
+            );
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters['sortBy'] != null) {
@@ -66,16 +600,85 @@ export class VaultsApi extends runtime.BaseAPI {
             queryParameters['size'] = requestParameters['size'];
         }
 
-        if (requestParameters['responseType'] != null) {
-            queryParameters['response_type'] = requestParameters['responseType'];
-        }
-
-        if (requestParameters['vaultIds'] != null) {
-            queryParameters['vault_ids'] = requestParameters['vaultIds'];
+        if (requestParameters['skipCount'] != null) {
+            queryParameters['skip_count'] = requestParameters['skipCount'];
         }
 
         if (requestParameters['search'] != null) {
             queryParameters['search'] = requestParameters['search'];
+        }
+
+        if (requestParameters['addresses'] != null) {
+            queryParameters['addresses'] = requestParameters['addresses'];
+        }
+
+        if (requestParameters['addressTypes'] != null) {
+            queryParameters['address_types'] = requestParameters['addressTypes'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/api/v1/vaults/{id}/addresses`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Get a list of all addresses in a vault.
+     * List Vault Addresses
+     */
+    async listVaultAddressesApiV1VaultsIdAddressesGetRaw(requestParameters: ListVaultAddressesApiV1VaultsIdAddressesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListVaultAddressesResponse>> {
+        const requestOptions = await this.listVaultAddressesApiV1VaultsIdAddressesGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ListVaultAddressesResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Get a list of all addresses in a vault.
+     * List Vault Addresses
+     */
+    
+
+    /**
+     * Creates request options for listVaultsApiV1VaultsGet without sending the request
+     */
+    async listVaultsApiV1VaultsGetRequestOpts(requestParameters: ListVaultsApiV1VaultsGetRequest): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        if (requestParameters['sortBy'] != null) {
+            queryParameters['sort_by'] = requestParameters['sortBy'];
+        }
+
+        if (requestParameters['page'] != null) {
+            queryParameters['page'] = requestParameters['page'];
+        }
+
+        if (requestParameters['size'] != null) {
+            queryParameters['size'] = requestParameters['size'];
+        }
+
+        if (requestParameters['skipCount'] != null) {
+            queryParameters['skip_count'] = requestParameters['skipCount'];
+        }
+
+        if (requestParameters['vaultIds'] != null) {
+            queryParameters['vault_ids'] = requestParameters['vaultIds'];
         }
 
         if (requestParameters['names'] != null) {
@@ -88,10 +691,6 @@ export class VaultsApi extends runtime.BaseAPI {
 
         if (requestParameters['vaultStates'] != null) {
             queryParameters['vault_states'] = requestParameters['vaultStates'];
-        }
-
-        if (requestParameters['keysetIds'] != null) {
-            queryParameters['keyset_ids'] = requestParameters['keysetIds'];
         }
 
         if (requestParameters['keyHolderIds'] != null) {
@@ -114,6 +713,10 @@ export class VaultsApi extends runtime.BaseAPI {
             queryParameters['account_addresses'] = requestParameters['accountAddresses'];
         }
 
+        if (requestParameters['positiveNativeBalanceChainIds'] != null) {
+            queryParameters['positive_native_balance_chain_ids'] = requestParameters['positiveNativeBalanceChainIds'];
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.accessToken) {
@@ -124,12 +727,24 @@ export class VaultsApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
-        const response = await this.request({
-            path: `/api/v1/vaults`,
+
+        let urlPath = `/api/v1/vaults`;
+
+        return {
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Get a list of all vaults in an organization.
+     * List Vaults
+     */
+    async listVaultsApiV1VaultsGetRaw(requestParameters: ListVaultsApiV1VaultsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ListVaultsResponse>> {
+        const requestOptions = await this.listVaultsApiV1VaultsGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => ListVaultsResponseFromJSON(jsonValue));
     }
@@ -142,5 +757,243 @@ export class VaultsApi extends runtime.BaseAPI {
         const response = await this.listVaultsApiV1VaultsGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
+
+    /**
+     * Creates request options for renameVaultAddressApiV1VaultsAddressesIdNamePut without sending the request
+     */
+    async renameVaultAddressApiV1VaultsAddressesIdNamePutRequestOpts(requestParameters: RenameVaultAddressApiV1VaultsAddressesIdNamePutRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling renameVaultAddressApiV1VaultsAddressesIdNamePut().'
+            );
+        }
+
+        if (requestParameters['renameVaultRequest'] == null) {
+            throw new runtime.RequiredError(
+                'renameVaultRequest',
+                'Required parameter "renameVaultRequest" was null or undefined when calling renameVaultAddressApiV1VaultsAddressesIdNamePut().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/api/v1/vaults/addresses/{id}/name`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: RenameVaultRequestToJSON(requestParameters['renameVaultRequest']),
+        };
+    }
+
+    /**
+     * Rename an existing vault address.
+     * Rename Vault Address
+     */
+    async renameVaultAddressApiV1VaultsAddressesIdNamePutRaw(requestParameters: RenameVaultAddressApiV1VaultsAddressesIdNamePutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.renameVaultAddressApiV1VaultsAddressesIdNamePutRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Rename an existing vault address.
+     * Rename Vault Address
+     */
+    
+
+    /**
+     * Creates request options for renameVaultApiV1VaultsIdNamePut without sending the request
+     */
+    async renameVaultApiV1VaultsIdNamePutRequestOpts(requestParameters: RenameVaultApiV1VaultsIdNamePutRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling renameVaultApiV1VaultsIdNamePut().'
+            );
+        }
+
+        if (requestParameters['renameVaultRequest'] == null) {
+            throw new runtime.RequiredError(
+                'renameVaultRequest',
+                'Required parameter "renameVaultRequest" was null or undefined when calling renameVaultApiV1VaultsIdNamePut().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/api/v1/vaults/{id}/name`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: RenameVaultRequestToJSON(requestParameters['renameVaultRequest']),
+        };
+    }
+
+    /**
+     * Rename an existing vault.
+     * Rename Vault
+     */
+    async renameVaultApiV1VaultsIdNamePutRaw(requestParameters: RenameVaultApiV1VaultsIdNamePutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.renameVaultApiV1VaultsIdNamePutRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Rename an existing vault.
+     * Rename Vault
+     */
+    
+
+    /**
+     * Creates request options for restoreVaultApiV1VaultsIdRestorePost without sending the request
+     */
+    async restoreVaultApiV1VaultsIdRestorePostRequestOpts(requestParameters: RestoreVaultApiV1VaultsIdRestorePostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling restoreVaultApiV1VaultsIdRestorePost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/api/v1/vaults/{id}/restore`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Restore an archived vault.
+     * Restore Vault
+     */
+    async restoreVaultApiV1VaultsIdRestorePostRaw(requestParameters: RestoreVaultApiV1VaultsIdRestorePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.restoreVaultApiV1VaultsIdRestorePostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Restore an archived vault.
+     * Restore Vault
+     */
+    
+
+    /**
+     * Creates request options for submitUpdateVaultChangeProposalApiV1VaultsIdProposalsPost without sending the request
+     */
+    async submitUpdateVaultChangeProposalApiV1VaultsIdProposalsPostRequestOpts(requestParameters: SubmitUpdateVaultChangeProposalApiV1VaultsIdProposalsPostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling submitUpdateVaultChangeProposalApiV1VaultsIdProposalsPost().'
+            );
+        }
+
+        if (requestParameters['submitUpdateVaultChangeProposalRequest'] == null) {
+            throw new runtime.RequiredError(
+                'submitUpdateVaultChangeProposalRequest',
+                'Required parameter "submitUpdateVaultChangeProposalRequest" was null or undefined when calling submitUpdateVaultChangeProposalApiV1VaultsIdProposalsPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+
+        let urlPath = `/api/v1/vaults/{id}/proposals`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: SubmitUpdateVaultChangeProposalRequestToJSON(requestParameters['submitUpdateVaultChangeProposalRequest']),
+        };
+    }
+
+    /**
+     * Submit an update vault change proposal. Verify, approve, and abort are handled via the user-actions API.
+     * Submit Update Vault Change Proposal
+     */
+    async submitUpdateVaultChangeProposalApiV1VaultsIdProposalsPostRaw(requestParameters: SubmitUpdateVaultChangeProposalApiV1VaultsIdProposalsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.submitUpdateVaultChangeProposalApiV1VaultsIdProposalsPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Submit an update vault change proposal. Verify, approve, and abort are handled via the user-actions API.
+     * Submit Update Vault Change Proposal
+     */
+    
 
 }

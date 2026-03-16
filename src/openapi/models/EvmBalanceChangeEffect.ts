@@ -14,22 +14,10 @@ import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
 } from './PricedAsset';
-import type { EvmBalanceChangeEffectTokenContract } from './EvmBalanceChangeEffectTokenContract';
-import {
-    EvmBalanceChangeEffectTokenContractFromJSON,
-} from './EvmBalanceChangeEffectTokenContract';
-import type { Price } from './Price';
-import {
-    PriceFromJSON,
-} from './Price';
 import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
 import {
     EnrichedEvmAddressFromJSON,
 } from './EnrichedEvmAddress';
-import type { EvmBalanceChangeEffectType } from './EvmBalanceChangeEffectType';
-import {
-    EvmBalanceChangeEffectTypeFromJSON,
-} from './EvmBalanceChangeEffectType';
 
 /**
  * 
@@ -38,62 +26,23 @@ import {
  */
 export interface EvmBalanceChangeEffect {
     /**
-     * 
+     * The asset information.
      * @type {PricedAsset}
      * @memberof EvmBalanceChangeEffect
      */
     pricedAsset: PricedAsset;
     /**
-     * 
+     * The amount of that was added to or deducted from the owner's balance. If the amount was deducted, the value is negative; if the amount was added, the value is positive.
      * @type {string}
      * @memberof EvmBalanceChangeEffect
      */
     diff: string;
     /**
-     * 
-     * @type {EvmBalanceChangeEffectType}
-     * @memberof EvmBalanceChangeEffect
-     */
-    type: EvmBalanceChangeEffectType;
-    /**
-     * 
+     * The address affected by the balance change.
      * @type {EnrichedEvmAddress}
      * @memberof EvmBalanceChangeEffect
      */
     address: EnrichedEvmAddress;
-    /**
-     * 
-     * @type {EnrichedEvmAddress}
-     * @memberof EvmBalanceChangeEffect
-     */
-    owner: EnrichedEvmAddress;
-    /**
-     * 
-     * @type {Price}
-     * @memberof EvmBalanceChangeEffect
-     */
-    price?: Price;
-    /**
-     * 
-     * @type {EvmBalanceChangeEffectTokenContract}
-     * @memberof EvmBalanceChangeEffect
-     * @deprecated
-     */
-    tokenContract?: EvmBalanceChangeEffectTokenContract;
-    /**
-     * 
-     * @type {string}
-     * @memberof EvmBalanceChangeEffect
-     * @deprecated
-     */
-    tokenId?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof EvmBalanceChangeEffect
-     * @deprecated
-     */
-    owned?: boolean;
 }
 
 export function EvmBalanceChangeEffectFromJSON(json: any): EvmBalanceChangeEffect {
@@ -108,13 +57,6 @@ function EvmBalanceChangeEffectFromJSONTyped(json: any, _ignoreDiscriminator: bo
         
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
         'diff': json['diff'],
-        'type': EvmBalanceChangeEffectTypeFromJSON(json['type']),
         'address': EnrichedEvmAddressFromJSON(json['address']),
-        'owner': EnrichedEvmAddressFromJSON(json['owner']),
-        'price': json['price'] == null ? undefined : PriceFromJSON(json['price']),
-        'tokenContract': json['token_contract'] == null ? undefined : EvmBalanceChangeEffectTokenContractFromJSON(json['token_contract']),
-        'tokenId': json['token_id'] == null ? undefined : json['token_id'],
-        'owned': json['owned'] == null ? undefined : json['owned'],
     };
 }
-

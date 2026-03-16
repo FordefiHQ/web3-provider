@@ -12,6 +12,7 @@
 
 
 /**
+ * Represents an approval state of a single approver
  * @export
  */
 export const ApprovalState = {
@@ -29,4 +30,3 @@ export function ApprovalStateFromJSON(json: any): ApprovalState {
 function ApprovalStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): ApprovalState {
     return json as ApprovalState;
 }
-

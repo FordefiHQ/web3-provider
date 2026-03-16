@@ -23,12 +23,12 @@ import {
 export interface DirectMessagesList {
     /**
      * 
-     * @type {string}
+     * @type {DirectMessagesListFormatEnum}
      * @memberof DirectMessagesList
      */
     format: DirectMessagesListFormatEnum;
     /**
-     * 
+     * List of messages in direct format.
      * @type {Array<DirectMessage>}
      * @memberof DirectMessagesList
      */
@@ -37,7 +37,7 @@ export interface DirectMessagesList {
 
 
 /**
- * 
+ * @export
  */
 const DirectMessagesListFormatEnum = {
     direct: 'direct'

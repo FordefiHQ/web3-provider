@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const SimulationStatus = {
@@ -29,4 +30,3 @@ export function SimulationStatusFromJSON(json: any): SimulationStatus {
 function SimulationStatusFromJSONTyped(json: any, _ignoreDiscriminator: boolean): SimulationStatus {
     return json as SimulationStatus;
 }
-

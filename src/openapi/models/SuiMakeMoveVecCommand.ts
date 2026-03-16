@@ -17,25 +17,25 @@ import {
 } from './SuiCommandArgument';
 
 /**
- * 
+ * Given n-values of the same type, it constructs a vector.
  * @export
  * @interface SuiMakeMoveVecCommand
  */
 export interface SuiMakeMoveVecCommand {
     /**
-     * 
-     * @type {string}
+     * The type of the command.
+     * @type {SuiMakeMoveVecCommandTypeEnum}
      * @memberof SuiMakeMoveVecCommand
      */
     type: SuiMakeMoveVecCommandTypeEnum;
     /**
-     * 
+     * The type of the values in the vector.
      * @type {string}
      * @memberof SuiMakeMoveVecCommand
      */
     typeTag?: string;
     /**
-     * 
+     * The values to put in the vector.
      * @type {Array<SuiCommandArgument>}
      * @memberof SuiMakeMoveVecCommand
      */
@@ -44,7 +44,7 @@ export interface SuiMakeMoveVecCommand {
 
 
 /**
- * 
+ * @export
  */
 const SuiMakeMoveVecCommandTypeEnum = {
     makeMoveVec: 'make_move_vec'

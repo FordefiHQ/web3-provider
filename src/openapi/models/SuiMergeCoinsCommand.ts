@@ -17,25 +17,25 @@ import {
 } from './SuiCommandArgument';
 
 /**
- * 
+ * Merge coins into a single coin.
  * @export
  * @interface SuiMergeCoinsCommand
  */
 export interface SuiMergeCoinsCommand {
     /**
-     * 
-     * @type {string}
+     * The type of the command.
+     * @type {SuiMergeCoinsCommandTypeEnum}
      * @memberof SuiMergeCoinsCommand
      */
     type: SuiMergeCoinsCommandTypeEnum;
     /**
-     * 
+     * The coins to merge.
      * @type {Array<SuiCommandArgument>}
      * @memberof SuiMergeCoinsCommand
      */
     sourceCoinObjects: Array<SuiCommandArgument>;
     /**
-     * 
+     * The coin to merge into.
      * @type {SuiCommandArgument}
      * @memberof SuiMergeCoinsCommand
      */
@@ -44,7 +44,7 @@ export interface SuiMergeCoinsCommand {
 
 
 /**
- * 
+ * @export
  */
 const SuiMergeCoinsCommandTypeEnum = {
     mergeCoins: 'merge_coins'

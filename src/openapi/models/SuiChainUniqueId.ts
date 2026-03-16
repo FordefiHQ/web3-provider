@@ -12,11 +12,12 @@
 
 
 /**
+ * 
  * @export
  */
 export const SuiChainUniqueId = {
-    mainnet: 'sui_mainnet',
-    testnet: 'sui_testnet'
+    suiMainnet: 'sui_mainnet',
+    suiTestnet: 'sui_testnet'
 } as const;
 export type SuiChainUniqueId = typeof SuiChainUniqueId[keyof typeof SuiChainUniqueId];
 
@@ -31,4 +32,3 @@ function SuiChainUniqueIdFromJSONTyped(json: any, _ignoreDiscriminator: boolean)
 export function SuiChainUniqueIdToJSON(value?: SuiChainUniqueId | null): any {
     return value as any;
 }
-

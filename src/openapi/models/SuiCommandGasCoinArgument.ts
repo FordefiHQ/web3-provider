@@ -11,14 +11,14 @@
  */
 
 /**
- * 
+ * The object for the SUI coin used to pay for gas.
  * @export
  * @interface SuiCommandGasCoinArgument
  */
 export interface SuiCommandGasCoinArgument {
     /**
-     * 
-     * @type {string}
+     * The type of the command argument.
+     * @type {SuiCommandGasCoinArgumentTypeEnum}
      * @memberof SuiCommandGasCoinArgument
      */
     type: SuiCommandGasCoinArgumentTypeEnum;
@@ -26,7 +26,7 @@ export interface SuiCommandGasCoinArgument {
 
 
 /**
- * 
+ * @export
  */
 const SuiCommandGasCoinArgumentTypeEnum = {
     gasCoin: 'gas_coin'

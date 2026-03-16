@@ -22,19 +22,19 @@ import {
  */
 export interface StarknetCallData {
     /**
-     * 
+     * The address of the contract to call.
      * @type {EnrichedStarknetAddress}
      * @memberof StarknetCallData
      */
     to: EnrichedStarknetAddress;
     /**
-     * 
+     * The name of the method to call.
      * @type {string}
      * @memberof StarknetCallData
      */
     methodName: string;
     /**
-     * 
+     * The arguments of the method to call.
      * @type {Array<string>}
      * @memberof StarknetCallData
      */
@@ -56,4 +56,3 @@ function StarknetCallDataFromJSONTyped(json: any, _ignoreDiscriminator: boolean)
         'methodArguments': json['method_arguments'],
     };
 }
-

@@ -28,19 +28,19 @@ import {
  */
 export interface UtxoAddress {
     /**
-     * 
+     * The UTXO string address.
      * @type {string}
      * @memberof UtxoAddress
      */
     address: string;
     /**
-     * 
+     * The type of the address.
      * @type {UtxoAddressType}
      * @memberof UtxoAddress
      */
     addressType: UtxoAddressType;
     /**
-     * 
+     * The UTXO chain unique ID.
      * @type {UtxoChain}
      * @memberof UtxoAddress
      */
@@ -79,4 +79,3 @@ function UtxoAddressToJSONTyped(value?: UtxoAddress | null, _ignoreDiscriminator
         'chain': UtxoChainToJSON(value['chain']),
     };
 }
-

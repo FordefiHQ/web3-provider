@@ -26,19 +26,19 @@ import {
  */
 export interface StacksFee {
     /**
-     * 
+     * The priority level.
      * @type {FeePriorityLevel}
      * @memberof StacksFee
      */
     priority: FeePriorityLevel;
     /**
-     * 
+     * The total fee payed for the transaction.
      * @type {string}
      * @memberof StacksFee
      */
     totalFee: string;
     /**
-     * 
+     * The information of the asset used to pay the fee and amount used.
      * @type {PricedAsset}
      * @memberof StacksFee
      */
@@ -60,4 +60,3 @@ function StacksFeeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Stack
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }
-

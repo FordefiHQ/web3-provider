@@ -22,19 +22,19 @@ import {
  */
 export interface CosmosNativeCoinWithAmount {
     /**
-     * 
+     * The amount of the coin in base unit (for example uatom).
      * @type {string}
      * @memberof CosmosNativeCoinWithAmount
      */
     amount: string;
     /**
      * 
-     * @type {string}
+     * @type {CosmosNativeCoinWithAmountTypeEnum}
      * @memberof CosmosNativeCoinWithAmount
      */
     type: CosmosNativeCoinWithAmountTypeEnum;
     /**
-     * 
+     * The coin.
      * @type {CosmosNativeCoin}
      * @memberof CosmosNativeCoinWithAmount
      */
@@ -43,7 +43,7 @@ export interface CosmosNativeCoinWithAmount {
 
 
 /**
- * 
+ * @export
  */
 const CosmosNativeCoinWithAmountTypeEnum = {
     native: 'native'

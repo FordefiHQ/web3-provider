@@ -24,9 +24,9 @@ import {
 } from './Erc721';
 
 /**
- * 
- * @export
  * @type EvmContractMetadataToken
+ * The token details of the contract.
+ * @export
  */
 export type EvmContractMetadataToken = { type: 'erc1155' } & Erc1155 | { type: 'erc20' } & Erc20 | { type: 'erc721' } & Erc721;
 
@@ -46,7 +46,6 @@ function EvmContractMetadataTokenFromJSONTyped(json: any, _ignoreDiscriminator: 
         case 'erc721':
             return Object.assign({}, Erc721FromJSONTyped(json, true), { type: 'erc721' } as const);
         default:
-            throw new Error(`No variant of EvmContractMetadataToken exists with 'type=${json['type']}'`);
+            return json;
     }
 }
-

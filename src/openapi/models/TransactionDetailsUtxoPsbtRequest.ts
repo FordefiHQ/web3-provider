@@ -30,37 +30,44 @@ import {
  */
 export interface TransactionDetailsUtxoPsbtRequest {
     /**
-     * 
-     * @type {string}
+     * A partially signed bitcoin transaction (PSBT).
+     * @type {TransactionDetailsUtxoPsbtRequestTypeEnum}
      * @memberof TransactionDetailsUtxoPsbtRequest
      */
     type: TransactionDetailsUtxoPsbtRequestTypeEnum;
     /**
-     * 
+     * Partially signed bitcoin transaction data encoded as a hex string.
      * @type {string}
      * @memberof TransactionDetailsUtxoPsbtRequest
      */
     psbtRawData: string;
     /**
-     * 
+     * Whether to finalize the transaction or not.
      * @type {boolean}
      * @memberof TransactionDetailsUtxoPsbtRequest
      */
     autoFinalize?: boolean;
     /**
-     * 
+     * The signer on the inputs.
      * @type {UtxoAddress}
      * @memberof TransactionDetailsUtxoPsbtRequest
+     * @deprecated
      */
-    sender: UtxoAddress;
+    sender?: UtxoAddress;
     /**
-     * 
+     * The signer on the inputs.
+     * @type {string}
+     * @memberof TransactionDetailsUtxoPsbtRequest
+     */
+    signer?: string;
+    /**
+     * Describes how to sign each input.
      * @type {Array<PsbtInput>}
      * @memberof TransactionDetailsUtxoPsbtRequest
      */
     inputs?: Array<PsbtInput>;
     /**
-     * 
+     * The push mode of the transaction when sending it to the node. It can be one of the following:<ul><li>`auto`: The transaction is pushed automatically by Fordefi.<li>`manual`: The transaction should be pushed manually by the user using a 3rd party (for example a dapp that created a PSBT).<li>`deferred`: The transaction is pushed by Fordefi after a certain time, if by that time it wasn't pushed manually by the client.</ul></ul> 
      * @type {PushMode}
      * @memberof TransactionDetailsUtxoPsbtRequest
      */
@@ -69,7 +76,7 @@ export interface TransactionDetailsUtxoPsbtRequest {
 
 
 /**
- * 
+ * @export
  */
 const TransactionDetailsUtxoPsbtRequestTypeEnum = {
     utxoPartiallySignedBitcoinTransaction: 'utxo_partially_signed_bitcoin_transaction'
@@ -91,6 +98,7 @@ function TransactionDetailsUtxoPsbtRequestToJSONTyped(value?: TransactionDetails
         'psbt_raw_data': value['psbtRawData'],
         'auto_finalize': value['autoFinalize'],
         'sender': UtxoAddressToJSON(value['sender']),
+        'signer': value['signer'],
         'inputs': value['inputs'] == null ? undefined : ((value['inputs'] as Array<any>).map(PsbtInputToJSON)),
         'push_mode': PushModeToJSON(value['pushMode']),
     };

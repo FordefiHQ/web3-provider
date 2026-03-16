@@ -26,31 +26,31 @@ import {
  */
 export interface CreateStarknetContractDeploymentRequest {
     /**
-     * 
-     * @type {string}
+     * A Starknet transaction to deploy a contract account.
+     * @type {CreateStarknetContractDeploymentRequestTypeEnum}
      * @memberof CreateStarknetContractDeploymentRequest
      */
     type: CreateStarknetContractDeploymentRequestTypeEnum;
     /**
-     * 
+     * `True` if the request should fail in case simulation failed, `False` otherwise. <br> In case simulation has failed upon continuation, the expected result of the transaction will be partial and policy will be applied on information that can be extracted statically from the transaction only. This might result in falling back to the default policy rule. 
      * @type {boolean}
      * @memberof CreateStarknetContractDeploymentRequest
      */
     failOnPredictionFailure?: boolean;
     /**
-     * 
+     * `True` to create a transaction without prediction, `False` otherwise. <br> In case of skipping simulation, the simulation status will be skipped and the expected result of the transaction will be empty. The policy will be applied on information that can be extracted statically from the transaction only. This might result in falling back to the default policy rule. <br> Note, it is recommended to use the default setting for this field and to turn off `fail_on_prediction_failure` instead - unless you wish to save time by omitting the prediction phase entirely. 
      * @type {boolean}
      * @memberof CreateStarknetContractDeploymentRequest
      */
     skipPrediction?: boolean;
     /**
-     * 
+     * The push mode of the transaction when sending it to the node. It can be one of the following:<ul><li>`auto`: The transaction is pushed automatically by Fordefi. <li>`manual`: The transaction should be pushed manually by the user using a 3rd party.<li>`deferred`: The transaction is pushed by Fordefi after a certain time, if by that time it wasn't pushed manually by the client.</ul></ul> 
      * @type {PushMode}
      * @memberof CreateStarknetContractDeploymentRequest
      */
     pushMode?: PushMode;
     /**
-     * 
+     * The chain that this transaction is on. Specify the chain name (for example, `starknet_mainnet`).
      * @type {StarknetChainUniqueId}
      * @memberof CreateStarknetContractDeploymentRequest
      */
@@ -59,7 +59,7 @@ export interface CreateStarknetContractDeploymentRequest {
 
 
 /**
- * 
+ * @export
  */
 const CreateStarknetContractDeploymentRequestTypeEnum = {
     starknetContractDeployment: 'starknet_contract_deployment'

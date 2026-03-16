@@ -22,19 +22,20 @@ import {
  */
 export interface EvmNativeTransferDetails {
     /**
-     * 
-     * @type {string}
+     * A transaction involving the transfer of native currency from one address to another. 
+     * @type {EvmNativeTransferDetailsTypeEnum}
      * @memberof EvmNativeTransferDetails
      */
     type: EvmNativeTransferDetailsTypeEnum;
     /**
-     * 
+     * The direction of the movement of funds, in case of a transfer.
      * @type {TransferDirection}
      * @memberof EvmNativeTransferDetails
+     * @deprecated
      */
     direction: TransferDirection;
     /**
-     * 
+     * Is this transfer an internal transfer between two vaults. None if the transaction is incoming.
      * @type {boolean}
      * @memberof EvmNativeTransferDetails
      */
@@ -43,7 +44,7 @@ export interface EvmNativeTransferDetails {
 
 
 /**
- * 
+ * @export
  */
 const EvmNativeTransferDetailsTypeEnum = {
     nativeTransfer: 'native_transfer'

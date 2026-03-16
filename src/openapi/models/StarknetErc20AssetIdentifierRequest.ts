@@ -23,13 +23,13 @@ import {
  */
 export interface StarknetErc20AssetIdentifierRequest {
     /**
-     * 
-     * @type {string}
+     * Erc20 asset identifier type.
+     * @type {StarknetErc20AssetIdentifierRequestTypeEnum}
      * @memberof StarknetErc20AssetIdentifierRequest
      */
     type: StarknetErc20AssetIdentifierRequestTypeEnum;
     /**
-     * 
+     * The Erc20 details.
      * @type {StarknetAddressRequest}
      * @memberof StarknetErc20AssetIdentifierRequest
      */
@@ -38,7 +38,7 @@ export interface StarknetErc20AssetIdentifierRequest {
 
 
 /**
- * 
+ * @export
  */
 const StarknetErc20AssetIdentifierRequestTypeEnum = {
     erc20: 'erc20'

@@ -30,19 +30,19 @@ import {
  */
 export interface ExchangeTransactionResult {
     /**
-     * 
+     * Details whether the transaction was reverted or not.
      * @type {ExchangeReversion}
      * @memberof ExchangeTransactionResult
      */
     reversion: ExchangeReversion;
     /**
-     * 
+     * The effects of the transaction.
      * @type {ExchangeEffects}
      * @memberof ExchangeTransactionResult
      */
     effects: ExchangeEffects;
     /**
-     * 
+     * The exchange's fee.
      * @type {ExchangeFee}
      * @memberof ExchangeTransactionResult
      */
@@ -64,4 +64,3 @@ function ExchangeTransactionResultFromJSONTyped(json: any, _ignoreDiscriminator:
         'exchangeFee': json['exchange_fee'] == null ? undefined : ExchangeFeeFromJSON(json['exchange_fee']),
     };
 }
-

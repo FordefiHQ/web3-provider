@@ -22,13 +22,13 @@ import {
  */
 export interface SolanaChain {
     /**
-     * 
-     * @type {string}
+     * The type of the chain.
+     * @type {SolanaChainChainTypeEnum}
      * @memberof SolanaChain
      */
     chainType: SolanaChainChainTypeEnum;
     /**
-     * 
+     * The type of the Solana-based chain.
      * @type {SolanaChainUniqueId}
      * @memberof SolanaChain
      */
@@ -37,7 +37,7 @@ export interface SolanaChain {
 
 
 /**
- * 
+ * @export
  */
 const SolanaChainChainTypeEnum = {
     solana: 'solana'

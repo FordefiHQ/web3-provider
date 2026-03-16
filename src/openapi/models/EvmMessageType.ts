@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const EvmMessageType = {
@@ -28,4 +29,3 @@ export function EvmMessageTypeFromJSON(json: any): EvmMessageType {
 function EvmMessageTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): EvmMessageType {
     return json as EvmMessageType;
 }
-

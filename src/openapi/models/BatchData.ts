@@ -10,6 +10,11 @@
  * Do not edit the class manually.
  */
 
+import type { PolicyMatch } from './PolicyMatch';
+import {
+    PolicyMatchFromJSON,
+} from './PolicyMatch';
+
 /**
  * 
  * @export
@@ -17,23 +22,29 @@
  */
 export interface BatchData {
     /**
-     * 
+     * The unique identifier of the batch.
      * @type {string}
      * @memberof BatchData
      */
     batchId: string;
     /**
-     * 
+     * Index of transaction in the batch.
      * @type {number}
      * @memberof BatchData
      */
     indexInBatch: number;
     /**
-     * 
+     * The number of transactions in the batch.
      * @type {number}
      * @memberof BatchData
      */
     batchSize: number;
+    /**
+     * List of policies matched by this message.
+     * @type {Array<PolicyMatch>}
+     * @memberof BatchData
+     */
+    matchedPolicies: Array<PolicyMatch>;
 }
 
 export function BatchDataFromJSON(json: any): BatchData {
@@ -49,6 +60,6 @@ function BatchDataFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Batch
         'batchId': json['batch_id'],
         'indexInBatch': json['index_in_batch'],
         'batchSize': json['batch_size'],
+        'matchedPolicies': ((json['matched_policies'] as Array<any>).map(PolicyMatchFromJSON)),
     };
 }
-

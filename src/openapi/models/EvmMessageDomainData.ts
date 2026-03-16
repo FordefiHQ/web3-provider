@@ -22,31 +22,31 @@ import {
  */
 export interface EvmMessageDomainData {
     /**
-     * 
+     * The name
      * @type {string}
      * @memberof EvmMessageDomainData
      */
     name?: string;
     /**
-     * 
+     * The version
      * @type {string}
      * @memberof EvmMessageDomainData
      */
     version?: string;
     /**
-     * The EVM chain ID can be either one of those supported by the default chains below or a custom chain ID if one was added to your organization. <ul><li>1=`ethereum_mainnet`</li><li>5=`ethereum_goerli`</li><li>10=`optimism_mainnet`</li><li>14=`flare_mainnet`</li><li>16=`flare_testnet`</li><li>56=`bsc_mainnet`</li><li>100=`gnosis_mainnet`</li><li>137=`polygon_mainnet`</li><li>146=`sonic_mainnet`</li><li>169=`manta_pacific_mainnet`</li><li>250=`fantom_mainnet`</li><li>324=`zksync_era_mainnet`</li><li>1030=`conflux_mainnet`</li><li>1100=`dymension_mainnet`</li><li>1101=`polygon_zkevm_mainnet`</li><li>1329=`sei_mainnet`</li><li>1729=`reya_mainnet`</li><li>2222=`kava_mainnet`</li><li>4200=`merlin_mainnet`</li><li>5000=`mantle_mainnet`</li><li>7000=`zeta_mainnet`</li><li>7700=`canto_mainnet`</li><li>8453=`base_mainnet`</li><li>8818=`clink_mainnet`</li><li>17000=`ethereum_holesky`</li><li>80001=`polygon_mumbai`</li><li>80094=`berachain_mainnet`</li><li>42161=`arbitrum_mainnet`</li><li>43114=`avalanche_chain`</li><li>59144=`linea_mainnet`</li><li>81457=`blast_mainnet`</li><li>421614=`arbitrum_sepolia`</li><li>534352=`scroll_mainnet`</li><li>660279=`xai_mainnet`</li><li>810180=`zklink_nova_mainnet`</li><li>11155111=`ethereum_sepolia`</li><li>123420000987=`clink_testnet`</li></ul>
+     * The EVM chain ID can be either one of those supported by the default chains below or a custom chain ID if one was added to your organization. <ul><li>1=`ethereum_mainnet`</li><li>5=`ethereum_goerli`</li><li>10=`optimism_mainnet`</li><li>14=`flare_mainnet`</li><li>16=`flare_testnet`</li><li>30=`rootstock_mainnet`</li><li>56=`bsc_mainnet`</li><li>100=`gnosis_mainnet`</li><li>130=`unichain_mainnet`</li><li>137=`polygon_mainnet`</li><li>143=`monad_mainnet`</li><li>146=`sonic_mainnet`</li><li>169=`manta_pacific_mainnet`</li><li>250=`fantom_mainnet`</li><li>324=`zksync_era_mainnet`</li><li>999=`hyperevm_mainnet`</li><li>1030=`conflux_mainnet`</li><li>1100=`dymension_mainnet`</li><li>1101=`polygon_zkevm_mainnet`</li><li>1329=`sei_mainnet`</li><li>1672=`pharos_mainnet`</li><li>1729=`reya_mainnet`</li><li>2222=`kava_mainnet`</li><li>4200=`merlin_mainnet`</li><li>5000=`mantle_mainnet`</li><li>7000=`zeta_mainnet`</li><li>7700=`canto_mainnet`</li><li>8453=`base_mainnet`</li><li>8818=`clink_mainnet`</li><li>8819=`clink_testnet`</li><li>9745=`plasma_mainnet`</li><li>16661=`zero_gravity_mainnet`</li><li>17000=`ethereum_holesky`</li><li>80001=`polygon_mumbai`</li><li>80094=`berachain_mainnet`</li><li>42161=`arbitrum_mainnet`</li><li>43114=`avalanche_chain`</li><li>57073=`ink_mainnet`</li><li>59144=`linea_mainnet`</li><li>81457=`blast_mainnet`</li><li>421614=`arbitrum_sepolia`</li><li>534352=`scroll_mainnet`</li><li>660279=`xai_mainnet`</li><li>747474=`katana_mainnet`</li><li>810180=`zklink_nova_mainnet`</li><li>11155111=`ethereum_sepolia`</li></ul>
      * @type {number}
      * @memberof EvmMessageDomainData
      */
     chainId?: number;
     /**
-     * 
+     * The verifying contract
      * @type {EnrichedEvmAddress}
      * @memberof EvmMessageDomainData
      */
     verifyingContract?: EnrichedEvmAddress;
     /**
-     * 
+     * The salt
      * @type {string}
      * @memberof EvmMessageDomainData
      */
@@ -70,4 +70,3 @@ function EvmMessageDomainDataFromJSONTyped(json: any, _ignoreDiscriminator: bool
         'salt': json['salt'] == null ? undefined : json['salt'],
     };
 }
-

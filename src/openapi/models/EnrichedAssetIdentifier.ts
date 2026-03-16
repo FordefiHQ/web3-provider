@@ -32,9 +32,9 @@ import {
 } from './EnrichedUtxoAssetIdentifier';
 
 /**
+ * @type EnrichedAssetIdentifier
  * 
  * @export
- * @type EnrichedAssetIdentifier
  */
 export type EnrichedAssetIdentifier = { type: 'cosmos' } & EnrichedCosmosAssetIdentifier | { type: 'evm' } & EnrichedEvmAssetIdentifier | { type: 'solana' } & EnrichedSolanaAssetIdentifier | { type: 'sui' } & EnrichedSuiAssetIdentifier | { type: 'utxo' } & EnrichedUtxoAssetIdentifier;
 
@@ -58,7 +58,6 @@ function EnrichedAssetIdentifierFromJSONTyped(json: any, _ignoreDiscriminator: b
         case 'utxo':
             return Object.assign({}, EnrichedUtxoAssetIdentifierFromJSONTyped(json, true), { type: 'utxo' } as const);
         default:
-            throw new Error(`No variant of EnrichedAssetIdentifier exists with 'type=${json['type']}'`);
+            return json;
     }
 }
-

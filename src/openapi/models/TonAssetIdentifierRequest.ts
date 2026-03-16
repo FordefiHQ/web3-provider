@@ -22,8 +22,8 @@ import {
  */
 export interface TonAssetIdentifierRequest {
     /**
-     * 
-     * @type {string}
+     * TON asset identifier type.
+     * @type {TonAssetIdentifierRequestTypeEnum}
      * @memberof TonAssetIdentifierRequest
      */
     type: TonAssetIdentifierRequestTypeEnum;
@@ -37,7 +37,7 @@ export interface TonAssetIdentifierRequest {
 
 
 /**
- * 
+ * @export
  */
 const TonAssetIdentifierRequestTypeEnum = {
     ton: 'ton'

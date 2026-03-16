@@ -12,6 +12,7 @@
 
 
 /**
+ * FiatCurrencySymbol
  * @export
  */
 export const FiatCurrencySymbol = {
@@ -26,4 +27,3 @@ export function FiatCurrencySymbolFromJSON(json: any): FiatCurrencySymbol {
 function FiatCurrencySymbolFromJSONTyped(json: any, _ignoreDiscriminator: boolean): FiatCurrencySymbol {
     return json as FiatCurrencySymbol;
 }
-

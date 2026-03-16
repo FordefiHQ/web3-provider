@@ -22,8 +22,8 @@ import {
  */
 export interface StacksAssetIdentifierRequest {
     /**
-     * 
-     * @type {string}
+     * Stacks asset identifier type.
+     * @type {StacksAssetIdentifierRequestTypeEnum}
      * @memberof StacksAssetIdentifierRequest
      */
     type: StacksAssetIdentifierRequestTypeEnum;
@@ -37,7 +37,7 @@ export interface StacksAssetIdentifierRequest {
 
 
 /**
- * 
+ * @export
  */
 const StacksAssetIdentifierRequestTypeEnum = {
     stacks: 'stacks'

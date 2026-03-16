@@ -53,4 +53,3 @@ function StacksEffectsFromJSONTyped(json: any, _ignoreDiscriminator: boolean): S
         'transfers': ((json['transfers'] as Array<any>).map(StacksTransferEffectFromJSON)),
     };
 }
-

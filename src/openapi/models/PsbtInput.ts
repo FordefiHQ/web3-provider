@@ -22,7 +22,7 @@ import {
  */
 export interface PsbtInput {
     /**
-     * 
+     * The input index to sign on.
      * @type {number}
      * @memberof PsbtInput
      */
@@ -34,13 +34,13 @@ export interface PsbtInput {
      */
     signerIdentity: PsbtInputSignerIdentity;
     /**
-     * 
+     * Flags that describe how to sign.
      * @type {Array<number>}
      * @memberof PsbtInput
      */
     sighashTypes?: Array<number>;
     /**
-     * 
+     * Disable tweaking of taproot public key.
      * @type {boolean}
      * @memberof PsbtInput
      */
@@ -64,4 +64,3 @@ function PsbtInputToJSONTyped(value?: PsbtInput | null, _ignoreDiscriminator: bo
         'disable_tweak_signer': value['disableTweakSigner'],
     };
 }
-

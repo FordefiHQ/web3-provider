@@ -14,10 +14,6 @@ import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
 } from './PricedAsset';
-import type { Price } from './Price';
-import {
-    PriceFromJSON,
-} from './Price';
 
 /**
  * 
@@ -26,31 +22,25 @@ import {
  */
 export interface GasDebit {
     /**
-     * 
+     * The amount of gas used.
      * @type {string}
      * @memberof GasDebit
      */
     gasUsed: string;
     /**
-     * 
+     * The gas price.
      * @type {string}
      * @memberof GasDebit
      */
     gasPrice: string;
     /**
-     * 
+     * The total fee taken (`gas_used` * `gas_price`).
      * @type {string}
      * @memberof GasDebit
      */
     totalFee: string;
     /**
-     * 
-     * @type {Price}
-     * @memberof GasDebit
-     */
-    fiatPrice?: Price;
-    /**
-     * 
+     * The information of the asset used to pay the fee and amount used.
      * @type {PricedAsset}
      * @memberof GasDebit
      */
@@ -70,8 +60,6 @@ function GasDebitFromJSONTyped(json: any, _ignoreDiscriminator: boolean): GasDeb
         'gasUsed': json['gas_used'],
         'gasPrice': json['gas_price'],
         'totalFee': json['total_fee'],
-        'fiatPrice': json['fiat_price'] == null ? undefined : PriceFromJSON(json['fiat_price']),
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }
-

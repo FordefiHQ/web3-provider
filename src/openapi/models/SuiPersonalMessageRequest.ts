@@ -22,19 +22,19 @@ import {
  */
 export interface SuiPersonalMessageRequest {
     /**
-     * 
-     * @type {string}
+     * Personal message standard.
+     * @type {SuiPersonalMessageRequestTypeEnum}
      * @memberof SuiPersonalMessageRequest
      */
     type: SuiPersonalMessageRequestTypeEnum;
     /**
-     * 
+     * The details of the chain of the native asset.
      * @type {SuiChainUniqueId}
      * @memberof SuiPersonalMessageRequest
      */
     chain: SuiChainUniqueId;
     /**
-     * 
+     * Base64 of the message to be signed.
      * @type {string}
      * @memberof SuiPersonalMessageRequest
      */
@@ -43,7 +43,7 @@ export interface SuiPersonalMessageRequest {
 
 
 /**
- * 
+ * @export
  */
 const SuiPersonalMessageRequestTypeEnum = {
     personalMessageType: 'personal_message_type'

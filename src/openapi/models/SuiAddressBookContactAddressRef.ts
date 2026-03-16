@@ -22,19 +22,19 @@ import {
  */
 export interface SuiAddressBookContactAddressRef {
     /**
-     * 
-     * @type {string}
+     * The type of the chain.
+     * @type {SuiAddressBookContactAddressRefChainTypeEnum}
      * @memberof SuiAddressBookContactAddressRef
      */
     chainType: SuiAddressBookContactAddressRefChainTypeEnum;
     /**
-     * 
+     * The address on the Sui chain.
      * @type {string}
      * @memberof SuiAddressBookContactAddressRef
      */
     address: string;
     /**
-     * 
+     * The chains the contact belongs to.
      * @type {Array<SuiChain>}
      * @memberof SuiAddressBookContactAddressRef
      */
@@ -43,7 +43,7 @@ export interface SuiAddressBookContactAddressRef {
 
 
 /**
- * 
+ * @export
  */
 const SuiAddressBookContactAddressRefChainTypeEnum = {
     sui: 'sui'

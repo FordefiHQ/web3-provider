@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const AmlPolicyMatchIncomingActionType = {
@@ -28,4 +29,3 @@ export function AmlPolicyMatchIncomingActionTypeFromJSON(json: any): AmlPolicyMa
 function AmlPolicyMatchIncomingActionTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): AmlPolicyMatchIncomingActionType {
     return json as AmlPolicyMatchIncomingActionType;
 }
-

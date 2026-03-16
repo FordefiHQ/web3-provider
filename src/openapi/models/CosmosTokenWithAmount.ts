@@ -22,19 +22,19 @@ import {
  */
 export interface CosmosTokenWithAmount {
     /**
-     * 
+     * The amount of the coin in base unit (for example uatom).
      * @type {string}
      * @memberof CosmosTokenWithAmount
      */
     amount: string;
     /**
      * 
-     * @type {string}
+     * @type {CosmosTokenWithAmountTypeEnum}
      * @memberof CosmosTokenWithAmount
      */
     type: CosmosTokenWithAmountTypeEnum;
     /**
-     * 
+     * The coin.
      * @type {CosmosToken}
      * @memberof CosmosTokenWithAmount
      */
@@ -43,7 +43,7 @@ export interface CosmosTokenWithAmount {
 
 
 /**
- * 
+ * @export
  */
 const CosmosTokenWithAmountTypeEnum = {
     token: 'token'

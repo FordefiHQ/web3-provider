@@ -27,9 +27,9 @@ import {
 } from './AptosNewCoinAssetIdentifierRequest';
 
 /**
+ * @type AptosAssetIdentifierDetails
  * 
  * @export
- * @type AptosAssetIdentifierDetails
  */
 export type AptosAssetIdentifierDetails = { type: 'coin' } & AptosCoinAssetIdentifierRequest | { type: 'native' } & AptosNativeAssetIdentifierRequest | { type: 'new_coin' } & AptosNewCoinAssetIdentifierRequest;
 
@@ -49,7 +49,7 @@ function AptosAssetIdentifierDetailsFromJSONTyped(json: any, _ignoreDiscriminato
         case 'new_coin':
             return Object.assign({}, AptosNewCoinAssetIdentifierRequestFromJSONTyped(json, true), { type: 'new_coin' } as const);
         default:
-            throw new Error(`No variant of AptosAssetIdentifierDetails exists with 'type=${json['type']}'`);
+            return json;
     }
 }
 
@@ -69,8 +69,6 @@ function AptosAssetIdentifierDetailsToJSONTyped(value?: AptosAssetIdentifierDeta
         case 'new_coin':
             return Object.assign({}, AptosNewCoinAssetIdentifierRequestToJSON(value), { type: 'new_coin' } as const);
         default:
-            throw new Error(`No variant of AptosAssetIdentifierDetails exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

@@ -22,13 +22,13 @@ import {
  */
 export interface SuiChain {
     /**
-     * 
-     * @type {string}
+     * The type of the chain.
+     * @type {SuiChainChainTypeEnum}
      * @memberof SuiChain
      */
     chainType: SuiChainChainTypeEnum;
     /**
-     * 
+     * The type of the Sui-based chain.
      * @type {SuiChainUniqueId}
      * @memberof SuiChain
      */
@@ -37,7 +37,7 @@ export interface SuiChain {
 
 
 /**
- * 
+ * @export
  */
 const SuiChainChainTypeEnum = {
     sui: 'sui'

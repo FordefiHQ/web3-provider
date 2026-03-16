@@ -10,6 +10,10 @@
  * Do not edit the class manually.
  */
 
+import type { EvmBridgesEffect } from './EvmBridgesEffect';
+import {
+    EvmBridgesEffectFromJSON,
+} from './EvmBridgesEffect';
 import type { EvmBridgeEffect } from './EvmBridgeEffect';
 import {
     EvmBridgeEffectFromJSON,
@@ -22,22 +26,29 @@ import {
  */
 export interface BridgeDetails {
     /**
-     * 
-     * @type {string}
+     * A transaction involving the transfer of funds from one blockchain to another.
+     * @type {BridgeDetailsTypeEnum}
      * @memberof BridgeDetails
      */
     type: BridgeDetailsTypeEnum;
     /**
-     * 
+     * The bridge effects of the transaction.
      * @type {EvmBridgeEffect}
      * @memberof BridgeDetails
+     * @deprecated
      */
     bridgeEffect: EvmBridgeEffect;
+    /**
+     * The bridge effects of the transaction.
+     * @type {EvmBridgesEffect}
+     * @memberof BridgeDetails
+     */
+    bridgeEffects: EvmBridgesEffect;
 }
 
 
 /**
- * 
+ * @export
  */
 const BridgeDetailsTypeEnum = {
     crossChainBridge: 'cross_chain_bridge'
@@ -52,5 +63,6 @@ export function BridgeDetailsFromJSONTyped(json: any, _ignoreDiscriminator: bool
         
         'type': json['type'],
         'bridgeEffect': EvmBridgeEffectFromJSON(json['bridge_effect']),
+        'bridgeEffects': EvmBridgesEffectFromJSON(json['bridge_effects']),
     };
 }

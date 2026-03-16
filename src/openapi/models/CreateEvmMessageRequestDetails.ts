@@ -24,9 +24,9 @@ import {
 } from './CreateEvmTypedV1MessageRequest';
 
 /**
+ * @type CreateEvmMessageRequestDetails
  * 
  * @export
- * @type CreateEvmMessageRequestDetails
  */
 export type CreateEvmMessageRequestDetails = { type: 'personal_message_type' } & CreateEvmPersonalMessageRequest | { type: 'typed_message_type' } & CreateEvmTypedMessageRequest | { type: 'typed_message_type_v1' } & CreateEvmTypedV1MessageRequest;
 
@@ -46,8 +46,6 @@ function CreateEvmMessageRequestDetailsToJSONTyped(value?: CreateEvmMessageReque
         case 'typed_message_type_v1':
             return Object.assign({}, CreateEvmTypedV1MessageRequestToJSON(value), { type: 'typed_message_type_v1' } as const);
         default:
-            throw new Error(`No variant of CreateEvmMessageRequestDetails exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

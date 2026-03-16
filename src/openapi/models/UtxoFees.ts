@@ -14,10 +14,6 @@ import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
 } from './PricedAsset';
-import type { Price } from './Price';
-import {
-    PriceFromJSON,
-} from './Price';
 import type { FeePriorityLevel } from './FeePriorityLevel';
 import {
     FeePriorityLevelFromJSON,
@@ -30,37 +26,31 @@ import {
  */
 export interface UtxoFees {
     /**
-     * 
+     * The priority level.
      * @type {FeePriorityLevel}
      * @memberof UtxoFees
      */
     priority: FeePriorityLevel;
     /**
-     * 
+     * The fee per byte.
      * @type {string}
      * @memberof UtxoFees
      */
     feePerByte: string;
     /**
-     * 
+     * The transaction size in bytes.
      * @type {string}
      * @memberof UtxoFees
      */
     transactionByteSize: string;
     /**
-     * 
+     * The total fee paid.
      * @type {string}
      * @memberof UtxoFees
      */
     totalFee: string;
     /**
-     * 
-     * @type {Price}
-     * @memberof UtxoFees
-     */
-    fiatPrice?: Price;
-    /**
-     * 
+     * The information of the asset used to pay the fee and amount used.
      * @type {PricedAsset}
      * @memberof UtxoFees
      */
@@ -81,8 +71,6 @@ function UtxoFeesFromJSONTyped(json: any, _ignoreDiscriminator: boolean): UtxoFe
         'feePerByte': json['fee_per_byte'],
         'transactionByteSize': json['transaction_byte_size'],
         'totalFee': json['total_fee'],
-        'fiatPrice': json['fiat_price'] == null ? undefined : PriceFromJSON(json['fiat_price']),
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }
-

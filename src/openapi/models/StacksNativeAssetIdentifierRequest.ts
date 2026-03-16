@@ -23,13 +23,13 @@ import {
  */
 export interface StacksNativeAssetIdentifierRequest {
     /**
-     * 
-     * @type {string}
+     * Stacks asset identifier type.
+     * @type {StacksNativeAssetIdentifierRequestTypeEnum}
      * @memberof StacksNativeAssetIdentifierRequest
      */
     type: StacksNativeAssetIdentifierRequestTypeEnum;
     /**
-     * 
+     * The details of the chain of the native asset.
      * @type {StacksChainUniqueId}
      * @memberof StacksNativeAssetIdentifierRequest
      */
@@ -38,7 +38,7 @@ export interface StacksNativeAssetIdentifierRequest {
 
 
 /**
- * 
+ * @export
  */
 const StacksNativeAssetIdentifierRequestTypeEnum = {
     native: 'native'

@@ -18,12 +18,12 @@
 export interface IntegerHashPayload {
     /**
      * 
-     * @type {string}
+     * @type {IntegerHashPayloadFormatEnum}
      * @memberof IntegerHashPayload
      */
     format: IntegerHashPayloadFormatEnum;
     /**
-     * 
+     * The payload to sign, as a big-endian integer. Only relevant for Stark curve signatures.
      * @type {string}
      * @memberof IntegerHashPayload
      */
@@ -32,7 +32,7 @@ export interface IntegerHashPayload {
 
 
 /**
- * 
+ * @export
  */
 const IntegerHashPayloadFormatEnum = {
     hashInteger: 'hash_integer'

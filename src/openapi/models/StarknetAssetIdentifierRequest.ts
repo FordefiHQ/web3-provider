@@ -22,8 +22,8 @@ import {
  */
 export interface StarknetAssetIdentifierRequest {
     /**
-     * 
-     * @type {string}
+     * Starknet asset identifier type.
+     * @type {StarknetAssetIdentifierRequestTypeEnum}
      * @memberof StarknetAssetIdentifierRequest
      */
     type: StarknetAssetIdentifierRequestTypeEnum;
@@ -37,7 +37,7 @@ export interface StarknetAssetIdentifierRequest {
 
 
 /**
- * 
+ * @export
  */
 const StarknetAssetIdentifierRequestTypeEnum = {
     starknet: 'starknet'

@@ -13,6 +13,7 @@
 import type { UtxoChainUniqueId } from './UtxoChainUniqueId';
 import {
     UtxoChainUniqueIdFromJSON,
+    UtxoChainUniqueIdToJSON,
 } from './UtxoChainUniqueId';
 
 /**
@@ -22,13 +23,13 @@ import {
  */
 export interface UtxoNativeAssetIdentifierRequest {
     /**
-     * 
-     * @type {string}
+     * Utxo asset identifier type.
+     * @type {UtxoNativeAssetIdentifierRequestTypeEnum}
      * @memberof UtxoNativeAssetIdentifierRequest
      */
     type: UtxoNativeAssetIdentifierRequestTypeEnum;
     /**
-     * 
+     * The unique id of the chain of the asset.
      * @type {UtxoChainUniqueId}
      * @memberof UtxoNativeAssetIdentifierRequest
      */
@@ -37,7 +38,7 @@ export interface UtxoNativeAssetIdentifierRequest {
 
 
 /**
- * 
+ * @export
  */
 const UtxoNativeAssetIdentifierRequestTypeEnum = {
     native: 'native'
@@ -56,5 +57,21 @@ function UtxoNativeAssetIdentifierRequestFromJSONTyped(json: any, _ignoreDiscrim
         
         'type': json['type'],
         'chain': UtxoChainUniqueIdFromJSON(json['chain']),
+    };
+}
+
+export function UtxoNativeAssetIdentifierRequestToJSON(json: any): UtxoNativeAssetIdentifierRequest {
+    return UtxoNativeAssetIdentifierRequestToJSONTyped(json, false);
+}
+
+function UtxoNativeAssetIdentifierRequestToJSONTyped(value?: UtxoNativeAssetIdentifierRequest | null, _ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
+    }
+
+    return {
+        
+        'type': value['type'],
+        'chain': UtxoChainUniqueIdToJSON(value['chain']),
     };
 }

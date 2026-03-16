@@ -30,37 +30,37 @@ import {
  */
 export interface EnrichedEvmAddress {
     /**
-     * 
+     * The vault corresponding to this address.
      * @type {VaultRef}
      * @memberof EnrichedEvmAddress
      */
     vault?: VaultRef;
     /**
-     * 
+     * The URL of a blockchain explorer that provides real-time information about the address.
      * @type {string}
      * @memberof EnrichedEvmAddress
      */
     explorerUrl?: string;
     /**
-     * 
+     * The contact details of this address.
      * @type {ContactRef}
      * @memberof EnrichedEvmAddress
      */
     contact?: ContactRef;
     /**
      * 
-     * @type {string}
+     * @type {EnrichedEvmAddressTypeEnum}
      * @memberof EnrichedEvmAddress
      */
     type: EnrichedEvmAddressTypeEnum;
     /**
-     * 
+     * The EVM address.
      * @type {string}
      * @memberof EnrichedEvmAddress
      */
     address: string;
     /**
-     * 
+     * The contract details corresponding to this address.
      * @type {EvmContractMetadata}
      * @memberof EnrichedEvmAddress
      */
@@ -69,7 +69,7 @@ export interface EnrichedEvmAddress {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedEvmAddressTypeEnum = {
     evm: 'evm'

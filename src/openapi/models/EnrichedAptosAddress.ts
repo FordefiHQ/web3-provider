@@ -26,31 +26,31 @@ import {
  */
 export interface EnrichedAptosAddress {
     /**
-     * 
+     * The vault corresponding to this address.
      * @type {VaultRef}
      * @memberof EnrichedAptosAddress
      */
     vault?: VaultRef;
     /**
-     * 
+     * The URL of a blockchain explorer that provides real-time information about the address.
      * @type {string}
      * @memberof EnrichedAptosAddress
      */
     explorerUrl?: string;
     /**
-     * 
+     * The contact details of this address.
      * @type {ContactRef}
      * @memberof EnrichedAptosAddress
      */
     contact?: ContactRef;
     /**
      * 
-     * @type {string}
+     * @type {EnrichedAptosAddressTypeEnum}
      * @memberof EnrichedAptosAddress
      */
     type: EnrichedAptosAddressTypeEnum;
     /**
-     * 
+     * The Aptos address represented in hex format.
      * @type {string}
      * @memberof EnrichedAptosAddress
      */
@@ -59,7 +59,7 @@ export interface EnrichedAptosAddress {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedAptosAddressTypeEnum = {
     aptos: 'aptos'

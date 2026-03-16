@@ -26,18 +26,22 @@ import type { EnrichedTronChain } from './EnrichedTronChain';
 import {
     EnrichedTronChainFromJSON,
 } from './EnrichedTronChain';
-import type { TronBlock } from './TronBlock';
-import {
-    TronBlockFromJSON,
-} from './TronBlock';
 import type { PushableTransactionState } from './PushableTransactionState';
 import {
     PushableTransactionStateFromJSON,
 } from './PushableTransactionState';
-import type { AmlPolicyMatchIncoming } from './AmlPolicyMatchIncoming';
+import type { TronTransactionTronTransactionTypeDetails } from './TronTransactionTronTransactionTypeDetails';
 import {
-    AmlPolicyMatchIncomingFromJSON,
-} from './AmlPolicyMatchIncoming';
+    TronTransactionTronTransactionTypeDetailsFromJSON,
+} from './TronTransactionTronTransactionTypeDetails';
+import type { MinedResultStatus } from './MinedResultStatus';
+import {
+    MinedResultStatusFromJSON,
+} from './MinedResultStatus';
+import type { VaultRef } from './VaultRef';
+import {
+    VaultRefFromJSON,
+} from './VaultRef';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
@@ -46,26 +50,30 @@ import type { TransactionDirection } from './TransactionDirection';
 import {
     TransactionDirectionFromJSON,
 } from './TransactionDirection';
-import type { PredictedTronTransactionTronTransactionTypeDetails } from './PredictedTronTransactionTronTransactionTypeDetails';
-import {
-    PredictedTronTransactionTronTransactionTypeDetailsFromJSON,
-} from './PredictedTronTransactionTronTransactionTypeDetails';
 import type { TronTransactionResult } from './TronTransactionResult';
 import {
     TronTransactionResultFromJSON,
 } from './TronTransactionResult';
+import type { AmlCheck } from './AmlCheck';
+import {
+    AmlCheckFromJSON,
+} from './AmlCheck';
 import type { Signature } from './Signature';
 import {
     SignatureFromJSON,
 } from './Signature';
+import type { RelatedTransaction } from './RelatedTransaction';
+import {
+    RelatedTransactionFromJSON,
+} from './RelatedTransaction';
 import type { SimulationStatusResult } from './SimulationStatusResult';
 import {
     SimulationStatusResultFromJSON,
 } from './SimulationStatusResult';
-import type { AmlResults } from './AmlResults';
+import type { Block } from './Block';
 import {
-    AmlResultsFromJSON,
-} from './AmlResults';
+    BlockFromJSON,
+} from './Block';
 
 /**
  * 
@@ -74,151 +82,169 @@ import {
  */
 export interface TronTransaction {
     /**
-     * 
+     * The unique identifier of the object in the Fordefi platform.
      * @type {string}
      * @memberof TronTransaction
      */
     id: string;
     /**
-     * 
+     * The date and time when the object was created.
      * @type {Date}
      * @memberof TronTransaction
      */
     createdAt: Date;
     /**
-     * 
+     * The date and time when the object was last modified. Any change to any field of the resource is considered a modification.
      * @type {Date}
      * @memberof TronTransaction
      */
     modifiedAt: Date;
     /**
-     * 
+     * Managed transaction data. Presented if the transaction was initiated from the Fordefi system itself, in contrast to unmanaged transactions (which are, for example, transfers of funds into a vault visible to Fordefi). 
      * @type {ManagedTransactionData}
      * @memberof TronTransaction
      */
     managedTransactionData?: ManagedTransactionData;
     /**
-     * 
+     * The transaction signatures.
      * @type {Array<Signature>}
      * @memberof TronTransaction
      */
     signatures: Array<Signature>;
     /**
-     * 
+     * An optional transaction note.
      * @type {string}
      * @memberof TronTransaction
      */
     note?: string;
     /**
-     * 
+     * `automatically_set` if the transaction was automatically set as spam by Fordefi, `manually_set` if the transaction was manually set as spam by a user, and `unset` if the transaction was not set as spam.
      * @type {TransactionSpamState}
      * @memberof TronTransaction
      */
     spamState?: TransactionSpamState;
     /**
-     * 
+     * The direction of the transaction.
      * @type {TransactionDirection}
      * @memberof TronTransaction
      */
     direction: TransactionDirection;
     /**
-     * 
+     * Whether the transaction was signed by an external user (for example in case of imported vault).
      * @type {boolean}
      * @memberof TronTransaction
      */
     signedExternally?: boolean;
     /**
-     * 
+     * The vaults that interacted with the transaction.
+     * @type {Array<VaultRef>}
+     * @memberof TronTransaction
+     */
+    interactedVaults: Array<VaultRef>;
+    /**
+     * The related transactions.
+     * @type {Array<RelatedTransaction>}
+     * @memberof TronTransaction
+     */
+    relatedTransactions?: Array<RelatedTransaction>;
+    /**
+     * The organization that the transaction belongs to.
+     * @type {string}
+     * @memberof TronTransaction
+     */
+    organizationId: string;
+    /**
+     * The block of the transaction.
+     * @type {Block}
+     * @memberof TronTransaction
+     */
+    block?: Block;
+    /**
+     * The state of the transaction.
      * @type {PushableTransactionState}
      * @memberof TronTransaction
      */
     state: PushableTransactionState;
     /**
-     * 
+     * The state changes of the transaction.
      * @type {Array<PushableTransactionStateChange>}
      * @memberof TronTransaction
      */
     stateChanges: Array<PushableTransactionStateChange>;
     /**
-     * 
-     * @type {AmlResults}
+     * The AML check.
+     * @type {AmlCheck}
      * @memberof TronTransaction
      */
-    amlResults?: AmlResults;
+    amlCheck?: AmlCheck;
     /**
-     * 
-     * @type {AmlPolicyMatchIncoming}
+     * The mined result status of the transaction.
+     * @type {MinedResultStatus}
      * @memberof TronTransaction
      */
-    incomingAmlPolicyMatch?: AmlPolicyMatchIncoming;
+    minedResultStatus?: MinedResultStatus;
     /**
-     * 
-     * @type {string}
-     * @memberof TronTransaction
-     */
-    type: TronTransactionTypeEnum;
-    /**
-     * 
-     * @type {PredictedTronTransactionTronTransactionTypeDetails}
-     * @memberof TronTransaction
-     */
-    tronTransactionTypeDetails: PredictedTronTransactionTronTransactionTypeDetails;
-    /**
-     * 
-     * @type {EnrichedTronChain}
-     * @memberof TronTransaction
-     */
-    chain: EnrichedTronChain;
-    /**
-     * 
-     * @type {EnrichedTronAddress}
-     * @memberof TronTransaction
-     */
-    sender: EnrichedTronAddress;
-    /**
-     * 
-     * @type {string}
-     * @memberof TronTransaction
-     */
-    hash?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TronTransaction
-     */
-    serializedSignedTransaction?: string;
-    /**
-     * 
-     * @type {TronBlock}
-     * @memberof TronTransaction
-     */
-    block?: TronBlock;
-    /**
-     * 
-     * @type {TronTransactionResult}
-     * @memberof TronTransaction
-     */
-    expectedResult?: TronTransactionResult;
-    /**
-     * 
+     * Whether simulation succeeded, reverted or failed.
      * @type {SimulationStatusResult}
      * @memberof TronTransaction
      */
     simulationStatusResult?: SimulationStatusResult;
     /**
+     * TRON transaction type.
+     * @type {TronTransactionTypeEnum}
+     * @memberof TronTransaction
+     */
+    type: TronTransactionTypeEnum;
+    /**
      * 
+     * @type {TronTransactionTronTransactionTypeDetails}
+     * @memberof TronTransaction
+     */
+    tronTransactionTypeDetails: TronTransactionTronTransactionTypeDetails;
+    /**
+     * The details of the chain this transaction is on.
+     * @type {EnrichedTronChain}
+     * @memberof TronTransaction
+     */
+    chain: EnrichedTronChain;
+    /**
+     * The sender of the transaction.
+     * @type {EnrichedTronAddress}
+     * @memberof TronTransaction
+     */
+    sender: EnrichedTronAddress;
+    /**
+     * The hash of the transaction.
+     * @type {string}
+     * @memberof TronTransaction
+     */
+    hash?: string;
+    /**
+     * The serialized signed transaction.
+     * @type {string}
+     * @memberof TronTransaction
+     */
+    serializedSignedTransaction?: string;
+    /**
+     * The expected result of the transaction in case it is mined.
+     * @type {TronTransactionResult}
+     * @memberof TronTransaction
+     */
+    expectedResult?: TronTransactionResult;
+    /**
+     * The result of the transaction after it was mined.
      * @type {TronTransactionResult}
      * @memberof TronTransaction
      */
     minedResult?: TronTransactionResult;
     /**
-     * 
+     * The URL of this transaction in a blockchain explorer. For example, https://explorer.hiro.so/
      * @type {string}
      * @memberof TronTransaction
      */
     explorerUrl?: string;
     /**
-     * 
+     * The memo of the transaction.
      * @type {string}
      * @memberof TronTransaction
      */
@@ -227,7 +253,7 @@ export interface TronTransaction {
 
 
 /**
- * 
+ * @export
  */
 const TronTransactionTypeEnum = {
     tronTransaction: 'tron_transaction'
@@ -249,19 +275,22 @@ export function TronTransactionFromJSONTyped(json: any, _ignoreDiscriminator: bo
         'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
         'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'interactedVaults': ((json['interacted_vaults'] as Array<any>).map(VaultRefFromJSON)),
+        'relatedTransactions': json['related_transactions'] == null ? undefined : ((json['related_transactions'] as Array<any>).map(RelatedTransactionFromJSON)),
+        'organizationId': json['organization_id'],
+        'block': json['block'] == null ? undefined : BlockFromJSON(json['block']),
         'state': PushableTransactionStateFromJSON(json['state']),
         'stateChanges': ((json['state_changes'] as Array<any>).map(PushableTransactionStateChangeFromJSON)),
-        'amlResults': json['aml_results'] == null ? undefined : AmlResultsFromJSON(json['aml_results']),
-        'incomingAmlPolicyMatch': json['incoming_aml_policy_match'] == null ? undefined : AmlPolicyMatchIncomingFromJSON(json['incoming_aml_policy_match']),
+        'amlCheck': json['aml_check'] == null ? undefined : AmlCheckFromJSON(json['aml_check']),
+        'minedResultStatus': json['mined_result_status'] == null ? undefined : MinedResultStatusFromJSON(json['mined_result_status']),
+        'simulationStatusResult': json['simulation_status_result'] == null ? undefined : SimulationStatusResultFromJSON(json['simulation_status_result']),
         'type': json['type'],
-        'tronTransactionTypeDetails': PredictedTronTransactionTronTransactionTypeDetailsFromJSON(json['tron_transaction_type_details']),
+        'tronTransactionTypeDetails': TronTransactionTronTransactionTypeDetailsFromJSON(json['tron_transaction_type_details']),
         'chain': EnrichedTronChainFromJSON(json['chain']),
         'sender': EnrichedTronAddressFromJSON(json['sender']),
         'hash': json['hash'] == null ? undefined : json['hash'],
         'serializedSignedTransaction': json['serialized_signed_transaction'] == null ? undefined : json['serialized_signed_transaction'],
-        'block': json['block'] == null ? undefined : TronBlockFromJSON(json['block']),
         'expectedResult': json['expected_result'] == null ? undefined : TronTransactionResultFromJSON(json['expected_result']),
-        'simulationStatusResult': json['simulation_status_result'] == null ? undefined : SimulationStatusResultFromJSON(json['simulation_status_result']),
         'minedResult': json['mined_result'] == null ? undefined : TronTransactionResultFromJSON(json['mined_result']),
         'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
         'memo': json['memo'] == null ? undefined : json['memo'],

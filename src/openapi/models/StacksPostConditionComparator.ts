@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const StacksPostConditionComparator = {
@@ -30,4 +31,3 @@ export function StacksPostConditionComparatorFromJSON(json: any): StacksPostCond
 function StacksPostConditionComparatorFromJSONTyped(json: any, _ignoreDiscriminator: boolean): StacksPostConditionComparator {
     return json as StacksPostConditionComparator;
 }
-

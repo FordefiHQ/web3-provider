@@ -17,19 +17,19 @@ import {
 } from './StacksChainUniqueId';
 
 /**
- * 
+ * Address represents a blockchain address.
  * @export
  * @interface StacksAddressRequest
  */
 export interface StacksAddressRequest {
     /**
-     * 
+     * The chain details this address is of.
      * @type {StacksChainUniqueId}
      * @memberof StacksAddressRequest
      */
     chain: StacksChainUniqueId;
     /**
-     * 
+     * Hexadecimal representation of the address in the chain.
      * @type {string}
      * @memberof StacksAddressRequest
      */
@@ -66,4 +66,3 @@ function StacksAddressRequestToJSONTyped(value?: StacksAddressRequest | null, _i
         'hex_repr': value['hexRepr'],
     };
 }
-

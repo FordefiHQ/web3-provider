@@ -22,19 +22,19 @@ import {
  */
 export interface CreateEvmPersonalMessageRequest {
     /**
-     * 
-     * @type {string}
+     * Personal message standard.
+     * @type {CreateEvmPersonalMessageRequestTypeEnum}
      * @memberof CreateEvmPersonalMessageRequest
      */
     type: CreateEvmPersonalMessageRequestTypeEnum;
     /**
-     * 
+     * The EVM chain that this message is intended for. Specify either the chain ID (for example `1` for `ethereum_mainnet`) or the chain name (for example, `ethereum_goerli`).
      * @type {EvmChainRequest}
      * @memberof CreateEvmPersonalMessageRequest
      */
     chain: EvmChainRequest;
     /**
-     * 
+     * The raw data of the message to be signed, provided as a string or hex-encoded.
      * @type {string}
      * @memberof CreateEvmPersonalMessageRequest
      */
@@ -66,4 +66,3 @@ function CreateEvmPersonalMessageRequestToJSONTyped(value?: CreateEvmPersonalMes
         'raw_data': value['rawData'],
     };
 }
-

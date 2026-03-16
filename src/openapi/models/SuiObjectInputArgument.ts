@@ -23,8 +23,8 @@ import {
  */
 export interface SuiObjectInputArgument {
     /**
-     * 
-     * @type {string}
+     * The type of the input argument.
+     * @type {SuiObjectInputArgumentTypeEnum}
      * @memberof SuiObjectInputArgument
      */
     type: SuiObjectInputArgumentTypeEnum;
@@ -38,7 +38,7 @@ export interface SuiObjectInputArgument {
 
 
 /**
- * 
+ * @export
  */
 const SuiObjectInputArgumentTypeEnum = {
     object: 'object'

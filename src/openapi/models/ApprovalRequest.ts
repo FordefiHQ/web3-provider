@@ -18,51 +18,33 @@ import type { ApprovalRequestState } from './ApprovalRequestState';
 import {
     ApprovalRequestStateFromJSON,
 } from './ApprovalRequestState';
-import type { RequestApprover } from './RequestApprover';
-import {
-    RequestApproverFromJSON,
-} from './RequestApprover';
 
 /**
- * 
+ * Represents an approval request for an action in the Fordefi platform
  * @export
  * @interface ApprovalRequest
  */
 export interface ApprovalRequest {
     /**
-     * 
+     * The state of the approval request.
      * @type {ApprovalRequestState}
      * @memberof ApprovalRequest
      */
     state: ApprovalRequestState;
     /**
-     * 
-     * @type {number}
-     * @memberof ApprovalRequest
-     * @deprecated
-     */
-    quorumSize?: number;
-    /**
-     * 
-     * @type {Array<RequestApprover>}
-     * @memberof ApprovalRequest
-     * @deprecated
-     */
-    approvers?: Array<RequestApprover>;
-    /**
-     * 
+     * The number of required approval groups.
      * @type {number}
      * @memberof ApprovalRequest
      */
     requiredGroups: number;
     /**
-     * 
+     * A list of the possible approvers from different groups.
      * @type {Array<ApprovalRequestGroup>}
      * @memberof ApprovalRequest
      */
     approvalGroups: Array<ApprovalRequestGroup>;
     /**
-     * 
+     * The error message if the request failed.
      * @type {string}
      * @memberof ApprovalRequest
      */
@@ -80,11 +62,8 @@ function ApprovalRequestFromJSONTyped(json: any, _ignoreDiscriminator: boolean):
     return {
         
         'state': ApprovalRequestStateFromJSON(json['state']),
-        'quorumSize': json['quorum_size'] == null ? undefined : json['quorum_size'],
-        'approvers': json['approvers'] == null ? undefined : ((json['approvers'] as Array<any>).map(RequestApproverFromJSON)),
         'requiredGroups': json['required_groups'],
         'approvalGroups': ((json['approval_groups'] as Array<any>).map(ApprovalRequestGroupFromJSON)),
         'errorMessage': json['error_message'] == null ? undefined : json['error_message'],
     };
 }
-

@@ -30,52 +30,58 @@ import {
  */
 export interface CreateAptosSerializedRawTransactionRequest {
     /**
-     * 
-     * @type {string}
+     * An Aptos transaction with serialized entry point payload.
+     * @type {CreateAptosSerializedRawTransactionRequestTypeEnum}
      * @memberof CreateAptosSerializedRawTransactionRequest
      */
     type: CreateAptosSerializedRawTransactionRequestTypeEnum;
     /**
-     * 
+     * `True` if the request should fail in case simulation failed, `False` otherwise. <br> In case simulation has failed upon continuation, the expected result of the transaction will be partial and policy will be applied on information that can be extracted statically from the transaction only. This might result in falling back to the default policy rule. 
      * @type {boolean}
      * @memberof CreateAptosSerializedRawTransactionRequest
      */
     failOnPredictionFailure?: boolean;
     /**
-     * 
-     * @type {AptosGasConfigRequest}
-     * @memberof CreateAptosSerializedRawTransactionRequest
-     */
-    gasConfig?: AptosGasConfigRequest;
-    /**
-     * 
-     * @type {AptosChainUniqueId}
-     * @memberof CreateAptosSerializedRawTransactionRequest
-     */
-    chain: AptosChainUniqueId;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateAptosSerializedRawTransactionRequest
-     */
-    serializedTransactionPayload: string;
-    /**
-     * 
+     * `True` to create a transaction without prediction, `False` otherwise. <br> In case of skipping simulation, the simulation status will be skipped and the expected result of the transaction will be empty. The policy will be applied on information that can be extracted statically from the transaction only. This might result in falling back to the default policy rule. <br> Note, it is recommended to use the default setting for this field and to turn off `fail_on_prediction_failure` instead - unless you wish to save time by omitting the prediction phase entirely. 
      * @type {boolean}
      * @memberof CreateAptosSerializedRawTransactionRequest
      */
     skipPrediction?: boolean;
     /**
-     * 
+     * The push mode of the transaction when sending it to the node. It can be one of the following:<ul><li>`auto`: The transaction is pushed automatically by Fordefi. <li>`manual`: The transaction should be pushed manually by the user using a 3rd party.<li>`deferred`: The transaction is pushed by Fordefi after a certain time, if by that time it wasn't pushed manually by the client.</ul></ul> 
      * @type {PushMode}
      * @memberof CreateAptosSerializedRawTransactionRequest
      */
     pushMode?: PushMode;
+    /**
+     * The gas configuration for the transaction.
+     * @type {AptosGasConfigRequest}
+     * @memberof CreateAptosSerializedRawTransactionRequest
+     */
+    gasConfig?: AptosGasConfigRequest;
+    /**
+     * If true, the transaction's Authenticator will be configured to support an external fee payer. After Fordefi signs the transaction, the client is responsible for forwarding it to the designated fee payer for final signing and broadcasting.
+     * @type {boolean}
+     * @memberof CreateAptosSerializedRawTransactionRequest
+     */
+    withExternalFeePayer?: boolean;
+    /**
+     * The chain that this transaction is on. Specify the chain name (for example, `aptos_mainnet`).
+     * @type {AptosChainUniqueId}
+     * @memberof CreateAptosSerializedRawTransactionRequest
+     */
+    chain: AptosChainUniqueId;
+    /**
+     * The serialized transaction payload in base64 format.
+     * @type {string}
+     * @memberof CreateAptosSerializedRawTransactionRequest
+     */
+    serializedTransactionPayload: string;
 }
 
 
 /**
- * 
+ * @export
  */
 const CreateAptosSerializedRawTransactionRequestTypeEnum = {
     aptosSerializedEntryPointPayload: 'aptos_serialized_entry_point_payload'
@@ -95,10 +101,11 @@ function CreateAptosSerializedRawTransactionRequestToJSONTyped(value?: CreateApt
         
         'type': value['type'],
         'fail_on_prediction_failure': value['failOnPredictionFailure'],
-        'gas_config': AptosGasConfigRequestToJSON(value['gasConfig']),
-        'chain': AptosChainUniqueIdToJSON(value['chain']),
-        'serialized_transaction_payload': value['serializedTransactionPayload'],
         'skip_prediction': value['skipPrediction'],
         'push_mode': PushModeToJSON(value['pushMode']),
+        'gas_config': AptosGasConfigRequestToJSON(value['gasConfig']),
+        'with_external_fee_payer': value['withExternalFeePayer'],
+        'chain': AptosChainUniqueIdToJSON(value['chain']),
+        'serialized_transaction_payload': value['serializedTransactionPayload'],
     };
 }

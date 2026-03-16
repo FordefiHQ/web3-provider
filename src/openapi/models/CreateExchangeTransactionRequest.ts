@@ -10,14 +10,14 @@
  * Do not edit the class manually.
  */
 
+import type { CreateExchangeExternalWithdrawRequest } from './CreateExchangeExternalWithdrawRequest';
+import {
+    CreateExchangeExternalWithdrawRequestToJSON,
+} from './CreateExchangeExternalWithdrawRequest';
 import type { DappInfo } from './DappInfo';
 import {
     DappInfoToJSON,
 } from './DappInfo';
-import type { CreateExchangeTransactionRequestDetails } from './CreateExchangeTransactionRequestDetails';
-import {
-    CreateExchangeTransactionRequestDetailsToJSON,
-} from './CreateExchangeTransactionRequestDetails';
 
 /**
  * 
@@ -26,46 +26,46 @@ import {
  */
 export interface CreateExchangeTransactionRequest {
     /**
-     * 
+     * The unique identifier of the vault.
      * @type {string}
      * @memberof CreateExchangeTransactionRequest
      */
     vaultId: string;
     /**
-     * 
+     * An optional transaction note.
      * @type {string}
      * @memberof CreateExchangeTransactionRequest
      */
     note?: string;
     /**
-     * 
-     * @type {string}
+     * The signer of the transaction. Can be: <ul><li>`initiator`: The creator of the transaction (default).<li>`api_signer`: A service that you run on your own network or cloud environment. </ul>
+     * @type {CreateExchangeTransactionRequestSignerTypeEnum}
      * @memberof CreateExchangeTransactionRequest
      */
     signerType?: CreateExchangeTransactionRequestSignerTypeEnum;
     /**
-     * 
+     * The DApp information.
      * @type {DappInfo}
      * @memberof CreateExchangeTransactionRequest
      */
     dappInfo?: DappInfo;
     /**
-     * 
-     * @type {string}
+     * EXCHANGE transaction type.
+     * @type {CreateExchangeTransactionRequestTypeEnum}
      * @memberof CreateExchangeTransactionRequest
      */
     type: CreateExchangeTransactionRequestTypeEnum;
     /**
      * 
-     * @type {CreateExchangeTransactionRequestDetails}
+     * @type {CreateExchangeExternalWithdrawRequest}
      * @memberof CreateExchangeTransactionRequest
      */
-    details: CreateExchangeTransactionRequestDetails;
+    details: CreateExchangeExternalWithdrawRequest;
 }
 
 
 /**
- * 
+ * @export
  */
 const CreateExchangeTransactionRequestSignerTypeEnum = {
     initiator: 'initiator',
@@ -74,7 +74,7 @@ const CreateExchangeTransactionRequestSignerTypeEnum = {
 type CreateExchangeTransactionRequestSignerTypeEnum = typeof CreateExchangeTransactionRequestSignerTypeEnum[keyof typeof CreateExchangeTransactionRequestSignerTypeEnum];
 
 /**
- * 
+ * @export
  */
 const CreateExchangeTransactionRequestTypeEnum = {
     exchangeTransaction: 'exchange_transaction'
@@ -97,6 +97,6 @@ function CreateExchangeTransactionRequestToJSONTyped(value?: CreateExchangeTrans
         'signer_type': value['signerType'],
         'dapp_info': DappInfoToJSON(value['dappInfo']),
         'type': value['type'],
-        'details': CreateExchangeTransactionRequestDetailsToJSON(value['details']),
+        'details': CreateExchangeExternalWithdrawRequestToJSON(value['details']),
     };
 }

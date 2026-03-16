@@ -23,13 +23,13 @@ import {
  */
 export interface StacksSip10AssetIdentifierRequest {
     /**
-     * 
-     * @type {string}
+     * Sip10 asset identifier type.
+     * @type {StacksSip10AssetIdentifierRequestTypeEnum}
      * @memberof StacksSip10AssetIdentifierRequest
      */
     type: StacksSip10AssetIdentifierRequestTypeEnum;
     /**
-     * 
+     * The Sip10 details.
      * @type {StacksAddressRequest}
      * @memberof StacksSip10AssetIdentifierRequest
      */
@@ -38,7 +38,7 @@ export interface StacksSip10AssetIdentifierRequest {
 
 
 /**
- * 
+ * @export
  */
 const StacksSip10AssetIdentifierRequestTypeEnum = {
     sip10: 'sip10'

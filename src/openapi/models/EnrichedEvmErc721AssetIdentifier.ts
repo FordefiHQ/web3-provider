@@ -26,25 +26,25 @@ import {
  */
 export interface EnrichedEvmErc721AssetIdentifier {
     /**
-     * 
+     * The details of the chain of the native asset.
      * @type {EnrichedEvmChain}
      * @memberof EnrichedEvmErc721AssetIdentifier
      */
     chain: EnrichedEvmChain;
     /**
-     * 
-     * @type {string}
+     * EVM asset identifier type.
+     * @type {EnrichedEvmErc721AssetIdentifierTypeEnum}
      * @memberof EnrichedEvmErc721AssetIdentifier
      */
     type: EnrichedEvmErc721AssetIdentifierTypeEnum;
     /**
-     * 
+     * The ERC-721 token contract.
      * @type {EnrichedEvmAddress}
      * @memberof EnrichedEvmErc721AssetIdentifier
      */
     token: EnrichedEvmAddress;
     /**
-     * 
+     * The token id of the ERC-721 token.
      * @type {string}
      * @memberof EnrichedEvmErc721AssetIdentifier
      */
@@ -53,7 +53,7 @@ export interface EnrichedEvmErc721AssetIdentifier {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedEvmErc721AssetIdentifierTypeEnum = {
     erc721: 'erc721'

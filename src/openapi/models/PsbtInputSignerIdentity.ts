@@ -20,9 +20,9 @@ import {
 } from './PsbtSignerIdentityPublicKey';
 
 /**
+ * @type PsbtInputSignerIdentity
  * 
  * @export
- * @type PsbtInputSignerIdentity
  */
 export type PsbtInputSignerIdentity = { type: 'address' } & PsbtSignerIdentityAddress | { type: 'public_key' } & PsbtSignerIdentityPublicKey;
 
@@ -40,8 +40,6 @@ function PsbtInputSignerIdentityToJSONTyped(value?: PsbtInputSignerIdentity | nu
         case 'public_key':
             return Object.assign({}, PsbtSignerIdentityPublicKeyToJSON(value), { type: 'public_key' } as const);
         default:
-            throw new Error(`No variant of PsbtInputSignerIdentity exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

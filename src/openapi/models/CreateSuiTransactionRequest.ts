@@ -34,38 +34,38 @@ import {
  */
 export interface CreateSuiTransactionRequest {
     /**
-     * 
+     * The unique identifier of the vault.
      * @type {string}
      * @memberof CreateSuiTransactionRequest
      */
     vaultId: string;
     /**
-     * 
+     * An optional transaction note.
      * @type {string}
      * @memberof CreateSuiTransactionRequest
      */
     note?: string;
     /**
-     * 
+     * The signer of the transaction. Can be: <ul><li>`initiator`: The creator of the transaction (default).<li>`api_signer`: A service that you run on your own network or cloud environment. <li>`end_user`: A mobile device using Fordefi's SDK.</ul>
      * @type {SignerType}
      * @memberof CreateSuiTransactionRequest
      */
     signerType?: SignerType;
     /**
-     * 
+     * The sign mode of the transaction determines when the transaction will transition to the signing phase. It can be one of the following:<ul><li>`auto`: The transaction will move to signing automatically after approval.<li>`triggered`: The transaction will be in the `waiting_for_signing_trigger` state until "Trigger Transaction Signing" is called. Currently supported only for API Signer signer type.</ul>
      * @type {SignMode}
      * @memberof CreateSuiTransactionRequest
      */
     signMode?: SignMode;
     /**
-     * 
+     * The DApp information.
      * @type {DappInfo}
      * @memberof CreateSuiTransactionRequest
      */
     dappInfo?: DappInfo;
     /**
-     * 
-     * @type {string}
+     * Sui transaction type.
+     * @type {CreateSuiTransactionRequestTypeEnum}
      * @memberof CreateSuiTransactionRequest
      */
     type: CreateSuiTransactionRequestTypeEnum;
@@ -79,7 +79,7 @@ export interface CreateSuiTransactionRequest {
 
 
 /**
- * 
+ * @export
  */
 const CreateSuiTransactionRequestTypeEnum = {
     suiTransaction: 'sui_transaction'

@@ -22,7 +22,7 @@ import {
  */
 export interface AptosGasConfigRequest {
     /**
-     * 
+     * The maximum gas amount payed in the transaction (in Octa).
      * @type {string}
      * @memberof AptosGasConfigRequest
      */
@@ -50,4 +50,3 @@ function AptosGasConfigRequestToJSONTyped(value?: AptosGasConfigRequest | null, 
         'price': AptosGasConfigRequestPriceToJSON(value['price']),
     };
 }
-

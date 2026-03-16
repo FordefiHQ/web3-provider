@@ -30,31 +30,31 @@ import {
  */
 export interface CosmosBechAddressEnrichedChain {
     /**
-     * 
+     * The Cosmos chain.
      * @type {CosmosChainUniqueId}
      * @memberof CosmosBechAddressEnrichedChain
      */
     chain: CosmosChainUniqueId;
     /**
-     * 
+     * The address as bech32.
      * @type {string}
      * @memberof CosmosBechAddressEnrichedChain
      */
     address: string;
     /**
-     * 
+     * The hex representation of the address.
      * @type {string}
      * @memberof CosmosBechAddressEnrichedChain
      */
     hexRepr?: string;
     /**
-     * 
+     * The type of the key that this address is derived from.
      * @type {CosmosKeyType}
      * @memberof CosmosBechAddressEnrichedChain
      */
     keyType?: CosmosKeyType;
     /**
-     * 
+     * Enriched chain of the address.
      * @type {EnrichedCosmosChain}
      * @memberof CosmosBechAddressEnrichedChain
      */
@@ -78,4 +78,3 @@ function CosmosBechAddressEnrichedChainFromJSONTyped(json: any, _ignoreDiscrimin
         'enrichedChain': EnrichedCosmosChainFromJSON(json['enriched_chain']),
     };
 }
-

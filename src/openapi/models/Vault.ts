@@ -30,6 +30,10 @@ import type { ExchangeVault } from './ExchangeVault';
 import {
     ExchangeVaultFromJSONTyped,
 } from './ExchangeVault';
+import type { SafeVault } from './SafeVault';
+import {
+    SafeVaultFromJSONTyped,
+} from './SafeVault';
 import type { SolanaVault } from './SolanaVault';
 import {
     SolanaVaultFromJSONTyped,
@@ -60,11 +64,11 @@ import {
 } from './UtxoVault';
 
 /**
- * 
- * @export
  * @type Vault
+ * Represents a vault in the Fordefi platform
+ * @export
  */
-export type Vault = { type: 'aptos' } & AptosVault | { type: 'black_box' } & BlackBoxVault | { type: 'cosmos' } & CosmosVault | { type: 'evm' } & EvmVault | { type: 'exchange' } & ExchangeVault | { type: 'solana' } & SolanaVault | { type: 'stacks' } & StacksVault | { type: 'starknet' } & StarknetVault | { type: 'sui' } & SuiVault | { type: 'ton' } & TonVault | { type: 'tron' } & TronVault | { type: 'utxo' } & UtxoVault;
+export type Vault = { type: 'aptos' } & AptosVault | { type: 'black_box' } & BlackBoxVault | { type: 'cosmos' } & CosmosVault | { type: 'evm' } & EvmVault | { type: 'exchange' } & ExchangeVault | { type: 'safe' } & SafeVault | { type: 'solana' } & SolanaVault | { type: 'stacks' } & StacksVault | { type: 'starknet' } & StarknetVault | { type: 'sui' } & SuiVault | { type: 'ton' } & TonVault | { type: 'tron' } & TronVault | { type: 'utxo' } & UtxoVault;
 
 export function VaultFromJSON(json: any): Vault {
     return VaultFromJSONTyped(json, false);
@@ -85,6 +89,8 @@ function VaultFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Vault {
             return Object.assign({}, EvmVaultFromJSONTyped(json, true), { type: 'evm' } as const);
         case 'exchange':
             return Object.assign({}, ExchangeVaultFromJSONTyped(json, true), { type: 'exchange' } as const);
+        case 'safe':
+            return Object.assign({}, SafeVaultFromJSONTyped(json, true), { type: 'safe' } as const);
         case 'solana':
             return Object.assign({}, SolanaVaultFromJSONTyped(json, true), { type: 'solana' } as const);
         case 'stacks':
@@ -100,7 +106,6 @@ function VaultFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Vault {
         case 'utxo':
             return Object.assign({}, UtxoVaultFromJSONTyped(json, true), { type: 'utxo' } as const);
         default:
-            throw new Error(`No variant of Vault exists with 'type=${json['type']}'`);
+            return json;
     }
 }
-

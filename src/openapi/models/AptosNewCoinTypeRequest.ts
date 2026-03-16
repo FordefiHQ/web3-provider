@@ -17,19 +17,19 @@ import {
 } from './AptosChainUniqueId';
 
 /**
- * 
+ * New coin type represents a blockchain new coin type.
  * @export
  * @interface AptosNewCoinTypeRequest
  */
 export interface AptosNewCoinTypeRequest {
     /**
-     * 
+     * The chain details this address is of.
      * @type {AptosChainUniqueId}
      * @memberof AptosNewCoinTypeRequest
      */
     chain: AptosChainUniqueId;
     /**
-     * 
+     * New coin's metadata address.
      * @type {string}
      * @memberof AptosNewCoinTypeRequest
      */
@@ -66,4 +66,3 @@ function AptosNewCoinTypeRequestToJSONTyped(value?: AptosNewCoinTypeRequest | nu
         'metadata_address': value['metadataAddress'],
     };
 }
-

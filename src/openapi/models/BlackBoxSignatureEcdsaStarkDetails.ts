@@ -22,25 +22,25 @@ import {
  */
 export interface BlackBoxSignatureEcdsaStarkDetails {
     /**
-     * 
-     * @type {string}
+     * ECDSA over the Stark curve signature.
+     * @type {BlackBoxSignatureEcdsaStarkDetailsTypeEnum}
      * @memberof BlackBoxSignatureEcdsaStarkDetails
      */
     type: BlackBoxSignatureEcdsaStarkDetailsTypeEnum;
     /**
-     * 
+     * The ECDSA signature over the Stark curve.
      * @type {EcdsaSignature}
      * @memberof BlackBoxSignatureEcdsaStarkDetails
      */
     signature?: EcdsaSignature;
     /**
-     * 
+     * The payload to sign, encoded in base64 format. 
      * @type {string}
      * @memberof BlackBoxSignatureEcdsaStarkDetails
      */
     hashBinary: string;
     /**
-     * 
+     * The payload to sign, as a big-endian integer.
      * @type {string}
      * @memberof BlackBoxSignatureEcdsaStarkDetails
      * @deprecated
@@ -50,7 +50,7 @@ export interface BlackBoxSignatureEcdsaStarkDetails {
 
 
 /**
- * 
+ * @export
  */
 const BlackBoxSignatureEcdsaStarkDetailsTypeEnum = {
     ecdsaStark: 'ecdsa_stark'

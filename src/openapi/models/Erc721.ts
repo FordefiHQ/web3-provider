@@ -22,26 +22,26 @@ import {
  */
 export interface Erc721 {
     /**
-     * 
+     * The token address
      * @type {EvmAddress}
      * @memberof Erc721
      */
     address: EvmAddress;
     /**
-     * 
+     * The token name
      * @type {string}
      * @memberof Erc721
      */
     name: string;
     /**
-     * 
+     * The token symbol or ticker
      * @type {string}
      * @memberof Erc721
      */
     symbol: string;
     /**
-     * 
-     * @type {string}
+     * The type of the token
+     * @type {Erc721TypeEnum}
      * @memberof Erc721
      */
     type: Erc721TypeEnum;
@@ -49,16 +49,12 @@ export interface Erc721 {
 
 
 /**
- * 
+ * @export
  */
 const Erc721TypeEnum = {
     erc721: 'erc721'
 } as const;
 type Erc721TypeEnum = typeof Erc721TypeEnum[keyof typeof Erc721TypeEnum];
-
-export function Erc721FromJSON(json: any): Erc721 {
-    return Erc721FromJSONTyped(json, false);
-}
 
 export function Erc721FromJSONTyped(json: any, _ignoreDiscriminator: boolean): Erc721 {
     if (json == null) {

@@ -20,9 +20,9 @@ import {
 } from './GasPriorityRequest';
 
 /**
- * 
- * @export
  * @type CreateEvmRawTransactionRequestGas
+ * The gas details of the transaction. The details depend on which option you choose:<ul><li>Gas Priority or <li>Custom Gas Request </ul>
+ * @export
  */
 export type CreateEvmRawTransactionRequestGas = { type: 'custom' } & CustomGasRequest | { type: 'priority' } & GasPriorityRequest;
 
@@ -40,8 +40,6 @@ function CreateEvmRawTransactionRequestGasToJSONTyped(value?: CreateEvmRawTransa
         case 'priority':
             return Object.assign({}, GasPriorityRequestToJSON(value), { type: 'priority' } as const);
         default:
-            throw new Error(`No variant of CreateEvmRawTransactionRequestGas exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

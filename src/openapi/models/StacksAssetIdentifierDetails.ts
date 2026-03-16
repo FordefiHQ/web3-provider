@@ -22,9 +22,9 @@ import {
 } from './StacksSip10AssetIdentifierRequest';
 
 /**
+ * @type StacksAssetIdentifierDetails
  * 
  * @export
- * @type StacksAssetIdentifierDetails
  */
 export type StacksAssetIdentifierDetails = { type: 'native' } & StacksNativeAssetIdentifierRequest | { type: 'sip10' } & StacksSip10AssetIdentifierRequest;
 
@@ -42,7 +42,7 @@ function StacksAssetIdentifierDetailsFromJSONTyped(json: any, _ignoreDiscriminat
         case 'sip10':
             return Object.assign({}, StacksSip10AssetIdentifierRequestFromJSONTyped(json, true), { type: 'sip10' } as const);
         default:
-            throw new Error(`No variant of StacksAssetIdentifierDetails exists with 'type=${json['type']}'`);
+            return json;
     }
 }
 
@@ -60,8 +60,6 @@ function StacksAssetIdentifierDetailsToJSONTyped(value?: StacksAssetIdentifierDe
         case 'sip10':
             return Object.assign({}, StacksSip10AssetIdentifierRequestToJSON(value), { type: 'sip10' } as const);
         default:
-            throw new Error(`No variant of StacksAssetIdentifierDetails exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

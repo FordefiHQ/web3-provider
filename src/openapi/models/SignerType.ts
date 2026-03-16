@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const SignerType = {
@@ -33,4 +34,3 @@ function SignerTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Sign
 export function SignerTypeToJSON(value?: SignerType | null): any {
     return value as any;
 }
-

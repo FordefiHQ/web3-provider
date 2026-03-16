@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const ExchangeTransactionState = {
@@ -34,4 +35,3 @@ export function ExchangeTransactionStateFromJSON(json: any): ExchangeTransaction
 function ExchangeTransactionStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): ExchangeTransactionState {
     return json as ExchangeTransactionState;
 }
-

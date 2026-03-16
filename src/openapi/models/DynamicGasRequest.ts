@@ -17,19 +17,19 @@
  */
 export interface DynamicGasRequest {
     /**
-     * 
-     * @type {string}
+     * The type of gas data.
+     * @type {DynamicGasRequestTypeEnum}
      * @memberof DynamicGasRequest
      */
     type: DynamicGasRequestTypeEnum;
     /**
-     * 
+     * Max priority fee per gas.
      * @type {string}
      * @memberof DynamicGasRequest
      */
     maxPriorityFeePerGas: string;
     /**
-     * 
+     * Max fee per gas.
      * @type {string}
      * @memberof DynamicGasRequest
      */
@@ -61,4 +61,3 @@ function DynamicGasRequestToJSONTyped(value?: DynamicGasRequest | null, _ignoreD
         'max_fee_per_gas': value['maxFeePerGas'],
     };
 }
-

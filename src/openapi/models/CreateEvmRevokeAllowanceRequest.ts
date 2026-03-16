@@ -10,10 +10,18 @@
  * Do not edit the class manually.
  */
 
+import type { TransactionFeePayerVault } from './TransactionFeePayerVault';
+import {
+    TransactionFeePayerVaultToJSON,
+} from './TransactionFeePayerVault';
 import type { EvmChainRequest } from './EvmChainRequest';
 import {
     EvmChainRequestToJSON,
 } from './EvmChainRequest';
+import type { CustomNonce } from './CustomNonce';
+import {
+    CustomNonceToJSON,
+} from './CustomNonce';
 import type { CreateEvmRawTransactionRequestGas } from './CreateEvmRawTransactionRequestGas';
 import {
     CreateEvmRawTransactionRequestGasToJSON,
@@ -30,15 +38,46 @@ import {
  */
 export interface CreateEvmRevokeAllowanceRequest {
     /**
-     * 
-     * @type {string}
+     * The vault that pays the fee for this transaction.
+     * @type {TransactionFeePayerVault}
+     * @memberof CreateEvmRevokeAllowanceRequest
+     */
+    feePayer?: TransactionFeePayerVault;
+    /**
+     * An EVM revoke allowance transaction is for revoking a spender's allowance for a specific token.
+     * @type {CreateEvmRevokeAllowanceRequestTypeEnum}
      * @memberof CreateEvmRevokeAllowanceRequest
      */
     type: CreateEvmRevokeAllowanceRequestTypeEnum;
     /**
-     * 
+     * `True` if the request should fail in case simulation failed, `False` otherwise. <br> In case simulation has failed upon continuation, the expected result of the transaction will be partial and policy will be applied on information that can be extracted statically from the transaction only. This might result in falling back to the default policy rule. 
      * @type {boolean}
      * @memberof CreateEvmRevokeAllowanceRequest
+     */
+    failOnPredictionFailure?: boolean;
+    /**
+     * `True` to create a transaction without prediction, `False` otherwise. <br> In case of skipping simulation, the simulation status will be skipped and the expected result of the transaction will be empty. The policy will be applied on information that can be extracted statically from the transaction only. This might result in falling back to the default policy rule. <br> Note, it is recommended to use the default setting for this field and to turn off `fail_on_prediction_failure` instead - unless you wish to save time by omitting the prediction phase entirely. 
+     * @type {boolean}
+     * @memberof CreateEvmRevokeAllowanceRequest
+     */
+    skipPrediction?: boolean;
+    /**
+     * The push mode of the transaction when sending it to the node. It can be one of the following:<ul><li>`auto`: The transaction is pushed automatically by Fordefi. <li>`manual`: The transaction should be pushed manually by the user using a 3rd party.<li>`deferred`: The transaction is pushed by Fordefi after a certain time, if by that time it wasn't pushed manually by the client.</ul></ul> 
+     * @type {PushMode}
+     * @memberof CreateEvmRevokeAllowanceRequest
+     */
+    pushMode?: PushMode;
+    /**
+     * Use a MEV protected node to send the transaction. By using a MEV protected node, you avoid maximal extractable value (MEV) attacks.
+     * @type {boolean}
+     * @memberof CreateEvmRevokeAllowanceRequest
+     */
+    useMevProtectedNode?: boolean;
+    /**
+     * Use a secure node to send the transaction. By using a secure node, you avoid maximal extractable value (MEV) attacks.
+     * @type {boolean}
+     * @memberof CreateEvmRevokeAllowanceRequest
+     * @deprecated
      */
     useSecureNode?: boolean;
     /**
@@ -48,43 +87,32 @@ export interface CreateEvmRevokeAllowanceRequest {
      */
     gas?: CreateEvmRawTransactionRequestGas;
     /**
-     * 
-     * @type {boolean}
-     * @memberof CreateEvmRevokeAllowanceRequest
-     */
-    failOnPredictionFailure?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CreateEvmRevokeAllowanceRequest
-     */
-    skipPrediction?: boolean;
-    /**
-     * 
-     * @type {PushMode}
-     * @memberof CreateEvmRevokeAllowanceRequest
-     */
-    pushMode?: PushMode;
-    /**
-     * 
+     * The unique identifier of the vault that pays the fee for this transaction.
      * @type {string}
      * @memberof CreateEvmRevokeAllowanceRequest
+     * @deprecated
      */
     funder?: string;
     /**
      * 
+     * @type {CustomNonce}
+     * @memberof CreateEvmRevokeAllowanceRequest
+     */
+    customNonce?: CustomNonce;
+    /**
+     * The chain that this transaction is on. Specify either the chain name (for example `ethereum_mainnet`), the chain ID as a string (`evm_1`), or the chain ID as an integer (`1`).
      * @type {EvmChainRequest}
      * @memberof CreateEvmRevokeAllowanceRequest
      */
     chain: EvmChainRequest;
     /**
-     * 
+     * The ERC-20 token contract for which to revoke allowance.
      * @type {string}
      * @memberof CreateEvmRevokeAllowanceRequest
      */
     token: string;
     /**
-     * 
+     * The EOA or contract address of the spender for whom to revoke allowance.
      * @type {string}
      * @memberof CreateEvmRevokeAllowanceRequest
      */
@@ -93,7 +121,7 @@ export interface CreateEvmRevokeAllowanceRequest {
 
 
 /**
- * 
+ * @export
  */
 const CreateEvmRevokeAllowanceRequestTypeEnum = {
     evmRevokeAllowance: 'evm_revoke_allowance'
@@ -111,13 +139,16 @@ function CreateEvmRevokeAllowanceRequestToJSONTyped(value?: CreateEvmRevokeAllow
 
     return {
         
+        'fee_payer': TransactionFeePayerVaultToJSON(value['feePayer']),
         'type': value['type'],
-        'use_secure_node': value['useSecureNode'],
-        'gas': CreateEvmRawTransactionRequestGasToJSON(value['gas']),
         'fail_on_prediction_failure': value['failOnPredictionFailure'],
         'skip_prediction': value['skipPrediction'],
         'push_mode': PushModeToJSON(value['pushMode']),
+        'use_mev_protected_node': value['useMevProtectedNode'],
+        'use_secure_node': value['useSecureNode'],
+        'gas': CreateEvmRawTransactionRequestGasToJSON(value['gas']),
         'funder': value['funder'],
+        'custom_nonce': CustomNonceToJSON(value['customNonce']),
         'chain': EvmChainRequestToJSON(value['chain']),
         'token': value['token'],
         'spender': value['spender'],

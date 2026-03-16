@@ -20,9 +20,9 @@ import {
 } from './EvmBridgeEffectUnknownDestination';
 
 /**
- * 
- * @export
  * @type EvmBridgeEffectDestination
+ * The destination details of the bridge transaction.
+ * @export
  */
 export type EvmBridgeEffectDestination = { type: 'known_target_chain' } & EvmBridgeEffectKnownDestination | { type: 'unknown_target_chain' } & EvmBridgeEffectUnknownDestination;
 
@@ -40,7 +40,6 @@ function EvmBridgeEffectDestinationFromJSONTyped(json: any, _ignoreDiscriminator
         case 'unknown_target_chain':
             return Object.assign({}, EvmBridgeEffectUnknownDestinationFromJSONTyped(json, true), { type: 'unknown_target_chain' } as const);
         default:
-            throw new Error(`No variant of EvmBridgeEffectDestination exists with 'type=${json['type']}'`);
+            return json;
     }
 }
-

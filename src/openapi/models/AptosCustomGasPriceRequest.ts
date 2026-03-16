@@ -18,12 +18,12 @@
 export interface AptosCustomGasPriceRequest {
     /**
      * 
-     * @type {string}
+     * @type {AptosCustomGasPriceRequestTypeEnum}
      * @memberof AptosCustomGasPriceRequest
      */
     type: AptosCustomGasPriceRequestTypeEnum;
     /**
-     * 
+     * The price per gas unit (in Octa).
      * @type {string}
      * @memberof AptosCustomGasPriceRequest
      */
@@ -32,7 +32,7 @@ export interface AptosCustomGasPriceRequest {
 
 
 /**
- * 
+ * @export
  */
 const AptosCustomGasPriceRequestTypeEnum = {
     custom: 'custom'

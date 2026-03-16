@@ -17,13 +17,13 @@
  */
 export interface SuiRecipientHex {
     /**
-     * 
-     * @type {string}
+     * The type of the recipient.
+     * @type {SuiRecipientHexTypeEnum}
      * @memberof SuiRecipientHex
      */
     type: SuiRecipientHexTypeEnum;
     /**
-     * 
+     * The address of the recipient.
      * @type {string}
      * @memberof SuiRecipientHex
      */
@@ -32,7 +32,7 @@ export interface SuiRecipientHex {
 
 
 /**
- * 
+ * @export
  */
 const SuiRecipientHexTypeEnum = {
     hex: 'hex'

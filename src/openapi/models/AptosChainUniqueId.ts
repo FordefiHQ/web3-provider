@@ -12,13 +12,14 @@
 
 
 /**
+ * 
  * @export
  */
 export const AptosChainUniqueId = {
-    mainnet: 'aptos_mainnet',
-    testnet: 'aptos_testnet',
-    movementMainnet: 'aptos_movement_mainnet',
-    movementTestnet: 'aptos_movement_testnet'
+    aptosMainnet: 'aptos_mainnet',
+    aptosTestnet: 'aptos_testnet',
+    aptosMovementMainnet: 'aptos_movement_mainnet',
+    aptosMovementTestnet: 'aptos_movement_testnet'
 } as const;
 export type AptosChainUniqueId = typeof AptosChainUniqueId[keyof typeof AptosChainUniqueId];
 
@@ -33,4 +34,3 @@ function AptosChainUniqueIdFromJSONTyped(json: any, _ignoreDiscriminator: boolea
 export function AptosChainUniqueIdToJSON(value?: AptosChainUniqueId | null): any {
     return value as any;
 }
-

@@ -30,31 +30,31 @@ import {
  */
 export interface EnrichedCosmosChain {
     /**
-     * 
-     * @type {string}
+     * The type of the chain.
+     * @type {EnrichedCosmosChainChainTypeEnum}
      * @memberof EnrichedCosmosChain
      */
     chainType: EnrichedCosmosChainChainTypeEnum;
     /**
-     * 
+     * The Cosmos chain unique id.
      * @type {CosmosChainUniqueId}
      * @memberof EnrichedCosmosChain
      */
     uniqueId: CosmosChainUniqueId;
     /**
-     * 
+     * The full blockchain name.
      * @type {string}
      * @memberof EnrichedCosmosChain
      */
     name: string;
     /**
-     * 
+     * The native currency symbol.
      * @type {string}
      * @memberof EnrichedCosmosChain
      */
     nativeCurrencySymbol: string;
     /**
-     * 
+     * The native currency name.
      * @type {string}
      * @memberof EnrichedCosmosChain
      */
@@ -66,31 +66,31 @@ export interface EnrichedCosmosChain {
      */
     blockchainExplorer?: BlockchainExplorer;
     /**
-     * 
+     * The logo URL of the chain.
      * @type {string}
      * @memberof EnrichedCosmosChain
      */
     logoUrl: string;
     /**
-     * 
+     * Whether the chain is on a testnet.
      * @type {boolean}
      * @memberof EnrichedCosmosChain
      */
     isTestnet: boolean;
     /**
-     * 
+     * Whether the chain is enabled.
      * @type {boolean}
      * @memberof EnrichedCosmosChain
      */
     isEnabled: boolean;
     /**
-     * 
+     * The base denom of the chain.
      * @type {string}
      * @memberof EnrichedCosmosChain
      */
     baseDenom: string;
     /**
-     * 
+     * The bech32 prefix for addresses on the chain.
      * @type {CosmosBech32Prefix}
      * @memberof EnrichedCosmosChain
      */
@@ -99,7 +99,7 @@ export interface EnrichedCosmosChain {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedCosmosChainChainTypeEnum = {
     cosmos: 'cosmos'

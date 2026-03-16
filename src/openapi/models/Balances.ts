@@ -11,23 +11,67 @@
  */
 
 /**
- * 
+ * The cryptocurrency balances of the asset.
  * @export
  * @interface Balances
  */
 export interface Balances {
     /**
-     * 
+     * The value of all mined assets.
      * @type {string}
      * @memberof Balances
      */
-    mined: string;
+    totalMined: string;
     /**
-     * 
+     * The value of all pending incoming assets.
      * @type {string}
      * @memberof Balances
      */
-    pendingIncoming: string;
+    totalPendingIncoming: string;
+    /**
+     * The value of all available mined assets. Equals to total mined balance minus frozen mined.
+     * @type {string}
+     * @memberof Balances
+     * @deprecated
+     */
+    mined?: string;
+    /**
+     * The value of all available pending incoming assets. Equals to total pending incoming minus frozen pending incoming.
+     * @type {string}
+     * @memberof Balances
+     * @deprecated
+     */
+    pendingIncoming?: string;
+    /**
+     * The value of all available mined assets. Equals to total mined balance minus frozen mined.
+     * @type {string}
+     * @memberof Balances
+     */
+    availableMined: string;
+    /**
+     * The value of all available pending incoming assets. Equals to total pending incoming minus frozen pending incoming.
+     * @type {string}
+     * @memberof Balances
+     */
+    availablePendingIncoming: string;
+    /**
+     * The value of all mined frozen assets.
+     * @type {string}
+     * @memberof Balances
+     */
+    frozenMined: string;
+    /**
+     * The value of all pending incoming frozen assets.
+     * @type {string}
+     * @memberof Balances
+     */
+    frozenPendingIncoming: string;
+    /**
+     * The trustline limit for Stellar assets. Nil for non-Stellar assets or assets without trustlines.
+     * @type {string}
+     * @memberof Balances
+     */
+    trustlineLimit?: string;
 }
 
 export function BalancesFromJSON(json: any): Balances {
@@ -40,8 +84,14 @@ function BalancesFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Balanc
     }
     return {
         
-        'mined': json['mined'],
-        'pendingIncoming': json['pending_incoming'],
+        'totalMined': json['total_mined'],
+        'totalPendingIncoming': json['total_pending_incoming'],
+        'mined': json['mined'] == null ? undefined : json['mined'],
+        'pendingIncoming': json['pending_incoming'] == null ? undefined : json['pending_incoming'],
+        'availableMined': json['available_mined'],
+        'availablePendingIncoming': json['available_pending_incoming'],
+        'frozenMined': json['frozen_mined'],
+        'frozenPendingIncoming': json['frozen_pending_incoming'],
+        'trustlineLimit': json['trustline_limit'] == null ? undefined : json['trustline_limit'],
     };
 }
-

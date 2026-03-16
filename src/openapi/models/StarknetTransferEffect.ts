@@ -26,25 +26,25 @@ import {
  */
 export interface StarknetTransferEffect {
     /**
-     * 
+     * The asset information.
      * @type {PricedAsset}
      * @memberof StarknetTransferEffect
      */
     pricedAsset: PricedAsset;
     /**
-     * 
+     * The amount of the transfer.
      * @type {string}
      * @memberof StarknetTransferEffect
      */
     amount: string;
     /**
-     * 
+     * The sender of the transfer.
      * @type {EnrichedStarknetAddress}
      * @memberof StarknetTransferEffect
      */
     from: EnrichedStarknetAddress;
     /**
-     * 
+     * The receiver of the transfer.
      * @type {EnrichedStarknetAddress}
      * @memberof StarknetTransferEffect
      */
@@ -67,4 +67,3 @@ function StarknetTransferEffectFromJSONTyped(json: any, _ignoreDiscriminator: bo
         'to': EnrichedStarknetAddressFromJSON(json['to']),
     };
 }
-

@@ -23,12 +23,12 @@ import {
 export interface StacksPriorityFeeRequest {
     /**
      * 
-     * @type {string}
+     * @type {StacksPriorityFeeRequestTypeEnum}
      * @memberof StacksPriorityFeeRequest
      */
     type: StacksPriorityFeeRequestTypeEnum;
     /**
-     * 
+     * Using the Fee Priority option, you allocate the range of fee you are willing to add: low, medium, or high. Fordefi then does its best to achieve success, based on these parameters.
      * @type {FeePriorityLevelRequest}
      * @memberof StacksPriorityFeeRequest
      */
@@ -37,7 +37,7 @@ export interface StacksPriorityFeeRequest {
 
 
 /**
- * 
+ * @export
  */
 const StacksPriorityFeeRequestTypeEnum = {
     priority: 'priority'

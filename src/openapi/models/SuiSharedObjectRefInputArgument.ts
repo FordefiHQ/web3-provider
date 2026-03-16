@@ -17,25 +17,25 @@
  */
 export interface SuiSharedObjectRefInputArgument {
     /**
-     * 
-     * @type {string}
+     * The type of the object.
+     * @type {SuiSharedObjectRefInputArgumentTypeEnum}
      * @memberof SuiSharedObjectRefInputArgument
      */
     type: SuiSharedObjectRefInputArgumentTypeEnum;
     /**
-     * 
+     * The id of the shared object.
      * @type {string}
      * @memberof SuiSharedObjectRefInputArgument
      */
     objectId: string;
     /**
-     * 
+     * The initial shared version of the object.
      * @type {number}
      * @memberof SuiSharedObjectRefInputArgument
      */
     initialSharedVersion: number;
     /**
-     * 
+     * `True` if the object is mutable, `False` otherwise.
      * @type {boolean}
      * @memberof SuiSharedObjectRefInputArgument
      */
@@ -44,7 +44,7 @@ export interface SuiSharedObjectRefInputArgument {
 
 
 /**
- * 
+ * @export
  */
 const SuiSharedObjectRefInputArgumentTypeEnum = {
     shared: 'shared'

@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const UtxoMessageType = {
@@ -31,4 +32,3 @@ function UtxoMessageTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean):
 export function UtxoMessageTypeToJSON(value?: UtxoMessageType | null): any {
     return value as any;
 }
-

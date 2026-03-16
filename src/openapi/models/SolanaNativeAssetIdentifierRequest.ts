@@ -23,13 +23,13 @@ import {
  */
 export interface SolanaNativeAssetIdentifierRequest {
     /**
-     * 
-     * @type {string}
+     * Solana asset identifier type.
+     * @type {SolanaNativeAssetIdentifierRequestTypeEnum}
      * @memberof SolanaNativeAssetIdentifierRequest
      */
     type: SolanaNativeAssetIdentifierRequestTypeEnum;
     /**
-     * 
+     * The details of the chain of the native asset.
      * @type {SolanaChainUniqueId}
      * @memberof SolanaNativeAssetIdentifierRequest
      */
@@ -38,7 +38,7 @@ export interface SolanaNativeAssetIdentifierRequest {
 
 
 /**
- * 
+ * @export
  */
 const SolanaNativeAssetIdentifierRequestTypeEnum = {
     native: 'native'

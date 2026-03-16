@@ -23,13 +23,13 @@ import {
  */
 export interface TonJettonAssetIdentifierRequest {
     /**
-     * 
-     * @type {string}
+     * Jetton asset identifier type.
+     * @type {TonJettonAssetIdentifierRequestTypeEnum}
      * @memberof TonJettonAssetIdentifierRequest
      */
     type: TonJettonAssetIdentifierRequestTypeEnum;
     /**
-     * 
+     * The Jetton details.
      * @type {TonAddressRequest}
      * @memberof TonJettonAssetIdentifierRequest
      */
@@ -38,7 +38,7 @@ export interface TonJettonAssetIdentifierRequest {
 
 
 /**
- * 
+ * @export
  */
 const TonJettonAssetIdentifierRequestTypeEnum = {
     jetton: 'jetton'

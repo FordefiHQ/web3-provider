@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const TransactionRiskType = {
@@ -36,4 +37,3 @@ export function TransactionRiskTypeFromJSON(json: any): TransactionRiskType {
 function TransactionRiskTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): TransactionRiskType {
     return json as TransactionRiskType;
 }
-

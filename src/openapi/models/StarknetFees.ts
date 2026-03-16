@@ -14,10 +14,6 @@ import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
 } from './PricedAsset';
-import type { Price } from './Price';
-import {
-    PriceFromJSON,
-} from './Price';
 
 /**
  * 
@@ -26,19 +22,13 @@ import {
  */
 export interface StarknetFees {
     /**
-     * 
+     * The fee payed for the transaction.
      * @type {string}
      * @memberof StarknetFees
      */
     feePayed: string;
     /**
-     * 
-     * @type {Price}
-     * @memberof StarknetFees
-     */
-    fiatPrice?: Price;
-    /**
-     * 
+     * The information of the asset used to pay the fee and amount used.
      * @type {PricedAsset}
      * @memberof StarknetFees
      */
@@ -56,8 +46,6 @@ function StarknetFeesFromJSONTyped(json: any, _ignoreDiscriminator: boolean): St
     return {
         
         'feePayed': json['fee_payed'],
-        'fiatPrice': json['fiat_price'] == null ? undefined : PriceFromJSON(json['fiat_price']),
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }
-

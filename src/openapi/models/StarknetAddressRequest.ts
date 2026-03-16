@@ -17,19 +17,19 @@ import {
 } from './StarknetChainUniqueId';
 
 /**
- * 
+ * Address represents a blockchain address.
  * @export
  * @interface StarknetAddressRequest
  */
 export interface StarknetAddressRequest {
     /**
-     * 
+     * The chain details this address is of.
      * @type {StarknetChainUniqueId}
      * @memberof StarknetAddressRequest
      */
     chain: StarknetChainUniqueId;
     /**
-     * 
+     * Hexadecimal representation of the address in the chain.
      * @type {string}
      * @memberof StarknetAddressRequest
      */
@@ -66,4 +66,3 @@ function StarknetAddressRequestToJSONTyped(value?: StarknetAddressRequest | null
         'hex_repr': value['hexRepr'],
     };
 }
-

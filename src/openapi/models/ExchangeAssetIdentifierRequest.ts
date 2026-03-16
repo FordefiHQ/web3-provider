@@ -22,19 +22,19 @@ import {
  */
 export interface ExchangeAssetIdentifierRequest {
     /**
-     * 
-     * @type {string}
+     * Asset identifier type.
+     * @type {ExchangeAssetIdentifierRequestTypeEnum}
      * @memberof ExchangeAssetIdentifierRequest
      */
     type: ExchangeAssetIdentifierRequestTypeEnum;
     /**
-     * 
+     * exchange type.
      * @type {ExchangeType}
      * @memberof ExchangeAssetIdentifierRequest
      */
     exchangeType: ExchangeType;
     /**
-     * 
+     * The symbol of the asset on the exchange.
      * @type {string}
      * @memberof ExchangeAssetIdentifierRequest
      */
@@ -43,7 +43,7 @@ export interface ExchangeAssetIdentifierRequest {
 
 
 /**
- * 
+ * @export
  */
 const ExchangeAssetIdentifierRequestTypeEnum = {
     exchange: 'exchange'

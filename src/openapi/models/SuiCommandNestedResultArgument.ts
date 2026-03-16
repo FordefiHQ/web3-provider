@@ -11,25 +11,25 @@
  */
 
 /**
- * 
+ * Like a `SuiCommandResultArgument` but it accesses a nested result.
  * @export
  * @interface SuiCommandNestedResultArgument
  */
 export interface SuiCommandNestedResultArgument {
     /**
-     * 
-     * @type {string}
+     * The type of the command argument.
+     * @type {SuiCommandNestedResultArgumentTypeEnum}
      * @memberof SuiCommandNestedResultArgument
      */
     type: SuiCommandNestedResultArgumentTypeEnum;
     /**
-     * 
+     * The index of the command in the command vector.
      * @type {number}
      * @memberof SuiCommandNestedResultArgument
      */
     index: number;
     /**
-     * 
+     * The index of the result in the result vector of that command.
      * @type {number}
      * @memberof SuiCommandNestedResultArgument
      */
@@ -38,7 +38,7 @@ export interface SuiCommandNestedResultArgument {
 
 
 /**
- * 
+ * @export
  */
 const SuiCommandNestedResultArgumentTypeEnum = {
     nestedResult: 'nested_result'

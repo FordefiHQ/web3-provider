@@ -10,10 +10,15 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from '../runtime';
 import type { EvmMessageDomainData } from './EvmMessageDomainData';
 import {
     EvmMessageDomainDataFromJSON,
 } from './EvmMessageDomainData';
+import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
+import {
+    EnrichedEvmAddressFromJSON,
+} from './EnrichedEvmAddress';
 
 /**
  * 
@@ -22,20 +27,26 @@ import {
  */
 export interface UnknownTypedMessageEvmMessage {
     /**
-     * 
+     * The domain data.
      * @type {EvmMessageDomainData}
      * @memberof UnknownTypedMessageEvmMessage
      */
     domain: EvmMessageDomainData;
     /**
-     * 
+     * Used to identify the primary type of the message.
      * @type {string}
      * @memberof UnknownTypedMessageEvmMessage
      */
     primaryType: string;
     /**
-     * 
-     * @type {string}
+     * Addresses that are related to this message, enriched with metadata.Please NOTE: the dictionary keys are EIP-55 checksummed addresses
+     * @type {{ [key: string]: EnrichedEvmAddress | undefined; }}
+     * @memberof UnknownTypedMessageEvmMessage
+     */
+    enrichedAddresses?: { [key: string]: EnrichedEvmAddress | undefined; };
+    /**
+     * The typed message type.
+     * @type {UnknownTypedMessageEvmMessageTypeEnum}
      * @memberof UnknownTypedMessageEvmMessage
      */
     type: UnknownTypedMessageEvmMessageTypeEnum;
@@ -43,7 +54,7 @@ export interface UnknownTypedMessageEvmMessage {
 
 
 /**
- * 
+ * @export
  */
 const UnknownTypedMessageEvmMessageTypeEnum = {
     unknown: 'unknown'
@@ -58,6 +69,7 @@ export function UnknownTypedMessageEvmMessageFromJSONTyped(json: any, _ignoreDis
         
         'domain': EvmMessageDomainDataFromJSON(json['domain']),
         'primaryType': json['primary_type'],
+        'enrichedAddresses': json['enriched_addresses'] == null ? undefined : (mapValues(json['enriched_addresses'], EnrichedEvmAddressFromJSON)),
         'type': json['type'],
     };
 }

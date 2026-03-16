@@ -22,13 +22,13 @@ import {
  */
 export interface AptosGasData {
     /**
-     * 
+     * The gas limit of the transaction.
      * @type {string}
      * @memberof AptosGasData
      */
     gasLimit: string;
     /**
-     * 
+     * The price per gas unit.
      * @type {AptosGasPrice}
      * @memberof AptosGasData
      */
@@ -49,4 +49,3 @@ function AptosGasDataFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Ap
         'price': AptosGasPriceFromJSON(json['price']),
     };
 }
-

@@ -14,6 +14,10 @@ import type { EvmBalanceChangeEffect } from './EvmBalanceChangeEffect';
 import {
     EvmBalanceChangeEffectFromJSON,
 } from './EvmBalanceChangeEffect';
+import type { EvmBridgesEffect } from './EvmBridgesEffect';
+import {
+    EvmBridgesEffectFromJSON,
+} from './EvmBridgesEffect';
 import type { EvmBridgeEffect } from './EvmBridgeEffect';
 import {
     EvmBridgeEffectFromJSON,
@@ -22,6 +26,10 @@ import type { EvmTransferEffect } from './EvmTransferEffect';
 import {
     EvmTransferEffectFromJSON,
 } from './EvmTransferEffect';
+import type { SetCodeAuthorizationEffect } from './SetCodeAuthorizationEffect';
+import {
+    SetCodeAuthorizationEffectFromJSON,
+} from './SetCodeAuthorizationEffect';
 import type { EvmContractDeploymentEffect } from './EvmContractDeploymentEffect';
 import {
     EvmContractDeploymentEffectFromJSON,
@@ -38,35 +46,47 @@ import {
  */
 export interface EvmEffects {
     /**
-     * 
+     * The aggregated balance changes at the addresses that are involved in the transaction. Values are indicated for all currency components of the transactions: native, ERC-20, ERC-721, and ERC-1155.
      * @type {Array<EvmBalanceChangeEffect>}
      * @memberof EvmEffects
      */
     balanceChanges: Array<EvmBalanceChangeEffect>;
     /**
-     * 
+     * The transfer events of the transaction.
      * @type {Array<EvmTransferEffect>}
      * @memberof EvmEffects
      */
     transfers: Array<EvmTransferEffect>;
     /**
-     * 
+     * The allowance events of the transaction.
      * @type {Array<AllowanceEffect>}
      * @memberof EvmEffects
      */
     allowances: Array<AllowanceEffect>;
     /**
-     * 
+     * The bridge effects of the transaction.
      * @type {Array<EvmBridgeEffect>}
      * @memberof EvmEffects
      */
     bridge: Array<EvmBridgeEffect>;
     /**
-     * 
+     * The bridge effects of the transaction.
+     * @type {Array<EvmBridgesEffect>}
+     * @memberof EvmEffects
+     */
+    bridges: Array<EvmBridgesEffect>;
+    /**
+     * The contract deployment information of the transaction.
      * @type {Array<EvmContractDeploymentEffect>}
      * @memberof EvmEffects
      */
     contractDeployments: Array<EvmContractDeploymentEffect>;
+    /**
+     * The set code authorization effects of the transaction.
+     * @type {Array<SetCodeAuthorizationEffect>}
+     * @memberof EvmEffects
+     */
+    setCodeAuthorizations: Array<SetCodeAuthorizationEffect>;
 }
 
 export function EvmEffectsFromJSON(json: any): EvmEffects {
@@ -83,7 +103,8 @@ function EvmEffectsFromJSONTyped(json: any, _ignoreDiscriminator: boolean): EvmE
         'transfers': ((json['transfers'] as Array<any>).map(EvmTransferEffectFromJSON)),
         'allowances': ((json['allowances'] as Array<any>).map(AllowanceEffectFromJSON)),
         'bridge': ((json['bridge'] as Array<any>).map(EvmBridgeEffectFromJSON)),
+        'bridges': ((json['bridges'] as Array<any>).map(EvmBridgesEffectFromJSON)),
         'contractDeployments': ((json['contract_deployments'] as Array<any>).map(EvmContractDeploymentEffectFromJSON)),
+        'setCodeAuthorizations': ((json['set_code_authorizations'] as Array<any>).map(SetCodeAuthorizationEffectFromJSON)),
     };
 }
-

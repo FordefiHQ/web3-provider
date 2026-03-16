@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const TransactionDirection = {
@@ -27,4 +28,3 @@ export function TransactionDirectionFromJSON(json: any): TransactionDirection {
 function TransactionDirectionFromJSONTyped(json: any, _ignoreDiscriminator: boolean): TransactionDirection {
     return json as TransactionDirection;
 }
-

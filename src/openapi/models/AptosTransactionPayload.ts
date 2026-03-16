@@ -20,9 +20,9 @@ import {
 } from './ScriptPayload';
 
 /**
- * 
- * @export
  * @type AptosTransactionPayload
+ * The payload of the transaction.
+ * @export
  */
 export type AptosTransactionPayload = { type: 'entry_point' } & AptosEntryFunctionPayload | { type: 'script' } & ScriptPayload;
 
@@ -40,7 +40,6 @@ function AptosTransactionPayloadFromJSONTyped(json: any, _ignoreDiscriminator: b
         case 'script':
             return Object.assign({}, ScriptPayloadFromJSONTyped(json, true), { type: 'script' } as const);
         default:
-            throw new Error(`No variant of AptosTransactionPayload exists with 'type=${json['type']}'`);
+            return json;
     }
 }
-

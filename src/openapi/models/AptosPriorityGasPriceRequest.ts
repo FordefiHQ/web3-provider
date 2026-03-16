@@ -23,12 +23,12 @@ import {
 export interface AptosPriorityGasPriceRequest {
     /**
      * 
-     * @type {string}
+     * @type {AptosPriorityGasPriceRequestTypeEnum}
      * @memberof AptosPriorityGasPriceRequest
      */
     type: AptosPriorityGasPriceRequestTypeEnum;
     /**
-     * 
+     * Using the Gas Priority option, you allocate gas according to `gas_limit` and `priority_level`, the range of fee you are willing to add: low, medium, or high. Fordefi then does its best to achieve success, based on these parameters.
      * @type {FeePriorityLevelRequest}
      * @memberof AptosPriorityGasPriceRequest
      */
@@ -37,7 +37,7 @@ export interface AptosPriorityGasPriceRequest {
 
 
 /**
- * 
+ * @export
  */
 const AptosPriorityGasPriceRequestTypeEnum = {
     priority: 'priority'

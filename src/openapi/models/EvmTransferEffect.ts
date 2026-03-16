@@ -14,22 +14,10 @@ import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
 } from './PricedAsset';
-import type { EvmBalanceChangeEffectTokenContract } from './EvmBalanceChangeEffectTokenContract';
-import {
-    EvmBalanceChangeEffectTokenContractFromJSON,
-} from './EvmBalanceChangeEffectTokenContract';
-import type { Price } from './Price';
-import {
-    PriceFromJSON,
-} from './Price';
 import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
 import {
     EnrichedEvmAddressFromJSON,
 } from './EnrichedEvmAddress';
-import type { EvmTransferEffectType } from './EvmTransferEffectType';
-import {
-    EvmTransferEffectTypeFromJSON,
-} from './EvmTransferEffectType';
 
 /**
  * 
@@ -38,55 +26,29 @@ import {
  */
 export interface EvmTransferEffect {
     /**
-     * 
+     * The asset information.
      * @type {PricedAsset}
      * @memberof EvmTransferEffect
      */
     pricedAsset: PricedAsset;
     /**
-     * 
+     * The amount of the transfer.
      * @type {string}
      * @memberof EvmTransferEffect
      */
     amount: string;
     /**
-     * 
-     * @type {EvmTransferEffectType}
-     * @memberof EvmTransferEffect
-     */
-    type: EvmTransferEffectType;
-    /**
-     * 
+     * The sender of the transfer.
      * @type {EnrichedEvmAddress}
      * @memberof EvmTransferEffect
      */
     from: EnrichedEvmAddress;
     /**
-     * 
+     * The receiver of the transfer.
      * @type {EnrichedEvmAddress}
      * @memberof EvmTransferEffect
      */
     to: EnrichedEvmAddress;
-    /**
-     * 
-     * @type {Price}
-     * @memberof EvmTransferEffect
-     */
-    price?: Price;
-    /**
-     * 
-     * @type {EvmBalanceChangeEffectTokenContract}
-     * @memberof EvmTransferEffect
-     * @deprecated
-     */
-    tokenContract?: EvmBalanceChangeEffectTokenContract;
-    /**
-     * 
-     * @type {string}
-     * @memberof EvmTransferEffect
-     * @deprecated
-     */
-    tokenId?: string;
 }
 
 export function EvmTransferEffectFromJSON(json: any): EvmTransferEffect {
@@ -101,12 +63,7 @@ function EvmTransferEffectFromJSONTyped(json: any, _ignoreDiscriminator: boolean
         
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
         'amount': json['amount'],
-        'type': EvmTransferEffectTypeFromJSON(json['type']),
         'from': EnrichedEvmAddressFromJSON(json['from']),
         'to': EnrichedEvmAddressFromJSON(json['to']),
-        'price': json['price'] == null ? undefined : PriceFromJSON(json['price']),
-        'tokenContract': json['token_contract'] == null ? undefined : EvmBalanceChangeEffectTokenContractFromJSON(json['token_contract']),
-        'tokenId': json['token_id'] == null ? undefined : json['token_id'],
     };
 }
-

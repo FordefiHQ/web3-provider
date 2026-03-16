@@ -26,15 +26,16 @@ import {
  */
 export interface TokenTransferDetails {
     /**
-     * 
-     * @type {string}
+     * A transaction involving the transfer of a token from one address to another.
+     * @type {TokenTransferDetailsTypeEnum}
      * @memberof TokenTransferDetails
      */
     type: TokenTransferDetailsTypeEnum;
     /**
-     * 
+     * The direction of funds movement, in case of a transfer.
      * @type {TransferDirection}
      * @memberof TokenTransferDetails
+     * @deprecated
      */
     direction: TransferDirection;
     /**
@@ -44,7 +45,7 @@ export interface TokenTransferDetails {
      */
     recipient: EnrichedEvmAddress;
     /**
-     * 
+     * Is this transfer an internal transfer between two vaults. None if the transaction is incoming.
      * @type {boolean}
      * @memberof TokenTransferDetails
      */
@@ -53,7 +54,7 @@ export interface TokenTransferDetails {
 
 
 /**
- * 
+ * @export
  */
 const TokenTransferDetailsTypeEnum = {
     tokenTransfer: 'token_transfer'

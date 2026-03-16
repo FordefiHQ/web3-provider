@@ -26,31 +26,31 @@ import {
  */
 export interface EnrichedStacksChain {
     /**
-     * 
-     * @type {string}
+     * The type of the chain.
+     * @type {EnrichedStacksChainChainTypeEnum}
      * @memberof EnrichedStacksChain
      */
     chainType: EnrichedStacksChainChainTypeEnum;
     /**
-     * 
+     * The type of the Stacks-based chain.
      * @type {StacksChainUniqueId}
      * @memberof EnrichedStacksChain
      */
     uniqueId: StacksChainUniqueId;
     /**
-     * 
+     * The full blockchain name.
      * @type {string}
      * @memberof EnrichedStacksChain
      */
     name: string;
     /**
-     * 
+     * The native currency symbol.
      * @type {string}
      * @memberof EnrichedStacksChain
      */
     nativeCurrencySymbol: string;
     /**
-     * 
+     * The native currency name.
      * @type {string}
      * @memberof EnrichedStacksChain
      */
@@ -62,19 +62,19 @@ export interface EnrichedStacksChain {
      */
     blockchainExplorer?: BlockchainExplorer;
     /**
-     * 
+     * The logo URL of the chain.
      * @type {string}
      * @memberof EnrichedStacksChain
      */
     logoUrl: string;
     /**
-     * 
+     * Whether the chain is on a testnet.
      * @type {boolean}
      * @memberof EnrichedStacksChain
      */
     isTestnet: boolean;
     /**
-     * 
+     * Whether the chain is enabled.
      * @type {boolean}
      * @memberof EnrichedStacksChain
      */
@@ -83,7 +83,7 @@ export interface EnrichedStacksChain {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedStacksChainChainTypeEnum = {
     stacks: 'stacks'

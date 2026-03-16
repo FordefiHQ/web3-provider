@@ -23,31 +23,31 @@ import {
  */
 export interface TonTransactionMessage {
     /**
-     * 
+     * The sender of the message in a user friendly format.
      * @type {TonAccountRepr}
      * @memberof TonTransactionMessage
      */
     address: TonAccountRepr;
     /**
-     * 
+     * The amount of nano tons to send.
      * @type {string}
      * @memberof TonTransactionMessage
      */
     amount: string;
     /**
-     * 
+     * The payload of the message.
      * @type {string}
      * @memberof TonTransactionMessage
      */
     payload?: string;
     /**
-     * 
+     * The state_init structure contains all the necessary information required to create the initial state of a smart contract.
      * @type {string}
      * @memberof TonTransactionMessage
      */
     stateInit?: string;
     /**
-     * 
+     * A comment that is attached to the message.
      * @type {string}
      * @memberof TonTransactionMessage
      */
@@ -90,4 +90,3 @@ function TonTransactionMessageToJSONTyped(value?: TonTransactionMessage | null, 
         'comment': value['comment'],
     };
 }
-

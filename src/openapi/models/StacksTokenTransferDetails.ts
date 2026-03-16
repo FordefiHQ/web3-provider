@@ -22,25 +22,25 @@ import {
  */
 export interface StacksTokenTransferDetails {
     /**
-     * 
-     * @type {string}
+     * A transaction involving the transfer of an sip10 asset from one address to another.
+     * @type {StacksTokenTransferDetailsTypeEnum}
      * @memberof StacksTokenTransferDetails
      */
     type: StacksTokenTransferDetailsTypeEnum;
     /**
-     * 
+     * The sender of the assets.
      * @type {EnrichedStacksAddress}
      * @memberof StacksTokenTransferDetails
      */
     sender: EnrichedStacksAddress;
     /**
-     * 
+     * The recipient of the assets.
      * @type {EnrichedStacksAddress}
      * @memberof StacksTokenTransferDetails
      */
     recipient: EnrichedStacksAddress;
     /**
-     * 
+     * Is this transfer an internal transfer between two vaults. None if the transaction is incoming.
      * @type {boolean}
      * @memberof StacksTokenTransferDetails
      */
@@ -49,7 +49,7 @@ export interface StacksTokenTransferDetails {
 
 
 /**
- * 
+ * @export
  */
 const StacksTokenTransferDetailsTypeEnum = {
     tokenTransfer: 'token_transfer'

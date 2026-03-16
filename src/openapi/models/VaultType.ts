@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const VaultType = {
@@ -19,6 +20,7 @@ export const VaultType = {
     blackBox: 'black_box',
     cosmos: 'cosmos',
     evm: 'evm',
+    safe: 'safe',
     solana: 'solana',
     stacks: 'stacks',
     starknet: 'starknet',
@@ -37,4 +39,3 @@ export function VaultTypeFromJSON(json: any): VaultType {
 function VaultTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): VaultType {
     return json as VaultType;
 }
-

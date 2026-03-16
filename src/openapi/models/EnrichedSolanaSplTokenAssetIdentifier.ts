@@ -26,19 +26,19 @@ import {
  */
 export interface EnrichedSolanaSplTokenAssetIdentifier {
     /**
-     * 
+     * The details of the chain of the native asset.
      * @type {EnrichedSolanaChain}
      * @memberof EnrichedSolanaSplTokenAssetIdentifier
      */
     chain: EnrichedSolanaChain;
     /**
-     * 
-     * @type {string}
+     * Solana asset type.
+     * @type {EnrichedSolanaSplTokenAssetIdentifierTypeEnum}
      * @memberof EnrichedSolanaSplTokenAssetIdentifier
      */
     type: EnrichedSolanaSplTokenAssetIdentifierTypeEnum;
     /**
-     * 
+     * The SPL token minter address.
      * @type {EnrichedSolanaAddress}
      * @memberof EnrichedSolanaSplTokenAssetIdentifier
      */
@@ -47,7 +47,7 @@ export interface EnrichedSolanaSplTokenAssetIdentifier {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedSolanaSplTokenAssetIdentifierTypeEnum = {
     splToken: 'spl_token'

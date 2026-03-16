@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const ChainType = {
@@ -28,4 +29,3 @@ export const ChainType = {
     utxo: 'utxo'
 } as const;
 export type ChainType = typeof ChainType[keyof typeof ChainType];
-

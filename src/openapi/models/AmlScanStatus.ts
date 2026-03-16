@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const AmlScanStatus = {
@@ -31,4 +32,3 @@ export function AmlScanStatusFromJSON(json: any): AmlScanStatus {
 function AmlScanStatusFromJSONTyped(json: any, _ignoreDiscriminator: boolean): AmlScanStatus {
     return json as AmlScanStatus;
 }
-

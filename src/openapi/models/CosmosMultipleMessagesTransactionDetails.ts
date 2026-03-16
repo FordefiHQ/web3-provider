@@ -22,14 +22,14 @@ import {
  */
 export interface CosmosMultipleMessagesTransactionDetails {
     /**
-     * 
+     * List of transaction's messages.
      * @type {MessagesList}
      * @memberof CosmosMultipleMessagesTransactionDetails
      */
     transactionData: MessagesList;
     /**
-     * 
-     * @type {string}
+     * A transaction of multiple messages.
+     * @type {CosmosMultipleMessagesTransactionDetailsTypeEnum}
      * @memberof CosmosMultipleMessagesTransactionDetails
      */
     type: CosmosMultipleMessagesTransactionDetailsTypeEnum;
@@ -37,7 +37,7 @@ export interface CosmosMultipleMessagesTransactionDetails {
 
 
 /**
- * 
+ * @export
  */
 const CosmosMultipleMessagesTransactionDetailsTypeEnum = {
     messages: 'messages'

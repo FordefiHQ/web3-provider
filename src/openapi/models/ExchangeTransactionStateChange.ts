@@ -14,14 +14,6 @@ import type { ExchangeTransactionState } from './ExchangeTransactionState';
 import {
     ExchangeTransactionStateFromJSON,
 } from './ExchangeTransactionState';
-import type { PricedAsset } from './PricedAsset';
-import {
-    PricedAssetFromJSON,
-} from './PricedAsset';
-import type { EvmPrices } from './EvmPrices';
-import {
-    EvmPricesFromJSON,
-} from './EvmPrices';
 import type { StateChangeReason } from './StateChangeReason';
 import {
     StateChangeReasonFromJSON,
@@ -34,38 +26,25 @@ import {
  */
 export interface ExchangeTransactionStateChange {
     /**
-     * 
+     * The date and time when the state was changed.
      * @type {Date}
      * @memberof ExchangeTransactionStateChange
      */
     changedAt: Date;
     /**
-     * 
+     * The reason for the state change.
      * @type {StateChangeReason}
      * @memberof ExchangeTransactionStateChange
      */
     reason?: StateChangeReason;
     /**
-     * 
-     * @type {Array<PricedAsset>}
-     * @memberof ExchangeTransactionStateChange
-     * @deprecated
-     */
-    assetPrices?: Array<PricedAsset>;
-    /**
-     * 
-     * @type {EvmPrices}
-     * @memberof ExchangeTransactionStateChange
-     */
-    prices?: EvmPrices;
-    /**
-     * 
+     * The previous state of the exchange transaction.
      * @type {ExchangeTransactionState}
      * @memberof ExchangeTransactionStateChange
      */
     previousState?: ExchangeTransactionState;
     /**
-     * 
+     * The new state of the exchange transaction.
      * @type {ExchangeTransactionState}
      * @memberof ExchangeTransactionStateChange
      */
@@ -84,10 +63,7 @@ function ExchangeTransactionStateChangeFromJSONTyped(json: any, _ignoreDiscrimin
         
         'changedAt': (new Date(json['changed_at'])),
         'reason': json['reason'] == null ? undefined : StateChangeReasonFromJSON(json['reason']),
-        'assetPrices': json['asset_prices'] == null ? undefined : ((json['asset_prices'] as Array<any>).map(PricedAssetFromJSON)),
-        'prices': json['prices'] == null ? undefined : EvmPricesFromJSON(json['prices']),
         'previousState': json['previous_state'] == null ? undefined : ExchangeTransactionStateFromJSON(json['previous_state']),
         'newState': ExchangeTransactionStateFromJSON(json['new_state']),
     };
 }
-

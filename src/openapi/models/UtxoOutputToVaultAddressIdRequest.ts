@@ -18,7 +18,7 @@
 export interface UtxoOutputToVaultAddressIdRequest {
     /**
      * 
-     * @type {string}
+     * @type {UtxoOutputToVaultAddressIdRequestTypeEnum}
      * @memberof UtxoOutputToVaultAddressIdRequest
      */
     type: UtxoOutputToVaultAddressIdRequestTypeEnum;
@@ -32,7 +32,7 @@ export interface UtxoOutputToVaultAddressIdRequest {
 
 
 /**
- * 
+ * @export
  */
 const UtxoOutputToVaultAddressIdRequestTypeEnum = {
     vaultAddressId: 'vault_address_id'

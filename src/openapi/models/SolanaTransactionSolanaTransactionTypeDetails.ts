@@ -10,10 +10,6 @@
  * Do not edit the class manually.
  */
 
-import type { GetSolanaSpotSwapDetails } from './GetSolanaSpotSwapDetails';
-import {
-    GetSolanaSpotSwapDetailsFromJSONTyped,
-} from './GetSolanaSpotSwapDetails';
 import type { SolanaNativeTransferDetails } from './SolanaNativeTransferDetails';
 import {
     SolanaNativeTransferDetailsFromJSONTyped,
@@ -28,11 +24,11 @@ import {
 } from './SolanaTokenTransferDetails';
 
 /**
- * 
- * @export
  * @type SolanaTransactionSolanaTransactionTypeDetails
+ * Details of the Solana transaction based on its type.
+ * @export
  */
-export type SolanaTransactionSolanaTransactionTypeDetails = { type: 'native_transfer' } & SolanaNativeTransferDetails | { type: 'raw_transaction' } & SolanaRawTransactionDetails | { type: 'spot_swap' } & GetSolanaSpotSwapDetails | { type: 'token_transfer' } & SolanaTokenTransferDetails;
+export type SolanaTransactionSolanaTransactionTypeDetails = { type: 'native_transfer' } & SolanaNativeTransferDetails | { type: 'raw_transaction' } & SolanaRawTransactionDetails | { type: 'token_transfer' } & SolanaTokenTransferDetails;
 
 export function SolanaTransactionSolanaTransactionTypeDetailsFromJSON(json: any): SolanaTransactionSolanaTransactionTypeDetails {
     return SolanaTransactionSolanaTransactionTypeDetailsFromJSONTyped(json, false);
@@ -47,12 +43,9 @@ function SolanaTransactionSolanaTransactionTypeDetailsFromJSONTyped(json: any, _
             return Object.assign({}, SolanaNativeTransferDetailsFromJSONTyped(json, true), { type: 'native_transfer' } as const);
         case 'raw_transaction':
             return Object.assign({}, SolanaRawTransactionDetailsFromJSONTyped(json, true), { type: 'raw_transaction' } as const);
-        case 'spot_swap':
-            return Object.assign({}, GetSolanaSpotSwapDetailsFromJSONTyped(json, true), { type: 'spot_swap' } as const);
         case 'token_transfer':
             return Object.assign({}, SolanaTokenTransferDetailsFromJSONTyped(json, true), { type: 'token_transfer' } as const);
         default:
-            throw new Error(`No variant of SolanaTransactionSolanaTransactionTypeDetails exists with 'type=${json['type']}'`);
+            return json;
     }
 }
-

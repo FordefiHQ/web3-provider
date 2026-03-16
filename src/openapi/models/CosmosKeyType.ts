@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const CosmosKeyType = {
@@ -31,4 +32,3 @@ function CosmosKeyTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): C
 export function CosmosKeyTypeToJSON(value?: CosmosKeyType | null): any {
     return value as any;
 }
-

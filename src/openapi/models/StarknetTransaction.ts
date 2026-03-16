@@ -26,10 +26,6 @@ import type { PushableTransactionStateChange } from './PushableTransactionStateC
 import {
     PushableTransactionStateChangeFromJSON,
 } from './PushableTransactionStateChange';
-import type { StarknetBlock } from './StarknetBlock';
-import {
-    StarknetBlockFromJSON,
-} from './StarknetBlock';
 import type { PushableTransactionState } from './PushableTransactionState';
 import {
     PushableTransactionStateFromJSON,
@@ -38,22 +34,34 @@ import type { StarknetTransactionResult } from './StarknetTransactionResult';
 import {
     StarknetTransactionResultFromJSON,
 } from './StarknetTransactionResult';
-import type { AmlPolicyMatchIncoming } from './AmlPolicyMatchIncoming';
+import type { MinedResultStatus } from './MinedResultStatus';
 import {
-    AmlPolicyMatchIncomingFromJSON,
-} from './AmlPolicyMatchIncoming';
+    MinedResultStatusFromJSON,
+} from './MinedResultStatus';
 import type { StarknetCallData } from './StarknetCallData';
 import {
     StarknetCallDataFromJSON,
 } from './StarknetCallData';
+import type { VaultRef } from './VaultRef';
+import {
+    VaultRefFromJSON,
+} from './VaultRef';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
 } from './TransactionSpamState';
+import type { StarknetFeeDetails } from './StarknetFeeDetails';
+import {
+    StarknetFeeDetailsFromJSON,
+} from './StarknetFeeDetails';
 import type { TransactionDirection } from './TransactionDirection';
 import {
     TransactionDirectionFromJSON,
 } from './TransactionDirection';
+import type { AmlCheck } from './AmlCheck';
+import {
+    AmlCheckFromJSON,
+} from './AmlCheck';
 import type { EnrichedStarknetAddress } from './EnrichedStarknetAddress';
 import {
     EnrichedStarknetAddressFromJSON,
@@ -62,14 +70,18 @@ import type { Signature } from './Signature';
 import {
     SignatureFromJSON,
 } from './Signature';
+import type { RelatedTransaction } from './RelatedTransaction';
+import {
+    RelatedTransactionFromJSON,
+} from './RelatedTransaction';
 import type { SimulationStatusResult } from './SimulationStatusResult';
 import {
     SimulationStatusResultFromJSON,
 } from './SimulationStatusResult';
-import type { AmlResults } from './AmlResults';
+import type { Block } from './Block';
 import {
-    AmlResultsFromJSON,
-} from './AmlResults';
+    BlockFromJSON,
+} from './Block';
 
 /**
  * 
@@ -78,86 +90,116 @@ import {
  */
 export interface StarknetTransaction {
     /**
-     * 
+     * The unique identifier of the object in the Fordefi platform.
      * @type {string}
      * @memberof StarknetTransaction
      */
     id: string;
     /**
-     * 
+     * The date and time when the object was created.
      * @type {Date}
      * @memberof StarknetTransaction
      */
     createdAt: Date;
     /**
-     * 
+     * The date and time when the object was last modified. Any change to any field of the resource is considered a modification.
      * @type {Date}
      * @memberof StarknetTransaction
      */
     modifiedAt: Date;
     /**
-     * 
+     * Managed transaction data. Presented if the transaction was initiated from the Fordefi system itself, in contrast to unmanaged transactions (which are, for example, transfers of funds into a vault visible to Fordefi). 
      * @type {ManagedTransactionData}
      * @memberof StarknetTransaction
      */
     managedTransactionData?: ManagedTransactionData;
     /**
-     * 
+     * The transaction signatures.
      * @type {Array<Signature>}
      * @memberof StarknetTransaction
      */
     signatures: Array<Signature>;
     /**
-     * 
+     * An optional transaction note.
      * @type {string}
      * @memberof StarknetTransaction
      */
     note?: string;
     /**
-     * 
+     * `automatically_set` if the transaction was automatically set as spam by Fordefi, `manually_set` if the transaction was manually set as spam by a user, and `unset` if the transaction was not set as spam.
      * @type {TransactionSpamState}
      * @memberof StarknetTransaction
      */
     spamState?: TransactionSpamState;
     /**
-     * 
+     * The direction of the transaction.
      * @type {TransactionDirection}
      * @memberof StarknetTransaction
      */
     direction: TransactionDirection;
     /**
-     * 
+     * Whether the transaction was signed by an external user (for example in case of imported vault).
      * @type {boolean}
      * @memberof StarknetTransaction
      */
     signedExternally?: boolean;
     /**
-     * 
+     * The vaults that interacted with the transaction.
+     * @type {Array<VaultRef>}
+     * @memberof StarknetTransaction
+     */
+    interactedVaults: Array<VaultRef>;
+    /**
+     * The related transactions.
+     * @type {Array<RelatedTransaction>}
+     * @memberof StarknetTransaction
+     */
+    relatedTransactions?: Array<RelatedTransaction>;
+    /**
+     * The organization that the transaction belongs to.
+     * @type {string}
+     * @memberof StarknetTransaction
+     */
+    organizationId: string;
+    /**
+     * The block of the transaction.
+     * @type {Block}
+     * @memberof StarknetTransaction
+     */
+    block?: Block;
+    /**
+     * The state of the transaction.
      * @type {PushableTransactionState}
      * @memberof StarknetTransaction
      */
     state: PushableTransactionState;
     /**
-     * 
+     * The state changes of the transaction.
      * @type {Array<PushableTransactionStateChange>}
      * @memberof StarknetTransaction
      */
     stateChanges: Array<PushableTransactionStateChange>;
     /**
-     * 
-     * @type {AmlResults}
+     * The AML check.
+     * @type {AmlCheck}
      * @memberof StarknetTransaction
      */
-    amlResults?: AmlResults;
+    amlCheck?: AmlCheck;
     /**
-     * 
-     * @type {AmlPolicyMatchIncoming}
+     * The mined result status of the transaction.
+     * @type {MinedResultStatus}
      * @memberof StarknetTransaction
      */
-    incomingAmlPolicyMatch?: AmlPolicyMatchIncoming;
+    minedResultStatus?: MinedResultStatus;
     /**
-     * 
-     * @type {string}
+     * Whether simulation succeeded, reverted or failed.
+     * @type {SimulationStatusResult}
+     * @memberof StarknetTransaction
+     */
+    simulationStatusResult?: SimulationStatusResult;
+    /**
+     * Starknet transaction type.
+     * @type {StarknetTransactionTypeEnum}
      * @memberof StarknetTransaction
      */
     type: StarknetTransactionTypeEnum;
@@ -168,82 +210,78 @@ export interface StarknetTransaction {
      */
     starknetTransactionTypeDetails: PredictedStarknetTransactionStarknetTransactionTypeDetails;
     /**
-     * 
+     * The call data of the transaction.
      * @type {Array<StarknetCallData>}
      * @memberof StarknetTransaction
      */
     callData: Array<StarknetCallData>;
     /**
-     * 
+     * The details of the chain this transaction is on.
      * @type {EnrichedStarknetChain}
      * @memberof StarknetTransaction
      */
     chain: EnrichedStarknetChain;
     /**
-     * 
+     * The nonce of the transaction.
      * @type {number}
      * @memberof StarknetTransaction
      */
     nonce?: number;
     /**
-     * 
+     * The sender of the transaction.
      * @type {EnrichedStarknetAddress}
      * @memberof StarknetTransaction
      */
     sender: EnrichedStarknetAddress;
     /**
-     * 
+     * The hash of the transaction.
      * @type {string}
      * @memberof StarknetTransaction
      */
     hash?: string;
     /**
-     * 
-     * @type {StarknetBlock}
-     * @memberof StarknetTransaction
-     */
-    block?: StarknetBlock;
-    /**
-     * 
+     * The expected result of the transaction in case it is mined.
      * @type {StarknetTransactionResult}
      * @memberof StarknetTransaction
      */
     expectedResult?: StarknetTransactionResult;
     /**
-     * 
-     * @type {SimulationStatusResult}
-     * @memberof StarknetTransaction
-     */
-    simulationStatusResult?: SimulationStatusResult;
-    /**
-     * 
+     * The result of the transaction after it was mined.
      * @type {StarknetTransactionResult}
      * @memberof StarknetTransaction
      */
     minedResult?: StarknetTransactionResult;
     /**
-     * 
+     * The URL of this transaction in a blockchain explorer. For example, starkscan.co
      * @type {string}
      * @memberof StarknetTransaction
      */
     explorerUrl?: string;
     /**
-     * 
+     * The maximum amount of the l1 gas
      * @type {string}
      * @memberof StarknetTransaction
+     * @deprecated
      */
     l1GasMaxAmount?: string;
     /**
-     * 
+     * The maximum price per unit of the l1 gas
      * @type {string}
      * @memberof StarknetTransaction
+     * @deprecated
      */
     l1GasMaxPricePerUnit?: string;
+    /**
+     * The details of the fee of the transaction.
+     * @type {StarknetFeeDetails}
+     * @memberof StarknetTransaction
+     */
+    feeDetails?: StarknetFeeDetails;
 }
 
 
 /**
- * 
+ * @export
  */
 const StarknetTransactionTypeEnum = {
     starknetTransaction: 'starknet_transaction'
@@ -265,10 +303,15 @@ export function StarknetTransactionFromJSONTyped(json: any, _ignoreDiscriminator
         'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
         'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'interactedVaults': ((json['interacted_vaults'] as Array<any>).map(VaultRefFromJSON)),
+        'relatedTransactions': json['related_transactions'] == null ? undefined : ((json['related_transactions'] as Array<any>).map(RelatedTransactionFromJSON)),
+        'organizationId': json['organization_id'],
+        'block': json['block'] == null ? undefined : BlockFromJSON(json['block']),
         'state': PushableTransactionStateFromJSON(json['state']),
         'stateChanges': ((json['state_changes'] as Array<any>).map(PushableTransactionStateChangeFromJSON)),
-        'amlResults': json['aml_results'] == null ? undefined : AmlResultsFromJSON(json['aml_results']),
-        'incomingAmlPolicyMatch': json['incoming_aml_policy_match'] == null ? undefined : AmlPolicyMatchIncomingFromJSON(json['incoming_aml_policy_match']),
+        'amlCheck': json['aml_check'] == null ? undefined : AmlCheckFromJSON(json['aml_check']),
+        'minedResultStatus': json['mined_result_status'] == null ? undefined : MinedResultStatusFromJSON(json['mined_result_status']),
+        'simulationStatusResult': json['simulation_status_result'] == null ? undefined : SimulationStatusResultFromJSON(json['simulation_status_result']),
         'type': json['type'],
         'starknetTransactionTypeDetails': PredictedStarknetTransactionStarknetTransactionTypeDetailsFromJSON(json['starknet_transaction_type_details']),
         'callData': ((json['call_data'] as Array<any>).map(StarknetCallDataFromJSON)),
@@ -276,12 +319,11 @@ export function StarknetTransactionFromJSONTyped(json: any, _ignoreDiscriminator
         'nonce': json['nonce'] == null ? undefined : json['nonce'],
         'sender': EnrichedStarknetAddressFromJSON(json['sender']),
         'hash': json['hash'] == null ? undefined : json['hash'],
-        'block': json['block'] == null ? undefined : StarknetBlockFromJSON(json['block']),
         'expectedResult': json['expected_result'] == null ? undefined : StarknetTransactionResultFromJSON(json['expected_result']),
-        'simulationStatusResult': json['simulation_status_result'] == null ? undefined : SimulationStatusResultFromJSON(json['simulation_status_result']),
         'minedResult': json['mined_result'] == null ? undefined : StarknetTransactionResultFromJSON(json['mined_result']),
         'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
         'l1GasMaxAmount': json['l1_gas_max_amount'] == null ? undefined : json['l1_gas_max_amount'],
         'l1GasMaxPricePerUnit': json['l1_gas_max_price_per_unit'] == null ? undefined : json['l1_gas_max_price_per_unit'],
+        'feeDetails': json['fee_details'] == null ? undefined : StarknetFeeDetailsFromJSON(json['fee_details']),
     };
 }

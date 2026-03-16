@@ -14,6 +14,10 @@ import type { UtxoOutputRequest } from './UtxoOutputRequest';
 import {
     UtxoOutputRequestToJSON,
 } from './UtxoOutputRequest';
+import type { TransactionDetailsUtxoTransferRequestSendMaxTo } from './TransactionDetailsUtxoTransferRequestSendMaxTo';
+import {
+    TransactionDetailsUtxoTransferRequestSendMaxToToJSON,
+} from './TransactionDetailsUtxoTransferRequestSendMaxTo';
 import type { PushMode } from './PushMode';
 import {
     PushModeToJSON,
@@ -30,17 +34,23 @@ import {
  */
 export interface TransactionDetailsUtxoTransferRequest {
     /**
-     * 
-     * @type {string}
+     * A UTXO transfer transaction.
+     * @type {TransactionDetailsUtxoTransferRequestTypeEnum}
      * @memberof TransactionDetailsUtxoTransferRequest
      */
     type: TransactionDetailsUtxoTransferRequestTypeEnum;
     /**
-     * 
+     * The outputs of the transaction.<br>Must be provided and hold at least one output in case 'send_max_to' is not provided.
      * @type {Array<UtxoOutputRequest>}
      * @memberof TransactionDetailsUtxoTransferRequest
      */
-    outputs: Array<UtxoOutputRequest>;
+    outputs?: Array<UtxoOutputRequest>;
+    /**
+     * 
+     * @type {TransactionDetailsUtxoTransferRequestSendMaxTo}
+     * @memberof TransactionDetailsUtxoTransferRequest
+     */
+    sendMaxTo?: TransactionDetailsUtxoTransferRequestSendMaxTo;
     /**
      * 
      * @type {TransactionDetailsUtxoTransferRequestFeePerByte}
@@ -48,13 +58,13 @@ export interface TransactionDetailsUtxoTransferRequest {
      */
     feePerByte?: TransactionDetailsUtxoTransferRequestFeePerByte;
     /**
-     * 
+     * The push mode of the transaction when sending it to the node. It can be one of the following:<ul><li>`auto`: The transaction is pushed automatically by Fordefi.<li>`manual`: The transaction should be pushed manually by the user using a 3rd party (for example a dapp that created a PSBT).<li>`deferred`: The transaction is pushed by Fordefi after a certain time, if by that time it wasn't pushed manually by the client.</ul></ul> 
      * @type {PushMode}
      * @memberof TransactionDetailsUtxoTransferRequest
      */
     pushMode?: PushMode;
     /**
-     * 
+     * List of memos to include in the transaction, provided as strings or hex-encoded.
      * @type {Array<string>}
      * @memberof TransactionDetailsUtxoTransferRequest
      */
@@ -63,7 +73,7 @@ export interface TransactionDetailsUtxoTransferRequest {
 
 
 /**
- * 
+ * @export
  */
 const TransactionDetailsUtxoTransferRequestTypeEnum = {
     utxoTransfer: 'utxo_transfer'
@@ -82,7 +92,8 @@ function TransactionDetailsUtxoTransferRequestToJSONTyped(value?: TransactionDet
     return {
         
         'type': value['type'],
-        'outputs': ((value['outputs'] as Array<any>).map(UtxoOutputRequestToJSON)),
+        'outputs': value['outputs'] == null ? undefined : ((value['outputs'] as Array<any>).map(UtxoOutputRequestToJSON)),
+        'send_max_to': TransactionDetailsUtxoTransferRequestSendMaxToToJSON(value['sendMaxTo']),
         'fee_per_byte': TransactionDetailsUtxoTransferRequestFeePerByteToJSON(value['feePerByte']),
         'push_mode': PushModeToJSON(value['pushMode']),
         'memos': value['memos'],

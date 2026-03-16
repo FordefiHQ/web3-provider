@@ -26,31 +26,31 @@ import {
  */
 export interface EnrichedSuiChain {
     /**
-     * 
-     * @type {string}
+     * The type of the chain.
+     * @type {EnrichedSuiChainChainTypeEnum}
      * @memberof EnrichedSuiChain
      */
     chainType: EnrichedSuiChainChainTypeEnum;
     /**
-     * 
+     * The type of the Sui-based chain.
      * @type {SuiChainUniqueId}
      * @memberof EnrichedSuiChain
      */
     uniqueId: SuiChainUniqueId;
     /**
-     * 
+     * The full blockchain name.
      * @type {string}
      * @memberof EnrichedSuiChain
      */
     name: string;
     /**
-     * 
+     * The native currency symbol.
      * @type {string}
      * @memberof EnrichedSuiChain
      */
     nativeCurrencySymbol: string;
     /**
-     * 
+     * The native currency name.
      * @type {string}
      * @memberof EnrichedSuiChain
      */
@@ -62,19 +62,19 @@ export interface EnrichedSuiChain {
      */
     blockchainExplorer?: BlockchainExplorer;
     /**
-     * 
+     * The logo URL of the chain.
      * @type {string}
      * @memberof EnrichedSuiChain
      */
     logoUrl: string;
     /**
-     * 
+     * Whether the chain is on a testnet.
      * @type {boolean}
      * @memberof EnrichedSuiChain
      */
     isTestnet: boolean;
     /**
-     * 
+     * Whether the chain is enabled.
      * @type {boolean}
      * @memberof EnrichedSuiChain
      */
@@ -83,7 +83,7 @@ export interface EnrichedSuiChain {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedSuiChainChainTypeEnum = {
     sui: 'sui'

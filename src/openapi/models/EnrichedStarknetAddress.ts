@@ -26,31 +26,31 @@ import {
  */
 export interface EnrichedStarknetAddress {
     /**
-     * 
+     * The vault corresponding to this address.
      * @type {VaultRef}
      * @memberof EnrichedStarknetAddress
      */
     vault?: VaultRef;
     /**
-     * 
+     * The URL of a blockchain explorer that provides real-time information about the address.
      * @type {string}
      * @memberof EnrichedStarknetAddress
      */
     explorerUrl?: string;
     /**
-     * 
+     * The contact details of this address.
      * @type {ContactRef}
      * @memberof EnrichedStarknetAddress
      */
     contact?: ContactRef;
     /**
      * 
-     * @type {string}
+     * @type {EnrichedStarknetAddressTypeEnum}
      * @memberof EnrichedStarknetAddress
      */
     type: EnrichedStarknetAddressTypeEnum;
     /**
-     * 
+     * The Starknet address represented in hex format.
      * @type {string}
      * @memberof EnrichedStarknetAddress
      */
@@ -59,7 +59,7 @@ export interface EnrichedStarknetAddress {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedStarknetAddressTypeEnum = {
     starknet: 'starknet'

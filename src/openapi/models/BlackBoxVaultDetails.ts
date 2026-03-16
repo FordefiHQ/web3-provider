@@ -28,9 +28,9 @@ import {
 } from './SchnorrSecp256k1BlackBoxValue';
 
 /**
+ * @type BlackBoxVaultDetails
  * 
  * @export
- * @type BlackBoxVaultDetails
  */
 export type BlackBoxVaultDetails = { type: 'ecdsa_secp256k1' } & EcdsaSecp256k1BlackBoxVault | { type: 'ecdsa_stark' } & EcdsaStarkBlackBoxVault | { type: 'eddsa_ed25519' } & EddsaED25519BlackBoxVault | { type: 'schnorr_secp256k1' } & SchnorrSecp256k1BlackBoxValue;
 
@@ -52,7 +52,6 @@ function BlackBoxVaultDetailsFromJSONTyped(json: any, _ignoreDiscriminator: bool
         case 'schnorr_secp256k1':
             return Object.assign({}, SchnorrSecp256k1BlackBoxValueFromJSONTyped(json, true), { type: 'schnorr_secp256k1' } as const);
         default:
-            throw new Error(`No variant of BlackBoxVaultDetails exists with 'type=${json['type']}'`);
+            return json;
     }
 }
-

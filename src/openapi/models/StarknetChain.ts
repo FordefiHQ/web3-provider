@@ -22,13 +22,13 @@ import {
  */
 export interface StarknetChain {
     /**
-     * 
-     * @type {string}
+     * The type of the chain.
+     * @type {StarknetChainChainTypeEnum}
      * @memberof StarknetChain
      */
     chainType: StarknetChainChainTypeEnum;
     /**
-     * 
+     * The type of the Starknet-based chain.
      * @type {StarknetChainUniqueId}
      * @memberof StarknetChain
      */
@@ -37,7 +37,7 @@ export interface StarknetChain {
 
 
 /**
- * 
+ * @export
  */
 const StarknetChainChainTypeEnum = {
     starknet: 'starknet'

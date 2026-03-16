@@ -18,12 +18,12 @@
 export interface BinaryHashPayload {
     /**
      * 
-     * @type {string}
+     * @type {BinaryHashPayloadFormatEnum}
      * @memberof BinaryHashPayload
      */
     format: BinaryHashPayloadFormatEnum;
     /**
-     * 
+     * The payload to sign, encoded in base64 format.
      * @type {string}
      * @memberof BinaryHashPayload
      */
@@ -32,7 +32,7 @@ export interface BinaryHashPayload {
 
 
 /**
- * 
+ * @export
  */
 const BinaryHashPayloadFormatEnum = {
     hashBinary: 'hash_binary'

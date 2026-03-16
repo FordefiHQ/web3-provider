@@ -22,25 +22,25 @@ import {
  */
 export interface TonProofMessageRequest {
     /**
-     * 
-     * @type {string}
+     * Proof message standard.
+     * @type {TonProofMessageRequestTypeEnum}
      * @memberof TonProofMessageRequest
      */
     type: TonProofMessageRequestTypeEnum;
     /**
-     * 
+     * The manifest_url of the Dapp that the message is for.
      * @type {string}
      * @memberof TonProofMessageRequest
      */
     manifestUrl: string;
     /**
-     * 
+     * The details of the chain of the native asset.
      * @type {TonChainUniqueId}
      * @memberof TonProofMessageRequest
      */
     chain: TonChainUniqueId;
     /**
-     * 
+     * The message payload to be signed, encoded in base64.
      * @type {string}
      * @memberof TonProofMessageRequest
      */
@@ -49,7 +49,7 @@ export interface TonProofMessageRequest {
 
 
 /**
- * 
+ * @export
  */
 const TonProofMessageRequestTypeEnum = {
     proofMessageType: 'proof_message_type'

@@ -17,13 +17,13 @@
  */
 export interface StacksRecipientHex {
     /**
-     * 
-     * @type {string}
+     * The type of the recipient.
+     * @type {StacksRecipientHexTypeEnum}
      * @memberof StacksRecipientHex
      */
     type: StacksRecipientHexTypeEnum;
     /**
-     * 
+     * The address of the recipient.
      * @type {string}
      * @memberof StacksRecipientHex
      */
@@ -32,7 +32,7 @@ export interface StacksRecipientHex {
 
 
 /**
- * 
+ * @export
  */
 const StacksRecipientHexTypeEnum = {
     hex: 'hex'

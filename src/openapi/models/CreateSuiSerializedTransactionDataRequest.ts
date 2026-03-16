@@ -26,37 +26,37 @@ import {
  */
 export interface CreateSuiSerializedTransactionDataRequest {
     /**
-     * 
-     * @type {string}
+     * A Sui Binary Canonical Serialization (or BCS) of a transaction.
+     * @type {CreateSuiSerializedTransactionDataRequestTypeEnum}
      * @memberof CreateSuiSerializedTransactionDataRequest
      */
     type: CreateSuiSerializedTransactionDataRequestTypeEnum;
     /**
-     * 
+     * `True` if the request should fail in case simulation failed, `False` otherwise. <br> In case simulation has failed upon continuation, the expected result of the transaction will be partial and policy will be applied on information that can be extracted statically from the transaction only. This might result in falling back to the default policy rule. 
      * @type {boolean}
      * @memberof CreateSuiSerializedTransactionDataRequest
      */
     failOnPredictionFailure?: boolean;
     /**
-     * 
-     * @type {PushMode}
-     * @memberof CreateSuiSerializedTransactionDataRequest
-     */
-    pushMode?: PushMode;
-    /**
-     * 
+     * `True` to create a transaction without prediction, `False` otherwise. <br> In case of skipping simulation, the simulation status will be skipped and the expected result of the transaction will be empty. The policy will be applied on information that can be extracted statically from the transaction only. This might result in falling back to the default policy rule. <br> Note, it is recommended to use the default setting for this field and to turn off `fail_on_prediction_failure` instead - unless you wish to save time by omitting the prediction phase entirely. 
      * @type {boolean}
      * @memberof CreateSuiSerializedTransactionDataRequest
      */
     skipPrediction?: boolean;
     /**
-     * 
+     * The push mode of the transaction when sending it to the node. It can be one of the following:<ul><li>`auto`: The transaction is pushed automatically by Fordefi. <li>`manual`: The transaction should be pushed manually by the user using a 3rd party.<li>`deferred`: The transaction is pushed by Fordefi after a certain time, if by that time it wasn't pushed manually by the client.</ul></ul> 
+     * @type {PushMode}
+     * @memberof CreateSuiSerializedTransactionDataRequest
+     */
+    pushMode?: PushMode;
+    /**
+     * The chain that this transaction is on. Specify the chain name (for example, `sui_mainnet`).
      * @type {SuiChainUniqueId}
      * @memberof CreateSuiSerializedTransactionDataRequest
      */
     chain: SuiChainUniqueId;
     /**
-     * 
+     * The base64 encoded BCS of the transaction.
      * @type {string}
      * @memberof CreateSuiSerializedTransactionDataRequest
      */
@@ -65,7 +65,7 @@ export interface CreateSuiSerializedTransactionDataRequest {
 
 
 /**
- * 
+ * @export
  */
 const CreateSuiSerializedTransactionDataRequestTypeEnum = {
     suiBinaryCanonicalSerialization: 'sui_binary_canonical_serialization'
@@ -85,8 +85,8 @@ function CreateSuiSerializedTransactionDataRequestToJSONTyped(value?: CreateSuiS
         
         'type': value['type'],
         'fail_on_prediction_failure': value['failOnPredictionFailure'],
-        'push_mode': PushModeToJSON(value['pushMode']),
         'skip_prediction': value['skipPrediction'],
+        'push_mode': PushModeToJSON(value['pushMode']),
         'chain': SuiChainUniqueIdToJSON(value['chain']),
         'data': value['data'],
     };

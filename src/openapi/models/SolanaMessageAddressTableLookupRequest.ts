@@ -17,19 +17,19 @@
  */
 export interface SolanaMessageAddressTableLookupRequest {
     /**
-     * 
+     * The address of the lookup table.
      * @type {string}
      * @memberof SolanaMessageAddressTableLookupRequest
      */
     accountKey: string;
     /**
-     * 
+     * Indexes of writable accounts in the lookup table.
      * @type {Array<number>}
      * @memberof SolanaMessageAddressTableLookupRequest
      */
     writableIndexes: Array<number>;
     /**
-     * 
+     * Indexes of read-only accounts in the lookup table.
      * @type {Array<number>}
      * @memberof SolanaMessageAddressTableLookupRequest
      */
@@ -52,4 +52,3 @@ function SolanaMessageAddressTableLookupRequestToJSONTyped(value?: SolanaMessage
         'readonly_indexes': value['readonlyIndexes'],
     };
 }
-

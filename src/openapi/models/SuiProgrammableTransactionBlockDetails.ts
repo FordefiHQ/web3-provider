@@ -22,19 +22,19 @@ import {
  */
 export interface SuiProgrammableTransactionBlockDetails {
     /**
-     * 
-     * @type {string}
+     * A transaction capable of any operation.
+     * @type {SuiProgrammableTransactionBlockDetailsTypeEnum}
      * @memberof SuiProgrammableTransactionBlockDetails
      */
     type: SuiProgrammableTransactionBlockDetailsTypeEnum;
     /**
-     * 
+     * The sender of the transaction.
      * @type {EnrichedSuiAddress}
      * @memberof SuiProgrammableTransactionBlockDetails
      */
     sender: EnrichedSuiAddress;
     /**
-     * 
+     * The recipients that interacted with the transaction.
      * @type {Array<EnrichedSuiAddress>}
      * @memberof SuiProgrammableTransactionBlockDetails
      */
@@ -43,7 +43,7 @@ export interface SuiProgrammableTransactionBlockDetails {
 
 
 /**
- * 
+ * @export
  */
 const SuiProgrammableTransactionBlockDetailsTypeEnum = {
     programmableTransactionBlock: 'programmable_transaction_block'

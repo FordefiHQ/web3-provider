@@ -18,24 +18,24 @@
 export interface DirectRequestData {
     /**
      * 
-     * @type {string}
+     * @type {DirectRequestDataFormatEnum}
      * @memberof DirectRequestData
      */
     format: DirectRequestDataFormatEnum;
     /**
-     * 
+     * Body bytes, encoded in base64 format.
      * @type {string}
      * @memberof DirectRequestData
      */
     body: string;
     /**
-     * 
+     * AuthInfo bytes, encoded in base64 format.
      * @type {string}
      * @memberof DirectRequestData
      */
     authInfo: string;
     /**
-     * 
+     * Account number of signer.
      * @type {string}
      * @memberof DirectRequestData
      */
@@ -44,7 +44,7 @@ export interface DirectRequestData {
 
 
 /**
- * 
+ * @export
  */
 const DirectRequestDataFormatEnum = {
     direct: 'direct'

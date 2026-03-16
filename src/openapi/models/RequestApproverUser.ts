@@ -20,9 +20,9 @@ import {
 } from './PersonRef';
 
 /**
+ * @type RequestApproverUser
  * 
  * @export
- * @type RequestApproverUser
  */
 export type RequestApproverUser = { userType: 'api_user' } & ApiUserRef | { userType: 'person' } & PersonRef;
 
@@ -40,7 +40,6 @@ function RequestApproverUserFromJSONTyped(json: any, _ignoreDiscriminator: boole
         case 'person':
             return Object.assign({}, PersonRefFromJSONTyped(json, true), { userType: 'person' } as const);
         default:
-            throw new Error(`No variant of RequestApproverUser exists with 'userType=${json['userType']}'`);
+            return json;
     }
 }
-

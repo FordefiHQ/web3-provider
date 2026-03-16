@@ -22,19 +22,19 @@ import {
  */
 export interface SolanaPersonalMessageRequest {
     /**
-     * 
-     * @type {string}
+     * Personal message standard.
+     * @type {SolanaPersonalMessageRequestTypeEnum}
      * @memberof SolanaPersonalMessageRequest
      */
     type: SolanaPersonalMessageRequestTypeEnum;
     /**
-     * 
+     * The details of the chain of the native asset.
      * @type {SolanaChainUniqueId}
      * @memberof SolanaPersonalMessageRequest
      */
     chain: SolanaChainUniqueId;
     /**
-     * 
+     * Base64 of the message to be signed.
      * @type {string}
      * @memberof SolanaPersonalMessageRequest
      */
@@ -43,7 +43,7 @@ export interface SolanaPersonalMessageRequest {
 
 
 /**
- * 
+ * @export
  */
 const SolanaPersonalMessageRequestTypeEnum = {
     personalMessageType: 'personal_message_type'

@@ -26,19 +26,19 @@ import {
  */
 export interface EnrichedEvmErc20AssetIdentifier {
     /**
-     * 
+     * The details of the chain of the native asset.
      * @type {EnrichedEvmChain}
      * @memberof EnrichedEvmErc20AssetIdentifier
      */
     chain: EnrichedEvmChain;
     /**
-     * 
-     * @type {string}
+     * EVM asset identifier type.
+     * @type {EnrichedEvmErc20AssetIdentifierTypeEnum}
      * @memberof EnrichedEvmErc20AssetIdentifier
      */
     type: EnrichedEvmErc20AssetIdentifierTypeEnum;
     /**
-     * 
+     * The ERC-20 token contract.
      * @type {EnrichedEvmAddress}
      * @memberof EnrichedEvmErc20AssetIdentifier
      */
@@ -47,7 +47,7 @@ export interface EnrichedEvmErc20AssetIdentifier {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedEvmErc20AssetIdentifierTypeEnum = {
     erc20: 'erc20'

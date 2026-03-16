@@ -20,9 +20,9 @@ import {
 } from './FeePriorityRequest';
 
 /**
- * 
- * @export
  * @type TransactionDetailsUtxoTransferRequestFeePerByte
+ * The fee details of the transaction. The details depend on which option you choose:<ul><li>Fee Priority or <li>Custom Fee Request </ul>
+ * @export
  */
 export type TransactionDetailsUtxoTransferRequestFeePerByte = { type: 'custom' } & CustomFeeRequest | { type: 'priority' } & FeePriorityRequest;
 
@@ -40,8 +40,6 @@ function TransactionDetailsUtxoTransferRequestFeePerByteToJSONTyped(value?: Tran
         case 'priority':
             return Object.assign({}, FeePriorityRequestToJSON(value), { type: 'priority' } as const);
         default:
-            throw new Error(`No variant of TransactionDetailsUtxoTransferRequestFeePerByte exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

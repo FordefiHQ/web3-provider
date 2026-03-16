@@ -22,31 +22,31 @@ import {
  */
 export interface ApiUserRef {
     /**
-     * 
+     * The unique identifier of the user in the Fordefi platform.
      * @type {string}
      * @memberof ApiUserRef
      */
     id: string;
     /**
-     * 
-     * @type {string}
+     * The type of the user.
+     * @type {ApiUserRefUserTypeEnum}
      * @memberof ApiUserRef
      */
     userType: ApiUserRefUserTypeEnum;
     /**
-     * 
+     * The name of the user.
      * @type {string}
      * @memberof ApiUserRef
      */
     name: string;
     /**
-     * 
-     * @type {string}
+     * The state of the user.
+     * @type {ApiUserRefStateEnum}
      * @memberof ApiUserRef
      */
     state: ApiUserRefStateEnum;
     /**
-     * 
+     * The role of the user.
      * @type {UserRole}
      * @memberof ApiUserRef
      */
@@ -55,7 +55,7 @@ export interface ApiUserRef {
 
 
 /**
- * 
+ * @export
  */
 const ApiUserRefUserTypeEnum = {
     apiUser: 'api_user'
@@ -63,7 +63,7 @@ const ApiUserRefUserTypeEnum = {
 type ApiUserRefUserTypeEnum = typeof ApiUserRefUserTypeEnum[keyof typeof ApiUserRefUserTypeEnum];
 
 /**
- * 
+ * @export
  */
 const ApiUserRefStateEnum = {
     active: 'active',

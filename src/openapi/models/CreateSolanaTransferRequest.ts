@@ -18,6 +18,10 @@ import type { SolanaAssetIdentifierRequest } from './SolanaAssetIdentifierReques
 import {
     SolanaAssetIdentifierRequestToJSON,
 } from './SolanaAssetIdentifierRequest';
+import type { TransactionFeePayerVault } from './TransactionFeePayerVault';
+import {
+    TransactionFeePayerVaultToJSON,
+} from './TransactionFeePayerVault';
 import type { CreateAptosTransferRequestValue } from './CreateAptosTransferRequestValue';
 import {
     CreateAptosTransferRequestValueToJSON,
@@ -38,35 +42,41 @@ import {
  */
 export interface CreateSolanaTransferRequest {
     /**
+     * The vault that pays the fee for this transaction.
+     * @type {TransactionFeePayerVault}
+     * @memberof CreateSolanaTransferRequest
+     */
+    feePayer?: TransactionFeePayerVault;
+    /**
      * 
      * @type {BatchSolanaTransactionRequestDetailsFee}
      * @memberof CreateSolanaTransferRequest
      */
     fee?: BatchSolanaTransactionRequestDetailsFee;
     /**
-     * 
-     * @type {string}
+     * A Solana transfer transaction is for transferring native currency or a token.
+     * @type {CreateSolanaTransferRequestTypeEnum}
      * @memberof CreateSolanaTransferRequest
      */
     type: CreateSolanaTransferRequestTypeEnum;
     /**
-     * 
+     * `True` if the request should fail in case simulation failed, `False` otherwise. <br> In case simulation has failed upon continuation, the expected result of the transaction will be partial and policy will be applied on information that can be extracted statically from the transaction only. This might result in falling back to the default policy rule. 
      * @type {boolean}
      * @memberof CreateSolanaTransferRequest
      */
     failOnPredictionFailure?: boolean;
     /**
-     * 
-     * @type {PushMode}
-     * @memberof CreateSolanaTransferRequest
-     */
-    pushMode?: PushMode;
-    /**
-     * 
+     * `True` to create a transaction without prediction, `False` otherwise. <br> In case of skipping simulation, the simulation status will be skipped and the expected result of the transaction will be empty. The policy will be applied on information that can be extracted statically from the transaction only. This might result in falling back to the default policy rule. <br> Note, it is recommended to use the default setting for this field and to turn off `fail_on_prediction_failure` instead - unless you wish to save time by omitting the prediction phase entirely. 
      * @type {boolean}
      * @memberof CreateSolanaTransferRequest
      */
     skipPrediction?: boolean;
+    /**
+     * The push mode of the transaction when sending it to the node. It can be one of the following:<ul><li>`auto`: The transaction is pushed automatically by Fordefi. <li>`manual`: The transaction should be pushed manually by the user using a 3rd party.<li>`deferred`: The transaction is pushed by Fordefi after a certain time, if by that time it wasn't pushed manually by the client.</ul></ul> 
+     * @type {PushMode}
+     * @memberof CreateSolanaTransferRequest
+     */
+    pushMode?: PushMode;
     /**
      * 
      * @type {CreateSolanaTransferRequestTo}
@@ -80,7 +90,7 @@ export interface CreateSolanaTransferRequest {
      */
     value: CreateAptosTransferRequestValue;
     /**
-     * 
+     * The Solana asset identifier to transfer.
      * @type {SolanaAssetIdentifierRequest}
      * @memberof CreateSolanaTransferRequest
      */
@@ -89,7 +99,7 @@ export interface CreateSolanaTransferRequest {
 
 
 /**
- * 
+ * @export
  */
 const CreateSolanaTransferRequestTypeEnum = {
     solanaTransfer: 'solana_transfer'
@@ -107,11 +117,12 @@ function CreateSolanaTransferRequestToJSONTyped(value?: CreateSolanaTransferRequ
 
     return {
         
+        'fee_payer': TransactionFeePayerVaultToJSON(value['feePayer']),
         'fee': BatchSolanaTransactionRequestDetailsFeeToJSON(value['fee']),
         'type': value['type'],
         'fail_on_prediction_failure': value['failOnPredictionFailure'],
-        'push_mode': PushModeToJSON(value['pushMode']),
         'skip_prediction': value['skipPrediction'],
+        'push_mode': PushModeToJSON(value['pushMode']),
         'to': CreateSolanaTransferRequestToToJSON(value['to']),
         'value': CreateAptosTransferRequestValueToJSON(value['value']),
         'asset_identifier': SolanaAssetIdentifierRequestToJSON(value['assetIdentifier']),

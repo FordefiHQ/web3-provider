@@ -17,13 +17,13 @@
  */
 export interface ExchangeTransferExternalRecipientTypeVault {
     /**
-     * 
-     * @type {string}
+     * Transfer to an MPC vault or a master account of a different exchange vault.
+     * @type {ExchangeTransferExternalRecipientTypeVaultTypeEnum}
      * @memberof ExchangeTransferExternalRecipientTypeVault
      */
     type: ExchangeTransferExternalRecipientTypeVaultTypeEnum;
     /**
-     * 
+     * The ID of the recipient vault.
      * @type {string}
      * @memberof ExchangeTransferExternalRecipientTypeVault
      */
@@ -32,7 +32,7 @@ export interface ExchangeTransferExternalRecipientTypeVault {
 
 
 /**
- * 
+ * @export
  */
 const ExchangeTransferExternalRecipientTypeVaultTypeEnum = {
     vault: 'vault'

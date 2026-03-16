@@ -26,37 +26,37 @@ import {
  */
 export interface PersonRef {
     /**
-     * 
+     * The unique identifier of the user in the Fordefi platform.
      * @type {string}
      * @memberof PersonRef
      */
     id: string;
     /**
-     * 
-     * @type {string}
+     * The type of user. Can be a person, or (in programmatic scenarios) an API user or API Signer.
+     * @type {PersonRefUserTypeEnum}
      * @memberof PersonRef
      */
     userType: PersonRefUserTypeEnum;
     /**
-     * 
+     * The name of the user.
      * @type {string}
      * @memberof PersonRef
      */
     name?: string;
     /**
-     * 
+     * The email of the user.
      * @type {string}
      * @memberof PersonRef
      */
     email: string;
     /**
-     * 
+     * The state of the user in the organization.
      * @type {UserState}
      * @memberof PersonRef
      */
     state: UserState;
     /**
-     * 
+     * The role of the user.
      * @type {UserRole}
      * @memberof PersonRef
      */
@@ -65,7 +65,7 @@ export interface PersonRef {
 
 
 /**
- * 
+ * @export
  */
 const PersonRefUserTypeEnum = {
     person: 'person'

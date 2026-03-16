@@ -26,19 +26,19 @@ import {
  */
 export interface UtxoMessageDetails {
     /**
-     * 
+     * The type of the message to sign.
      * @type {UtxoMessageType}
      * @memberof UtxoMessageDetails
      */
     type: UtxoMessageType;
     /**
-     * 
+     * The sender of the message.
      * @type {UtxoAddress}
      * @memberof UtxoMessageDetails
      */
     sender: UtxoAddress;
     /**
-     * 
+     * The raw data of the message, encoded in base64
      * @type {string}
      * @memberof UtxoMessageDetails
      */
@@ -61,4 +61,3 @@ function UtxoMessageDetailsToJSONTyped(value?: UtxoMessageDetails | null, _ignor
         'raw_data': value['rawData'],
     };
 }
-

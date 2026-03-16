@@ -16,19 +16,19 @@ import {
 } from './SolanaChain';
 
 /**
- * 
+ * Address represents an EVM blockchain address.
  * @export
  * @interface SolanaAddress
  */
 export interface SolanaAddress {
     /**
-     * 
+     * The chain details this address is of.
      * @type {SolanaChain}
      * @memberof SolanaAddress
      */
     chain: SolanaChain;
     /**
-     * 
+     * Base58 representation of the address in the chain.
      * @type {string}
      * @memberof SolanaAddress
      */
@@ -49,4 +49,3 @@ function SolanaAddressFromJSONTyped(json: any, _ignoreDiscriminator: boolean): S
         'base58Repr': json['base58_repr'],
     };
 }
-

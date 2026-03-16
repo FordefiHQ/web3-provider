@@ -11,31 +11,31 @@
  */
 
 /**
- * 
+ * Represents a reference to a vault address in the Fordefi platform
  * @export
  * @interface VaultAddressRef
  */
 export interface VaultAddressRef {
     /**
-     * 
+     * The unique identifier of the vault address in the Fordefi platform.
      * @type {string}
      * @memberof VaultAddressRef
      */
     id: string;
     /**
-     * 
+     * The unique identifier of the vault this address belongs to.
      * @type {string}
      * @memberof VaultAddressRef
      */
     vaultId: string;
     /**
-     * 
+     * The name of the vault address.
      * @type {string}
      * @memberof VaultAddressRef
      */
     name: string;
     /**
-     * 
+     * The address of the vault address.
      * @type {string}
      * @memberof VaultAddressRef
      */
@@ -58,4 +58,3 @@ function VaultAddressRefFromJSONTyped(json: any, _ignoreDiscriminator: boolean):
         'address': json['address'],
     };
 }
-

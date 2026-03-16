@@ -23,13 +23,13 @@ import {
  */
 export interface TronTrc20AssetIdentifierRequest {
     /**
-     * 
-     * @type {string}
+     * Trc20 asset identifier type.
+     * @type {TronTrc20AssetIdentifierRequestTypeEnum}
      * @memberof TronTrc20AssetIdentifierRequest
      */
     type: TronTrc20AssetIdentifierRequestTypeEnum;
     /**
-     * 
+     * The Trc20 details.
      * @type {TronAddressRequest}
      * @memberof TronTrc20AssetIdentifierRequest
      */
@@ -38,7 +38,7 @@ export interface TronTrc20AssetIdentifierRequest {
 
 
 /**
- * 
+ * @export
  */
 const TronTrc20AssetIdentifierRequestTypeEnum = {
     trc20: 'trc20'

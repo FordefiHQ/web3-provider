@@ -22,13 +22,13 @@ import {
  */
 export interface ExchangeFee {
     /**
-     * 
+     * The asset information.
      * @type {PricedAsset}
      * @memberof ExchangeFee
      */
     pricedAsset: PricedAsset;
     /**
-     * 
+     * The exchange's fee.
      * @type {string}
      * @memberof ExchangeFee
      */
@@ -49,4 +49,3 @@ function ExchangeFeeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Exc
         'fee': json['fee'],
     };
 }
-

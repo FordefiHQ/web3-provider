@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const ExchangeReversionState = {
@@ -27,4 +28,3 @@ export function ExchangeReversionStateFromJSON(json: any): ExchangeReversionStat
 function ExchangeReversionStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): ExchangeReversionState {
     return json as ExchangeReversionState;
 }
-

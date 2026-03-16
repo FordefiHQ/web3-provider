@@ -30,31 +30,31 @@ import {
  */
 export interface KnownAssetStacksPostCondition {
     /**
-     * 
+     * The address this post condition applies to.
      * @type {EnrichedStacksAddress}
      * @memberof KnownAssetStacksPostCondition
      */
     address: EnrichedStacksAddress;
     /**
-     * 
+     * The condition code of the post condition.
      * @type {StacksPostConditionComparator}
      * @memberof KnownAssetStacksPostCondition
      */
     conditionCode: StacksPostConditionComparator;
     /**
-     * 
+     * The amount of the asset this post condition applies to.
      * @type {string}
      * @memberof KnownAssetStacksPostCondition
      */
     amount: string;
     /**
-     * 
-     * @type {string}
+     * The type of the post condition.
+     * @type {KnownAssetStacksPostConditionTypeEnum}
      * @memberof KnownAssetStacksPostCondition
      */
     type: KnownAssetStacksPostConditionTypeEnum;
     /**
-     * 
+     * The asset this post condition applies to.
      * @type {PricedAsset}
      * @memberof KnownAssetStacksPostCondition
      */
@@ -63,7 +63,7 @@ export interface KnownAssetStacksPostCondition {
 
 
 /**
- * 
+ * @export
  */
 const KnownAssetStacksPostConditionTypeEnum = {
     knownAsset: 'known_asset'

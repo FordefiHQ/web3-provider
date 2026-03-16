@@ -11,19 +11,19 @@
  */
 
 /**
- * 
+ * The result of another command.
  * @export
  * @interface SuiCommandResultArgument
  */
 export interface SuiCommandResultArgument {
     /**
-     * 
-     * @type {string}
+     * The type of the command argument.
+     * @type {SuiCommandResultArgumentTypeEnum}
      * @memberof SuiCommandResultArgument
      */
     type: SuiCommandResultArgumentTypeEnum;
     /**
-     * 
+     * The index of the command in the command vector.
      * @type {number}
      * @memberof SuiCommandResultArgument
      */
@@ -32,7 +32,7 @@ export interface SuiCommandResultArgument {
 
 
 /**
- * 
+ * @export
  */
 const SuiCommandResultArgumentTypeEnum = {
     result: 'result'

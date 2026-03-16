@@ -17,19 +17,19 @@
  */
 export interface BlackBoxSignatureSchnorrSecp256k1Details {
     /**
-     * 
-     * @type {string}
+     * Schnorr over the secp256k1 curve signature.
+     * @type {BlackBoxSignatureSchnorrSecp256k1DetailsTypeEnum}
      * @memberof BlackBoxSignatureSchnorrSecp256k1Details
      */
     type: BlackBoxSignatureSchnorrSecp256k1DetailsTypeEnum;
     /**
-     * 
+     * The signature, encoded in base64 format.
      * @type {string}
      * @memberof BlackBoxSignatureSchnorrSecp256k1Details
      */
     signature?: string;
     /**
-     * 
+     * The payload to sign, encoded in base64 format.
      * @type {string}
      * @memberof BlackBoxSignatureSchnorrSecp256k1Details
      */
@@ -38,7 +38,7 @@ export interface BlackBoxSignatureSchnorrSecp256k1Details {
 
 
 /**
- * 
+ * @export
  */
 const BlackBoxSignatureSchnorrSecp256k1DetailsTypeEnum = {
     schnorrSecp256k1: 'schnorr_secp256k1'

@@ -18,12 +18,12 @@
 export interface PsbtSignerIdentityPublicKey {
     /**
      * 
-     * @type {string}
+     * @type {PsbtSignerIdentityPublicKeyTypeEnum}
      * @memberof PsbtSignerIdentityPublicKey
      */
     type: PsbtSignerIdentityPublicKeyTypeEnum;
     /**
-     * 
+     * Public key that should sign on the input.
      * @type {string}
      * @memberof PsbtSignerIdentityPublicKey
      */
@@ -32,7 +32,7 @@ export interface PsbtSignerIdentityPublicKey {
 
 
 /**
- * 
+ * @export
  */
 const PsbtSignerIdentityPublicKeyTypeEnum = {
     publicKey: 'public_key'

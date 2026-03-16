@@ -30,37 +30,37 @@ import {
  */
 export interface EnrichedSolanaAddress {
     /**
-     * 
+     * The vault corresponding to this address.
      * @type {VaultRef}
      * @memberof EnrichedSolanaAddress
      */
     vault?: VaultRef;
     /**
-     * 
+     * The URL of a blockchain explorer that provides real-time information about the address.
      * @type {string}
      * @memberof EnrichedSolanaAddress
      */
     explorerUrl?: string;
     /**
-     * 
+     * The contact details of this address.
      * @type {ContactRef}
      * @memberof EnrichedSolanaAddress
      */
     contact?: ContactRef;
     /**
      * 
-     * @type {string}
+     * @type {EnrichedSolanaAddressTypeEnum}
      * @memberof EnrichedSolanaAddress
      */
     type: EnrichedSolanaAddressTypeEnum;
     /**
-     * 
+     * The Solana address represented in Base58 format.
      * @type {string}
      * @memberof EnrichedSolanaAddress
      */
     address: string;
     /**
-     * 
+     * The details of the contract corresponding to this address.
      * @type {SolanaContractMetadata}
      * @memberof EnrichedSolanaAddress
      */
@@ -69,7 +69,7 @@ export interface EnrichedSolanaAddress {
 
 
 /**
- * 
+ * @export
  */
 const EnrichedSolanaAddressTypeEnum = {
     solana: 'solana'

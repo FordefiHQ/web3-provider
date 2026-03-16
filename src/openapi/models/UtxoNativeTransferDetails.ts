@@ -26,31 +26,32 @@ import {
  */
 export interface UtxoNativeTransferDetails {
     /**
-     * 
-     * @type {string}
+     * A transaction involving the transfer of native currency from one or moreaddresses to one or more addresses.
+     * @type {UtxoNativeTransferDetailsTypeEnum}
      * @memberof UtxoNativeTransferDetails
      */
     type: UtxoNativeTransferDetailsTypeEnum;
     /**
-     * 
+     * The direction of the movement of funds, in case of a transfer.
      * @type {TransferDirection}
      * @memberof UtxoNativeTransferDetails
+     * @deprecated
      */
     direction: TransferDirection;
     /**
-     * 
+     * Is this transfer an internal transfer between two vaults. None if the transaction is incoming.
      * @type {boolean}
      * @memberof UtxoNativeTransferDetails
      */
     isInternal?: boolean;
     /**
-     * 
+     * The vault that signed this transfer.
      * @type {VaultRef}
      * @memberof UtxoNativeTransferDetails
      */
     vault?: VaultRef;
     /**
-     * 
+     * List of memos of the transaction.
      * @type {Array<string>}
      * @memberof UtxoNativeTransferDetails
      */
@@ -59,7 +60,7 @@ export interface UtxoNativeTransferDetails {
 
 
 /**
- * 
+ * @export
  */
 const UtxoNativeTransferDetailsTypeEnum = {
     nativeTransfer: 'native_transfer'

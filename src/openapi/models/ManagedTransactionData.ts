@@ -30,6 +30,10 @@ import type { SignMode } from './SignMode';
 import {
     SignModeFromJSON,
 } from './SignMode';
+import type { FeePaidByVault } from './FeePaidByVault';
+import {
+    FeePaidByVaultFromJSON,
+} from './FeePaidByVault';
 import type { BatchData } from './BatchData';
 import {
     BatchDataFromJSON,
@@ -62,13 +66,13 @@ import {
  */
 export interface ManagedTransactionData {
     /**
-     * 
+     * The user who created the transaction.
      * @type {UserRef}
      * @memberof ManagedTransactionData
      */
     createdBy: UserRef;
     /**
-     * 
+     * The user who aborted the transaction, `null` if the transaction was not aborted.
      * @type {UserRef}
      * @memberof ManagedTransactionData
      */
@@ -80,89 +84,108 @@ export interface ManagedTransactionData {
      */
     deviceSigningRequest?: ActionSigningRequest;
     /**
-     * 
+     * The approval request.
      * @type {ApprovalRequest}
      * @memberof ManagedTransactionData
      */
     approvalRequest?: ApprovalRequest;
     /**
-     * 
+     * The AML policy match.
      * @type {AmlPolicyMatchOutgoing}
      * @memberof ManagedTransactionData
      */
     amlPolicyMatch?: AmlPolicyMatchOutgoing;
     /**
-     * 
+     * The policy match.
      * @type {PolicyMatch}
      * @memberof ManagedTransactionData
      */
     policyMatch?: PolicyMatch;
     /**
-     * 
+     * The type of signer of the transaction. Can be one of the following: <ul><li>`initiator`: The creator of the transaction (default). <li>`api_signer`: An API Signer - a service that you run on your own network or cloud environment. <li>`multiple_signers`: An API Signer or a person that is part of the list of allowed signers.<li>`end_user`: An end user - a signature by a mobile device with a third-party app that uses Fordefi's Mobile SDK. </ul>In the case of `initiator`, a notification is expected to be sent to the initiator's mobile device for approval of the transaction. 
      * @type {SignerType}
      * @memberof ManagedTransactionData
      */
     signerType: SignerType;
     /**
-     * 
+     * The list of risks associated with this transaction.
      * @type {Array<TransactionRisk>}
      * @memberof ManagedTransactionData
      */
     risks: Array<TransactionRisk>;
     /**
-     * 
+     * The translated error message received from the node if it was rejected by it.
      * @type {string}
      * @memberof ManagedTransactionData
      */
     errorPushingToBlockchainMessage?: string;
     /**
-     * 
+     * The error message received from the node if it was rejected by it.
      * @type {string}
      * @memberof ManagedTransactionData
      */
     originalErrorPushingToBlockchainMessage?: string;
     /**
-     * 
+     * The vault creating the transaction.
      * @type {VaultRef}
      * @memberof ManagedTransactionData
      */
     vault: VaultRef;
     /**
-     * 
+     * Optional idempotence ID of a transaction.
      * @type {string}
      * @memberof ManagedTransactionData
      */
     idempotenceId?: string;
     /**
-     * 
+     * Does current user have permissions to the origin vault according to its vault group permissions.
      * @type {boolean}
      * @memberof ManagedTransactionData
      */
     hasCurrentUserVaultPermissions: boolean;
     /**
-     * 
+     * Batch data if the transaction is part of a batch.
      * @type {BatchData}
      * @memberof ManagedTransactionData
      */
     batchData?: BatchData;
     /**
-     * 
+     * The push mode of the transaction when sending it to the node. It can be one of the following:<ul><li>`auto`: The transaction is pushed automatically by Fordefi. <li>`manual`: The transaction should be pushed manually by the user using a 3rd party.<li>`deferred`: The transaction is pushed by Fordefi after a certain time, if by that time it wasn't pushed manually by the client.</ul> 
      * @type {PushMode}
      * @memberof ManagedTransactionData
      */
     pushMode?: PushMode;
     /**
-     * 
+     * The last time the transaction was pushed to the node.
      * @type {Date}
      * @memberof ManagedTransactionData
      */
     lastPushedAt?: Date;
     /**
-     * 
+     * The sign mode of the transaction determines when the transaction will transition to the signing phase. It can be one of the following:<ul><li>`auto`: The transaction will move to signing automatically after approval.<li>`triggered`: The transaction will be in the `waiting_for_signing_trigger` state until "Trigger Transaction Signing" is called. Currently supported only for API Signer signer type.</ul>
      * @type {SignMode}
      * @memberof ManagedTransactionData
      */
     signMode?: SignMode;
+    /**
+     * 
+     * @type {FeePaidByVault}
+     * @memberof ManagedTransactionData
+     */
+    feePaidBy?: FeePaidByVault;
+    /**
+     * Bytes to sign (e.g. for external signer). Set after finalize-for-signing.
+     * @type {string}
+     * @memberof ManagedTransactionData
+     * @deprecated
+     */
+    payloadToSign?: string;
+    /**
+     * JWS attestation for the payload (external signer). Set after finalize-for-signing.
+     * @type {string}
+     * @memberof ManagedTransactionData
+     */
+    attestedPayloadForSigning?: string;
 }
 
 export function ManagedTransactionDataFromJSON(json: any): ManagedTransactionData {
@@ -192,6 +215,8 @@ function ManagedTransactionDataFromJSONTyped(json: any, _ignoreDiscriminator: bo
         'pushMode': json['push_mode'] == null ? undefined : PushModeFromJSON(json['push_mode']),
         'lastPushedAt': json['last_pushed_at'] == null ? undefined : (new Date(json['last_pushed_at'])),
         'signMode': json['sign_mode'] == null ? undefined : SignModeFromJSON(json['sign_mode']),
+        'feePaidBy': json['fee_paid_by'] == null ? undefined : FeePaidByVaultFromJSON(json['fee_paid_by']),
+        'payloadToSign': json['payload_to_sign'] == null ? undefined : json['payload_to_sign'],
+        'attestedPayloadForSigning': json['attested_payload_for_signing'] == null ? undefined : json['attested_payload_for_signing'],
     };
 }
-

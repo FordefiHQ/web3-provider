@@ -22,13 +22,13 @@ import {
  */
 export interface EvmTransactionParsedData {
     /**
-     * 
+     * The method name, in case of contract call.
      * @type {string}
      * @memberof EvmTransactionParsedData
      */
     method: string;
     /**
-     * 
+     * The method arguments, in case of contract call.
      * @type {Array<EvmTransactionMethodArgument>}
      * @memberof EvmTransactionParsedData
      */
@@ -49,4 +49,3 @@ function EvmTransactionParsedDataFromJSONTyped(json: any, _ignoreDiscriminator: 
         'methodArguments': ((json['method_arguments'] as Array<any>).map(EvmTransactionMethodArgumentFromJSON)),
     };
 }
-

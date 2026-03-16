@@ -26,19 +26,19 @@ import {
  */
 export interface EvmBridgeEffectKnownDestination {
     /**
-     * 
-     * @type {string}
+     * The type of the effect destination.
+     * @type {EvmBridgeEffectKnownDestinationTypeEnum}
      * @memberof EvmBridgeEffectKnownDestination
      */
     type: EvmBridgeEffectKnownDestinationTypeEnum;
     /**
-     * 
+     * The destination address of the bridge transaction.
      * @type {EnrichedEvmAddress}
      * @memberof EvmBridgeEffectKnownDestination
      */
     destAddress: EnrichedEvmAddress;
     /**
-     * 
+     * The destination chain of the bridge transaction.
      * @type {EnrichedEvmChain}
      * @memberof EvmBridgeEffectKnownDestination
      */
@@ -47,7 +47,7 @@ export interface EvmBridgeEffectKnownDestination {
 
 
 /**
- * 
+ * @export
  */
 const EvmBridgeEffectKnownDestinationTypeEnum = {
     knownTargetChain: 'known_target_chain'

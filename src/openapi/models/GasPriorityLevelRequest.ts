@@ -12,6 +12,7 @@
 
 
 /**
+ * 
  * @export
  */
 export const GasPriorityLevelRequest = {
@@ -24,4 +25,3 @@ export type GasPriorityLevelRequest = typeof GasPriorityLevelRequest[keyof typeo
 export function GasPriorityLevelRequestToJSON(value?: GasPriorityLevelRequest | null): any {
     return value as any;
 }
-

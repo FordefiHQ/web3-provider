@@ -44,29 +44,29 @@ export interface CreateSolanaSerializedTransactionMessageRequest {
      */
     fee?: BatchSolanaTransactionRequestDetailsFee;
     /**
-     * 
-     * @type {string}
+     * A Solana serialized transaction message request.
+     * @type {CreateSolanaSerializedTransactionMessageRequestTypeEnum}
      * @memberof CreateSolanaSerializedTransactionMessageRequest
      */
     type: CreateSolanaSerializedTransactionMessageRequestTypeEnum;
     /**
-     * 
+     * `True` if the request should fail in case simulation failed, `False` otherwise. <br> In case simulation has failed upon continuation, the expected result of the transaction will be partial and policy will be applied on information that can be extracted statically from the transaction only. This might result in falling back to the default policy rule. 
      * @type {boolean}
      * @memberof CreateSolanaSerializedTransactionMessageRequest
      */
     failOnPredictionFailure?: boolean;
     /**
-     * 
-     * @type {PushMode}
-     * @memberof CreateSolanaSerializedTransactionMessageRequest
-     */
-    pushMode?: PushMode;
-    /**
-     * 
+     * `True` to create a transaction without prediction, `False` otherwise. <br> In case of skipping simulation, the simulation status will be skipped and the expected result of the transaction will be empty. The policy will be applied on information that can be extracted statically from the transaction only. This might result in falling back to the default policy rule. <br> Note, it is recommended to use the default setting for this field and to turn off `fail_on_prediction_failure` instead - unless you wish to save time by omitting the prediction phase entirely. 
      * @type {boolean}
      * @memberof CreateSolanaSerializedTransactionMessageRequest
      */
     skipPrediction?: boolean;
+    /**
+     * The push mode of the transaction when sending it to the node. It can be one of the following:<ul><li>`auto`: The transaction is pushed automatically by Fordefi. <li>`manual`: The transaction should be pushed manually by the user using a 3rd party.<li>`deferred`: The transaction is pushed by Fordefi after a certain time, if by that time it wasn't pushed manually by the client.</ul></ul> 
+     * @type {PushMode}
+     * @memberof CreateSolanaSerializedTransactionMessageRequest
+     */
+    pushMode?: PushMode;
     /**
      * 
      * @type {SolanaChainUniqueId}
@@ -74,19 +74,26 @@ export interface CreateSolanaSerializedTransactionMessageRequest {
      */
     chain: SolanaChainUniqueId;
     /**
-     * 
+     * The base64 encoded binary transaction message. Can be either a serialized legacy Message or a serialized MessageV0.
+     * The first account in the serialized transaction message must match theaddress of the vault in the request.
+     * If the serialized message contains a recent block hash, the server may override it to prevent the transaction from expiring.
+     * Additionally, if the transaction does not include a priority fee (ComputeBudget instruction), the server might add it to increase the chances of the transaction landing on chain.
      * @type {string}
      * @memberof CreateSolanaSerializedTransactionMessageRequest
      */
     data: string;
     /**
-     * 
+     * List of Base64 encoded partial signatures.
+     * Can be omitted if the transaction requires no partial signatures, or if ephemeral_keys are passed instead.
+     * If passed, then the size of this array must match the total number of signers in the transaction, and elements in positions corresponding to vault accounts must be `{data: null}`
      * @type {Array<SolanaTransactionSignaturesRequest>}
      * @memberof CreateSolanaSerializedTransactionMessageRequest
      */
     signatures?: Array<SolanaTransactionSignaturesRequest>;
     /**
-     * 
+     * A list of 64-byte Solana secret keys, encoded as base64, for any non-vault signer accounts.
+     * Can be omitted if the transaction requires no partial signatures, or if signatures are passed instead.
+     * If passed, then the size of this array must match the total number of signers in the transaction, and elements in positions corresponding to vault accounts must be `{data: null}`
      * @type {Array<SolanaSecretKeyRequest>}
      * @memberof CreateSolanaSerializedTransactionMessageRequest
      */
@@ -95,7 +102,7 @@ export interface CreateSolanaSerializedTransactionMessageRequest {
 
 
 /**
- * 
+ * @export
  */
 const CreateSolanaSerializedTransactionMessageRequestTypeEnum = {
     solanaSerializedTransactionMessage: 'solana_serialized_transaction_message'
@@ -116,8 +123,8 @@ function CreateSolanaSerializedTransactionMessageRequestToJSONTyped(value?: Crea
         'fee': BatchSolanaTransactionRequestDetailsFeeToJSON(value['fee']),
         'type': value['type'],
         'fail_on_prediction_failure': value['failOnPredictionFailure'],
-        'push_mode': PushModeToJSON(value['pushMode']),
         'skip_prediction': value['skipPrediction'],
+        'push_mode': PushModeToJSON(value['pushMode']),
         'chain': SolanaChainUniqueIdToJSON(value['chain']),
         'data': value['data'],
         'signatures': value['signatures'] == null ? undefined : ((value['signatures'] as Array<any>).map(SolanaTransactionSignaturesRequestToJSON)),

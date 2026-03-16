@@ -34,18 +34,18 @@ import type { EnrichedSuiChain } from './EnrichedSuiChain';
 import {
     EnrichedSuiChainFromJSON,
 } from './EnrichedSuiChain';
-import type { SuiCheckpointData } from './SuiCheckpointData';
+import type { MinedResultStatus } from './MinedResultStatus';
 import {
-    SuiCheckpointDataFromJSON,
-} from './SuiCheckpointData';
-import type { AmlPolicyMatchIncoming } from './AmlPolicyMatchIncoming';
-import {
-    AmlPolicyMatchIncomingFromJSON,
-} from './AmlPolicyMatchIncoming';
+    MinedResultStatusFromJSON,
+} from './MinedResultStatus';
 import type { SuiGasConfig } from './SuiGasConfig';
 import {
     SuiGasConfigFromJSON,
 } from './SuiGasConfig';
+import type { VaultRef } from './VaultRef';
+import {
+    VaultRefFromJSON,
+} from './VaultRef';
 import type { SuiTransactionResult } from './SuiTransactionResult';
 import {
     SuiTransactionResultFromJSON,
@@ -66,22 +66,30 @@ import type { SuiMessageVersion } from './SuiMessageVersion';
 import {
     SuiMessageVersionFromJSON,
 } from './SuiMessageVersion';
+import type { AmlCheck } from './AmlCheck';
+import {
+    AmlCheckFromJSON,
+} from './AmlCheck';
 import type { Signature } from './Signature';
 import {
     SignatureFromJSON,
 } from './Signature';
+import type { RelatedTransaction } from './RelatedTransaction';
+import {
+    RelatedTransactionFromJSON,
+} from './RelatedTransaction';
 import type { SimulationStatusResult } from './SimulationStatusResult';
 import {
     SimulationStatusResultFromJSON,
 } from './SimulationStatusResult';
+import type { Block } from './Block';
+import {
+    BlockFromJSON,
+} from './Block';
 import type { SuiInput } from './SuiInput';
 import {
     SuiInputFromJSON,
 } from './SuiInput';
-import type { AmlResults } from './AmlResults';
-import {
-    AmlResultsFromJSON,
-} from './AmlResults';
 
 /**
  * 
@@ -90,86 +98,116 @@ import {
  */
 export interface SuiTransaction {
     /**
-     * 
+     * The unique identifier of the object in the Fordefi platform.
      * @type {string}
      * @memberof SuiTransaction
      */
     id: string;
     /**
-     * 
+     * The date and time when the object was created.
      * @type {Date}
      * @memberof SuiTransaction
      */
     createdAt: Date;
     /**
-     * 
+     * The date and time when the object was last modified. Any change to any field of the resource is considered a modification.
      * @type {Date}
      * @memberof SuiTransaction
      */
     modifiedAt: Date;
     /**
-     * 
+     * Managed transaction data. Presented if the transaction was initiated from the Fordefi system itself, in contrast to unmanaged transactions (which are, for example, transfers of funds into a vault visible to Fordefi). 
      * @type {ManagedTransactionData}
      * @memberof SuiTransaction
      */
     managedTransactionData?: ManagedTransactionData;
     /**
-     * 
+     * The transaction signatures.
      * @type {Array<Signature>}
      * @memberof SuiTransaction
      */
     signatures: Array<Signature>;
     /**
-     * 
+     * An optional transaction note.
      * @type {string}
      * @memberof SuiTransaction
      */
     note?: string;
     /**
-     * 
+     * `automatically_set` if the transaction was automatically set as spam by Fordefi, `manually_set` if the transaction was manually set as spam by a user, and `unset` if the transaction was not set as spam.
      * @type {TransactionSpamState}
      * @memberof SuiTransaction
      */
     spamState?: TransactionSpamState;
     /**
-     * 
+     * The direction of the transaction.
      * @type {TransactionDirection}
      * @memberof SuiTransaction
      */
     direction: TransactionDirection;
     /**
-     * 
+     * Whether the transaction was signed by an external user (for example in case of imported vault).
      * @type {boolean}
      * @memberof SuiTransaction
      */
     signedExternally?: boolean;
     /**
-     * 
+     * The vaults that interacted with the transaction.
+     * @type {Array<VaultRef>}
+     * @memberof SuiTransaction
+     */
+    interactedVaults: Array<VaultRef>;
+    /**
+     * The related transactions.
+     * @type {Array<RelatedTransaction>}
+     * @memberof SuiTransaction
+     */
+    relatedTransactions?: Array<RelatedTransaction>;
+    /**
+     * The organization that the transaction belongs to.
+     * @type {string}
+     * @memberof SuiTransaction
+     */
+    organizationId: string;
+    /**
+     * The block of the transaction.
+     * @type {Block}
+     * @memberof SuiTransaction
+     */
+    block?: Block;
+    /**
+     * The state of the transaction.
      * @type {PushableTransactionState}
      * @memberof SuiTransaction
      */
     state: PushableTransactionState;
     /**
-     * 
+     * The state changes of the transaction.
      * @type {Array<PushableTransactionStateChange>}
      * @memberof SuiTransaction
      */
     stateChanges: Array<PushableTransactionStateChange>;
     /**
-     * 
-     * @type {AmlResults}
+     * The AML check.
+     * @type {AmlCheck}
      * @memberof SuiTransaction
      */
-    amlResults?: AmlResults;
+    amlCheck?: AmlCheck;
     /**
-     * 
-     * @type {AmlPolicyMatchIncoming}
+     * The mined result status of the transaction.
+     * @type {MinedResultStatus}
      * @memberof SuiTransaction
      */
-    incomingAmlPolicyMatch?: AmlPolicyMatchIncoming;
+    minedResultStatus?: MinedResultStatus;
     /**
-     * 
-     * @type {string}
+     * Whether simulation succeeded, reverted or failed.
+     * @type {SimulationStatusResult}
+     * @memberof SuiTransaction
+     */
+    simulationStatusResult?: SimulationStatusResult;
+    /**
+     * Sui transaction type.
+     * @type {SuiTransactionTypeEnum}
      * @memberof SuiTransaction
      */
     type: SuiTransactionTypeEnum;
@@ -180,112 +218,113 @@ export interface SuiTransaction {
      */
     suiTransactionTypeDetails: PredictedSuiTransactionSuiTransactionTypeDetails;
     /**
-     * 
+     * The details of the chain this transaction is on.
      * @type {EnrichedSuiChain}
      * @memberof SuiTransaction
      */
     chain: EnrichedSuiChain;
     /**
-     * 
+     * The version of the transaction message.
      * @type {SuiMessageVersion}
      * @memberof SuiTransaction
      */
     version: SuiMessageVersion;
     /**
-     * 
+     * The inputs of the transaction.
      * @type {Array<SuiInput>}
      * @memberof SuiTransaction
      */
     inputs: Array<SuiInput>;
     /**
-     * 
+     * The commands of the transactions.
      * @type {Array<SuiCommand>}
      * @memberof SuiTransaction
      */
     commands: Array<SuiCommand>;
     /**
-     * 
+     * The sender of the transaction.
      * @type {EnrichedSuiAddress}
      * @memberof SuiTransaction
      */
     sender: EnrichedSuiAddress;
     /**
-     * 
+     * The recipient of the transaction.
      * @type {EnrichedSuiAddress}
      * @memberof SuiTransaction
      */
     recipient?: EnrichedSuiAddress;
     /**
-     * 
+     * The digest of the transaction.
      * @type {string}
      * @memberof SuiTransaction
      */
     digest?: string;
     /**
-     * 
+     * The tx_bytes param encoded as a base64 string.
      * @type {string}
      * @memberof SuiTransaction
      */
     txBytes?: string;
     /**
-     * 
+     * The json representation of the transaction's data
      * @type {string}
      * @memberof SuiTransaction
      */
     decodedTxBytes?: string;
     /**
-     * 
-     * @type {SuiCheckpointData}
+     * Details of the checkpoint the transaction was mined in.
+     * @type {Block}
      * @memberof SuiTransaction
+     * @deprecated
      */
-    checkpoint?: SuiCheckpointData;
+    checkpoint?: Block;
     /**
-     * 
+     * The epoch of the transaction.
      * @type {number}
      * @memberof SuiTransaction
      */
     epoch?: number;
     /**
-     * 
+     * The gas details submitted for the transaction.
      * @type {SuiGasConfig}
      * @memberof SuiTransaction
      */
     gasSubmitted: SuiGasConfig;
     /**
-     * 
+     * The expected result of the transaction in case it is mined.
      * @type {SuiTransactionResult}
      * @memberof SuiTransaction
      */
     expectedResult?: SuiTransactionResult;
     /**
-     * 
-     * @type {SimulationStatusResult}
-     * @memberof SuiTransaction
-     */
-    simulationStatusResult: SimulationStatusResult;
-    /**
-     * 
+     * The result of the transaction after it was mined.
      * @type {SuiTransactionResult}
      * @memberof SuiTransaction
      */
     minedResult?: SuiTransactionResult;
     /**
-     * 
+     * The json representation of the transaction's data which contains the inputs and commands.
      * @type {string}
      * @memberof SuiTransaction
      */
     transactionBlockData?: string;
     /**
-     * 
+     * The URL of this transaction in a blockchain explorer. For example, Suiscan.
      * @type {string}
      * @memberof SuiTransaction
      */
     explorerUrl?: string;
+    /**
+     * The address that pays the fee for this transaction (gas owner).
+     * @type {EnrichedSuiAddress}
+     * @memberof SuiTransaction
+     */
+    feePayer?: EnrichedSuiAddress;
 }
 
 
 /**
- * 
+ * @export
  */
 const SuiTransactionTypeEnum = {
     suiTransaction: 'sui_transaction'
@@ -307,10 +346,15 @@ export function SuiTransactionFromJSONTyped(json: any, _ignoreDiscriminator: boo
         'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
         'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'interactedVaults': ((json['interacted_vaults'] as Array<any>).map(VaultRefFromJSON)),
+        'relatedTransactions': json['related_transactions'] == null ? undefined : ((json['related_transactions'] as Array<any>).map(RelatedTransactionFromJSON)),
+        'organizationId': json['organization_id'],
+        'block': json['block'] == null ? undefined : BlockFromJSON(json['block']),
         'state': PushableTransactionStateFromJSON(json['state']),
         'stateChanges': ((json['state_changes'] as Array<any>).map(PushableTransactionStateChangeFromJSON)),
-        'amlResults': json['aml_results'] == null ? undefined : AmlResultsFromJSON(json['aml_results']),
-        'incomingAmlPolicyMatch': json['incoming_aml_policy_match'] == null ? undefined : AmlPolicyMatchIncomingFromJSON(json['incoming_aml_policy_match']),
+        'amlCheck': json['aml_check'] == null ? undefined : AmlCheckFromJSON(json['aml_check']),
+        'minedResultStatus': json['mined_result_status'] == null ? undefined : MinedResultStatusFromJSON(json['mined_result_status']),
+        'simulationStatusResult': json['simulation_status_result'] == null ? undefined : SimulationStatusResultFromJSON(json['simulation_status_result']),
         'type': json['type'],
         'suiTransactionTypeDetails': PredictedSuiTransactionSuiTransactionTypeDetailsFromJSON(json['sui_transaction_type_details']),
         'chain': EnrichedSuiChainFromJSON(json['chain']),
@@ -322,13 +366,13 @@ export function SuiTransactionFromJSONTyped(json: any, _ignoreDiscriminator: boo
         'digest': json['digest'] == null ? undefined : json['digest'],
         'txBytes': json['tx_bytes'] == null ? undefined : json['tx_bytes'],
         'decodedTxBytes': json['decoded_tx_bytes'] == null ? undefined : json['decoded_tx_bytes'],
-        'checkpoint': json['checkpoint'] == null ? undefined : SuiCheckpointDataFromJSON(json['checkpoint']),
+        'checkpoint': json['checkpoint'] == null ? undefined : BlockFromJSON(json['checkpoint']),
         'epoch': json['epoch'] == null ? undefined : json['epoch'],
         'gasSubmitted': SuiGasConfigFromJSON(json['gas_submitted']),
         'expectedResult': json['expected_result'] == null ? undefined : SuiTransactionResultFromJSON(json['expected_result']),
-        'simulationStatusResult': SimulationStatusResultFromJSON(json['simulation_status_result']),
         'minedResult': json['mined_result'] == null ? undefined : SuiTransactionResultFromJSON(json['mined_result']),
         'transactionBlockData': json['transaction_block_data'] == null ? undefined : json['transaction_block_data'],
         'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
+        'feePayer': json['fee_payer'] == null ? undefined : EnrichedSuiAddressFromJSON(json['fee_payer']),
     };
 }

@@ -17,20 +17,20 @@
  */
 export interface EcdsaStarkBlackBoxVault {
     /**
-     * 
-     * @type {string}
+     * ECDSA over the Stark curve signing scheme.
+     * @type {EcdsaStarkBlackBoxVaultTypeEnum}
      * @memberof EcdsaStarkBlackBoxVault
      */
     type: EcdsaStarkBlackBoxVaultTypeEnum;
     /**
-     * 
+     * The stark public key, represented in hex format.
      * @type {string}
      * @memberof EcdsaStarkBlackBoxVault
      * @deprecated
      */
     publicKey: string;
     /**
-     * 
+     * The stark public key, represented in hex format.
      * @type {string}
      * @memberof EcdsaStarkBlackBoxVault
      */
@@ -39,7 +39,7 @@ export interface EcdsaStarkBlackBoxVault {
 
 
 /**
- * 
+ * @export
  */
 const EcdsaStarkBlackBoxVaultTypeEnum = {
     ecdsaStark: 'ecdsa_stark'

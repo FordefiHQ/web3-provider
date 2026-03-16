@@ -56,9 +56,9 @@ import {
 } from './EnrichedUtxoAddress';
 
 /**
+ * @type EnrichedAddress
  * 
  * @export
- * @type EnrichedAddress
  */
 export type EnrichedAddress = { type: 'aptos' } & EnrichedAptosAddress | { type: 'cosmos' } & EnrichedCosmosBechAddress | { type: 'evm' } & EnrichedEvmAddress | { type: 'exchange' } & EnrichedExchangeAddress | { type: 'solana' } & EnrichedSolanaAddress | { type: 'stacks' } & EnrichedStacksAddress | { type: 'starknet' } & EnrichedStarknetAddress | { type: 'sui' } & EnrichedSuiAddress | { type: 'ton' } & EnrichedTonAddress | { type: 'tron' } & EnrichedTronAddress | { type: 'utxo' } & EnrichedUtxoAddress;
 
@@ -94,7 +94,6 @@ function EnrichedAddressFromJSONTyped(json: any, _ignoreDiscriminator: boolean):
         case 'utxo':
             return Object.assign({}, EnrichedUtxoAddressFromJSONTyped(json, true), { type: 'utxo' } as const);
         default:
-            throw new Error(`No variant of EnrichedAddress exists with 'type=${json['type']}'`);
+            return json;
     }
 }
-

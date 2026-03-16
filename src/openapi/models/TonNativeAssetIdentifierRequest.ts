@@ -23,13 +23,13 @@ import {
  */
 export interface TonNativeAssetIdentifierRequest {
     /**
-     * 
-     * @type {string}
+     * TON asset identifier type.
+     * @type {TonNativeAssetIdentifierRequestTypeEnum}
      * @memberof TonNativeAssetIdentifierRequest
      */
     type: TonNativeAssetIdentifierRequestTypeEnum;
     /**
-     * 
+     * The details of the chain of the native asset.
      * @type {TonChainUniqueId}
      * @memberof TonNativeAssetIdentifierRequest
      */
@@ -38,7 +38,7 @@ export interface TonNativeAssetIdentifierRequest {
 
 
 /**
- * 
+ * @export
  */
 const TonNativeAssetIdentifierRequestTypeEnum = {
     native: 'native'

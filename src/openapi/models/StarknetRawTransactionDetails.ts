@@ -22,13 +22,13 @@ import {
  */
 export interface StarknetRawTransactionDetails {
     /**
-     * 
-     * @type {string}
+     * A transaction with contract calls.
+     * @type {StarknetRawTransactionDetailsTypeEnum}
      * @memberof StarknetRawTransactionDetails
      */
     type: StarknetRawTransactionDetailsTypeEnum;
     /**
-     * 
+     * The called contracts.
      * @type {Array<EnrichedStarknetAddress>}
      * @memberof StarknetRawTransactionDetails
      */
@@ -37,7 +37,7 @@ export interface StarknetRawTransactionDetails {
 
 
 /**
- * 
+ * @export
  */
 const StarknetRawTransactionDetailsTypeEnum = {
     rawTransaction: 'raw_transaction'

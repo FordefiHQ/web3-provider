@@ -10,10 +10,6 @@
  * Do not edit the class manually.
  */
 
-import type { PartialErrorResponse } from './PartialErrorResponse';
-import {
-    PartialErrorResponseFromJSON,
-} from './PartialErrorResponse';
 import type { Vault } from './Vault';
 import {
     VaultFromJSON,
@@ -25,12 +21,6 @@ import {
  * @interface ListVaultsResponse
  */
 export interface ListVaultsResponse {
-    /**
-     * 
-     * @type {PartialErrorResponse}
-     * @memberof ListVaultsResponse
-     */
-    partialError?: PartialErrorResponse;
     /**
      * 
      * @type {number}
@@ -67,11 +57,9 @@ function ListVaultsResponseFromJSONTyped(json: any, _ignoreDiscriminator: boolea
     }
     return {
         
-        'partialError': json['partial_error'] == null ? undefined : PartialErrorResponseFromJSON(json['partial_error']),
         'total': json['total'],
         'page': json['page'],
         'size': json['size'],
         'vaults': ((json['vaults'] as Array<any>).map(VaultFromJSON)),
     };
 }
-

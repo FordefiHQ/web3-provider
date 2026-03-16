@@ -22,7 +22,7 @@ import {
  */
 export interface EvmContractDeploymentEffect {
     /**
-     * 
+     * The address of the deployed contract.
      * @type {EnrichedEvmAddress}
      * @memberof EvmContractDeploymentEffect
      */
@@ -42,4 +42,3 @@ function EvmContractDeploymentEffectFromJSONTyped(json: any, _ignoreDiscriminato
         'address': EnrichedEvmAddressFromJSON(json['address']),
     };
 }
-

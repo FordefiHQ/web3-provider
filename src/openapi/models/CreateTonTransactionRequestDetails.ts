@@ -20,9 +20,9 @@ import {
 } from './CreateTonTransferRequest';
 
 /**
+ * @type CreateTonTransactionRequestDetails
  * 
  * @export
- * @type CreateTonTransactionRequestDetails
  */
 export type CreateTonTransactionRequestDetails = { type: 'ton_raw_transaction' } & CreateTonSerializedRawTransactionRequest | { type: 'ton_transfer' } & CreateTonTransferRequest;
 
@@ -40,8 +40,6 @@ function CreateTonTransactionRequestDetailsToJSONTyped(value?: CreateTonTransact
         case 'ton_transfer':
             return Object.assign({}, CreateTonTransferRequestToJSON(value), { type: 'ton_transfer' } as const);
         default:
-            throw new Error(`No variant of CreateTonTransactionRequestDetails exists with 'type=${value['type']}'`);
+            return value;
     }
-
 }
-

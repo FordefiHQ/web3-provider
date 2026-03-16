@@ -10,10 +10,6 @@
  * Do not edit the class manually.
  */
 
-import type { AptosBalanceChangeEffectType } from './AptosBalanceChangeEffectType';
-import {
-    AptosBalanceChangeEffectTypeFromJSON,
-} from './AptosBalanceChangeEffectType';
 import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
@@ -30,35 +26,23 @@ import {
  */
 export interface AptosBalanceChangeEffect {
     /**
-     * 
+     * The asset information.
      * @type {PricedAsset}
      * @memberof AptosBalanceChangeEffect
      */
     pricedAsset: PricedAsset;
     /**
-     * 
+     * The amount of that was added to or deducted from the owner's balance. If the amount was deducted, the value is negative; if the amount was added, the value is positive.
      * @type {string}
      * @memberof AptosBalanceChangeEffect
      */
     diff: string;
     /**
-     * 
-     * @type {AptosBalanceChangeEffectType}
-     * @memberof AptosBalanceChangeEffect
-     */
-    type: AptosBalanceChangeEffectType;
-    /**
-     * 
+     * The address affected by the balance change.
      * @type {EnrichedAptosAddress}
      * @memberof AptosBalanceChangeEffect
      */
     address: EnrichedAptosAddress;
-    /**
-     * 
-     * @type {EnrichedAptosAddress}
-     * @memberof AptosBalanceChangeEffect
-     */
-    owner?: EnrichedAptosAddress;
 }
 
 export function AptosBalanceChangeEffectFromJSON(json: any): AptosBalanceChangeEffect {
@@ -73,9 +57,6 @@ function AptosBalanceChangeEffectFromJSONTyped(json: any, _ignoreDiscriminator: 
         
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
         'diff': json['diff'],
-        'type': AptosBalanceChangeEffectTypeFromJSON(json['type']),
         'address': EnrichedAptosAddressFromJSON(json['address']),
-        'owner': json['owner'] == null ? undefined : EnrichedAptosAddressFromJSON(json['owner']),
     };
 }
-

@@ -26,19 +26,19 @@ import {
  */
 export interface ExchangeBalanceChangeEffect {
     /**
-     * 
+     * The asset information.
      * @type {PricedAsset}
      * @memberof ExchangeBalanceChangeEffect
      */
     pricedAsset: PricedAsset;
     /**
-     * 
+     * The amount of that was added to or deducted from the owner's balance. If the amount was deducted, the value is negative; if the amount was added, the value is positive.
      * @type {string}
      * @memberof ExchangeBalanceChangeEffect
      */
     diff: string;
     /**
-     * 
+     * The address affected by the balance change or vault in case of an exchange vault.
      * @type {EnrichedAddress}
      * @memberof ExchangeBalanceChangeEffect
      */
@@ -60,4 +60,3 @@ function ExchangeBalanceChangeEffectFromJSONTyped(json: any, _ignoreDiscriminato
         'address': EnrichedAddressFromJSON(json['address']),
     };
 }
-

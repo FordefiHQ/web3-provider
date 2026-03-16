@@ -26,13 +26,13 @@ import {
  */
 export interface UtxoTransactionResult {
     /**
-     * 
+     * The fees of the transaction.
      * @type {UtxoFees}
      * @memberof UtxoTransactionResult
      */
     fees?: UtxoFees;
     /**
-     * 
+     * The effects of the transaction.
      * @type {UtxoEffects}
      * @memberof UtxoTransactionResult
      */
@@ -53,4 +53,3 @@ function UtxoTransactionResultFromJSONTyped(json: any, _ignoreDiscriminator: boo
         'effects': UtxoEffectsFromJSON(json['effects']),
     };
 }
-

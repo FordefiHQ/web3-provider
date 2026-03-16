@@ -20,9 +20,9 @@ import {
 } from './UnknownAssetStacksPostCondition';
 
 /**
+ * @type StacksPostCondition
  * 
  * @export
- * @type StacksPostCondition
  */
 export type StacksPostCondition = { type: 'known_asset' } & KnownAssetStacksPostCondition | { type: 'unknown_asset' } & UnknownAssetStacksPostCondition;
 
@@ -40,7 +40,6 @@ function StacksPostConditionFromJSONTyped(json: any, _ignoreDiscriminator: boole
         case 'unknown_asset':
             return Object.assign({}, UnknownAssetStacksPostConditionFromJSONTyped(json, true), { type: 'unknown_asset' } as const);
         default:
-            throw new Error(`No variant of StacksPostCondition exists with 'type=${json['type']}'`);
+            return json;
     }
 }
-

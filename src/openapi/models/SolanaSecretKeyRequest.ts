@@ -17,7 +17,7 @@
  */
 export interface SolanaSecretKeyRequest {
     /**
-     * 
+     * A 64-byte Solana secret key of the account, encoded in base-64.
      * @type {string}
      * @memberof SolanaSecretKeyRequest
      */
@@ -38,4 +38,3 @@ function SolanaSecretKeyRequestToJSONTyped(value?: SolanaSecretKeyRequest | null
         'data': value['data'],
     };
 }
-

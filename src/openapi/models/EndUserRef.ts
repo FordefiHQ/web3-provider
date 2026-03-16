@@ -17,26 +17,26 @@
  */
 export interface EndUserRef {
     /**
-     * 
+     * The unique identifier of the user in the Fordefi platform.
      * @type {string}
      * @memberof EndUserRef
      */
     id: string;
     /**
-     * 
-     * @type {string}
+     * The type of the user.
+     * @type {EndUserRefUserTypeEnum}
      * @memberof EndUserRef
      */
     userType: EndUserRefUserTypeEnum;
     /**
-     * 
+     * External id of the user.
      * @type {string}
      * @memberof EndUserRef
      */
     externalId: string;
     /**
-     * 
-     * @type {string}
+     * The state of the user.
+     * @type {EndUserRefStateEnum}
      * @memberof EndUserRef
      */
     state: EndUserRefStateEnum;
@@ -44,7 +44,7 @@ export interface EndUserRef {
 
 
 /**
- * 
+ * @export
  */
 const EndUserRefUserTypeEnum = {
     endUser: 'end_user'
@@ -52,7 +52,7 @@ const EndUserRefUserTypeEnum = {
 type EndUserRefUserTypeEnum = typeof EndUserRefUserTypeEnum[keyof typeof EndUserRefUserTypeEnum];
 
 /**
- * 
+ * @export
  */
 const EndUserRefStateEnum = {
     active: 'active',

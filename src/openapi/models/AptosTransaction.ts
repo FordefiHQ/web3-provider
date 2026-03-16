@@ -10,10 +10,6 @@
  * Do not edit the class manually.
  */
 
-import type { AptosBlock } from './AptosBlock';
-import {
-    AptosBlockFromJSON,
-} from './AptosBlock';
 import type { EnrichedAptosChain } from './EnrichedAptosChain';
 import {
     EnrichedAptosChainFromJSON,
@@ -46,10 +42,14 @@ import type { PushableTransactionState } from './PushableTransactionState';
 import {
     PushableTransactionStateFromJSON,
 } from './PushableTransactionState';
-import type { AmlPolicyMatchIncoming } from './AmlPolicyMatchIncoming';
+import type { MinedResultStatus } from './MinedResultStatus';
 import {
-    AmlPolicyMatchIncomingFromJSON,
-} from './AmlPolicyMatchIncoming';
+    MinedResultStatusFromJSON,
+} from './MinedResultStatus';
+import type { VaultRef } from './VaultRef';
+import {
+    VaultRefFromJSON,
+} from './VaultRef';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
@@ -62,18 +62,26 @@ import type { TransactionDirection } from './TransactionDirection';
 import {
     TransactionDirectionFromJSON,
 } from './TransactionDirection';
+import type { AmlCheck } from './AmlCheck';
+import {
+    AmlCheckFromJSON,
+} from './AmlCheck';
 import type { Signature } from './Signature';
 import {
     SignatureFromJSON,
 } from './Signature';
+import type { RelatedTransaction } from './RelatedTransaction';
+import {
+    RelatedTransactionFromJSON,
+} from './RelatedTransaction';
 import type { SimulationStatusResult } from './SimulationStatusResult';
 import {
     SimulationStatusResultFromJSON,
 } from './SimulationStatusResult';
-import type { AmlResults } from './AmlResults';
+import type { Block } from './Block';
 import {
-    AmlResultsFromJSON,
-} from './AmlResults';
+    BlockFromJSON,
+} from './Block';
 
 /**
  * 
@@ -82,86 +90,116 @@ import {
  */
 export interface AptosTransaction {
     /**
-     * 
+     * The unique identifier of the object in the Fordefi platform.
      * @type {string}
      * @memberof AptosTransaction
      */
     id: string;
     /**
-     * 
+     * The date and time when the object was created.
      * @type {Date}
      * @memberof AptosTransaction
      */
     createdAt: Date;
     /**
-     * 
+     * The date and time when the object was last modified. Any change to any field of the resource is considered a modification.
      * @type {Date}
      * @memberof AptosTransaction
      */
     modifiedAt: Date;
     /**
-     * 
+     * Managed transaction data. Presented if the transaction was initiated from the Fordefi system itself, in contrast to unmanaged transactions (which are, for example, transfers of funds into a vault visible to Fordefi). 
      * @type {ManagedTransactionData}
      * @memberof AptosTransaction
      */
     managedTransactionData?: ManagedTransactionData;
     /**
-     * 
+     * The transaction signatures.
      * @type {Array<Signature>}
      * @memberof AptosTransaction
      */
     signatures: Array<Signature>;
     /**
-     * 
+     * An optional transaction note.
      * @type {string}
      * @memberof AptosTransaction
      */
     note?: string;
     /**
-     * 
+     * `automatically_set` if the transaction was automatically set as spam by Fordefi, `manually_set` if the transaction was manually set as spam by a user, and `unset` if the transaction was not set as spam.
      * @type {TransactionSpamState}
      * @memberof AptosTransaction
      */
     spamState?: TransactionSpamState;
     /**
-     * 
+     * The direction of the transaction.
      * @type {TransactionDirection}
      * @memberof AptosTransaction
      */
     direction: TransactionDirection;
     /**
-     * 
+     * Whether the transaction was signed by an external user (for example in case of imported vault).
      * @type {boolean}
      * @memberof AptosTransaction
      */
     signedExternally?: boolean;
     /**
-     * 
+     * The vaults that interacted with the transaction.
+     * @type {Array<VaultRef>}
+     * @memberof AptosTransaction
+     */
+    interactedVaults: Array<VaultRef>;
+    /**
+     * The related transactions.
+     * @type {Array<RelatedTransaction>}
+     * @memberof AptosTransaction
+     */
+    relatedTransactions?: Array<RelatedTransaction>;
+    /**
+     * The organization that the transaction belongs to.
+     * @type {string}
+     * @memberof AptosTransaction
+     */
+    organizationId: string;
+    /**
+     * The block of the transaction.
+     * @type {Block}
+     * @memberof AptosTransaction
+     */
+    block?: Block;
+    /**
+     * The state of the transaction.
      * @type {PushableTransactionState}
      * @memberof AptosTransaction
      */
     state: PushableTransactionState;
     /**
-     * 
+     * The state changes of the transaction.
      * @type {Array<PushableTransactionStateChange>}
      * @memberof AptosTransaction
      */
     stateChanges: Array<PushableTransactionStateChange>;
     /**
-     * 
-     * @type {AmlResults}
+     * The AML check.
+     * @type {AmlCheck}
      * @memberof AptosTransaction
      */
-    amlResults?: AmlResults;
+    amlCheck?: AmlCheck;
     /**
-     * 
-     * @type {AmlPolicyMatchIncoming}
+     * The mined result status of the transaction.
+     * @type {MinedResultStatus}
      * @memberof AptosTransaction
      */
-    incomingAmlPolicyMatch?: AmlPolicyMatchIncoming;
+    minedResultStatus?: MinedResultStatus;
     /**
-     * 
-     * @type {string}
+     * Whether simulation succeeded, reverted or failed.
+     * @type {SimulationStatusResult}
+     * @memberof AptosTransaction
+     */
+    simulationStatusResult?: SimulationStatusResult;
+    /**
+     * Aptos transaction type.
+     * @type {AptosTransactionTypeEnum}
      * @memberof AptosTransaction
      */
     type: AptosTransactionTypeEnum;
@@ -172,25 +210,25 @@ export interface AptosTransaction {
      */
     aptosTransactionTypeDetails: AptosTransactionAptosTransactionTypeDetails;
     /**
-     * 
+     * The details of the chain this transaction is on.
      * @type {EnrichedAptosChain}
      * @memberof AptosTransaction
      */
     chain: EnrichedAptosChain;
     /**
-     * 
+     * The version of the transaction.
      * @type {number}
      * @memberof AptosTransaction
      */
     version?: number;
     /**
-     * 
+     * The nonce of the transaction.
      * @type {number}
      * @memberof AptosTransaction
      */
     nonce?: number;
     /**
-     * 
+     * The sender of the transaction.
      * @type {EnrichedAptosAddress}
      * @memberof AptosTransaction
      */
@@ -202,49 +240,49 @@ export interface AptosTransaction {
      */
     payload: AptosTransactionPayload;
     /**
-     * 
+     * The hash of the transaction.
      * @type {string}
      * @memberof AptosTransaction
      */
     hash?: string;
     /**
-     * 
-     * @type {AptosBlock}
-     * @memberof AptosTransaction
-     */
-    block?: AptosBlock;
-    /**
-     * 
+     * The gas details submitted for the transaction.
      * @type {AptosGasData}
      * @memberof AptosTransaction
      */
     gasSubmitted: AptosGasData;
     /**
-     * 
+     * If true, the transaction's Authenticator will be configured to support an external fee payer. After Fordefi signs the transaction, the client is responsible for forwarding it to the designated fee payer for final signing and broadcasting.
+     * @type {boolean}
+     * @memberof AptosTransaction
+     */
+    withExternalFeePayer?: boolean;
+    /**
+     * The address of the fee payer vault for sponsored transactions.
+     * @type {EnrichedAptosAddress}
+     * @memberof AptosTransaction
+     */
+    feePayer?: EnrichedAptosAddress;
+    /**
+     * The serialized signed transaction.
      * @type {string}
      * @memberof AptosTransaction
      */
     serializedSignedTransaction?: string;
     /**
-     * 
+     * The expected result of the transaction in case it is mined.
      * @type {AptosTransactionResult}
      * @memberof AptosTransaction
      */
     expectedResult?: AptosTransactionResult;
     /**
-     * 
-     * @type {SimulationStatusResult}
-     * @memberof AptosTransaction
-     */
-    simulationStatusResult?: SimulationStatusResult;
-    /**
-     * 
+     * The result of the transaction after it was mined.
      * @type {AptosTransactionResult}
      * @memberof AptosTransaction
      */
     minedResult?: AptosTransactionResult;
     /**
-     * 
+     * The URL of this transaction in a blockchain explorer. For example, explorer.aptoslabs.com
      * @type {string}
      * @memberof AptosTransaction
      */
@@ -253,7 +291,7 @@ export interface AptosTransaction {
 
 
 /**
- * 
+ * @export
  */
 const AptosTransactionTypeEnum = {
     aptosTransaction: 'aptos_transaction'
@@ -275,10 +313,15 @@ export function AptosTransactionFromJSONTyped(json: any, _ignoreDiscriminator: b
         'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
         'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'interactedVaults': ((json['interacted_vaults'] as Array<any>).map(VaultRefFromJSON)),
+        'relatedTransactions': json['related_transactions'] == null ? undefined : ((json['related_transactions'] as Array<any>).map(RelatedTransactionFromJSON)),
+        'organizationId': json['organization_id'],
+        'block': json['block'] == null ? undefined : BlockFromJSON(json['block']),
         'state': PushableTransactionStateFromJSON(json['state']),
         'stateChanges': ((json['state_changes'] as Array<any>).map(PushableTransactionStateChangeFromJSON)),
-        'amlResults': json['aml_results'] == null ? undefined : AmlResultsFromJSON(json['aml_results']),
-        'incomingAmlPolicyMatch': json['incoming_aml_policy_match'] == null ? undefined : AmlPolicyMatchIncomingFromJSON(json['incoming_aml_policy_match']),
+        'amlCheck': json['aml_check'] == null ? undefined : AmlCheckFromJSON(json['aml_check']),
+        'minedResultStatus': json['mined_result_status'] == null ? undefined : MinedResultStatusFromJSON(json['mined_result_status']),
+        'simulationStatusResult': json['simulation_status_result'] == null ? undefined : SimulationStatusResultFromJSON(json['simulation_status_result']),
         'type': json['type'],
         'aptosTransactionTypeDetails': AptosTransactionAptosTransactionTypeDetailsFromJSON(json['aptos_transaction_type_details']),
         'chain': EnrichedAptosChainFromJSON(json['chain']),
@@ -287,11 +330,11 @@ export function AptosTransactionFromJSONTyped(json: any, _ignoreDiscriminator: b
         'sender': EnrichedAptosAddressFromJSON(json['sender']),
         'payload': AptosTransactionPayloadFromJSON(json['payload']),
         'hash': json['hash'] == null ? undefined : json['hash'],
-        'block': json['block'] == null ? undefined : AptosBlockFromJSON(json['block']),
         'gasSubmitted': AptosGasDataFromJSON(json['gas_submitted']),
+        'withExternalFeePayer': json['with_external_fee_payer'] == null ? undefined : json['with_external_fee_payer'],
+        'feePayer': json['fee_payer'] == null ? undefined : EnrichedAptosAddressFromJSON(json['fee_payer']),
         'serializedSignedTransaction': json['serialized_signed_transaction'] == null ? undefined : json['serialized_signed_transaction'],
         'expectedResult': json['expected_result'] == null ? undefined : AptosTransactionResultFromJSON(json['expected_result']),
-        'simulationStatusResult': json['simulation_status_result'] == null ? undefined : SimulationStatusResultFromJSON(json['simulation_status_result']),
         'minedResult': json['mined_result'] == null ? undefined : AptosTransactionResultFromJSON(json['mined_result']),
         'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
     };

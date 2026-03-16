@@ -17,13 +17,13 @@
  */
 export interface StdCoin {
     /**
-     * 
+     * Denom of this coin.
      * @type {string}
      * @memberof StdCoin
      */
     denom: string;
     /**
-     * 
+     * Amount of this coin.
      * @type {string}
      * @memberof StdCoin
      */
@@ -45,4 +45,3 @@ function StdCoinToJSONTyped(value?: StdCoin | null, _ignoreDiscriminator: boolea
         'amount': value['amount'],
     };
 }
-

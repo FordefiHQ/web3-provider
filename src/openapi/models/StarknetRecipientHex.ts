@@ -17,13 +17,13 @@
  */
 export interface StarknetRecipientHex {
     /**
-     * 
-     * @type {string}
+     * The type of the recipient.
+     * @type {StarknetRecipientHexTypeEnum}
      * @memberof StarknetRecipientHex
      */
     type: StarknetRecipientHexTypeEnum;
     /**
-     * 
+     * The address of the recipient.
      * @type {string}
      * @memberof StarknetRecipientHex
      */
@@ -32,7 +32,7 @@ export interface StarknetRecipientHex {
 
 
 /**
- * 
+ * @export
  */
 const StarknetRecipientHexTypeEnum = {
     hex: 'hex'

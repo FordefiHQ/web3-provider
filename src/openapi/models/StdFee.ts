@@ -32,25 +32,25 @@ export interface StdFee {
      */
     coins: Array<CosmosCoinWithAmount>;
     /**
-     * 
+     * The gas amount.
      * @type {string}
      * @memberof StdFee
      */
     gas: string;
     /**
-     * 
+     * The payer.
      * @type {EnrichedCosmosBechAddress}
      * @memberof StdFee
      */
     payer?: EnrichedCosmosBechAddress;
     /**
-     * 
+     * The granter.
      * @type {EnrichedCosmosBechAddress}
      * @memberof StdFee
      */
     granter?: EnrichedCosmosBechAddress;
     /**
-     * 
+     * The fee payer.
      * @type {EnrichedCosmosBechAddress}
      * @memberof StdFee
      */
@@ -74,4 +74,3 @@ function StdFeeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): StdFee {
         'feePayer': json['fee_payer'] == null ? undefined : EnrichedCosmosBechAddressFromJSON(json['fee_payer']),
     };
 }
-

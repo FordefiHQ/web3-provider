@@ -17,19 +17,19 @@
  */
 export interface EvmBridgeEffectUnknownDestination {
     /**
-     * 
-     * @type {string}
+     * The type of the effect destination.
+     * @type {EvmBridgeEffectUnknownDestinationTypeEnum}
      * @memberof EvmBridgeEffectUnknownDestination
      */
     type: EvmBridgeEffectUnknownDestinationTypeEnum;
     /**
-     * 
+     * The destination address of the bridge transaction.
      * @type {string}
      * @memberof EvmBridgeEffectUnknownDestination
      */
     destAddress?: string;
     /**
-     * 
+     * The destination chain of the bridge transaction.
      * @type {string}
      * @memberof EvmBridgeEffectUnknownDestination
      */
@@ -38,7 +38,7 @@ export interface EvmBridgeEffectUnknownDestination {
 
 
 /**
- * 
+ * @export
  */
 const EvmBridgeEffectUnknownDestinationTypeEnum = {
     unknownTargetChain: 'unknown_target_chain'

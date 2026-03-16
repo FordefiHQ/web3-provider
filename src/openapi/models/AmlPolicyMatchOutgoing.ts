@@ -22,25 +22,25 @@ import {
  */
 export interface AmlPolicyMatchOutgoing {
     /**
-     * 
+     * `True` if this is the default rule, `False` otherwise.
      * @type {boolean}
      * @memberof AmlPolicyMatchOutgoing
      */
     isDefault: boolean;
     /**
-     * 
+     * The unique identifier of the rule.
      * @type {string}
      * @memberof AmlPolicyMatchOutgoing
      */
     ruleId: string;
     /**
-     * 
+     * The name of the rule.
      * @type {string}
      * @memberof AmlPolicyMatchOutgoing
      */
     ruleName: string;
     /**
-     * 
+     * The action taken in the event of a policy match. Can be: <ul><li> Allow automatically<li> Block<li> Require express approval<li> Skip</ul>
      * @type {AmlPolicyMatchOutgoingActionType}
      * @memberof AmlPolicyMatchOutgoing
      */
@@ -63,4 +63,3 @@ function AmlPolicyMatchOutgoingFromJSONTyped(json: any, _ignoreDiscriminator: bo
         'actionType': AmlPolicyMatchOutgoingActionTypeFromJSON(json['action_type']),
     };
 }
-

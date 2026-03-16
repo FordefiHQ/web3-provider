@@ -17,13 +17,13 @@
  */
 export interface DirectMessage {
     /**
-     * 
+     * Message type.
      * @type {string}
      * @memberof DirectMessage
      */
     type: string;
     /**
-     * 
+     * Message bytes, encoded in base64 format.
      * @type {string}
      * @memberof DirectMessage
      */
@@ -44,4 +44,3 @@ function DirectMessageFromJSONTyped(json: any, _ignoreDiscriminator: boolean): D
         'value': json['value'],
     };
 }
-

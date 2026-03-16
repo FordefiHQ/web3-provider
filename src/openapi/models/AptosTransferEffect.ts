@@ -14,10 +14,6 @@ import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
 } from './PricedAsset';
-import type { AptosTransferEffectType } from './AptosTransferEffectType';
-import {
-    AptosTransferEffectTypeFromJSON,
-} from './AptosTransferEffectType';
 import type { EnrichedAptosAddress } from './EnrichedAptosAddress';
 import {
     EnrichedAptosAddressFromJSON,
@@ -30,31 +26,25 @@ import {
  */
 export interface AptosTransferEffect {
     /**
-     * 
+     * The asset information.
      * @type {PricedAsset}
      * @memberof AptosTransferEffect
      */
     pricedAsset: PricedAsset;
     /**
-     * 
+     * The amount of the transfer.
      * @type {string}
      * @memberof AptosTransferEffect
      */
     amount: string;
     /**
-     * 
-     * @type {AptosTransferEffectType}
-     * @memberof AptosTransferEffect
-     */
-    type: AptosTransferEffectType;
-    /**
-     * 
+     * The sender of the transfer.
      * @type {EnrichedAptosAddress}
      * @memberof AptosTransferEffect
      */
     from: EnrichedAptosAddress;
     /**
-     * 
+     * The receiver of the transfer.
      * @type {EnrichedAptosAddress}
      * @memberof AptosTransferEffect
      */
@@ -73,9 +63,7 @@ function AptosTransferEffectFromJSONTyped(json: any, _ignoreDiscriminator: boole
         
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
         'amount': json['amount'],
-        'type': AptosTransferEffectTypeFromJSON(json['type']),
         'from': EnrichedAptosAddressFromJSON(json['from']),
         'to': EnrichedAptosAddressFromJSON(json['to']),
     };
 }
-

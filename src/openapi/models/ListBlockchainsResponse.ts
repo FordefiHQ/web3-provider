@@ -14,23 +14,13 @@ import type { EnrichedChain } from './EnrichedChain';
 import {
     EnrichedChainFromJSON,
 } from './EnrichedChain';
-import type { PartialErrorResponse } from './PartialErrorResponse';
-import {
-    PartialErrorResponseFromJSON,
-} from './PartialErrorResponse';
 
 /**
- * 
+ * A list of blockchains.
  * @export
  * @interface ListBlockchainsResponse
  */
 export interface ListBlockchainsResponse {
-    /**
-     * 
-     * @type {PartialErrorResponse}
-     * @memberof ListBlockchainsResponse
-     */
-    partialError?: PartialErrorResponse;
     /**
      * 
      * @type {number}
@@ -67,11 +57,9 @@ function ListBlockchainsResponseFromJSONTyped(json: any, _ignoreDiscriminator: b
     }
     return {
         
-        'partialError': json['partial_error'] == null ? undefined : PartialErrorResponseFromJSON(json['partial_error']),
         'total': json['total'],
         'page': json['page'],
         'size': json['size'],
         'chains': ((json['chains'] as Array<any>).map(EnrichedChainFromJSON)),
     };
 }
-
