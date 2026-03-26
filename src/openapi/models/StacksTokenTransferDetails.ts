@@ -49,7 +49,7 @@ export interface StacksTokenTransferDetails {
 
 
 /**
- * @export
+ * 
  */
 const StacksTokenTransferDetailsTypeEnum = {
     tokenTransfer: 'token_transfer'

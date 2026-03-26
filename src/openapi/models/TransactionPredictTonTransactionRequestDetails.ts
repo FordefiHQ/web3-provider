@@ -20,9 +20,9 @@ import {
 } from './PredictTonTransferRequest';
 
 /**
- * @type TransactionPredictTonTransactionRequestDetails
  * 
  * @export
+ * @type TransactionPredictTonTransactionRequestDetails
  */
 export type TransactionPredictTonTransactionRequestDetails = { type: 'ton_raw_transaction' } & PredictTonSerializedRawTransactionRequest | { type: 'ton_transfer' } & PredictTonTransferRequest;
 

@@ -44,7 +44,7 @@ export interface HyperliquidWithdrawAction {
 
 
 /**
- * @export
+ * 
  */
 const HyperliquidWithdrawActionActionTypeEnum = {
     withdraw: 'withdraw'

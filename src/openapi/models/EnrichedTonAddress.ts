@@ -77,7 +77,7 @@ export interface EnrichedTonAddress {
 
 
 /**
- * @export
+ * 
  */
 const EnrichedTonAddressTypeEnum = {
     ton: 'ton'

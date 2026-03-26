@@ -59,7 +59,7 @@ export interface EnrichedSuiAddress {
 
 
 /**
- * @export
+ * 
  */
 const EnrichedSuiAddressTypeEnum = {
     sui: 'sui'

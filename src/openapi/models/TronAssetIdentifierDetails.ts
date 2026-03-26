@@ -22,9 +22,9 @@ import {
 } from './TronTrc20AssetIdentifierRequest';
 
 /**
- * @type TronAssetIdentifierDetails
  * 
  * @export
+ * @type TronAssetIdentifierDetails
  */
 export type TronAssetIdentifierDetails = { type: 'native' } & TronNativeAssetIdentifierRequest | { type: 'trc20' } & TronTrc20AssetIdentifierRequest;
 

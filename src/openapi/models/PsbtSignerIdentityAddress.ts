@@ -32,7 +32,7 @@ export interface PsbtSignerIdentityAddress {
 
 
 /**
- * @export
+ * 
  */
 const PsbtSignerIdentityAddressTypeEnum = {
     address: 'address'

@@ -73,7 +73,7 @@ export interface AptosPersonalMessageRequest {
 
 
 /**
- * @export
+ * 
  */
 const AptosPersonalMessageRequestTypeEnum = {
     personalMessageType: 'personal_message_type'

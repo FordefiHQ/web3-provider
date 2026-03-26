@@ -55,7 +55,7 @@ export interface TransactionPredictAptosTransactionRequest {
 
 
 /**
- * @export
+ * 
  */
 const TransactionPredictAptosTransactionRequestTypeEnum = {
     aptosTransaction: 'aptos_transaction'

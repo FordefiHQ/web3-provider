@@ -32,7 +32,7 @@ export interface TonAccountRepr {
 
 
 /**
- * @export
+ * 
  */
 const TonAccountReprChainTypeEnum = {
     ton: 'ton'

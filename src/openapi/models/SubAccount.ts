@@ -43,7 +43,7 @@ export interface SubAccount {
 
 
 /**
- * @export
+ * 
  */
 const SubAccountTypeEnum = {
     sub: 'sub'

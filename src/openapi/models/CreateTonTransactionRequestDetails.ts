@@ -20,9 +20,9 @@ import {
 } from './CreateTonTransferRequest';
 
 /**
- * @type CreateTonTransactionRequestDetails
  * 
  * @export
+ * @type CreateTonTransactionRequestDetails
  */
 export type CreateTonTransactionRequestDetails = { type: 'ton_raw_transaction' } & CreateTonSerializedRawTransactionRequest | { type: 'ton_transfer' } & CreateTonTransferRequest;
 

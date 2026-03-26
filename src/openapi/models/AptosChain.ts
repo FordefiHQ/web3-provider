@@ -37,7 +37,7 @@ export interface AptosChain {
 
 
 /**
- * @export
+ * 
  */
 const AptosChainChainTypeEnum = {
     aptos: 'aptos'

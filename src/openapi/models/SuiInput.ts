@@ -22,9 +22,9 @@ import {
 } from './SuiPureInputArgument';
 
 /**
- * @type SuiInput
  * 
  * @export
+ * @type SuiInput
  */
 export type SuiInput = { type: 'object' } & SuiObjectInputArgument | { type: 'pure' } & SuiPureInputArgument;
 

@@ -32,7 +32,7 @@ export interface UtxoOutputToAddressRequest {
 
 
 /**
- * @export
+ * 
  */
 const UtxoOutputToAddressRequestTypeEnum = {
     address: 'address'

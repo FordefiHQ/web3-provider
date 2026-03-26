@@ -43,7 +43,7 @@ export interface StarknetSuggestedFees {
 
 
 /**
- * @export
+ * 
  */
 const StarknetSuggestedFeesTypeEnum = {
     starknet: 'starknet'

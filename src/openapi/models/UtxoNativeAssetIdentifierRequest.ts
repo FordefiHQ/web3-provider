@@ -38,7 +38,7 @@ export interface UtxoNativeAssetIdentifierRequest {
 
 
 /**
- * @export
+ * 
  */
 const UtxoNativeAssetIdentifierRequestTypeEnum = {
     native: 'native'

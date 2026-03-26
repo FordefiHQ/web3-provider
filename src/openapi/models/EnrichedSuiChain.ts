@@ -83,7 +83,7 @@ export interface EnrichedSuiChain {
 
 
 /**
- * @export
+ * 
  */
 const EnrichedSuiChainChainTypeEnum = {
     sui: 'sui'

@@ -79,7 +79,7 @@ export interface CreateCosmosMessageRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateCosmosMessageRequestTypeEnum = {
     cosmosMessage: 'cosmos_message'

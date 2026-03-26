@@ -55,7 +55,7 @@ export interface PredictStarknetTransactionRequest {
 
 
 /**
- * @export
+ * 
  */
 const PredictStarknetTransactionRequestTypeEnum = {
     starknetTransaction: 'starknet_transaction'

@@ -77,7 +77,7 @@ export interface PrioritySolanaSuggestedFees {
 
 
 /**
- * @export
+ * 
  */
 const PrioritySolanaSuggestedFeesTypeEnum = {
     solana: 'solana'
@@ -85,7 +85,7 @@ const PrioritySolanaSuggestedFeesTypeEnum = {
 type PrioritySolanaSuggestedFeesTypeEnum = typeof PrioritySolanaSuggestedFeesTypeEnum[keyof typeof PrioritySolanaSuggestedFeesTypeEnum];
 
 /**
- * @export
+ * 
  */
 const PrioritySolanaSuggestedFeesFeeTypeEnum = {
     priorityFee: 'priority_fee'

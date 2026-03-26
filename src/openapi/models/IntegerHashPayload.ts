@@ -32,7 +32,7 @@ export interface IntegerHashPayload {
 
 
 /**
- * @export
+ * 
  */
 const IntegerHashPayloadFormatEnum = {
     hashInteger: 'hash_integer'

@@ -44,7 +44,7 @@ export interface EndUserRef {
 
 
 /**
- * @export
+ * 
  */
 const EndUserRefUserTypeEnum = {
     endUser: 'end_user'
@@ -52,7 +52,7 @@ const EndUserRefUserTypeEnum = {
 type EndUserRefUserTypeEnum = typeof EndUserRefUserTypeEnum[keyof typeof EndUserRefUserTypeEnum];
 
 /**
- * @export
+ * 
  */
 const EndUserRefStateEnum = {
     active: 'active',

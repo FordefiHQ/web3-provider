@@ -50,7 +50,7 @@ export interface CreateSafeVaultRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateSafeVaultRequestTypeEnum = {
     safe: 'safe'

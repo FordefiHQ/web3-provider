@@ -38,7 +38,7 @@ export interface EvmDataRequestFullDetails {
 
 
 /**
- * @export
+ * 
  */
 const EvmDataRequestFullDetailsTypeEnum = {
     fullDetails: 'full_details'

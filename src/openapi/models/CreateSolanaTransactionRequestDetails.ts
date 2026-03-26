@@ -24,9 +24,9 @@ import {
 } from './CreateSolanaTransferRequest';
 
 /**
- * @type CreateSolanaTransactionRequestDetails
  * 
  * @export
+ * @type CreateSolanaTransactionRequestDetails
  */
 export type CreateSolanaTransactionRequestDetails = { type: 'solana_raw_transaction' } & CreateSolanaRawTransactionRequest | { type: 'solana_serialized_transaction_message' } & CreateSolanaSerializedTransactionMessageRequest | { type: 'solana_transfer' } & CreateSolanaTransferRequest;
 

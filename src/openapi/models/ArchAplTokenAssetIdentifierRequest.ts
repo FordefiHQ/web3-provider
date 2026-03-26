@@ -37,7 +37,7 @@ export interface ArchAplTokenAssetIdentifierRequest {
 
 
 /**
- * @export
+ * 
  */
 const ArchAplTokenAssetIdentifierRequestTypeEnum = {
     aplToken: 'apl_token'

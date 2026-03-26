@@ -95,7 +95,7 @@ export interface CreateStacksTransactionWithWaitRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateStacksTransactionWithWaitRequestTypeEnum = {
     stacksTransaction: 'stacks_transaction'

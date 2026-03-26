@@ -119,7 +119,7 @@ export interface CreateEvmUnwrapNativeRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateEvmUnwrapNativeRequestTypeEnum = {
     evmUnwrapNative: 'evm_unwrap_native'

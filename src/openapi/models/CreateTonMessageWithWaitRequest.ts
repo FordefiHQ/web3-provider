@@ -95,7 +95,7 @@ export interface CreateTonMessageWithWaitRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateTonMessageWithWaitRequestTypeEnum = {
     tonMessage: 'ton_message'

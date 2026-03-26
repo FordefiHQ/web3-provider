@@ -91,7 +91,7 @@ export interface PredictedSolanaSpotSwapDetails {
 
 
 /**
- * @export
+ * 
  */
 const PredictedSolanaSpotSwapDetailsTypeEnum = {
     spotSwap: 'spot_swap'

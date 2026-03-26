@@ -65,7 +65,7 @@ export interface CreateTonVaultRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateTonVaultRequestTypeEnum = {
     ton: 'ton'

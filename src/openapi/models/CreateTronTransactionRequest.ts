@@ -79,7 +79,7 @@ export interface CreateTronTransactionRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateTronTransactionRequestTypeEnum = {
     tronTransaction: 'tron_transaction'

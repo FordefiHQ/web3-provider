@@ -37,7 +37,7 @@ export interface EvmAssetIdentifierRequest {
 
 
 /**
- * @export
+ * 
  */
 const EvmAssetIdentifierRequestTypeEnum = {
     evm: 'evm'

@@ -32,7 +32,7 @@ export interface SuiCommandResultArgument {
 
 
 /**
- * @export
+ * 
  */
 const SuiCommandResultArgumentTypeEnum = {
     result: 'result'

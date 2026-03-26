@@ -101,7 +101,7 @@ export interface UtxoAsset {
 
 
 /**
- * @export
+ * 
  */
 const UtxoAssetTypeEnum = {
     utxoAsset: 'utxo_asset'

@@ -43,7 +43,7 @@ export interface TransactionDetailsEvmTypedMessageRequest {
 
 
 /**
- * @export
+ * 
  */
 const TransactionDetailsEvmTypedMessageRequestTypeEnum = {
     typedMessageType: 'typed_message_type'

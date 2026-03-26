@@ -55,7 +55,7 @@ export interface TransactionPredictSuiMessageRequest {
 
 
 /**
- * @export
+ * 
  */
 const TransactionPredictSuiMessageRequestTypeEnum = {
     suiMessage: 'sui_message'

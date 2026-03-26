@@ -37,7 +37,7 @@ export interface StellarAssetIdentifierRequest {
 
 
 /**
- * @export
+ * 
  */
 const StellarAssetIdentifierRequestTypeEnum = {
     stellar: 'stellar'

@@ -79,7 +79,7 @@ export interface CreateTonMessageRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateTonMessageRequestTypeEnum = {
     tonMessage: 'ton_message'

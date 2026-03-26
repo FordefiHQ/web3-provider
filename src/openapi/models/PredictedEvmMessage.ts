@@ -125,7 +125,7 @@ export interface PredictedEvmMessage {
 
 
 /**
- * @export
+ * 
  */
 const PredictedEvmMessageTypeEnum = {
     evmMessage: 'evm_message'

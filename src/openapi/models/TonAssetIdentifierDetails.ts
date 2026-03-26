@@ -22,9 +22,9 @@ import {
 } from './TonNativeAssetIdentifierRequest';
 
 /**
- * @type TonAssetIdentifierDetails
  * 
  * @export
+ * @type TonAssetIdentifierDetails
  */
 export type TonAssetIdentifierDetails = { type: 'jetton' } & TonJettonAssetIdentifierRequest | { type: 'native' } & TonNativeAssetIdentifierRequest;
 

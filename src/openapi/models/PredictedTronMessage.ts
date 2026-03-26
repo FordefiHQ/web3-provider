@@ -105,7 +105,7 @@ export interface PredictedTronMessage {
 
 
 /**
- * @export
+ * 
  */
 const PredictedTronMessageTypeEnum = {
     tronMessage: 'tron_message'

@@ -26,7 +26,7 @@ export interface SetCodeDetails {
 
 
 /**
- * @export
+ * 
  */
 const SetCodeDetailsTypeEnum = {
     setCode: 'set_code'

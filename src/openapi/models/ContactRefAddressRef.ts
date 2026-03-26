@@ -52,9 +52,9 @@ import {
 } from './UtxoAddressBookContactAddressRef';
 
 /**
- * @type ContactRefAddressRef
  * 
  * @export
+ * @type ContactRefAddressRef
  */
 export type ContactRefAddressRef = { chainType: 'aptos' } & AptosAddressBookContactAddressRef | { chainType: 'cosmos' } & CosmosAddressBookContactAddressRef | { chainType: 'evm' } & EVMAddressBookContactAddressRef | { chainType: 'solana' } & SolanaAddressBookContactAddressRef | { chainType: 'stacks' } & StacksAddressBookContactAddressRef | { chainType: 'starknet' } & StarknetAddressBookContactAddressRef | { chainType: 'sui' } & SuiAddressBookContactAddressRef | { chainType: 'ton' } & TonAddressBookContactAddressRef | { chainType: 'tron' } & TronAddressBookContactAddressRef | { chainType: 'utxo' } & UtxoAddressBookContactAddressRef;
 

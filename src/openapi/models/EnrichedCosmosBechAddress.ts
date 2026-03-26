@@ -63,7 +63,7 @@ export interface EnrichedCosmosBechAddress {
 
 
 /**
- * @export
+ * 
  */
 const EnrichedCosmosBechAddressTypeEnum = {
     cosmos: 'cosmos'

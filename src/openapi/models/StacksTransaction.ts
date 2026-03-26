@@ -275,7 +275,7 @@ export interface StacksTransaction {
 
 
 /**
- * @export
+ * 
  */
 const StacksTransactionTypeEnum = {
     stacksTransaction: 'stacks_transaction'

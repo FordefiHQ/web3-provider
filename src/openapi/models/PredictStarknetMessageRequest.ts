@@ -55,7 +55,7 @@ export interface PredictStarknetMessageRequest {
 
 
 /**
- * @export
+ * 
  */
 const PredictStarknetMessageRequestTypeEnum = {
     starknetMessage: 'starknet_message'

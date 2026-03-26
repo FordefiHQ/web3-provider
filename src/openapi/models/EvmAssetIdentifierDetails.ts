@@ -37,9 +37,9 @@ import {
 } from './EvmNativeAssetIdentifierRequest';
 
 /**
- * @type EvmAssetIdentifierDetails
  * 
  * @export
+ * @type EvmAssetIdentifierDetails
  */
 export type EvmAssetIdentifierDetails = { type: 'erc1155' } & EvmErc1155AssetIdentifierRequest | { type: 'erc20' } & EvmErc20AssetIdentifierRequest | { type: 'erc721' } & EvmErc721AssetIdentifierRequest | { type: 'hyperliquid' } & EvmHyperLiquidAssetIdentifierRequest | { type: 'native' } & EvmNativeAssetIdentifierRequest;
 

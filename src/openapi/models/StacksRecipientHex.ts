@@ -32,7 +32,7 @@ export interface StacksRecipientHex {
 
 
 /**
- * @export
+ * 
  */
 const StacksRecipientHexTypeEnum = {
     hex: 'hex'

@@ -43,7 +43,7 @@ export interface BlackBoxSignatureEcdsaSecp256k1Details {
 
 
 /**
- * @export
+ * 
  */
 const BlackBoxSignatureEcdsaSecp256k1DetailsTypeEnum = {
     ecdsaSecp256k1: 'ecdsa_secp256k1'

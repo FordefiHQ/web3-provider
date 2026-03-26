@@ -24,9 +24,9 @@ import {
 } from './CreateSuiTransferRequest';
 
 /**
- * @type CreateSuiTransactionRequestDetails
  * 
  * @export
+ * @type CreateSuiTransactionRequestDetails
  */
 export type CreateSuiTransactionRequestDetails = { type: 'sui_binary_canonical_serialization' } & CreateSuiSerializedTransactionDataRequest | { type: 'sui_programmable_transaction_block' } & CreateSuiProgrammableTransactionBlockRequest | { type: 'sui_transfer' } & CreateSuiTransferRequest;
 

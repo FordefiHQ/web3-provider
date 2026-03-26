@@ -44,7 +44,7 @@ export interface SuiTransferObjectsCommand {
 
 
 /**
- * @export
+ * 
  */
 const SuiTransferObjectsCommandTypeEnum = {
     transferObjects: 'transfer_objects'

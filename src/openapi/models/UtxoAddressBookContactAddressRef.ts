@@ -43,7 +43,7 @@ export interface UtxoAddressBookContactAddressRef {
 
 
 /**
- * @export
+ * 
  */
 const UtxoAddressBookContactAddressRefChainTypeEnum = {
     utxo: 'utxo'

@@ -65,7 +65,7 @@ export interface CreateStarknetVaultRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateStarknetVaultRequestTypeEnum = {
     starknet: 'starknet'

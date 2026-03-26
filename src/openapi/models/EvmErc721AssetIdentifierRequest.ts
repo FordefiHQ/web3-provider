@@ -44,7 +44,7 @@ export interface EvmErc721AssetIdentifierRequest {
 
 
 /**
- * @export
+ * 
  */
 const EvmErc721AssetIdentifierRequestTypeEnum = {
     erc721: 'erc721'

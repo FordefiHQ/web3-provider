@@ -136,7 +136,7 @@ export interface EnrichedEvmChain {
 
 
 /**
- * @export
+ * 
  */
 const EnrichedEvmChainChainTypeEnum = {
     evm: 'evm'

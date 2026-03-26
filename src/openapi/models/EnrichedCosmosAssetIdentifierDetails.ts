@@ -20,9 +20,9 @@ import {
 } from './EnrichedCosmosTokenAssetIdentifier';
 
 /**
- * @type EnrichedCosmosAssetIdentifierDetails
  * 
  * @export
+ * @type EnrichedCosmosAssetIdentifierDetails
  */
 export type EnrichedCosmosAssetIdentifierDetails = { type: 'native' } & EnrichedCosmosNativeAssetIdentifier | { type: 'token' } & EnrichedCosmosTokenAssetIdentifier;
 

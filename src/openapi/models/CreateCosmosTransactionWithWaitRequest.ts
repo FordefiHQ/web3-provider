@@ -95,7 +95,7 @@ export interface CreateCosmosTransactionWithWaitRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateCosmosTransactionWithWaitRequestTypeEnum = {
     cosmosTransaction: 'cosmos_transaction'

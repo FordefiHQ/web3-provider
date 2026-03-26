@@ -32,7 +32,7 @@ export interface EvmDataRequestBase64 {
 
 
 /**
- * @export
+ * 
  */
 const EvmDataRequestBase64TypeEnum = {
     base64: 'base64'

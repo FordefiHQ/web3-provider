@@ -37,7 +37,7 @@ export interface ArchAssetIdentifierRequest {
 
 
 /**
- * @export
+ * 
  */
 const ArchAssetIdentifierRequestTypeEnum = {
     arch: 'arch'

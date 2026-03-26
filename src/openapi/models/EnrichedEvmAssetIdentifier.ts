@@ -37,7 +37,7 @@ export interface EnrichedEvmAssetIdentifier {
 
 
 /**
- * @export
+ * 
  */
 const EnrichedEvmAssetIdentifierTypeEnum = {
     evm: 'evm'

@@ -32,7 +32,7 @@ export interface SuiRecipientHex {
 
 
 /**
- * @export
+ * 
  */
 const SuiRecipientHexTypeEnum = {
     hex: 'hex'

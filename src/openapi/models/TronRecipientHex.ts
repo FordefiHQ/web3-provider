@@ -32,7 +32,7 @@ export interface TronRecipientHex {
 
 
 /**
- * @export
+ * 
  */
 const TronRecipientHexTypeEnum = {
     hex: 'hex'

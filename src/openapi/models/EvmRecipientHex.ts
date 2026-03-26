@@ -32,7 +32,7 @@ export interface EvmRecipientHex {
 
 
 /**
- * @export
+ * 
  */
 const EvmRecipientHexTypeEnum = {
     hex: 'hex'

@@ -92,7 +92,7 @@ export interface TransactionPredictSolanaSerializedTransactionMessageRequest {
 
 
 /**
- * @export
+ * 
  */
 const TransactionPredictSolanaSerializedTransactionMessageRequestTypeEnum = {
     solanaSerializedTransactionMessage: 'solana_serialized_transaction_message'

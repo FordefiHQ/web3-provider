@@ -105,7 +105,7 @@ export interface PredictedStarknetMessage {
 
 
 /**
- * @export
+ * 
  */
 const PredictedStarknetMessageTypeEnum = {
     starknetMessage: 'starknet_message'

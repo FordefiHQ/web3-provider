@@ -59,7 +59,7 @@ export interface EnrichedStarknetAddress {
 
 
 /**
- * @export
+ * 
  */
 const EnrichedStarknetAddressTypeEnum = {
     starknet: 'starknet'

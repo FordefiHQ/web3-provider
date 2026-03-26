@@ -65,7 +65,7 @@ export interface CreateSuiVaultRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateSuiVaultRequestTypeEnum = {
     sui: 'sui'

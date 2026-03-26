@@ -95,7 +95,7 @@ export interface CreateEvmMessageWithWaitRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateEvmMessageWithWaitRequestTypeEnum = {
     evmMessage: 'evm_message'

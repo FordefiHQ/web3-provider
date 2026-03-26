@@ -92,9 +92,9 @@ import {
 } from './TransactionPredictUtxoTransactionRequest';
 
 /**
- * @type PredictTransactionRequest
  * 
  * @export
+ * @type PredictTransactionRequest
  */
 export type PredictTransactionRequest = { type: 'aptos_message' } & TransactionPredictAptosMessageRequest | { type: 'aptos_transaction' } & TransactionPredictAptosTransactionRequest | { type: 'cosmos_message' } & TransactionPredictCosmosMessageRequest | { type: 'cosmos_transaction' } & TransactionPredictCosmosTransactionRequest | { type: 'evm_message' } & TransactionPredictEvmMessageRequest | { type: 'evm_transaction' } & TransactionPredictEvmTransactionRequest | { type: 'exchange_transaction' } & TransactionPredictExchangeTransactionRequest | { type: 'solana_message' } & TransactionPredictSolanaMessageRequest | { type: 'solana_transaction' } & TransactionPredictSolanaTransactionRequest | { type: 'stacks_transaction' } & PredictStacksTransactionRequest | { type: 'starknet_message' } & PredictStarknetMessageRequest | { type: 'starknet_transaction' } & PredictStarknetTransactionRequest | { type: 'sui_message' } & TransactionPredictSuiMessageRequest | { type: 'sui_transaction' } & TransactionPredictSuiTransactionRequest | { type: 'ton_message' } & TransactionPredictTonMessageRequest | { type: 'ton_transaction' } & TransactionPredictTonTransactionRequest | { type: 'tron_message' } & PredictTronMessageRequest | { type: 'tron_transaction' } & TransactionPredictTronTransactionRequest | { type: 'utxo_message' } & TransactionPredictUtxoMessageRequest | { type: 'utxo_transaction' } & TransactionPredictUtxoTransactionRequest;
 

@@ -190,7 +190,7 @@ export interface CosmosVault {
 
 
 /**
- * @export
+ * 
  */
 const CosmosVaultTypeEnum = {
     cosmos: 'cosmos'

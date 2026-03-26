@@ -38,7 +38,7 @@ export interface AptosNativeAssetIdentifierRequest {
 
 
 /**
- * @export
+ * 
  */
 const AptosNativeAssetIdentifierRequestTypeEnum = {
     native: 'native'

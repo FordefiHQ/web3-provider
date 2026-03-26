@@ -49,7 +49,7 @@ export interface EvmDynamicSuggestedFees {
 
 
 /**
- * @export
+ * 
  */
 const EvmDynamicSuggestedFeesTypeEnum = {
     dynamic: 'dynamic'

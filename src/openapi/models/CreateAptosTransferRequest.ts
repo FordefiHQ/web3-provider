@@ -105,7 +105,7 @@ export interface CreateAptosTransferRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateAptosTransferRequestTypeEnum = {
     aptosTransfer: 'aptos_transfer'

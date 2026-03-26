@@ -49,7 +49,7 @@ export interface StacksNativeTransferDetails {
 
 
 /**
- * @export
+ * 
  */
 const StacksNativeTransferDetailsTypeEnum = {
     nativeTransfer: 'native_transfer'

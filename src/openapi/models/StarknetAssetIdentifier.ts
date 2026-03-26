@@ -47,7 +47,7 @@ export interface StarknetAssetIdentifier {
 
 
 /**
- * @export
+ * 
  */
 const StarknetAssetIdentifierTypeEnum = {
     starknet: 'starknet'

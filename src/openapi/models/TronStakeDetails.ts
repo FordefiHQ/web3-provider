@@ -49,7 +49,7 @@ export interface TronStakeDetails {
 
 
 /**
- * @export
+ * 
  */
 const TronStakeDetailsTypeEnum = {
     stake: 'stake'

@@ -49,7 +49,7 @@ export interface SuiCoinTransferDetails {
 
 
 /**
- * @export
+ * 
  */
 const SuiCoinTransferDetailsTypeEnum = {
     coinTransfer: 'coin_transfer'

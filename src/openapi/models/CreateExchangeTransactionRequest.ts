@@ -65,7 +65,7 @@ export interface CreateExchangeTransactionRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateExchangeTransactionRequestSignerTypeEnum = {
     initiator: 'initiator',
@@ -74,7 +74,7 @@ const CreateExchangeTransactionRequestSignerTypeEnum = {
 type CreateExchangeTransactionRequestSignerTypeEnum = typeof CreateExchangeTransactionRequestSignerTypeEnum[keyof typeof CreateExchangeTransactionRequestSignerTypeEnum];
 
 /**
- * @export
+ * 
  */
 const CreateExchangeTransactionRequestTypeEnum = {
     exchangeTransaction: 'exchange_transaction'

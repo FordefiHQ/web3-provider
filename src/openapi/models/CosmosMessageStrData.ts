@@ -32,7 +32,7 @@ export interface CosmosMessageStrData {
 
 
 /**
- * @export
+ * 
  */
 const CosmosMessageStrDataTypeEnum = {
     string: 'string'

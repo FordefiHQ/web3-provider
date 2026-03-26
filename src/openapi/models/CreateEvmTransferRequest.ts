@@ -129,7 +129,7 @@ export interface CreateEvmTransferRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateEvmTransferRequestTypeEnum = {
     evmTransfer: 'evm_transfer'

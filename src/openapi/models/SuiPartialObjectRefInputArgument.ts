@@ -32,7 +32,7 @@ export interface SuiPartialObjectRefInputArgument {
 
 
 /**
- * @export
+ * 
  */
 const SuiPartialObjectRefInputArgumentTypeEnum = {
     partial: 'partial'

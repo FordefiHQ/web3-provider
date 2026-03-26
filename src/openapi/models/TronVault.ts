@@ -184,7 +184,7 @@ export interface TronVault {
 
 
 /**
- * @export
+ * 
  */
 const TronVaultTypeEnum = {
     tron: 'tron'

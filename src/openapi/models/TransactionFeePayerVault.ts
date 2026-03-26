@@ -32,7 +32,7 @@ export interface TransactionFeePayerVault {
 
 
 /**
- * @export
+ * 
  */
 const TransactionFeePayerVaultTypeEnum = {
     vault: 'vault'

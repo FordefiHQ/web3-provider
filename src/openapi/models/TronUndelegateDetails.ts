@@ -49,7 +49,7 @@ export interface TronUndelegateDetails {
 
 
 /**
- * @export
+ * 
  */
 const TronUndelegateDetailsTypeEnum = {
     undelegate: 'undelegate'

@@ -26,7 +26,7 @@ export interface ContractCallDetails {
 
 
 /**
- * @export
+ * 
  */
 const ContractCallDetailsTypeEnum = {
     contractCall: 'contract_call'

@@ -22,9 +22,9 @@ import {
 } from './CosmosTokenAssetIdentifierRequest';
 
 /**
- * @type CosmosAssetIdentifierDetails
  * 
  * @export
+ * @type CosmosAssetIdentifierDetails
  */
 export type CosmosAssetIdentifierDetails = { type: 'native' } & CosmosNativeAssetIdentifierRequest | { type: 'token' } & CosmosTokenAssetIdentifierRequest;
 

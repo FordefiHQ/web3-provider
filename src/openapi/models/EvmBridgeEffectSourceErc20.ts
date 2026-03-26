@@ -47,7 +47,7 @@ export interface EvmBridgeEffectSourceErc20 {
 
 
 /**
- * @export
+ * 
  */
 const EvmBridgeEffectSourceErc20TypeEnum = {
     erc20: 'erc20'

@@ -49,7 +49,7 @@ export interface TronContractCallDetails {
 
 
 /**
- * @export
+ * 
  */
 const TronContractCallDetailsTypeEnum = {
     contractCall: 'contract_call'

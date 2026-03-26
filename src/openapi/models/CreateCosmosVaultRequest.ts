@@ -65,7 +65,7 @@ export interface CreateCosmosVaultRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateCosmosVaultRequestTypeEnum = {
     cosmos: 'cosmos'

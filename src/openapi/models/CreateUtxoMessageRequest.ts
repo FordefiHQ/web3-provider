@@ -79,7 +79,7 @@ export interface CreateUtxoMessageRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateUtxoMessageRequestTypeEnum = {
     utxoMessage: 'utxo_message'

@@ -49,7 +49,7 @@ export interface TonAddressBookContactAddressRef {
 
 
 /**
- * @export
+ * 
  */
 const TonAddressBookContactAddressRefChainTypeEnum = {
     ton: 'ton'

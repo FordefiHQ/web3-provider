@@ -32,9 +32,9 @@ import {
 } from './EnrichedUtxoAssetIdentifier';
 
 /**
- * @type EnrichedAssetIdentifier
  * 
  * @export
+ * @type EnrichedAssetIdentifier
  */
 export type EnrichedAssetIdentifier = { type: 'cosmos' } & EnrichedCosmosAssetIdentifier | { type: 'evm' } & EnrichedEvmAssetIdentifier | { type: 'solana' } & EnrichedSolanaAssetIdentifier | { type: 'sui' } & EnrichedSuiAssetIdentifier | { type: 'utxo' } & EnrichedUtxoAssetIdentifier;
 

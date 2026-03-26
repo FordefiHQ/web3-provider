@@ -79,7 +79,7 @@ export interface CreateSolanaTransactionRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateSolanaTransactionRequestTypeEnum = {
     solanaTransaction: 'solana_transaction'

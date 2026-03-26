@@ -55,7 +55,7 @@ export interface PredictTronMessageRequest {
 
 
 /**
- * @export
+ * 
  */
 const PredictTronMessageRequestTypeEnum = {
     tronMessage: 'tron_message'

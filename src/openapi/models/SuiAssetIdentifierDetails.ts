@@ -22,9 +22,9 @@ import {
 } from './SuiNativeAssetIdentifierRequest';
 
 /**
- * @type SuiAssetIdentifierDetails
  * 
  * @export
+ * @type SuiAssetIdentifierDetails
  */
 export type SuiAssetIdentifierDetails = { type: 'coin' } & SuiCoinAssetIdentifierRequest | { type: 'native' } & SuiNativeAssetIdentifierRequest;
 

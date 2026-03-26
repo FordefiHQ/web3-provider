@@ -37,7 +37,7 @@ export interface AptosPriorityGasPriceRequest {
 
 
 /**
- * @export
+ * 
  */
 const AptosPriorityGasPriceRequestTypeEnum = {
     priority: 'priority'

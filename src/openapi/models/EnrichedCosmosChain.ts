@@ -99,7 +99,7 @@ export interface EnrichedCosmosChain {
 
 
 /**
- * @export
+ * 
  */
 const EnrichedCosmosChainChainTypeEnum = {
     cosmos: 'cosmos'

@@ -49,7 +49,7 @@ export interface Erc721 {
 
 
 /**
- * @export
+ * 
  */
 const Erc721TypeEnum = {
     erc721: 'erc721'

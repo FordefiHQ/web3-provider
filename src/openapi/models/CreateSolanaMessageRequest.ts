@@ -79,7 +79,7 @@ export interface CreateSolanaMessageRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateSolanaMessageRequestTypeEnum = {
     solanaMessage: 'solana_message'

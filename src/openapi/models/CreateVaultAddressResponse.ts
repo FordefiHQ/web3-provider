@@ -101,7 +101,7 @@ export interface CreateVaultAddressResponse {
 
 
 /**
- * @export
+ * 
  */
 const CreateVaultAddressResponseTypeEnum = {
     utxo: 'utxo'

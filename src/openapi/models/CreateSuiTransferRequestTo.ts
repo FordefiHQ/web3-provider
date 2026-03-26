@@ -24,9 +24,9 @@ import {
 } from './SuiRecipientHex';
 
 /**
- * @type CreateSuiTransferRequestTo
  * 
  * @export
+ * @type CreateSuiTransferRequestTo
  */
 export type CreateSuiTransferRequestTo = { type: 'contact_id' } & RecipientContactId | { type: 'hex' } & SuiRecipientHex | { type: 'vault_id' } & RecipientVaultId;
 

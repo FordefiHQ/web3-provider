@@ -365,7 +365,7 @@ export interface EvmTransaction {
 
 
 /**
- * @export
+ * 
  */
 const EvmTransactionTypeEnum = {
     evmTransaction: 'evm_transaction'

@@ -48,7 +48,7 @@ export interface BridgeDetails {
 
 
 /**
- * @export
+ * 
  */
 const BridgeDetailsTypeEnum = {
     crossChainBridge: 'cross_chain_bridge'

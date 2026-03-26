@@ -53,7 +53,7 @@ export interface ExchangeAssetIdentifier {
 
 
 /**
- * @export
+ * 
  */
 const ExchangeAssetIdentifierTypeEnum = {
     exchange: 'exchange'

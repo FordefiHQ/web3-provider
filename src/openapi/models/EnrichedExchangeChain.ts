@@ -83,7 +83,7 @@ export interface EnrichedExchangeChain {
 
 
 /**
- * @export
+ * 
  */
 const EnrichedExchangeChainChainTypeEnum = {
     exchange: 'exchange'

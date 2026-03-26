@@ -37,7 +37,7 @@ export interface CantonAssetIdentifierRequest {
 
 
 /**
- * @export
+ * 
  */
 const CantonAssetIdentifierRequestTypeEnum = {
     canton: 'canton'

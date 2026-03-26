@@ -37,7 +37,7 @@ export interface SolanaChain {
 
 
 /**
- * @export
+ * 
  */
 const SolanaChainChainTypeEnum = {
     solana: 'solana'

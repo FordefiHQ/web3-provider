@@ -44,7 +44,7 @@ export interface EvmChain {
 
 
 /**
- * @export
+ * 
  */
 const EvmChainChainTypeEnum = {
     evm: 'evm'

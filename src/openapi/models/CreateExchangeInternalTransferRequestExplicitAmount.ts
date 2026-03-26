@@ -32,7 +32,7 @@ export interface CreateExchangeInternalTransferRequestExplicitAmount {
 
 
 /**
- * @export
+ * 
  */
 const CreateExchangeInternalTransferRequestExplicitAmountTypeEnum = {
     value: 'value'

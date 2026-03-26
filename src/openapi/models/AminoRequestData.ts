@@ -59,7 +59,7 @@ export interface AminoRequestData {
 
 
 /**
- * @export
+ * 
  */
 const AminoRequestDataFormatEnum = {
     amino: 'amino'

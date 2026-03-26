@@ -32,7 +32,7 @@ export interface StacksCustomFeeRequest {
 
 
 /**
- * @export
+ * 
  */
 const StacksCustomFeeRequestTypeEnum = {
     custom: 'custom'

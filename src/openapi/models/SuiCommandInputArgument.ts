@@ -32,7 +32,7 @@ export interface SuiCommandInputArgument {
 
 
 /**
- * @export
+ * 
  */
 const SuiCommandInputArgumentTypeEnum = {
     input: 'input'

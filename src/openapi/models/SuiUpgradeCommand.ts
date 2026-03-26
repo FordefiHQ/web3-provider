@@ -56,7 +56,7 @@ export interface SuiUpgradeCommand {
 
 
 /**
- * @export
+ * 
  */
 const SuiUpgradeCommandTypeEnum = {
     upgrade: 'upgrade'

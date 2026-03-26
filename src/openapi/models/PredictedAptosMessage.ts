@@ -105,7 +105,7 @@ export interface PredictedAptosMessage {
 
 
 /**
- * @export
+ * 
  */
 const PredictedAptosMessageTypeEnum = {
     aptosMessage: 'aptos_message'

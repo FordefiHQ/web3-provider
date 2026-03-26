@@ -26,7 +26,7 @@ export interface PersonalMessageDetails {
 
 
 /**
- * @export
+ * 
  */
 const PersonalMessageDetailsTypeEnum = {
     personalMessageType: 'personal_message_type'

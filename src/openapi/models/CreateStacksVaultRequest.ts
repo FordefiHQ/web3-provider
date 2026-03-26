@@ -44,7 +44,7 @@ export interface CreateStacksVaultRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateStacksVaultRequestTypeEnum = {
     stacks: 'stacks'

@@ -65,7 +65,7 @@ export interface CreateTronVaultRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateTronVaultRequestTypeEnum = {
     tron: 'tron'

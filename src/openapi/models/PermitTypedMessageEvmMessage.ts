@@ -109,7 +109,7 @@ export interface PermitTypedMessageEvmMessage {
 
 
 /**
- * @export
+ * 
  */
 const PermitTypedMessageEvmMessageTypeEnum = {
     permit: 'permit'

@@ -85,7 +85,7 @@ export interface CreateTronTransferRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateTronTransferRequestTypeEnum = {
     tronTransfer: 'tron_transfer'

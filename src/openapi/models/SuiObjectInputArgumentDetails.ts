@@ -32,9 +32,9 @@ import {
 } from './SuiSharedObjectRefInputArgument';
 
 /**
- * @type SuiObjectInputArgumentDetails
  * 
  * @export
+ * @type SuiObjectInputArgumentDetails
  */
 export type SuiObjectInputArgumentDetails = { type: 'imm_or_owned' } & SuiImmOrOwnedObjectRefInputArgument | { type: 'partial' } & SuiPartialObjectRefInputArgument | { type: 'receiving' } & SuiReceivingObjectRefInputArgument | { type: 'shared' } & SuiSharedObjectRefInputArgument;
 

@@ -37,7 +37,7 @@ export interface CosmosChain {
 
 
 /**
- * @export
+ * 
  */
 const CosmosChainChainTypeEnum = {
     cosmos: 'cosmos'

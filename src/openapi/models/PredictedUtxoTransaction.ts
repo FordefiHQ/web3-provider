@@ -139,7 +139,7 @@ export interface PredictedUtxoTransaction {
 
 
 /**
- * @export
+ * 
  */
 const PredictedUtxoTransactionTypeEnum = {
     utxoTransaction: 'utxo_transaction'

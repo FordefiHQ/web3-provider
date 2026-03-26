@@ -38,7 +38,7 @@ export interface AptosNewCoinAssetIdentifierRequest {
 
 
 /**
- * @export
+ * 
  */
 const AptosNewCoinAssetIdentifierRequestTypeEnum = {
     newCoin: 'new_coin'

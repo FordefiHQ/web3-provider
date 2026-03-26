@@ -20,9 +20,9 @@ import {
 } from './CreateTronTransferRequest';
 
 /**
- * @type CreateTronTransactionRequestDetails
  * 
  * @export
+ * @type CreateTronTransactionRequestDetails
  */
 export type CreateTronTransactionRequestDetails = { type: 'tron_serialized_raw_transaction' } & CreateTronSerializedRawTransactionRequest | { type: 'tron_transfer' } & CreateTronTransferRequest;
 

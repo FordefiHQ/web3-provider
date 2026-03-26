@@ -281,7 +281,7 @@ export interface StarknetTransaction {
 
 
 /**
- * @export
+ * 
  */
 const StarknetTransactionTypeEnum = {
     starknetTransaction: 'starknet_transaction'

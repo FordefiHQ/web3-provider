@@ -101,7 +101,7 @@ export interface SuiAsset {
 
 
 /**
- * @export
+ * 
  */
 const SuiAssetTypeEnum = {
     suiAsset: 'sui_asset'

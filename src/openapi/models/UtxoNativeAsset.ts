@@ -37,7 +37,7 @@ export interface UtxoNativeAsset {
 
 
 /**
- * @export
+ * 
  */
 const UtxoNativeAssetTypeEnum = {
     utxoNativeAsset: 'utxo_native_asset'

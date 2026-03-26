@@ -55,7 +55,7 @@ export interface TransactionPredictTonTransactionRequest {
 
 
 /**
- * @export
+ * 
  */
 const TransactionPredictTonTransactionRequestTypeEnum = {
     tonTransaction: 'ton_transaction'

@@ -55,7 +55,7 @@ export interface DynamicGas {
 
 
 /**
- * @export
+ * 
  */
 const DynamicGasTypeEnum = {
     dynamic: 'dynamic'

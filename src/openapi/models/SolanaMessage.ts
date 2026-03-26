@@ -205,7 +205,7 @@ export interface SolanaMessage {
 
 
 /**
- * @export
+ * 
  */
 const SolanaMessageTypeEnum = {
     solanaMessage: 'solana_message'

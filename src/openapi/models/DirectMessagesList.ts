@@ -37,7 +37,7 @@ export interface DirectMessagesList {
 
 
 /**
- * @export
+ * 
  */
 const DirectMessagesListFormatEnum = {
     direct: 'direct'

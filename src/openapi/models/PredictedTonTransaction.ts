@@ -159,7 +159,7 @@ export interface PredictedTonTransaction {
 
 
 /**
- * @export
+ * 
  */
 const PredictedTonTransactionTypeEnum = {
     tonTransaction: 'ton_transaction'

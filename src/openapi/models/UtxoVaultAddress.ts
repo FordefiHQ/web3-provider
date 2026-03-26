@@ -101,7 +101,7 @@ export interface UtxoVaultAddress {
 
 
 /**
- * @export
+ * 
  */
 const UtxoVaultAddressTypeEnum = {
     utxo: 'utxo'

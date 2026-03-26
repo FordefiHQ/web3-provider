@@ -61,7 +61,7 @@ export interface Erc20 {
 
 
 /**
- * @export
+ * 
  */
 const Erc20TypeEnum = {
     erc20: 'erc20'

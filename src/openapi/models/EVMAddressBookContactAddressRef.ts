@@ -43,7 +43,7 @@ export interface EVMAddressBookContactAddressRef {
 
 
 /**
- * @export
+ * 
  */
 const EVMAddressBookContactAddressRefChainTypeEnum = {
     evm: 'evm'

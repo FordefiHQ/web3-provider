@@ -95,7 +95,7 @@ export interface CreateStarknetMessageWithWaitRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateStarknetMessageWithWaitRequestTypeEnum = {
     starknetMessage: 'starknet_message'

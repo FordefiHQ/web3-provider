@@ -73,7 +73,7 @@ export interface TypedCosmosTransferRequest {
 
 
 /**
- * @export
+ * 
  */
 const TypedCosmosTransferRequestTypeEnum = {
     cosmosTransfer: 'cosmos_transfer'

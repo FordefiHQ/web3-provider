@@ -24,9 +24,9 @@ import {
 } from './CreateStarknetTransferRequest';
 
 /**
- * @type CreateStarknetTransactionRequestDetails
  * 
  * @export
+ * @type CreateStarknetTransactionRequestDetails
  */
 export type CreateStarknetTransactionRequestDetails = { type: 'starknet_contract_call' } & CreateStarknetTransactionInvokeRequest | { type: 'starknet_contract_deployment' } & CreateStarknetContractDeploymentRequest | { type: 'starknet_transfer' } & CreateStarknetTransferRequest;
 

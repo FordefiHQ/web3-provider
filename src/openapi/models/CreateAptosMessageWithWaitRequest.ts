@@ -95,7 +95,7 @@ export interface CreateAptosMessageWithWaitRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateAptosMessageWithWaitRequestTypeEnum = {
     aptosMessage: 'aptos_message'

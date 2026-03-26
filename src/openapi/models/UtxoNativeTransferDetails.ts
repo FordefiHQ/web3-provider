@@ -60,7 +60,7 @@ export interface UtxoNativeTransferDetails {
 
 
 /**
- * @export
+ * 
  */
 const UtxoNativeTransferDetailsTypeEnum = {
     nativeTransfer: 'native_transfer'

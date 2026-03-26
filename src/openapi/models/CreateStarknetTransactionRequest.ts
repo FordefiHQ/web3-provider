@@ -79,7 +79,7 @@ export interface CreateStarknetTransactionRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateStarknetTransactionRequestTypeEnum = {
     starknetTransaction: 'starknet_transaction'

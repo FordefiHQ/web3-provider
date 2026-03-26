@@ -173,7 +173,7 @@ export interface ExchangeVault {
 
 
 /**
- * @export
+ * 
  */
 const ExchangeVaultTypeEnum = {
     exchange: 'exchange'

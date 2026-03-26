@@ -55,7 +55,7 @@ export interface TransactionPredictTronTransactionRequest {
 
 
 /**
- * @export
+ * 
  */
 const TransactionPredictTronTransactionRequestTypeEnum = {
     tronTransaction: 'tron_transaction'

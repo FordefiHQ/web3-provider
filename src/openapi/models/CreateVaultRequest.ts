@@ -60,9 +60,9 @@ import {
 } from './CreateUtxoVaultRequest';
 
 /**
- * @type CreateVaultRequest
  * 
  * @export
+ * @type CreateVaultRequest
  */
 export type CreateVaultRequest = { type: 'aptos' } & CreateAptosVaultRequest | { type: 'black_box' } & CreateBlackBoxVaultRequest | { type: 'cosmos' } & CreateCosmosVaultRequest | { type: 'evm' } & CreateEvmVaultRequest | { type: 'safe' } & CreateSafeVaultRequest | { type: 'solana' } & CreateSolanaVaultRequest | { type: 'stacks' } & CreateStacksVaultRequest | { type: 'starknet' } & CreateStarknetVaultRequest | { type: 'sui' } & CreateSuiVaultRequest | { type: 'ton' } & CreateTonVaultRequest | { type: 'tron' } & CreateTronVaultRequest | { type: 'utxo' } & CreateUtxoVaultRequest;
 

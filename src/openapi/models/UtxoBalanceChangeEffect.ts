@@ -53,7 +53,7 @@ export interface UtxoBalanceChangeEffect {
 
 
 /**
- * @export
+ * 
  */
 const UtxoBalanceChangeEffectTypeEnum = {
     native: 'native'

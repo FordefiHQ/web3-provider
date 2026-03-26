@@ -105,7 +105,7 @@ export interface PredictedTonMessage {
 
 
 /**
- * @export
+ * 
  */
 const PredictedTonMessageTypeEnum = {
     tonMessage: 'ton_message'

@@ -55,7 +55,7 @@ export interface TransactionPredictCosmosMessageRequest {
 
 
 /**
- * @export
+ * 
  */
 const TransactionPredictCosmosMessageRequestTypeEnum = {
     cosmosMessage: 'cosmos_message'

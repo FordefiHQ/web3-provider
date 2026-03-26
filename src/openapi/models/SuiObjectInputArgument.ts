@@ -38,7 +38,7 @@ export interface SuiObjectInputArgument {
 
 
 /**
- * @export
+ * 
  */
 const SuiObjectInputArgumentTypeEnum = {
     object: 'object'

@@ -44,7 +44,7 @@ export interface ApiSignerRef {
 
 
 /**
- * @export
+ * 
  */
 const ApiSignerRefUserTypeEnum = {
     apiSigner: 'api_signer'
@@ -52,7 +52,7 @@ const ApiSignerRefUserTypeEnum = {
 type ApiSignerRefUserTypeEnum = typeof ApiSignerRefUserTypeEnum[keyof typeof ApiSignerRefUserTypeEnum];
 
 /**
- * @export
+ * 
  */
 const ApiSignerRefStateEnum = {
     active: 'active',

@@ -44,7 +44,7 @@ export interface SuiSplitCoinsCommand {
 
 
 /**
- * @export
+ * 
  */
 const SuiSplitCoinsCommandTypeEnum = {
     splitCoins: 'split_coins'

@@ -32,9 +32,9 @@ import {
 } from './EnrichedEvmNativeAssetIdentifier';
 
 /**
- * @type EnrichedEvmAssetIdentifierDetails
  * 
  * @export
+ * @type EnrichedEvmAssetIdentifierDetails
  */
 export type EnrichedEvmAssetIdentifierDetails = { type: 'erc1155' } & EnrichedEvmErc1155AssetIdentifier | { type: 'erc20' } & EnrichedEvmErc20AssetIdentifier | { type: 'erc721' } & EnrichedEvmErc721AssetIdentifier | { type: 'hyperliquid' } & EnrichedEvmHyperLiquidAssetIdentifier | { type: 'native' } & EnrichedEvmNativeAssetIdentifier;
 

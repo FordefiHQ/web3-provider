@@ -32,7 +32,7 @@ export interface RecipientVaultId {
 
 
 /**
- * @export
+ * 
  */
 const RecipientVaultIdTypeEnum = {
     vaultId: 'vault_id'

@@ -43,7 +43,7 @@ export interface SolanaPersonalMessageRequest {
 
 
 /**
- * @export
+ * 
  */
 const SolanaPersonalMessageRequestTypeEnum = {
     personalMessageType: 'personal_message_type'

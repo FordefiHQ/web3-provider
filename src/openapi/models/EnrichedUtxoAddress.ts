@@ -73,7 +73,7 @@ export interface EnrichedUtxoAddress {
 
 
 /**
- * @export
+ * 
  */
 const EnrichedUtxoAddressTypeEnum = {
     utxo: 'utxo'

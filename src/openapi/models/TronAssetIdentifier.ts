@@ -47,7 +47,7 @@ export interface TronAssetIdentifier {
 
 
 /**
- * @export
+ * 
  */
 const TronAssetIdentifierTypeEnum = {
     tron: 'tron'

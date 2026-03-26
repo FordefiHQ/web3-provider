@@ -32,7 +32,7 @@ export interface SuiPureByteArrayInput {
 
 
 /**
- * @export
+ * 
  */
 const SuiPureByteArrayInputTypeEnum = {
     byteArrayPureInput: 'byte_array_pure_input'

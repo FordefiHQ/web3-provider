@@ -22,9 +22,9 @@ import {
 } from './SolanaSplTokenAssetIdentifierRequest';
 
 /**
- * @type SolanaAssetIdentifierDetails
  * 
  * @export
+ * @type SolanaAssetIdentifierDetails
  */
 export type SolanaAssetIdentifierDetails = { type: 'native' } & SolanaNativeAssetIdentifierRequest | { type: 'spl_token' } & SolanaSplTokenAssetIdentifierRequest;
 

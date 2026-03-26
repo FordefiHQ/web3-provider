@@ -79,7 +79,7 @@ export interface CreateSuiMessageRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateSuiMessageRequestTypeEnum = {
     suiMessage: 'sui_message'

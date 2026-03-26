@@ -56,7 +56,7 @@ export interface EnrichedSuiCoin {
 
 
 /**
- * @export
+ * 
  */
 const EnrichedSuiCoinTypeEnum = {
     coin: 'coin'

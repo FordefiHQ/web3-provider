@@ -95,7 +95,7 @@ export interface CreateSolanaMessageWithWaitRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateSolanaMessageWithWaitRequestTypeEnum = {
     solanaMessage: 'solana_message'

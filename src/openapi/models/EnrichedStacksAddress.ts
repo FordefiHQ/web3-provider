@@ -59,7 +59,7 @@ export interface EnrichedStacksAddress {
 
 
 /**
- * @export
+ * 
  */
 const EnrichedStacksAddressTypeEnum = {
     stacks: 'stacks'

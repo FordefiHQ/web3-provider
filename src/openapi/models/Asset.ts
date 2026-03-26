@@ -32,9 +32,9 @@ import {
 } from './UtxoAsset';
 
 /**
- * @type Asset
  * 
  * @export
+ * @type Asset
  */
 export type Asset = { type: 'cosmos_asset' } & CosmosAsset | { type: 'evm_asset' } & EvmAsset | { type: 'solana_asset' } & SolanaAsset | { type: 'sui_asset' } & SuiAsset | { type: 'utxo_asset' } & UtxoAsset;
 

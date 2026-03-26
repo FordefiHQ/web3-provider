@@ -55,7 +55,7 @@ export interface AptosSuggestedFees {
 
 
 /**
- * @export
+ * 
  */
 const AptosSuggestedFeesTypeEnum = {
     aptos: 'aptos'

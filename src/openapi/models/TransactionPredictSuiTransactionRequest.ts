@@ -55,7 +55,7 @@ export interface TransactionPredictSuiTransactionRequest {
 
 
 /**
- * @export
+ * 
  */
 const TransactionPredictSuiTransactionRequestTypeEnum = {
     suiTransaction: 'sui_transaction'

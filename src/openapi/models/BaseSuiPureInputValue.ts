@@ -32,9 +32,9 @@ import {
 } from './SuiPureStringInput';
 
 /**
- * @type BaseSuiPureInputValue
  * 
  * @export
+ * @type BaseSuiPureInputValue
  */
 export type BaseSuiPureInputValue = { type: 'bool_pure_input' } & SuiPureBoolInput | { type: 'byte_array_pure_input' } & SuiPureByteArrayInput | { type: 'number_pure_input' } & SuiPureNumberInput | { type: 'string_pure_input' } & SuiPureStringInput;
 

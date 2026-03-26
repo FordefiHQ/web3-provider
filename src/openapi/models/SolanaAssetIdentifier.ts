@@ -47,7 +47,7 @@ export interface SolanaAssetIdentifier {
 
 
 /**
- * @export
+ * 
  */
 const SolanaAssetIdentifierTypeEnum = {
     solana: 'solana'

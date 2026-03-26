@@ -44,7 +44,7 @@ export interface SuiReceivingObjectRefInputArgument {
 
 
 /**
- * @export
+ * 
  */
 const SuiReceivingObjectRefInputArgumentTypeEnum = {
     receiving: 'receiving'

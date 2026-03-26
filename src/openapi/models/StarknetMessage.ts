@@ -191,7 +191,7 @@ export interface StarknetMessage {
 
 
 /**
- * @export
+ * 
  */
 const StarknetMessageTypeEnum = {
     starknetMessage: 'starknet_message'

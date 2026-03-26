@@ -57,7 +57,7 @@ export interface TypedCosmosRawTransactionRequest {
 
 
 /**
- * @export
+ * 
  */
 const TypedCosmosRawTransactionRequestTypeEnum = {
     cosmosRawTransaction: 'cosmos_raw_transaction'

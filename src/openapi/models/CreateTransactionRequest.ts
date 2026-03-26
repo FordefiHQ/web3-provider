@@ -96,9 +96,9 @@ import {
 } from './CreateUtxoTransactionRequest';
 
 /**
- * @type CreateTransactionRequest
  * 
  * @export
+ * @type CreateTransactionRequest
  */
 export type CreateTransactionRequest = { type: 'aptos_message' } & CreateAptosMessageRequest | { type: 'aptos_transaction' } & CreateAptosTransactionRequest | { type: 'black_box_signature' } & CreateBlackBoxSignatureRequest | { type: 'cosmos_message' } & CreateCosmosMessageRequest | { type: 'cosmos_transaction' } & CreateCosmosTransactionRequest | { type: 'evm_message' } & CreateEvmMessageRequest | { type: 'evm_transaction' } & CreateEvmTransactionRequest | { type: 'exchange_transaction' } & CreateExchangeTransactionRequest | { type: 'solana_message' } & CreateSolanaMessageRequest | { type: 'solana_transaction' } & CreateSolanaTransactionRequest | { type: 'stacks_transaction' } & CreateStacksTransactionRequest | { type: 'starknet_message' } & CreateStarknetMessageRequest | { type: 'starknet_transaction' } & CreateStarknetTransactionRequest | { type: 'sui_message' } & CreateSuiMessageRequest | { type: 'sui_transaction' } & CreateSuiTransactionRequest | { type: 'ton_message' } & CreateTonMessageRequest | { type: 'ton_transaction' } & CreateTonTransactionRequest | { type: 'tron_message' } & CreateTronMessageRequest | { type: 'tron_transaction' } & CreateTronTransactionRequest | { type: 'utxo_message' } & CreateUtxoMessageRequest | { type: 'utxo_transaction' } & CreateUtxoTransactionRequest;
 

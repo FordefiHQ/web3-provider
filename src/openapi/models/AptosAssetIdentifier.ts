@@ -47,7 +47,7 @@ export interface AptosAssetIdentifier {
 
 
 /**
- * @export
+ * 
  */
 const AptosAssetIdentifierTypeEnum = {
     aptos: 'aptos'

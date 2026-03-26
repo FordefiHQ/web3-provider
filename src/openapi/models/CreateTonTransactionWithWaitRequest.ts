@@ -95,7 +95,7 @@ export interface CreateTonTransactionWithWaitRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateTonTransactionWithWaitRequestTypeEnum = {
     tonTransaction: 'ton_transaction'

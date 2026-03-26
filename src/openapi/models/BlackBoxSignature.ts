@@ -166,7 +166,7 @@ export interface BlackBoxSignature {
 
 
 /**
- * @export
+ * 
  */
 const BlackBoxSignatureTypeEnum = {
     blackBoxSignature: 'black_box_signature'

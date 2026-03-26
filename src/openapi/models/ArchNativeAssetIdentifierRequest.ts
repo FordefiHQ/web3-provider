@@ -37,7 +37,7 @@ export interface ArchNativeAssetIdentifierRequest {
 
 
 /**
- * @export
+ * 
  */
 const ArchNativeAssetIdentifierRequestTypeEnum = {
     native: 'native'

@@ -69,7 +69,7 @@ export interface EnrichedSolanaAddress {
 
 
 /**
- * @export
+ * 
  */
 const EnrichedSolanaAddressTypeEnum = {
     solana: 'solana'

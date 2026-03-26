@@ -37,7 +37,7 @@ export interface ContractDeploymentDetails {
 
 
 /**
- * @export
+ * 
  */
 const ContractDeploymentDetailsTypeEnum = {
     contractDeployment: 'contract_deployment'

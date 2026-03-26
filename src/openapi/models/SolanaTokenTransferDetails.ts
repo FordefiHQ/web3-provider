@@ -60,7 +60,7 @@ export interface SolanaTokenTransferDetails {
 
 
 /**
- * @export
+ * 
  */
 const SolanaTokenTransferDetailsTypeEnum = {
     tokenTransfer: 'token_transfer'

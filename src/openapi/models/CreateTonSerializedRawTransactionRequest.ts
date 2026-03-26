@@ -69,7 +69,7 @@ export interface CreateTonSerializedRawTransactionRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateTonSerializedRawTransactionRequestTypeEnum = {
     tonRawTransaction: 'ton_raw_transaction'

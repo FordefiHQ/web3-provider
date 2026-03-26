@@ -33,7 +33,7 @@ export interface CosmosPushData {
 
 
 /**
- * @export
+ * 
  */
 const CosmosPushDataTypeEnum = {
     cosmosTransaction: 'cosmos_transaction'

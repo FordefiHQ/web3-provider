@@ -64,9 +64,9 @@ import {
 } from './UtxoVault';
 
 /**
- * @type CreateVaultResponse
  * 
  * @export
+ * @type CreateVaultResponse
  */
 export type CreateVaultResponse = { type: 'aptos' } & AptosVault | { type: 'black_box' } & BlackBoxVault | { type: 'cosmos' } & CosmosVault | { type: 'evm' } & EvmVault | { type: 'exchange' } & ExchangeVault | { type: 'safe' } & SafeVault | { type: 'solana' } & SolanaVault | { type: 'stacks' } & StacksVault | { type: 'starknet' } & StarknetVault | { type: 'sui' } & SuiVault | { type: 'ton' } & TonVault | { type: 'tron' } & TronVault | { type: 'utxo' } & UtxoVault;
 

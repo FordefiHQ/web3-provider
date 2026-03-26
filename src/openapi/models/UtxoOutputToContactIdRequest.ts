@@ -32,7 +32,7 @@ export interface UtxoOutputToContactIdRequest {
 
 
 /**
- * @export
+ * 
  */
 const UtxoOutputToContactIdRequestTypeEnum = {
     contactId: 'contact_id'

@@ -47,7 +47,7 @@ export interface EnrichedCosmosTokenAssetIdentifier {
 
 
 /**
- * @export
+ * 
  */
 const EnrichedCosmosTokenAssetIdentifierTypeEnum = {
     token: 'token'

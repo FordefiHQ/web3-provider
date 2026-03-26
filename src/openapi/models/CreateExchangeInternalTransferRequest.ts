@@ -65,7 +65,7 @@ export interface CreateExchangeInternalTransferRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateExchangeInternalTransferRequestTypeEnum = {
     internalTransfer: 'internal_transfer'

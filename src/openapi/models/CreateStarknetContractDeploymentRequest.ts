@@ -59,7 +59,7 @@ export interface CreateStarknetContractDeploymentRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateStarknetContractDeploymentRequestTypeEnum = {
     starknetContractDeployment: 'starknet_contract_deployment'

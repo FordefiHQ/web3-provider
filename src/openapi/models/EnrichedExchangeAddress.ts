@@ -63,7 +63,7 @@ export interface EnrichedExchangeAddress {
 
 
 /**
- * @export
+ * 
  */
 const EnrichedExchangeAddressTypeEnum = {
     exchange: 'exchange'

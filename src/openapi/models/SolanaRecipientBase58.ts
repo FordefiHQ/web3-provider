@@ -32,7 +32,7 @@ export interface SolanaRecipientBase58 {
 
 
 /**
- * @export
+ * 
  */
 const SolanaRecipientBase58TypeEnum = {
     address: 'address'

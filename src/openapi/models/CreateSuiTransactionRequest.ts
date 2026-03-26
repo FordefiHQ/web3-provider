@@ -79,7 +79,7 @@ export interface CreateSuiTransactionRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateSuiTransactionRequestTypeEnum = {
     suiTransaction: 'sui_transaction'

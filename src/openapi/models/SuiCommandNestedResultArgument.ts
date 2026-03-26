@@ -38,7 +38,7 @@ export interface SuiCommandNestedResultArgument {
 
 
 /**
- * @export
+ * 
  */
 const SuiCommandNestedResultArgumentTypeEnum = {
     nestedResult: 'nested_result'

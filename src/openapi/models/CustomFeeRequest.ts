@@ -32,7 +32,7 @@ export interface CustomFeeRequest {
 
 
 /**
- * @export
+ * 
  */
 const CustomFeeRequestTypeEnum = {
     custom: 'custom'

@@ -38,7 +38,7 @@ export interface SuiNativeAssetIdentifierRequest {
 
 
 /**
- * @export
+ * 
  */
 const SuiNativeAssetIdentifierRequestTypeEnum = {
     native: 'native'

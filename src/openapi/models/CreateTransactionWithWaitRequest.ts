@@ -92,9 +92,9 @@ import {
 } from './CreateUtxoTransactionWithWaitRequest';
 
 /**
- * @type CreateTransactionWithWaitRequest
  * 
  * @export
+ * @type CreateTransactionWithWaitRequest
  */
 export type CreateTransactionWithWaitRequest = { type: 'aptos_message' } & CreateAptosMessageWithWaitRequest | { type: 'aptos_transaction' } & CreateAptosTransactionWithWaitRequest | { type: 'black_box_signature' } & CreateBlackBoxSignatureWithWaitRequest | { type: 'cosmos_message' } & CreateCosmosMessageWithWaitRequest | { type: 'cosmos_transaction' } & CreateCosmosTransactionWithWaitRequest | { type: 'evm_message' } & CreateEvmMessageWithWaitRequest | { type: 'evm_transaction' } & CreateEvmTransactionWithWaitRequest | { type: 'solana_message' } & CreateSolanaMessageWithWaitRequest | { type: 'solana_transaction' } & CreateSolanaTransactionWithWaitRequest | { type: 'stacks_transaction' } & CreateStacksTransactionWithWaitRequest | { type: 'starknet_message' } & CreateStarknetMessageWithWaitRequest | { type: 'starknet_transaction' } & CreateStarknetTransactionWithWaitRequest | { type: 'sui_message' } & CreateSuiMessageWithWaitRequest | { type: 'sui_transaction' } & CreateSuiTransactionWithWaitRequest | { type: 'ton_message' } & CreateTonMessageWithWaitRequest | { type: 'ton_transaction' } & CreateTonTransactionWithWaitRequest | { type: 'tron_message' } & CreateTronMessageWithWaitRequest | { type: 'tron_transaction' } & CreateTronTransactionWithWaitRequest | { type: 'utxo_message' } & CreateUtxoMessageWithWaitRequest | { type: 'utxo_transaction' } & CreateUtxoTransactionWithWaitRequest;
 

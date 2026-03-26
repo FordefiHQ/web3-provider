@@ -41,7 +41,7 @@ export interface Details2 {
 
 
 /**
- * @export
+ * 
  */
 const Details2TypeEnum = {
     suiNativeAsset: 'sui_native_asset',

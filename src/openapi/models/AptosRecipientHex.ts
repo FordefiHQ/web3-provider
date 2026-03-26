@@ -32,7 +32,7 @@ export interface AptosRecipientHex {
 
 
 /**
- * @export
+ * 
  */
 const AptosRecipientHexTypeEnum = {
     hex: 'hex'

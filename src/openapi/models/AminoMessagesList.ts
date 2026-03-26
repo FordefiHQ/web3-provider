@@ -37,7 +37,7 @@ export interface AminoMessagesList {
 
 
 /**
- * @export
+ * 
  */
 const AminoMessagesListFormatEnum = {
     amino: 'amino'

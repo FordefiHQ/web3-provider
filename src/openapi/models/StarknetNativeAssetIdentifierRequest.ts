@@ -38,7 +38,7 @@ export interface StarknetNativeAssetIdentifierRequest {
 
 
 /**
- * @export
+ * 
  */
 const StarknetNativeAssetIdentifierRequestTypeEnum = {
     native: 'native'

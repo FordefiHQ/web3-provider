@@ -44,7 +44,7 @@ export interface HyperliquidUsdSendAction {
 
 
 /**
- * @export
+ * 
  */
 const HyperliquidUsdSendActionActionTypeEnum = {
     usdSend: 'usd_send'

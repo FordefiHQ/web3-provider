@@ -37,7 +37,7 @@ export interface CosmosAssetIdentifierRequest {
 
 
 /**
- * @export
+ * 
  */
 const CosmosAssetIdentifierRequestTypeEnum = {
     cosmos: 'cosmos'

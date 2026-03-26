@@ -20,9 +20,9 @@ import {
 } from './IntegerHashPayload';
 
 /**
- * @type CreateBlackBoxSignatureRequestDetails
  * 
  * @export
+ * @type CreateBlackBoxSignatureRequestDetails
  */
 export type CreateBlackBoxSignatureRequestDetails = { format: 'hash_binary' } & BinaryHashPayload | { format: 'hash_integer' } & IntegerHashPayload;
 

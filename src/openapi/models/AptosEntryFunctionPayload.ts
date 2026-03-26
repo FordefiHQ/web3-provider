@@ -67,7 +67,7 @@ export interface AptosEntryFunctionPayload {
 
 
 /**
- * @export
+ * 
  */
 const AptosEntryFunctionPayloadTypeEnum = {
     entryPoint: 'entry_point'

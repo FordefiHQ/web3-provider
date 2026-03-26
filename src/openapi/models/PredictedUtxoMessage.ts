@@ -105,7 +105,7 @@ export interface PredictedUtxoMessage {
 
 
 /**
- * @export
+ * 
  */
 const PredictedUtxoMessageTypeEnum = {
     utxoMessage: 'utxo_message'

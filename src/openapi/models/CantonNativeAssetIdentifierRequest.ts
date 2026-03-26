@@ -37,7 +37,7 @@ export interface CantonNativeAssetIdentifierRequest {
 
 
 /**
- * @export
+ * 
  */
 const CantonNativeAssetIdentifierRequestTypeEnum = {
     native: 'native'

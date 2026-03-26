@@ -47,7 +47,7 @@ export interface TronTypedMessageV2Request {
 
 
 /**
- * @export
+ * 
  */
 const TronTypedMessageV2RequestTypeEnum = {
     typedMessageTypeV2: 'typed_message_type_v2'

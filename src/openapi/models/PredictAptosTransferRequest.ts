@@ -95,7 +95,7 @@ export interface PredictAptosTransferRequest {
 
 
 /**
- * @export
+ * 
  */
 const PredictAptosTransferRequestTypeEnum = {
     aptosTransfer: 'aptos_transfer'

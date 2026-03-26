@@ -36,9 +36,9 @@ import {
 } from './CreateEvmWrapNativeRequest';
 
 /**
- * @type CreateEvmTransactionRequestDetails
  * 
  * @export
+ * @type CreateEvmTransactionRequestDetails
  */
 export type CreateEvmTransactionRequestDetails = { type: 'evm_raw_transaction' } & CreateEvmRawTransactionRequest | { type: 'evm_revoke_allowance' } & CreateEvmRevokeAllowanceRequest | { type: 'evm_set_code' } & CreateEvmSetCodeRequest | { type: 'evm_transfer' } & CreateEvmTransferRequest | { type: 'evm_unwrap_native' } & CreateEvmUnwrapNativeRequest | { type: 'evm_wrap_native' } & CreateEvmWrapNativeRequest;
 

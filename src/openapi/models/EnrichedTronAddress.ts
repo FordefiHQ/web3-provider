@@ -59,7 +59,7 @@ export interface EnrichedTronAddress {
 
 
 /**
- * @export
+ * 
  */
 const EnrichedTronAddressTypeEnum = {
     tron: 'tron'

@@ -95,7 +95,7 @@ export interface CreateSolanaTransactionWithWaitRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateSolanaTransactionWithWaitRequestTypeEnum = {
     solanaTransaction: 'solana_transaction'

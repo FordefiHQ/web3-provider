@@ -49,7 +49,7 @@ export interface StarknetErc20TransferDetails {
 
 
 /**
- * @export
+ * 
  */
 const StarknetErc20TransferDetailsTypeEnum = {
     erc20Transfer: 'erc20_transfer'

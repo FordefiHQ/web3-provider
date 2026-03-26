@@ -20,9 +20,9 @@ import {
 } from './CantonNativeAssetIdentifierRequest';
 
 /**
- * @type CantonAssetIdentifierDetails
  * 
  * @export
+ * @type CantonAssetIdentifierDetails
  */
 export type CantonAssetIdentifierDetails = { type: 'cip56_token' } & CantonCip56TokenAssetIdentifierRequest | { type: 'native' } & CantonNativeAssetIdentifierRequest;
 

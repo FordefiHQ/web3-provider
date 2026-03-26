@@ -20,9 +20,9 @@ import {
 } from './ArchNativeAssetIdentifierRequest';
 
 /**
- * @type ArchAssetIdentifierDetails
  * 
  * @export
+ * @type ArchAssetIdentifierDetails
  */
 export type ArchAssetIdentifierDetails = { type: 'apl_token' } & ArchAplTokenAssetIdentifierRequest | { type: 'native' } & ArchNativeAssetIdentifierRequest;
 

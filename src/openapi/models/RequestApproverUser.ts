@@ -20,9 +20,9 @@ import {
 } from './PersonRef';
 
 /**
- * @type RequestApproverUser
  * 
  * @export
+ * @type RequestApproverUser
  */
 export type RequestApproverUser = { userType: 'api_user' } & ApiUserRef | { userType: 'person' } & PersonRef;
 

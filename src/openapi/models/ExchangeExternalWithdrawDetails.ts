@@ -81,7 +81,7 @@ export interface ExchangeExternalWithdrawDetails {
 
 
 /**
- * @export
+ * 
  */
 const ExchangeExternalWithdrawDetailsTypeEnum = {
     externalWithdraw: 'external_withdraw'

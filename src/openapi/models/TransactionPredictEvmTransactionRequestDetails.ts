@@ -36,9 +36,9 @@ import {
 } from './TransactionPredictEvmWrapNativeRequest';
 
 /**
- * @type TransactionPredictEvmTransactionRequestDetails
  * 
  * @export
+ * @type TransactionPredictEvmTransactionRequestDetails
  */
 export type TransactionPredictEvmTransactionRequestDetails = { type: 'evm_raw_transaction' } & TransactionPredictEvmRawTransactionRequest | { type: 'evm_revoke_allowance' } & TransactionPredictEvmRevokeAllowanceRequest | { type: 'evm_set_code' } & TransactionPredictEvmSetCodeRequest | { type: 'evm_transfer' } & TransactionPredictEvmTransferRequest | { type: 'evm_unwrap_native' } & TransactionPredictEvmUnwrapNativeRequest | { type: 'evm_wrap_native' } & TransactionPredictEvmWrapNativeRequest;
 

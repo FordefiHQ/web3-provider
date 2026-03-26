@@ -95,7 +95,7 @@ export interface CreateAptosTransactionWithWaitRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateAptosTransactionWithWaitRequestTypeEnum = {
     aptosTransaction: 'aptos_transaction'

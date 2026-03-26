@@ -95,7 +95,7 @@ export interface CreateStarknetTransactionWithWaitRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateStarknetTransactionWithWaitRequestTypeEnum = {
     starknetTransaction: 'starknet_transaction'

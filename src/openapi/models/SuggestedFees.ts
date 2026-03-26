@@ -40,9 +40,9 @@ import {
 } from './UtxoSuggestedFees';
 
 /**
- * @type SuggestedFees
  * 
  * @export
+ * @type SuggestedFees
  */
 export type SuggestedFees = { type: 'aptos' } & AptosSuggestedFees | { type: 'cosmos' } & CosmosSuggestedFees | { type: 'evm' } & EvmSuggestedFees | { type: 'starknet' } & StarknetSuggestedFees | { type: 'sui' } & SuiSuggestedFees | { type: 'ton' } & TonSuggestedFees | { type: 'utxo' } & UtxoSuggestedFees;
 

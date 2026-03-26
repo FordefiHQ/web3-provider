@@ -43,7 +43,7 @@ export interface CreateEvmTypedV1MessageRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateEvmTypedV1MessageRequestTypeEnum = {
     typedMessageTypeV1: 'typed_message_type_v1'

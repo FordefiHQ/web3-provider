@@ -70,7 +70,7 @@ export interface CosmosTokenTransferDetails {
 
 
 /**
- * @export
+ * 
  */
 const CosmosTokenTransferDetailsTypeEnum = {
     tokenTransfer: 'token_transfer'

@@ -74,7 +74,7 @@ export interface HyperliquidSendAssetAction {
 
 
 /**
- * @export
+ * 
  */
 const HyperliquidSendAssetActionActionTypeEnum = {
     sendAsset: 'send_asset'

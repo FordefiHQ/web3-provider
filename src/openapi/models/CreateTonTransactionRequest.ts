@@ -79,7 +79,7 @@ export interface CreateTonTransactionRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateTonTransactionRequestTypeEnum = {
     tonTransaction: 'ton_transaction'

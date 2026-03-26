@@ -43,7 +43,7 @@ export interface StellarSorobanAssetIdentifierRequest {
 
 
 /**
- * @export
+ * 
  */
 const StellarSorobanAssetIdentifierRequestTypeEnum = {
     sorobanAsset: 'soroban_asset'

@@ -291,7 +291,7 @@ export interface AptosTransaction {
 
 
 /**
- * @export
+ * 
  */
 const AptosTransactionTypeEnum = {
     aptosTransaction: 'aptos_transaction'

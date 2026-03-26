@@ -47,7 +47,7 @@ export interface EvmBridgeEffectKnownDestination {
 
 
 /**
- * @export
+ * 
  */
 const EvmBridgeEffectKnownDestinationTypeEnum = {
     knownTargetChain: 'known_target_chain'

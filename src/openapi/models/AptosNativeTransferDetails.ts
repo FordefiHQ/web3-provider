@@ -49,7 +49,7 @@ export interface AptosNativeTransferDetails {
 
 
 /**
- * @export
+ * 
  */
 const AptosNativeTransferDetailsTypeEnum = {
     nativeTransfer: 'native_transfer'

@@ -38,7 +38,7 @@ export interface StacksSip10AssetIdentifierRequest {
 
 
 /**
- * @export
+ * 
  */
 const StacksSip10AssetIdentifierRequestTypeEnum = {
     sip10: 'sip10'

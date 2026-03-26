@@ -43,7 +43,7 @@ export interface StarknetAddressBookContactAddressRef {
 
 
 /**
- * @export
+ * 
  */
 const StarknetAddressBookContactAddressRefChainTypeEnum = {
     starknet: 'starknet'

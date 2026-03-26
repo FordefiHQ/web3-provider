@@ -47,7 +47,7 @@ export interface CosmosArbitraryMessageRequest {
 
 
 /**
- * @export
+ * 
  */
 const CosmosArbitraryMessageRequestTypeEnum = {
     arbitraryMessageType: 'arbitrary_message_type'

@@ -181,7 +181,7 @@ export interface PredictedAptosTransaction {
 
 
 /**
- * @export
+ * 
  */
 const PredictedAptosTransactionTypeEnum = {
     aptosTransaction: 'aptos_transaction'

@@ -49,7 +49,7 @@ export interface SuiNativeTransferDetails {
 
 
 /**
- * @export
+ * 
  */
 const SuiNativeTransferDetailsTypeEnum = {
     nativeTransfer: 'native_transfer'

@@ -20,9 +20,9 @@ import {
 } from './CreateStacksTransferRequest';
 
 /**
- * @type CreateStacksTransactionRequestDetails
  * 
  * @export
+ * @type CreateStacksTransactionRequestDetails
  */
 export type CreateStacksTransactionRequestDetails = { type: 'stacks_serialized_transaction' } & CreateStacksTransactionSerializedRequest | { type: 'stacks_transfer' } & CreateStacksTransferRequest;
 

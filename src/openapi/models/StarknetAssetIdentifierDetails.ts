@@ -22,9 +22,9 @@ import {
 } from './StarknetNativeAssetIdentifierRequest';
 
 /**
- * @type StarknetAssetIdentifierDetails
  * 
  * @export
+ * @type StarknetAssetIdentifierDetails
  */
 export type StarknetAssetIdentifierDetails = { type: 'erc20' } & StarknetErc20AssetIdentifierRequest | { type: 'native' } & StarknetNativeAssetIdentifierRequest;
 

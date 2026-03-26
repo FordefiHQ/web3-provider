@@ -191,7 +191,7 @@ export interface ExchangeTransaction {
 
 
 /**
- * @export
+ * 
  */
 const ExchangeTransactionTypeEnum = {
     exchangeTransaction: 'exchange_transaction'

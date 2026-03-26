@@ -82,7 +82,7 @@ export interface CosmosToken {
 
 
 /**
- * @export
+ * 
  */
 const CosmosTokenTypeEnum = {
     token: 'token'

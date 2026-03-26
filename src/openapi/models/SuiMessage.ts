@@ -185,7 +185,7 @@ export interface SuiMessage {
 
 
 /**
- * @export
+ * 
  */
 const SuiMessageTypeEnum = {
     suiMessage: 'sui_message'

@@ -32,7 +32,7 @@ export interface SuiPureStringInput {
 
 
 /**
- * @export
+ * 
  */
 const SuiPureStringInputTypeEnum = {
     stringPureInput: 'string_pure_input'

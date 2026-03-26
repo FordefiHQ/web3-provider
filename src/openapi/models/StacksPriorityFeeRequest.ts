@@ -37,7 +37,7 @@ export interface StacksPriorityFeeRequest {
 
 
 /**
- * @export
+ * 
  */
 const StacksPriorityFeeRequestTypeEnum = {
     priority: 'priority'

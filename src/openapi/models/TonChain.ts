@@ -37,7 +37,7 @@ export interface TonChain {
 
 
 /**
- * @export
+ * 
  */
 const TonChainChainTypeEnum = {
     ton: 'ton'

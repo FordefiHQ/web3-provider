@@ -32,7 +32,7 @@ export interface MasterAccount {
 
 
 /**
- * @export
+ * 
  */
 const MasterAccountTypeEnum = {
     master: 'master'

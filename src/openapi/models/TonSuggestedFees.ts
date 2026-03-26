@@ -43,7 +43,7 @@ export interface TonSuggestedFees {
 
 
 /**
- * @export
+ * 
  */
 const TonSuggestedFeesTypeEnum = {
     ton: 'ton'

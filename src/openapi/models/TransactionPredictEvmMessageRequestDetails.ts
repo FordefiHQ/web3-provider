@@ -24,9 +24,9 @@ import {
 } from './TransactionDetailsEvmTypedV1MessageRequest';
 
 /**
- * @type TransactionPredictEvmMessageRequestDetails
  * 
  * @export
+ * @type TransactionPredictEvmMessageRequestDetails
  */
 export type TransactionPredictEvmMessageRequestDetails = { type: 'personal_message_type' } & TransactionDetailsEvmPersonalMessageRequest | { type: 'typed_message_type' } & TransactionDetailsEvmTypedMessageRequest | { type: 'typed_message_type_v1' } & TransactionDetailsEvmTypedV1MessageRequest;
 

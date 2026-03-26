@@ -43,7 +43,7 @@ export interface EvmSuggestedFees {
 
 
 /**
- * @export
+ * 
  */
 const EvmSuggestedFeesTypeEnum = {
     evm: 'evm'

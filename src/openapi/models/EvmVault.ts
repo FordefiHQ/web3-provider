@@ -184,7 +184,7 @@ export interface EvmVault {
 
 
 /**
- * @export
+ * 
  */
 const EvmVaultTypeEnum = {
     evm: 'evm'

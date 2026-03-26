@@ -49,7 +49,7 @@ export interface StarknetNativeTransferDetails {
 
 
 /**
- * @export
+ * 
  */
 const StarknetNativeTransferDetailsTypeEnum = {
     nativeTransfer: 'native_transfer'

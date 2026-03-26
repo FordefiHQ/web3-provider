@@ -58,7 +58,7 @@ export interface PricedAsset {
 
 
 /**
- * @export
+ * 
  */
 const PricedAssetTypeEnum = {
     assetPrice: 'asset_price'

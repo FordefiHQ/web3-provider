@@ -253,7 +253,7 @@ export interface TronTransaction {
 
 
 /**
- * @export
+ * 
  */
 const TronTransactionTypeEnum = {
     tronTransaction: 'tron_transaction'

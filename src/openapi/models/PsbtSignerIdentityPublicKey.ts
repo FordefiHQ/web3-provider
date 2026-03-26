@@ -32,7 +32,7 @@ export interface PsbtSignerIdentityPublicKey {
 
 
 /**
- * @export
+ * 
  */
 const PsbtSignerIdentityPublicKeyTypeEnum = {
     publicKey: 'public_key'

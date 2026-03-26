@@ -37,7 +37,7 @@ export interface StellarNativeAssetIdentifierRequest {
 
 
 /**
- * @export
+ * 
  */
 const StellarNativeAssetIdentifierRequestTypeEnum = {
     native: 'native'

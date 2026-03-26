@@ -37,7 +37,7 @@ export interface StacksRawTransactionDetails {
 
 
 /**
- * @export
+ * 
  */
 const StacksRawTransactionDetailsTypeEnum = {
     rawTransaction: 'raw_transaction'

@@ -267,7 +267,7 @@ export interface CosmosTransaction {
 
 
 /**
- * @export
+ * 
  */
 const CosmosTransactionTypeEnum = {
     cosmosTransaction: 'cosmos_transaction'

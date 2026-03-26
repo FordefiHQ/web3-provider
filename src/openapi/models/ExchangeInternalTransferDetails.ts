@@ -49,7 +49,7 @@ export interface ExchangeInternalTransferDetails {
 
 
 /**
- * @export
+ * 
  */
 const ExchangeInternalTransferDetailsTypeEnum = {
     internalTransfer: 'internal_transfer'

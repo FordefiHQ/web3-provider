@@ -38,7 +38,7 @@ export interface BaseBridgeUnknownDestination {
 
 
 /**
- * @export
+ * 
  */
 const BaseBridgeUnknownDestinationTypeEnum = {
     unknownTargetChain: 'unknown_target_chain'

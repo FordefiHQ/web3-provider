@@ -44,7 +44,7 @@ export interface SuiMergeCoinsCommand {
 
 
 /**
- * @export
+ * 
  */
 const SuiMergeCoinsCommandTypeEnum = {
     mergeCoins: 'merge_coins'

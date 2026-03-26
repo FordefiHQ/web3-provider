@@ -49,7 +49,7 @@ export interface TronUnstakeDetails {
 
 
 /**
- * @export
+ * 
  */
 const TronUnstakeDetailsTypeEnum = {
     unstake: 'unstake'

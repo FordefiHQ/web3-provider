@@ -38,7 +38,7 @@ export interface BlackBoxSignatureSchnorrSecp256k1Details {
 
 
 /**
- * @export
+ * 
  */
 const BlackBoxSignatureSchnorrSecp256k1DetailsTypeEnum = {
     schnorrSecp256k1: 'schnorr_secp256k1'

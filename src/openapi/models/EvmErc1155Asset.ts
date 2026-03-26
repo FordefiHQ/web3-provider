@@ -53,7 +53,7 @@ export interface EvmErc1155Asset {
 
 
 /**
- * @export
+ * 
  */
 const EvmErc1155AssetTypeEnum = {
     evmErc1155Asset: 'evm_erc1155_asset'

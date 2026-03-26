@@ -50,7 +50,7 @@ export interface HyperliquidSpotSendAction {
 
 
 /**
- * @export
+ * 
  */
 const HyperliquidSpotSendActionActionTypeEnum = {
     spotSend: 'spot_send'

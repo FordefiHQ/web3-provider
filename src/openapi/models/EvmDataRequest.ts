@@ -24,9 +24,9 @@ import {
 } from './EvmDataRequestHex';
 
 /**
- * @type EvmDataRequest
  * 
  * @export
+ * @type EvmDataRequest
  */
 export type EvmDataRequest = { type: 'base64' } & EvmDataRequestBase64 | { type: 'full_details' } & EvmDataRequestFullDetails | { type: 'hex' } & EvmDataRequestHex;
 

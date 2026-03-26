@@ -53,7 +53,7 @@ export interface StellarClassicAssetIdentifierRequest {
 
 
 /**
- * @export
+ * 
  */
 const StellarClassicAssetIdentifierRequestTypeEnum = {
     classicAsset: 'classic_asset'

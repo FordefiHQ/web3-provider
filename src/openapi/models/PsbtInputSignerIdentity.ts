@@ -20,9 +20,9 @@ import {
 } from './PsbtSignerIdentityPublicKey';
 
 /**
- * @type PsbtInputSignerIdentity
  * 
  * @export
+ * @type PsbtInputSignerIdentity
  */
 export type PsbtInputSignerIdentity = { type: 'address' } & PsbtSignerIdentityAddress | { type: 'public_key' } & PsbtSignerIdentityPublicKey;
 

@@ -95,7 +95,7 @@ export interface CreateSuiTransactionWithWaitRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateSuiTransactionWithWaitRequestTypeEnum = {
     suiTransaction: 'sui_transaction'

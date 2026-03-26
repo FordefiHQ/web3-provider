@@ -55,7 +55,7 @@ export interface UtxoSuggestedFees {
 
 
 /**
- * @export
+ * 
  */
 const UtxoSuggestedFeesTypeEnum = {
     utxo: 'utxo'

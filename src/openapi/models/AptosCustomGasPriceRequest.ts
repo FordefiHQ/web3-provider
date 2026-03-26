@@ -32,7 +32,7 @@ export interface AptosCustomGasPriceRequest {
 
 
 /**
- * @export
+ * 
  */
 const AptosCustomGasPriceRequestTypeEnum = {
     custom: 'custom'

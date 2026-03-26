@@ -37,7 +37,7 @@ export interface TronChain {
 
 
 /**
- * @export
+ * 
  */
 const TronChainChainTypeEnum = {
     tron: 'tron'

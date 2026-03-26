@@ -171,7 +171,7 @@ export interface PredictedStacksTransaction {
 
 
 /**
- * @export
+ * 
  */
 const PredictedStacksTransactionTypeEnum = {
     stacksTransaction: 'stacks_transaction'

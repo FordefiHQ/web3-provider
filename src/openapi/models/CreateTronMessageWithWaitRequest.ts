@@ -95,7 +95,7 @@ export interface CreateTronMessageWithWaitRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateTronMessageWithWaitRequestTypeEnum = {
     tronMessage: 'tron_message'

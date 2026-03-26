@@ -28,9 +28,9 @@ import {
 } from './UtxoOutputToVaultIdRequest';
 
 /**
- * @type UtxoOutputRequestTo
  * 
  * @export
+ * @type UtxoOutputRequestTo
  */
 export type UtxoOutputRequestTo = { type: 'address' } & UtxoOutputToAddressRequest | { type: 'contact_id' } & UtxoOutputToContactIdRequest | { type: 'vault_address_id' } & UtxoOutputToVaultAddressIdRequest | { type: 'vault_id' } & UtxoOutputToVaultIdRequest;
 

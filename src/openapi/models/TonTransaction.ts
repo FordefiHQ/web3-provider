@@ -263,7 +263,7 @@ export interface TonTransaction {
 
 
 /**
- * @export
+ * 
  */
 const TonTransactionTypeEnum = {
     tonTransaction: 'ton_transaction'

@@ -32,7 +32,7 @@ export interface ExchangeTransferExternalRecipientTypeAddress {
 
 
 /**
- * @export
+ * 
  */
 const ExchangeTransferExternalRecipientTypeAddressTypeEnum = {
     address: 'address'

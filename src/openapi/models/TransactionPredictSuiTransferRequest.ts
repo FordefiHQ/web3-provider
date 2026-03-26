@@ -89,7 +89,7 @@ export interface TransactionPredictSuiTransferRequest {
 
 
 /**
- * @export
+ * 
  */
 const TransactionPredictSuiTransferRequestTypeEnum = {
     suiTransfer: 'sui_transfer'

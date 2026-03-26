@@ -49,7 +49,7 @@ export interface TronNativeTransferDetails {
 
 
 /**
- * @export
+ * 
  */
 const TronNativeTransferDetailsTypeEnum = {
     nativeTransfer: 'native_transfer'

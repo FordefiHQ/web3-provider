@@ -214,12 +214,6 @@ export class TransactionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Abort a transaction.  Abort is possible only for a transaction that is in one of the following states:    <ul>    <li>Waiting for approval    <li>Approved    </ul>  The aborting user must be one of the following: <ul> <li>The user who created the transaction <li>An admin <li>A legitimate approver </ul>  API users can abort only the transactions they created.
-     * Abort Transaction
-     */
-    
-
-    /**
      * Creates request options for approveTransactionApiV1TransactionsIdApprovePost without sending the request
      */
     async approveTransactionApiV1TransactionsIdApprovePostRequestOpts(requestParameters: ApproveTransactionApiV1TransactionsIdApprovePostRequest): Promise<runtime.RequestOpts> {
@@ -264,12 +258,6 @@ export class TransactionsApi extends runtime.BaseAPI {
 
         return new runtime.VoidApiResponse(response);
     }
-
-    /**
-     * Approve a transaction.  A transaction awaits approval when the caller API user has been specified as a potential approver in the policy and the transaction is in the `waiting_for_approval` state.
-     * Approve Transaction
-     */
-    
 
     /**
      * Creates request options for createTransactionAndWaitApiV1TransactionsCreateAndWaitPost without sending the request
@@ -330,12 +318,6 @@ export class TransactionsApi extends runtime.BaseAPI {
 
         return new runtime.JSONApiResponse(response, (jsonValue) => CreateTransactionWithWaitResponseFromJSON(jsonValue));
     }
-
-    /**
-     * Create a new transaction and wait until transaction reaches given state.
-     * Create Transaction And Wait
-     */
-    
 
     /**
      * Creates request options for createTransactionApiV1TransactionsPost without sending the request
@@ -467,12 +449,6 @@ export class TransactionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create basic transfer transaction.
-     * Create Transfer
-     */
-    
-
-    /**
      * Creates request options for exportTransactionsApiV1TransactionsExportGet without sending the request
      */
     async exportTransactionsApiV1TransactionsExportGetRequestOpts(requestParameters: ExportTransactionsApiV1TransactionsExportGetRequest): Promise<runtime.RequestOpts> {
@@ -581,12 +557,6 @@ export class TransactionsApi extends runtime.BaseAPI {
 
         return new runtime.JSONApiResponse(response, (jsonValue) => ExportFromJSON(jsonValue));
     }
-
-    /**
-     * Start the export process for filtered transactions using cursor pagination.
-     * Export Transactions
-     */
-    
 
     /**
      * Creates request options for getTransactionApiV1TransactionsIdGet without sending the request
@@ -786,12 +756,6 @@ export class TransactionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get a list of all transactions in an organization.
-     * List Transactions
-     */
-    
-
-    /**
      * Creates request options for predictTransactionApiV1TransactionsPredictPost without sending the request
      */
     async predictTransactionApiV1TransactionsPredictPostRequestOpts(requestParameters: PredictTransactionApiV1TransactionsPredictPostRequest): Promise<runtime.RequestOpts> {
@@ -838,12 +802,6 @@ export class TransactionsApi extends runtime.BaseAPI {
 
         return new runtime.JSONApiResponse(response, (jsonValue) => PredictTransactionResponseFromJSON(jsonValue));
     }
-
-    /**
-     * Simulate the transaction and changes in token balances, in addition to the fee estimation.
-     * Predict Transaction
-     */
-    
 
     /**
      * Creates request options for pushTransactionApiV1TransactionsIdPushPost without sending the request
@@ -893,12 +851,6 @@ export class TransactionsApi extends runtime.BaseAPI {
 
         return new runtime.JSONApiResponse(response, (jsonValue) => PushTransactionResponseFromJSON(jsonValue));
     }
-
-    /**
-     * Push an existing signed transaction to the chain. The transaction must have been previously created with a `push_mode: manual` flag and must now be in state `signed`.
-     * Push Transaction
-     */
-    
 
     /**
      * Creates request options for releaseTransactionApiV1TransactionsIdReleasePost without sending the request
@@ -965,12 +917,6 @@ export class TransactionsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Release a transaction.
-     * Release Transaction
-     */
-    
-
-    /**
      * Creates request options for triggerTransactionSigningApiV1TransactionsIdTriggerSigningPost without sending the request
      */
     async triggerTransactionSigningApiV1TransactionsIdTriggerSigningPostRequestOpts(requestParameters: TriggerTransactionSigningApiV1TransactionsIdTriggerSigningPostRequest): Promise<runtime.RequestOpts> {
@@ -1015,12 +961,6 @@ export class TransactionsApi extends runtime.BaseAPI {
 
         return new runtime.VoidApiResponse(response);
     }
-
-    /**
-     * Trigger transaction signing.
-     * Trigger Transaction Signing
-     */
-    
 
     /**
      * Creates request options for updateTransactionSpamStateApiV1TransactionsIdUpdateSpamStatePut without sending the request
@@ -1077,11 +1017,5 @@ export class TransactionsApi extends runtime.BaseAPI {
 
         return new runtime.VoidApiResponse(response);
     }
-
-    /**
-     * Update transaction\'s spam state.
-     * Update Transaction Spam State
-     */
-    
 
 }

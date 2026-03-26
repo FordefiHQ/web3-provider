@@ -32,7 +32,7 @@ export interface BinaryHashPayload {
 
 
 /**
- * @export
+ * 
  */
 const BinaryHashPayloadFormatEnum = {
     hashBinary: 'hash_binary'

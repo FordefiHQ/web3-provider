@@ -60,7 +60,7 @@ export interface SolanaNativeTransferDetails {
 
 
 /**
- * @export
+ * 
  */
 const SolanaNativeTransferDetailsTypeEnum = {
     nativeTransfer: 'native_transfer'

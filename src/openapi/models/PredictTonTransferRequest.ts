@@ -75,7 +75,7 @@ export interface PredictTonTransferRequest {
 
 
 /**
- * @export
+ * 
  */
 const PredictTonTransferRequestTypeEnum = {
     tonTransfer: 'ton_transfer'

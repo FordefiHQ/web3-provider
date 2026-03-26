@@ -38,7 +38,7 @@ export interface CosmosNativeAssetIdentifierRequest {
 
 
 /**
- * @export
+ * 
  */
 const CosmosNativeAssetIdentifierRequestTypeEnum = {
     native: 'native'

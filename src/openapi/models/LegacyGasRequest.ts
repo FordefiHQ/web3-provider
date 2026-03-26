@@ -32,7 +32,7 @@ export interface LegacyGasRequest {
 
 
 /**
- * @export
+ * 
  */
 const LegacyGasRequestTypeEnum = {
     legacy: 'legacy'

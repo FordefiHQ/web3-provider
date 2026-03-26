@@ -43,7 +43,7 @@ export interface AptosAddressBookContactAddressRef {
 
 
 /**
- * @export
+ * 
  */
 const AptosAddressBookContactAddressRefChainTypeEnum = {
     aptos: 'aptos'

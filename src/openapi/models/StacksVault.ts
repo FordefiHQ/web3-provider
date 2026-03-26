@@ -174,7 +174,7 @@ export interface StacksVault {
 
 
 /**
- * @export
+ * 
  */
 const StacksVaultTypeEnum = {
     stacks: 'stacks'

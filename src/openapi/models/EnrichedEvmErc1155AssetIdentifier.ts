@@ -53,7 +53,7 @@ export interface EnrichedEvmErc1155AssetIdentifier {
 
 
 /**
- * @export
+ * 
  */
 const EnrichedEvmErc1155AssetIdentifierTypeEnum = {
     erc1155: 'erc1155'

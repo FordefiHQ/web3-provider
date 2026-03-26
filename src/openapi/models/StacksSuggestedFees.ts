@@ -55,7 +55,7 @@ export interface StacksSuggestedFees {
 
 
 /**
- * @export
+ * 
  */
 const StacksSuggestedFeesTypeEnum = {
     stacks: 'stacks'

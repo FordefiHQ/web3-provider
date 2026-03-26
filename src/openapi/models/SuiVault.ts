@@ -174,7 +174,7 @@ export interface SuiVault {
 
 
 /**
- * @export
+ * 
  */
 const SuiVaultTypeEnum = {
     sui: 'sui'

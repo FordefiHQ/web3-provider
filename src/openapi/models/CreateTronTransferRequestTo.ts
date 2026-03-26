@@ -24,9 +24,9 @@ import {
 } from './TronRecipientHex';
 
 /**
- * @type CreateTronTransferRequestTo
  * 
  * @export
+ * @type CreateTronTransferRequestTo
  */
 export type CreateTronTransferRequestTo = { type: 'contact_id' } & RecipientContactId | { type: 'hex' } & TronRecipientHex | { type: 'vault_id' } & RecipientVaultId;
 

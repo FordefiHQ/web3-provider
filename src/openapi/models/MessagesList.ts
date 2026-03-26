@@ -24,9 +24,9 @@ import {
 } from './MinedMessagesList';
 
 /**
- * @type MessagesList
  * 
  * @export
+ * @type MessagesList
  */
 export type MessagesList = { format: 'amino' } & AminoMessagesList | { format: 'direct' } & DirectMessagesList | { format: 'mined' } & MinedMessagesList;
 

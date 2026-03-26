@@ -41,7 +41,7 @@ export interface Details1 {
 
 
 /**
- * @export
+ * 
  */
 const Details1TypeEnum = {
     solanaNativeAsset: 'solana_native_asset',

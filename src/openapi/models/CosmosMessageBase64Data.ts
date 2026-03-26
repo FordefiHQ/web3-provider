@@ -32,7 +32,7 @@ export interface CosmosMessageBase64Data {
 
 
 /**
- * @export
+ * 
  */
 const CosmosMessageBase64DataTypeEnum = {
     base64: 'base64'

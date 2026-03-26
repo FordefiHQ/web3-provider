@@ -171,7 +171,7 @@ export interface PredictedSuiTransaction {
 
 
 /**
- * @export
+ * 
  */
 const PredictedSuiTransactionTypeEnum = {
     suiTransaction: 'sui_transaction'

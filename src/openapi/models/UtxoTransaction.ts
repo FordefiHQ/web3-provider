@@ -265,7 +265,7 @@ export interface UtxoTransaction {
 
 
 /**
- * @export
+ * 
  */
 const UtxoTransactionTypeEnum = {
     utxoTransaction: 'utxo_transaction'

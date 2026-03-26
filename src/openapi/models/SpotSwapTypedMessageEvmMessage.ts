@@ -203,7 +203,7 @@ export interface SpotSwapTypedMessageEvmMessage {
 
 
 /**
- * @export
+ * 
  */
 const SpotSwapTypedMessageEvmMessageTypeEnum = {
     spotSwap: 'spot_swap'

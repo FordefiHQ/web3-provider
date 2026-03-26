@@ -95,7 +95,7 @@ export interface CreateTronTransactionWithWaitRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateTronTransactionWithWaitRequestTypeEnum = {
     tronTransaction: 'tron_transaction'

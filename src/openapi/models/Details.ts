@@ -41,7 +41,7 @@ export interface Details {
 
 
 /**
- * @export
+ * 
  */
 const DetailsTypeEnum = {
     cosmosNativeAsset: 'cosmos_native_asset',

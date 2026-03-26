@@ -79,7 +79,7 @@ export interface CreateStarknetMessageRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateStarknetMessageRequestTypeEnum = {
     starknetMessage: 'starknet_message'

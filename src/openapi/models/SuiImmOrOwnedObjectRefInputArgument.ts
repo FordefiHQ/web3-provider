@@ -44,7 +44,7 @@ export interface SuiImmOrOwnedObjectRefInputArgument {
 
 
 /**
- * @export
+ * 
  */
 const SuiImmOrOwnedObjectRefInputArgumentTypeEnum = {
     immOrOwned: 'imm_or_owned'

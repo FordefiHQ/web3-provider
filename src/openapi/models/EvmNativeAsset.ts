@@ -37,7 +37,7 @@ export interface EvmNativeAsset {
 
 
 /**
- * @export
+ * 
  */
 const EvmNativeAssetTypeEnum = {
     evmNativeAsset: 'evm_native_asset'

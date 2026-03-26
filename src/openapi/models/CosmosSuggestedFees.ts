@@ -43,7 +43,7 @@ export interface CosmosSuggestedFees {
 
 
 /**
- * @export
+ * 
  */
 const CosmosSuggestedFeesTypeEnum = {
     cosmos: 'cosmos'

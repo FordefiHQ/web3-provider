@@ -38,7 +38,7 @@ export interface UtxoChain {
 
 
 /**
- * @export
+ * 
  */
 const UtxoChainChainTypeEnum = {
     utxo: 'utxo'

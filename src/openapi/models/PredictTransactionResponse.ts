@@ -92,9 +92,9 @@ import {
 } from './PredictedUtxoTransaction';
 
 /**
- * @type PredictTransactionResponse
  * 
  * @export
+ * @type PredictTransactionResponse
  */
 export type PredictTransactionResponse = { type: 'aptos_message' } & PredictedAptosMessage | { type: 'aptos_transaction' } & PredictedAptosTransaction | { type: 'cosmos_message' } & PredictedCosmosMessage | { type: 'cosmos_transaction' } & PredictedCosmosTransaction | { type: 'evm_message' } & PredictedEvmMessage | { type: 'evm_transaction' } & PredictedEvmTransaction | { type: 'exchange_transaction' } & PredictedExchangeTransaction | { type: 'solana_message' } & PredictedSolanaMessage | { type: 'solana_transaction' } & PredictedSolanaTransaction | { type: 'stacks_transaction' } & PredictedStacksTransaction | { type: 'starknet_message' } & PredictedStarknetMessage | { type: 'starknet_transaction' } & PredictedStarknetTransaction | { type: 'sui_message' } & PredictedSuiMessage | { type: 'sui_transaction' } & PredictedSuiTransaction | { type: 'ton_message' } & PredictedTonMessage | { type: 'ton_transaction' } & PredictedTonTransaction | { type: 'tron_message' } & PredictedTronMessage | { type: 'tron_transaction' } & PredictedTronTransaction | { type: 'utxo_message' } & PredictedUtxoMessage | { type: 'utxo_transaction' } & PredictedUtxoTransaction;
 

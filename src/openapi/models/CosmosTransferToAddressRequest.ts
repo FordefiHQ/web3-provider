@@ -37,7 +37,7 @@ export interface CosmosTransferToAddressRequest {
 
 
 /**
- * @export
+ * 
  */
 const CosmosTransferToAddressRequestTypeEnum = {
     address: 'address'

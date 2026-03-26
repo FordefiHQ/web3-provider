@@ -38,7 +38,7 @@ export interface BlackBoxSignatureEddsaEd25519Details {
 
 
 /**
- * @export
+ * 
  */
 const BlackBoxSignatureEddsaEd25519DetailsTypeEnum = {
     eddsaEd25519: 'eddsa_ed25519'

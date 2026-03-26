@@ -38,7 +38,7 @@ export interface StarknetErc20AssetIdentifierRequest {
 
 
 /**
- * @export
+ * 
  */
 const StarknetErc20AssetIdentifierRequestTypeEnum = {
     erc20: 'erc20'

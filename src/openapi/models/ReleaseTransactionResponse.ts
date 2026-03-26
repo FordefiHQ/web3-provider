@@ -96,9 +96,9 @@ import {
 } from './UtxoTransaction';
 
 /**
- * @type ReleaseTransactionResponse
  * 
  * @export
+ * @type ReleaseTransactionResponse
  */
 export type ReleaseTransactionResponse = { type: 'aptos_message' } & AptosMessage | { type: 'aptos_transaction' } & AptosTransaction | { type: 'black_box_signature' } & BlackBoxSignature | { type: 'cosmos_message' } & CosmosMessage | { type: 'cosmos_transaction' } & CosmosTransaction | { type: 'evm_message' } & EvmMessage | { type: 'evm_transaction' } & EvmTransaction | { type: 'exchange_transaction' } & ExchangeTransaction | { type: 'solana_message' } & SolanaMessage | { type: 'solana_transaction' } & SolanaTransaction | { type: 'stacks_transaction' } & StacksTransaction | { type: 'starknet_message' } & StarknetMessage | { type: 'starknet_transaction' } & StarknetTransaction | { type: 'sui_message' } & SuiMessage | { type: 'sui_transaction' } & SuiTransaction | { type: 'ton_message' } & TonMessage | { type: 'ton_transaction' } & TonTransaction | { type: 'tron_message' } & TronMessage | { type: 'tron_transaction' } & TronTransaction | { type: 'utxo_message' } & UtxoMessage | { type: 'utxo_transaction' } & UtxoTransaction;
 

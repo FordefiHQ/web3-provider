@@ -37,7 +37,7 @@ export interface SolanaPriorityFeeRequest {
 
 
 /**
- * @export
+ * 
  */
 const SolanaPriorityFeeRequestTypeEnum = {
     priority: 'priority'

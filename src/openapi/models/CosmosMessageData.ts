@@ -22,9 +22,9 @@ import {
 } from './CosmosMessageStrData';
 
 /**
- * @type CosmosMessageData
  * 
  * @export
+ * @type CosmosMessageData
  */
 export type CosmosMessageData = { type: 'base64' } & CosmosMessageBase64Data | { type: 'string' } & CosmosMessageStrData;
 

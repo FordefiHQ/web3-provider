@@ -76,7 +76,7 @@ export interface TransactionDetailsUtxoPsbtRequest {
 
 
 /**
- * @export
+ * 
  */
 const TransactionDetailsUtxoPsbtRequestTypeEnum = {
     utxoPartiallySignedBitcoinTransaction: 'utxo_partially_signed_bitcoin_transaction'

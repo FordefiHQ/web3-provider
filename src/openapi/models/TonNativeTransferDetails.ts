@@ -49,7 +49,7 @@ export interface TonNativeTransferDetails {
 
 
 /**
- * @export
+ * 
  */
 const TonNativeTransferDetailsTypeEnum = {
     nativeTransfer: 'native_transfer'

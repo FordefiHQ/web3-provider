@@ -65,7 +65,7 @@ export interface CreateAptosVaultRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateAptosVaultRequestTypeEnum = {
     aptos: 'aptos'

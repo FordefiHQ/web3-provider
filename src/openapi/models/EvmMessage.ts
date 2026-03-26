@@ -205,7 +205,7 @@ export interface EvmMessage {
 
 
 /**
- * @export
+ * 
  */
 const EvmMessageTypeEnum = {
     evmMessage: 'evm_message'

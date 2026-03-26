@@ -38,7 +38,7 @@ export interface StacksNativeAssetIdentifierRequest {
 
 
 /**
- * @export
+ * 
  */
 const StacksNativeAssetIdentifierRequestTypeEnum = {
     native: 'native'

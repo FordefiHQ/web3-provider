@@ -32,9 +32,9 @@ import {
 } from './EvmNativeAsset';
 
 /**
- * @type EvmAssetDetails
  * 
  * @export
+ * @type EvmAssetDetails
  */
 export type EvmAssetDetails = { type: 'evm_erc1155_asset' } & EvmErc1155Asset | { type: 'evm_erc20_asset' } & EvmErc20Asset | { type: 'evm_erc721_asset' } & EvmErc721Asset | { type: 'evm_hyperliquid_asset' } & EvmHyperLiquidAsset | { type: 'evm_native_asset' } & EvmNativeAsset;
 

@@ -203,7 +203,7 @@ export interface TonMessage {
 
 
 /**
- * @export
+ * 
  */
 const TonMessageTypeEnum = {
     tonMessage: 'ton_message'

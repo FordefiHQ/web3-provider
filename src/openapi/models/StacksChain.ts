@@ -37,7 +37,7 @@ export interface StacksChain {
 
 
 /**
- * @export
+ * 
  */
 const StacksChainChainTypeEnum = {
     stacks: 'stacks'

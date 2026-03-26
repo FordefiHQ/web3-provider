@@ -56,9 +56,9 @@ import {
 } from './EnrichedUtxoAddress';
 
 /**
- * @type EnrichedAddress
  * 
  * @export
+ * @type EnrichedAddress
  */
 export type EnrichedAddress = { type: 'aptos' } & EnrichedAptosAddress | { type: 'cosmos' } & EnrichedCosmosBechAddress | { type: 'evm' } & EnrichedEvmAddress | { type: 'exchange' } & EnrichedExchangeAddress | { type: 'solana' } & EnrichedSolanaAddress | { type: 'stacks' } & EnrichedStacksAddress | { type: 'starknet' } & EnrichedStarknetAddress | { type: 'sui' } & EnrichedSuiAddress | { type: 'ton' } & EnrichedTonAddress | { type: 'tron' } & EnrichedTronAddress | { type: 'utxo' } & EnrichedUtxoAddress;
 

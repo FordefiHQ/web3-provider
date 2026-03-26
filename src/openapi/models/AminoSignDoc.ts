@@ -37,7 +37,7 @@ export interface AminoSignDoc {
 
 
 /**
- * @export
+ * 
  */
 const AminoSignDocFormatEnum = {
     amino: 'amino'

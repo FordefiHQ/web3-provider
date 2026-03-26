@@ -95,7 +95,7 @@ export interface CreateUtxoTransactionWithWaitRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateUtxoTransactionWithWaitRequestTypeEnum = {
     utxoTransaction: 'utxo_transaction'

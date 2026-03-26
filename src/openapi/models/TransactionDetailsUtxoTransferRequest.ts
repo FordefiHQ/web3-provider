@@ -73,7 +73,7 @@ export interface TransactionDetailsUtxoTransferRequest {
 
 
 /**
- * @export
+ * 
  */
 const TransactionDetailsUtxoTransferRequestTypeEnum = {
     utxoTransfer: 'utxo_transfer'

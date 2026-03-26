@@ -190,7 +190,7 @@ export interface StarknetVault {
 
 
 /**
- * @export
+ * 
  */
 const StarknetVaultTypeEnum = {
     starknet: 'starknet'

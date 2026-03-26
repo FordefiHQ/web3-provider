@@ -32,7 +32,7 @@ export interface ExchangeTransferExternalRecipientTypeContact {
 
 
 /**
- * @export
+ * 
  */
 const ExchangeTransferExternalRecipientTypeContactTypeEnum = {
     contact: 'contact'

@@ -37,7 +37,7 @@ export interface StacksAssetIdentifierRequest {
 
 
 /**
- * @export
+ * 
  */
 const StacksAssetIdentifierRequestTypeEnum = {
     stacks: 'stacks'

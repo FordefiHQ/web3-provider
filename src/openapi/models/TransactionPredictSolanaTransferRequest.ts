@@ -89,7 +89,7 @@ export interface TransactionPredictSolanaTransferRequest {
 
 
 /**
- * @export
+ * 
  */
 const TransactionPredictSolanaTransferRequestTypeEnum = {
     solanaTransfer: 'solana_transfer'

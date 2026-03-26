@@ -47,7 +47,7 @@ export interface EnrichedSolanaSplTokenAssetIdentifier {
 
 
 /**
- * @export
+ * 
  */
 const EnrichedSolanaSplTokenAssetIdentifierTypeEnum = {
     splToken: 'spl_token'

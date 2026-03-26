@@ -38,7 +38,7 @@ export interface CreateExchangeExternalWithdrawRequestExplicitAmount {
 
 
 /**
- * @export
+ * 
  */
 const CreateExchangeExternalWithdrawRequestExplicitAmountTypeEnum = {
     value: 'value'

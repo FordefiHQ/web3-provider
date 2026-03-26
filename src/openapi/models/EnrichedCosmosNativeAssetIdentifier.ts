@@ -47,7 +47,7 @@ export interface EnrichedCosmosNativeAssetIdentifier {
 
 
 /**
- * @export
+ * 
  */
 const EnrichedCosmosNativeAssetIdentifierTypeEnum = {
     native: 'native'

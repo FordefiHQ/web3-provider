@@ -69,7 +69,7 @@ export interface CreateStarknetTransactionInvokeRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateStarknetTransactionInvokeRequestTypeEnum = {
     starknetContractCall: 'starknet_contract_call'

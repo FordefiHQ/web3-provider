@@ -54,7 +54,7 @@ export interface TokenTransferDetails {
 
 
 /**
- * @export
+ * 
  */
 const TokenTransferDetailsTypeEnum = {
     tokenTransfer: 'token_transfer'

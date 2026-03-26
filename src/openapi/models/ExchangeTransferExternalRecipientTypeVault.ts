@@ -32,7 +32,7 @@ export interface ExchangeTransferExternalRecipientTypeVault {
 
 
 /**
- * @export
+ * 
  */
 const ExchangeTransferExternalRecipientTypeVaultTypeEnum = {
     vault: 'vault'

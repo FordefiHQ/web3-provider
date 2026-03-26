@@ -95,7 +95,7 @@ export interface CreateBlackBoxSignatureWithWaitRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateBlackBoxSignatureWithWaitRequestTypeEnum = {
     blackBoxSignature: 'black_box_signature'

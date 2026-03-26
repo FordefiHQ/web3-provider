@@ -79,7 +79,7 @@ export interface CreateStacksTransactionRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateStacksTransactionRequestTypeEnum = {
     stacksTransaction: 'stacks_transaction'

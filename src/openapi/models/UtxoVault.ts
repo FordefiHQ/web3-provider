@@ -206,7 +206,7 @@ export interface UtxoVault {
 
 
 /**
- * @export
+ * 
  */
 const UtxoVaultTypeEnum = {
     utxo: 'utxo'

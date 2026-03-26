@@ -38,7 +38,7 @@ export interface SolanaNativeAssetIdentifierRequest {
 
 
 /**
- * @export
+ * 
  */
 const SolanaNativeAssetIdentifierRequestTypeEnum = {
     native: 'native'

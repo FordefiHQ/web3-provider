@@ -24,9 +24,9 @@ import {
 } from './CosmosTokenTransferDetails';
 
 /**
- * @type CosmosTransactionTypeDetails
  * 
  * @export
+ * @type CosmosTransactionTypeDetails
  */
 export type CosmosTransactionTypeDetails = { type: 'messages' } & CosmosMultipleMessagesTransactionDetails | { type: 'native_transfer' } & CosmosNativeTransferDetails | { type: 'token_transfer' } & CosmosTokenTransferDetails;
 

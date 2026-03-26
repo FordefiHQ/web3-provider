@@ -38,7 +38,7 @@ export interface TronNativeAssetIdentifierRequest {
 
 
 /**
- * @export
+ * 
  */
 const TronNativeAssetIdentifierRequestTypeEnum = {
     native: 'native'

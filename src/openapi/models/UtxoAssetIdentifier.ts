@@ -47,7 +47,7 @@ export interface UtxoAssetIdentifier {
 
 
 /**
- * @export
+ * 
  */
 const UtxoAssetIdentifierTypeEnum = {
     utxo: 'utxo'

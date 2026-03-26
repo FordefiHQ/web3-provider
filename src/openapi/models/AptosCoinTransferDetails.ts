@@ -49,7 +49,7 @@ export interface AptosCoinTransferDetails {
 
 
 /**
- * @export
+ * 
  */
 const AptosCoinTransferDetailsTypeEnum = {
     coinTransfer: 'coin_transfer'

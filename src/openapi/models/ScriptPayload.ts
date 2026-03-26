@@ -44,7 +44,7 @@ export interface ScriptPayload {
 
 
 /**
- * @export
+ * 
  */
 const ScriptPayloadTypeEnum = {
     script: 'script'

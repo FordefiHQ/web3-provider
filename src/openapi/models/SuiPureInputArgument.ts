@@ -38,7 +38,7 @@ export interface SuiPureInputArgument {
 
 
 /**
- * @export
+ * 
  */
 const SuiPureInputArgumentTypeEnum = {
     pure: 'pure'

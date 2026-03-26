@@ -81,7 +81,7 @@ export interface TransactionPredictEvmRevokeAllowanceRequest {
 
 
 /**
- * @export
+ * 
  */
 const TransactionPredictEvmRevokeAllowanceRequestTypeEnum = {
     evmRevokeAllowance: 'evm_revoke_allowance'

@@ -39,7 +39,7 @@ export interface EcdsaStarkBlackBoxVault {
 
 
 /**
- * @export
+ * 
  */
 const EcdsaStarkBlackBoxVaultTypeEnum = {
     ecdsaStark: 'ecdsa_stark'

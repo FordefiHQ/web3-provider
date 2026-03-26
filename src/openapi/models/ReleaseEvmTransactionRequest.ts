@@ -69,7 +69,7 @@ export interface ReleaseEvmTransactionRequest {
 
 
 /**
- * @export
+ * 
  */
 const ReleaseEvmTransactionRequestTypeEnum = {
     evmTransaction: 'evm_transaction'

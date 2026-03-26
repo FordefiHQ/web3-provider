@@ -185,7 +185,7 @@ export interface UtxoMessage {
 
 
 /**
- * @export
+ * 
  */
 const UtxoMessageTypeEnum = {
     utxoMessage: 'utxo_message'

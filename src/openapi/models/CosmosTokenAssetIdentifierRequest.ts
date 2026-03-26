@@ -44,7 +44,7 @@ export interface CosmosTokenAssetIdentifierRequest {
 
 
 /**
- * @export
+ * 
  */
 const CosmosTokenAssetIdentifierRequestTypeEnum = {
     token: 'token'

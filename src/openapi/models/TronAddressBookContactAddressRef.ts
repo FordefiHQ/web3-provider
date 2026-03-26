@@ -49,7 +49,7 @@ export interface TronAddressBookContactAddressRef {
 
 
 /**
- * @export
+ * 
  */
 const TronAddressBookContactAddressRefChainTypeEnum = {
     tron: 'tron'

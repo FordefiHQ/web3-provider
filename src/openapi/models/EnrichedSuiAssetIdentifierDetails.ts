@@ -20,9 +20,9 @@ import {
 } from './EnrichedSuiNativeAssetIdentifier';
 
 /**
- * @type EnrichedSuiAssetIdentifierDetails
  * 
  * @export
+ * @type EnrichedSuiAssetIdentifierDetails
  */
 export type EnrichedSuiAssetIdentifierDetails = { type: 'coin' } & EnrichedSuiCoinAssetIdentifier | { type: 'native' } & EnrichedSuiNativeAssetIdentifier;
 

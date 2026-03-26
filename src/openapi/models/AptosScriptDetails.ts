@@ -32,7 +32,7 @@ export interface AptosScriptDetails {
 
 
 /**
- * @export
+ * 
  */
 const AptosScriptDetailsTypeEnum = {
     script: 'script'

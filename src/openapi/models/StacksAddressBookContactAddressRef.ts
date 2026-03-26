@@ -49,7 +49,7 @@ export interface StacksAddressBookContactAddressRef {
 
 
 /**
- * @export
+ * 
  */
 const StacksAddressBookContactAddressRefChainTypeEnum = {
     stacks: 'stacks'

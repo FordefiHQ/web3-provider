@@ -32,7 +32,7 @@ export interface RecipientContactId {
 
 
 /**
- * @export
+ * 
  */
 const RecipientContactIdTypeEnum = {
     contactId: 'contact_id'

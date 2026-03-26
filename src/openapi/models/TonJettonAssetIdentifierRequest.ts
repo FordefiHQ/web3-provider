@@ -38,7 +38,7 @@ export interface TonJettonAssetIdentifierRequest {
 
 
 /**
- * @export
+ * 
  */
 const TonJettonAssetIdentifierRequestTypeEnum = {
     jetton: 'jetton'

@@ -37,7 +37,7 @@ export interface FeePriorityRequest {
 
 
 /**
- * @export
+ * 
  */
 const FeePriorityRequestTypeEnum = {
     priority: 'priority'

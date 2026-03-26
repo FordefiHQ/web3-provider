@@ -119,7 +119,7 @@ export interface PredictedExchangeTransaction {
 
 
 /**
- * @export
+ * 
  */
 const PredictedExchangeTransactionTypeEnum = {
     exchangeTransaction: 'exchange_transaction'

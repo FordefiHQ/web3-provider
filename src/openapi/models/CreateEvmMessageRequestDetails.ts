@@ -24,9 +24,9 @@ import {
 } from './CreateEvmTypedV1MessageRequest';
 
 /**
- * @type CreateEvmMessageRequestDetails
  * 
  * @export
+ * @type CreateEvmMessageRequestDetails
  */
 export type CreateEvmMessageRequestDetails = { type: 'personal_message_type' } & CreateEvmPersonalMessageRequest | { type: 'typed_message_type' } & CreateEvmTypedMessageRequest | { type: 'typed_message_type_v1' } & CreateEvmTypedV1MessageRequest;
 

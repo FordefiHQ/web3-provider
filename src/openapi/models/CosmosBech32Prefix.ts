@@ -12,7 +12,6 @@
 
 
 /**
- * 
  * @export
  */
 export const CosmosBech32Prefix = {

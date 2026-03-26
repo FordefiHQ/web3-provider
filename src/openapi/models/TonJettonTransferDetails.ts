@@ -49,7 +49,7 @@ export interface TonJettonTransferDetails {
 
 
 /**
- * @export
+ * 
  */
 const TonJettonTransferDetailsTypeEnum = {
     jettonTransfer: 'jetton_transfer'

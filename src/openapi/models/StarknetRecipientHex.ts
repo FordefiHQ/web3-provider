@@ -32,7 +32,7 @@ export interface StarknetRecipientHex {
 
 
 /**
- * @export
+ * 
  */
 const StarknetRecipientHexTypeEnum = {
     hex: 'hex'

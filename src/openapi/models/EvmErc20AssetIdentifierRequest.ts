@@ -38,7 +38,7 @@ export interface EvmErc20AssetIdentifierRequest {
 
 
 /**
- * @export
+ * 
  */
 const EvmErc20AssetIdentifierRequestTypeEnum = {
     erc20: 'erc20'

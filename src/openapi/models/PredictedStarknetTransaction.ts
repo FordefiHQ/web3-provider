@@ -159,7 +159,7 @@ export interface PredictedStarknetTransaction {
 
 
 /**
- * @export
+ * 
  */
 const PredictedStarknetTransactionTypeEnum = {
     starknetTransaction: 'starknet_transaction'

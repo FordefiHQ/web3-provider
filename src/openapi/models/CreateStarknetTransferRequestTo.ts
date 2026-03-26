@@ -24,9 +24,9 @@ import {
 } from './StarknetRecipientHex';
 
 /**
- * @type CreateStarknetTransferRequestTo
  * 
  * @export
+ * @type CreateStarknetTransferRequestTo
  */
 export type CreateStarknetTransferRequestTo = { type: 'contact_id' } & RecipientContactId | { type: 'hex' } & StarknetRecipientHex | { type: 'vault_id' } & RecipientVaultId;
 

@@ -43,7 +43,7 @@ export interface SuiPersonalMessageRequest {
 
 
 /**
- * @export
+ * 
  */
 const SuiPersonalMessageRequestTypeEnum = {
     personalMessageType: 'personal_message_type'

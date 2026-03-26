@@ -43,7 +43,7 @@ export interface SuiAddressBookContactAddressRef {
 
 
 /**
- * @export
+ * 
  */
 const SuiAddressBookContactAddressRefChainTypeEnum = {
     sui: 'sui'

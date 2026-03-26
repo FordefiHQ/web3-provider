@@ -50,7 +50,7 @@ export interface HyperliquidVaultTransferAction {
 
 
 /**
- * @export
+ * 
  */
 const HyperliquidVaultTransferActionActionTypeEnum = {
     vaultTransfer: 'vault_transfer'

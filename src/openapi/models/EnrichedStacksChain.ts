@@ -83,7 +83,7 @@ export interface EnrichedStacksChain {
 
 
 /**
- * @export
+ * 
  */
 const EnrichedStacksChainChainTypeEnum = {
     stacks: 'stacks'

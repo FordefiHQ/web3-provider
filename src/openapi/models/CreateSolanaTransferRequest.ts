@@ -99,7 +99,7 @@ export interface CreateSolanaTransferRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateSolanaTransferRequestTypeEnum = {
     solanaTransfer: 'solana_transfer'

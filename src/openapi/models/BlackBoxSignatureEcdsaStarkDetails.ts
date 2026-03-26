@@ -50,7 +50,7 @@ export interface BlackBoxSignatureEcdsaStarkDetails {
 
 
 /**
- * @export
+ * 
  */
 const BlackBoxSignatureEcdsaStarkDetailsTypeEnum = {
     ecdsaStark: 'ecdsa_stark'

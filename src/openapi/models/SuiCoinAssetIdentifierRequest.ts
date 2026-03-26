@@ -38,7 +38,7 @@ export interface SuiCoinAssetIdentifierRequest {
 
 
 /**
- * @export
+ * 
  */
 const SuiCoinAssetIdentifierRequestTypeEnum = {
     coin: 'coin'

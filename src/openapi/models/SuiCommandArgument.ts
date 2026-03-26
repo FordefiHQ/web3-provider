@@ -32,9 +32,9 @@ import {
 } from './SuiCommandResultArgument';
 
 /**
- * @type SuiCommandArgument
  * 
  * @export
+ * @type SuiCommandArgument
  */
 export type SuiCommandArgument = { type: 'gas_coin' } & SuiCommandGasCoinArgument | { type: 'input' } & SuiCommandInputArgument | { type: 'nested_result' } & SuiCommandNestedResultArgument | { type: 'result' } & SuiCommandResultArgument;
 

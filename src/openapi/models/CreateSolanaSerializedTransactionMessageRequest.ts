@@ -102,7 +102,7 @@ export interface CreateSolanaSerializedTransactionMessageRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateSolanaSerializedTransactionMessageRequestTypeEnum = {
     solanaSerializedTransactionMessage: 'solana_serialized_transaction_message'

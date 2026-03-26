@@ -65,7 +65,7 @@ export interface CreateEvmVaultRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateEvmVaultRequestTypeEnum = {
     evm: 'evm'

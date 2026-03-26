@@ -55,7 +55,7 @@ export interface TransactionPredictUtxoMessageRequest {
 
 
 /**
- * @export
+ * 
  */
 const TransactionPredictUtxoMessageRequestTypeEnum = {
     utxoMessage: 'utxo_message'

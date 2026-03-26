@@ -89,7 +89,7 @@ export interface TransactionPredictEvmTransferRequest {
 
 
 /**
- * @export
+ * 
  */
 const TransactionPredictEvmTransferRequestTypeEnum = {
     evmTransfer: 'evm_transfer'

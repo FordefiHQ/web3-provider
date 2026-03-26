@@ -43,7 +43,7 @@ export interface StarknetTypedMessageRequest {
 
 
 /**
- * @export
+ * 
  */
 const StarknetTypedMessageRequestTypeEnum = {
     typedMessageType: 'typed_message_type'

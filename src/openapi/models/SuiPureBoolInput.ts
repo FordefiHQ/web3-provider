@@ -32,7 +32,7 @@ export interface SuiPureBoolInput {
 
 
 /**
- * @export
+ * 
  */
 const SuiPureBoolInputTypeEnum = {
     boolPureInput: 'bool_pure_input'

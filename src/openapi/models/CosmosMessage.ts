@@ -183,7 +183,7 @@ export interface CosmosMessage {
 
 
 /**
- * @export
+ * 
  */
 const CosmosMessageTypeEnum = {
     cosmosMessage: 'cosmos_message'

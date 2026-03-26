@@ -67,7 +67,7 @@ export interface CreateSessionDetails {
 
 
 /**
- * @export
+ * 
  */
 const CreateSessionDetailsTypeEnum = {
     createSessionMessageType: 'create_session_message_type'

@@ -68,7 +68,7 @@ export interface CreateTronSerializedRawTransactionRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateTronSerializedRawTransactionRequestTypeEnum = {
     tronSerializedRawTransaction: 'tron_serialized_raw_transaction'

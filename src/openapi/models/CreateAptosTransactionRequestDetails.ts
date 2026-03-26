@@ -20,9 +20,9 @@ import {
 } from './CreateAptosTransferRequest';
 
 /**
- * @type CreateAptosTransactionRequestDetails
  * 
  * @export
+ * @type CreateAptosTransactionRequestDetails
  */
 export type CreateAptosTransactionRequestDetails = { type: 'aptos_serialized_entry_point_payload' } & CreateAptosSerializedRawTransactionRequest | { type: 'aptos_transfer' } & CreateAptosTransferRequest;
 

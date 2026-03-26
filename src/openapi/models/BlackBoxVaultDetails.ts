@@ -28,9 +28,9 @@ import {
 } from './SchnorrSecp256k1BlackBoxValue';
 
 /**
- * @type BlackBoxVaultDetails
  * 
  * @export
+ * @type BlackBoxVaultDetails
  */
 export type BlackBoxVaultDetails = { type: 'ecdsa_secp256k1' } & EcdsaSecp256k1BlackBoxVault | { type: 'ecdsa_stark' } & EcdsaStarkBlackBoxVault | { type: 'eddsa_ed25519' } & EddsaED25519BlackBoxVault | { type: 'schnorr_secp256k1' } & SchnorrSecp256k1BlackBoxValue;
 

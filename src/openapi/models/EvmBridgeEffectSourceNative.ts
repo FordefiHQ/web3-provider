@@ -47,7 +47,7 @@ export interface EvmBridgeEffectSourceNative {
 
 
 /**
- * @export
+ * 
  */
 const EvmBridgeEffectSourceNativeTypeEnum = {
     native: 'native'

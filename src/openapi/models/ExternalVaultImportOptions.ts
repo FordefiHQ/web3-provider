@@ -38,7 +38,7 @@ export interface ExternalVaultImportOptions {
 
 
 /**
- * @export
+ * 
  */
 const ExternalVaultImportOptionsOriginEnum = {
     externalSigner: 'external_signer'

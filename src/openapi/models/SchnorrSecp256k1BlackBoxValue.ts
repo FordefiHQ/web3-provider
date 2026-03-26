@@ -26,7 +26,7 @@ export interface SchnorrSecp256k1BlackBoxValue {
 
 
 /**
- * @export
+ * 
  */
 const SchnorrSecp256k1BlackBoxValueTypeEnum = {
     schnorrSecp256k1: 'schnorr_secp256k1'

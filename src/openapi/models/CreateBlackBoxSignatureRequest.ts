@@ -79,7 +79,7 @@ export interface CreateBlackBoxSignatureRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateBlackBoxSignatureRequestTypeEnum = {
     blackBoxSignature: 'black_box_signature'

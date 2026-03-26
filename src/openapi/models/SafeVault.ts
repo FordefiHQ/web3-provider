@@ -146,7 +146,7 @@ export interface SafeVault {
 
 
 /**
- * @export
+ * 
  */
 const SafeVaultTypeEnum = {
     safe: 'safe'

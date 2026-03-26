@@ -32,7 +32,7 @@ export interface TonRecipientHex {
 
 
 /**
- * @export
+ * 
  */
 const TonRecipientHexTypeEnum = {
     hex: 'hex'

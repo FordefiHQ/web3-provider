@@ -37,7 +37,7 @@ export interface CosmosMultipleMessagesTransactionDetails {
 
 
 /**
- * @export
+ * 
  */
 const CosmosMultipleMessagesTransactionDetailsTypeEnum = {
     messages: 'messages'

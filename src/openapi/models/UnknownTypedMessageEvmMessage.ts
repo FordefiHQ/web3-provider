@@ -54,7 +54,7 @@ export interface UnknownTypedMessageEvmMessage {
 
 
 /**
- * @export
+ * 
  */
 const UnknownTypedMessageEvmMessageTypeEnum = {
     unknown: 'unknown'

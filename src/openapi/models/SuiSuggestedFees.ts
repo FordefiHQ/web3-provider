@@ -37,7 +37,7 @@ export interface SuiSuggestedFees {
 
 
 /**
- * @export
+ * 
  */
 const SuiSuggestedFeesTypeEnum = {
     sui: 'sui'

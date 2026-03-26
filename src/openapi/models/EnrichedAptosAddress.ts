@@ -59,7 +59,7 @@ export interface EnrichedAptosAddress {
 
 
 /**
- * @export
+ * 
  */
 const EnrichedAptosAddressTypeEnum = {
     aptos: 'aptos'

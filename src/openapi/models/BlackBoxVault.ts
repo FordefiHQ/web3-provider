@@ -178,7 +178,7 @@ export interface BlackBoxVault {
 
 
 /**
- * @export
+ * 
  */
 const BlackBoxVaultTypeEnum = {
     blackBox: 'black_box'

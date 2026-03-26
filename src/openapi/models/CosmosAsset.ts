@@ -101,7 +101,7 @@ export interface CosmosAsset {
 
 
 /**
- * @export
+ * 
  */
 const CosmosAssetTypeEnum = {
     cosmosAsset: 'cosmos_asset'

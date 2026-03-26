@@ -37,7 +37,7 @@ export interface StarknetRawTransactionDetails {
 
 
 /**
- * @export
+ * 
  */
 const StarknetRawTransactionDetailsTypeEnum = {
     rawTransaction: 'raw_transaction'

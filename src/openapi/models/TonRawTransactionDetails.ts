@@ -37,7 +37,7 @@ export interface TonRawTransactionDetails {
 
 
 /**
- * @export
+ * 
  */
 const TonRawTransactionDetailsTypeEnum = {
     rawTransaction: 'raw_transaction'

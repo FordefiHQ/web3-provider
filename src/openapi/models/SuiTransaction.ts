@@ -324,7 +324,7 @@ export interface SuiTransaction {
 
 
 /**
- * @export
+ * 
  */
 const SuiTransactionTypeEnum = {
     suiTransaction: 'sui_transaction'

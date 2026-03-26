@@ -24,9 +24,9 @@ import {
 } from './StacksRecipientHex';
 
 /**
- * @type CreateStacksTransferRequestTo
  * 
  * @export
+ * @type CreateStacksTransferRequestTo
  */
 export type CreateStacksTransferRequestTo = { type: 'contact_id' } & RecipientContactId | { type: 'hex' } & StacksRecipientHex | { type: 'vault_id' } & RecipientVaultId;
 

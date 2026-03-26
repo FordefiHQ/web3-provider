@@ -55,7 +55,7 @@ export interface TransactionPredictUtxoTransactionRequest {
 
 
 /**
- * @export
+ * 
  */
 const TransactionPredictUtxoTransactionRequestTypeEnum = {
     utxoTransaction: 'utxo_transaction'

@@ -50,7 +50,7 @@ export interface SuiMoveCallCommand {
 
 
 /**
- * @export
+ * 
  */
 const SuiMoveCallCommandTypeEnum = {
     moveCall: 'move_call'

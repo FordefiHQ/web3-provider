@@ -71,7 +71,7 @@ export interface PredictAptosSerializedRawTransactionRequest {
 
 
 /**
- * @export
+ * 
  */
 const PredictAptosSerializedRawTransactionRequestTypeEnum = {
     aptosSerializedEntryPointPayload: 'aptos_serialized_entry_point_payload'

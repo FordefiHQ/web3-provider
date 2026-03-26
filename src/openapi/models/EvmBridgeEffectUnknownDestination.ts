@@ -38,7 +38,7 @@ export interface EvmBridgeEffectUnknownDestination {
 
 
 /**
- * @export
+ * 
  */
 const EvmBridgeEffectUnknownDestinationTypeEnum = {
     unknownTargetChain: 'unknown_target_chain'

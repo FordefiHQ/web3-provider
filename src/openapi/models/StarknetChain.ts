@@ -37,7 +37,7 @@ export interface StarknetChain {
 
 
 /**
- * @export
+ * 
  */
 const StarknetChainChainTypeEnum = {
     starknet: 'starknet'

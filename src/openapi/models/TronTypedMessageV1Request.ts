@@ -43,7 +43,7 @@ export interface TronTypedMessageV1Request {
 
 
 /**
- * @export
+ * 
  */
 const TronTypedMessageV1RequestTypeEnum = {
     typedMessageTypeV1: 'typed_message_type_v1'

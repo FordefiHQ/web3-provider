@@ -179,7 +179,7 @@ export interface TronMessage {
 
 
 /**
- * @export
+ * 
  */
 const TronMessageTypeEnum = {
     tronMessage: 'tron_message'

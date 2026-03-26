@@ -101,7 +101,7 @@ export interface SolanaAsset {
 
 
 /**
- * @export
+ * 
  */
 const SolanaAssetTypeEnum = {
     solanaAsset: 'solana_asset'

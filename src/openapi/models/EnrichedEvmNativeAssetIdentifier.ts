@@ -37,7 +37,7 @@ export interface EnrichedEvmNativeAssetIdentifier {
 
 
 /**
- * @export
+ * 
  */
 const EnrichedEvmNativeAssetIdentifierTypeEnum = {
     native: 'native'

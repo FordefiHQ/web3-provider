@@ -27,9 +27,9 @@ import {
 } from './AptosNewCoinAssetIdentifierRequest';
 
 /**
- * @type AptosAssetIdentifierDetails
  * 
  * @export
+ * @type AptosAssetIdentifierDetails
  */
 export type AptosAssetIdentifierDetails = { type: 'coin' } & AptosCoinAssetIdentifierRequest | { type: 'native' } & AptosNativeAssetIdentifierRequest | { type: 'new_coin' } & AptosNewCoinAssetIdentifierRequest;
 

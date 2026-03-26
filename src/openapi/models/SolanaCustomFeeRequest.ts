@@ -38,7 +38,7 @@ export interface SolanaCustomFeeRequest {
 
 
 /**
- * @export
+ * 
  */
 const SolanaCustomFeeRequestTypeEnum = {
     custom: 'custom'

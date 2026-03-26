@@ -47,7 +47,7 @@ export interface TonAssetIdentifier {
 
 
 /**
- * @export
+ * 
  */
 const TonAssetIdentifierTypeEnum = {
     ton: 'ton'

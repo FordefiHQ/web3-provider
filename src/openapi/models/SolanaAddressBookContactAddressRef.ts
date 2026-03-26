@@ -43,7 +43,7 @@ export interface SolanaAddressBookContactAddressRef {
 
 
 /**
- * @export
+ * 
  */
 const SolanaAddressBookContactAddressRefChainTypeEnum = {
     solana: 'solana'

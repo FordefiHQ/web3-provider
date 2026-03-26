@@ -28,9 +28,9 @@ import {
 } from './BlackBoxSignatureSchnorrSecp256k1Details';
 
 /**
- * @type BlackBoxSignatureDetails
  * 
  * @export
+ * @type BlackBoxSignatureDetails
  */
 export type BlackBoxSignatureDetails = { type: 'ecdsa_secp256k1' } & BlackBoxSignatureEcdsaSecp256k1Details | { type: 'ecdsa_stark' } & BlackBoxSignatureEcdsaStarkDetails | { type: 'eddsa_ed25519' } & BlackBoxSignatureEddsaEd25519Details | { type: 'schnorr_secp256k1' } & BlackBoxSignatureSchnorrSecp256k1Details;
 

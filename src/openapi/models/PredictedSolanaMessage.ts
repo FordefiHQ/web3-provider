@@ -125,7 +125,7 @@ export interface PredictedSolanaMessage {
 
 
 /**
- * @export
+ * 
  */
 const PredictedSolanaMessageTypeEnum = {
     solanaMessage: 'solana_message'

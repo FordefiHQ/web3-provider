@@ -105,7 +105,7 @@ export interface PredictedCosmosMessage {
 
 
 /**
- * @export
+ * 
  */
 const PredictedCosmosMessageTypeEnum = {
     cosmosMessage: 'cosmos_message'

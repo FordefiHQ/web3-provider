@@ -95,7 +95,7 @@ export interface CreateCosmosMessageWithWaitRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateCosmosMessageWithWaitRequestTypeEnum = {
     cosmosMessage: 'cosmos_message'

@@ -47,7 +47,7 @@ export interface EvmErc20Asset {
 
 
 /**
- * @export
+ * 
  */
 const EvmErc20AssetTypeEnum = {
     evmErc20Asset: 'evm_erc20_asset'

@@ -43,7 +43,7 @@ export interface CosmosNativeCoinWithAmount {
 
 
 /**
- * @export
+ * 
  */
 const CosmosNativeCoinWithAmountTypeEnum = {
     native: 'native'

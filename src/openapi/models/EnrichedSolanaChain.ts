@@ -83,7 +83,7 @@ export interface EnrichedSolanaChain {
 
 
 /**
- * @export
+ * 
  */
 const EnrichedSolanaChainChainTypeEnum = {
     solana: 'solana'

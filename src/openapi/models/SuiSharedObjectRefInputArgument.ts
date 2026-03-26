@@ -44,7 +44,7 @@ export interface SuiSharedObjectRefInputArgument {
 
 
 /**
- * @export
+ * 
  */
 const SuiSharedObjectRefInputArgumentTypeEnum = {
     shared: 'shared'

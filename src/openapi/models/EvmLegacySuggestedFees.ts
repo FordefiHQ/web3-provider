@@ -49,7 +49,7 @@ export interface EvmLegacySuggestedFees {
 
 
 /**
- * @export
+ * 
  */
 const EvmLegacySuggestedFeesTypeEnum = {
     legacy: 'legacy'

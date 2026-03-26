@@ -37,7 +37,7 @@ export interface AllowanceDetails {
 
 
 /**
- * @export
+ * 
  */
 const AllowanceDetailsTypeEnum = {
     allowance: 'allowance'

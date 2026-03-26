@@ -79,7 +79,7 @@ export interface CreateTronMessageRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateTronMessageRequestTypeEnum = {
     tronMessage: 'tron_message'

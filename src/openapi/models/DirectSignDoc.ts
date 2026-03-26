@@ -67,7 +67,7 @@ export interface DirectSignDoc {
 
 
 /**
- * @export
+ * 
  */
 const DirectSignDocFormatEnum = {
     direct: 'direct'

@@ -95,7 +95,7 @@ export interface CreateEvmTransactionWithWaitRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateEvmTransactionWithWaitRequestTypeEnum = {
     evmTransaction: 'evm_transaction'

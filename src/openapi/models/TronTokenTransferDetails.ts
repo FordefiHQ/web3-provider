@@ -49,7 +49,7 @@ export interface TronTokenTransferDetails {
 
 
 /**
- * @export
+ * 
  */
 const TronTokenTransferDetailsTypeEnum = {
     tokenTransfer: 'token_transfer'

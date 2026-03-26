@@ -43,7 +43,7 @@ export interface ChainalysisScanResult {
 
 
 /**
- * @export
+ * 
  */
 const ChainalysisScanResultTypeEnum = {
     chainalysis: 'chainalysis'

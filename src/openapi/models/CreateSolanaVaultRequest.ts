@@ -65,7 +65,7 @@ export interface CreateSolanaVaultRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateSolanaVaultRequestTypeEnum = {
     solana: 'solana'

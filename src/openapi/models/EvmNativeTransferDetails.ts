@@ -44,7 +44,7 @@ export interface EvmNativeTransferDetails {
 
 
 /**
- * @export
+ * 
  */
 const EvmNativeTransferDetailsTypeEnum = {
     nativeTransfer: 'native_transfer'

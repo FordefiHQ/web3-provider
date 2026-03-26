@@ -47,9 +47,9 @@ import {
 } from './SuiUpgradeCommand';
 
 /**
- * @type SuiCommand
  * 
  * @export
+ * @type SuiCommand
  */
 export type SuiCommand = { type: 'make_move_vec' } & SuiMakeMoveVecCommand | { type: 'merge_coins' } & SuiMergeCoinsCommand | { type: 'move_call' } & SuiMoveCallCommand | { type: 'publish' } & SuiPublishCommand | { type: 'split_coins' } & SuiSplitCoinsCommand | { type: 'transfer_objects' } & SuiTransferObjectsCommand | { type: 'upgrade' } & SuiUpgradeCommand;
 

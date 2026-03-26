@@ -24,9 +24,9 @@ import {
 } from './StellarSorobanAssetIdentifierRequest';
 
 /**
- * @type StellarAssetIdentifierDetails
  * 
  * @export
+ * @type StellarAssetIdentifierDetails
  */
 export type StellarAssetIdentifierDetails = { type: 'classic_asset' } & StellarClassicAssetIdentifierRequest | { type: 'native' } & StellarNativeAssetIdentifierRequest | { type: 'soroban_asset' } & StellarSorobanAssetIdentifierRequest;
 

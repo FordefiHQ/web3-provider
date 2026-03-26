@@ -24,9 +24,9 @@ import {
 } from './MinedSignDoc';
 
 /**
- * @type SignDoc
  * 
  * @export
+ * @type SignDoc
  */
 export type SignDoc = { format: 'amino' } & AminoSignDoc | { format: 'direct' } & DirectSignDoc | { format: 'mined' } & MinedSignDoc;
 

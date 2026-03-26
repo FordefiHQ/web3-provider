@@ -79,7 +79,7 @@ export interface CreateAptosTransactionRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateAptosTransactionRequestTypeEnum = {
     aptosTransaction: 'aptos_transaction'

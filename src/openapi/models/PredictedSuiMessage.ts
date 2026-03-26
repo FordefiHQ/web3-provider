@@ -105,7 +105,7 @@ export interface PredictedSuiMessage {
 
 
 /**
- * @export
+ * 
  */
 const PredictedSuiMessageTypeEnum = {
     suiMessage: 'sui_message'

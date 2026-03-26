@@ -55,7 +55,7 @@ export interface TransactionPredictSolanaTransactionRequest {
 
 
 /**
- * @export
+ * 
  */
 const TransactionPredictSolanaTransactionRequestTypeEnum = {
     solanaTransaction: 'solana_transaction'

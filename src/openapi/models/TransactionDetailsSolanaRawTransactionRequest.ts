@@ -115,7 +115,7 @@ export interface TransactionDetailsSolanaRawTransactionRequest {
 
 
 /**
- * @export
+ * 
  */
 const TransactionDetailsSolanaRawTransactionRequestTypeEnum = {
     solanaRawTransaction: 'solana_raw_transaction'

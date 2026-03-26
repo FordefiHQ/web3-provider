@@ -26,7 +26,7 @@ export interface SuiCommandGasCoinArgument {
 
 
 /**
- * @export
+ * 
  */
 const SuiCommandGasCoinArgumentTypeEnum = {
     gasCoin: 'gas_coin'

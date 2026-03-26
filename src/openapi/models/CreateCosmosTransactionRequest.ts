@@ -79,7 +79,7 @@ export interface CreateCosmosTransactionRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateCosmosTransactionRequestTypeEnum = {
     cosmosTransaction: 'cosmos_transaction'

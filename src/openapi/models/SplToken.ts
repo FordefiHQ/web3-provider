@@ -61,7 +61,7 @@ export interface SplToken {
 
 
 /**
- * @export
+ * 
  */
 const SplTokenTypeEnum = {
     splToken: 'spl_token'

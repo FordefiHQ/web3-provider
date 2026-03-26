@@ -190,12 +190,6 @@ export class VaultsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Archive an existing vault.
-     * Archive Vault
-     */
-    
-
-    /**
      * Creates request options for createAddressApiV1VaultsIdAddressesPost without sending the request
      */
     async createAddressApiV1VaultsIdAddressesPostRequestOpts(requestParameters: CreateAddressApiV1VaultsIdAddressesPostRequest): Promise<runtime.RequestOpts> {
@@ -252,12 +246,6 @@ export class VaultsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create a new address.
-     * Create Address
-     */
-    
-
-    /**
      * Creates request options for createVaultApiV1VaultsPost without sending the request
      */
     async createVaultApiV1VaultsPostRequestOpts(requestParameters: CreateVaultApiV1VaultsPostRequest): Promise<runtime.RequestOpts> {
@@ -304,12 +292,6 @@ export class VaultsApi extends runtime.BaseAPI {
 
         return new runtime.JSONApiResponse(response, (jsonValue) => CreateVaultResponseFromJSON(jsonValue));
     }
-
-    /**
-     * Create a new vault.
-     * Create Vault
-     */
-    
 
     /**
      * Creates request options for exportVaultsWithAssetsAsyncApiV1VaultsExportAsyncGet without sending the request
@@ -362,12 +344,6 @@ export class VaultsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get a CSV-format list of balances of all vaults and their assets.
-     * Export Vaults With Assets Async
-     */
-    
-
-    /**
      * Creates request options for getVaultApiV1VaultsIdGet without sending the request
      */
     async getVaultApiV1VaultsIdGetRequestOpts(requestParameters: GetVaultApiV1VaultsIdGetRequest): Promise<runtime.RequestOpts> {
@@ -412,12 +388,6 @@ export class VaultsApi extends runtime.BaseAPI {
 
         return new runtime.JSONApiResponse(response, (jsonValue) => GetVaultResponseFromJSON(jsonValue));
     }
-
-    /**
-     * Retrieve vault details.
-     * Get Vault
-     */
-    
 
     /**
      * Creates request options for getVaultAssetApiV1VaultsIdAssetsAssetIdGet without sending the request
@@ -484,12 +454,6 @@ export class VaultsApi extends runtime.BaseAPI {
 
         return new runtime.JSONApiResponse(response, (jsonValue) => GetOwnedAssetResponseFromJSON(jsonValue));
     }
-
-    /**
-     * Get a specific asset in a vault.
-     * Get Vault Asset
-     */
-    
 
     /**
      * Creates request options for getVaultAssetsApiV1VaultsIdAssetsGet without sending the request
@@ -570,12 +534,6 @@ export class VaultsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get a list of all assets in a vault.
-     * Get Vault Assets
-     */
-    
-
-    /**
      * Creates request options for listVaultAddressesApiV1VaultsIdAddressesGet without sending the request
      */
     async listVaultAddressesApiV1VaultsIdAddressesGetRequestOpts(requestParameters: ListVaultAddressesApiV1VaultsIdAddressesGetRequest): Promise<runtime.RequestOpts> {
@@ -648,12 +606,6 @@ export class VaultsApi extends runtime.BaseAPI {
 
         return new runtime.JSONApiResponse(response, (jsonValue) => ListVaultAddressesResponseFromJSON(jsonValue));
     }
-
-    /**
-     * Get a list of all addresses in a vault.
-     * List Vault Addresses
-     */
-    
 
     /**
      * Creates request options for listVaultsApiV1VaultsGet without sending the request
@@ -815,12 +767,6 @@ export class VaultsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Rename an existing vault address.
-     * Rename Vault Address
-     */
-    
-
-    /**
      * Creates request options for renameVaultApiV1VaultsIdNamePut without sending the request
      */
     async renameVaultApiV1VaultsIdNamePutRequestOpts(requestParameters: RenameVaultApiV1VaultsIdNamePutRequest): Promise<runtime.RequestOpts> {
@@ -877,12 +823,6 @@ export class VaultsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Rename an existing vault.
-     * Rename Vault
-     */
-    
-
-    /**
      * Creates request options for restoreVaultApiV1VaultsIdRestorePost without sending the request
      */
     async restoreVaultApiV1VaultsIdRestorePostRequestOpts(requestParameters: RestoreVaultApiV1VaultsIdRestorePostRequest): Promise<runtime.RequestOpts> {
@@ -927,12 +867,6 @@ export class VaultsApi extends runtime.BaseAPI {
 
         return new runtime.VoidApiResponse(response);
     }
-
-    /**
-     * Restore an archived vault.
-     * Restore Vault
-     */
-    
 
     /**
      * Creates request options for submitUpdateVaultChangeProposalApiV1VaultsIdProposalsPost without sending the request
@@ -989,11 +923,5 @@ export class VaultsApi extends runtime.BaseAPI {
 
         return new runtime.VoidApiResponse(response);
     }
-
-    /**
-     * Submit an update vault change proposal. Verify, approve, and abort are handled via the user-actions API.
-     * Submit Update Vault Change Proposal
-     */
-    
 
 }

@@ -20,9 +20,9 @@ import {
 } from './ReleaseUtxoTransactionRequest';
 
 /**
- * @type ReleaseTransactionRequest
  * 
  * @export
+ * @type ReleaseTransactionRequest
  */
 export type ReleaseTransactionRequest = { type: 'evm_transaction' } & ReleaseEvmTransactionRequest | { type: 'utxo_transaction' } & ReleaseUtxoTransactionRequest;
 

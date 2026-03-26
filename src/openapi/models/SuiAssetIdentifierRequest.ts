@@ -37,7 +37,7 @@ export interface SuiAssetIdentifierRequest {
 
 
 /**
- * @export
+ * 
  */
 const SuiAssetIdentifierRequestTypeEnum = {
     sui: 'sui'

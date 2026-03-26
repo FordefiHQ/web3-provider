@@ -95,7 +95,7 @@ export interface CreateStacksTransferRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateStacksTransferRequestTypeEnum = {
     stacksTransfer: 'stacks_transfer'

@@ -95,7 +95,7 @@ export interface CreateSuiMessageWithWaitRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateSuiMessageWithWaitRequestTypeEnum = {
     suiMessage: 'sui_message'

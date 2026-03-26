@@ -24,9 +24,9 @@ import {
 } from './RecipientVaultId';
 
 /**
- * @type CreateAptosTransferRequestTo
  * 
  * @export
+ * @type CreateAptosTransferRequestTo
  */
 export type CreateAptosTransferRequestTo = { type: 'contact_id' } & RecipientContactId | { type: 'hex' } & AptosRecipientHex | { type: 'vault_id' } & RecipientVaultId;
 

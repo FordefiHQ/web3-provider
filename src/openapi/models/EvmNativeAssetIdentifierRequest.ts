@@ -32,7 +32,7 @@ export interface EvmNativeAssetIdentifierRequest {
 
 
 /**
- * @export
+ * 
  */
 const EvmNativeAssetIdentifierRequestTypeEnum = {
     native: 'native'

@@ -20,9 +20,9 @@ import {
 } from './UnknownAssetStacksPostCondition';
 
 /**
- * @type StacksPostCondition
  * 
  * @export
+ * @type StacksPostCondition
  */
 export type StacksPostCondition = { type: 'known_asset' } & KnownAssetStacksPostCondition | { type: 'unknown_asset' } & UnknownAssetStacksPostCondition;
 

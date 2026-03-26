@@ -37,7 +37,7 @@ export interface SuiChain {
 
 
 /**
- * @export
+ * 
  */
 const SuiChainChainTypeEnum = {
     sui: 'sui'

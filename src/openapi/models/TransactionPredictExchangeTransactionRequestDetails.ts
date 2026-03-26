@@ -20,9 +20,9 @@ import {
 } from './CreateExchangeInternalTransferRequest';
 
 /**
- * @type TransactionPredictExchangeTransactionRequestDetails
  * 
  * @export
+ * @type TransactionPredictExchangeTransactionRequestDetails
  */
 export type TransactionPredictExchangeTransactionRequestDetails = { type: 'external_withdraw' } & CreateExchangeExternalWithdrawRequest | { type: 'internal_transfer' } & CreateExchangeInternalTransferRequest;
 

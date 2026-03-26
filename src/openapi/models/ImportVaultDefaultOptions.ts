@@ -38,7 +38,7 @@ export interface ImportVaultDefaultOptions {
 
 
 /**
- * @export
+ * 
  */
 const ImportVaultDefaultOptionsOriginEnum = {
     importedKeys: 'imported_keys'

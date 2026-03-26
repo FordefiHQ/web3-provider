@@ -197,7 +197,7 @@ export interface AptosMessage {
 
 
 /**
- * @export
+ * 
  */
 const AptosMessageTypeEnum = {
     aptosMessage: 'aptos_message'

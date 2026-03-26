@@ -20,9 +20,9 @@ import {
 } from './EnrichedSolanaSplTokenAssetIdentifier';
 
 /**
- * @type EnrichedSolanaAssetIdentifierDetails
  * 
  * @export
+ * @type EnrichedSolanaAssetIdentifierDetails
  */
 export type EnrichedSolanaAssetIdentifierDetails = { type: 'native' } & EnrichedSolanaNativeAssetIdentifier | { type: 'spl_token' } & EnrichedSolanaSplTokenAssetIdentifier;
 

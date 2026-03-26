@@ -99,7 +99,7 @@ export interface CreateSuiTransferRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateSuiTransferRequestTypeEnum = {
     suiTransfer: 'sui_transfer'

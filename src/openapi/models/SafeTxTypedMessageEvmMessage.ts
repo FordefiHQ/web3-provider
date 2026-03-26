@@ -164,7 +164,7 @@ export interface SafeTxTypedMessageEvmMessage {
 
 
 /**
- * @export
+ * 
  */
 const SafeTxTypedMessageEvmMessageTypeEnum = {
     safeTx: 'safe_tx'

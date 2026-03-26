@@ -26,7 +26,7 @@ export interface EddsaED25519BlackBoxVault {
 
 
 /**
- * @export
+ * 
  */
 const EddsaED25519BlackBoxVaultTypeEnum = {
     eddsaEd25519: 'eddsa_ed25519'

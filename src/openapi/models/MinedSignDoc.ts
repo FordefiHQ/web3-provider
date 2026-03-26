@@ -43,7 +43,7 @@ export interface MinedSignDoc {
 
 
 /**
- * @export
+ * 
  */
 const MinedSignDocFormatEnum = {
     mined: 'mined'

@@ -70,7 +70,7 @@ export interface CosmosNativeTransferDetails {
 
 
 /**
- * @export
+ * 
  */
 const CosmosNativeTransferDetailsTypeEnum = {
     nativeTransfer: 'native_transfer'

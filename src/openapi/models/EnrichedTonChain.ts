@@ -83,7 +83,7 @@ export interface EnrichedTonChain {
 
 
 /**
- * @export
+ * 
  */
 const EnrichedTonChainChainTypeEnum = {
     ton: 'ton'

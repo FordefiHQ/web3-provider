@@ -20,9 +20,9 @@ import {
 } from './TransactionPredictSuiTransferRequest';
 
 /**
- * @type TransactionPredictSuiTransactionRequestDetails
  * 
  * @export
+ * @type TransactionPredictSuiTransactionRequestDetails
  */
 export type TransactionPredictSuiTransactionRequestDetails = { type: 'sui_programmable_transaction_block' } & TransactionDetailsSuiProgrammableTransactionBlockRequest | { type: 'sui_transfer' } & TransactionPredictSuiTransferRequest;
 

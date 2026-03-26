@@ -37,7 +37,7 @@ export interface AptosEntryPointDetails {
 
 
 /**
- * @export
+ * 
  */
 const AptosEntryPointDetailsTypeEnum = {
     entryPoint: 'entry_point'

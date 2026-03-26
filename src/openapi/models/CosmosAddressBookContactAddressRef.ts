@@ -49,7 +49,7 @@ export interface CosmosAddressBookContactAddressRef {
 
 
 /**
- * @export
+ * 
  */
 const CosmosAddressBookContactAddressRefChainTypeEnum = {
     cosmos: 'cosmos'

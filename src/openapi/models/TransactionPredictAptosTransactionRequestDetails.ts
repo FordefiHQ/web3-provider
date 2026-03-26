@@ -20,9 +20,9 @@ import {
 } from './PredictAptosTransferRequest';
 
 /**
- * @type TransactionPredictAptosTransactionRequestDetails
  * 
  * @export
+ * @type TransactionPredictAptosTransactionRequestDetails
  */
 export type TransactionPredictAptosTransactionRequestDetails = { type: 'aptos_serialized_entry_point_payload' } & PredictAptosSerializedRawTransactionRequest | { type: 'aptos_transfer' } & PredictAptosTransferRequest;
 

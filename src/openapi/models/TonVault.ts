@@ -192,7 +192,7 @@ export interface TonVault {
 
 
 /**
- * @export
+ * 
  */
 const TonVaultTypeEnum = {
     ton: 'ton'

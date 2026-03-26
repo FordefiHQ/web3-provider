@@ -75,7 +75,7 @@ export interface CreateUtxoVaultRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateUtxoVaultRequestTypeEnum = {
     utxo: 'utxo'

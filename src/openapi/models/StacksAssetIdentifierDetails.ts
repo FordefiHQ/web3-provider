@@ -22,9 +22,9 @@ import {
 } from './StacksSip10AssetIdentifierRequest';
 
 /**
- * @type StacksAssetIdentifierDetails
  * 
  * @export
+ * @type StacksAssetIdentifierDetails
  */
 export type StacksAssetIdentifierDetails = { type: 'native' } & StacksNativeAssetIdentifierRequest | { type: 'sip10' } & StacksSip10AssetIdentifierRequest;
 

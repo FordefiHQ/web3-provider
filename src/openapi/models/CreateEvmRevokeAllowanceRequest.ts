@@ -121,7 +121,7 @@ export interface CreateEvmRevokeAllowanceRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateEvmRevokeAllowanceRequestTypeEnum = {
     evmRevokeAllowance: 'evm_revoke_allowance'

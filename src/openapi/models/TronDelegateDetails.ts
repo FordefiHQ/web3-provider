@@ -49,7 +49,7 @@ export interface TronDelegateDetails {
 
 
 /**
- * @export
+ * 
  */
 const TronDelegateDetailsTypeEnum = {
     delegate: 'delegate'

@@ -44,7 +44,7 @@ export interface DirectRequestData {
 
 
 /**
- * @export
+ * 
  */
 const DirectRequestDataFormatEnum = {
     direct: 'direct'

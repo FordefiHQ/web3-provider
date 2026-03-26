@@ -75,7 +75,7 @@ export interface TransactionPredictEvmSetCodeRequest {
 
 
 /**
- * @export
+ * 
  */
 const TransactionPredictEvmSetCodeRequestTypeEnum = {
     evmSetCode: 'evm_set_code'

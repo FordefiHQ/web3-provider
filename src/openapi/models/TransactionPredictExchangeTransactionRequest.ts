@@ -55,7 +55,7 @@ export interface TransactionPredictExchangeTransactionRequest {
 
 
 /**
- * @export
+ * 
  */
 const TransactionPredictExchangeTransactionRequestTypeEnum = {
     exchangeTransaction: 'exchange_transaction'

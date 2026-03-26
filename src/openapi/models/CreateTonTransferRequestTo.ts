@@ -24,9 +24,9 @@ import {
 } from './TonRecipientHex';
 
 /**
- * @type CreateTonTransferRequestTo
  * 
  * @export
+ * @type CreateTonTransferRequestTo
  */
 export type CreateTonTransferRequestTo = { type: 'contact_id' } & RecipientContactId | { type: 'hex' } & TonRecipientHex | { type: 'vault_id' } & RecipientVaultId;
 

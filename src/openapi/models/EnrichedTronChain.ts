@@ -83,7 +83,7 @@ export interface EnrichedTronChain {
 
 
 /**
- * @export
+ * 
  */
 const EnrichedTronChainChainTypeEnum = {
     tron: 'tron'

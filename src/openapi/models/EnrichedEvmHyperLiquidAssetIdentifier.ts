@@ -49,7 +49,7 @@ export interface EnrichedEvmHyperLiquidAssetIdentifier {
 
 
 /**
- * @export
+ * 
  */
 const EnrichedEvmHyperLiquidAssetIdentifierTypeEnum = {
     hyperliquid: 'hyperliquid'

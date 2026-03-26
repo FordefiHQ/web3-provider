@@ -32,7 +32,7 @@ export interface UtxoOutputToVaultAddressIdRequest {
 
 
 /**
- * @export
+ * 
  */
 const UtxoOutputToVaultAddressIdRequestTypeEnum = {
     vaultAddressId: 'vault_address_id'

@@ -83,7 +83,7 @@ export interface EnrichedUtxoChain {
 
 
 /**
- * @export
+ * 
  */
 const EnrichedUtxoChainChainTypeEnum = {
     utxo: 'utxo'

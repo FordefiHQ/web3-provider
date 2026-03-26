@@ -305,7 +305,7 @@ export interface SolanaTransaction {
 
 
 /**
- * @export
+ * 
  */
 const SolanaTransactionTypeEnum = {
     solanaTransaction: 'solana_transaction'

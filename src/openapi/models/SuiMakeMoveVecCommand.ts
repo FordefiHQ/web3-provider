@@ -44,7 +44,7 @@ export interface SuiMakeMoveVecCommand {
 
 
 /**
- * @export
+ * 
  */
 const SuiMakeMoveVecCommandTypeEnum = {
     makeMoveVec: 'make_move_vec'

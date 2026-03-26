@@ -20,9 +20,9 @@ import {
 } from './TronTypedMessageV2Request';
 
 /**
- * @type CreateTronMessageRequestDetails
  * 
  * @export
+ * @type CreateTronMessageRequestDetails
  */
 export type CreateTronMessageRequestDetails = { type: 'typed_message_type_v1' } & TronTypedMessageV1Request | { type: 'typed_message_type_v2' } & TronTypedMessageV2Request;
 

@@ -71,7 +71,7 @@ export interface CreateBlackBoxVaultRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateBlackBoxVaultRequestTypeEnum = {
     blackBox: 'black_box'
@@ -79,7 +79,7 @@ const CreateBlackBoxVaultRequestTypeEnum = {
 type CreateBlackBoxVaultRequestTypeEnum = typeof CreateBlackBoxVaultRequestTypeEnum[keyof typeof CreateBlackBoxVaultRequestTypeEnum];
 
 /**
- * @export
+ * 
  */
 const CreateBlackBoxVaultRequestKeyTypeEnum = {
     ecdsaStark: 'ecdsa_stark',

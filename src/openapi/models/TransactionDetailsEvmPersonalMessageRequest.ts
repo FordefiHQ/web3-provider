@@ -43,7 +43,7 @@ export interface TransactionDetailsEvmPersonalMessageRequest {
 
 
 /**
- * @export
+ * 
  */
 const TransactionDetailsEvmPersonalMessageRequestTypeEnum = {
     personalMessageType: 'personal_message_type'

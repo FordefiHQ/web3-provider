@@ -67,7 +67,7 @@ export interface JitoSolanaSuggestedFees {
 
 
 /**
- * @export
+ * 
  */
 const JitoSolanaSuggestedFeesTypeEnum = {
     solana: 'solana'
@@ -75,7 +75,7 @@ const JitoSolanaSuggestedFeesTypeEnum = {
 type JitoSolanaSuggestedFeesTypeEnum = typeof JitoSolanaSuggestedFeesTypeEnum[keyof typeof JitoSolanaSuggestedFeesTypeEnum];
 
 /**
- * @export
+ * 
  */
 const JitoSolanaSuggestedFeesFeeTypeEnum = {
     jito: 'jito'

@@ -37,7 +37,7 @@ export interface CantonCip56TokenAssetIdentifierRequest {
 
 
 /**
- * @export
+ * 
  */
 const CantonCip56TokenAssetIdentifierRequestTypeEnum = {
     cip56Token: 'cip56_token'

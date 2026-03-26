@@ -79,7 +79,7 @@ export interface TransactionPredictEvmUnwrapNativeRequest {
 
 
 /**
- * @export
+ * 
  */
 const TransactionPredictEvmUnwrapNativeRequestTypeEnum = {
     evmUnwrapNative: 'evm_unwrap_native'

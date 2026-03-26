@@ -95,7 +95,7 @@ export interface CreateUtxoMessageWithWaitRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateUtxoMessageWithWaitRequestTypeEnum = {
     utxoMessage: 'utxo_message'

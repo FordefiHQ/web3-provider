@@ -59,7 +59,7 @@ export interface ReleaseUtxoTransactionRequest {
 
 
 /**
- * @export
+ * 
  */
 const ReleaseUtxoTransactionRequestTypeEnum = {
     utxoTransaction: 'utxo_transaction'

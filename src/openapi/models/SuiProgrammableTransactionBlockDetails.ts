@@ -43,7 +43,7 @@ export interface SuiProgrammableTransactionBlockDetails {
 
 
 /**
- * @export
+ * 
  */
 const SuiProgrammableTransactionBlockDetailsTypeEnum = {
     programmableTransactionBlock: 'programmable_transaction_block'

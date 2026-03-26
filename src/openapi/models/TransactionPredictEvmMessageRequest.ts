@@ -55,7 +55,7 @@ export interface TransactionPredictEvmMessageRequest {
 
 
 /**
- * @export
+ * 
  */
 const TransactionPredictEvmMessageRequestTypeEnum = {
     evmMessage: 'evm_message'

@@ -32,7 +32,7 @@ export interface MinedMessagesList {
 
 
 /**
- * @export
+ * 
  */
 const MinedMessagesListFormatEnum = {
     mined: 'mined'

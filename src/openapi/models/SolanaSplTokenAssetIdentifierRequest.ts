@@ -38,7 +38,7 @@ export interface SolanaSplTokenAssetIdentifierRequest {
 
 
 /**
- * @export
+ * 
  */
 const SolanaSplTokenAssetIdentifierRequestTypeEnum = {
     splToken: 'spl_token'

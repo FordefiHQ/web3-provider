@@ -38,7 +38,7 @@ export interface SuiPublishCommand {
 
 
 /**
- * @export
+ * 
  */
 const SuiPublishCommandTypeEnum = {
     publish: 'publish'

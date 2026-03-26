@@ -83,7 +83,7 @@ export interface EnrichedStarknetChain {
 
 
 /**
- * @export
+ * 
  */
 const EnrichedStarknetChainChainTypeEnum = {
     starknet: 'starknet'

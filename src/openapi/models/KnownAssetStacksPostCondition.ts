@@ -63,7 +63,7 @@ export interface KnownAssetStacksPostCondition {
 
 
 /**
- * @export
+ * 
  */
 const KnownAssetStacksPostConditionTypeEnum = {
     knownAsset: 'known_asset'

@@ -92,12 +92,6 @@ export class BlockchainsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the suggested fees in a specific network.
-     * Get Suggested Fees
-     */
-    
-
-    /**
      * Creates request options for listChainsApiV1BlockchainsGet without sending the request
      */
     async listChainsApiV1BlockchainsGetRequestOpts(requestParameters: ListChainsApiV1BlockchainsGetRequest): Promise<runtime.RequestOpts> {

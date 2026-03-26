@@ -85,7 +85,7 @@ export interface CreateTonTransferRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateTonTransferRequestTypeEnum = {
     tonTransfer: 'ton_transfer'

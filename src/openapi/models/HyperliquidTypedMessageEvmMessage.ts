@@ -73,7 +73,7 @@ export interface HyperliquidTypedMessageEvmMessage {
 
 
 /**
- * @export
+ * 
  */
 const HyperliquidTypedMessageEvmMessageTypeEnum = {
     hyperliquid: 'hyperliquid'

@@ -79,7 +79,7 @@ export interface CreateAptosMessageRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateAptosMessageRequestTypeEnum = {
     aptosMessage: 'aptos_message'

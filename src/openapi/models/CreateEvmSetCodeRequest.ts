@@ -115,7 +115,7 @@ export interface CreateEvmSetCodeRequest {
 
 
 /**
- * @export
+ * 
  */
 const CreateEvmSetCodeRequestTypeEnum = {
     evmSetCode: 'evm_set_code'

@@ -49,7 +49,7 @@ export interface TonProofMessageRequest {
 
 
 /**
- * @export
+ * 
  */
 const TonProofMessageRequestTypeEnum = {
     proofMessageType: 'proof_message_type'

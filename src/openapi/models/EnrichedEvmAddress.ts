@@ -69,7 +69,7 @@ export interface EnrichedEvmAddress {
 
 
 /**
- * @export
+ * 
  */
 const EnrichedEvmAddressTypeEnum = {
     evm: 'evm'

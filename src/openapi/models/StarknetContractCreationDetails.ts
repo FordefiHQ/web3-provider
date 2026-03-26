@@ -26,7 +26,7 @@ export interface StarknetContractCreationDetails {
 
 
 /**
- * @export
+ * 
  */
 const StarknetContractCreationDetailsTypeEnum = {
     contractDeployment: 'contract_deployment'

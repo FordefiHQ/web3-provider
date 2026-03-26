@@ -32,7 +32,7 @@ export interface TronTypedMessageV2TextRawData {
 
 
 /**
- * @export
+ * 
  */
 const TronTypedMessageV2TextRawDataFormatEnum = {
     text: 'text'
