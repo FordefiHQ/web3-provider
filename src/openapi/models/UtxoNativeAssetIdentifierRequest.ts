@@ -13,7 +13,6 @@
 import type { UtxoChainUniqueId } from './UtxoChainUniqueId';
 import {
     UtxoChainUniqueIdFromJSON,
-    UtxoChainUniqueIdToJSON,
 } from './UtxoChainUniqueId';
 
 /**
@@ -57,21 +56,5 @@ function UtxoNativeAssetIdentifierRequestFromJSONTyped(json: any, _ignoreDiscrim
         
         'type': json['type'],
         'chain': UtxoChainUniqueIdFromJSON(json['chain']),
-    };
-}
-
-export function UtxoNativeAssetIdentifierRequestToJSON(json: any): UtxoNativeAssetIdentifierRequest {
-    return UtxoNativeAssetIdentifierRequestToJSONTyped(json, false);
-}
-
-function UtxoNativeAssetIdentifierRequestToJSONTyped(value?: UtxoNativeAssetIdentifierRequest | null, _ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
-
-    return {
-        
-        'type': value['type'],
-        'chain': UtxoChainUniqueIdToJSON(value['chain']),
     };
 }

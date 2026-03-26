@@ -15,18 +15,11 @@ import * as runtime from '../runtime';
 import type {
   ChainSource,
   ChainType,
-  GetSuggestedFeesResponse,
   ListBlockchainsResponse,
 } from '../models/index';
 import {
-    GetSuggestedFeesResponseFromJSON,
     ListBlockchainsResponseFromJSON,
 } from '../models/index';
-
-interface GetSuggestedFeesApiV1BlockchainsSuggestedFeesGetRequest {
-    chains?: Array<string>;
-    chainTypes?: Array<ChainType>;
-}
 
 interface ListChainsApiV1BlockchainsGetRequest {
     page?: number;
@@ -44,52 +37,6 @@ interface ListChainsApiV1BlockchainsGetRequest {
  * 
  */
 export class BlockchainsApi extends runtime.BaseAPI {
-
-    /**
-     * Creates request options for getSuggestedFeesApiV1BlockchainsSuggestedFeesGet without sending the request
-     */
-    async getSuggestedFeesApiV1BlockchainsSuggestedFeesGetRequestOpts(requestParameters: GetSuggestedFeesApiV1BlockchainsSuggestedFeesGetRequest): Promise<runtime.RequestOpts> {
-        const queryParameters: any = {};
-
-        if (requestParameters['chains'] != null) {
-            queryParameters['chains'] = requestParameters['chains'];
-        }
-
-        if (requestParameters['chainTypes'] != null) {
-            queryParameters['chain_types'] = requestParameters['chainTypes'];
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-
-        let urlPath = `/api/v1/blockchains/suggested-fees`;
-
-        return {
-            path: urlPath,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        };
-    }
-
-    /**
-     * Get the suggested fees in a specific network.
-     * Get Suggested Fees
-     */
-    async getSuggestedFeesApiV1BlockchainsSuggestedFeesGetRaw(requestParameters: GetSuggestedFeesApiV1BlockchainsSuggestedFeesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetSuggestedFeesResponse>> {
-        const requestOptions = await this.getSuggestedFeesApiV1BlockchainsSuggestedFeesGetRequestOpts(requestParameters);
-        const response = await this.request(requestOptions, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => GetSuggestedFeesResponseFromJSON(jsonValue));
-    }
 
     /**
      * Creates request options for listChainsApiV1BlockchainsGet without sending the request

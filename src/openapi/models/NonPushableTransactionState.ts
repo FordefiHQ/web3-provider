@@ -36,7 +36,3 @@ export function NonPushableTransactionStateFromJSON(json: any): NonPushableTrans
 function NonPushableTransactionStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): NonPushableTransactionState {
     return json as NonPushableTransactionState;
 }
-
-export function NonPushableTransactionStateToJSON(value?: NonPushableTransactionState | null): any {
-    return value as any;
-}

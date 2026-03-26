@@ -46,7 +46,3 @@ export function PushableTransactionStateFromJSON(json: any): PushableTransaction
 function PushableTransactionStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): PushableTransactionState {
     return json as PushableTransactionState;
 }
-
-export function PushableTransactionStateToJSON(value?: PushableTransactionState | null): any {
-    return value as any;
-}
