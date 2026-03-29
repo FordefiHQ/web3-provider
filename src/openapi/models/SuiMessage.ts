@@ -188,7 +188,7 @@ export interface SuiMessage {
  * 
  */
 const SuiMessageTypeEnum = {
-    suiMessage: 'sui_message'
+    SuiMessage: 'sui_message'
 } as const;
 type SuiMessageTypeEnum = typeof SuiMessageTypeEnum[keyof typeof SuiMessageTypeEnum];
 

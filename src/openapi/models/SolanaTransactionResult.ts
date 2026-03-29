@@ -82,3 +82,4 @@ function SolanaTransactionResultFromJSONTyped(json: any, _ignoreDiscriminator: b
         'instructionError': json['instruction_error'] == null ? undefined : InstructionErrorFromJSON(json['instruction_error']),
     };
 }
+

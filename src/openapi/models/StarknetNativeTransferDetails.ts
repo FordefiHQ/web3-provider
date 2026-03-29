@@ -52,7 +52,7 @@ export interface StarknetNativeTransferDetails {
  * 
  */
 const StarknetNativeTransferDetailsTypeEnum = {
-    nativeTransfer: 'native_transfer'
+    NativeTransfer: 'native_transfer'
 } as const;
 type StarknetNativeTransferDetailsTypeEnum = typeof StarknetNativeTransferDetailsTypeEnum[keyof typeof StarknetNativeTransferDetailsTypeEnum];
 

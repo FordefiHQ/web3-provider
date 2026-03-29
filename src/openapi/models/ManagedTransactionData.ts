@@ -220,3 +220,4 @@ function ManagedTransactionDataFromJSONTyped(json: any, _ignoreDiscriminator: bo
         'attestedPayloadForSigning': json['attested_payload_for_signing'] == null ? undefined : json['attested_payload_for_signing'],
     };
 }
+

@@ -41,7 +41,7 @@ export interface CosmosNativeAssetIdentifierRequest {
  * 
  */
 const CosmosNativeAssetIdentifierRequestTypeEnum = {
-    native: 'native'
+    Native: 'native'
 } as const;
 type CosmosNativeAssetIdentifierRequestTypeEnum = typeof CosmosNativeAssetIdentifierRequestTypeEnum[keyof typeof CosmosNativeAssetIdentifierRequestTypeEnum];
 

@@ -20,17 +20,17 @@ import {
 } from './SolanaPriorityFeeRequest';
 
 /**
- * @type BatchSolanaTransactionRequestDetailsFee
+ * @type CreateSolanaRawTransactionRequestFee
  * The fee configuration for the transaction.
  * @export
  */
-export type BatchSolanaTransactionRequestDetailsFee = { type: 'custom' } & SolanaCustomFeeRequest | { type: 'priority' } & SolanaPriorityFeeRequest;
+export type CreateSolanaRawTransactionRequestFee = { type: 'custom' } & SolanaCustomFeeRequest | { type: 'priority' } & SolanaPriorityFeeRequest;
 
-export function BatchSolanaTransactionRequestDetailsFeeToJSON(json: any): any {
-    return BatchSolanaTransactionRequestDetailsFeeToJSONTyped(json, false);
+export function CreateSolanaRawTransactionRequestFeeToJSON(json: any): any {
+    return CreateSolanaRawTransactionRequestFeeToJSONTyped(json, false);
 }
 
-function BatchSolanaTransactionRequestDetailsFeeToJSONTyped(value?: BatchSolanaTransactionRequestDetailsFee | null, _ignoreDiscriminator: boolean = false): any {
+function CreateSolanaRawTransactionRequestFeeToJSONTyped(value?: CreateSolanaRawTransactionRequestFee | null, _ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
@@ -43,3 +43,4 @@ function BatchSolanaTransactionRequestDetailsFeeToJSONTyped(value?: BatchSolanaT
             return value;
     }
 }
+

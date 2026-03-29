@@ -35,7 +35,7 @@ export interface CreateRequestExplicitAmount {
  * 
  */
 const CreateRequestExplicitAmountTypeEnum = {
-    value: 'value'
+    Value: 'value'
 } as const;
 type CreateRequestExplicitAmountTypeEnum = typeof CreateRequestExplicitAmountTypeEnum[keyof typeof CreateRequestExplicitAmountTypeEnum];
 

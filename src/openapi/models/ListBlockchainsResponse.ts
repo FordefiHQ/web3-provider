@@ -63,3 +63,4 @@ function ListBlockchainsResponseFromJSONTyped(json: any, _ignoreDiscriminator: b
         'chains': ((json['chains'] as Array<any>).map(EnrichedChainFromJSON)),
     };
 }
+

@@ -82,7 +82,7 @@ export interface CreateStarknetMessageRequest {
  * 
  */
 const CreateStarknetMessageRequestTypeEnum = {
-    starknetMessage: 'starknet_message'
+    StarknetMessage: 'starknet_message'
 } as const;
 type CreateStarknetMessageRequestTypeEnum = typeof CreateStarknetMessageRequestTypeEnum[keyof typeof CreateStarknetMessageRequestTypeEnum];
 

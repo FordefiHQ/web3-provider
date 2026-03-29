@@ -41,7 +41,7 @@ export interface StacksNativeAssetIdentifierRequest {
  * 
  */
 const StacksNativeAssetIdentifierRequestTypeEnum = {
-    native: 'native'
+    Native: 'native'
 } as const;
 type StacksNativeAssetIdentifierRequestTypeEnum = typeof StacksNativeAssetIdentifierRequestTypeEnum[keyof typeof StacksNativeAssetIdentifierRequestTypeEnum];
 

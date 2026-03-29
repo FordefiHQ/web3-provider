@@ -50,7 +50,7 @@ export interface TonAssetIdentifier {
  * 
  */
 const TonAssetIdentifierTypeEnum = {
-    ton: 'ton'
+    Ton: 'ton'
 } as const;
 type TonAssetIdentifierTypeEnum = typeof TonAssetIdentifierTypeEnum[keyof typeof TonAssetIdentifierTypeEnum];
 

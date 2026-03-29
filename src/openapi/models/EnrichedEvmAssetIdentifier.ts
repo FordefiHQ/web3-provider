@@ -40,7 +40,7 @@ export interface EnrichedEvmAssetIdentifier {
  * 
  */
 const EnrichedEvmAssetIdentifierTypeEnum = {
-    evm: 'evm'
+    Evm: 'evm'
 } as const;
 type EnrichedEvmAssetIdentifierTypeEnum = typeof EnrichedEvmAssetIdentifierTypeEnum[keyof typeof EnrichedEvmAssetIdentifierTypeEnum];
 

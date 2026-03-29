@@ -40,7 +40,7 @@ export interface AminoSignDoc {
  * 
  */
 const AminoSignDocFormatEnum = {
-    amino: 'amino'
+    Amino: 'amino'
 } as const;
 type AminoSignDocFormatEnum = typeof AminoSignDocFormatEnum[keyof typeof AminoSignDocFormatEnum];
 

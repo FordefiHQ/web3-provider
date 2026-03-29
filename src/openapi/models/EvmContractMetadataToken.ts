@@ -49,3 +49,4 @@ function EvmContractMetadataTokenFromJSONTyped(json: any, _ignoreDiscriminator: 
             return json;
     }
 }
+

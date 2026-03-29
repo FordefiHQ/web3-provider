@@ -76,7 +76,7 @@ export interface EnrichedUtxoAddress {
  * 
  */
 const EnrichedUtxoAddressTypeEnum = {
-    utxo: 'utxo'
+    Utxo: 'utxo'
 } as const;
 type EnrichedUtxoAddressTypeEnum = typeof EnrichedUtxoAddressTypeEnum[keyof typeof EnrichedUtxoAddressTypeEnum];
 

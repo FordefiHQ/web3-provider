@@ -45,3 +45,4 @@ function StdCoinToJSONTyped(value?: StdCoin | null, _ignoreDiscriminator: boolea
         'amount': value['amount'],
     };
 }
+

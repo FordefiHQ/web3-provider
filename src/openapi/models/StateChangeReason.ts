@@ -15,12 +15,12 @@
  * @export
  */
 export const StateChangeReason = {
-    failedToVerifySignature: 'failed_to_verify_signature',
-    originalTransactionWasCompleted: 'original_transaction_was_completed',
-    staleNonce: 'stale_nonce',
-    quoteExpired: 'quote_expired',
-    anotherDlcTransactionWasCompleted: 'another_dlc_transaction_was_completed',
-    feeLimitExceeded: 'fee_limit_exceeded'
+    FailedToVerifySignature: 'failed_to_verify_signature',
+    OriginalTransactionWasCompleted: 'original_transaction_was_completed',
+    StaleNonce: 'stale_nonce',
+    QuoteExpired: 'quote_expired',
+    AnotherDlcTransactionWasCompleted: 'another_dlc_transaction_was_completed',
+    FeeLimitExceeded: 'fee_limit_exceeded'
 } as const;
 export type StateChangeReason = typeof StateChangeReason[keyof typeof StateChangeReason];
 
@@ -31,3 +31,4 @@ export function StateChangeReasonFromJSON(json: any): StateChangeReason {
 function StateChangeReasonFromJSONTyped(json: any, _ignoreDiscriminator: boolean): StateChangeReason {
     return json as StateChangeReason;
 }
+

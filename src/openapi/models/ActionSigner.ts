@@ -56,3 +56,4 @@ function ActionSignerFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Ac
         'hasSigned': json['has_signed'],
     };
 }
+

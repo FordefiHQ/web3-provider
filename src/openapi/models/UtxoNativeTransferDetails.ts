@@ -37,7 +37,7 @@ export interface UtxoNativeTransferDetails {
      * @memberof UtxoNativeTransferDetails
      * @deprecated
      */
-    direction: TransferDirection;
+    direction?: TransferDirection;
     /**
      * Is this transfer an internal transfer between two vaults. None if the transaction is incoming.
      * @type {boolean}
@@ -63,7 +63,7 @@ export interface UtxoNativeTransferDetails {
  * 
  */
 const UtxoNativeTransferDetailsTypeEnum = {
-    nativeTransfer: 'native_transfer'
+    NativeTransfer: 'native_transfer'
 } as const;
 type UtxoNativeTransferDetailsTypeEnum = typeof UtxoNativeTransferDetailsTypeEnum[keyof typeof UtxoNativeTransferDetailsTypeEnum];
 
@@ -74,7 +74,7 @@ export function UtxoNativeTransferDetailsFromJSONTyped(json: any, _ignoreDiscrim
     return {
         
         'type': json['type'],
-        'direction': TransferDirectionFromJSON(json['direction']),
+        'direction': json['direction'] == null ? undefined : TransferDirectionFromJSON(json['direction']),
         'isInternal': json['is_internal'] == null ? undefined : json['is_internal'],
         'vault': json['vault'] == null ? undefined : VaultRefFromJSON(json['vault']),
         'memos': json['memos'],

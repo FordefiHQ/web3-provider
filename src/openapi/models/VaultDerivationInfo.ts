@@ -49,3 +49,4 @@ function VaultDerivationInfoFromJSONTyped(json: any, _ignoreDiscriminator: boole
         'masterPublicKey': MasterPublicKeyFromJSON(json['master_public_key']),
     };
 }
+

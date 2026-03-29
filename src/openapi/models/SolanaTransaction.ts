@@ -308,7 +308,7 @@ export interface SolanaTransaction {
  * 
  */
 const SolanaTransactionTypeEnum = {
-    solanaTransaction: 'solana_transaction'
+    SolanaTransaction: 'solana_transaction'
 } as const;
 type SolanaTransactionTypeEnum = typeof SolanaTransactionTypeEnum[keyof typeof SolanaTransactionTypeEnum];
 

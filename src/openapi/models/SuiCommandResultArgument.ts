@@ -35,7 +35,7 @@ export interface SuiCommandResultArgument {
  * 
  */
 const SuiCommandResultArgumentTypeEnum = {
-    result: 'result'
+    Result: 'result'
 } as const;
 type SuiCommandResultArgumentTypeEnum = typeof SuiCommandResultArgumentTypeEnum[keyof typeof SuiCommandResultArgumentTypeEnum];
 

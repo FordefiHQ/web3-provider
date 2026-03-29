@@ -46,7 +46,7 @@ export interface ChainalysisScanResult {
  * 
  */
 const ChainalysisScanResultTypeEnum = {
-    chainalysis: 'chainalysis'
+    Chainalysis: 'chainalysis'
 } as const;
 type ChainalysisScanResultTypeEnum = typeof ChainalysisScanResultTypeEnum[keyof typeof ChainalysisScanResultTypeEnum];
 

@@ -52,7 +52,7 @@ export interface TonProofMessageRequest {
  * 
  */
 const TonProofMessageRequestTypeEnum = {
-    proofMessageType: 'proof_message_type'
+    ProofMessageType: 'proof_message_type'
 } as const;
 type TonProofMessageRequestTypeEnum = typeof TonProofMessageRequestTypeEnum[keyof typeof TonProofMessageRequestTypeEnum];
 

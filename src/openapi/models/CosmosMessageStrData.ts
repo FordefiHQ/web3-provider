@@ -35,7 +35,7 @@ export interface CosmosMessageStrData {
  * 
  */
 const CosmosMessageStrDataTypeEnum = {
-    string: 'string'
+    String: 'string'
 } as const;
 type CosmosMessageStrDataTypeEnum = typeof CosmosMessageStrDataTypeEnum[keyof typeof CosmosMessageStrDataTypeEnum];
 

@@ -53,3 +53,4 @@ function StacksPostConditionsFromJSONTyped(json: any, _ignoreDiscriminator: bool
         'postConditions': ((json['post_conditions'] as Array<any>).map(StacksPostConditionFromJSON)),
     };
 }
+

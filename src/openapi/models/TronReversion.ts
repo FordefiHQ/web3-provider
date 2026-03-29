@@ -49,3 +49,4 @@ function TronReversionFromJSONTyped(json: any, _ignoreDiscriminator: boolean): T
         'reason': json['reason'] == null ? undefined : json['reason'],
     };
 }
+

@@ -20,17 +20,17 @@ import {
 } from './CreateRequestMaxAmount';
 
 /**
- * @type CreateStellarTransferRequestValue
+ * @type CreateTronTransferRequestValue
  * The number of units to transfer.
  * @export
  */
-export type CreateStellarTransferRequestValue = { type: 'max' } & CreateRequestMaxAmount | { type: 'value' } & CreateRequestExplicitAmount;
+export type CreateTronTransferRequestValue = { type: 'max' } & CreateRequestMaxAmount | { type: 'value' } & CreateRequestExplicitAmount;
 
-export function CreateStellarTransferRequestValueToJSON(json: any): any {
-    return CreateStellarTransferRequestValueToJSONTyped(json, false);
+export function CreateTronTransferRequestValueToJSON(json: any): any {
+    return CreateTronTransferRequestValueToJSONTyped(json, false);
 }
 
-function CreateStellarTransferRequestValueToJSONTyped(value?: CreateStellarTransferRequestValue | null, _ignoreDiscriminator: boolean = false): any {
+function CreateTronTransferRequestValueToJSONTyped(value?: CreateTronTransferRequestValue | null, _ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
@@ -43,3 +43,4 @@ function CreateStellarTransferRequestValueToJSONTyped(value?: CreateStellarTrans
             return value;
     }
 }
+

@@ -62,7 +62,7 @@ export interface AminoRequestData {
  * 
  */
 const AminoRequestDataFormatEnum = {
-    amino: 'amino'
+    Amino: 'amino'
 } as const;
 type AminoRequestDataFormatEnum = typeof AminoRequestDataFormatEnum[keyof typeof AminoRequestDataFormatEnum];
 

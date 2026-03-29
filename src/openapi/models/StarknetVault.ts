@@ -78,10 +78,10 @@ export interface StarknetVault {
     modifiedAt: Date;
     /**
      * Metadata in a form: <str, bool | str | int | array[str]>.
-     * @type {{ [key: string]: MetadataValue | undefined; }}
+     * @type {{ [key: string]: MetadataValue; }}
      * @memberof StarknetVault
      */
-    metadata?: { [key: string]: MetadataValue | undefined; };
+    metadata?: { [key: string]: MetadataValue; };
     /**
      * The name of the vault.
      * @type {string}
@@ -193,7 +193,7 @@ export interface StarknetVault {
  * 
  */
 const StarknetVaultTypeEnum = {
-    starknet: 'starknet'
+    Starknet: 'starknet'
 } as const;
 type StarknetVaultTypeEnum = typeof StarknetVaultTypeEnum[keyof typeof StarknetVaultTypeEnum];
 

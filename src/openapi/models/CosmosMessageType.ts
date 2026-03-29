@@ -15,7 +15,7 @@
  * @export
  */
 export const CosmosMessageType = {
-    arbitraryMessageType: 'arbitrary_message_type'
+    ArbitraryMessageType: 'arbitrary_message_type'
 } as const;
 export type CosmosMessageType = typeof CosmosMessageType[keyof typeof CosmosMessageType];
 
@@ -26,3 +26,4 @@ export function CosmosMessageTypeFromJSON(json: any): CosmosMessageType {
 function CosmosMessageTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): CosmosMessageType {
     return json as CosmosMessageType;
 }
+

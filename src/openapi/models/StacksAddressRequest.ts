@@ -66,3 +66,4 @@ function StacksAddressRequestToJSONTyped(value?: StacksAddressRequest | null, _i
         'hex_repr': value['hexRepr'],
     };
 }
+

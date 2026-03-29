@@ -82,7 +82,7 @@ export interface CreateStacksTransactionRequest {
  * 
  */
 const CreateStacksTransactionRequestTypeEnum = {
-    stacksTransaction: 'stacks_transaction'
+    StacksTransaction: 'stacks_transaction'
 } as const;
 type CreateStacksTransactionRequestTypeEnum = typeof CreateStacksTransactionRequestTypeEnum[keyof typeof CreateStacksTransactionRequestTypeEnum];
 

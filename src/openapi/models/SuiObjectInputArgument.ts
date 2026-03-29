@@ -41,7 +41,7 @@ export interface SuiObjectInputArgument {
  * 
  */
 const SuiObjectInputArgumentTypeEnum = {
-    object: 'object'
+    Object: 'object'
 } as const;
 type SuiObjectInputArgumentTypeEnum = typeof SuiObjectInputArgumentTypeEnum[keyof typeof SuiObjectInputArgumentTypeEnum];
 

@@ -56,3 +56,4 @@ function ContactRefFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Cont
         'addressRef': ContactRefAddressRefFromJSON(json['address_ref']),
     };
 }
+

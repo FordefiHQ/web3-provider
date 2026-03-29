@@ -82,7 +82,7 @@ export interface CreateTonTransactionRequest {
  * 
  */
 const CreateTonTransactionRequestTypeEnum = {
-    tonTransaction: 'ton_transaction'
+    TonTransaction: 'ton_transaction'
 } as const;
 type CreateTonTransactionRequestTypeEnum = typeof CreateTonTransactionRequestTypeEnum[keyof typeof CreateTonTransactionRequestTypeEnum];
 

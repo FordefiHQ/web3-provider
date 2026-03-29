@@ -38,3 +38,4 @@ function SolanaSecretKeyRequestToJSONTyped(value?: SolanaSecretKeyRequest | null
         'data': value['data'],
     };
 }
+

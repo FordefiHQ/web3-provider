@@ -58,7 +58,7 @@ export interface UtxoPsbtDetails {
  * 
  */
 const UtxoPsbtDetailsTypeEnum = {
-    partiallySignedBitcoinTransaction: 'partially_signed_bitcoin_transaction'
+    PartiallySignedBitcoinTransaction: 'partially_signed_bitcoin_transaction'
 } as const;
 type UtxoPsbtDetailsTypeEnum = typeof UtxoPsbtDetailsTypeEnum[keyof typeof UtxoPsbtDetailsTypeEnum];
 

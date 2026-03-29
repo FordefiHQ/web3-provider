@@ -40,7 +40,7 @@ export interface ContractDeploymentDetails {
  * 
  */
 const ContractDeploymentDetailsTypeEnum = {
-    contractDeployment: 'contract_deployment'
+    ContractDeployment: 'contract_deployment'
 } as const;
 type ContractDeploymentDetailsTypeEnum = typeof ContractDeploymentDetailsTypeEnum[keyof typeof ContractDeploymentDetailsTypeEnum];
 

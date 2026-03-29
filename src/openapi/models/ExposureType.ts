@@ -15,8 +15,8 @@
  * @export
  */
 export const ExposureType = {
-    direct: 'direct',
-    indirect: 'indirect'
+    Direct: 'direct',
+    Indirect: 'indirect'
 } as const;
 export type ExposureType = typeof ExposureType[keyof typeof ExposureType];
 
@@ -27,3 +27,4 @@ export function ExposureTypeFromJSON(json: any): ExposureType {
 function ExposureTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): ExposureType {
     return json as ExposureType;
 }
+

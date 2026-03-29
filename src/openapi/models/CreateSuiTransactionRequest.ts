@@ -82,7 +82,7 @@ export interface CreateSuiTransactionRequest {
  * 
  */
 const CreateSuiTransactionRequestTypeEnum = {
-    suiTransaction: 'sui_transaction'
+    SuiTransaction: 'sui_transaction'
 } as const;
 type CreateSuiTransactionRequestTypeEnum = typeof CreateSuiTransactionRequestTypeEnum[keyof typeof CreateSuiTransactionRequestTypeEnum];
 

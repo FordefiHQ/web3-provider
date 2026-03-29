@@ -66,3 +66,4 @@ function TonAddressRequestToJSONTyped(value?: TonAddressRequest | null, _ignoreD
         'address': value['address'],
     };
 }
+

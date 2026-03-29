@@ -44,3 +44,4 @@ function ExchangePortfolioFromJSONTyped(json: any, _ignoreDiscriminator: boolean
         'portfolioName': json['portfolio_name'],
     };
 }
+

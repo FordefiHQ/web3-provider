@@ -37,7 +37,7 @@ export interface SolanaNativeTransferDetails {
      * @memberof SolanaNativeTransferDetails
      * @deprecated
      */
-    direction: TransferDirection;
+    direction?: TransferDirection;
     /**
      * The sender of the tokens.
      * @type {EnrichedSolanaAddress}
@@ -63,7 +63,7 @@ export interface SolanaNativeTransferDetails {
  * 
  */
 const SolanaNativeTransferDetailsTypeEnum = {
-    nativeTransfer: 'native_transfer'
+    NativeTransfer: 'native_transfer'
 } as const;
 type SolanaNativeTransferDetailsTypeEnum = typeof SolanaNativeTransferDetailsTypeEnum[keyof typeof SolanaNativeTransferDetailsTypeEnum];
 
@@ -74,7 +74,7 @@ export function SolanaNativeTransferDetailsFromJSONTyped(json: any, _ignoreDiscr
     return {
         
         'type': json['type'],
-        'direction': TransferDirectionFromJSON(json['direction']),
+        'direction': json['direction'] == null ? undefined : TransferDirectionFromJSON(json['direction']),
         'sender': EnrichedSolanaAddressFromJSON(json['sender']),
         'recipient': EnrichedSolanaAddressFromJSON(json['recipient']),
         'isInternal': json['is_internal'] == null ? undefined : json['is_internal'],

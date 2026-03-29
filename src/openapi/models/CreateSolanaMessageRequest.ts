@@ -82,7 +82,7 @@ export interface CreateSolanaMessageRequest {
  * 
  */
 const CreateSolanaMessageRequestTypeEnum = {
-    solanaMessage: 'solana_message'
+    SolanaMessage: 'solana_message'
 } as const;
 type CreateSolanaMessageRequestTypeEnum = typeof CreateSolanaMessageRequestTypeEnum[keyof typeof CreateSolanaMessageRequestTypeEnum];
 

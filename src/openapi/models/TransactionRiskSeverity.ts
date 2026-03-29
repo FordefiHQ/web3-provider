@@ -15,9 +15,9 @@
  * @export
  */
 export const TransactionRiskSeverity = {
-    low: 'low',
-    medium: 'medium',
-    high: 'high'
+    Low: 'low',
+    Medium: 'medium',
+    High: 'high'
 } as const;
 export type TransactionRiskSeverity = typeof TransactionRiskSeverity[keyof typeof TransactionRiskSeverity];
 
@@ -28,3 +28,4 @@ export function TransactionRiskSeverityFromJSON(json: any): TransactionRiskSever
 function TransactionRiskSeverityFromJSONTyped(json: any, _ignoreDiscriminator: boolean): TransactionRiskSeverity {
     return json as TransactionRiskSeverity;
 }
+

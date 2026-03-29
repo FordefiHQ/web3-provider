@@ -52,7 +52,7 @@ export interface StacksAddressBookContactAddressRef {
  * 
  */
 const StacksAddressBookContactAddressRefChainTypeEnum = {
-    stacks: 'stacks'
+    Stacks: 'stacks'
 } as const;
 type StacksAddressBookContactAddressRefChainTypeEnum = typeof StacksAddressBookContactAddressRefChainTypeEnum[keyof typeof StacksAddressBookContactAddressRefChainTypeEnum];
 

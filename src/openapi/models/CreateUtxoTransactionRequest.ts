@@ -82,7 +82,7 @@ export interface CreateUtxoTransactionRequest {
  * 
  */
 const CreateUtxoTransactionRequestTypeEnum = {
-    utxoTransaction: 'utxo_transaction'
+    UtxoTransaction: 'utxo_transaction'
 } as const;
 type CreateUtxoTransactionRequestTypeEnum = typeof CreateUtxoTransactionRequestTypeEnum[keyof typeof CreateUtxoTransactionRequestTypeEnum];
 

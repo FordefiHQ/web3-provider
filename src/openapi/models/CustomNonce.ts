@@ -25,3 +25,4 @@ export function CustomNonceToJSON(json: any): CustomNonce {
 function CustomNonceToJSONTyped(value?: CustomNonce | null, _ignoreDiscriminator: boolean = false): any {
     return value;
 }
+

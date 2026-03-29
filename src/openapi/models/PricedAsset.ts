@@ -61,7 +61,7 @@ export interface PricedAsset {
  * 
  */
 const PricedAssetTypeEnum = {
-    assetPrice: 'asset_price'
+    AssetPrice: 'asset_price'
 } as const;
 type PricedAssetTypeEnum = typeof PricedAssetTypeEnum[keyof typeof PricedAssetTypeEnum];
 

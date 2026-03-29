@@ -60,3 +60,4 @@ function SuiBalanceChangeEffectFromJSONTyped(json: any, _ignoreDiscriminator: bo
         'address': EnrichedSuiAddressFromJSON(json['address']),
     };
 }
+

@@ -47,7 +47,7 @@ export interface SuiMergeCoinsCommand {
  * 
  */
 const SuiMergeCoinsCommandTypeEnum = {
-    mergeCoins: 'merge_coins'
+    MergeCoins: 'merge_coins'
 } as const;
 type SuiMergeCoinsCommandTypeEnum = typeof SuiMergeCoinsCommandTypeEnum[keyof typeof SuiMergeCoinsCommandTypeEnum];
 

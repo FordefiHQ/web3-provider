@@ -40,7 +40,7 @@ export interface FeePaidByVault {
  * 
  */
 const FeePaidByVaultTypeEnum = {
-    vault: 'vault'
+    Vault: 'vault'
 } as const;
 type FeePaidByVaultTypeEnum = typeof FeePaidByVaultTypeEnum[keyof typeof FeePaidByVaultTypeEnum];
 

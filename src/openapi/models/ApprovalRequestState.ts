@@ -16,11 +16,11 @@
  * @export
  */
 export const ApprovalRequestState = {
-    created: 'created',
-    approved: 'approved',
-    insufficientApprovers: 'insufficient_approvers',
-    autoApproved: 'auto_approved',
-    failed: 'failed'
+    Created: 'created',
+    Approved: 'approved',
+    InsufficientApprovers: 'insufficient_approvers',
+    AutoApproved: 'auto_approved',
+    Failed: 'failed'
 } as const;
 export type ApprovalRequestState = typeof ApprovalRequestState[keyof typeof ApprovalRequestState];
 
@@ -31,3 +31,4 @@ export function ApprovalRequestStateFromJSON(json: any): ApprovalRequestState {
 function ApprovalRequestStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): ApprovalRequestState {
     return json as ApprovalRequestState;
 }
+

@@ -15,8 +15,8 @@
  * @export
  */
 export const ExchangeReversionState = {
-    notReverted: 'not_reverted',
-    insufficientExchangeWithdrawFunds: 'insufficient_exchange_withdraw_funds'
+    NotReverted: 'not_reverted',
+    InsufficientExchangeWithdrawFunds: 'insufficient_exchange_withdraw_funds'
 } as const;
 export type ExchangeReversionState = typeof ExchangeReversionState[keyof typeof ExchangeReversionState];
 
@@ -27,3 +27,4 @@ export function ExchangeReversionStateFromJSON(json: any): ExchangeReversionStat
 function ExchangeReversionStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): ExchangeReversionState {
     return json as ExchangeReversionState;
 }
+

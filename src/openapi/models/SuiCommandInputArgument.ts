@@ -35,7 +35,7 @@ export interface SuiCommandInputArgument {
  * 
  */
 const SuiCommandInputArgumentTypeEnum = {
-    input: 'input'
+    Input: 'input'
 } as const;
 type SuiCommandInputArgumentTypeEnum = typeof SuiCommandInputArgumentTypeEnum[keyof typeof SuiCommandInputArgumentTypeEnum];
 

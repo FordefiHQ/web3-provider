@@ -35,7 +35,7 @@ export interface EvmDataRequestHex {
  * @export
  */
 export const EvmDataRequestHexTypeEnum = {
-    hex: 'hex'
+    Hex: 'hex'
 } as const;
 export type EvmDataRequestHexTypeEnum = typeof EvmDataRequestHexTypeEnum[keyof typeof EvmDataRequestHexTypeEnum];
 
@@ -54,3 +54,4 @@ function EvmDataRequestHexToJSONTyped(value?: EvmDataRequestHex | null, _ignoreD
         'hex_data': value['hexData'],
     };
 }
+

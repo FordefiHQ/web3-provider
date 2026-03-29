@@ -53,3 +53,4 @@ function CosmosEffectsFromJSONTyped(json: any, _ignoreDiscriminator: boolean): C
         'transfers': ((json['transfers'] as Array<any>).map(CosmosTransferEffectFromJSON)),
     };
 }
+

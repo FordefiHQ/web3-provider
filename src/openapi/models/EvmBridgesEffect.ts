@@ -78,3 +78,4 @@ function EvmBridgesEffectFromJSONTyped(json: any, _ignoreDiscriminator: boolean)
         'destination': EvmBridgesEffectDestinationFromJSON(json['destination']),
     };
 }
+

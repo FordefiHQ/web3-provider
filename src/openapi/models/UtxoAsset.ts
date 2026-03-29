@@ -96,7 +96,7 @@ export interface UtxoAsset {
      * @memberof UtxoAsset
      * @deprecated
      */
-    details: UtxoNativeAsset;
+    details?: UtxoNativeAsset;
 }
 
 
@@ -104,7 +104,7 @@ export interface UtxoAsset {
  * 
  */
 const UtxoAssetTypeEnum = {
-    utxoAsset: 'utxo_asset'
+    UtxoAsset: 'utxo_asset'
 } as const;
 type UtxoAssetTypeEnum = typeof UtxoAssetTypeEnum[keyof typeof UtxoAssetTypeEnum];
 
@@ -124,6 +124,6 @@ export function UtxoAssetFromJSONTyped(json: any, _ignoreDiscriminator: boolean)
         'assetIdentifier': EnrichedAssetIdentifierFromJSON(json['asset_identifier']),
         'metadataUri': json['metadata_uri'] == null ? undefined : json['metadata_uri'],
         'type': json['type'],
-        'details': UtxoNativeAssetFromJSON(json['details']),
+        'details': json['details'] == null ? undefined : UtxoNativeAssetFromJSON(json['details']),
     };
 }

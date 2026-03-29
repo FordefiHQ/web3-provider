@@ -70,7 +70,7 @@ export interface AptosEntryFunctionPayload {
  * 
  */
 const AptosEntryFunctionPayloadTypeEnum = {
-    entryPoint: 'entry_point'
+    EntryPoint: 'entry_point'
 } as const;
 type AptosEntryFunctionPayloadTypeEnum = typeof AptosEntryFunctionPayloadTypeEnum[keyof typeof AptosEntryFunctionPayloadTypeEnum];
 

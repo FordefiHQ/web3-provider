@@ -49,3 +49,4 @@ function TonReversionFromJSONTyped(json: any, _ignoreDiscriminator: boolean): To
         'reason': json['reason'] == null ? undefined : json['reason'],
     };
 }
+

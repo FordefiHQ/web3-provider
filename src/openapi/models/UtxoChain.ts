@@ -41,7 +41,7 @@ export interface UtxoChain {
  * 
  */
 const UtxoChainChainTypeEnum = {
-    utxo: 'utxo'
+    Utxo: 'utxo'
 } as const;
 type UtxoChainChainTypeEnum = typeof UtxoChainChainTypeEnum[keyof typeof UtxoChainChainTypeEnum];
 

@@ -43,3 +43,4 @@ function AptosTransactionPayloadFromJSONTyped(json: any, _ignoreDiscriminator: b
             return json;
     }
 }
+

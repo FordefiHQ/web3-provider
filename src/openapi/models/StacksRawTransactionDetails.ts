@@ -40,7 +40,7 @@ export interface StacksRawTransactionDetails {
  * 
  */
 const StacksRawTransactionDetailsTypeEnum = {
-    rawTransaction: 'raw_transaction'
+    RawTransaction: 'raw_transaction'
 } as const;
 type StacksRawTransactionDetailsTypeEnum = typeof StacksRawTransactionDetailsTypeEnum[keyof typeof StacksRawTransactionDetailsTypeEnum];
 

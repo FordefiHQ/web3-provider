@@ -108,7 +108,7 @@ export interface CreateAptosTransferRequest {
  * 
  */
 const CreateAptosTransferRequestTypeEnum = {
-    aptosTransfer: 'aptos_transfer'
+    AptosTransfer: 'aptos_transfer'
 } as const;
 type CreateAptosTransferRequestTypeEnum = typeof CreateAptosTransferRequestTypeEnum[keyof typeof CreateAptosTransferRequestTypeEnum];
 

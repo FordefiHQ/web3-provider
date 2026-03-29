@@ -43,3 +43,4 @@ function PsbtInputSignerIdentityToJSONTyped(value?: PsbtInputSignerIdentity | nu
             return value;
     }
 }
+

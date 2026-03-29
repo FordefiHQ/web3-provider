@@ -52,7 +52,7 @@ export interface ExchangeInternalTransferDetails {
  * 
  */
 const ExchangeInternalTransferDetailsTypeEnum = {
-    internalTransfer: 'internal_transfer'
+    InternalTransfer: 'internal_transfer'
 } as const;
 type ExchangeInternalTransferDetailsTypeEnum = typeof ExchangeInternalTransferDetailsTypeEnum[keyof typeof ExchangeInternalTransferDetailsTypeEnum];
 

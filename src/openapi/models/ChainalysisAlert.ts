@@ -71,3 +71,4 @@ function ChainalysisAlertFromJSONTyped(json: any, _ignoreDiscriminator: boolean)
         'service': json['service'] == null ? undefined : json['service'],
     };
 }
+

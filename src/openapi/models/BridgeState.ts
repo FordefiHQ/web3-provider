@@ -15,9 +15,9 @@
  * @export
  */
 export const BridgeState = {
-    pending: 'pending',
-    success: 'success',
-    failed: 'failed'
+    Pending: 'pending',
+    Success: 'success',
+    Failed: 'failed'
 } as const;
 export type BridgeState = typeof BridgeState[keyof typeof BridgeState];
 
@@ -28,3 +28,4 @@ export function BridgeStateFromJSON(json: any): BridgeState {
 function BridgeStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): BridgeState {
     return json as BridgeState;
 }
+

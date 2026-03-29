@@ -82,7 +82,7 @@ export interface CreateEvmTransactionRequest {
  * @export
  */
 export const CreateEvmTransactionRequestTypeEnum = {
-    evmTransaction: 'evm_transaction'
+    EvmTransaction: 'evm_transaction'
 } as const;
 export type CreateEvmTransactionRequestTypeEnum = typeof CreateEvmTransactionRequestTypeEnum[keyof typeof CreateEvmTransactionRequestTypeEnum];
 
@@ -106,3 +106,4 @@ function CreateEvmTransactionRequestToJSONTyped(value?: CreateEvmTransactionRequ
         'details': CreateEvmTransactionRequestDetailsToJSON(value['details']),
     };
 }
+

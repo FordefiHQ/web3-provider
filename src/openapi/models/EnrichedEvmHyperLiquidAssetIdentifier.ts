@@ -52,7 +52,7 @@ export interface EnrichedEvmHyperLiquidAssetIdentifier {
  * 
  */
 const EnrichedEvmHyperLiquidAssetIdentifierTypeEnum = {
-    hyperliquid: 'hyperliquid'
+    Hyperliquid: 'hyperliquid'
 } as const;
 type EnrichedEvmHyperLiquidAssetIdentifierTypeEnum = typeof EnrichedEvmHyperLiquidAssetIdentifierTypeEnum[keyof typeof EnrichedEvmHyperLiquidAssetIdentifierTypeEnum];
 

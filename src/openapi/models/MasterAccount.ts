@@ -35,7 +35,7 @@ export interface MasterAccount {
  * 
  */
 const MasterAccountTypeEnum = {
-    master: 'master'
+    Master: 'master'
 } as const;
 type MasterAccountTypeEnum = typeof MasterAccountTypeEnum[keyof typeof MasterAccountTypeEnum];
 

@@ -56,3 +56,4 @@ function UtxoInputFromJSONTyped(json: any, _ignoreDiscriminator: boolean): UtxoI
         'shouldSign': json['should_sign'] == null ? undefined : json['should_sign'],
     };
 }
+

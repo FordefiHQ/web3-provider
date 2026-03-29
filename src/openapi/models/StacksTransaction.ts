@@ -278,7 +278,7 @@ export interface StacksTransaction {
  * 
  */
 const StacksTransactionTypeEnum = {
-    stacksTransaction: 'stacks_transaction'
+    StacksTransaction: 'stacks_transaction'
 } as const;
 type StacksTransactionTypeEnum = typeof StacksTransactionTypeEnum[keyof typeof StacksTransactionTypeEnum];
 

@@ -74,3 +74,4 @@ function RelatedTransactionFromJSONTyped(json: any, _ignoreDiscriminator: boolea
         'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
     };
 }
+

@@ -71,3 +71,4 @@ function AptosTransactionResultFromJSONTyped(json: any, _ignoreDiscriminator: bo
         'rawResult': json['raw_result'] == null ? undefined : json['raw_result'],
     };
 }
+

@@ -50,7 +50,7 @@ export interface EvmBridgeEffectKnownDestination {
  * 
  */
 const EvmBridgeEffectKnownDestinationTypeEnum = {
-    knownTargetChain: 'known_target_chain'
+    KnownTargetChain: 'known_target_chain'
 } as const;
 type EvmBridgeEffectKnownDestinationTypeEnum = typeof EvmBridgeEffectKnownDestinationTypeEnum[keyof typeof EvmBridgeEffectKnownDestinationTypeEnum];
 

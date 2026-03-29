@@ -49,3 +49,4 @@ function CreateTonTransferRequestToToJSONTyped(value?: CreateTonTransferRequestT
             return value;
     }
 }
+

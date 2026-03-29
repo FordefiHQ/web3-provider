@@ -157,3 +157,4 @@ function CreateTransactionRequestToJSONTyped(value?: CreateTransactionRequest | 
             return value;
     }
 }
+

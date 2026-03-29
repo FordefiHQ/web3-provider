@@ -50,7 +50,7 @@ export interface EnrichedSolanaSplTokenAssetIdentifier {
  * 
  */
 const EnrichedSolanaSplTokenAssetIdentifierTypeEnum = {
-    splToken: 'spl_token'
+    SplToken: 'spl_token'
 } as const;
 type EnrichedSolanaSplTokenAssetIdentifierTypeEnum = typeof EnrichedSolanaSplTokenAssetIdentifierTypeEnum[keyof typeof EnrichedSolanaSplTokenAssetIdentifierTypeEnum];
 

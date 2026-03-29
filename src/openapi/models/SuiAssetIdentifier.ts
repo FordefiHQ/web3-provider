@@ -50,7 +50,7 @@ export interface SuiAssetIdentifier {
  * 
  */
 const SuiAssetIdentifierTypeEnum = {
-    sui: 'sui'
+    Sui: 'sui'
 } as const;
 type SuiAssetIdentifierTypeEnum = typeof SuiAssetIdentifierTypeEnum[keyof typeof SuiAssetIdentifierTypeEnum];
 

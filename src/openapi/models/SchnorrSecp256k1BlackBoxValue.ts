@@ -29,7 +29,7 @@ export interface SchnorrSecp256k1BlackBoxValue {
  * 
  */
 const SchnorrSecp256k1BlackBoxValueTypeEnum = {
-    schnorrSecp256k1: 'schnorr_secp256k1'
+    SchnorrSecp256k1: 'schnorr_secp256k1'
 } as const;
 type SchnorrSecp256k1BlackBoxValueTypeEnum = typeof SchnorrSecp256k1BlackBoxValueTypeEnum[keyof typeof SchnorrSecp256k1BlackBoxValueTypeEnum];
 

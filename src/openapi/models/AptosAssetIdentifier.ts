@@ -50,7 +50,7 @@ export interface AptosAssetIdentifier {
  * 
  */
 const AptosAssetIdentifierTypeEnum = {
-    aptos: 'aptos'
+    Aptos: 'aptos'
 } as const;
 type AptosAssetIdentifierTypeEnum = typeof AptosAssetIdentifierTypeEnum[keyof typeof AptosAssetIdentifierTypeEnum];
 

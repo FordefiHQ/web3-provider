@@ -47,7 +47,7 @@ export interface SuiSplitCoinsCommand {
  * 
  */
 const SuiSplitCoinsCommandTypeEnum = {
-    splitCoins: 'split_coins'
+    SplitCoins: 'split_coins'
 } as const;
 type SuiSplitCoinsCommandTypeEnum = typeof SuiSplitCoinsCommandTypeEnum[keyof typeof SuiSplitCoinsCommandTypeEnum];
 

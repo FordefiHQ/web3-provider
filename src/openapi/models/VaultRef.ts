@@ -107,3 +107,4 @@ function VaultRefFromJSONTyped(json: any, _ignoreDiscriminator: boolean): VaultR
         'endUser': json['end_user'] == null ? undefined : EndUserRefFromJSON(json['end_user']),
     };
 }
+

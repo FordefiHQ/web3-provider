@@ -40,7 +40,7 @@ export interface TronAssetIdentifierRequest {
  * 
  */
 const TronAssetIdentifierRequestTypeEnum = {
-    tron: 'tron'
+    Tron: 'tron'
 } as const;
 type TronAssetIdentifierRequestTypeEnum = typeof TronAssetIdentifierRequestTypeEnum[keyof typeof TronAssetIdentifierRequestTypeEnum];
 

@@ -73,3 +73,4 @@ function TronTransactionTronTransactionTypeDetailsFromJSONTyped(json: any, _igno
             return json;
     }
 }
+

@@ -82,7 +82,7 @@ export interface CreateUtxoMessageRequest {
  * 
  */
 const CreateUtxoMessageRequestTypeEnum = {
-    utxoMessage: 'utxo_message'
+    UtxoMessage: 'utxo_message'
 } as const;
 type CreateUtxoMessageRequestTypeEnum = typeof CreateUtxoMessageRequestTypeEnum[keyof typeof CreateUtxoMessageRequestTypeEnum];
 

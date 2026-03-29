@@ -15,8 +15,8 @@
  * @export
  */
 export const UtxoMessageType = {
-    ecdsa: 'ecdsa',
-    bip322Simple: 'bip322_simple'
+    Ecdsa: 'ecdsa',
+    Bip322Simple: 'bip322_simple'
 } as const;
 export type UtxoMessageType = typeof UtxoMessageType[keyof typeof UtxoMessageType];
 
@@ -31,3 +31,4 @@ function UtxoMessageTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean):
 export function UtxoMessageTypeToJSON(value?: UtxoMessageType | null): any {
     return value as any;
 }
+

@@ -266,7 +266,7 @@ export interface TonTransaction {
  * 
  */
 const TonTransactionTypeEnum = {
-    tonTransaction: 'ton_transaction'
+    TonTransaction: 'ton_transaction'
 } as const;
 type TonTransactionTypeEnum = typeof TonTransactionTypeEnum[keyof typeof TonTransactionTypeEnum];
 

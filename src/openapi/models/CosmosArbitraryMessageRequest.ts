@@ -50,7 +50,7 @@ export interface CosmosArbitraryMessageRequest {
  * 
  */
 const CosmosArbitraryMessageRequestTypeEnum = {
-    arbitraryMessageType: 'arbitrary_message_type'
+    ArbitraryMessageType: 'arbitrary_message_type'
 } as const;
 type CosmosArbitraryMessageRequestTypeEnum = typeof CosmosArbitraryMessageRequestTypeEnum[keyof typeof CosmosArbitraryMessageRequestTypeEnum];
 

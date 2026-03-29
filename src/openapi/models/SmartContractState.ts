@@ -15,9 +15,9 @@
  * @export
  */
 export const SmartContractState = {
-    enabled: 'enabled',
-    enabling: 'enabling',
-    disabling: 'disabling'
+    Enabled: 'enabled',
+    Enabling: 'enabling',
+    Disabling: 'disabling'
 } as const;
 export type SmartContractState = typeof SmartContractState[keyof typeof SmartContractState];
 
@@ -28,3 +28,4 @@ export function SmartContractStateFromJSON(json: any): SmartContractState {
 function SmartContractStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): SmartContractState {
     return json as SmartContractState;
 }
+

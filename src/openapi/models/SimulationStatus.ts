@@ -15,10 +15,10 @@
  * @export
  */
 export const SimulationStatus = {
-    success: 'success',
-    failed: 'failed',
-    reverted: 'reverted',
-    skipped: 'skipped'
+    Success: 'success',
+    Failed: 'failed',
+    Reverted: 'reverted',
+    Skipped: 'skipped'
 } as const;
 export type SimulationStatus = typeof SimulationStatus[keyof typeof SimulationStatus];
 
@@ -29,3 +29,4 @@ export function SimulationStatusFromJSON(json: any): SimulationStatus {
 function SimulationStatusFromJSONTyped(json: any, _ignoreDiscriminator: boolean): SimulationStatus {
     return json as SimulationStatus;
 }
+

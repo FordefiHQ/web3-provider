@@ -41,7 +41,7 @@ export interface AptosNewCoinAssetIdentifierRequest {
  * 
  */
 const AptosNewCoinAssetIdentifierRequestTypeEnum = {
-    newCoin: 'new_coin'
+    NewCoin: 'new_coin'
 } as const;
 type AptosNewCoinAssetIdentifierRequestTypeEnum = typeof AptosNewCoinAssetIdentifierRequestTypeEnum[keyof typeof AptosNewCoinAssetIdentifierRequestTypeEnum];
 

@@ -52,7 +52,7 @@ export interface TonJettonTransferDetails {
  * 
  */
 const TonJettonTransferDetailsTypeEnum = {
-    jettonTransfer: 'jetton_transfer'
+    JettonTransfer: 'jetton_transfer'
 } as const;
 type TonJettonTransferDetailsTypeEnum = typeof TonJettonTransferDetailsTypeEnum[keyof typeof TonJettonTransferDetailsTypeEnum];
 

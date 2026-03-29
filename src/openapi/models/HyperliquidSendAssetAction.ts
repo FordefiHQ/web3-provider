@@ -77,7 +77,7 @@ export interface HyperliquidSendAssetAction {
  * 
  */
 const HyperliquidSendAssetActionActionTypeEnum = {
-    sendAsset: 'send_asset'
+    SendAsset: 'send_asset'
 } as const;
 type HyperliquidSendAssetActionActionTypeEnum = typeof HyperliquidSendAssetActionActionTypeEnum[keyof typeof HyperliquidSendAssetActionActionTypeEnum];
 

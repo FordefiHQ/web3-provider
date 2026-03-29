@@ -40,7 +40,7 @@ export interface TonChain {
  * 
  */
 const TonChainChainTypeEnum = {
-    ton: 'ton'
+    Ton: 'ton'
 } as const;
 type TonChainChainTypeEnum = typeof TonChainChainTypeEnum[keyof typeof TonChainChainTypeEnum];
 

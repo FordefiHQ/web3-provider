@@ -52,7 +52,7 @@ export interface TronTokenTransferDetails {
  * 
  */
 const TronTokenTransferDetailsTypeEnum = {
-    tokenTransfer: 'token_transfer'
+    TokenTransfer: 'token_transfer'
 } as const;
 type TronTokenTransferDetailsTypeEnum = typeof TronTokenTransferDetailsTypeEnum[keyof typeof TronTokenTransferDetailsTypeEnum];
 

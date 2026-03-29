@@ -46,7 +46,7 @@ export interface TronTypedMessageV1Request {
  * 
  */
 const TronTypedMessageV1RequestTypeEnum = {
-    typedMessageTypeV1: 'typed_message_type_v1'
+    TypedMessageTypeV1: 'typed_message_type_v1'
 } as const;
 type TronTypedMessageV1RequestTypeEnum = typeof TronTypedMessageV1RequestTypeEnum[keyof typeof TronTypedMessageV1RequestTypeEnum];
 

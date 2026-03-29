@@ -15,8 +15,8 @@
  * @export
  */
 export const VaultOriginType = {
-    native: 'native',
-    imported: 'imported'
+    Native: 'native',
+    Imported: 'imported'
 } as const;
 export type VaultOriginType = typeof VaultOriginType[keyof typeof VaultOriginType];
 
@@ -27,3 +27,4 @@ export function VaultOriginTypeFromJSON(json: any): VaultOriginType {
 function VaultOriginTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): VaultOriginType {
     return json as VaultOriginType;
 }
+

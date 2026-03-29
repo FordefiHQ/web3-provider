@@ -49,3 +49,4 @@ function SimulationStatusResultFromJSONTyped(json: any, _ignoreDiscriminator: bo
         'details': json['details'],
     };
 }
+

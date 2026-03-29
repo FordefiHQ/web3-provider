@@ -64,3 +64,4 @@ function TronTransactionResultFromJSONTyped(json: any, _ignoreDiscriminator: boo
         'effects': TronEffectsFromJSON(json['effects']),
     };
 }
+

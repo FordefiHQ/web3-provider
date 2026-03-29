@@ -15,8 +15,8 @@
  * @export
  */
 export const MpcVaultState = {
-    active: 'active',
-    archived: 'archived'
+    Active: 'active',
+    Archived: 'archived'
 } as const;
 export type MpcVaultState = typeof MpcVaultState[keyof typeof MpcVaultState];
 
@@ -27,3 +27,4 @@ export function MpcVaultStateFromJSON(json: any): MpcVaultState {
 function MpcVaultStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): MpcVaultState {
     return json as MpcVaultState;
 }
+

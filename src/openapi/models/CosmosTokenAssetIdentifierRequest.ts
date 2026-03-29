@@ -47,7 +47,7 @@ export interface CosmosTokenAssetIdentifierRequest {
  * 
  */
 const CosmosTokenAssetIdentifierRequestTypeEnum = {
-    token: 'token'
+    Token: 'token'
 } as const;
 type CosmosTokenAssetIdentifierRequestTypeEnum = typeof CosmosTokenAssetIdentifierRequestTypeEnum[keyof typeof CosmosTokenAssetIdentifierRequestTypeEnum];
 

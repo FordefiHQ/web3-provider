@@ -63,3 +63,4 @@ function AmlPolicyMatchIncomingFromJSONTyped(json: any, _ignoreDiscriminator: bo
         'actionType': AmlPolicyMatchIncomingActionTypeFromJSON(json['action_type']),
     };
 }
+

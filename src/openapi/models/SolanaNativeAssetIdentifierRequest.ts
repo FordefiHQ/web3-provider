@@ -41,7 +41,7 @@ export interface SolanaNativeAssetIdentifierRequest {
  * 
  */
 const SolanaNativeAssetIdentifierRequestTypeEnum = {
-    native: 'native'
+    Native: 'native'
 } as const;
 type SolanaNativeAssetIdentifierRequestTypeEnum = typeof SolanaNativeAssetIdentifierRequestTypeEnum[keyof typeof SolanaNativeAssetIdentifierRequestTypeEnum];
 

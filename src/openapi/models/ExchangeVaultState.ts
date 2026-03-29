@@ -15,8 +15,8 @@
  * @export
  */
 export const ExchangeVaultState = {
-    active: 'active',
-    pending: 'pending'
+    Active: 'active',
+    Pending: 'pending'
 } as const;
 export type ExchangeVaultState = typeof ExchangeVaultState[keyof typeof ExchangeVaultState];
 
@@ -27,3 +27,4 @@ export function ExchangeVaultStateFromJSON(json: any): ExchangeVaultState {
 function ExchangeVaultStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): ExchangeVaultState {
     return json as ExchangeVaultState;
 }
+

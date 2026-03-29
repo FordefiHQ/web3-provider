@@ -70,3 +70,4 @@ function EvmMessageDomainDataFromJSONTyped(json: any, _ignoreDiscriminator: bool
         'salt': json['salt'] == null ? undefined : json['salt'],
     };
 }
+

@@ -52,7 +52,7 @@ export interface TronContractCallDetails {
  * 
  */
 const TronContractCallDetailsTypeEnum = {
-    contractCall: 'contract_call'
+    ContractCall: 'contract_call'
 } as const;
 type TronContractCallDetailsTypeEnum = typeof TronContractCallDetailsTypeEnum[keyof typeof TronContractCallDetailsTypeEnum];
 

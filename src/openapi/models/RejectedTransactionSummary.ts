@@ -77,3 +77,4 @@ function RejectedTransactionSummaryFromJSONTyped(json: any, _ignoreDiscriminator
         'confirmationsRequired': json['confirmations_required'],
     };
 }
+

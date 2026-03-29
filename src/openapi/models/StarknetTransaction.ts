@@ -284,7 +284,7 @@ export interface StarknetTransaction {
  * 
  */
 const StarknetTransactionTypeEnum = {
-    starknetTransaction: 'starknet_transaction'
+    StarknetTransaction: 'starknet_transaction'
 } as const;
 type StarknetTransactionTypeEnum = typeof StarknetTransactionTypeEnum[keyof typeof StarknetTransactionTypeEnum];
 

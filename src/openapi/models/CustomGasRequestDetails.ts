@@ -43,3 +43,4 @@ function CustomGasRequestDetailsToJSONTyped(value?: CustomGasRequestDetails | nu
             return value;
     }
 }
+

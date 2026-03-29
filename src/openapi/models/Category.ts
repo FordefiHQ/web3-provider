@@ -44,3 +44,4 @@ function CategoryFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Catego
         'name': json['name'],
     };
 }
+

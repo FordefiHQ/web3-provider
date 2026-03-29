@@ -72,7 +72,7 @@ export interface EnrichedSolanaAddress {
  * 
  */
 const EnrichedSolanaAddressTypeEnum = {
-    solana: 'solana'
+    Solana: 'solana'
 } as const;
 type EnrichedSolanaAddressTypeEnum = typeof EnrichedSolanaAddressTypeEnum[keyof typeof EnrichedSolanaAddressTypeEnum];
 

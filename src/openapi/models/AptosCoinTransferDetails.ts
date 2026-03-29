@@ -52,7 +52,7 @@ export interface AptosCoinTransferDetails {
  * 
  */
 const AptosCoinTransferDetailsTypeEnum = {
-    coinTransfer: 'coin_transfer'
+    CoinTransfer: 'coin_transfer'
 } as const;
 type AptosCoinTransferDetailsTypeEnum = typeof AptosCoinTransferDetailsTypeEnum[keyof typeof AptosCoinTransferDetailsTypeEnum];
 

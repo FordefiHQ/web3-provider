@@ -104,7 +104,7 @@ export interface UtxoVaultAddress {
  * 
  */
 const UtxoVaultAddressTypeEnum = {
-    utxo: 'utxo'
+    Utxo: 'utxo'
 } as const;
 type UtxoVaultAddressTypeEnum = typeof UtxoVaultAddressTypeEnum[keyof typeof UtxoVaultAddressTypeEnum];
 

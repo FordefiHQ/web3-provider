@@ -60,3 +60,4 @@ function SolanaBalanceChangeEffectFromJSONTyped(json: any, _ignoreDiscriminator:
         'address': EnrichedSolanaAddressFromJSON(json['address']),
     };
 }
+

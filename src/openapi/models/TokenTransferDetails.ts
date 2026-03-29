@@ -37,7 +37,7 @@ export interface TokenTransferDetails {
      * @memberof TokenTransferDetails
      * @deprecated
      */
-    direction: TransferDirection;
+    direction?: TransferDirection;
     /**
      * 
      * @type {EnrichedEvmAddress}
@@ -57,7 +57,7 @@ export interface TokenTransferDetails {
  * 
  */
 const TokenTransferDetailsTypeEnum = {
-    tokenTransfer: 'token_transfer'
+    TokenTransfer: 'token_transfer'
 } as const;
 type TokenTransferDetailsTypeEnum = typeof TokenTransferDetailsTypeEnum[keyof typeof TokenTransferDetailsTypeEnum];
 
@@ -68,7 +68,7 @@ export function TokenTransferDetailsFromJSONTyped(json: any, _ignoreDiscriminato
     return {
         
         'type': json['type'],
-        'direction': TransferDirectionFromJSON(json['direction']),
+        'direction': json['direction'] == null ? undefined : TransferDirectionFromJSON(json['direction']),
         'recipient': EnrichedEvmAddressFromJSON(json['recipient']),
         'isInternal': json['is_internal'] == null ? undefined : json['is_internal'],
     };

@@ -43,3 +43,4 @@ function CreateStacksTransactionSerializedRequestFeeToJSONTyped(value?: CreateSt
             return value;
     }
 }
+

@@ -15,12 +15,12 @@
  * @export
  */
 export const AmlScanStatus = {
-    error: 'error',
-    timeout: 'timeout',
-    skipped: 'skipped',
-    completed: 'completed',
-    unsupportedChain: 'unsupported_chain',
-    pending: 'pending'
+    Error: 'error',
+    Timeout: 'timeout',
+    Skipped: 'skipped',
+    Completed: 'completed',
+    UnsupportedChain: 'unsupported_chain',
+    Pending: 'pending'
 } as const;
 export type AmlScanStatus = typeof AmlScanStatus[keyof typeof AmlScanStatus];
 
@@ -31,3 +31,4 @@ export function AmlScanStatusFromJSON(json: any): AmlScanStatus {
 function AmlScanStatusFromJSONTyped(json: any, _ignoreDiscriminator: boolean): AmlScanStatus {
     return json as AmlScanStatus;
 }
+

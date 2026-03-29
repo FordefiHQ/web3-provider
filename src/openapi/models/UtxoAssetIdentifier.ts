@@ -50,7 +50,7 @@ export interface UtxoAssetIdentifier {
  * 
  */
 const UtxoAssetIdentifierTypeEnum = {
-    utxo: 'utxo'
+    Utxo: 'utxo'
 } as const;
 type UtxoAssetIdentifierTypeEnum = typeof UtxoAssetIdentifierTypeEnum[keyof typeof UtxoAssetIdentifierTypeEnum];
 

@@ -64,3 +64,4 @@ function StacksTransactionResultFromJSONTyped(json: any, _ignoreDiscriminator: b
         'effects': StacksEffectsFromJSON(json['effects']),
     };
 }
+

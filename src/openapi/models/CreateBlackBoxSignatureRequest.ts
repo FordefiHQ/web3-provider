@@ -82,7 +82,7 @@ export interface CreateBlackBoxSignatureRequest {
  * 
  */
 const CreateBlackBoxSignatureRequestTypeEnum = {
-    blackBoxSignature: 'black_box_signature'
+    BlackBoxSignature: 'black_box_signature'
 } as const;
 type CreateBlackBoxSignatureRequestTypeEnum = typeof CreateBlackBoxSignatureRequestTypeEnum[keyof typeof CreateBlackBoxSignatureRequestTypeEnum];
 

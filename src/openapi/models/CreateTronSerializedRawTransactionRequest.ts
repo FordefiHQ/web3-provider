@@ -71,7 +71,7 @@ export interface CreateTronSerializedRawTransactionRequest {
  * 
  */
 const CreateTronSerializedRawTransactionRequestTypeEnum = {
-    tronSerializedRawTransaction: 'tron_serialized_raw_transaction'
+    TronSerializedRawTransaction: 'tron_serialized_raw_transaction'
 } as const;
 type CreateTronSerializedRawTransactionRequestTypeEnum = typeof CreateTronSerializedRawTransactionRequestTypeEnum[keyof typeof CreateTronSerializedRawTransactionRequestTypeEnum];
 

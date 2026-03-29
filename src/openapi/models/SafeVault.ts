@@ -65,10 +65,10 @@ export interface SafeVault {
     modifiedAt: Date;
     /**
      * Metadata in a form: <str, bool | str | int | array[str]>.
-     * @type {{ [key: string]: MetadataValue | undefined; }}
+     * @type {{ [key: string]: MetadataValue; }}
      * @memberof SafeVault
      */
-    metadata?: { [key: string]: MetadataValue | undefined; };
+    metadata?: { [key: string]: MetadataValue; };
     /**
      * The name of the vault.
      * @type {string}
@@ -149,7 +149,7 @@ export interface SafeVault {
  * 
  */
 const SafeVaultTypeEnum = {
-    safe: 'safe'
+    Safe: 'safe'
 } as const;
 type SafeVaultTypeEnum = typeof SafeVaultTypeEnum[keyof typeof SafeVaultTypeEnum];
 

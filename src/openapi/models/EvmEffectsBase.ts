@@ -75,3 +75,4 @@ function EvmEffectsBaseFromJSONTyped(json: any, _ignoreDiscriminator: boolean): 
         'bridges': json['bridges'] == null ? undefined : ((json['bridges'] as Array<any>).map(EvmBridgesEffectFromJSON)),
     };
 }
+

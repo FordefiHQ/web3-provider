@@ -40,7 +40,7 @@ export interface SolanaRawTransactionDetails {
  * 
  */
 const SolanaRawTransactionDetailsTypeEnum = {
-    rawTransaction: 'raw_transaction'
+    RawTransaction: 'raw_transaction'
 } as const;
 type SolanaRawTransactionDetailsTypeEnum = typeof SolanaRawTransactionDetailsTypeEnum[keyof typeof SolanaRawTransactionDetailsTypeEnum];
 

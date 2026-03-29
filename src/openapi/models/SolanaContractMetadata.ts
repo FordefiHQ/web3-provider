@@ -67,3 +67,4 @@ function SolanaContractMetadataFromJSONTyped(json: any, _ignoreDiscriminator: bo
         'token': json['token'] == null ? undefined : SplTokenFromJSON(json['token']),
     };
 }
+

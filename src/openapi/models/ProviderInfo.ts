@@ -49,3 +49,4 @@ function ProviderInfoFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Pr
         'providerName': json['provider_name'],
     };
 }
+

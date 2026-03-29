@@ -81,3 +81,4 @@ function SuiObjectInputArgumentDetailsToJSONTyped(value?: SuiObjectInputArgument
             return value;
     }
 }
+

@@ -35,7 +35,7 @@ export interface BinaryHashPayload {
  * 
  */
 const BinaryHashPayloadFormatEnum = {
-    hashBinary: 'hash_binary'
+    HashBinary: 'hash_binary'
 } as const;
 type BinaryHashPayloadFormatEnum = typeof BinaryHashPayloadFormatEnum[keyof typeof BinaryHashPayloadFormatEnum];
 

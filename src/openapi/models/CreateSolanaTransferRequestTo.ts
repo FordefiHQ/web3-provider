@@ -49,3 +49,4 @@ function CreateSolanaTransferRequestToToJSONTyped(value?: CreateSolanaTransferRe
             return value;
     }
 }
+

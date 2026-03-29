@@ -46,7 +46,7 @@ export interface SuiAddressBookContactAddressRef {
  * 
  */
 const SuiAddressBookContactAddressRefChainTypeEnum = {
-    sui: 'sui'
+    Sui: 'sui'
 } as const;
 type SuiAddressBookContactAddressRefChainTypeEnum = typeof SuiAddressBookContactAddressRefChainTypeEnum[keyof typeof SuiAddressBookContactAddressRefChainTypeEnum];
 

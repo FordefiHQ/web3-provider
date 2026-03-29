@@ -15,10 +15,10 @@
  * @export
  */
 export const TronReversionState = {
-    notReverted: 'not_reverted',
-    unknownRevert: 'unknown_revert',
-    contractAsserted: 'contract_asserted',
-    insufficientFundsGasAndValue: 'insufficient_funds_gas_and_value'
+    NotReverted: 'not_reverted',
+    UnknownRevert: 'unknown_revert',
+    ContractAsserted: 'contract_asserted',
+    InsufficientFundsGasAndValue: 'insufficient_funds_gas_and_value'
 } as const;
 export type TronReversionState = typeof TronReversionState[keyof typeof TronReversionState];
 
@@ -29,3 +29,4 @@ export function TronReversionStateFromJSON(json: any): TronReversionState {
 function TronReversionStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): TronReversionState {
     return json as TronReversionState;
 }
+

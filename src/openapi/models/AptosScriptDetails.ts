@@ -35,7 +35,7 @@ export interface AptosScriptDetails {
  * 
  */
 const AptosScriptDetailsTypeEnum = {
-    script: 'script'
+    Script: 'script'
 } as const;
 type AptosScriptDetailsTypeEnum = typeof AptosScriptDetailsTypeEnum[keyof typeof AptosScriptDetailsTypeEnum];
 

@@ -73,3 +73,4 @@ function EvmTransactionEvmTransactionTypeDetailsFromJSONTyped(json: any, _ignore
             return json;
     }
 }
+

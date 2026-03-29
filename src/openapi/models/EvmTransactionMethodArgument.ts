@@ -63,3 +63,4 @@ function EvmTransactionMethodArgumentFromJSONTyped(json: any, _ignoreDiscriminat
         'enrichedAddress': json['enriched_address'] == null ? undefined : EnrichedEvmAddressFromJSON(json['enriched_address']),
     };
 }
+

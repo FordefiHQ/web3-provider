@@ -63,3 +63,4 @@ function ListVaultsResponseFromJSONTyped(json: any, _ignoreDiscriminator: boolea
         'vaults': ((json['vaults'] as Array<any>).map(VaultFromJSON)),
     };
 }
+

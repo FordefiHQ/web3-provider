@@ -40,7 +40,7 @@ export interface StacksChain {
  * 
  */
 const StacksChainChainTypeEnum = {
-    stacks: 'stacks'
+    Stacks: 'stacks'
 } as const;
 type StacksChainChainTypeEnum = typeof StacksChainChainTypeEnum[keyof typeof StacksChainChainTypeEnum];
 

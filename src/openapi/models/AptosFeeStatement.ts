@@ -84,3 +84,4 @@ function AptosFeeStatementFromJSONTyped(json: any, _ignoreDiscriminator: boolean
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }
+

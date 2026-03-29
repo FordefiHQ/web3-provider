@@ -49,3 +49,4 @@ function CreateStarknetTransactionRequestDetailsToJSONTyped(value?: CreateStarkn
             return value;
     }
 }
+

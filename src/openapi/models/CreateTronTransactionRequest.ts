@@ -82,7 +82,7 @@ export interface CreateTronTransactionRequest {
  * 
  */
 const CreateTronTransactionRequestTypeEnum = {
-    tronTransaction: 'tron_transaction'
+    TronTransaction: 'tron_transaction'
 } as const;
 type CreateTronTransactionRequestTypeEnum = typeof CreateTronTransactionRequestTypeEnum[keyof typeof CreateTronTransactionRequestTypeEnum];
 

@@ -15,10 +15,10 @@
  * @export
  */
 export const RiskRating = {
-    low: 'low',
-    medium: 'medium',
-    high: 'high',
-    severe: 'severe'
+    Low: 'low',
+    Medium: 'medium',
+    High: 'high',
+    Severe: 'severe'
 } as const;
 export type RiskRating = typeof RiskRating[keyof typeof RiskRating];
 
@@ -29,3 +29,4 @@ export function RiskRatingFromJSON(json: any): RiskRating {
 function RiskRatingFromJSONTyped(json: any, _ignoreDiscriminator: boolean): RiskRating {
     return json as RiskRating;
 }
+

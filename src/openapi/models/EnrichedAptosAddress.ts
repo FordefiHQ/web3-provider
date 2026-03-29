@@ -62,7 +62,7 @@ export interface EnrichedAptosAddress {
  * 
  */
 const EnrichedAptosAddressTypeEnum = {
-    aptos: 'aptos'
+    Aptos: 'aptos'
 } as const;
 type EnrichedAptosAddressTypeEnum = typeof EnrichedAptosAddressTypeEnum[keyof typeof EnrichedAptosAddressTypeEnum];
 

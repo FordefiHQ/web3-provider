@@ -49,3 +49,4 @@ function EvmDataRequestToJSONTyped(value?: EvmDataRequest | null, _ignoreDiscrim
             return value;
     }
 }
+

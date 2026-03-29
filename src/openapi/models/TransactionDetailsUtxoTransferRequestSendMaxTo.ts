@@ -55,3 +55,4 @@ function TransactionDetailsUtxoTransferRequestSendMaxToToJSONTyped(value?: Trans
             return value;
     }
 }
+

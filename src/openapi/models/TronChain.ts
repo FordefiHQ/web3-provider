@@ -40,7 +40,7 @@ export interface TronChain {
  * 
  */
 const TronChainChainTypeEnum = {
-    tron: 'tron'
+    Tron: 'tron'
 } as const;
 type TronChainChainTypeEnum = typeof TronChainChainTypeEnum[keyof typeof TronChainChainTypeEnum];
 

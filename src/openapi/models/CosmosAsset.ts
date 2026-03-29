@@ -96,7 +96,7 @@ export interface CosmosAsset {
      * @memberof CosmosAsset
      * @deprecated
      */
-    details: Details;
+    details?: Details;
 }
 
 
@@ -104,7 +104,7 @@ export interface CosmosAsset {
  * 
  */
 const CosmosAssetTypeEnum = {
-    cosmosAsset: 'cosmos_asset'
+    CosmosAsset: 'cosmos_asset'
 } as const;
 type CosmosAssetTypeEnum = typeof CosmosAssetTypeEnum[keyof typeof CosmosAssetTypeEnum];
 
@@ -124,6 +124,6 @@ export function CosmosAssetFromJSONTyped(json: any, _ignoreDiscriminator: boolea
         'assetIdentifier': EnrichedAssetIdentifierFromJSON(json['asset_identifier']),
         'metadataUri': json['metadata_uri'] == null ? undefined : json['metadata_uri'],
         'type': json['type'],
-        'details': DetailsFromJSON(json['details']),
+        'details': json['details'] == null ? undefined : DetailsFromJSON(json['details']),
     };
 }

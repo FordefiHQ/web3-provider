@@ -35,7 +35,7 @@ export interface SuiPureStringInput {
  * 
  */
 const SuiPureStringInputTypeEnum = {
-    stringPureInput: 'string_pure_input'
+    StringPureInput: 'string_pure_input'
 } as const;
 type SuiPureStringInputTypeEnum = typeof SuiPureStringInputTypeEnum[keyof typeof SuiPureStringInputTypeEnum];
 

@@ -84,7 +84,7 @@ export interface CreateAptosSerializedRawTransactionRequest {
  * 
  */
 const CreateAptosSerializedRawTransactionRequestTypeEnum = {
-    aptosSerializedEntryPointPayload: 'aptos_serialized_entry_point_payload'
+    AptosSerializedEntryPointPayload: 'aptos_serialized_entry_point_payload'
 } as const;
 type CreateAptosSerializedRawTransactionRequestTypeEnum = typeof CreateAptosSerializedRawTransactionRequestTypeEnum[keyof typeof CreateAptosSerializedRawTransactionRequestTypeEnum];
 

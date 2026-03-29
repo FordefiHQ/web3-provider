@@ -58,7 +58,7 @@ export interface DynamicGas {
  * 
  */
 const DynamicGasTypeEnum = {
-    dynamic: 'dynamic'
+    Dynamic: 'dynamic'
 } as const;
 type DynamicGasTypeEnum = typeof DynamicGasTypeEnum[keyof typeof DynamicGasTypeEnum];
 

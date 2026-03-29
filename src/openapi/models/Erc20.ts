@@ -64,7 +64,7 @@ export interface Erc20 {
  * 
  */
 const Erc20TypeEnum = {
-    erc20: 'erc20'
+    Erc20: 'erc20'
 } as const;
 type Erc20TypeEnum = typeof Erc20TypeEnum[keyof typeof Erc20TypeEnum];
 

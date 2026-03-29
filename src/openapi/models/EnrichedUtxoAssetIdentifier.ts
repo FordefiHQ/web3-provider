@@ -40,7 +40,7 @@ export interface EnrichedUtxoAssetIdentifier {
  * 
  */
 const EnrichedUtxoAssetIdentifierTypeEnum = {
-    utxo: 'utxo'
+    Utxo: 'utxo'
 } as const;
 type EnrichedUtxoAssetIdentifierTypeEnum = typeof EnrichedUtxoAssetIdentifierTypeEnum[keyof typeof EnrichedUtxoAssetIdentifierTypeEnum];
 

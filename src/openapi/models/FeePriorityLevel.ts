@@ -15,10 +15,10 @@
  * @export
  */
 export const FeePriorityLevel = {
-    custom: 'custom',
-    low: 'low',
-    medium: 'medium',
-    high: 'high'
+    Custom: 'custom',
+    Low: 'low',
+    Medium: 'medium',
+    High: 'high'
 } as const;
 export type FeePriorityLevel = typeof FeePriorityLevel[keyof typeof FeePriorityLevel];
 
@@ -29,3 +29,4 @@ export function FeePriorityLevelFromJSON(json: any): FeePriorityLevel {
 function FeePriorityLevelFromJSONTyped(json: any, _ignoreDiscriminator: boolean): FeePriorityLevel {
     return json as FeePriorityLevel;
 }
+

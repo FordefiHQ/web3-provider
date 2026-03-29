@@ -16,7 +16,7 @@
  * @export
  */
 export const FiatCurrencySymbol = {
-    usd: 'usd'
+    Usd: 'usd'
 } as const;
 export type FiatCurrencySymbol = typeof FiatCurrencySymbol[keyof typeof FiatCurrencySymbol];
 
@@ -27,3 +27,4 @@ export function FiatCurrencySymbolFromJSON(json: any): FiatCurrencySymbol {
 function FiatCurrencySymbolFromJSONTyped(json: any, _ignoreDiscriminator: boolean): FiatCurrencySymbol {
     return json as FiatCurrencySymbol;
 }
+

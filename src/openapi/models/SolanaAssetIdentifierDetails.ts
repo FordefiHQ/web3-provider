@@ -63,3 +63,4 @@ function SolanaAssetIdentifierDetailsToJSONTyped(value?: SolanaAssetIdentifierDe
             return value;
     }
 }
+

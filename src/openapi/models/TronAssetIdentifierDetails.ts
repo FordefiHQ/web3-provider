@@ -63,3 +63,4 @@ function TronAssetIdentifierDetailsToJSONTyped(value?: TronAssetIdentifierDetail
             return value;
     }
 }
+

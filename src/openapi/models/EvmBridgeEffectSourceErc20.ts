@@ -50,7 +50,7 @@ export interface EvmBridgeEffectSourceErc20 {
  * 
  */
 const EvmBridgeEffectSourceErc20TypeEnum = {
-    erc20: 'erc20'
+    Erc20: 'erc20'
 } as const;
 type EvmBridgeEffectSourceErc20TypeEnum = typeof EvmBridgeEffectSourceErc20TypeEnum[keyof typeof EvmBridgeEffectSourceErc20TypeEnum];
 

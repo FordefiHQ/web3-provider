@@ -41,7 +41,7 @@ export interface SuiPureInputArgument {
  * 
  */
 const SuiPureInputArgumentTypeEnum = {
-    pure: 'pure'
+    Pure: 'pure'
 } as const;
 type SuiPureInputArgumentTypeEnum = typeof SuiPureInputArgumentTypeEnum[keyof typeof SuiPureInputArgumentTypeEnum];
 

@@ -28,3 +28,4 @@ export function EvmChainRequestToJSON(json: any): EvmChainRequest {
 function EvmChainRequestToJSONTyped(value?: EvmChainRequest | null, _ignoreDiscriminator: boolean = false): any {
     return value;
 }
+

@@ -43,3 +43,4 @@ function CreateCosmosTransactionRequestDetailsToJSONTyped(value?: CreateCosmosTr
             return value;
     }
 }
+

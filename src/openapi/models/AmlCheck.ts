@@ -53,3 +53,4 @@ function AmlCheckFromJSONTyped(json: any, _ignoreDiscriminator: boolean): AmlChe
         'incomingAmlCheck': json['incoming_aml_check'] == null ? undefined : IncomingAmlCheckFromJSON(json['incoming_aml_check']),
     };
 }
+

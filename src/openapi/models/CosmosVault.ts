@@ -78,10 +78,10 @@ export interface CosmosVault {
     modifiedAt: Date;
     /**
      * Metadata in a form: <str, bool | str | int | array[str]>.
-     * @type {{ [key: string]: MetadataValue | undefined; }}
+     * @type {{ [key: string]: MetadataValue; }}
      * @memberof CosmosVault
      */
-    metadata?: { [key: string]: MetadataValue | undefined; };
+    metadata?: { [key: string]: MetadataValue; };
     /**
      * The name of the vault.
      * @type {string}
@@ -193,7 +193,7 @@ export interface CosmosVault {
  * 
  */
 const CosmosVaultTypeEnum = {
-    cosmos: 'cosmos'
+    Cosmos: 'cosmos'
 } as const;
 type CosmosVaultTypeEnum = typeof CosmosVaultTypeEnum[keyof typeof CosmosVaultTypeEnum];
 

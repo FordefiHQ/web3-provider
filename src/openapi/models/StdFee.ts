@@ -74,3 +74,4 @@ function StdFeeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): StdFee {
         'feePayer': json['fee_payer'] == null ? undefined : EnrichedCosmosBechAddressFromJSON(json['fee_payer']),
     };
 }
+

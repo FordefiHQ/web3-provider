@@ -30,10 +30,10 @@ export interface EvmDataRequestFullDetails {
     methodName: string;
     /**
      * The arguments to pass into the method, as `key:value` pairs.
-     * @type {{ [key: string]: any | undefined; }}
+     * @type {{ [key: string]: any; }}
      * @memberof EvmDataRequestFullDetails
      */
-    methodArguments: { [key: string]: any | undefined; };
+    methodArguments: { [key: string]: any; };
 }
 
 
@@ -41,7 +41,7 @@ export interface EvmDataRequestFullDetails {
  * 
  */
 const EvmDataRequestFullDetailsTypeEnum = {
-    fullDetails: 'full_details'
+    FullDetails: 'full_details'
 } as const;
 type EvmDataRequestFullDetailsTypeEnum = typeof EvmDataRequestFullDetailsTypeEnum[keyof typeof EvmDataRequestFullDetailsTypeEnum];
 

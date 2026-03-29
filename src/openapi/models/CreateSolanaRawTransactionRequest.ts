@@ -22,14 +22,14 @@ import type { SolanaChainUniqueId } from './SolanaChainUniqueId';
 import {
     SolanaChainUniqueIdToJSON,
 } from './SolanaChainUniqueId';
+import type { CreateSolanaRawTransactionRequestFee } from './CreateSolanaRawTransactionRequestFee';
+import {
+    CreateSolanaRawTransactionRequestFeeToJSON,
+} from './CreateSolanaRawTransactionRequestFee';
 import type { SolanaTransactionSignaturesRequest } from './SolanaTransactionSignaturesRequest';
 import {
     SolanaTransactionSignaturesRequestToJSON,
 } from './SolanaTransactionSignaturesRequest';
-import type { BatchSolanaTransactionRequestDetailsFee } from './BatchSolanaTransactionRequestDetailsFee';
-import {
-    BatchSolanaTransactionRequestDetailsFeeToJSON,
-} from './BatchSolanaTransactionRequestDetailsFee';
 import type { PushMode } from './PushMode';
 import {
     PushModeToJSON,
@@ -75,10 +75,10 @@ export interface CreateSolanaRawTransactionRequest {
     pushMode?: PushMode;
     /**
      * 
-     * @type {BatchSolanaTransactionRequestDetailsFee}
+     * @type {CreateSolanaRawTransactionRequestFee}
      * @memberof CreateSolanaRawTransactionRequest
      */
-    fee?: BatchSolanaTransactionRequestDetailsFee;
+    fee?: CreateSolanaRawTransactionRequestFee;
     /**
      * 
      * @type {SolanaChainUniqueId}
@@ -128,7 +128,7 @@ export interface CreateSolanaRawTransactionRequest {
  * 
  */
 const CreateSolanaRawTransactionRequestTypeEnum = {
-    solanaRawTransaction: 'solana_raw_transaction'
+    SolanaRawTransaction: 'solana_raw_transaction'
 } as const;
 type CreateSolanaRawTransactionRequestTypeEnum = typeof CreateSolanaRawTransactionRequestTypeEnum[keyof typeof CreateSolanaRawTransactionRequestTypeEnum];
 
@@ -147,7 +147,7 @@ function CreateSolanaRawTransactionRequestToJSONTyped(value?: CreateSolanaRawTra
         'fail_on_prediction_failure': value['failOnPredictionFailure'],
         'skip_prediction': value['skipPrediction'],
         'push_mode': PushModeToJSON(value['pushMode']),
-        'fee': BatchSolanaTransactionRequestDetailsFeeToJSON(value['fee']),
+        'fee': CreateSolanaRawTransactionRequestFeeToJSON(value['fee']),
         'chain': SolanaChainUniqueIdToJSON(value['chain']),
         'version': SolanaMessageVersionToJSON(value['version']),
         'instructions': ((value['instructions'] as Array<any>).map(SolanaCompiledInstructionRequestToJSON)),

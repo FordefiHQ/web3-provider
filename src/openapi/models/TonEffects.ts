@@ -53,3 +53,4 @@ function TonEffectsFromJSONTyped(json: any, _ignoreDiscriminator: boolean): TonE
         'transfers': ((json['transfers'] as Array<any>).map(TonTransferEffectFromJSON)),
     };
 }
+

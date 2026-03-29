@@ -61,3 +61,4 @@ function UtxoMessageDetailsToJSONTyped(value?: UtxoMessageDetails | null, _ignor
         'raw_data': value['rawData'],
     };
 }
+

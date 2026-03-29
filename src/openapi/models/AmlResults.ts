@@ -60,3 +60,4 @@ function AmlResultsFromJSONTyped(json: any, _ignoreDiscriminator: boolean): AmlR
         'scanResults': json['scan_results'] == null ? undefined : ChainalysisScanResultFromJSON(json['scan_results']),
     };
 }
+

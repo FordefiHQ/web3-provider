@@ -96,7 +96,7 @@ export interface SolanaAsset {
      * @memberof SolanaAsset
      * @deprecated
      */
-    details: Details1;
+    details?: Details1;
 }
 
 
@@ -104,7 +104,7 @@ export interface SolanaAsset {
  * 
  */
 const SolanaAssetTypeEnum = {
-    solanaAsset: 'solana_asset'
+    SolanaAsset: 'solana_asset'
 } as const;
 type SolanaAssetTypeEnum = typeof SolanaAssetTypeEnum[keyof typeof SolanaAssetTypeEnum];
 
@@ -124,6 +124,6 @@ export function SolanaAssetFromJSONTyped(json: any, _ignoreDiscriminator: boolea
         'assetIdentifier': EnrichedAssetIdentifierFromJSON(json['asset_identifier']),
         'metadataUri': json['metadata_uri'] == null ? undefined : json['metadata_uri'],
         'type': json['type'],
-        'details': Details1FromJSON(json['details']),
+        'details': json['details'] == null ? undefined : Details1FromJSON(json['details']),
     };
 }

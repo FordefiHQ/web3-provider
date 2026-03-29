@@ -46,7 +46,7 @@ export interface SolanaPersonalMessageRequest {
  * 
  */
 const SolanaPersonalMessageRequestTypeEnum = {
-    personalMessageType: 'personal_message_type'
+    PersonalMessageType: 'personal_message_type'
 } as const;
 type SolanaPersonalMessageRequestTypeEnum = typeof SolanaPersonalMessageRequestTypeEnum[keyof typeof SolanaPersonalMessageRequestTypeEnum];
 

@@ -53,3 +53,4 @@ function TronEffectsFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Tro
         'transfers': ((json['transfers'] as Array<any>).map(TronTransferEffectFromJSON)),
     };
 }
+

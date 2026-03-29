@@ -35,7 +35,7 @@ export interface UtxoOutputToVaultIdRequest {
  * 
  */
 const UtxoOutputToVaultIdRequestTypeEnum = {
-    vaultId: 'vault_id'
+    VaultId: 'vault_id'
 } as const;
 type UtxoOutputToVaultIdRequestTypeEnum = typeof UtxoOutputToVaultIdRequestTypeEnum[keyof typeof UtxoOutputToVaultIdRequestTypeEnum];
 

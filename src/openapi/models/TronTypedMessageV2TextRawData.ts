@@ -35,7 +35,7 @@ export interface TronTypedMessageV2TextRawData {
  * 
  */
 const TronTypedMessageV2TextRawDataFormatEnum = {
-    text: 'text'
+    Text: 'text'
 } as const;
 type TronTypedMessageV2TextRawDataFormatEnum = typeof TronTypedMessageV2TextRawDataFormatEnum[keyof typeof TronTypedMessageV2TextRawDataFormatEnum];
 

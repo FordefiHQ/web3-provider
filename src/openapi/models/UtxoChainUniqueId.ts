@@ -15,12 +15,13 @@
  * @export
  */
 export const UtxoChainUniqueId = {
-    bitcoinMainnet: 'bitcoin_mainnet',
-    bitcoinTestnet: 'bitcoin_testnet',
-    bitcoinTestnetV4: 'bitcoin_testnet_v4',
-    dogecoinMainnet: 'dogecoin_mainnet',
-    bitcoinCashMainnet: 'bitcoin_cash_mainnet',
-    pearlMainnet: 'pearl_mainnet'
+    BitcoinMainnet: 'bitcoin_mainnet',
+    BitcoinTestnet: 'bitcoin_testnet',
+    BitcoinTestnetV4: 'bitcoin_testnet_v4',
+    DogecoinMainnet: 'dogecoin_mainnet',
+    BitcoinCashMainnet: 'bitcoin_cash_mainnet',
+    PearlTestnet: 'pearl_testnet',
+    PearlMainnet: 'pearl_mainnet'
 } as const;
 export type UtxoChainUniqueId = typeof UtxoChainUniqueId[keyof typeof UtxoChainUniqueId];
 
@@ -35,3 +36,4 @@ function UtxoChainUniqueIdFromJSONTyped(json: any, _ignoreDiscriminator: boolean
 export function UtxoChainUniqueIdToJSON(value?: UtxoChainUniqueId | null): any {
     return value as any;
 }
+

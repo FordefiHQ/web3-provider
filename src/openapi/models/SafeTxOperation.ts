@@ -15,8 +15,8 @@
  * @export
  */
 export const SafeTxOperation = {
-    call: 'call',
-    delegateCall: 'delegate_call'
+    Call: 'call',
+    DelegateCall: 'delegate_call'
 } as const;
 export type SafeTxOperation = typeof SafeTxOperation[keyof typeof SafeTxOperation];
 
@@ -27,3 +27,4 @@ export function SafeTxOperationFromJSON(json: any): SafeTxOperation {
 function SafeTxOperationFromJSONTyped(json: any, _ignoreDiscriminator: boolean): SafeTxOperation {
     return json as SafeTxOperation;
 }
+

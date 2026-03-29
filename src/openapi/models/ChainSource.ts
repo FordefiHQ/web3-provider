@@ -15,8 +15,8 @@
  * @export
  */
 export const ChainSource = {
-    default: 'default',
-    custom: 'custom'
+    Default: 'default',
+    Custom: 'custom'
 } as const;
 export type ChainSource = typeof ChainSource[keyof typeof ChainSource];
 
@@ -27,3 +27,4 @@ export function ChainSourceFromJSON(json: any): ChainSource {
 function ChainSourceFromJSONTyped(json: any, _ignoreDiscriminator: boolean): ChainSource {
     return json as ChainSource;
 }
+

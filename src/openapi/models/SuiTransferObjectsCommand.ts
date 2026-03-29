@@ -47,7 +47,7 @@ export interface SuiTransferObjectsCommand {
  * 
  */
 const SuiTransferObjectsCommandTypeEnum = {
-    transferObjects: 'transfer_objects'
+    TransferObjects: 'transfer_objects'
 } as const;
 type SuiTransferObjectsCommandTypeEnum = typeof SuiTransferObjectsCommandTypeEnum[keyof typeof SuiTransferObjectsCommandTypeEnum];
 

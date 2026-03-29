@@ -62,7 +62,7 @@ export interface EnrichedTronAddress {
  * 
  */
 const EnrichedTronAddressTypeEnum = {
-    tron: 'tron'
+    Tron: 'tron'
 } as const;
 type EnrichedTronAddressTypeEnum = typeof EnrichedTronAddressTypeEnum[keyof typeof EnrichedTronAddressTypeEnum];
 

@@ -66,7 +66,7 @@ export interface EnrichedCosmosBechAddress {
  * 
  */
 const EnrichedCosmosBechAddressTypeEnum = {
-    cosmos: 'cosmos'
+    Cosmos: 'cosmos'
 } as const;
 type EnrichedCosmosBechAddressTypeEnum = typeof EnrichedCosmosBechAddressTypeEnum[keyof typeof EnrichedCosmosBechAddressTypeEnum];
 

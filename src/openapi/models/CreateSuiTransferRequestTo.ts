@@ -49,3 +49,4 @@ function CreateSuiTransferRequestToToJSONTyped(value?: CreateSuiTransferRequestT
             return value;
     }
 }
+

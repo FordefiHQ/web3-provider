@@ -68,3 +68,4 @@ function SuiObjectRefToJSONTyped(value?: SuiObjectRef | null, _ignoreDiscriminat
         'version': value['version'],
     };
 }
+

@@ -49,3 +49,4 @@ function SignatureFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Signa
         'signedBy': json['signed_by'] == null ? undefined : SignatureSignedByFromJSON(json['signed_by']),
     };
 }
+

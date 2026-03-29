@@ -63,3 +63,4 @@ function PolicyMatchFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Pol
         'actionType': TransactionPolicyMatchActionTypeFromJSON(json['action_type']),
     };
 }
+

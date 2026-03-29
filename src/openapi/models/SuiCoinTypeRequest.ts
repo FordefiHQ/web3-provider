@@ -66,3 +66,4 @@ function SuiCoinTypeRequestToJSONTyped(value?: SuiCoinTypeRequest | null, _ignor
         'coin_type_str': value['coinTypeStr'],
     };
 }
+

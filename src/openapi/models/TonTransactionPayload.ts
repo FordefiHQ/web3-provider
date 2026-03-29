@@ -79,3 +79,4 @@ function TonTransactionPayloadToJSONTyped(value?: TonTransactionPayload | null, 
         'messages': ((value['messages'] as Array<any>).map(TonTransactionMessageToJSON)),
     };
 }
+

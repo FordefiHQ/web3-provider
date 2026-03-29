@@ -37,7 +37,7 @@ export interface BridgeDetails {
      * @memberof BridgeDetails
      * @deprecated
      */
-    bridgeEffect: EvmBridgeEffect;
+    bridgeEffect?: EvmBridgeEffect;
     /**
      * The bridge effects of the transaction.
      * @type {EvmBridgesEffect}
@@ -51,7 +51,7 @@ export interface BridgeDetails {
  * 
  */
 const BridgeDetailsTypeEnum = {
-    crossChainBridge: 'cross_chain_bridge'
+    CrossChainBridge: 'cross_chain_bridge'
 } as const;
 type BridgeDetailsTypeEnum = typeof BridgeDetailsTypeEnum[keyof typeof BridgeDetailsTypeEnum];
 
@@ -62,7 +62,7 @@ export function BridgeDetailsFromJSONTyped(json: any, _ignoreDiscriminator: bool
     return {
         
         'type': json['type'],
-        'bridgeEffect': EvmBridgeEffectFromJSON(json['bridge_effect']),
+        'bridgeEffect': json['bridge_effect'] == null ? undefined : EvmBridgeEffectFromJSON(json['bridge_effect']),
         'bridgeEffects': EvmBridgesEffectFromJSON(json['bridge_effects']),
     };
 }

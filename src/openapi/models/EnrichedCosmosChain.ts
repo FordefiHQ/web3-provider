@@ -102,7 +102,7 @@ export interface EnrichedCosmosChain {
  * 
  */
 const EnrichedCosmosChainChainTypeEnum = {
-    cosmos: 'cosmos'
+    Cosmos: 'cosmos'
 } as const;
 type EnrichedCosmosChainChainTypeEnum = typeof EnrichedCosmosChainChainTypeEnum[keyof typeof EnrichedCosmosChainChainTypeEnum];
 

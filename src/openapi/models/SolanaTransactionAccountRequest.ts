@@ -59,3 +59,4 @@ function SolanaTransactionAccountRequestToJSONTyped(value?: SolanaTransactionAcc
         'ephemeral_key': value['ephemeralKey'],
     };
 }
+

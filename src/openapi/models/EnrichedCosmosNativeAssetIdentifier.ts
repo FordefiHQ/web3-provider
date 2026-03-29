@@ -50,7 +50,7 @@ export interface EnrichedCosmosNativeAssetIdentifier {
  * 
  */
 const EnrichedCosmosNativeAssetIdentifierTypeEnum = {
-    native: 'native'
+    Native: 'native'
 } as const;
 type EnrichedCosmosNativeAssetIdentifierTypeEnum = typeof EnrichedCosmosNativeAssetIdentifierTypeEnum[keyof typeof EnrichedCosmosNativeAssetIdentifierTypeEnum];
 

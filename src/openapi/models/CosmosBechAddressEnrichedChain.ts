@@ -78,3 +78,4 @@ function CosmosBechAddressEnrichedChainFromJSONTyped(json: any, _ignoreDiscrimin
         'enrichedChain': EnrichedCosmosChainFromJSON(json['enriched_chain']),
     };
 }
+

@@ -50,7 +50,7 @@ export interface StarknetAssetIdentifier {
  * 
  */
 const StarknetAssetIdentifierTypeEnum = {
-    starknet: 'starknet'
+    Starknet: 'starknet'
 } as const;
 type StarknetAssetIdentifierTypeEnum = typeof StarknetAssetIdentifierTypeEnum[keyof typeof StarknetAssetIdentifierTypeEnum];
 

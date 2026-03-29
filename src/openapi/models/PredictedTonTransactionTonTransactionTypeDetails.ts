@@ -49,3 +49,4 @@ function PredictedTonTransactionTonTransactionTypeDetailsFromJSONTyped(json: any
             return json;
     }
 }
+

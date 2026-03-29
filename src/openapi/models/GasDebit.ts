@@ -63,3 +63,4 @@ function GasDebitFromJSONTyped(json: any, _ignoreDiscriminator: boolean): GasDeb
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }
+

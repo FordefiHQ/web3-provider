@@ -15,10 +15,10 @@
  * @export
  */
 export const AptosReversionState = {
-    notReverted: 'not_reverted',
-    unknownRevert: 'unknown_revert',
-    contractAsserted: 'contract_asserted',
-    insufficientFundsGasAndValue: 'insufficient_funds_gas_and_value'
+    NotReverted: 'not_reverted',
+    UnknownRevert: 'unknown_revert',
+    ContractAsserted: 'contract_asserted',
+    InsufficientFundsGasAndValue: 'insufficient_funds_gas_and_value'
 } as const;
 export type AptosReversionState = typeof AptosReversionState[keyof typeof AptosReversionState];
 
@@ -29,3 +29,4 @@ export function AptosReversionStateFromJSON(json: any): AptosReversionState {
 function AptosReversionStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): AptosReversionState {
     return json as AptosReversionState;
 }
+

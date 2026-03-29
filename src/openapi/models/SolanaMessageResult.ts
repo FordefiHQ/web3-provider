@@ -42,3 +42,4 @@ function SolanaMessageResultFromJSONTyped(json: any, _ignoreDiscriminator: boole
         'effects': SolanaEffectsFromJSON(json['effects']),
     };
 }
+

@@ -60,3 +60,4 @@ function EvmAddressRequestToJSONTyped(value?: EvmAddressRequest | null, _ignoreD
         'hex_repr': value['hexRepr'],
     };
 }
+

@@ -43,3 +43,4 @@ function CosmosCoinWithAmountCoinWithAmountFromJSONTyped(json: any, _ignoreDiscr
             return json;
     }
 }
+

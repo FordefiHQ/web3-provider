@@ -72,3 +72,4 @@ function BlockchainExplorerFromJSONTyped(json: any, _ignoreDiscriminator: boolea
         'assetFormatUrl': json['asset_format_url'] == null ? undefined : json['asset_format_url'],
     };
 }
+

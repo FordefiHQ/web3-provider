@@ -53,3 +53,4 @@ function StarknetEffectsFromJSONTyped(json: any, _ignoreDiscriminator: boolean):
         'transfers': ((json['transfers'] as Array<any>).map(StarknetTransferEffectFromJSON)),
     };
 }
+

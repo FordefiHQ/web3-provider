@@ -72,7 +72,7 @@ export interface CreateEvmRawTransactionRequest {
      */
     pushMode?: PushMode;
     /**
-     * Use a MEV protected node to send the transaction. By using a MEV protected node, you avoid maximal extractable value (MEV) attacks.
+     * Use an MEV protected node to send the transaction. By using an MEV protected node, you avoid maximal extractable value (MEV) attacks.
      * @type {boolean}
      * @memberof CreateEvmRawTransactionRequest
      */
@@ -134,7 +134,7 @@ export interface CreateEvmRawTransactionRequest {
  * @export
  */
 export const CreateEvmRawTransactionRequestTypeEnum = {
-    evmRawTransaction: 'evm_raw_transaction'
+    EvmRawTransaction: 'evm_raw_transaction'
 } as const;
 export type CreateEvmRawTransactionRequestTypeEnum = typeof CreateEvmRawTransactionRequestTypeEnum[keyof typeof CreateEvmRawTransactionRequestTypeEnum];
 
@@ -165,3 +165,4 @@ function CreateEvmRawTransactionRequestToJSONTyped(value?: CreateEvmRawTransacti
         'data': EvmDataRequestToJSON(value['data']),
     };
 }
+

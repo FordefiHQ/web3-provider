@@ -40,7 +40,7 @@ export interface AllowanceDetails {
  * 
  */
 const AllowanceDetailsTypeEnum = {
-    allowance: 'allowance'
+    Allowance: 'allowance'
 } as const;
 type AllowanceDetailsTypeEnum = typeof AllowanceDetailsTypeEnum[keyof typeof AllowanceDetailsTypeEnum];
 

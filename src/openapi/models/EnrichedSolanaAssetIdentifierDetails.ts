@@ -43,3 +43,4 @@ function EnrichedSolanaAssetIdentifierDetailsFromJSONTyped(json: any, _ignoreDis
             return json;
     }
 }
+

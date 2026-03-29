@@ -40,7 +40,7 @@ export interface FeePriorityRequest {
  * 
  */
 const FeePriorityRequestTypeEnum = {
-    priority: 'priority'
+    Priority: 'priority'
 } as const;
 type FeePriorityRequestTypeEnum = typeof FeePriorityRequestTypeEnum[keyof typeof FeePriorityRequestTypeEnum];
 

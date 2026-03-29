@@ -49,3 +49,4 @@ function SetCodeAuthorizationEffectFromJSONTyped(json: any, _ignoreDiscriminator
         'contract': EnrichedEvmAddressFromJSON(json['contract']),
     };
 }
+

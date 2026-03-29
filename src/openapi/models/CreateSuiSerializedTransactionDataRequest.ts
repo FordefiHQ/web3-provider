@@ -68,7 +68,7 @@ export interface CreateSuiSerializedTransactionDataRequest {
  * 
  */
 const CreateSuiSerializedTransactionDataRequestTypeEnum = {
-    suiBinaryCanonicalSerialization: 'sui_binary_canonical_serialization'
+    SuiBinaryCanonicalSerialization: 'sui_binary_canonical_serialization'
 } as const;
 type CreateSuiSerializedTransactionDataRequestTypeEnum = typeof CreateSuiSerializedTransactionDataRequestTypeEnum[keyof typeof CreateSuiSerializedTransactionDataRequestTypeEnum];
 

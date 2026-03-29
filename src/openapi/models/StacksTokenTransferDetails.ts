@@ -52,7 +52,7 @@ export interface StacksTokenTransferDetails {
  * 
  */
 const StacksTokenTransferDetailsTypeEnum = {
-    tokenTransfer: 'token_transfer'
+    TokenTransfer: 'token_transfer'
 } as const;
 type StacksTokenTransferDetailsTypeEnum = typeof StacksTokenTransferDetailsTypeEnum[keyof typeof StacksTokenTransferDetailsTypeEnum];
 

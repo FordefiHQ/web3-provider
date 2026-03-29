@@ -15,10 +15,10 @@
  * @export
  */
 export const AllowanceEffectType = {
-    erc20: 'erc20',
-    erc721: 'erc721',
-    erc721ForAll: 'erc721_for_all',
-    erc1155ForAll: 'erc1155_for_all'
+    Erc20: 'erc20',
+    Erc721: 'erc721',
+    Erc721ForAll: 'erc721_for_all',
+    Erc1155ForAll: 'erc1155_for_all'
 } as const;
 export type AllowanceEffectType = typeof AllowanceEffectType[keyof typeof AllowanceEffectType];
 
@@ -29,3 +29,4 @@ export function AllowanceEffectTypeFromJSON(json: any): AllowanceEffectType {
 function AllowanceEffectTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): AllowanceEffectType {
     return json as AllowanceEffectType;
 }
+

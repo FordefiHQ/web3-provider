@@ -46,7 +46,7 @@ export interface SuiProgrammableTransactionBlockDetails {
  * 
  */
 const SuiProgrammableTransactionBlockDetailsTypeEnum = {
-    programmableTransactionBlock: 'programmable_transaction_block'
+    ProgrammableTransactionBlock: 'programmable_transaction_block'
 } as const;
 type SuiProgrammableTransactionBlockDetailsTypeEnum = typeof SuiProgrammableTransactionBlockDetailsTypeEnum[keyof typeof SuiProgrammableTransactionBlockDetailsTypeEnum];
 

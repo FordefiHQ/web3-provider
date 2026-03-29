@@ -43,3 +43,4 @@ function CreateUtxoTransactionRequestDetailsToJSONTyped(value?: CreateUtxoTransa
             return value;
     }
 }
+

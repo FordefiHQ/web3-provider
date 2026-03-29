@@ -40,7 +40,7 @@ export interface AptosAssetIdentifierRequest {
  * 
  */
 const AptosAssetIdentifierRequestTypeEnum = {
-    aptos: 'aptos'
+    Aptos: 'aptos'
 } as const;
 type AptosAssetIdentifierRequestTypeEnum = typeof AptosAssetIdentifierRequestTypeEnum[keyof typeof AptosAssetIdentifierRequestTypeEnum];
 

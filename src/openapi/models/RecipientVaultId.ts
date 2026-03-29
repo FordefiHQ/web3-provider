@@ -35,7 +35,7 @@ export interface RecipientVaultId {
  * 
  */
 const RecipientVaultIdTypeEnum = {
-    vaultId: 'vault_id'
+    VaultId: 'vault_id'
 } as const;
 type RecipientVaultIdTypeEnum = typeof RecipientVaultIdTypeEnum[keyof typeof RecipientVaultIdTypeEnum];
 

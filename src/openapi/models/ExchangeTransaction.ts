@@ -194,7 +194,7 @@ export interface ExchangeTransaction {
  * 
  */
 const ExchangeTransactionTypeEnum = {
-    exchangeTransaction: 'exchange_transaction'
+    ExchangeTransaction: 'exchange_transaction'
 } as const;
 type ExchangeTransactionTypeEnum = typeof ExchangeTransactionTypeEnum[keyof typeof ExchangeTransactionTypeEnum];
 

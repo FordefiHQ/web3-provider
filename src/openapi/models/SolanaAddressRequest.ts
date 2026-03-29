@@ -66,3 +66,4 @@ function SolanaAddressRequestToJSONTyped(value?: SolanaAddressRequest | null, _i
         'base58_repr': value['base58Repr'],
     };
 }
+

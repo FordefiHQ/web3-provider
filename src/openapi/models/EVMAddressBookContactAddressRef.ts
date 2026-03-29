@@ -46,7 +46,7 @@ export interface EVMAddressBookContactAddressRef {
  * 
  */
 const EVMAddressBookContactAddressRefChainTypeEnum = {
-    evm: 'evm'
+    Evm: 'evm'
 } as const;
 type EVMAddressBookContactAddressRefChainTypeEnum = typeof EVMAddressBookContactAddressRefChainTypeEnum[keyof typeof EVMAddressBookContactAddressRefChainTypeEnum];
 

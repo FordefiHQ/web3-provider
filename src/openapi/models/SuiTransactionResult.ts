@@ -71,3 +71,4 @@ function SuiTransactionResultFromJSONTyped(json: any, _ignoreDiscriminator: bool
         'effects': SuiEffectsFromJSON(json['effects']),
     };
 }
+

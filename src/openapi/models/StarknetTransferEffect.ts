@@ -67,3 +67,4 @@ function StarknetTransferEffectFromJSONTyped(json: any, _ignoreDiscriminator: bo
         'to': EnrichedStarknetAddressFromJSON(json['to']),
     };
 }
+

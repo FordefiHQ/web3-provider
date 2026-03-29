@@ -15,9 +15,9 @@
  * @export
  */
 export const TransactionSpamState = {
-    unset: 'unset',
-    manuallySet: 'manually_set',
-    automaticallySet: 'automatically_set'
+    Unset: 'unset',
+    ManuallySet: 'manually_set',
+    AutomaticallySet: 'automatically_set'
 } as const;
 export type TransactionSpamState = typeof TransactionSpamState[keyof typeof TransactionSpamState];
 
@@ -28,3 +28,4 @@ export function TransactionSpamStateFromJSON(json: any): TransactionSpamState {
 function TransactionSpamStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): TransactionSpamState {
     return json as TransactionSpamState;
 }
+

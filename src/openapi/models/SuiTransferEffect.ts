@@ -67,3 +67,4 @@ function SuiTransferEffectFromJSONTyped(json: any, _ignoreDiscriminator: boolean
         'to': EnrichedSuiAddressFromJSON(json['to']),
     };
 }
+

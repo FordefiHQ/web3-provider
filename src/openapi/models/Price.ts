@@ -27,7 +27,7 @@ export interface Price {
      * @memberof Price
      * @deprecated
      */
-    price: string;
+    price?: string;
     /**
      * The price in the given fiat currency.
      * @type {string}
@@ -52,8 +52,9 @@ function PriceFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Price {
     }
     return {
         
-        'price': json['price'],
+        'price': json['price'] == null ? undefined : json['price'],
         'priceFloat': json['price_float'],
         'fiatCurrency': FiatCurrencyFromJSON(json['fiat_currency']),
     };
 }
+

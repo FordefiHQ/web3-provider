@@ -73,3 +73,4 @@ function HyperliquidTypedMessageEvmMessageActionTypeFromJSONTyped(json: any, _ig
             return json;
     }
 }
+

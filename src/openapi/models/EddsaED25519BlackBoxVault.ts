@@ -29,7 +29,7 @@ export interface EddsaED25519BlackBoxVault {
  * 
  */
 const EddsaED25519BlackBoxVaultTypeEnum = {
-    eddsaEd25519: 'eddsa_ed25519'
+    EddsaEd25519: 'eddsa_ed25519'
 } as const;
 type EddsaED25519BlackBoxVaultTypeEnum = typeof EddsaED25519BlackBoxVaultTypeEnum[keyof typeof EddsaED25519BlackBoxVaultTypeEnum];
 

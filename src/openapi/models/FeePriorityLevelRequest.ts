@@ -15,12 +15,13 @@
  * @export
  */
 export const FeePriorityLevelRequest = {
-    low: 'low',
-    medium: 'medium',
-    high: 'high'
+    Low: 'low',
+    Medium: 'medium',
+    High: 'high'
 } as const;
 export type FeePriorityLevelRequest = typeof FeePriorityLevelRequest[keyof typeof FeePriorityLevelRequest];
 
 export function FeePriorityLevelRequestToJSON(value?: FeePriorityLevelRequest | null): any {
     return value as any;
 }
+

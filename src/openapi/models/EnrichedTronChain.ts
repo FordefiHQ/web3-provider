@@ -86,7 +86,7 @@ export interface EnrichedTronChain {
  * 
  */
 const EnrichedTronChainChainTypeEnum = {
-    tron: 'tron'
+    Tron: 'tron'
 } as const;
 type EnrichedTronChainChainTypeEnum = typeof EnrichedTronChainChainTypeEnum[keyof typeof EnrichedTronChainChainTypeEnum];
 

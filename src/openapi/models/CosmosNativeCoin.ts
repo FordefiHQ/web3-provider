@@ -85,7 +85,7 @@ export interface CosmosNativeCoin {
  * 
  */
 const CosmosNativeCoinTypeEnum = {
-    native: 'native'
+    Native: 'native'
 } as const;
 type CosmosNativeCoinTypeEnum = typeof CosmosNativeCoinTypeEnum[keyof typeof CosmosNativeCoinTypeEnum];
 

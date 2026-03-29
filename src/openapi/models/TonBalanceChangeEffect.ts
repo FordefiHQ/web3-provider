@@ -60,3 +60,4 @@ function TonBalanceChangeEffectFromJSONTyped(json: any, _ignoreDiscriminator: bo
         'address': EnrichedTonAddressFromJSON(json['address']),
     };
 }
+

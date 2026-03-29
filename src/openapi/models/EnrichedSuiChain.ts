@@ -86,7 +86,7 @@ export interface EnrichedSuiChain {
  * 
  */
 const EnrichedSuiChainChainTypeEnum = {
-    sui: 'sui'
+    Sui: 'sui'
 } as const;
 type EnrichedSuiChainChainTypeEnum = typeof EnrichedSuiChainChainTypeEnum[keyof typeof EnrichedSuiChainChainTypeEnum];
 

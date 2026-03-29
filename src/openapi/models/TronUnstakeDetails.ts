@@ -52,7 +52,7 @@ export interface TronUnstakeDetails {
  * 
  */
 const TronUnstakeDetailsTypeEnum = {
-    unstake: 'unstake'
+    Unstake: 'unstake'
 } as const;
 type TronUnstakeDetailsTypeEnum = typeof TronUnstakeDetailsTypeEnum[keyof typeof TronUnstakeDetailsTypeEnum];
 

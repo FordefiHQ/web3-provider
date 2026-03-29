@@ -52,7 +52,7 @@ export interface TronNativeTransferDetails {
  * 
  */
 const TronNativeTransferDetailsTypeEnum = {
-    nativeTransfer: 'native_transfer'
+    NativeTransfer: 'native_transfer'
 } as const;
 type TronNativeTransferDetailsTypeEnum = typeof TronNativeTransferDetailsTypeEnum[keyof typeof TronNativeTransferDetailsTypeEnum];
 

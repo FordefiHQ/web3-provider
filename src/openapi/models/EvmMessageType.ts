@@ -15,9 +15,9 @@
  * @export
  */
 export const EvmMessageType = {
-    personalMessageType: 'personal_message_type',
-    typedMessageType: 'typed_message_type',
-    typedMessageTypeV1: 'typed_message_type_v1'
+    PersonalMessageType: 'personal_message_type',
+    TypedMessageType: 'typed_message_type',
+    TypedMessageTypeV1: 'typed_message_type_v1'
 } as const;
 export type EvmMessageType = typeof EvmMessageType[keyof typeof EvmMessageType];
 
@@ -28,3 +28,4 @@ export function EvmMessageTypeFromJSON(json: any): EvmMessageType {
 function EvmMessageTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): EvmMessageType {
     return json as EvmMessageType;
 }
+

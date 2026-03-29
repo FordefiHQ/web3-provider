@@ -15,7 +15,7 @@
  * @export
  */
 export const StarknetMessageType = {
-    typedMessageType: 'typed_message_type'
+    TypedMessageType: 'typed_message_type'
 } as const;
 export type StarknetMessageType = typeof StarknetMessageType[keyof typeof StarknetMessageType];
 
@@ -26,3 +26,4 @@ export function StarknetMessageTypeFromJSON(json: any): StarknetMessageType {
 function StarknetMessageTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): StarknetMessageType {
     return json as StarknetMessageType;
 }
+

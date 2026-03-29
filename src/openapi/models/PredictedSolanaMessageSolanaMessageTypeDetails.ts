@@ -43,3 +43,4 @@ function PredictedSolanaMessageSolanaMessageTypeDetailsFromJSONTyped(json: any, 
             return json;
     }
 }
+

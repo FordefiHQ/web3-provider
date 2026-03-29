@@ -60,3 +60,4 @@ function CosmosTransactionResultFromJSONTyped(json: any, _ignoreDiscriminator: b
         'effects': CosmosEffectsFromJSON(json['effects']),
     };
 }
+

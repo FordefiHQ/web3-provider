@@ -35,7 +35,7 @@ export interface UtxoOutputToAddressRequest {
  * 
  */
 const UtxoOutputToAddressRequestTypeEnum = {
-    address: 'address'
+    Address: 'address'
 } as const;
 type UtxoOutputToAddressRequestTypeEnum = typeof UtxoOutputToAddressRequestTypeEnum[keyof typeof UtxoOutputToAddressRequestTypeEnum];
 

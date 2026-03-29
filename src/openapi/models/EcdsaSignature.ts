@@ -51,3 +51,4 @@ function EcdsaSignatureFromJSONTyped(json: any, _ignoreDiscriminator: boolean): 
         'v': json['v'],
     };
 }
+

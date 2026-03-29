@@ -60,3 +60,4 @@ function TronBalanceChangeEffectFromJSONTyped(json: any, _ignoreDiscriminator: b
         'address': EnrichedTronAddressFromJSON(json['address']),
     };
 }
+

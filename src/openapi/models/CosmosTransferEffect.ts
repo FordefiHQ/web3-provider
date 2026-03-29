@@ -67,3 +67,4 @@ function CosmosTransferEffectFromJSONTyped(json: any, _ignoreDiscriminator: bool
         'to': EnrichedCosmosBechAddressFromJSON(json['to']),
     };
 }
+

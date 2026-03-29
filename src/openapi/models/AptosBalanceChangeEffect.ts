@@ -60,3 +60,4 @@ function AptosBalanceChangeEffectFromJSONTyped(json: any, _ignoreDiscriminator: 
         'address': EnrichedAptosAddressFromJSON(json['address']),
     };
 }
+

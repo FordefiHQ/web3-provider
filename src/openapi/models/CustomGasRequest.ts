@@ -46,7 +46,7 @@ export interface CustomGasRequest {
  * @export
  */
 export const CustomGasRequestTypeEnum = {
-    custom: 'custom'
+    Custom: 'custom'
 } as const;
 export type CustomGasRequestTypeEnum = typeof CustomGasRequestTypeEnum[keyof typeof CustomGasRequestTypeEnum];
 

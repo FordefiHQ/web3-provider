@@ -49,3 +49,4 @@ function EvmAddressFromJSONTyped(json: any, _ignoreDiscriminator: boolean): EvmA
         'hexRepr': json['hex_repr'],
     };
 }
+

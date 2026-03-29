@@ -76,7 +76,7 @@ export interface AptosPersonalMessageRequest {
  * 
  */
 const AptosPersonalMessageRequestTypeEnum = {
-    personalMessageType: 'personal_message_type'
+    PersonalMessageType: 'personal_message_type'
 } as const;
 type AptosPersonalMessageRequestTypeEnum = typeof AptosPersonalMessageRequestTypeEnum[keyof typeof AptosPersonalMessageRequestTypeEnum];
 

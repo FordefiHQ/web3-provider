@@ -53,3 +53,4 @@ function UtxoTransactionResultFromJSONTyped(json: any, _ignoreDiscriminator: boo
         'effects': UtxoEffectsFromJSON(json['effects']),
     };
 }
+

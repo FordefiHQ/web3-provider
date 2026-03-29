@@ -40,7 +40,7 @@ export interface SolanaChain {
  * 
  */
 const SolanaChainChainTypeEnum = {
-    solana: 'solana'
+    Solana: 'solana'
 } as const;
 type SolanaChainChainTypeEnum = typeof SolanaChainChainTypeEnum[keyof typeof SolanaChainChainTypeEnum];
 

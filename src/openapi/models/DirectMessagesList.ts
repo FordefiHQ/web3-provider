@@ -40,7 +40,7 @@ export interface DirectMessagesList {
  * 
  */
 const DirectMessagesListFormatEnum = {
-    direct: 'direct'
+    Direct: 'direct'
 } as const;
 type DirectMessagesListFormatEnum = typeof DirectMessagesListFormatEnum[keyof typeof DirectMessagesListFormatEnum];
 

@@ -188,7 +188,7 @@ export interface UtxoMessage {
  * 
  */
 const UtxoMessageTypeEnum = {
-    utxoMessage: 'utxo_message'
+    UtxoMessage: 'utxo_message'
 } as const;
 type UtxoMessageTypeEnum = typeof UtxoMessageTypeEnum[keyof typeof UtxoMessageTypeEnum];
 

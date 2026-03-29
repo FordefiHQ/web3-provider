@@ -49,3 +49,4 @@ function SuiGasFromJSONTyped(json: any, _ignoreDiscriminator: boolean): SuiGas {
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }
+

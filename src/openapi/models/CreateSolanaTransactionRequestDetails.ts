@@ -49,3 +49,4 @@ function CreateSolanaTransactionRequestDetailsToJSONTyped(value?: CreateSolanaTr
             return value;
     }
 }
+

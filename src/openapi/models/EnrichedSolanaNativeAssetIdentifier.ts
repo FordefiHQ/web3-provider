@@ -40,7 +40,7 @@ export interface EnrichedSolanaNativeAssetIdentifier {
  * 
  */
 const EnrichedSolanaNativeAssetIdentifierTypeEnum = {
-    native: 'native'
+    Native: 'native'
 } as const;
 type EnrichedSolanaNativeAssetIdentifierTypeEnum = typeof EnrichedSolanaNativeAssetIdentifierTypeEnum[keyof typeof EnrichedSolanaNativeAssetIdentifierTypeEnum];
 

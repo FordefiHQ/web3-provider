@@ -35,7 +35,7 @@ export interface RecipientContactId {
  * 
  */
 const RecipientContactIdTypeEnum = {
-    contactId: 'contact_id'
+    ContactId: 'contact_id'
 } as const;
 type RecipientContactIdTypeEnum = typeof RecipientContactIdTypeEnum[keyof typeof RecipientContactIdTypeEnum];
 

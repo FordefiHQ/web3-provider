@@ -41,7 +41,7 @@ export interface TonJettonAssetIdentifierRequest {
  * 
  */
 const TonJettonAssetIdentifierRequestTypeEnum = {
-    jetton: 'jetton'
+    Jetton: 'jetton'
 } as const;
 type TonJettonAssetIdentifierRequestTypeEnum = typeof TonJettonAssetIdentifierRequestTypeEnum[keyof typeof TonJettonAssetIdentifierRequestTypeEnum];
 

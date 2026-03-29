@@ -64,3 +64,4 @@ function PsbtInputToJSONTyped(value?: PsbtInput | null, _ignoreDiscriminator: bo
         'disable_tweak_signer': value['disableTweakSigner'],
     };
 }
+

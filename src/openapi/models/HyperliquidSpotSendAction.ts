@@ -53,7 +53,7 @@ export interface HyperliquidSpotSendAction {
  * 
  */
 const HyperliquidSpotSendActionActionTypeEnum = {
-    spotSend: 'spot_send'
+    SpotSend: 'spot_send'
 } as const;
 type HyperliquidSpotSendActionActionTypeEnum = typeof HyperliquidSpotSendActionActionTypeEnum[keyof typeof HyperliquidSpotSendActionActionTypeEnum];
 

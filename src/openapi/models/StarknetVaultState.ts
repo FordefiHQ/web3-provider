@@ -15,9 +15,9 @@
  * @export
  */
 export const StarknetVaultState = {
-    inactive: 'inactive',
-    activating: 'activating',
-    active: 'active'
+    Inactive: 'inactive',
+    Activating: 'activating',
+    Active: 'active'
 } as const;
 export type StarknetVaultState = typeof StarknetVaultState[keyof typeof StarknetVaultState];
 
@@ -28,3 +28,4 @@ export function StarknetVaultStateFromJSON(json: any): StarknetVaultState {
 function StarknetVaultStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): StarknetVaultState {
     return json as StarknetVaultState;
 }
+

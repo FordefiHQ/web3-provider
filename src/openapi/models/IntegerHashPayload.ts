@@ -35,7 +35,7 @@ export interface IntegerHashPayload {
  * 
  */
 const IntegerHashPayloadFormatEnum = {
-    hashInteger: 'hash_integer'
+    HashInteger: 'hash_integer'
 } as const;
 type IntegerHashPayloadFormatEnum = typeof IntegerHashPayloadFormatEnum[keyof typeof IntegerHashPayloadFormatEnum];
 

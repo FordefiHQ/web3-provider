@@ -82,7 +82,7 @@ export interface CreateAptosMessageRequest {
  * 
  */
 const CreateAptosMessageRequestTypeEnum = {
-    aptosMessage: 'aptos_message'
+    AptosMessage: 'aptos_message'
 } as const;
 type CreateAptosMessageRequestTypeEnum = typeof CreateAptosMessageRequestTypeEnum[keyof typeof CreateAptosMessageRequestTypeEnum];
 

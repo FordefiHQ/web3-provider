@@ -76,7 +76,7 @@ export interface CreateEvmTransferRequest {
      */
     pushMode?: PushMode;
     /**
-     * Use a MEV protected node to send the transaction. By using a MEV protected node, you avoid maximal extractable value (MEV) attacks.
+     * Use an MEV protected node to send the transaction. By using an MEV protected node, you avoid maximal extractable value (MEV) attacks.
      * @type {boolean}
      * @memberof CreateEvmTransferRequest
      */
@@ -132,7 +132,7 @@ export interface CreateEvmTransferRequest {
  * 
  */
 const CreateEvmTransferRequestTypeEnum = {
-    evmTransfer: 'evm_transfer'
+    EvmTransfer: 'evm_transfer'
 } as const;
 type CreateEvmTransferRequestTypeEnum = typeof CreateEvmTransferRequestTypeEnum[keyof typeof CreateEvmTransferRequestTypeEnum];
 

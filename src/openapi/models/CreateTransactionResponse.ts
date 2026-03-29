@@ -157,3 +157,4 @@ function CreateTransactionResponseFromJSONTyped(json: any, _ignoreDiscriminator:
             return json;
     }
 }
+

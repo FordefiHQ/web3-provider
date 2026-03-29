@@ -60,3 +60,4 @@ function AptosGasPriceFromJSONTyped(json: any, _ignoreDiscriminator: boolean): A
         'fiatPrice': json['fiat_price'] == null ? undefined : PriceFromJSON(json['fiat_price']),
     };
 }
+

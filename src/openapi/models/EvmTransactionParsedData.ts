@@ -49,3 +49,4 @@ function EvmTransactionParsedDataFromJSONTyped(json: any, _ignoreDiscriminator: 
         'methodArguments': ((json['method_arguments'] as Array<any>).map(EvmTransactionMethodArgumentFromJSON)),
     };
 }
+

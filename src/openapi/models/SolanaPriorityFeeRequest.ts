@@ -40,7 +40,7 @@ export interface SolanaPriorityFeeRequest {
  * 
  */
 const SolanaPriorityFeeRequestTypeEnum = {
-    priority: 'priority'
+    Priority: 'priority'
 } as const;
 type SolanaPriorityFeeRequestTypeEnum = typeof SolanaPriorityFeeRequestTypeEnum[keyof typeof SolanaPriorityFeeRequestTypeEnum];
 

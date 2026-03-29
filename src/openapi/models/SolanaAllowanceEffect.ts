@@ -67,3 +67,4 @@ function SolanaAllowanceEffectFromJSONTyped(json: any, _ignoreDiscriminator: boo
         'spender': EnrichedSolanaAddressFromJSON(json['spender']),
     };
 }
+

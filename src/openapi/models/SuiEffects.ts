@@ -53,3 +53,4 @@ function SuiEffectsFromJSONTyped(json: any, _ignoreDiscriminator: boolean): SuiE
         'transfers': ((json['transfers'] as Array<any>).map(SuiTransferEffectFromJSON)),
     };
 }
+

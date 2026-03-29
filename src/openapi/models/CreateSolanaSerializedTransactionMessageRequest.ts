@@ -14,6 +14,10 @@ import type { SolanaChainUniqueId } from './SolanaChainUniqueId';
 import {
     SolanaChainUniqueIdToJSON,
 } from './SolanaChainUniqueId';
+import type { CreateSolanaRawTransactionRequestFee } from './CreateSolanaRawTransactionRequestFee';
+import {
+    CreateSolanaRawTransactionRequestFeeToJSON,
+} from './CreateSolanaRawTransactionRequestFee';
 import type { SolanaSecretKeyRequest } from './SolanaSecretKeyRequest';
 import {
     SolanaSecretKeyRequestToJSON,
@@ -22,10 +26,6 @@ import type { SolanaTransactionSignaturesRequest } from './SolanaTransactionSign
 import {
     SolanaTransactionSignaturesRequestToJSON,
 } from './SolanaTransactionSignaturesRequest';
-import type { BatchSolanaTransactionRequestDetailsFee } from './BatchSolanaTransactionRequestDetailsFee';
-import {
-    BatchSolanaTransactionRequestDetailsFeeToJSON,
-} from './BatchSolanaTransactionRequestDetailsFee';
 import type { PushMode } from './PushMode';
 import {
     PushModeToJSON,
@@ -39,10 +39,10 @@ import {
 export interface CreateSolanaSerializedTransactionMessageRequest {
     /**
      * 
-     * @type {BatchSolanaTransactionRequestDetailsFee}
+     * @type {CreateSolanaRawTransactionRequestFee}
      * @memberof CreateSolanaSerializedTransactionMessageRequest
      */
-    fee?: BatchSolanaTransactionRequestDetailsFee;
+    fee?: CreateSolanaRawTransactionRequestFee;
     /**
      * A Solana serialized transaction message request.
      * @type {CreateSolanaSerializedTransactionMessageRequestTypeEnum}
@@ -105,7 +105,7 @@ export interface CreateSolanaSerializedTransactionMessageRequest {
  * 
  */
 const CreateSolanaSerializedTransactionMessageRequestTypeEnum = {
-    solanaSerializedTransactionMessage: 'solana_serialized_transaction_message'
+    SolanaSerializedTransactionMessage: 'solana_serialized_transaction_message'
 } as const;
 type CreateSolanaSerializedTransactionMessageRequestTypeEnum = typeof CreateSolanaSerializedTransactionMessageRequestTypeEnum[keyof typeof CreateSolanaSerializedTransactionMessageRequestTypeEnum];
 
@@ -120,7 +120,7 @@ function CreateSolanaSerializedTransactionMessageRequestToJSONTyped(value?: Crea
 
     return {
         
-        'fee': BatchSolanaTransactionRequestDetailsFeeToJSON(value['fee']),
+        'fee': CreateSolanaRawTransactionRequestFeeToJSON(value['fee']),
         'type': value['type'],
         'fail_on_prediction_failure': value['failOnPredictionFailure'],
         'skip_prediction': value['skipPrediction'],

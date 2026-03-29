@@ -29,7 +29,7 @@ export interface EcdsaSecp256k1BlackBoxVault {
  * 
  */
 const EcdsaSecp256k1BlackBoxVaultTypeEnum = {
-    ecdsaSecp256k1: 'ecdsa_secp256k1'
+    EcdsaSecp256k1: 'ecdsa_secp256k1'
 } as const;
 type EcdsaSecp256k1BlackBoxVaultTypeEnum = typeof EcdsaSecp256k1BlackBoxVaultTypeEnum[keyof typeof EcdsaSecp256k1BlackBoxVaultTypeEnum];
 

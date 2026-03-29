@@ -15,13 +15,14 @@
  * @export
  */
 export const ListVaultsSortableFields = {
-    createdAtAsc: 'created_at_asc',
-    createdAtDesc: 'created_at_desc',
-    nameAsc: 'name_asc',
-    nameDesc: 'name_desc',
-    vaultTypeAsc: 'vault_type_asc',
-    vaultTypeDesc: 'vault_type_desc',
-    isFavoriteAsc: 'is_favorite_asc',
-    isFavoriteDesc: 'is_favorite_desc'
+    CreatedAtAsc: 'created_at_asc',
+    CreatedAtDesc: 'created_at_desc',
+    NameAsc: 'name_asc',
+    NameDesc: 'name_desc',
+    VaultTypeAsc: 'vault_type_asc',
+    VaultTypeDesc: 'vault_type_desc',
+    IsFavoriteAsc: 'is_favorite_asc',
+    IsFavoriteDesc: 'is_favorite_desc'
 } as const;
 export type ListVaultsSortableFields = typeof ListVaultsSortableFields[keyof typeof ListVaultsSortableFields];
+

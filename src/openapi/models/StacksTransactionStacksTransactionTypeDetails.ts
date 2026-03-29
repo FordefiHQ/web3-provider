@@ -49,3 +49,4 @@ function StacksTransactionStacksTransactionTypeDetailsFromJSONTyped(json: any, _
             return json;
     }
 }
+

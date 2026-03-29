@@ -15,27 +15,27 @@
  * @export
  */
 export const PushableTransactionState = {
-    waitingForApproval: 'waiting_for_approval',
-    waitingForSigningTrigger: 'waiting_for_signing_trigger',
-    approved: 'approved',
-    finalizedForSigning: 'finalized_for_signing',
-    signed: 'signed',
-    pushedToBlockchain: 'pushed_to_blockchain',
-    mined: 'mined',
-    completed: 'completed',
-    aborted: 'aborted',
-    errorPushingToBlockchain: 'error_pushing_to_blockchain',
-    minedReverted: 'mined_reverted',
-    completedReverted: 'completed_reverted',
-    errorSigning: 'error_signing',
-    stuck: 'stuck',
-    dropped: 'dropped',
-    queued: 'queued',
-    accelerating: 'accelerating',
-    canceling: 'canceling',
-    accelerated: 'accelerated',
-    cancelled: 'cancelled',
-    insufficientFunds: 'insufficient_funds'
+    WaitingForApproval: 'waiting_for_approval',
+    WaitingForSigningTrigger: 'waiting_for_signing_trigger',
+    Approved: 'approved',
+    FinalizedForSigning: 'finalized_for_signing',
+    Signed: 'signed',
+    PushedToBlockchain: 'pushed_to_blockchain',
+    Mined: 'mined',
+    Completed: 'completed',
+    Aborted: 'aborted',
+    ErrorPushingToBlockchain: 'error_pushing_to_blockchain',
+    MinedReverted: 'mined_reverted',
+    CompletedReverted: 'completed_reverted',
+    ErrorSigning: 'error_signing',
+    Stuck: 'stuck',
+    Dropped: 'dropped',
+    Queued: 'queued',
+    Accelerating: 'accelerating',
+    Canceling: 'canceling',
+    Accelerated: 'accelerated',
+    Cancelled: 'cancelled',
+    InsufficientFunds: 'insufficient_funds'
 } as const;
 export type PushableTransactionState = typeof PushableTransactionState[keyof typeof PushableTransactionState];
 
@@ -46,3 +46,4 @@ export function PushableTransactionStateFromJSON(json: any): PushableTransaction
 function PushableTransactionStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): PushableTransactionState {
     return json as PushableTransactionState;
 }
+

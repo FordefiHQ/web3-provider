@@ -85,7 +85,7 @@ export interface CosmosToken {
  * 
  */
 const CosmosTokenTypeEnum = {
-    token: 'token'
+    Token: 'token'
 } as const;
 type CosmosTokenTypeEnum = typeof CosmosTokenTypeEnum[keyof typeof CosmosTokenTypeEnum];
 

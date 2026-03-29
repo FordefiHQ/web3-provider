@@ -15,9 +15,9 @@
  * @export
  */
 export const UserRole = {
-    admin: 'admin',
-    trader: 'trader',
-    viewer: 'viewer'
+    Admin: 'admin',
+    Trader: 'trader',
+    Viewer: 'viewer'
 } as const;
 export type UserRole = typeof UserRole[keyof typeof UserRole];
 
@@ -28,3 +28,4 @@ export function UserRoleFromJSON(json: any): UserRole {
 function UserRoleFromJSONTyped(json: any, _ignoreDiscriminator: boolean): UserRole {
     return json as UserRole;
 }
+

@@ -97,3 +97,4 @@ function AssetIdentifierFromJSONTyped(json: any, _ignoreDiscriminator: boolean):
             return json;
     }
 }
+

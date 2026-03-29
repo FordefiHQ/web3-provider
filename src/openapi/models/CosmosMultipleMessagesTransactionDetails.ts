@@ -40,7 +40,7 @@ export interface CosmosMultipleMessagesTransactionDetails {
  * 
  */
 const CosmosMultipleMessagesTransactionDetailsTypeEnum = {
-    messages: 'messages'
+    Messages: 'messages'
 } as const;
 type CosmosMultipleMessagesTransactionDetailsTypeEnum = typeof CosmosMultipleMessagesTransactionDetailsTypeEnum[keyof typeof CosmosMultipleMessagesTransactionDetailsTypeEnum];
 

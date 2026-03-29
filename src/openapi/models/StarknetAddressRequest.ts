@@ -66,3 +66,4 @@ function StarknetAddressRequestToJSONTyped(value?: StarknetAddressRequest | null
         'hex_repr': value['hexRepr'],
     };
 }
+

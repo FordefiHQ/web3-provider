@@ -49,3 +49,4 @@ function ExchangeFeeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Exc
         'fee': json['fee'],
     };
 }
+

@@ -61,3 +61,4 @@ function EvmAssetDetailsFromJSONTyped(json: any, _ignoreDiscriminator: boolean):
             return json;
     }
 }
+

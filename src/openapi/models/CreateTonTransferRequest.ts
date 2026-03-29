@@ -88,7 +88,7 @@ export interface CreateTonTransferRequest {
  * 
  */
 const CreateTonTransferRequestTypeEnum = {
-    tonTransfer: 'ton_transfer'
+    TonTransfer: 'ton_transfer'
 } as const;
 type CreateTonTransferRequestTypeEnum = typeof CreateTonTransferRequestTypeEnum[keyof typeof CreateTonTransferRequestTypeEnum];
 

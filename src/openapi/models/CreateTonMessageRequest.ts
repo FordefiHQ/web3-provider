@@ -82,7 +82,7 @@ export interface CreateTonMessageRequest {
  * 
  */
 const CreateTonMessageRequestTypeEnum = {
-    tonMessage: 'ton_message'
+    TonMessage: 'ton_message'
 } as const;
 type CreateTonMessageRequestTypeEnum = typeof CreateTonMessageRequestTypeEnum[keyof typeof CreateTonMessageRequestTypeEnum];
 

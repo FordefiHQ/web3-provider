@@ -60,3 +60,4 @@ function EvmBalanceChangeEffectFromJSONTyped(json: any, _ignoreDiscriminator: bo
         'address': EnrichedEvmAddressFromJSON(json['address']),
     };
 }
+

@@ -49,3 +49,4 @@ function SignDocFromJSONTyped(json: any, _ignoreDiscriminator: boolean): SignDoc
             return json;
     }
 }
+

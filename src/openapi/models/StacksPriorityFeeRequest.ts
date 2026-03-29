@@ -40,7 +40,7 @@ export interface StacksPriorityFeeRequest {
  * 
  */
 const StacksPriorityFeeRequestTypeEnum = {
-    priority: 'priority'
+    Priority: 'priority'
 } as const;
 type StacksPriorityFeeRequestTypeEnum = typeof StacksPriorityFeeRequestTypeEnum[keyof typeof StacksPriorityFeeRequestTypeEnum];
 

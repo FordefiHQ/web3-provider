@@ -62,7 +62,7 @@ export interface EnrichedSuiAddress {
  * 
  */
 const EnrichedSuiAddressTypeEnum = {
-    sui: 'sui'
+    Sui: 'sui'
 } as const;
 type EnrichedSuiAddressTypeEnum = typeof EnrichedSuiAddressTypeEnum[keyof typeof EnrichedSuiAddressTypeEnum];
 

@@ -90,3 +90,4 @@ function TonTransactionMessageToJSONTyped(value?: TonTransactionMessage | null, 
         'comment': value['comment'],
     };
 }
+

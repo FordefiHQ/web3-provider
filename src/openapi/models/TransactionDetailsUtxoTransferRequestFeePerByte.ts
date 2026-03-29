@@ -43,3 +43,4 @@ function TransactionDetailsUtxoTransferRequestFeePerByteToJSONTyped(value?: Tran
             return value;
     }
 }
+

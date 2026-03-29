@@ -35,7 +35,7 @@ export interface SuiPartialObjectRefInputArgument {
  * 
  */
 const SuiPartialObjectRefInputArgumentTypeEnum = {
-    partial: 'partial'
+    Partial: 'partial'
 } as const;
 type SuiPartialObjectRefInputArgumentTypeEnum = typeof SuiPartialObjectRefInputArgumentTypeEnum[keyof typeof SuiPartialObjectRefInputArgumentTypeEnum];
 

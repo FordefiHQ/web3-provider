@@ -41,7 +41,7 @@ export interface SuiCommandNestedResultArgument {
  * 
  */
 const SuiCommandNestedResultArgumentTypeEnum = {
-    nestedResult: 'nested_result'
+    NestedResult: 'nested_result'
 } as const;
 type SuiCommandNestedResultArgumentTypeEnum = typeof SuiCommandNestedResultArgumentTypeEnum[keyof typeof SuiCommandNestedResultArgumentTypeEnum];
 

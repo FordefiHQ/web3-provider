@@ -327,7 +327,7 @@ export interface SuiTransaction {
  * 
  */
 const SuiTransactionTypeEnum = {
-    suiTransaction: 'sui_transaction'
+    SuiTransaction: 'sui_transaction'
 } as const;
 type SuiTransactionTypeEnum = typeof SuiTransactionTypeEnum[keyof typeof SuiTransactionTypeEnum];
 

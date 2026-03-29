@@ -47,7 +47,7 @@ export interface SuiReceivingObjectRefInputArgument {
  * 
  */
 const SuiReceivingObjectRefInputArgumentTypeEnum = {
-    receiving: 'receiving'
+    Receiving: 'receiving'
 } as const;
 type SuiReceivingObjectRefInputArgumentTypeEnum = typeof SuiReceivingObjectRefInputArgumentTypeEnum[keyof typeof SuiReceivingObjectRefInputArgumentTypeEnum];
 

@@ -52,3 +52,4 @@ function SolanaMessageAddressTableLookupRequestToJSONTyped(value?: SolanaMessage
         'readonly_indexes': value['readonlyIndexes'],
     };
 }
+

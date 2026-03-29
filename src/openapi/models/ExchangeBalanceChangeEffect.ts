@@ -60,3 +60,4 @@ function ExchangeBalanceChangeEffectFromJSONTyped(json: any, _ignoreDiscriminato
         'address': EnrichedAddressFromJSON(json['address']),
     };
 }
+

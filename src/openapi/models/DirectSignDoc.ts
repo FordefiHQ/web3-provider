@@ -70,7 +70,7 @@ export interface DirectSignDoc {
  * 
  */
 const DirectSignDocFormatEnum = {
-    direct: 'direct'
+    Direct: 'direct'
 } as const;
 type DirectSignDocFormatEnum = typeof DirectSignDocFormatEnum[keyof typeof DirectSignDocFormatEnum];
 

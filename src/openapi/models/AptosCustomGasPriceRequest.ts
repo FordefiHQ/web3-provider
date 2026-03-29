@@ -35,7 +35,7 @@ export interface AptosCustomGasPriceRequest {
  * 
  */
 const AptosCustomGasPriceRequestTypeEnum = {
-    custom: 'custom'
+    Custom: 'custom'
 } as const;
 type AptosCustomGasPriceRequestTypeEnum = typeof AptosCustomGasPriceRequestTypeEnum[keyof typeof AptosCustomGasPriceRequestTypeEnum];
 

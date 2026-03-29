@@ -35,7 +35,7 @@ export interface PsbtSignerIdentityAddress {
  * 
  */
 const PsbtSignerIdentityAddressTypeEnum = {
-    address: 'address'
+    Address: 'address'
 } as const;
 type PsbtSignerIdentityAddressTypeEnum = typeof PsbtSignerIdentityAddressTypeEnum[keyof typeof PsbtSignerIdentityAddressTypeEnum];
 

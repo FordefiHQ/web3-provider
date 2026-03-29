@@ -67,3 +67,4 @@ function PushableTransactionStateChangeFromJSONTyped(json: any, _ignoreDiscrimin
         'newState': PushableTransactionStateFromJSON(json['new_state']),
     };
 }
+

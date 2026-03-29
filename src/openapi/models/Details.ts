@@ -44,8 +44,8 @@ export interface Details {
  * 
  */
 const DetailsTypeEnum = {
-    cosmosNativeAsset: 'cosmos_native_asset',
-    cosmosTokenAsset: 'cosmos_token_asset'
+    CosmosNativeAsset: 'cosmos_native_asset',
+    CosmosTokenAsset: 'cosmos_token_asset'
 } as const;
 type DetailsTypeEnum = typeof DetailsTypeEnum[keyof typeof DetailsTypeEnum];
 

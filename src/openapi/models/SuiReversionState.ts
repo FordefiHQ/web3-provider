@@ -15,14 +15,14 @@
  * @export
  */
 export const SuiReversionState = {
-    notReverted: 'not_reverted',
-    unknownRevert: 'unknown_revert',
-    contractAsserted: 'contract_asserted',
-    insufficientFundsGasAndValue: 'insufficient_funds_gas_and_value',
-    invalidInput: 'invalid_input',
-    transactionFailedToReachFinality: 'transaction_failed_to_reach_finality',
-    outOfGas: 'out_of_gas',
-    transactionLockedObjectsFailure: 'transaction_locked_objects_failure'
+    NotReverted: 'not_reverted',
+    UnknownRevert: 'unknown_revert',
+    ContractAsserted: 'contract_asserted',
+    InsufficientFundsGasAndValue: 'insufficient_funds_gas_and_value',
+    InvalidInput: 'invalid_input',
+    TransactionFailedToReachFinality: 'transaction_failed_to_reach_finality',
+    OutOfGas: 'out_of_gas',
+    TransactionLockedObjectsFailure: 'transaction_locked_objects_failure'
 } as const;
 export type SuiReversionState = typeof SuiReversionState[keyof typeof SuiReversionState];
 
@@ -33,3 +33,4 @@ export function SuiReversionStateFromJSON(json: any): SuiReversionState {
 function SuiReversionStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): SuiReversionState {
     return json as SuiReversionState;
 }
+

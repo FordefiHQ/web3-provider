@@ -208,7 +208,7 @@ export interface EvmMessage {
  * 
  */
 const EvmMessageTypeEnum = {
-    evmMessage: 'evm_message'
+    EvmMessage: 'evm_message'
 } as const;
 type EvmMessageTypeEnum = typeof EvmMessageTypeEnum[keyof typeof EvmMessageTypeEnum];
 

@@ -64,3 +64,4 @@ function ExchangeTransactionResultFromJSONTyped(json: any, _ignoreDiscriminator:
         'exchangeFee': json['exchange_fee'] == null ? undefined : ExchangeFeeFromJSON(json['exchange_fee']),
     };
 }
+

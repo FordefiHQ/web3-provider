@@ -15,13 +15,13 @@
  * @export
  */
 export const UserState = {
-    active: 'active',
-    onboardingPendingCodeGeneration: 'onboarding_pending_code_generation',
-    onboardingPendingActivation: 'onboarding_pending_activation',
-    resetDevicePendingCodeGeneration: 'reset_device_pending_code_generation',
-    resetDevicePendingActivation: 'reset_device_pending_activation',
-    pendingApproval: 'pending_approval',
-    deleted: 'deleted'
+    Active: 'active',
+    OnboardingPendingCodeGeneration: 'onboarding_pending_code_generation',
+    OnboardingPendingActivation: 'onboarding_pending_activation',
+    ResetDevicePendingCodeGeneration: 'reset_device_pending_code_generation',
+    ResetDevicePendingActivation: 'reset_device_pending_activation',
+    PendingApproval: 'pending_approval',
+    Deleted: 'deleted'
 } as const;
 export type UserState = typeof UserState[keyof typeof UserState];
 
@@ -32,3 +32,4 @@ export function UserStateFromJSON(json: any): UserState {
 function UserStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): UserState {
     return json as UserState;
 }
+

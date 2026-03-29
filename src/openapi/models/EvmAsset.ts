@@ -96,7 +96,7 @@ export interface EvmAsset {
      * @memberof EvmAsset
      * @deprecated
      */
-    details: EvmAssetDetails;
+    details?: EvmAssetDetails;
 }
 
 
@@ -104,7 +104,7 @@ export interface EvmAsset {
  * 
  */
 const EvmAssetTypeEnum = {
-    evmAsset: 'evm_asset'
+    EvmAsset: 'evm_asset'
 } as const;
 type EvmAssetTypeEnum = typeof EvmAssetTypeEnum[keyof typeof EvmAssetTypeEnum];
 
@@ -124,6 +124,6 @@ export function EvmAssetFromJSONTyped(json: any, _ignoreDiscriminator: boolean):
         'assetIdentifier': EnrichedAssetIdentifierFromJSON(json['asset_identifier']),
         'metadataUri': json['metadata_uri'] == null ? undefined : json['metadata_uri'],
         'type': json['type'],
-        'details': EvmAssetDetailsFromJSON(json['details']),
+        'details': json['details'] == null ? undefined : EvmAssetDetailsFromJSON(json['details']),
     };
 }

@@ -15,17 +15,17 @@
  * @export
  */
 export const TransactionRiskType = {
-    transferToErc20Contract: 'transfer_to_erc20_contract',
-    organizationNotInteractedWithAddress: 'organization_not_interacted_with_address',
-    vaultNotInteractedWithAddress: 'vault_not_interacted_with_address',
-    allowanceToEoa: 'allowance_to_eoa',
-    unlimitedAllowance: 'unlimited_allowance',
-    contractNotVerified: 'contract_not_verified',
-    bridgeDestDifferFromSender: 'bridge_dest_differ_from_sender',
-    nftApproveForAll: 'nft_approve_for_all',
-    missingSimulation: 'missing_simulation',
-    unsupportedSimulation: 'unsupported_simulation',
-    postConditionsAllowMode: 'post_conditions_allow_mode'
+    TransferToErc20Contract: 'transfer_to_erc20_contract',
+    OrganizationNotInteractedWithAddress: 'organization_not_interacted_with_address',
+    VaultNotInteractedWithAddress: 'vault_not_interacted_with_address',
+    AllowanceToEoa: 'allowance_to_eoa',
+    UnlimitedAllowance: 'unlimited_allowance',
+    ContractNotVerified: 'contract_not_verified',
+    BridgeDestDifferFromSender: 'bridge_dest_differ_from_sender',
+    NftApproveForAll: 'nft_approve_for_all',
+    MissingSimulation: 'missing_simulation',
+    UnsupportedSimulation: 'unsupported_simulation',
+    PostConditionsAllowMode: 'post_conditions_allow_mode'
 } as const;
 export type TransactionRiskType = typeof TransactionRiskType[keyof typeof TransactionRiskType];
 
@@ -36,3 +36,4 @@ export function TransactionRiskTypeFromJSON(json: any): TransactionRiskType {
 function TransactionRiskTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): TransactionRiskType {
     return json as TransactionRiskType;
 }
+

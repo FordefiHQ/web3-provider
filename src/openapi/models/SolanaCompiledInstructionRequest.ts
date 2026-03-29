@@ -52,3 +52,4 @@ function SolanaCompiledInstructionRequestToJSONTyped(value?: SolanaCompiledInstr
         'account_indexes': value['accountIndexes'],
     };
 }
+

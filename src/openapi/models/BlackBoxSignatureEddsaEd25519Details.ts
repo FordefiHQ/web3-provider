@@ -41,7 +41,7 @@ export interface BlackBoxSignatureEddsaEd25519Details {
  * 
  */
 const BlackBoxSignatureEddsaEd25519DetailsTypeEnum = {
-    eddsaEd25519: 'eddsa_ed25519'
+    EddsaEd25519: 'eddsa_ed25519'
 } as const;
 type BlackBoxSignatureEddsaEd25519DetailsTypeEnum = typeof BlackBoxSignatureEddsaEd25519DetailsTypeEnum[keyof typeof BlackBoxSignatureEddsaEd25519DetailsTypeEnum];
 

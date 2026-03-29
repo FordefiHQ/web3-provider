@@ -15,7 +15,7 @@
  * @export
  */
 export const SuiMessageVersion = {
-    v1: 'v1'
+    V1: 'v1'
 } as const;
 export type SuiMessageVersion = typeof SuiMessageVersion[keyof typeof SuiMessageVersion];
 
@@ -26,3 +26,4 @@ export function SuiMessageVersionFromJSON(json: any): SuiMessageVersion {
 function SuiMessageVersionFromJSONTyped(json: any, _ignoreDiscriminator: boolean): SuiMessageVersion {
     return json as SuiMessageVersion;
 }
+

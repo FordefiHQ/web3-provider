@@ -10,14 +10,14 @@
  * Do not edit the class manually.
  */
 
+import type { CreateTronTransferRequestValue } from './CreateTronTransferRequestValue';
+import {
+    CreateTronTransferRequestValueToJSON,
+} from './CreateTronTransferRequestValue';
 import type { CreateTronTransferRequestTo } from './CreateTronTransferRequestTo';
 import {
     CreateTronTransferRequestToToJSON,
 } from './CreateTronTransferRequestTo';
-import type { CreateStellarTransferRequestValue } from './CreateStellarTransferRequestValue';
-import {
-    CreateStellarTransferRequestValueToJSON,
-} from './CreateStellarTransferRequestValue';
 import type { TronAssetIdentifierRequest } from './TronAssetIdentifierRequest';
 import {
     TronAssetIdentifierRequestToJSON,
@@ -65,10 +65,10 @@ export interface CreateTronTransferRequest {
     to: CreateTronTransferRequestTo;
     /**
      * 
-     * @type {CreateStellarTransferRequestValue}
+     * @type {CreateTronTransferRequestValue}
      * @memberof CreateTronTransferRequest
      */
-    value: CreateStellarTransferRequestValue;
+    value: CreateTronTransferRequestValue;
     /**
      * The TRON asset identifier to transfer.
      * @type {TronAssetIdentifierRequest}
@@ -88,7 +88,7 @@ export interface CreateTronTransferRequest {
  * 
  */
 const CreateTronTransferRequestTypeEnum = {
-    tronTransfer: 'tron_transfer'
+    TronTransfer: 'tron_transfer'
 } as const;
 type CreateTronTransferRequestTypeEnum = typeof CreateTronTransferRequestTypeEnum[keyof typeof CreateTronTransferRequestTypeEnum];
 
@@ -108,7 +108,7 @@ function CreateTronTransferRequestToJSONTyped(value?: CreateTronTransferRequest 
         'skip_prediction': value['skipPrediction'],
         'push_mode': PushModeToJSON(value['pushMode']),
         'to': CreateTronTransferRequestToToJSON(value['to']),
-        'value': CreateStellarTransferRequestValueToJSON(value['value']),
+        'value': CreateTronTransferRequestValueToJSON(value['value']),
         'asset_identifier': TronAssetIdentifierRequestToJSON(value['assetIdentifier']),
         'memo': value['memo'],
     };

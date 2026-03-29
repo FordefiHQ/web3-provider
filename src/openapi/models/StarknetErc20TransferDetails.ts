@@ -52,7 +52,7 @@ export interface StarknetErc20TransferDetails {
  * 
  */
 const StarknetErc20TransferDetailsTypeEnum = {
-    erc20Transfer: 'erc20_transfer'
+    Erc20Transfer: 'erc20_transfer'
 } as const;
 type StarknetErc20TransferDetailsTypeEnum = typeof StarknetErc20TransferDetailsTypeEnum[keyof typeof StarknetErc20TransferDetailsTypeEnum];
 

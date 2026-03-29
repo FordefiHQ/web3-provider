@@ -35,7 +35,7 @@ export interface EvmDataRequestBase64 {
  * 
  */
 const EvmDataRequestBase64TypeEnum = {
-    base64: 'base64'
+    Base64: 'base64'
 } as const;
 type EvmDataRequestBase64TypeEnum = typeof EvmDataRequestBase64TypeEnum[keyof typeof EvmDataRequestBase64TypeEnum];
 

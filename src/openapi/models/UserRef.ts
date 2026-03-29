@@ -61,3 +61,4 @@ function UserRefFromJSONTyped(json: any, _ignoreDiscriminator: boolean): UserRef
             return json;
     }
 }
+

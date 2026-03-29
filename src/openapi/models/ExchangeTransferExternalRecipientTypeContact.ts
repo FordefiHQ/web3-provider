@@ -35,7 +35,7 @@ export interface ExchangeTransferExternalRecipientTypeContact {
  * 
  */
 const ExchangeTransferExternalRecipientTypeContactTypeEnum = {
-    contact: 'contact'
+    Contact: 'contact'
 } as const;
 type ExchangeTransferExternalRecipientTypeContactTypeEnum = typeof ExchangeTransferExternalRecipientTypeContactTypeEnum[keyof typeof ExchangeTransferExternalRecipientTypeContactTypeEnum];
 

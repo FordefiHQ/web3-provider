@@ -68,7 +68,7 @@ export interface PersonRef {
  * 
  */
 const PersonRefUserTypeEnum = {
-    person: 'person'
+    Person: 'person'
 } as const;
 type PersonRefUserTypeEnum = typeof PersonRefUserTypeEnum[keyof typeof PersonRefUserTypeEnum];
 

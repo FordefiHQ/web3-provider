@@ -43,3 +43,4 @@ function CreateStacksTransactionRequestDetailsToJSONTyped(value?: CreateStacksTr
             return value;
     }
 }
+

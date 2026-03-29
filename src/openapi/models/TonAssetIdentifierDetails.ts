@@ -63,3 +63,4 @@ function TonAssetIdentifierDetailsToJSONTyped(value?: TonAssetIdentifierDetails 
             return value;
     }
 }
+

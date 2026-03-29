@@ -40,10 +40,10 @@ export interface UnknownTypedMessageEvmMessage {
     primaryType: string;
     /**
      * Addresses that are related to this message, enriched with metadata.Please NOTE: the dictionary keys are EIP-55 checksummed addresses
-     * @type {{ [key: string]: EnrichedEvmAddress | undefined; }}
+     * @type {{ [key: string]: EnrichedEvmAddress; }}
      * @memberof UnknownTypedMessageEvmMessage
      */
-    enrichedAddresses?: { [key: string]: EnrichedEvmAddress | undefined; };
+    enrichedAddresses?: { [key: string]: EnrichedEvmAddress; };
     /**
      * The typed message type.
      * @type {UnknownTypedMessageEvmMessageTypeEnum}
@@ -57,7 +57,7 @@ export interface UnknownTypedMessageEvmMessage {
  * 
  */
 const UnknownTypedMessageEvmMessageTypeEnum = {
-    unknown: 'unknown'
+    Unknown: 'unknown'
 } as const;
 type UnknownTypedMessageEvmMessageTypeEnum = typeof UnknownTypedMessageEvmMessageTypeEnum[keyof typeof UnknownTypedMessageEvmMessageTypeEnum];
 

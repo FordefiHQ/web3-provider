@@ -26,10 +26,10 @@ import type { CreateAptosTransferRequestValue } from './CreateAptosTransferReque
 import {
     CreateAptosTransferRequestValueToJSON,
 } from './CreateAptosTransferRequestValue';
-import type { BatchSolanaTransactionRequestDetailsFee } from './BatchSolanaTransactionRequestDetailsFee';
+import type { CreateSolanaRawTransactionRequestFee } from './CreateSolanaRawTransactionRequestFee';
 import {
-    BatchSolanaTransactionRequestDetailsFeeToJSON,
-} from './BatchSolanaTransactionRequestDetailsFee';
+    CreateSolanaRawTransactionRequestFeeToJSON,
+} from './CreateSolanaRawTransactionRequestFee';
 import type { PushMode } from './PushMode';
 import {
     PushModeToJSON,
@@ -49,10 +49,10 @@ export interface CreateSolanaTransferRequest {
     feePayer?: TransactionFeePayerVault;
     /**
      * 
-     * @type {BatchSolanaTransactionRequestDetailsFee}
+     * @type {CreateSolanaRawTransactionRequestFee}
      * @memberof CreateSolanaTransferRequest
      */
-    fee?: BatchSolanaTransactionRequestDetailsFee;
+    fee?: CreateSolanaRawTransactionRequestFee;
     /**
      * A Solana transfer transaction is for transferring native currency or a token.
      * @type {CreateSolanaTransferRequestTypeEnum}
@@ -102,7 +102,7 @@ export interface CreateSolanaTransferRequest {
  * 
  */
 const CreateSolanaTransferRequestTypeEnum = {
-    solanaTransfer: 'solana_transfer'
+    SolanaTransfer: 'solana_transfer'
 } as const;
 type CreateSolanaTransferRequestTypeEnum = typeof CreateSolanaTransferRequestTypeEnum[keyof typeof CreateSolanaTransferRequestTypeEnum];
 
@@ -118,7 +118,7 @@ function CreateSolanaTransferRequestToJSONTyped(value?: CreateSolanaTransferRequ
     return {
         
         'fee_payer': TransactionFeePayerVaultToJSON(value['feePayer']),
-        'fee': BatchSolanaTransactionRequestDetailsFeeToJSON(value['fee']),
+        'fee': CreateSolanaRawTransactionRequestFeeToJSON(value['fee']),
         'type': value['type'],
         'fail_on_prediction_failure': value['failOnPredictionFailure'],
         'skip_prediction': value['skipPrediction'],

@@ -44,8 +44,8 @@ export interface Details2 {
  * 
  */
 const Details2TypeEnum = {
-    suiNativeAsset: 'sui_native_asset',
-    suiCoinAsset: 'sui_coin_asset'
+    SuiNativeAsset: 'sui_native_asset',
+    SuiCoinAsset: 'sui_coin_asset'
 } as const;
 type Details2TypeEnum = typeof Details2TypeEnum[keyof typeof Details2TypeEnum];
 

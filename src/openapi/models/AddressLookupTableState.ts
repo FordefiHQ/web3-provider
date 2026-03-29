@@ -70,3 +70,4 @@ function AddressLookupTableStateFromJSONTyped(json: any, _ignoreDiscriminator: b
         'lastExtendedSlotStartIndex': json['last_extended_slot_start_index'],
     };
 }
+

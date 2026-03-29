@@ -56,7 +56,7 @@ export interface UtxoBalanceChangeEffect {
  * 
  */
 const UtxoBalanceChangeEffectTypeEnum = {
-    native: 'native'
+    Native: 'native'
 } as const;
 type UtxoBalanceChangeEffectTypeEnum = typeof UtxoBalanceChangeEffectTypeEnum[keyof typeof UtxoBalanceChangeEffectTypeEnum];
 

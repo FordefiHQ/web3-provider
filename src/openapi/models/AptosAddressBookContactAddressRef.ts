@@ -46,7 +46,7 @@ export interface AptosAddressBookContactAddressRef {
  * 
  */
 const AptosAddressBookContactAddressRefChainTypeEnum = {
-    aptos: 'aptos'
+    Aptos: 'aptos'
 } as const;
 type AptosAddressBookContactAddressRefChainTypeEnum = typeof AptosAddressBookContactAddressRefChainTypeEnum[keyof typeof AptosAddressBookContactAddressRefChainTypeEnum];
 

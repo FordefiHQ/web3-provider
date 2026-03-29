@@ -15,16 +15,16 @@
  * @export
  */
 export const EvmReversionState = {
-    notReverted: 'not_reverted',
-    unknownRevert: 'unknown_revert',
-    contractAsserted: 'contract_asserted',
-    outOfGas: 'out_of_gas',
-    maxFeeLessThanBlockBaseFee: 'max_fee_less_than_block_base_fee',
-    baseFeeExceedsGasLimit: 'base_fee_exceeds_gas_limit',
-    insufficientFundsGasAndValue: 'insufficient_funds_gas_and_value',
-    invalidInput: 'invalid_input',
-    transactionRejected: 'transaction_rejected',
-    gasLimitExceedsBlockLimit: 'gas_limit_exceeds_block_limit'
+    NotReverted: 'not_reverted',
+    UnknownRevert: 'unknown_revert',
+    ContractAsserted: 'contract_asserted',
+    OutOfGas: 'out_of_gas',
+    MaxFeeLessThanBlockBaseFee: 'max_fee_less_than_block_base_fee',
+    BaseFeeExceedsGasLimit: 'base_fee_exceeds_gas_limit',
+    InsufficientFundsGasAndValue: 'insufficient_funds_gas_and_value',
+    InvalidInput: 'invalid_input',
+    TransactionRejected: 'transaction_rejected',
+    GasLimitExceedsBlockLimit: 'gas_limit_exceeds_block_limit'
 } as const;
 export type EvmReversionState = typeof EvmReversionState[keyof typeof EvmReversionState];
 
@@ -35,3 +35,4 @@ export function EvmReversionStateFromJSON(json: any): EvmReversionState {
 function EvmReversionStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): EvmReversionState {
     return json as EvmReversionState;
 }
+

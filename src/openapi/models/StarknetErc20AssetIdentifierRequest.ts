@@ -41,7 +41,7 @@ export interface StarknetErc20AssetIdentifierRequest {
  * 
  */
 const StarknetErc20AssetIdentifierRequestTypeEnum = {
-    erc20: 'erc20'
+    Erc20: 'erc20'
 } as const;
 type StarknetErc20AssetIdentifierRequestTypeEnum = typeof StarknetErc20AssetIdentifierRequestTypeEnum[keyof typeof StarknetErc20AssetIdentifierRequestTypeEnum];
 

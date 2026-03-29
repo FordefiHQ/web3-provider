@@ -48,10 +48,10 @@ export interface SafeTxTypedMessageEvmMessage {
     primaryType: string;
     /**
      * Addresses that are related to this message, enriched with metadata.Please NOTE: the dictionary keys are EIP-55 checksummed addresses
-     * @type {{ [key: string]: EnrichedEvmAddress | undefined; }}
+     * @type {{ [key: string]: EnrichedEvmAddress; }}
      * @memberof SafeTxTypedMessageEvmMessage
      */
-    enrichedAddresses?: { [key: string]: EnrichedEvmAddress | undefined; };
+    enrichedAddresses?: { [key: string]: EnrichedEvmAddress; };
     /**
      * The typed message type.
      * @type {SafeTxTypedMessageEvmMessageTypeEnum}
@@ -167,7 +167,7 @@ export interface SafeTxTypedMessageEvmMessage {
  * 
  */
 const SafeTxTypedMessageEvmMessageTypeEnum = {
-    safeTx: 'safe_tx'
+    SafeTx: 'safe_tx'
 } as const;
 type SafeTxTypedMessageEvmMessageTypeEnum = typeof SafeTxTypedMessageEvmMessageTypeEnum[keyof typeof SafeTxTypedMessageEvmMessageTypeEnum];
 

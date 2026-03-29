@@ -41,7 +41,7 @@ export interface SuiCoinAssetIdentifierRequest {
  * 
  */
 const SuiCoinAssetIdentifierRequestTypeEnum = {
-    coin: 'coin'
+    Coin: 'coin'
 } as const;
 type SuiCoinAssetIdentifierRequestTypeEnum = typeof SuiCoinAssetIdentifierRequestTypeEnum[keyof typeof SuiCoinAssetIdentifierRequestTypeEnum];
 

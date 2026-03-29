@@ -43,3 +43,4 @@ function EnrichedCosmosAssetIdentifierDetailsFromJSONTyped(json: any, _ignoreDis
             return json;
     }
 }
+

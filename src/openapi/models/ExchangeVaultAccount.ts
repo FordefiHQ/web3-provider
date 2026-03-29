@@ -43,3 +43,4 @@ function ExchangeVaultAccountFromJSONTyped(json: any, _ignoreDiscriminator: bool
             return json;
     }
 }
+

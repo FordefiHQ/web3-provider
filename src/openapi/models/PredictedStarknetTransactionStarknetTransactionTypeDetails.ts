@@ -55,3 +55,4 @@ function PredictedStarknetTransactionStarknetTransactionTypeDetailsFromJSONTyped
             return json;
     }
 }
+

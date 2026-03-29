@@ -49,3 +49,4 @@ function AptosGasDataFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Ap
         'price': AptosGasPriceFromJSON(json['price']),
     };
 }
+

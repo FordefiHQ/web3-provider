@@ -45,3 +45,4 @@ function DappInfoToJSONTyped(value?: DappInfo | null, _ignoreDiscriminator: bool
         'name': value['name'],
     };
 }
+

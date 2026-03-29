@@ -67,3 +67,4 @@ function SolanaTransferEffectFromJSONTyped(json: any, _ignoreDiscriminator: bool
         'to': EnrichedSolanaAddressFromJSON(json['to']),
     };
 }
+

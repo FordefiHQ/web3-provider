@@ -35,7 +35,7 @@ export interface LegacyGasRequest {
  * 
  */
 const LegacyGasRequestTypeEnum = {
-    legacy: 'legacy'
+    Legacy: 'legacy'
 } as const;
 type LegacyGasRequestTypeEnum = typeof LegacyGasRequestTypeEnum[keyof typeof LegacyGasRequestTypeEnum];
 

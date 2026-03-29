@@ -52,7 +52,7 @@ export interface StacksNativeTransferDetails {
  * 
  */
 const StacksNativeTransferDetailsTypeEnum = {
-    nativeTransfer: 'native_transfer'
+    NativeTransfer: 'native_transfer'
 } as const;
 type StacksNativeTransferDetailsTypeEnum = typeof StacksNativeTransferDetailsTypeEnum[keyof typeof StacksNativeTransferDetailsTypeEnum];
 

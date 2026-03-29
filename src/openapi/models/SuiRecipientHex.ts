@@ -35,7 +35,7 @@ export interface SuiRecipientHex {
  * 
  */
 const SuiRecipientHexTypeEnum = {
-    hex: 'hex'
+    Hex: 'hex'
 } as const;
 type SuiRecipientHexTypeEnum = typeof SuiRecipientHexTypeEnum[keyof typeof SuiRecipientHexTypeEnum];
 

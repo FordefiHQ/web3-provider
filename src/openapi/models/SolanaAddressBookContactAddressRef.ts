@@ -46,7 +46,7 @@ export interface SolanaAddressBookContactAddressRef {
  * 
  */
 const SolanaAddressBookContactAddressRefChainTypeEnum = {
-    solana: 'solana'
+    Solana: 'solana'
 } as const;
 type SolanaAddressBookContactAddressRefChainTypeEnum = typeof SolanaAddressBookContactAddressRefChainTypeEnum[keyof typeof SolanaAddressBookContactAddressRefChainTypeEnum];
 

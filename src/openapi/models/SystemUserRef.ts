@@ -41,7 +41,7 @@ export interface SystemUserRef {
  * 
  */
 const SystemUserRefUserTypeEnum = {
-    system: 'system'
+    System: 'system'
 } as const;
 type SystemUserRefUserTypeEnum = typeof SystemUserRefUserTypeEnum[keyof typeof SystemUserRefUserTypeEnum];
 

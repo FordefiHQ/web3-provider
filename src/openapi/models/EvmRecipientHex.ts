@@ -35,7 +35,7 @@ export interface EvmRecipientHex {
  * 
  */
 const EvmRecipientHexTypeEnum = {
-    hex: 'hex'
+    Hex: 'hex'
 } as const;
 type EvmRecipientHexTypeEnum = typeof EvmRecipientHexTypeEnum[keyof typeof EvmRecipientHexTypeEnum];
 

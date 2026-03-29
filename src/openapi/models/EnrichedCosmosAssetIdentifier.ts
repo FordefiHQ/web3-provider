@@ -40,7 +40,7 @@ export interface EnrichedCosmosAssetIdentifier {
  * 
  */
 const EnrichedCosmosAssetIdentifierTypeEnum = {
-    cosmos: 'cosmos'
+    Cosmos: 'cosmos'
 } as const;
 type EnrichedCosmosAssetIdentifierTypeEnum = typeof EnrichedCosmosAssetIdentifierTypeEnum[keyof typeof EnrichedCosmosAssetIdentifierTypeEnum];
 

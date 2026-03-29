@@ -49,3 +49,4 @@ function StarknetFeesFromJSONTyped(json: any, _ignoreDiscriminator: boolean): St
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }
+

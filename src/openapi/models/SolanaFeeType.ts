@@ -15,8 +15,8 @@
  * @export
  */
 export const SolanaFeeType = {
-    jito: 'jito',
-    priorityFee: 'priority_fee'
+    Jito: 'jito',
+    PriorityFee: 'priority_fee'
 } as const;
 export type SolanaFeeType = typeof SolanaFeeType[keyof typeof SolanaFeeType];
 
@@ -27,3 +27,4 @@ export function SolanaFeeTypeFromJSON(json: any): SolanaFeeType {
 function SolanaFeeTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): SolanaFeeType {
     return json as SolanaFeeType;
 }
+

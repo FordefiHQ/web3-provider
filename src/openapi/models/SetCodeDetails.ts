@@ -29,7 +29,7 @@ export interface SetCodeDetails {
  * 
  */
 const SetCodeDetailsTypeEnum = {
-    setCode: 'set_code'
+    SetCode: 'set_code'
 } as const;
 type SetCodeDetailsTypeEnum = typeof SetCodeDetailsTypeEnum[keyof typeof SetCodeDetailsTypeEnum];
 

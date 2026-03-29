@@ -47,7 +47,7 @@ export interface EndUserRef {
  * 
  */
 const EndUserRefUserTypeEnum = {
-    endUser: 'end_user'
+    EndUser: 'end_user'
 } as const;
 type EndUserRefUserTypeEnum = typeof EndUserRefUserTypeEnum[keyof typeof EndUserRefUserTypeEnum];
 
@@ -55,8 +55,8 @@ type EndUserRefUserTypeEnum = typeof EndUserRefUserTypeEnum[keyof typeof EndUser
  * 
  */
 const EndUserRefStateEnum = {
-    active: 'active',
-    deleted: 'deleted'
+    Active: 'active',
+    Deleted: 'deleted'
 } as const;
 type EndUserRefStateEnum = typeof EndUserRefStateEnum[keyof typeof EndUserRefStateEnum];
 

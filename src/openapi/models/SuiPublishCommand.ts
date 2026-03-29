@@ -41,7 +41,7 @@ export interface SuiPublishCommand {
  * 
  */
 const SuiPublishCommandTypeEnum = {
-    publish: 'publish'
+    Publish: 'publish'
 } as const;
 type SuiPublishCommandTypeEnum = typeof SuiPublishCommandTypeEnum[keyof typeof SuiPublishCommandTypeEnum];
 

@@ -92,3 +92,4 @@ function SolanaFeeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Solan
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }
+

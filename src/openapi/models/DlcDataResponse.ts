@@ -70,3 +70,4 @@ function DlcDataResponseFromJSONTyped(json: any, _ignoreDiscriminator: boolean):
         'adaptorPoint': json['adaptor_point'] == null ? undefined : json['adaptor_point'],
     };
 }
+

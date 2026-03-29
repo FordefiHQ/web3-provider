@@ -49,3 +49,4 @@ function SolanaTransactionSolanaTransactionTypeDetailsFromJSONTyped(json: any, _
             return json;
     }
 }
+

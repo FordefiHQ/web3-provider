@@ -82,7 +82,7 @@ export interface CreateStarknetTransferRequest {
  * 
  */
 const CreateStarknetTransferRequestTypeEnum = {
-    starknetTransfer: 'starknet_transfer'
+    StarknetTransfer: 'starknet_transfer'
 } as const;
 type CreateStarknetTransferRequestTypeEnum = typeof CreateStarknetTransferRequestTypeEnum[keyof typeof CreateStarknetTransferRequestTypeEnum];
 

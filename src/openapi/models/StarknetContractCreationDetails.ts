@@ -29,7 +29,7 @@ export interface StarknetContractCreationDetails {
  * 
  */
 const StarknetContractCreationDetailsTypeEnum = {
-    contractDeployment: 'contract_deployment'
+    ContractDeployment: 'contract_deployment'
 } as const;
 type StarknetContractCreationDetailsTypeEnum = typeof StarknetContractCreationDetailsTypeEnum[keyof typeof StarknetContractCreationDetailsTypeEnum];
 

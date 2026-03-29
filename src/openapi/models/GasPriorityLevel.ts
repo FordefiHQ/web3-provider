@@ -15,10 +15,10 @@
  * @export
  */
 export const GasPriorityLevel = {
-    custom: 'custom',
-    low: 'low',
-    medium: 'medium',
-    high: 'high'
+    Custom: 'custom',
+    Low: 'low',
+    Medium: 'medium',
+    High: 'high'
 } as const;
 export type GasPriorityLevel = typeof GasPriorityLevel[keyof typeof GasPriorityLevel];
 
@@ -29,3 +29,4 @@ export function GasPriorityLevelFromJSON(json: any): GasPriorityLevel {
 function GasPriorityLevelFromJSONTyped(json: any, _ignoreDiscriminator: boolean): GasPriorityLevel {
     return json as GasPriorityLevel;
 }
+

@@ -40,7 +40,7 @@ export interface AminoMessagesList {
  * 
  */
 const AminoMessagesListFormatEnum = {
-    amino: 'amino'
+    Amino: 'amino'
 } as const;
 type AminoMessagesListFormatEnum = typeof AminoMessagesListFormatEnum[keyof typeof AminoMessagesListFormatEnum];
 

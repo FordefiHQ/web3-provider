@@ -40,7 +40,7 @@ export interface UtxoNativeAssetIdentifierRequest {
  * 
  */
 const UtxoNativeAssetIdentifierRequestTypeEnum = {
-    native: 'native'
+    Native: 'native'
 } as const;
 type UtxoNativeAssetIdentifierRequestTypeEnum = typeof UtxoNativeAssetIdentifierRequestTypeEnum[keyof typeof UtxoNativeAssetIdentifierRequestTypeEnum];
 

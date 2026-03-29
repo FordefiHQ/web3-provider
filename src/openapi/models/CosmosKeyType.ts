@@ -15,8 +15,8 @@
  * @export
  */
 export const CosmosKeyType = {
-    secp256k1: 'secp256k1',
-    ethsecp256k1: 'ethsecp256k1'
+    Secp256k1: 'secp256k1',
+    Ethsecp256k1: 'ethsecp256k1'
 } as const;
 export type CosmosKeyType = typeof CosmosKeyType[keyof typeof CosmosKeyType];
 
@@ -31,3 +31,4 @@ function CosmosKeyTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): C
 export function CosmosKeyTypeToJSON(value?: CosmosKeyType | null): any {
     return value as any;
 }
+

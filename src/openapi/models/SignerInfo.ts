@@ -63,3 +63,4 @@ function SignerInfoFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Sign
         'sequence': json['sequence'],
     };
 }
+

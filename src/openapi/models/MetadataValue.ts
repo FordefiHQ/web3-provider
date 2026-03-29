@@ -25,3 +25,4 @@ export function MetadataValueFromJSON(json: any): MetadataValue {
 function MetadataValueFromJSONTyped(json: any, _ignoreDiscriminator: boolean): MetadataValue {
     return json;
 }
+

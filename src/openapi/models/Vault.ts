@@ -109,3 +109,4 @@ function VaultFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Vault {
             return json;
     }
 }
+

@@ -50,7 +50,7 @@ export interface EvmBridgeEffectSourceNative {
  * 
  */
 const EvmBridgeEffectSourceNativeTypeEnum = {
-    native: 'native'
+    Native: 'native'
 } as const;
 type EvmBridgeEffectSourceNativeTypeEnum = typeof EvmBridgeEffectSourceNativeTypeEnum[keyof typeof EvmBridgeEffectSourceNativeTypeEnum];
 

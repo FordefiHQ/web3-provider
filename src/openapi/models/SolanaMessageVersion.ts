@@ -15,8 +15,8 @@
  * @export
  */
 export const SolanaMessageVersion = {
-    legacy: 'legacy',
-    v0: 'v0'
+    Legacy: 'legacy',
+    V0: 'v0'
 } as const;
 export type SolanaMessageVersion = typeof SolanaMessageVersion[keyof typeof SolanaMessageVersion];
 
@@ -31,3 +31,4 @@ function SolanaMessageVersionFromJSONTyped(json: any, _ignoreDiscriminator: bool
 export function SolanaMessageVersionToJSON(value?: SolanaMessageVersion | null): any {
     return value as any;
 }
+

@@ -74,3 +74,4 @@ function UtxoFeesFromJSONTyped(json: any, _ignoreDiscriminator: boolean): UtxoFe
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }
+

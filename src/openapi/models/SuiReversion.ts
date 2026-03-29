@@ -49,3 +49,4 @@ function SuiReversionFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Su
         'reason': json['reason'] == null ? undefined : json['reason'],
     };
 }
+

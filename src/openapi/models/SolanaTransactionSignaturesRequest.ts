@@ -38,3 +38,4 @@ function SolanaTransactionSignaturesRequestToJSONTyped(value?: SolanaTransaction
         'data': value['data'],
     };
 }
+

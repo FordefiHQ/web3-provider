@@ -43,3 +43,4 @@ function CreateEvmRawTransactionRequestGasToJSONTyped(value?: CreateEvmRawTransa
             return value;
     }
 }
+

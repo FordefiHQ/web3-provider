@@ -41,7 +41,7 @@ export interface SolanaCustomFeeRequest {
  * 
  */
 const SolanaCustomFeeRequestTypeEnum = {
-    custom: 'custom'
+    Custom: 'custom'
 } as const;
 type SolanaCustomFeeRequestTypeEnum = typeof SolanaCustomFeeRequestTypeEnum[keyof typeof SolanaCustomFeeRequestTypeEnum];
 

@@ -56,7 +56,7 @@ export interface EvmErc1155Asset {
  * 
  */
 const EvmErc1155AssetTypeEnum = {
-    evmErc1155Asset: 'evm_erc1155_asset'
+    EvmErc1155Asset: 'evm_erc1155_asset'
 } as const;
 type EvmErc1155AssetTypeEnum = typeof EvmErc1155AssetTypeEnum[keyof typeof EvmErc1155AssetTypeEnum];
 

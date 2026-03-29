@@ -40,7 +40,7 @@ export interface CosmosAssetIdentifierRequest {
  * 
  */
 const CosmosAssetIdentifierRequestTypeEnum = {
-    cosmos: 'cosmos'
+    Cosmos: 'cosmos'
 } as const;
 type CosmosAssetIdentifierRequestTypeEnum = typeof CosmosAssetIdentifierRequestTypeEnum[keyof typeof CosmosAssetIdentifierRequestTypeEnum];
 

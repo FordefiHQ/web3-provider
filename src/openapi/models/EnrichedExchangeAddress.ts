@@ -66,7 +66,7 @@ export interface EnrichedExchangeAddress {
  * 
  */
 const EnrichedExchangeAddressTypeEnum = {
-    exchange: 'exchange'
+    Exchange: 'exchange'
 } as const;
 type EnrichedExchangeAddressTypeEnum = typeof EnrichedExchangeAddressTypeEnum[keyof typeof EnrichedExchangeAddressTypeEnum];
 

@@ -49,3 +49,4 @@ function CreateEvmTransferRequestToToJSONTyped(value?: CreateEvmTransferRequestT
             return value;
     }
 }
+

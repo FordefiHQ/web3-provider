@@ -15,11 +15,11 @@
  * @export
  */
 export const SolanaReversionState = {
-    notReverted: 'not_reverted',
-    unknownRevert: 'unknown_revert',
-    contractAsserted: 'contract_asserted',
-    insufficientFundsGasAndValue: 'insufficient_funds_gas_and_value',
-    insufficientFundsForRent: 'insufficient_funds_for_rent'
+    NotReverted: 'not_reverted',
+    UnknownRevert: 'unknown_revert',
+    ContractAsserted: 'contract_asserted',
+    InsufficientFundsGasAndValue: 'insufficient_funds_gas_and_value',
+    InsufficientFundsForRent: 'insufficient_funds_for_rent'
 } as const;
 export type SolanaReversionState = typeof SolanaReversionState[keyof typeof SolanaReversionState];
 
@@ -30,3 +30,4 @@ export function SolanaReversionStateFromJSON(json: any): SolanaReversionState {
 function SolanaReversionStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): SolanaReversionState {
     return json as SolanaReversionState;
 }
+

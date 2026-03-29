@@ -52,7 +52,7 @@ export interface TronAddressBookContactAddressRef {
  * 
  */
 const TronAddressBookContactAddressRefChainTypeEnum = {
-    tron: 'tron'
+    Tron: 'tron'
 } as const;
 type TronAddressBookContactAddressRefChainTypeEnum = typeof TronAddressBookContactAddressRefChainTypeEnum[keyof typeof TronAddressBookContactAddressRefChainTypeEnum];
 

@@ -67,3 +67,4 @@ function EvmTransferEffectFromJSONTyped(json: any, _ignoreDiscriminator: boolean
         'to': EnrichedEvmAddressFromJSON(json['to']),
     };
 }
+

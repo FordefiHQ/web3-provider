@@ -47,10 +47,10 @@ export interface HyperliquidTypedMessageEvmMessage {
     primaryType: string;
     /**
      * Addresses that are related to this message, enriched with metadata.Please NOTE: the dictionary keys are EIP-55 checksummed addresses
-     * @type {{ [key: string]: EnrichedEvmAddress | undefined; }}
+     * @type {{ [key: string]: EnrichedEvmAddress; }}
      * @memberof HyperliquidTypedMessageEvmMessage
      */
-    enrichedAddresses?: { [key: string]: EnrichedEvmAddress | undefined; };
+    enrichedAddresses?: { [key: string]: EnrichedEvmAddress; };
     /**
      * The typed message type.
      * @type {HyperliquidTypedMessageEvmMessageTypeEnum}
@@ -76,7 +76,7 @@ export interface HyperliquidTypedMessageEvmMessage {
  * 
  */
 const HyperliquidTypedMessageEvmMessageTypeEnum = {
-    hyperliquid: 'hyperliquid'
+    Hyperliquid: 'hyperliquid'
 } as const;
 type HyperliquidTypedMessageEvmMessageTypeEnum = typeof HyperliquidTypedMessageEvmMessageTypeEnum[keyof typeof HyperliquidTypedMessageEvmMessageTypeEnum];
 

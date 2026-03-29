@@ -10,14 +10,14 @@
  * Do not edit the class manually.
  */
 
-import type { CreateExchangeExternalWithdrawRequest } from './CreateExchangeExternalWithdrawRequest';
-import {
-    CreateExchangeExternalWithdrawRequestToJSON,
-} from './CreateExchangeExternalWithdrawRequest';
 import type { DappInfo } from './DappInfo';
 import {
     DappInfoToJSON,
 } from './DappInfo';
+import type { CreateExchangeTransactionRequestDetails } from './CreateExchangeTransactionRequestDetails';
+import {
+    CreateExchangeTransactionRequestDetailsToJSON,
+} from './CreateExchangeTransactionRequestDetails';
 
 /**
  * 
@@ -57,10 +57,10 @@ export interface CreateExchangeTransactionRequest {
     type: CreateExchangeTransactionRequestTypeEnum;
     /**
      * 
-     * @type {CreateExchangeExternalWithdrawRequest}
+     * @type {CreateExchangeTransactionRequestDetails}
      * @memberof CreateExchangeTransactionRequest
      */
-    details: CreateExchangeExternalWithdrawRequest;
+    details: CreateExchangeTransactionRequestDetails;
 }
 
 
@@ -68,8 +68,8 @@ export interface CreateExchangeTransactionRequest {
  * 
  */
 const CreateExchangeTransactionRequestSignerTypeEnum = {
-    initiator: 'initiator',
-    apiSigner: 'api_signer'
+    Initiator: 'initiator',
+    ApiSigner: 'api_signer'
 } as const;
 type CreateExchangeTransactionRequestSignerTypeEnum = typeof CreateExchangeTransactionRequestSignerTypeEnum[keyof typeof CreateExchangeTransactionRequestSignerTypeEnum];
 
@@ -77,7 +77,7 @@ type CreateExchangeTransactionRequestSignerTypeEnum = typeof CreateExchangeTrans
  * 
  */
 const CreateExchangeTransactionRequestTypeEnum = {
-    exchangeTransaction: 'exchange_transaction'
+    ExchangeTransaction: 'exchange_transaction'
 } as const;
 type CreateExchangeTransactionRequestTypeEnum = typeof CreateExchangeTransactionRequestTypeEnum[keyof typeof CreateExchangeTransactionRequestTypeEnum];
 
@@ -97,6 +97,6 @@ function CreateExchangeTransactionRequestToJSONTyped(value?: CreateExchangeTrans
         'signer_type': value['signerType'],
         'dapp_info': DappInfoToJSON(value['dappInfo']),
         'type': value['type'],
-        'details': CreateExchangeExternalWithdrawRequestToJSON(value['details']),
+        'details': CreateExchangeTransactionRequestDetailsToJSON(value['details']),
     };
 }

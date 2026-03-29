@@ -64,7 +64,7 @@ export interface SplToken {
  * 
  */
 const SplTokenTypeEnum = {
-    splToken: 'spl_token'
+    SplToken: 'spl_token'
 } as const;
 type SplTokenTypeEnum = typeof SplTokenTypeEnum[keyof typeof SplTokenTypeEnum];
 

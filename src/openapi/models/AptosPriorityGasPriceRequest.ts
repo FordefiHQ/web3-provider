@@ -40,7 +40,7 @@ export interface AptosPriorityGasPriceRequest {
  * 
  */
 const AptosPriorityGasPriceRequestTypeEnum = {
-    priority: 'priority'
+    Priority: 'priority'
 } as const;
 type AptosPriorityGasPriceRequestTypeEnum = typeof AptosPriorityGasPriceRequestTypeEnum[keyof typeof AptosPriorityGasPriceRequestTypeEnum];
 

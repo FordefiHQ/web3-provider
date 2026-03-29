@@ -43,3 +43,4 @@ function CreateAptosTransactionRequestDetailsToJSONTyped(value?: CreateAptosTran
             return value;
     }
 }
+

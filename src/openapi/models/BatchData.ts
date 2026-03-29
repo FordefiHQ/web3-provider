@@ -63,3 +63,4 @@ function BatchDataFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Batch
         'matchedPolicies': ((json['matched_policies'] as Array<any>).map(PolicyMatchFromJSON)),
     };
 }
+

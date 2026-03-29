@@ -63,3 +63,4 @@ function StacksContractCallPayloadFromJSONTyped(json: any, _ignoreDiscriminator:
         'functionArguments': json['function_arguments'],
     };
 }
+

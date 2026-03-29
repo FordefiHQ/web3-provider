@@ -49,3 +49,4 @@ function CosmosTransactionTypeDetailsFromJSONTyped(json: any, _ignoreDiscriminat
             return json;
     }
 }
+

@@ -49,3 +49,4 @@ function EvmReversionFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Ev
         'reason': json['reason'] == null ? undefined : json['reason'],
     };
 }
+

@@ -63,3 +63,4 @@ function StarknetAssetIdentifierDetailsToJSONTyped(value?: StarknetAssetIdentifi
             return value;
     }
 }
+

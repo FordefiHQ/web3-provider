@@ -67,3 +67,4 @@ function NonPushableTransactionStateChangeFromJSONTyped(json: any, _ignoreDiscri
         'newState': NonPushableTransactionStateFromJSON(json['new_state']),
     };
 }
+

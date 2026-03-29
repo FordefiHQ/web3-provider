@@ -74,10 +74,10 @@ export interface SolanaVault {
     modifiedAt: Date;
     /**
      * Metadata in a form: <str, bool | str | int | array[str]>.
-     * @type {{ [key: string]: MetadataValue | undefined; }}
+     * @type {{ [key: string]: MetadataValue; }}
      * @memberof SolanaVault
      */
-    metadata?: { [key: string]: MetadataValue | undefined; };
+    metadata?: { [key: string]: MetadataValue; };
     /**
      * The name of the vault.
      * @type {string}
@@ -177,7 +177,7 @@ export interface SolanaVault {
  * 
  */
 const SolanaVaultTypeEnum = {
-    solana: 'solana'
+    Solana: 'solana'
 } as const;
 type SolanaVaultTypeEnum = typeof SolanaVaultTypeEnum[keyof typeof SolanaVaultTypeEnum];
 

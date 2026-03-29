@@ -74,10 +74,10 @@ export interface TonVault {
     modifiedAt: Date;
     /**
      * Metadata in a form: <str, bool | str | int | array[str]>.
-     * @type {{ [key: string]: MetadataValue | undefined; }}
+     * @type {{ [key: string]: MetadataValue; }}
      * @memberof TonVault
      */
-    metadata?: { [key: string]: MetadataValue | undefined; };
+    metadata?: { [key: string]: MetadataValue; };
     /**
      * The name of the vault.
      * @type {string}
@@ -195,7 +195,7 @@ export interface TonVault {
  * 
  */
 const TonVaultTypeEnum = {
-    ton: 'ton'
+    Ton: 'ton'
 } as const;
 type TonVaultTypeEnum = typeof TonVaultTypeEnum[keyof typeof TonVaultTypeEnum];
 

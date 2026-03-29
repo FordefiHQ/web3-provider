@@ -43,3 +43,4 @@ function EnrichedSuiAssetIdentifierDetailsFromJSONTyped(json: any, _ignoreDiscri
             return json;
     }
 }
+

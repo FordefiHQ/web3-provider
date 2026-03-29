@@ -182,7 +182,7 @@ export interface TronMessage {
  * 
  */
 const TronMessageTypeEnum = {
-    tronMessage: 'tron_message'
+    TronMessage: 'tron_message'
 } as const;
 type TronMessageTypeEnum = typeof TronMessageTypeEnum[keyof typeof TronMessageTypeEnum];
 

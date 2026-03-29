@@ -52,7 +52,7 @@ export interface LegacyGas {
  * @export
  */
 export const LegacyGasTypeEnum = {
-    legacy: 'legacy'
+    Legacy: 'legacy'
 } as const;
 export type LegacyGasTypeEnum = typeof LegacyGasTypeEnum[keyof typeof LegacyGasTypeEnum];
 
@@ -68,3 +68,4 @@ export function LegacyGasFromJSONTyped(json: any, _ignoreDiscriminator: boolean)
         'type': json['type'],
     };
 }
+

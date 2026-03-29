@@ -15,11 +15,11 @@
  * @export
  */
 export const RelatedTransactionType = {
-    swapFulfilledBy: 'swap_fulfilled_by',
-    swapFulfilling: 'swap_fulfilling',
-    bridgeIntent: 'bridge_intent',
-    bridgeSource: 'bridge_source',
-    bridgeDestination: 'bridge_destination'
+    SwapFulfilledBy: 'swap_fulfilled_by',
+    SwapFulfilling: 'swap_fulfilling',
+    BridgeIntent: 'bridge_intent',
+    BridgeSource: 'bridge_source',
+    BridgeDestination: 'bridge_destination'
 } as const;
 export type RelatedTransactionType = typeof RelatedTransactionType[keyof typeof RelatedTransactionType];
 
@@ -30,3 +30,4 @@ export function RelatedTransactionTypeFromJSON(json: any): RelatedTransactionTyp
 function RelatedTransactionTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): RelatedTransactionType {
     return json as RelatedTransactionType;
 }
+

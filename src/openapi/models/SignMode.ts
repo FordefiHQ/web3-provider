@@ -15,8 +15,8 @@
  * @export
  */
 export const SignMode = {
-    auto: 'auto',
-    triggered: 'triggered'
+    Auto: 'auto',
+    Triggered: 'triggered'
 } as const;
 export type SignMode = typeof SignMode[keyof typeof SignMode];
 
@@ -31,3 +31,4 @@ function SignModeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): SignMo
 export function SignModeToJSON(value?: SignMode | null): any {
     return value as any;
 }
+

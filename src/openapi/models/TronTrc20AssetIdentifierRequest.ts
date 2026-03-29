@@ -41,7 +41,7 @@ export interface TronTrc20AssetIdentifierRequest {
  * 
  */
 const TronTrc20AssetIdentifierRequestTypeEnum = {
-    trc20: 'trc20'
+    Trc20: 'trc20'
 } as const;
 type TronTrc20AssetIdentifierRequestTypeEnum = typeof TronTrc20AssetIdentifierRequestTypeEnum[keyof typeof TronTrc20AssetIdentifierRequestTypeEnum];
 

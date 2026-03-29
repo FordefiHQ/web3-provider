@@ -91,3 +91,4 @@ function ContactRefAddressRefFromJSONTyped(json: any, _ignoreDiscriminator: bool
             return json;
     }
 }
+

@@ -40,7 +40,7 @@ export interface CosmosTransferToAddressRequest {
  * 
  */
 const CosmosTransferToAddressRequestTypeEnum = {
-    address: 'address'
+    Address: 'address'
 } as const;
 type CosmosTransferToAddressRequestTypeEnum = typeof CosmosTransferToAddressRequestTypeEnum[keyof typeof CosmosTransferToAddressRequestTypeEnum];
 

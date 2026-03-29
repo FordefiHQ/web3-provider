@@ -15,11 +15,11 @@
  * @export
  */
 export const StacksPostConditionComparator = {
-    eq: 'eq',
-    gt: 'gt',
-    ge: 'ge',
-    lt: 'lt',
-    le: 'le'
+    Eq: 'eq',
+    Gt: 'gt',
+    Ge: 'ge',
+    Lt: 'lt',
+    Le: 'le'
 } as const;
 export type StacksPostConditionComparator = typeof StacksPostConditionComparator[keyof typeof StacksPostConditionComparator];
 
@@ -30,3 +30,4 @@ export function StacksPostConditionComparatorFromJSON(json: any): StacksPostCond
 function StacksPostConditionComparatorFromJSONTyped(json: any, _ignoreDiscriminator: boolean): StacksPostConditionComparator {
     return json as StacksPostConditionComparator;
 }
+

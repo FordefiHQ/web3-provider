@@ -46,7 +46,7 @@ export interface CreateEvmTypedV1MessageRequest {
  * 
  */
 const CreateEvmTypedV1MessageRequestTypeEnum = {
-    typedMessageTypeV1: 'typed_message_type_v1'
+    TypedMessageTypeV1: 'typed_message_type_v1'
 } as const;
 type CreateEvmTypedV1MessageRequestTypeEnum = typeof CreateEvmTypedV1MessageRequestTypeEnum[keyof typeof CreateEvmTypedV1MessageRequestTypeEnum];
 

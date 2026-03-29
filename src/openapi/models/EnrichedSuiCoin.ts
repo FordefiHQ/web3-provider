@@ -59,7 +59,7 @@ export interface EnrichedSuiCoin {
  * 
  */
 const EnrichedSuiCoinTypeEnum = {
-    coin: 'coin'
+    Coin: 'coin'
 } as const;
 type EnrichedSuiCoinTypeEnum = typeof EnrichedSuiCoinTypeEnum[keyof typeof EnrichedSuiCoinTypeEnum];
 

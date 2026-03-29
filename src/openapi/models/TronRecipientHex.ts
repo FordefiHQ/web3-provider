@@ -35,7 +35,7 @@ export interface TronRecipientHex {
  * 
  */
 const TronRecipientHexTypeEnum = {
-    hex: 'hex'
+    Hex: 'hex'
 } as const;
 type TronRecipientHexTypeEnum = typeof TronRecipientHexTypeEnum[keyof typeof TronRecipientHexTypeEnum];
 

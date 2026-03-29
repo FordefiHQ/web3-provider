@@ -35,7 +35,7 @@ export interface ExchangeTransferExternalRecipientTypeVault {
  * 
  */
 const ExchangeTransferExternalRecipientTypeVaultTypeEnum = {
-    vault: 'vault'
+    Vault: 'vault'
 } as const;
 type ExchangeTransferExternalRecipientTypeVaultTypeEnum = typeof ExchangeTransferExternalRecipientTypeVaultTypeEnum[keyof typeof ExchangeTransferExternalRecipientTypeVaultTypeEnum];
 

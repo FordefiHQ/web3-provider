@@ -72,3 +72,4 @@ function StarknetFeeDetailsFromJSONTyped(json: any, _ignoreDiscriminator: boolea
         'l1DataGasPrice': json['l1_data_gas_price'],
     };
 }
+

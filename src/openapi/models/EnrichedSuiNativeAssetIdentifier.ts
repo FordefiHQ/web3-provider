@@ -40,7 +40,7 @@ export interface EnrichedSuiNativeAssetIdentifier {
  * 
  */
 const EnrichedSuiNativeAssetIdentifierTypeEnum = {
-    native: 'native'
+    Native: 'native'
 } as const;
 type EnrichedSuiNativeAssetIdentifierTypeEnum = typeof EnrichedSuiNativeAssetIdentifierTypeEnum[keyof typeof EnrichedSuiNativeAssetIdentifierTypeEnum];
 

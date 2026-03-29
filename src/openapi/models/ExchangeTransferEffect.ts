@@ -71,3 +71,4 @@ function ExchangeTransferEffectFromJSONTyped(json: any, _ignoreDiscriminator: bo
         'to': EnrichedAddressFromJSON(json['to']),
     };
 }
+

@@ -35,7 +35,7 @@ export interface MinedMessagesList {
  * 
  */
 const MinedMessagesListFormatEnum = {
-    mined: 'mined'
+    Mined: 'mined'
 } as const;
 type MinedMessagesListFormatEnum = typeof MinedMessagesListFormatEnum[keyof typeof MinedMessagesListFormatEnum];
 

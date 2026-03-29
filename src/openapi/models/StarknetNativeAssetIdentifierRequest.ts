@@ -41,7 +41,7 @@ export interface StarknetNativeAssetIdentifierRequest {
  * 
  */
 const StarknetNativeAssetIdentifierRequestTypeEnum = {
-    native: 'native'
+    Native: 'native'
 } as const;
 type StarknetNativeAssetIdentifierRequestTypeEnum = typeof StarknetNativeAssetIdentifierRequestTypeEnum[keyof typeof StarknetNativeAssetIdentifierRequestTypeEnum];
 

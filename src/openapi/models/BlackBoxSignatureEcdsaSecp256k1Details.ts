@@ -46,7 +46,7 @@ export interface BlackBoxSignatureEcdsaSecp256k1Details {
  * 
  */
 const BlackBoxSignatureEcdsaSecp256k1DetailsTypeEnum = {
-    ecdsaSecp256k1: 'ecdsa_secp256k1'
+    EcdsaSecp256k1: 'ecdsa_secp256k1'
 } as const;
 type BlackBoxSignatureEcdsaSecp256k1DetailsTypeEnum = typeof BlackBoxSignatureEcdsaSecp256k1DetailsTypeEnum[keyof typeof BlackBoxSignatureEcdsaSecp256k1DetailsTypeEnum];
 

@@ -60,3 +60,4 @@ function StarknetBalanceChangeEffectFromJSONTyped(json: any, _ignoreDiscriminato
         'address': EnrichedStarknetAddressFromJSON(json['address']),
     };
 }
+

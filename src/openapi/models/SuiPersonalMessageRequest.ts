@@ -46,7 +46,7 @@ export interface SuiPersonalMessageRequest {
  * 
  */
 const SuiPersonalMessageRequestTypeEnum = {
-    personalMessageType: 'personal_message_type'
+    PersonalMessageType: 'personal_message_type'
 } as const;
 type SuiPersonalMessageRequestTypeEnum = typeof SuiPersonalMessageRequestTypeEnum[keyof typeof SuiPersonalMessageRequestTypeEnum];
 

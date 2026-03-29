@@ -49,3 +49,4 @@ function CreateStarknetTransferRequestToToJSONTyped(value?: CreateStarknetTransf
             return value;
     }
 }
+

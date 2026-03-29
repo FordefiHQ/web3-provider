@@ -49,3 +49,4 @@ function FiatCurrencyFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Fi
         'decimals': json['decimals'],
     };
 }
+

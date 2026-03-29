@@ -15,9 +15,9 @@
  * @export
  */
 export const TransferDirection = {
-    outgoing: 'outgoing',
-    incoming: 'incoming',
-    internal: 'internal'
+    Outgoing: 'outgoing',
+    Incoming: 'incoming',
+    Internal: 'internal'
 } as const;
 export type TransferDirection = typeof TransferDirection[keyof typeof TransferDirection];
 
@@ -28,3 +28,4 @@ export function TransferDirectionFromJSON(json: any): TransferDirection {
 function TransferDirectionFromJSONTyped(json: any, _ignoreDiscriminator: boolean): TransferDirection {
     return json as TransferDirection;
 }
+

@@ -46,7 +46,7 @@ export interface MinedSignDoc {
  * 
  */
 const MinedSignDocFormatEnum = {
-    mined: 'mined'
+    Mined: 'mined'
 } as const;
 type MinedSignDocFormatEnum = typeof MinedSignDocFormatEnum[keyof typeof MinedSignDocFormatEnum];
 

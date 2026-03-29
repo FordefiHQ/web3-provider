@@ -35,7 +35,7 @@ export interface StarknetRecipientHex {
  * 
  */
 const StarknetRecipientHexTypeEnum = {
-    hex: 'hex'
+    Hex: 'hex'
 } as const;
 type StarknetRecipientHexTypeEnum = typeof StarknetRecipientHexTypeEnum[keyof typeof StarknetRecipientHexTypeEnum];
 

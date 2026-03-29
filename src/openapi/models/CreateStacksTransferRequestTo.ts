@@ -49,3 +49,4 @@ function CreateStacksTransferRequestToToJSONTyped(value?: CreateStacksTransferRe
             return value;
     }
 }
+

@@ -40,35 +40,35 @@ export interface Block {
      * @memberof Block
      * @deprecated
      */
-    height: number;
+    height?: number;
     /**
      * The slot number.
      * @type {number}
      * @memberof Block
      * @deprecated
      */
-    slot: number;
+    slot?: number;
     /**
      * The sequence number of the checkpoint.
      * @type {number}
      * @memberof Block
      * @deprecated
      */
-    sequenceNumber: number;
+    sequenceNumber?: number;
     /**
      * The digest of the checkpoint
      * @type {string}
      * @memberof Block
      * @deprecated
      */
-    digest: string;
+    digest?: string;
     /**
      * The block number.
      * @type {number}
      * @memberof Block
      * @deprecated
      */
-    sequence: number;
+    sequence?: number;
 }
 
 export function BlockFromJSON(json: any): Block {
@@ -84,10 +84,11 @@ function BlockFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Block {
         'number': json['number'],
         'hash': json['hash'] == null ? undefined : json['hash'],
         'minedAt': (new Date(json['mined_at'])),
-        'height': json['height'],
-        'slot': json['slot'],
-        'sequenceNumber': json['sequence_number'],
-        'digest': json['digest'],
-        'sequence': json['sequence'],
+        'height': json['height'] == null ? undefined : json['height'],
+        'slot': json['slot'] == null ? undefined : json['slot'],
+        'sequenceNumber': json['sequence_number'] == null ? undefined : json['sequence_number'],
+        'digest': json['digest'] == null ? undefined : json['digest'],
+        'sequence': json['sequence'] == null ? undefined : json['sequence'],
     };
 }
+

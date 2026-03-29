@@ -35,7 +35,7 @@ export interface CosmosMessageBase64Data {
  * 
  */
 const CosmosMessageBase64DataTypeEnum = {
-    base64: 'base64'
+    Base64: 'base64'
 } as const;
 type CosmosMessageBase64DataTypeEnum = typeof CosmosMessageBase64DataTypeEnum[keyof typeof CosmosMessageBase64DataTypeEnum];
 

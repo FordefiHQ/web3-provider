@@ -29,7 +29,7 @@ export interface PersonalMessageDetails {
  * 
  */
 const PersonalMessageDetailsTypeEnum = {
-    personalMessageType: 'personal_message_type'
+    PersonalMessageType: 'personal_message_type'
 } as const;
 type PersonalMessageDetailsTypeEnum = typeof PersonalMessageDetailsTypeEnum[keyof typeof PersonalMessageDetailsTypeEnum];
 

@@ -206,7 +206,7 @@ export interface TonMessage {
  * 
  */
 const TonMessageTypeEnum = {
-    tonMessage: 'ton_message'
+    TonMessage: 'ton_message'
 } as const;
 type TonMessageTypeEnum = typeof TonMessageTypeEnum[keyof typeof TonMessageTypeEnum];
 

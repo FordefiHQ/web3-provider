@@ -15,10 +15,10 @@
  * @export
  */
 export const AmlPolicyMatchOutgoingActionType = {
-    allow: 'allow',
-    block: 'block',
-    requireApproval: 'require_approval',
-    skip: 'skip'
+    Allow: 'allow',
+    Block: 'block',
+    RequireApproval: 'require_approval',
+    Skip: 'skip'
 } as const;
 export type AmlPolicyMatchOutgoingActionType = typeof AmlPolicyMatchOutgoingActionType[keyof typeof AmlPolicyMatchOutgoingActionType];
 
@@ -29,3 +29,4 @@ export function AmlPolicyMatchOutgoingActionTypeFromJSON(json: any): AmlPolicyMa
 function AmlPolicyMatchOutgoingActionTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): AmlPolicyMatchOutgoingActionType {
     return json as AmlPolicyMatchOutgoingActionType;
 }
+

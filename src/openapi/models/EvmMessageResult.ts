@@ -42,3 +42,4 @@ function EvmMessageResultFromJSONTyped(json: any, _ignoreDiscriminator: boolean)
         'effects': EvmEffectsBaseFromJSON(json['effects']),
     };
 }
+

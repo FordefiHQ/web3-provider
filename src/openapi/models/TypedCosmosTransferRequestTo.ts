@@ -49,3 +49,4 @@ function TypedCosmosTransferRequestToToJSONTyped(value?: TypedCosmosTransferRequ
             return value;
     }
 }
+

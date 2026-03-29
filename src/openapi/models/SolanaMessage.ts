@@ -208,7 +208,7 @@ export interface SolanaMessage {
  * 
  */
 const SolanaMessageTypeEnum = {
-    solanaMessage: 'solana_message'
+    SolanaMessage: 'solana_message'
 } as const;
 type SolanaMessageTypeEnum = typeof SolanaMessageTypeEnum[keyof typeof SolanaMessageTypeEnum];
 

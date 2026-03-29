@@ -336,9 +336,9 @@ export interface EvmTransaction {
      * @memberof EvmTransaction
      * @deprecated
      */
-    useSecureNode: boolean;
+    useSecureNode?: boolean;
     /**
-     * `True` if Fordefi sends this transaction through a MEV protected node, `False` otherwise. By using a MEV protected node, you avoid maximal extractable value (MEV) attacks.
+     * `True` if Fordefi sends this transaction through an MEV protected node, `False` otherwise. By using an MEV protected node, you avoid maximal extractable value (MEV) attacks.
      * @type {boolean}
      * @memberof EvmTransaction
      */
@@ -368,7 +368,7 @@ export interface EvmTransaction {
  * 
  */
 const EvmTransactionTypeEnum = {
-    evmTransaction: 'evm_transaction'
+    EvmTransaction: 'evm_transaction'
 } as const;
 type EvmTransactionTypeEnum = typeof EvmTransactionTypeEnum[keyof typeof EvmTransactionTypeEnum];
 
@@ -418,7 +418,7 @@ export function EvmTransactionFromJSONTyped(json: any, _ignoreDiscriminator: boo
         'fundedByTransactionId': json['funded_by_transaction_id'] == null ? undefined : json['funded_by_transaction_id'],
         'fundedByVault': json['funded_by_vault'] == null ? undefined : VaultRefFromJSON(json['funded_by_vault']),
         'currentPrecedingPushedToBlockchainTransactionId': json['current_preceding_pushed_to_blockchain_transaction_id'] == null ? undefined : json['current_preceding_pushed_to_blockchain_transaction_id'],
-        'useSecureNode': json['use_secure_node'],
+        'useSecureNode': json['use_secure_node'] == null ? undefined : json['use_secure_node'],
         'useMevProtectedNode': json['use_mev_protected_node'],
         'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
         'rawTransaction': json['raw_transaction'] == null ? undefined : json['raw_transaction'],

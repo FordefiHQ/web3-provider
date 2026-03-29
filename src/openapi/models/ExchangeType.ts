@@ -15,12 +15,12 @@
  * @export
  */
 export const ExchangeType = {
-    binance: 'binance',
-    bybit: 'bybit',
-    coinbaseInternational: 'coinbase_international',
-    coinbaseUs: 'coinbase_us',
-    okx: 'okx',
-    kraken: 'kraken'
+    Binance: 'binance',
+    Bybit: 'bybit',
+    CoinbaseInternational: 'coinbase_international',
+    CoinbaseUs: 'coinbase_us',
+    Okx: 'okx',
+    Kraken: 'kraken'
 } as const;
 export type ExchangeType = typeof ExchangeType[keyof typeof ExchangeType];
 
@@ -35,3 +35,4 @@ function ExchangeTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Ex
 export function ExchangeTypeToJSON(value?: ExchangeType | null): any {
     return value as any;
 }
+

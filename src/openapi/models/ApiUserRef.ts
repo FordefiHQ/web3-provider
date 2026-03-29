@@ -58,7 +58,7 @@ export interface ApiUserRef {
  * 
  */
 const ApiUserRefUserTypeEnum = {
-    apiUser: 'api_user'
+    ApiUser: 'api_user'
 } as const;
 type ApiUserRefUserTypeEnum = typeof ApiUserRefUserTypeEnum[keyof typeof ApiUserRefUserTypeEnum];
 
@@ -66,8 +66,8 @@ type ApiUserRefUserTypeEnum = typeof ApiUserRefUserTypeEnum[keyof typeof ApiUser
  * 
  */
 const ApiUserRefStateEnum = {
-    active: 'active',
-    deleted: 'deleted'
+    Active: 'active',
+    Deleted: 'deleted'
 } as const;
 type ApiUserRefStateEnum = typeof ApiUserRefStateEnum[keyof typeof ApiUserRefStateEnum];
 

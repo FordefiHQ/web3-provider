@@ -44,3 +44,4 @@ function BoundCountFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Boun
         'hasMore': json['has_more'],
     };
 }
+

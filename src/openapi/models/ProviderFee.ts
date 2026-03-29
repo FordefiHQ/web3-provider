@@ -49,3 +49,4 @@ function ProviderFeeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Pro
         'amount': json['amount'],
     };
 }
+

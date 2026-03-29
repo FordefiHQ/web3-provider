@@ -256,7 +256,7 @@ export interface TronTransaction {
  * 
  */
 const TronTransactionTypeEnum = {
-    tronTransaction: 'tron_transaction'
+    TronTransaction: 'tron_transaction'
 } as const;
 type TronTransactionTypeEnum = typeof TronTransactionTypeEnum[keyof typeof TronTransactionTypeEnum];
 

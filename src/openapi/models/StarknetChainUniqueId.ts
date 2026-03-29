@@ -15,7 +15,7 @@
  * @export
  */
 export const StarknetChainUniqueId = {
-    starknetMainnet: 'starknet_mainnet'
+    StarknetMainnet: 'starknet_mainnet'
 } as const;
 export type StarknetChainUniqueId = typeof StarknetChainUniqueId[keyof typeof StarknetChainUniqueId];
 
@@ -30,3 +30,4 @@ function StarknetChainUniqueIdFromJSONTyped(json: any, _ignoreDiscriminator: boo
 export function StarknetChainUniqueIdToJSON(value?: StarknetChainUniqueId | null): any {
     return value as any;
 }
+

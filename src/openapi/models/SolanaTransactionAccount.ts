@@ -56,3 +56,4 @@ function SolanaTransactionAccountFromJSONTyped(json: any, _ignoreDiscriminator: 
         'signer': json['signer'],
     };
 }
+

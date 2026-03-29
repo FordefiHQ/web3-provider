@@ -46,7 +46,7 @@ export interface StarknetAddressBookContactAddressRef {
  * 
  */
 const StarknetAddressBookContactAddressRefChainTypeEnum = {
-    starknet: 'starknet'
+    Starknet: 'starknet'
 } as const;
 type StarknetAddressBookContactAddressRefChainTypeEnum = typeof StarknetAddressBookContactAddressRefChainTypeEnum[keyof typeof StarknetAddressBookContactAddressRefChainTypeEnum];
 

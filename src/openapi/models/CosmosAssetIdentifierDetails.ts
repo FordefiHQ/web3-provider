@@ -63,3 +63,4 @@ function CosmosAssetIdentifierDetailsToJSONTyped(value?: CosmosAssetIdentifierDe
             return value;
     }
 }
+

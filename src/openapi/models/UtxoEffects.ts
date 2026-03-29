@@ -82,3 +82,4 @@ function UtxoEffectsFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Utx
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }
+

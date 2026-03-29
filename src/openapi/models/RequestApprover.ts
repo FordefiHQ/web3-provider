@@ -68,3 +68,4 @@ function RequestApproverFromJSONTyped(json: any, _ignoreDiscriminator: boolean):
         'state': ApprovalStateFromJSON(json['state']),
     };
 }
+

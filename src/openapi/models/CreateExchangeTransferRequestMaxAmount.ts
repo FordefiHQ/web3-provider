@@ -29,7 +29,7 @@ export interface CreateExchangeTransferRequestMaxAmount {
  * 
  */
 const CreateExchangeTransferRequestMaxAmountTypeEnum = {
-    max: 'max'
+    Max: 'max'
 } as const;
 type CreateExchangeTransferRequestMaxAmountTypeEnum = typeof CreateExchangeTransferRequestMaxAmountTypeEnum[keyof typeof CreateExchangeTransferRequestMaxAmountTypeEnum];
 

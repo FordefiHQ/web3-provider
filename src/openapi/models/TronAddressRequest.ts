@@ -66,3 +66,4 @@ function TronAddressRequestToJSONTyped(value?: TronAddressRequest | null, _ignor
         'base58_repr': value['base58Repr'],
     };
 }
+

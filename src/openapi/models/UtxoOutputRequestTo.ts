@@ -55,3 +55,4 @@ function UtxoOutputRequestToToJSONTyped(value?: UtxoOutputRequestTo | null, _ign
             return value;
     }
 }
+

@@ -81,3 +81,4 @@ function SuiCommandArgumentToJSONTyped(value?: SuiCommandArgument | null, _ignor
             return value;
     }
 }
+

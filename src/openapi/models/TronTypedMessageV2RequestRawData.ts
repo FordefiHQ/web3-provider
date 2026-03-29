@@ -43,3 +43,4 @@ function TronTypedMessageV2RequestRawDataToJSONTyped(value?: TronTypedMessageV2R
             return value;
     }
 }
+

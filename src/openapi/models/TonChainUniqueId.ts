@@ -15,7 +15,7 @@
  * @export
  */
 export const TonChainUniqueId = {
-    tonMainnet: 'ton_mainnet'
+    TonMainnet: 'ton_mainnet'
 } as const;
 export type TonChainUniqueId = typeof TonChainUniqueId[keyof typeof TonChainUniqueId];
 
@@ -30,3 +30,4 @@ function TonChainUniqueIdFromJSONTyped(json: any, _ignoreDiscriminator: boolean)
 export function TonChainUniqueIdToJSON(value?: TonChainUniqueId | null): any {
     return value as any;
 }
+

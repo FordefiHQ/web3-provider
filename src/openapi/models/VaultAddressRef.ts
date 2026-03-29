@@ -58,3 +58,4 @@ function VaultAddressRefFromJSONTyped(json: any, _ignoreDiscriminator: boolean):
         'address': json['address'],
     };
 }
+

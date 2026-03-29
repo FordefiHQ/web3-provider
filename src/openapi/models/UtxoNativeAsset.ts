@@ -40,7 +40,7 @@ export interface UtxoNativeAsset {
  * 
  */
 const UtxoNativeAssetTypeEnum = {
-    utxoNativeAsset: 'utxo_native_asset'
+    UtxoNativeAsset: 'utxo_native_asset'
 } as const;
 type UtxoNativeAssetTypeEnum = typeof UtxoNativeAssetTypeEnum[keyof typeof UtxoNativeAssetTypeEnum];
 

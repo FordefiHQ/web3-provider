@@ -74,10 +74,10 @@ export interface ExchangeVault {
     modifiedAt: Date;
     /**
      * Metadata in a form: <str, bool | str | int | array[str]>.
-     * @type {{ [key: string]: MetadataValue | undefined; }}
+     * @type {{ [key: string]: MetadataValue; }}
      * @memberof ExchangeVault
      */
-    metadata?: { [key: string]: MetadataValue | undefined; };
+    metadata?: { [key: string]: MetadataValue; };
     /**
      * The name of the vault.
      * @type {string}
@@ -176,7 +176,7 @@ export interface ExchangeVault {
  * 
  */
 const ExchangeVaultTypeEnum = {
-    exchange: 'exchange'
+    Exchange: 'exchange'
 } as const;
 type ExchangeVaultTypeEnum = typeof ExchangeVaultTypeEnum[keyof typeof ExchangeVaultTypeEnum];
 

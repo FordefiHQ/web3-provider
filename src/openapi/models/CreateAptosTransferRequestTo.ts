@@ -49,3 +49,4 @@ function CreateAptosTransferRequestToToJSONTyped(value?: CreateAptosTransferRequ
             return value;
     }
 }
+

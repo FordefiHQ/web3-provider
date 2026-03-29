@@ -40,7 +40,7 @@ export interface SolanaAssetIdentifierRequest {
  * 
  */
 const SolanaAssetIdentifierRequestTypeEnum = {
-    solana: 'solana'
+    Solana: 'solana'
 } as const;
 type SolanaAssetIdentifierRequestTypeEnum = typeof SolanaAssetIdentifierRequestTypeEnum[keyof typeof SolanaAssetIdentifierRequestTypeEnum];
 

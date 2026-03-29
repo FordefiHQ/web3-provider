@@ -67,3 +67,4 @@ function EvmBridgeEffectFromJSONTyped(json: any, _ignoreDiscriminator: boolean):
         'amount': json['amount'],
     };
 }
+

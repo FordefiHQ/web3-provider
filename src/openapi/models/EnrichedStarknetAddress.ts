@@ -62,7 +62,7 @@ export interface EnrichedStarknetAddress {
  * 
  */
 const EnrichedStarknetAddressTypeEnum = {
-    starknet: 'starknet'
+    Starknet: 'starknet'
 } as const;
 type EnrichedStarknetAddressTypeEnum = typeof EnrichedStarknetAddressTypeEnum[keyof typeof EnrichedStarknetAddressTypeEnum];
 

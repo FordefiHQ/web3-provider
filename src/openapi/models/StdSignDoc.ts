@@ -92,3 +92,4 @@ function StdSignDocFromJSONTyped(json: any, _ignoreDiscriminator: boolean): StdS
         'memo': json['memo'],
     };
 }
+

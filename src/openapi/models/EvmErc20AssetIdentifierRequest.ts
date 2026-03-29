@@ -41,7 +41,7 @@ export interface EvmErc20AssetIdentifierRequest {
  * 
  */
 const EvmErc20AssetIdentifierRequestTypeEnum = {
-    erc20: 'erc20'
+    Erc20: 'erc20'
 } as const;
 type EvmErc20AssetIdentifierRequestTypeEnum = typeof EvmErc20AssetIdentifierRequestTypeEnum[keyof typeof EvmErc20AssetIdentifierRequestTypeEnum];
 

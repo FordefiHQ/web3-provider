@@ -35,7 +35,7 @@ export interface SolanaRecipientBase58 {
  * 
  */
 const SolanaRecipientBase58TypeEnum = {
-    address: 'address'
+    Address: 'address'
 } as const;
 type SolanaRecipientBase58TypeEnum = typeof SolanaRecipientBase58TypeEnum[keyof typeof SolanaRecipientBase58TypeEnum];
 

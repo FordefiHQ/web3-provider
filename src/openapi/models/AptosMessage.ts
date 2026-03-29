@@ -200,7 +200,7 @@ export interface AptosMessage {
  * 
  */
 const AptosMessageTypeEnum = {
-    aptosMessage: 'aptos_message'
+    AptosMessage: 'aptos_message'
 } as const;
 type AptosMessageTypeEnum = typeof AptosMessageTypeEnum[keyof typeof AptosMessageTypeEnum];
 

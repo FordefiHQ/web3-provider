@@ -67,3 +67,4 @@ function ApprovalRequestFromJSONTyped(json: any, _ignoreDiscriminator: boolean):
         'errorMessage': json['error_message'] == null ? undefined : json['error_message'],
     };
 }
+

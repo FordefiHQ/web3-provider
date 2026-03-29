@@ -43,3 +43,4 @@ function CreateTronTransactionRequestDetailsToJSONTyped(value?: CreateTronTransa
             return value;
     }
 }
+

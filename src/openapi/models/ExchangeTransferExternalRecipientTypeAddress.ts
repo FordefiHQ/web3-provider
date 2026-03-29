@@ -35,7 +35,7 @@ export interface ExchangeTransferExternalRecipientTypeAddress {
  * 
  */
 const ExchangeTransferExternalRecipientTypeAddressTypeEnum = {
-    address: 'address'
+    Address: 'address'
 } as const;
 type ExchangeTransferExternalRecipientTypeAddressTypeEnum = typeof ExchangeTransferExternalRecipientTypeAddressTypeEnum[keyof typeof ExchangeTransferExternalRecipientTypeAddressTypeEnum];
 

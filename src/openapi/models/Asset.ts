@@ -61,3 +61,4 @@ function AssetFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Asset {
             return json;
     }
 }
+

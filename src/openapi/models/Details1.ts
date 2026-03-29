@@ -44,8 +44,8 @@ export interface Details1 {
  * 
  */
 const Details1TypeEnum = {
-    solanaNativeAsset: 'solana_native_asset',
-    solanaSplTokenAsset: 'solana_spl_token_asset'
+    SolanaNativeAsset: 'solana_native_asset',
+    SolanaSplTokenAsset: 'solana_spl_token_asset'
 } as const;
 type Details1TypeEnum = typeof Details1TypeEnum[keyof typeof Details1TypeEnum];
 

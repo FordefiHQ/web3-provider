@@ -16,10 +16,10 @@
  * @export
  */
 export const ApprovalState = {
-    pending: 'pending',
-    approved: 'approved',
-    unauthorized: 'unauthorized',
-    notParticipated: 'not_participated'
+    Pending: 'pending',
+    Approved: 'approved',
+    Unauthorized: 'unauthorized',
+    NotParticipated: 'not_participated'
 } as const;
 export type ApprovalState = typeof ApprovalState[keyof typeof ApprovalState];
 
@@ -30,3 +30,4 @@ export function ApprovalStateFromJSON(json: any): ApprovalState {
 function ApprovalStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): ApprovalState {
     return json as ApprovalState;
 }
+

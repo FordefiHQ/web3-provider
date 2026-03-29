@@ -50,3 +50,4 @@ function AptosGasConfigRequestToJSONTyped(value?: AptosGasConfigRequest | null, 
         'price': AptosGasConfigRequestPriceToJSON(value['price']),
     };
 }
+

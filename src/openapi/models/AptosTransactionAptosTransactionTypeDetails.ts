@@ -55,3 +55,4 @@ function AptosTransactionAptosTransactionTypeDetailsFromJSONTyped(json: any, _ig
             return json;
     }
 }
+

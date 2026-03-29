@@ -70,7 +70,7 @@ export interface CreateSessionDetails {
  * 
  */
 const CreateSessionDetailsTypeEnum = {
-    createSessionMessageType: 'create_session_message_type'
+    CreateSessionMessageType: 'create_session_message_type'
 } as const;
 type CreateSessionDetailsTypeEnum = typeof CreateSessionDetailsTypeEnum[keyof typeof CreateSessionDetailsTypeEnum];
 

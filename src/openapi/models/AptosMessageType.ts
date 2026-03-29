@@ -15,7 +15,7 @@
  * @export
  */
 export const AptosMessageType = {
-    personalMessageType: 'personal_message_type'
+    PersonalMessageType: 'personal_message_type'
 } as const;
 export type AptosMessageType = typeof AptosMessageType[keyof typeof AptosMessageType];
 
@@ -26,3 +26,4 @@ export function AptosMessageTypeFromJSON(json: any): AptosMessageType {
 function AptosMessageTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): AptosMessageType {
     return json as AptosMessageType;
 }
+

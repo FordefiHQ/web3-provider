@@ -44,3 +44,4 @@ function MasterPublicKeyFromJSONTyped(json: any, _ignoreDiscriminator: boolean):
         'xpub': json['xpub'],
     };
 }
+

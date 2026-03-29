@@ -40,7 +40,7 @@ export interface StarknetRawTransactionDetails {
  * 
  */
 const StarknetRawTransactionDetailsTypeEnum = {
-    rawTransaction: 'raw_transaction'
+    RawTransaction: 'raw_transaction'
 } as const;
 type StarknetRawTransactionDetailsTypeEnum = typeof StarknetRawTransactionDetailsTypeEnum[keyof typeof StarknetRawTransactionDetailsTypeEnum];
 

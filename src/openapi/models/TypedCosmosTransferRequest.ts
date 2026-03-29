@@ -76,7 +76,7 @@ export interface TypedCosmosTransferRequest {
  * 
  */
 const TypedCosmosTransferRequestTypeEnum = {
-    cosmosTransfer: 'cosmos_transfer'
+    CosmosTransfer: 'cosmos_transfer'
 } as const;
 type TypedCosmosTransferRequestTypeEnum = typeof TypedCosmosTransferRequestTypeEnum[keyof typeof TypedCosmosTransferRequestTypeEnum];
 

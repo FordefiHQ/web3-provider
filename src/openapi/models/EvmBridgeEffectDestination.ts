@@ -43,3 +43,4 @@ function EvmBridgeEffectDestinationFromJSONTyped(json: any, _ignoreDiscriminator
             return json;
     }
 }
+

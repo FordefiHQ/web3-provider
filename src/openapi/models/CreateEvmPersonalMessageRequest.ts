@@ -46,7 +46,7 @@ export interface CreateEvmPersonalMessageRequest {
  * @export
  */
 export const CreateEvmPersonalMessageRequestTypeEnum = {
-    personalMessageType: 'personal_message_type'
+    PersonalMessageType: 'personal_message_type'
 } as const;
 export type CreateEvmPersonalMessageRequestTypeEnum = typeof CreateEvmPersonalMessageRequestTypeEnum[keyof typeof CreateEvmPersonalMessageRequestTypeEnum];
 
@@ -66,3 +66,4 @@ function CreateEvmPersonalMessageRequestToJSONTyped(value?: CreateEvmPersonalMes
         'raw_data': value['rawData'],
     };
 }
+

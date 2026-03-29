@@ -49,3 +49,4 @@ function CreateEvmMessageRequestDetailsToJSONTyped(value?: CreateEvmMessageReque
             return value;
     }
 }
+

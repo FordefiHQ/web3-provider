@@ -53,7 +53,7 @@ export interface SuiMoveCallCommand {
  * 
  */
 const SuiMoveCallCommandTypeEnum = {
-    moveCall: 'move_call'
+    MoveCall: 'move_call'
 } as const;
 type SuiMoveCallCommandTypeEnum = typeof SuiMoveCallCommandTypeEnum[keyof typeof SuiMoveCallCommandTypeEnum];
 

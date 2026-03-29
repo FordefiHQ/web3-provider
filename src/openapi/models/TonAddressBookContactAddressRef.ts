@@ -52,7 +52,7 @@ export interface TonAddressBookContactAddressRef {
  * 
  */
 const TonAddressBookContactAddressRefChainTypeEnum = {
-    ton: 'ton'
+    Ton: 'ton'
 } as const;
 type TonAddressBookContactAddressRefChainTypeEnum = typeof TonAddressBookContactAddressRefChainTypeEnum[keyof typeof TonAddressBookContactAddressRefChainTypeEnum];
 

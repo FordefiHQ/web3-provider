@@ -71,3 +71,4 @@ function StdFeeRequestToJSONTyped(value?: StdFeeRequest | null, _ignoreDiscrimin
         'fee_payer': value['feePayer'],
     };
 }
+

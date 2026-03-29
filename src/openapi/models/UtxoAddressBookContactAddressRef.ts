@@ -46,7 +46,7 @@ export interface UtxoAddressBookContactAddressRef {
  * 
  */
 const UtxoAddressBookContactAddressRefChainTypeEnum = {
-    utxo: 'utxo'
+    Utxo: 'utxo'
 } as const;
 type UtxoAddressBookContactAddressRefChainTypeEnum = typeof UtxoAddressBookContactAddressRefChainTypeEnum[keyof typeof UtxoAddressBookContactAddressRefChainTypeEnum];
 

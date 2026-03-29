@@ -40,7 +40,7 @@ export interface AptosEntryPointDetails {
  * 
  */
 const AptosEntryPointDetailsTypeEnum = {
-    entryPoint: 'entry_point'
+    EntryPoint: 'entry_point'
 } as const;
 type AptosEntryPointDetailsTypeEnum = typeof AptosEntryPointDetailsTypeEnum[keyof typeof AptosEntryPointDetailsTypeEnum];
 

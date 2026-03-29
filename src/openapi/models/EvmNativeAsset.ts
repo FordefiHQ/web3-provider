@@ -40,7 +40,7 @@ export interface EvmNativeAsset {
  * 
  */
 const EvmNativeAssetTypeEnum = {
-    evmNativeAsset: 'evm_native_asset'
+    EvmNativeAsset: 'evm_native_asset'
 } as const;
 type EvmNativeAssetTypeEnum = typeof EvmNativeAssetTypeEnum[keyof typeof EvmNativeAssetTypeEnum];
 

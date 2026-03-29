@@ -47,7 +47,7 @@ export interface ApiSignerRef {
  * 
  */
 const ApiSignerRefUserTypeEnum = {
-    apiSigner: 'api_signer'
+    ApiSigner: 'api_signer'
 } as const;
 type ApiSignerRefUserTypeEnum = typeof ApiSignerRefUserTypeEnum[keyof typeof ApiSignerRefUserTypeEnum];
 
@@ -55,10 +55,10 @@ type ApiSignerRefUserTypeEnum = typeof ApiSignerRefUserTypeEnum[keyof typeof Api
  * 
  */
 const ApiSignerRefStateEnum = {
-    active: 'active',
-    onboardingPendingCodeGeneration: 'onboarding_pending_code_generation',
-    onboardingPendingActivation: 'onboarding_pending_activation',
-    deleted: 'deleted'
+    Active: 'active',
+    OnboardingPendingCodeGeneration: 'onboarding_pending_code_generation',
+    OnboardingPendingActivation: 'onboarding_pending_activation',
+    Deleted: 'deleted'
 } as const;
 type ApiSignerRefStateEnum = typeof ApiSignerRefStateEnum[keyof typeof ApiSignerRefStateEnum];
 

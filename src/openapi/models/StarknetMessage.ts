@@ -194,7 +194,7 @@ export interface StarknetMessage {
  * 
  */
 const StarknetMessageTypeEnum = {
-    starknetMessage: 'starknet_message'
+    StarknetMessage: 'starknet_message'
 } as const;
 type StarknetMessageTypeEnum = typeof StarknetMessageTypeEnum[keyof typeof StarknetMessageTypeEnum];
 

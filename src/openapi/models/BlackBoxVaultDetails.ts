@@ -55,3 +55,4 @@ function BlackBoxVaultDetailsFromJSONTyped(json: any, _ignoreDiscriminator: bool
             return json;
     }
 }
+

@@ -63,3 +63,4 @@ function StacksAssetIdentifierDetailsToJSONTyped(value?: StacksAssetIdentifierDe
             return value;
     }
 }
+

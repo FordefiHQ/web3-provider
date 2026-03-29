@@ -169,7 +169,7 @@ export interface BlackBoxSignature {
  * 
  */
 const BlackBoxSignatureTypeEnum = {
-    blackBoxSignature: 'black_box_signature'
+    BlackBoxSignature: 'black_box_signature'
 } as const;
 type BlackBoxSignatureTypeEnum = typeof BlackBoxSignatureTypeEnum[keyof typeof BlackBoxSignatureTypeEnum];
 

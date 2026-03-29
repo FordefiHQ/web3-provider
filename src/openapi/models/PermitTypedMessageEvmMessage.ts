@@ -48,10 +48,10 @@ export interface PermitTypedMessageEvmMessage {
     primaryType: string;
     /**
      * Addresses that are related to this message, enriched with metadata.Please NOTE: the dictionary keys are EIP-55 checksummed addresses
-     * @type {{ [key: string]: EnrichedEvmAddress | undefined; }}
+     * @type {{ [key: string]: EnrichedEvmAddress; }}
      * @memberof PermitTypedMessageEvmMessage
      */
-    enrichedAddresses?: { [key: string]: EnrichedEvmAddress | undefined; };
+    enrichedAddresses?: { [key: string]: EnrichedEvmAddress; };
     /**
      * The typed message type.
      * @type {PermitTypedMessageEvmMessageTypeEnum}
@@ -64,21 +64,21 @@ export interface PermitTypedMessageEvmMessage {
      * @memberof PermitTypedMessageEvmMessage
      * @deprecated
      */
-    owner: EnrichedEvmAddress;
+    owner?: EnrichedEvmAddress;
     /**
      * The spender.
      * @type {EnrichedEvmAddress}
      * @memberof PermitTypedMessageEvmMessage
      * @deprecated
      */
-    spender: EnrichedEvmAddress;
+    spender?: EnrichedEvmAddress;
     /**
      * The value.
      * @type {string}
      * @memberof PermitTypedMessageEvmMessage
      * @deprecated
      */
-    value: string;
+    value?: string;
     /**
      * The deadline.
      * @type {Date}
@@ -104,7 +104,7 @@ export interface PermitTypedMessageEvmMessage {
      * @memberof PermitTypedMessageEvmMessage
      * @deprecated
      */
-    pricedAsset: PricedAsset;
+    pricedAsset?: PricedAsset;
 }
 
 
@@ -112,7 +112,7 @@ export interface PermitTypedMessageEvmMessage {
  * 
  */
 const PermitTypedMessageEvmMessageTypeEnum = {
-    permit: 'permit'
+    Permit: 'permit'
 } as const;
 type PermitTypedMessageEvmMessageTypeEnum = typeof PermitTypedMessageEvmMessageTypeEnum[keyof typeof PermitTypedMessageEvmMessageTypeEnum];
 
@@ -126,12 +126,12 @@ export function PermitTypedMessageEvmMessageFromJSONTyped(json: any, _ignoreDisc
         'primaryType': json['primary_type'],
         'enrichedAddresses': json['enriched_addresses'] == null ? undefined : (mapValues(json['enriched_addresses'], EnrichedEvmAddressFromJSON)),
         'type': json['type'],
-        'owner': EnrichedEvmAddressFromJSON(json['owner']),
-        'spender': EnrichedEvmAddressFromJSON(json['spender']),
-        'value': json['value'],
+        'owner': json['owner'] == null ? undefined : EnrichedEvmAddressFromJSON(json['owner']),
+        'spender': json['spender'] == null ? undefined : EnrichedEvmAddressFromJSON(json['spender']),
+        'value': json['value'] == null ? undefined : json['value'],
         'deadline': (new Date(json['deadline'])),
         'nonce': json['nonce'],
         'price': json['price'] == null ? undefined : PriceFromJSON(json['price']),
-        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
+        'pricedAsset': json['priced_asset'] == null ? undefined : PricedAssetFromJSON(json['priced_asset']),
     };
 }

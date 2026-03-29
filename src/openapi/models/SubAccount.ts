@@ -46,7 +46,7 @@ export interface SubAccount {
  * 
  */
 const SubAccountTypeEnum = {
-    sub: 'sub'
+    Sub: 'sub'
 } as const;
 type SubAccountTypeEnum = typeof SubAccountTypeEnum[keyof typeof SubAccountTypeEnum];
 

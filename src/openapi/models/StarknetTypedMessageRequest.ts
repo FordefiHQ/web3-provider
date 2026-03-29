@@ -46,7 +46,7 @@ export interface StarknetTypedMessageRequest {
  * 
  */
 const StarknetTypedMessageRequestTypeEnum = {
-    typedMessageType: 'typed_message_type'
+    TypedMessageType: 'typed_message_type'
 } as const;
 type StarknetTypedMessageRequestTypeEnum = typeof StarknetTypedMessageRequestTypeEnum[keyof typeof StarknetTypedMessageRequestTypeEnum];
 

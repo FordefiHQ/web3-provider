@@ -55,3 +55,4 @@ function BlackBoxSignatureDetailsFromJSONTyped(json: any, _ignoreDiscriminator: 
             return json;
     }
 }
+

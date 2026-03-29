@@ -35,7 +35,7 @@ export interface SuiPureByteArrayInput {
  * 
  */
 const SuiPureByteArrayInputTypeEnum = {
-    byteArrayPureInput: 'byte_array_pure_input'
+    ByteArrayPureInput: 'byte_array_pure_input'
 } as const;
 type SuiPureByteArrayInputTypeEnum = typeof SuiPureByteArrayInputTypeEnum[keyof typeof SuiPureByteArrayInputTypeEnum];
 

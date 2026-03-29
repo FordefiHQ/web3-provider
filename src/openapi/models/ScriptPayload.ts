@@ -47,7 +47,7 @@ export interface ScriptPayload {
  * 
  */
 const ScriptPayloadTypeEnum = {
-    script: 'script'
+    Script: 'script'
 } as const;
 type ScriptPayloadTypeEnum = typeof ScriptPayloadTypeEnum[keyof typeof ScriptPayloadTypeEnum];
 

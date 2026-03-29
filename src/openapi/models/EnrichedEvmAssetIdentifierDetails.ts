@@ -61,3 +61,4 @@ function EnrichedEvmAssetIdentifierDetailsFromJSONTyped(json: any, _ignoreDiscri
             return json;
     }
 }
+

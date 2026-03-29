@@ -43,3 +43,4 @@ function StacksPostConditionFromJSONTyped(json: any, _ignoreDiscriminator: boole
             return json;
     }
 }
+

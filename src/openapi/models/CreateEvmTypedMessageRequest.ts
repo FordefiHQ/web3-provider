@@ -46,7 +46,7 @@ export interface CreateEvmTypedMessageRequest {
  * @export
  */
 export const CreateEvmTypedMessageRequestTypeEnum = {
-    typedMessageType: 'typed_message_type'
+    TypedMessageType: 'typed_message_type'
 } as const;
 export type CreateEvmTypedMessageRequestTypeEnum = typeof CreateEvmTypedMessageRequestTypeEnum[keyof typeof CreateEvmTypedMessageRequestTypeEnum];
 
@@ -66,3 +66,4 @@ function CreateEvmTypedMessageRequestToJSONTyped(value?: CreateEvmTypedMessageRe
         'raw_data': value['rawData'],
     };
 }
+

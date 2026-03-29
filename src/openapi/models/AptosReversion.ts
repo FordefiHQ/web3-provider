@@ -49,3 +49,4 @@ function AptosReversionFromJSONTyped(json: any, _ignoreDiscriminator: boolean): 
         'reason': json['reason'] == null ? undefined : json['reason'],
     };
 }
+

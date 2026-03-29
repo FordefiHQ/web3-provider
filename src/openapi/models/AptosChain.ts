@@ -40,7 +40,7 @@ export interface AptosChain {
  * 
  */
 const AptosChainChainTypeEnum = {
-    aptos: 'aptos'
+    Aptos: 'aptos'
 } as const;
 type AptosChainChainTypeEnum = typeof AptosChainChainTypeEnum[keyof typeof AptosChainChainTypeEnum];
 

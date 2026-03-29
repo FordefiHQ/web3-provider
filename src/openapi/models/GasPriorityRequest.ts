@@ -46,7 +46,7 @@ export interface GasPriorityRequest {
  * @export
  */
 export const GasPriorityRequestTypeEnum = {
-    priority: 'priority'
+    Priority: 'priority'
 } as const;
 export type GasPriorityRequestTypeEnum = typeof GasPriorityRequestTypeEnum[keyof typeof GasPriorityRequestTypeEnum];
 
@@ -66,3 +66,4 @@ function GasPriorityRequestToJSONTyped(value?: GasPriorityRequest | null, _ignor
         'priority_level': GasPriorityLevelRequestToJSON(value['priorityLevel']),
     };
 }
+

@@ -74,10 +74,10 @@ export interface StacksVault {
     modifiedAt: Date;
     /**
      * Metadata in a form: <str, bool | str | int | array[str]>.
-     * @type {{ [key: string]: MetadataValue | undefined; }}
+     * @type {{ [key: string]: MetadataValue; }}
      * @memberof StacksVault
      */
-    metadata?: { [key: string]: MetadataValue | undefined; };
+    metadata?: { [key: string]: MetadataValue; };
     /**
      * The name of the vault.
      * @type {string}
@@ -177,7 +177,7 @@ export interface StacksVault {
  * 
  */
 const StacksVaultTypeEnum = {
-    stacks: 'stacks'
+    Stacks: 'stacks'
 } as const;
 type StacksVaultTypeEnum = typeof StacksVaultTypeEnum[keyof typeof StacksVaultTypeEnum];
 

@@ -35,7 +35,7 @@ export interface StacksCustomFeeRequest {
  * 
  */
 const StacksCustomFeeRequestTypeEnum = {
-    custom: 'custom'
+    Custom: 'custom'
 } as const;
 type StacksCustomFeeRequestTypeEnum = typeof StacksCustomFeeRequestTypeEnum[keyof typeof StacksCustomFeeRequestTypeEnum];
 

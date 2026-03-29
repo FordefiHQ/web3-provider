@@ -70,3 +70,4 @@ function SolanaCompiledInstructionFromJSONTyped(json: any, _ignoreDiscriminator:
         'base58Data': json['base58_data'] == null ? undefined : json['base58_data'],
     };
 }
+

@@ -52,3 +52,4 @@ function StarknetCallDataRequestToJSONTyped(value?: StarknetCallDataRequest | nu
         'method_arguments': value['methodArguments'],
     };
 }
+

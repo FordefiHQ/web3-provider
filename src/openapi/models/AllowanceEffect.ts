@@ -95,3 +95,4 @@ function AllowanceEffectFromJSONTyped(json: any, _ignoreDiscriminator: boolean):
         'operator': json['operator'] == null ? undefined : EnrichedEvmAddressFromJSON(json['operator']),
     };
 }
+

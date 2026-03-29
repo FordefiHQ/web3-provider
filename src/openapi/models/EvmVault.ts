@@ -78,10 +78,10 @@ export interface EvmVault {
     modifiedAt: Date;
     /**
      * Metadata in a form: <str, bool | str | int | array[str]>.
-     * @type {{ [key: string]: MetadataValue | undefined; }}
+     * @type {{ [key: string]: MetadataValue; }}
      * @memberof EvmVault
      */
-    metadata?: { [key: string]: MetadataValue | undefined; };
+    metadata?: { [key: string]: MetadataValue; };
     /**
      * The name of the vault.
      * @type {string}
@@ -176,10 +176,10 @@ export interface EvmVault {
     address: string;
     /**
      * A dictionary of chain IDs to smart contract states.
-     * @type {{ [key: string]: SmartContractState | undefined; }}
+     * @type {{ [key: string]: SmartContractState; }}
      * @memberof EvmVault
      */
-    smartContractStates?: { [key: string]: SmartContractState | undefined; };
+    smartContractStates?: { [key: string]: SmartContractState; };
 }
 
 
@@ -187,7 +187,7 @@ export interface EvmVault {
  * 
  */
 const EvmVaultTypeEnum = {
-    evm: 'evm'
+    Evm: 'evm'
 } as const;
 type EvmVaultTypeEnum = typeof EvmVaultTypeEnum[keyof typeof EvmVaultTypeEnum];
 

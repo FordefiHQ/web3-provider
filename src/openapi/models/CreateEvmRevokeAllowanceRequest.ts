@@ -68,7 +68,7 @@ export interface CreateEvmRevokeAllowanceRequest {
      */
     pushMode?: PushMode;
     /**
-     * Use a MEV protected node to send the transaction. By using a MEV protected node, you avoid maximal extractable value (MEV) attacks.
+     * Use an MEV protected node to send the transaction. By using an MEV protected node, you avoid maximal extractable value (MEV) attacks.
      * @type {boolean}
      * @memberof CreateEvmRevokeAllowanceRequest
      */
@@ -124,7 +124,7 @@ export interface CreateEvmRevokeAllowanceRequest {
  * 
  */
 const CreateEvmRevokeAllowanceRequestTypeEnum = {
-    evmRevokeAllowance: 'evm_revoke_allowance'
+    EvmRevokeAllowance: 'evm_revoke_allowance'
 } as const;
 type CreateEvmRevokeAllowanceRequestTypeEnum = typeof CreateEvmRevokeAllowanceRequestTypeEnum[keyof typeof CreateEvmRevokeAllowanceRequestTypeEnum];
 

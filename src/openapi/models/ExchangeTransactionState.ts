@@ -15,15 +15,15 @@
  * @export
  */
 export const ExchangeTransactionState = {
-    waitingForApproval: 'waiting_for_approval',
-    approved: 'approved',
-    signed: 'signed',
-    completed: 'completed',
-    aborted: 'aborted',
-    errorSigning: 'error_signing',
-    errorSubmittingToExchange: 'error_submitting_to_exchange',
-    pendingExchange: 'pending_exchange',
-    errorProcessingByExchange: 'error_processing_by_exchange'
+    WaitingForApproval: 'waiting_for_approval',
+    Approved: 'approved',
+    Signed: 'signed',
+    Completed: 'completed',
+    Aborted: 'aborted',
+    ErrorSigning: 'error_signing',
+    ErrorSubmittingToExchange: 'error_submitting_to_exchange',
+    PendingExchange: 'pending_exchange',
+    ErrorProcessingByExchange: 'error_processing_by_exchange'
 } as const;
 export type ExchangeTransactionState = typeof ExchangeTransactionState[keyof typeof ExchangeTransactionState];
 
@@ -34,3 +34,4 @@ export function ExchangeTransactionStateFromJSON(json: any): ExchangeTransaction
 function ExchangeTransactionStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): ExchangeTransactionState {
     return json as ExchangeTransactionState;
 }
+

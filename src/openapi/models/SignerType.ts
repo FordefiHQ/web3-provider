@@ -15,10 +15,11 @@
  * @export
  */
 export const SignerType = {
-    initiator: 'initiator',
-    apiSigner: 'api_signer',
-    endUser: 'end_user',
-    multipleSigners: 'multiple_signers'
+    Initiator: 'initiator',
+    ApiSigner: 'api_signer',
+    EndUser: 'end_user',
+    MultipleSigners: 'multiple_signers',
+    ApiUser: 'api_user'
 } as const;
 export type SignerType = typeof SignerType[keyof typeof SignerType];
 
@@ -33,3 +34,4 @@ function SignerTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Sign
 export function SignerTypeToJSON(value?: SignerType | null): any {
     return value as any;
 }
+

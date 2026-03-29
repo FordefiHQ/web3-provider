@@ -67,3 +67,4 @@ function TronTransferEffectFromJSONTyped(json: any, _ignoreDiscriminator: boolea
         'to': EnrichedTronAddressFromJSON(json['to']),
     };
 }
+

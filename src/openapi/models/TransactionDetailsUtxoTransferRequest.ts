@@ -76,7 +76,7 @@ export interface TransactionDetailsUtxoTransferRequest {
  * 
  */
 const TransactionDetailsUtxoTransferRequestTypeEnum = {
-    utxoTransfer: 'utxo_transfer'
+    UtxoTransfer: 'utxo_transfer'
 } as const;
 type TransactionDetailsUtxoTransferRequestTypeEnum = typeof TransactionDetailsUtxoTransferRequestTypeEnum[keyof typeof TransactionDetailsUtxoTransferRequestTypeEnum];
 

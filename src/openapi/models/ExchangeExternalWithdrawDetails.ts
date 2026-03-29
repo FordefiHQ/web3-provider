@@ -84,7 +84,7 @@ export interface ExchangeExternalWithdrawDetails {
  * 
  */
 const ExchangeExternalWithdrawDetailsTypeEnum = {
-    externalWithdraw: 'external_withdraw'
+    ExternalWithdraw: 'external_withdraw'
 } as const;
 type ExchangeExternalWithdrawDetailsTypeEnum = typeof ExchangeExternalWithdrawDetailsTypeEnum[keyof typeof ExchangeExternalWithdrawDetailsTypeEnum];
 

@@ -15,19 +15,19 @@
  * @export
  */
 export const VaultType = {
-    aptos: 'aptos',
-    blackBox: 'black_box',
-    cosmos: 'cosmos',
-    evm: 'evm',
-    safe: 'safe',
-    solana: 'solana',
-    stacks: 'stacks',
-    starknet: 'starknet',
-    sui: 'sui',
-    ton: 'ton',
-    tron: 'tron',
-    utxo: 'utxo',
-    exchange: 'exchange'
+    Aptos: 'aptos',
+    BlackBox: 'black_box',
+    Cosmos: 'cosmos',
+    Evm: 'evm',
+    Safe: 'safe',
+    Solana: 'solana',
+    Stacks: 'stacks',
+    Starknet: 'starknet',
+    Sui: 'sui',
+    Ton: 'ton',
+    Tron: 'tron',
+    Utxo: 'utxo',
+    Exchange: 'exchange'
 } as const;
 export type VaultType = typeof VaultType[keyof typeof VaultType];
 
@@ -38,3 +38,4 @@ export function VaultTypeFromJSON(json: any): VaultType {
 function VaultTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): VaultType {
     return json as VaultType;
 }
+

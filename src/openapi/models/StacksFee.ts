@@ -60,3 +60,4 @@ function StacksFeeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Stack
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }
+

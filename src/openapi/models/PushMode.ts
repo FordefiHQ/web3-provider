@@ -15,9 +15,9 @@
  * @export
  */
 export const PushMode = {
-    auto: 'auto',
-    manual: 'manual',
-    deferred: 'deferred'
+    Auto: 'auto',
+    Manual: 'manual',
+    Deferred: 'deferred'
 } as const;
 export type PushMode = typeof PushMode[keyof typeof PushMode];
 
@@ -32,3 +32,4 @@ function PushModeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): PushMo
 export function PushModeToJSON(value?: PushMode | null): any {
     return value as any;
 }
+

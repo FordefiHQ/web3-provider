@@ -43,3 +43,4 @@ function RequestApproverUserFromJSONTyped(json: any, _ignoreDiscriminator: boole
             return json;
     }
 }
+

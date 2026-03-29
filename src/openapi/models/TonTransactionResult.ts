@@ -64,3 +64,4 @@ function TonTransactionResultFromJSONTyped(json: any, _ignoreDiscriminator: bool
         'effects': TonEffectsFromJSON(json['effects']),
     };
 }
+

@@ -53,3 +53,4 @@ function AptosEffectsFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Ap
         'transfers': ((json['transfers'] as Array<any>).map(AptosTransferEffectFromJSON)),
     };
 }
+

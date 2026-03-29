@@ -98,7 +98,7 @@ export interface CreateStacksTransferRequest {
  * 
  */
 const CreateStacksTransferRequestTypeEnum = {
-    stacksTransfer: 'stacks_transfer'
+    StacksTransfer: 'stacks_transfer'
 } as const;
 type CreateStacksTransferRequestTypeEnum = typeof CreateStacksTransferRequestTypeEnum[keyof typeof CreateStacksTransferRequestTypeEnum];
 

@@ -41,7 +41,7 @@ export interface StacksSip10AssetIdentifierRequest {
  * 
  */
 const StacksSip10AssetIdentifierRequestTypeEnum = {
-    sip10: 'sip10'
+    Sip10: 'sip10'
 } as const;
 type StacksSip10AssetIdentifierRequestTypeEnum = typeof StacksSip10AssetIdentifierRequestTypeEnum[keyof typeof StacksSip10AssetIdentifierRequestTypeEnum];
 

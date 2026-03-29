@@ -35,7 +35,7 @@ export interface EvmNativeAssetIdentifierRequest {
  * 
  */
 const EvmNativeAssetIdentifierRequestTypeEnum = {
-    native: 'native'
+    Native: 'native'
 } as const;
 type EvmNativeAssetIdentifierRequestTypeEnum = typeof EvmNativeAssetIdentifierRequestTypeEnum[keyof typeof EvmNativeAssetIdentifierRequestTypeEnum];
 

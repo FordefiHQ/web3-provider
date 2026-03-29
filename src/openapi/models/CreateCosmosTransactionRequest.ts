@@ -82,7 +82,7 @@ export interface CreateCosmosTransactionRequest {
  * 
  */
 const CreateCosmosTransactionRequestTypeEnum = {
-    cosmosTransaction: 'cosmos_transaction'
+    CosmosTransaction: 'cosmos_transaction'
 } as const;
 type CreateCosmosTransactionRequestTypeEnum = typeof CreateCosmosTransactionRequestTypeEnum[keyof typeof CreateCosmosTransactionRequestTypeEnum];
 

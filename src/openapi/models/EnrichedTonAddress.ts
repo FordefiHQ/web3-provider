@@ -80,7 +80,7 @@ export interface EnrichedTonAddress {
  * 
  */
 const EnrichedTonAddressTypeEnum = {
-    ton: 'ton'
+    Ton: 'ton'
 } as const;
 type EnrichedTonAddressTypeEnum = typeof EnrichedTonAddressTypeEnum[keyof typeof EnrichedTonAddressTypeEnum];
 

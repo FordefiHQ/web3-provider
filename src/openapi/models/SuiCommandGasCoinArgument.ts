@@ -29,7 +29,7 @@ export interface SuiCommandGasCoinArgument {
  * 
  */
 const SuiCommandGasCoinArgumentTypeEnum = {
-    gasCoin: 'gas_coin'
+    GasCoin: 'gas_coin'
 } as const;
 type SuiCommandGasCoinArgumentTypeEnum = typeof SuiCommandGasCoinArgumentTypeEnum[keyof typeof SuiCommandGasCoinArgumentTypeEnum];
 

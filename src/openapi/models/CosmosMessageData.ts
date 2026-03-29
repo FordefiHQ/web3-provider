@@ -63,3 +63,4 @@ function CosmosMessageDataToJSONTyped(value?: CosmosMessageData | null, _ignoreD
             return value;
     }
 }
+

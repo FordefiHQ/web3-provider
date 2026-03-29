@@ -52,7 +52,7 @@ export interface SuiCoinTransferDetails {
  * 
  */
 const SuiCoinTransferDetailsTypeEnum = {
-    coinTransfer: 'coin_transfer'
+    CoinTransfer: 'coin_transfer'
 } as const;
 type SuiCoinTransferDetailsTypeEnum = typeof SuiCoinTransferDetailsTypeEnum[keyof typeof SuiCoinTransferDetailsTypeEnum];
 

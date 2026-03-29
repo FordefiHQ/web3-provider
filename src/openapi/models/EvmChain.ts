@@ -47,7 +47,7 @@ export interface EvmChain {
  * 
  */
 const EvmChainChainTypeEnum = {
-    evm: 'evm'
+    Evm: 'evm'
 } as const;
 type EvmChainChainTypeEnum = typeof EvmChainChainTypeEnum[keyof typeof EvmChainChainTypeEnum];
 

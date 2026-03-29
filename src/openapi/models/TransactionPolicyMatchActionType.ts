@@ -15,9 +15,9 @@
  * @export
  */
 export const TransactionPolicyMatchActionType = {
-    allow: 'allow',
-    block: 'block',
-    requireApproval: 'require_approval'
+    Allow: 'allow',
+    Block: 'block',
+    RequireApproval: 'require_approval'
 } as const;
 export type TransactionPolicyMatchActionType = typeof TransactionPolicyMatchActionType[keyof typeof TransactionPolicyMatchActionType];
 
@@ -28,3 +28,4 @@ export function TransactionPolicyMatchActionTypeFromJSON(json: any): Transaction
 function TransactionPolicyMatchActionTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): TransactionPolicyMatchActionType {
     return json as TransactionPolicyMatchActionType;
 }
+

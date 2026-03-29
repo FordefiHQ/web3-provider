@@ -66,3 +66,4 @@ function AptosCoinTypeRequestToJSONTyped(value?: AptosCoinTypeRequest | null, _i
         'coin_type_str': value['coinTypeStr'],
     };
 }
+

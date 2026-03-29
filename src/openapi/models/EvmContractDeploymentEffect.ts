@@ -42,3 +42,4 @@ function EvmContractDeploymentEffectFromJSONTyped(json: any, _ignoreDiscriminato
         'address': EnrichedEvmAddressFromJSON(json['address']),
     };
 }
+

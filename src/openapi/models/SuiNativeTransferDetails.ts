@@ -52,7 +52,7 @@ export interface SuiNativeTransferDetails {
  * 
  */
 const SuiNativeTransferDetailsTypeEnum = {
-    nativeTransfer: 'native_transfer'
+    NativeTransfer: 'native_transfer'
 } as const;
 type SuiNativeTransferDetailsTypeEnum = typeof SuiNativeTransferDetailsTypeEnum[keyof typeof SuiNativeTransferDetailsTypeEnum];
 

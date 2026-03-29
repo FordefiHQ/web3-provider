@@ -35,7 +35,7 @@ export interface AptosRecipientHex {
  * 
  */
 const AptosRecipientHexTypeEnum = {
-    hex: 'hex'
+    Hex: 'hex'
 } as const;
 type AptosRecipientHexTypeEnum = typeof AptosRecipientHexTypeEnum[keyof typeof AptosRecipientHexTypeEnum];
 

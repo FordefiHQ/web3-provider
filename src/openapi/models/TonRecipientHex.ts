@@ -35,7 +35,7 @@ export interface TonRecipientHex {
  * 
  */
 const TonRecipientHexTypeEnum = {
-    hex: 'hex'
+    Hex: 'hex'
 } as const;
 type TonRecipientHexTypeEnum = typeof TonRecipientHexTypeEnum[keyof typeof TonRecipientHexTypeEnum];
 

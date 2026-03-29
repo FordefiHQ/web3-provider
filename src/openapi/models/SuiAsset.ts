@@ -96,7 +96,7 @@ export interface SuiAsset {
      * @memberof SuiAsset
      * @deprecated
      */
-    details: Details2;
+    details?: Details2;
 }
 
 
@@ -104,7 +104,7 @@ export interface SuiAsset {
  * 
  */
 const SuiAssetTypeEnum = {
-    suiAsset: 'sui_asset'
+    SuiAsset: 'sui_asset'
 } as const;
 type SuiAssetTypeEnum = typeof SuiAssetTypeEnum[keyof typeof SuiAssetTypeEnum];
 
@@ -124,6 +124,6 @@ export function SuiAssetFromJSONTyped(json: any, _ignoreDiscriminator: boolean):
         'assetIdentifier': EnrichedAssetIdentifierFromJSON(json['asset_identifier']),
         'metadataUri': json['metadata_uri'] == null ? undefined : json['metadata_uri'],
         'type': json['type'],
-        'details': Details2FromJSON(json['details']),
+        'details': json['details'] == null ? undefined : Details2FromJSON(json['details']),
     };
 }

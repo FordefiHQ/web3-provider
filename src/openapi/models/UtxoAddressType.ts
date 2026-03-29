@@ -15,10 +15,10 @@
  * @export
  */
 export const UtxoAddressType = {
-    legacy: 'legacy',
-    p2sh: 'p2sh',
-    segwit: 'segwit',
-    taproot: 'taproot'
+    Legacy: 'legacy',
+    P2sh: 'p2sh',
+    Segwit: 'segwit',
+    Taproot: 'taproot'
 } as const;
 export type UtxoAddressType = typeof UtxoAddressType[keyof typeof UtxoAddressType];
 
@@ -33,3 +33,4 @@ function UtxoAddressTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean):
 export function UtxoAddressTypeToJSON(value?: UtxoAddressType | null): any {
     return value as any;
 }
+

@@ -67,3 +67,4 @@ function TonTransferEffectFromJSONTyped(json: any, _ignoreDiscriminator: boolean
         'to': EnrichedTonAddressFromJSON(json['to']),
     };
 }
+

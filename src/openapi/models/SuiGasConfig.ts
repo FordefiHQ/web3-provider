@@ -82,3 +82,4 @@ function SuiGasConfigToJSONTyped(value?: SuiGasConfig | null, _ignoreDiscriminat
         'payment': ((value['payment'] as Array<any>).map(SuiObjectRefToJSON)),
     };
 }
+

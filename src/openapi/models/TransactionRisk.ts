@@ -68,3 +68,4 @@ function TransactionRiskFromJSONTyped(json: any, _ignoreDiscriminator: boolean):
         'description': json['description'],
     };
 }
+

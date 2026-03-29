@@ -35,7 +35,7 @@ export interface PsbtSignerIdentityPublicKey {
  * 
  */
 const PsbtSignerIdentityPublicKeyTypeEnum = {
-    publicKey: 'public_key'
+    PublicKey: 'public_key'
 } as const;
 type PsbtSignerIdentityPublicKeyTypeEnum = typeof PsbtSignerIdentityPublicKeyTypeEnum[keyof typeof PsbtSignerIdentityPublicKeyTypeEnum];
 

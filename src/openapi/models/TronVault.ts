@@ -78,10 +78,10 @@ export interface TronVault {
     modifiedAt: Date;
     /**
      * Metadata in a form: <str, bool | str | int | array[str]>.
-     * @type {{ [key: string]: MetadataValue | undefined; }}
+     * @type {{ [key: string]: MetadataValue; }}
      * @memberof TronVault
      */
-    metadata?: { [key: string]: MetadataValue | undefined; };
+    metadata?: { [key: string]: MetadataValue; };
     /**
      * The name of the vault.
      * @type {string}
@@ -176,10 +176,10 @@ export interface TronVault {
     address: string;
     /**
      * Resource usage tracking per chain type map. Key is the chain type (for example, MAINNET).
-     * @type {{ [key: string]: TronVaultEnergyAndBandwidthData | undefined; }}
+     * @type {{ [key: string]: TronVaultEnergyAndBandwidthData; }}
      * @memberof TronVault
      */
-    energyAndBandwidthDataMap: { [key: string]: TronVaultEnergyAndBandwidthData | undefined; };
+    energyAndBandwidthDataMap: { [key: string]: TronVaultEnergyAndBandwidthData; };
 }
 
 
@@ -187,7 +187,7 @@ export interface TronVault {
  * 
  */
 const TronVaultTypeEnum = {
-    tron: 'tron'
+    Tron: 'tron'
 } as const;
 type TronVaultTypeEnum = typeof TronVaultTypeEnum[keyof typeof TronVaultTypeEnum];
 

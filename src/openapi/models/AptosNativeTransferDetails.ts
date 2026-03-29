@@ -52,7 +52,7 @@ export interface AptosNativeTransferDetails {
  * 
  */
 const AptosNativeTransferDetailsTypeEnum = {
-    nativeTransfer: 'native_transfer'
+    NativeTransfer: 'native_transfer'
 } as const;
 type AptosNativeTransferDetailsTypeEnum = typeof AptosNativeTransferDetailsTypeEnum[keyof typeof AptosNativeTransferDetailsTypeEnum];
 

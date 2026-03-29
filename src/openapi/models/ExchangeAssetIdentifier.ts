@@ -56,7 +56,7 @@ export interface ExchangeAssetIdentifier {
  * 
  */
 const ExchangeAssetIdentifierTypeEnum = {
-    exchange: 'exchange'
+    Exchange: 'exchange'
 } as const;
 type ExchangeAssetIdentifierTypeEnum = typeof ExchangeAssetIdentifierTypeEnum[keyof typeof ExchangeAssetIdentifierTypeEnum];
 

@@ -47,7 +47,7 @@ export interface DirectRequestData {
  * 
  */
 const DirectRequestDataFormatEnum = {
-    direct: 'direct'
+    Direct: 'direct'
 } as const;
 type DirectRequestDataFormatEnum = typeof DirectRequestDataFormatEnum[keyof typeof DirectRequestDataFormatEnum];
 

@@ -62,7 +62,7 @@ export interface EnrichedStacksAddress {
  * 
  */
 const EnrichedStacksAddressTypeEnum = {
-    stacks: 'stacks'
+    Stacks: 'stacks'
 } as const;
 type EnrichedStacksAddressTypeEnum = typeof EnrichedStacksAddressTypeEnum[keyof typeof EnrichedStacksAddressTypeEnum];
 

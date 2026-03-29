@@ -64,3 +64,4 @@ function SolanaEffectsFromJSONTyped(json: any, _ignoreDiscriminator: boolean): S
         'allowances': ((json['allowances'] as Array<any>).map(SolanaAllowanceEffectFromJSON)),
     };
 }
+

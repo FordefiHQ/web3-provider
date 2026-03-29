@@ -43,3 +43,4 @@ function CreateTonTransactionRequestDetailsToJSONTyped(value?: CreateTonTransact
             return value;
     }
 }
+

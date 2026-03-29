@@ -59,7 +59,7 @@ export interface SuiUpgradeCommand {
  * 
  */
 const SuiUpgradeCommandTypeEnum = {
-    upgrade: 'upgrade'
+    Upgrade: 'upgrade'
 } as const;
 type SuiUpgradeCommandTypeEnum = typeof SuiUpgradeCommandTypeEnum[keyof typeof SuiUpgradeCommandTypeEnum];
 

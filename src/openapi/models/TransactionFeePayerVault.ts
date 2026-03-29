@@ -35,7 +35,7 @@ export interface TransactionFeePayerVault {
  * 
  */
 const TransactionFeePayerVaultTypeEnum = {
-    vault: 'vault'
+    Vault: 'vault'
 } as const;
 type TransactionFeePayerVaultTypeEnum = typeof TransactionFeePayerVaultTypeEnum[keyof typeof TransactionFeePayerVaultTypeEnum];
 

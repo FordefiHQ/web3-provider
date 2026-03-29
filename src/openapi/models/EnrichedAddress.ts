@@ -97,3 +97,4 @@ function EnrichedAddressFromJSONTyped(json: any, _ignoreDiscriminator: boolean):
             return json;
     }
 }
+

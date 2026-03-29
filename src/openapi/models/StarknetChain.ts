@@ -40,7 +40,7 @@ export interface StarknetChain {
  * 
  */
 const StarknetChainChainTypeEnum = {
-    starknet: 'starknet'
+    Starknet: 'starknet'
 } as const;
 type StarknetChainChainTypeEnum = typeof StarknetChainChainTypeEnum[keyof typeof StarknetChainChainTypeEnum];
 

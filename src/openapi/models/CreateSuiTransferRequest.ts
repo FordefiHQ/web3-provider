@@ -102,7 +102,7 @@ export interface CreateSuiTransferRequest {
  * 
  */
 const CreateSuiTransferRequestTypeEnum = {
-    suiTransfer: 'sui_transfer'
+    SuiTransfer: 'sui_transfer'
 } as const;
 type CreateSuiTransferRequestTypeEnum = typeof CreateSuiTransferRequestTypeEnum[keyof typeof CreateSuiTransferRequestTypeEnum];
 

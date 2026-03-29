@@ -49,3 +49,4 @@ function CreateSuiTransactionRequestDetailsToJSONTyped(value?: CreateSuiTransact
             return value;
     }
 }
+

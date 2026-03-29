@@ -35,7 +35,7 @@ export interface UtxoOutputToContactIdRequest {
  * 
  */
 const UtxoOutputToContactIdRequestTypeEnum = {
-    contactId: 'contact_id'
+    ContactId: 'contact_id'
 } as const;
 type UtxoOutputToContactIdRequestTypeEnum = typeof UtxoOutputToContactIdRequestTypeEnum[keyof typeof UtxoOutputToContactIdRequestTypeEnum];
 

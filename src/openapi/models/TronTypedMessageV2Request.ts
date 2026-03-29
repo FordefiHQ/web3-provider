@@ -50,7 +50,7 @@ export interface TronTypedMessageV2Request {
  * 
  */
 const TronTypedMessageV2RequestTypeEnum = {
-    typedMessageTypeV2: 'typed_message_type_v2'
+    TypedMessageTypeV2: 'typed_message_type_v2'
 } as const;
 type TronTypedMessageV2RequestTypeEnum = typeof TronTypedMessageV2RequestTypeEnum[keyof typeof TronTypedMessageV2RequestTypeEnum];
 

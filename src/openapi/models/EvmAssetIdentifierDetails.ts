@@ -90,3 +90,4 @@ function EvmAssetIdentifierDetailsToJSONTyped(value?: EvmAssetIdentifierDetails 
             return value;
     }
 }
+

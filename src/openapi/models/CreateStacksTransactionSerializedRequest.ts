@@ -78,7 +78,7 @@ export interface CreateStacksTransactionSerializedRequest {
  * 
  */
 const CreateStacksTransactionSerializedRequestTypeEnum = {
-    stacksSerializedTransaction: 'stacks_serialized_transaction'
+    StacksSerializedTransaction: 'stacks_serialized_transaction'
 } as const;
 type CreateStacksTransactionSerializedRequestTypeEnum = typeof CreateStacksTransactionSerializedRequestTypeEnum[keyof typeof CreateStacksTransactionSerializedRequestTypeEnum];
 

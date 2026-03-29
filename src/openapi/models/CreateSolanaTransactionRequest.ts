@@ -82,7 +82,7 @@ export interface CreateSolanaTransactionRequest {
  * 
  */
 const CreateSolanaTransactionRequestTypeEnum = {
-    solanaTransaction: 'solana_transaction'
+    SolanaTransaction: 'solana_transaction'
 } as const;
 type CreateSolanaTransactionRequestTypeEnum = typeof CreateSolanaTransactionRequestTypeEnum[keyof typeof CreateSolanaTransactionRequestTypeEnum];
 

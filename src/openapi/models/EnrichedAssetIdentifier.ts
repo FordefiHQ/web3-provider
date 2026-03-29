@@ -61,3 +61,4 @@ function EnrichedAssetIdentifierFromJSONTyped(json: any, _ignoreDiscriminator: b
             return json;
     }
 }
+

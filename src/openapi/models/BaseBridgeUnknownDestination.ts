@@ -41,7 +41,7 @@ export interface BaseBridgeUnknownDestination {
  * 
  */
 const BaseBridgeUnknownDestinationTypeEnum = {
-    unknownTargetChain: 'unknown_target_chain'
+    UnknownTargetChain: 'unknown_target_chain'
 } as const;
 type BaseBridgeUnknownDestinationTypeEnum = typeof BaseBridgeUnknownDestinationTypeEnum[keyof typeof BaseBridgeUnknownDestinationTypeEnum];
 

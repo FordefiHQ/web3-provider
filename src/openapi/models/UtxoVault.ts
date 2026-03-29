@@ -82,10 +82,10 @@ export interface UtxoVault {
     modifiedAt: Date;
     /**
      * Metadata in a form: <str, bool | str | int | array[str]>.
-     * @type {{ [key: string]: MetadataValue | undefined; }}
+     * @type {{ [key: string]: MetadataValue; }}
      * @memberof UtxoVault
      */
-    metadata?: { [key: string]: MetadataValue | undefined; };
+    metadata?: { [key: string]: MetadataValue; };
     /**
      * The name of the vault.
      * @type {string}
@@ -209,7 +209,7 @@ export interface UtxoVault {
  * 
  */
 const UtxoVaultTypeEnum = {
-    utxo: 'utxo'
+    Utxo: 'utxo'
 } as const;
 type UtxoVaultTypeEnum = typeof UtxoVaultTypeEnum[keyof typeof UtxoVaultTypeEnum];
 

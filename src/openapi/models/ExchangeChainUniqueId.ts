@@ -15,12 +15,12 @@
  * @export
  */
 export const ExchangeChainUniqueId = {
-    exchangeBinance: 'exchange_binance',
-    exchangeBybit: 'exchange_bybit',
-    exchangeCoinbaseInternational: 'exchange_coinbase_international',
-    exchangeCoinbaseUs: 'exchange_coinbase_us',
-    exchangeOkx: 'exchange_okx',
-    exchangeKraken: 'exchange_kraken'
+    ExchangeBinance: 'exchange_binance',
+    ExchangeBybit: 'exchange_bybit',
+    ExchangeCoinbaseInternational: 'exchange_coinbase_international',
+    ExchangeCoinbaseUs: 'exchange_coinbase_us',
+    ExchangeOkx: 'exchange_okx',
+    ExchangeKraken: 'exchange_kraken'
 } as const;
 export type ExchangeChainUniqueId = typeof ExchangeChainUniqueId[keyof typeof ExchangeChainUniqueId];
 
@@ -31,3 +31,4 @@ export function ExchangeChainUniqueIdFromJSON(json: any): ExchangeChainUniqueId 
 function ExchangeChainUniqueIdFromJSONTyped(json: any, _ignoreDiscriminator: boolean): ExchangeChainUniqueId {
     return json as ExchangeChainUniqueId;
 }
+

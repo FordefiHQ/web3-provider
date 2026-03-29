@@ -52,7 +52,7 @@ export interface TronUndelegateDetails {
  * 
  */
 const TronUndelegateDetailsTypeEnum = {
-    undelegate: 'undelegate'
+    Undelegate: 'undelegate'
 } as const;
 type TronUndelegateDetailsTypeEnum = typeof TronUndelegateDetailsTypeEnum[keyof typeof TronUndelegateDetailsTypeEnum];
 

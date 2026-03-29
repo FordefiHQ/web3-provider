@@ -40,7 +40,7 @@ export interface CosmosChain {
  * 
  */
 const CosmosChainChainTypeEnum = {
-    cosmos: 'cosmos'
+    Cosmos: 'cosmos'
 } as const;
 type CosmosChainChainTypeEnum = typeof CosmosChainChainTypeEnum[keyof typeof CosmosChainChainTypeEnum];
 

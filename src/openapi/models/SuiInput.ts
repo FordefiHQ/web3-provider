@@ -63,3 +63,4 @@ function SuiInputToJSONTyped(value?: SuiInput | null, _ignoreDiscriminator: bool
             return value;
     }
 }
+

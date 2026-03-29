@@ -28,7 +28,7 @@ export interface EcdsaStarkBlackBoxVault {
      * @memberof EcdsaStarkBlackBoxVault
      * @deprecated
      */
-    publicKey: string;
+    publicKey?: string;
     /**
      * The stark public key, represented in hex format.
      * @type {string}
@@ -42,7 +42,7 @@ export interface EcdsaStarkBlackBoxVault {
  * 
  */
 const EcdsaStarkBlackBoxVaultTypeEnum = {
-    ecdsaStark: 'ecdsa_stark'
+    EcdsaStark: 'ecdsa_stark'
 } as const;
 type EcdsaStarkBlackBoxVaultTypeEnum = typeof EcdsaStarkBlackBoxVaultTypeEnum[keyof typeof EcdsaStarkBlackBoxVaultTypeEnum];
 
@@ -53,7 +53,7 @@ export function EcdsaStarkBlackBoxVaultFromJSONTyped(json: any, _ignoreDiscrimin
     return {
         
         'type': json['type'],
-        'publicKey': json['public_key'],
+        'publicKey': json['public_key'] == null ? undefined : json['public_key'],
         'starkKey': json['stark_key'],
     };
 }

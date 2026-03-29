@@ -294,7 +294,7 @@ export interface AptosTransaction {
  * 
  */
 const AptosTransactionTypeEnum = {
-    aptosTransaction: 'aptos_transaction'
+    AptosTransaction: 'aptos_transaction'
 } as const;
 type AptosTransactionTypeEnum = typeof AptosTransactionTypeEnum[keyof typeof AptosTransactionTypeEnum];
 

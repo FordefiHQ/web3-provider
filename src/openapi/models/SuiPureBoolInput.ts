@@ -35,7 +35,7 @@ export interface SuiPureBoolInput {
  * 
  */
 const SuiPureBoolInputTypeEnum = {
-    boolPureInput: 'bool_pure_input'
+    BoolPureInput: 'bool_pure_input'
 } as const;
 type SuiPureBoolInputTypeEnum = typeof SuiPureBoolInputTypeEnum[keyof typeof SuiPureBoolInputTypeEnum];
 

@@ -64,3 +64,4 @@ function EvmTransactionResultFromJSONTyped(json: any, _ignoreDiscriminator: bool
         'effects': EvmEffectsFromJSON(json['effects']),
     };
 }
+

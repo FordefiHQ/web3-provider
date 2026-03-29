@@ -52,7 +52,7 @@ export interface Erc721 {
  * 
  */
 const Erc721TypeEnum = {
-    erc721: 'erc721'
+    Erc721: 'erc721'
 } as const;
 type Erc721TypeEnum = typeof Erc721TypeEnum[keyof typeof Erc721TypeEnum];
 

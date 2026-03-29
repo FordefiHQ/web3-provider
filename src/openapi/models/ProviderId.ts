@@ -15,13 +15,13 @@
  * @export
  */
 export const ProviderId = {
-    oneinch: 'oneinch',
-    cowswap: 'cowswap',
-    uniswap: 'uniswap',
-    jupiter: 'jupiter',
-    kyberswap: 'kyberswap',
-    layerzero: 'layerzero',
-    paraswap: 'paraswap'
+    Oneinch: 'oneinch',
+    Cowswap: 'cowswap',
+    Uniswap: 'uniswap',
+    Jupiter: 'jupiter',
+    Kyberswap: 'kyberswap',
+    Layerzero: 'layerzero',
+    Paraswap: 'paraswap'
 } as const;
 export type ProviderId = typeof ProviderId[keyof typeof ProviderId];
 
@@ -32,3 +32,4 @@ export function ProviderIdFromJSON(json: any): ProviderId {
 function ProviderIdFromJSONTyped(json: any, _ignoreDiscriminator: boolean): ProviderId {
     return json as ProviderId;
 }
+

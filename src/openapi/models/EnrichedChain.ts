@@ -97,3 +97,4 @@ function EnrichedChainFromJSONTyped(json: any, _ignoreDiscriminator: boolean): E
             return json;
     }
 }
+

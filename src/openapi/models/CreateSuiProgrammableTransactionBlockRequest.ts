@@ -92,7 +92,7 @@ export interface CreateSuiProgrammableTransactionBlockRequest {
  * 
  */
 const CreateSuiProgrammableTransactionBlockRequestTypeEnum = {
-    suiProgrammableTransactionBlock: 'sui_programmable_transaction_block'
+    SuiProgrammableTransactionBlock: 'sui_programmable_transaction_block'
 } as const;
 type CreateSuiProgrammableTransactionBlockRequestTypeEnum = typeof CreateSuiProgrammableTransactionBlockRequestTypeEnum[keyof typeof CreateSuiProgrammableTransactionBlockRequestTypeEnum];
 

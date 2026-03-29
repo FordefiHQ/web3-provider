@@ -29,7 +29,7 @@ export interface HyperliquidUnknownAction {
  * 
  */
 const HyperliquidUnknownActionActionTypeEnum = {
-    unknownAction: 'unknown_action'
+    UnknownAction: 'unknown_action'
 } as const;
 type HyperliquidUnknownActionActionTypeEnum = typeof HyperliquidUnknownActionActionTypeEnum[keyof typeof HyperliquidUnknownActionActionTypeEnum];
 

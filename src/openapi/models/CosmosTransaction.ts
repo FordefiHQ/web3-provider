@@ -270,7 +270,7 @@ export interface CosmosTransaction {
  * 
  */
 const CosmosTransactionTypeEnum = {
-    cosmosTransaction: 'cosmos_transaction'
+    CosmosTransaction: 'cosmos_transaction'
 } as const;
 type CosmosTransactionTypeEnum = typeof CosmosTransactionTypeEnum[keyof typeof CosmosTransactionTypeEnum];
 

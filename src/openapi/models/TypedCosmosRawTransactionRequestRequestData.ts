@@ -43,3 +43,4 @@ function TypedCosmosRawTransactionRequestRequestDataToJSONTyped(value?: TypedCos
             return value;
     }
 }
+

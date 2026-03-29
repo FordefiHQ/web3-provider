@@ -49,3 +49,4 @@ function ApprovalRequestGroupFromJSONTyped(json: any, _ignoreDiscriminator: bool
         'approvers': ((json['approvers'] as Array<any>).map(RequestApproverFromJSON)),
     };
 }
+

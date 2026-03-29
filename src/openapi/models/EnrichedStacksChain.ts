@@ -86,7 +86,7 @@ export interface EnrichedStacksChain {
  * 
  */
 const EnrichedStacksChainChainTypeEnum = {
-    stacks: 'stacks'
+    Stacks: 'stacks'
 } as const;
 type EnrichedStacksChainChainTypeEnum = typeof EnrichedStacksChainChainTypeEnum[keyof typeof EnrichedStacksChainChainTypeEnum];
 

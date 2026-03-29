@@ -43,3 +43,4 @@ function UtxoTransactionUtxoTransactionTypeDetailsFromJSONTyped(json: any, _igno
             return json;
     }
 }
+

@@ -15,10 +15,10 @@
  * @export
  */
 export const TonReversionState = {
-    notReverted: 'not_reverted',
-    unknownRevert: 'unknown_revert',
-    contractAsserted: 'contract_asserted',
-    insufficientFundsGasAndValue: 'insufficient_funds_gas_and_value'
+    NotReverted: 'not_reverted',
+    UnknownRevert: 'unknown_revert',
+    ContractAsserted: 'contract_asserted',
+    InsufficientFundsGasAndValue: 'insufficient_funds_gas_and_value'
 } as const;
 export type TonReversionState = typeof TonReversionState[keyof typeof TonReversionState];
 
@@ -29,3 +29,4 @@ export function TonReversionStateFromJSON(json: any): TonReversionState {
 function TonReversionStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): TonReversionState {
     return json as TonReversionState;
 }
+

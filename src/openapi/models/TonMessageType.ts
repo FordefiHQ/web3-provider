@@ -15,7 +15,7 @@
  * @export
  */
 export const TonMessageType = {
-    proofMessageType: 'proof_message_type'
+    ProofMessageType: 'proof_message_type'
 } as const;
 export type TonMessageType = typeof TonMessageType[keyof typeof TonMessageType];
 
@@ -26,3 +26,4 @@ export function TonMessageTypeFromJSON(json: any): TonMessageType {
 function TonMessageTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): TonMessageType {
     return json as TonMessageType;
 }
+

@@ -49,3 +49,4 @@ function PredictedSuiTransactionSuiTransactionTypeDetailsFromJSONTyped(json: any
             return json;
     }
 }
+

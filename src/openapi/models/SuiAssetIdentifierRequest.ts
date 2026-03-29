@@ -40,7 +40,7 @@ export interface SuiAssetIdentifierRequest {
  * 
  */
 const SuiAssetIdentifierRequestTypeEnum = {
-    sui: 'sui'
+    Sui: 'sui'
 } as const;
 type SuiAssetIdentifierRequestTypeEnum = typeof SuiAssetIdentifierRequestTypeEnum[keyof typeof SuiAssetIdentifierRequestTypeEnum];
 

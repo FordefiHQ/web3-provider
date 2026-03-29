@@ -60,3 +60,4 @@ function CosmosBalanceChangeEffectFromJSONTyped(json: any, _ignoreDiscriminator:
         'address': EnrichedCosmosBechAddressFromJSON(json['address']),
     };
 }
+

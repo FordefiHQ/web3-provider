@@ -15,8 +15,8 @@
  * @export
  */
 export const TransactionDirection = {
-    outgoing: 'outgoing',
-    incoming: 'incoming'
+    Outgoing: 'outgoing',
+    Incoming: 'incoming'
 } as const;
 export type TransactionDirection = typeof TransactionDirection[keyof typeof TransactionDirection];
 
@@ -27,3 +27,4 @@ export function TransactionDirectionFromJSON(json: any): TransactionDirection {
 function TransactionDirectionFromJSONTyped(json: any, _ignoreDiscriminator: boolean): TransactionDirection {
     return json as TransactionDirection;
 }
+

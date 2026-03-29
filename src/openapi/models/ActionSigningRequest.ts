@@ -53,3 +53,4 @@ function ActionSigningRequestFromJSONTyped(json: any, _ignoreDiscriminator: bool
         'signers': ((json['signers'] as Array<any>).map(ActionSignerFromJSON)),
     };
 }
+

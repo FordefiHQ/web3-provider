@@ -40,7 +40,7 @@ export interface TonRawTransactionDetails {
  * 
  */
 const TonRawTransactionDetailsTypeEnum = {
-    rawTransaction: 'raw_transaction'
+    RawTransaction: 'raw_transaction'
 } as const;
 type TonRawTransactionDetailsTypeEnum = typeof TonRawTransactionDetailsTypeEnum[keyof typeof TonRawTransactionDetailsTypeEnum];
 

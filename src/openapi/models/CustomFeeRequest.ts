@@ -35,7 +35,7 @@ export interface CustomFeeRequest {
  * 
  */
 const CustomFeeRequestTypeEnum = {
-    custom: 'custom'
+    Custom: 'custom'
 } as const;
 type CustomFeeRequestTypeEnum = typeof CustomFeeRequestTypeEnum[keyof typeof CustomFeeRequestTypeEnum];
 

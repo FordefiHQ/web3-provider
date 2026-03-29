@@ -67,3 +67,4 @@ function SolanaEnrichedMessageAddressTableLookupFromJSONTyped(json: any, _ignore
         'state': AddressLookupTableStateFromJSON(json['state']),
     };
 }
+

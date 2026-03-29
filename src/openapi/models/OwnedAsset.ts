@@ -48,7 +48,7 @@ export interface OwnedAsset {
      * @memberof OwnedAsset
      * @deprecated
      */
-    balance: string;
+    balance?: string;
     /**
      * 
      * @type {Balances}
@@ -69,7 +69,8 @@ function OwnedAssetFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Owne
         
         'asset': json['asset'] == null ? undefined : AssetFromJSON(json['asset']),
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
-        'balance': json['balance'],
+        'balance': json['balance'] == null ? undefined : json['balance'],
         'balances': BalancesFromJSON(json['balances']),
     };
 }
+

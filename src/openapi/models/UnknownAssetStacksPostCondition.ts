@@ -62,7 +62,7 @@ export interface UnknownAssetStacksPostCondition {
  * 
  */
 const UnknownAssetStacksPostConditionTypeEnum = {
-    unknownAsset: 'unknown_asset'
+    UnknownAsset: 'unknown_asset'
 } as const;
 type UnknownAssetStacksPostConditionTypeEnum = typeof UnknownAssetStacksPostConditionTypeEnum[keyof typeof UnknownAssetStacksPostConditionTypeEnum];
 

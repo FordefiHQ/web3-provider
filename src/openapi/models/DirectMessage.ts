@@ -44,3 +44,4 @@ function DirectMessageFromJSONTyped(json: any, _ignoreDiscriminator: boolean): D
         'value': json['value'],
     };
 }
+

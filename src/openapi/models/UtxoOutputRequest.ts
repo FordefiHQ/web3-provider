@@ -50,3 +50,4 @@ function UtxoOutputRequestToJSONTyped(value?: UtxoOutputRequest | null, _ignoreD
         'value': value['value'],
     };
 }
+

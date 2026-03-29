@@ -15,7 +15,7 @@
  * @export
  */
 export const SuiMessageType = {
-    personalMessageType: 'personal_message_type'
+    PersonalMessageType: 'personal_message_type'
 } as const;
 export type SuiMessageType = typeof SuiMessageType[keyof typeof SuiMessageType];
 
@@ -26,3 +26,4 @@ export function SuiMessageTypeFromJSON(json: any): SuiMessageType {
 function SuiMessageTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): SuiMessageType {
     return json as SuiMessageType;
 }
+

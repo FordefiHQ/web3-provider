@@ -47,7 +47,7 @@ export interface HyperliquidUsdSendAction {
  * 
  */
 const HyperliquidUsdSendActionActionTypeEnum = {
-    usdSend: 'usd_send'
+    UsdSend: 'usd_send'
 } as const;
 type HyperliquidUsdSendActionActionTypeEnum = typeof HyperliquidUsdSendActionActionTypeEnum[keyof typeof HyperliquidUsdSendActionActionTypeEnum];
 

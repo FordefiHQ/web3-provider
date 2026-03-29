@@ -72,3 +72,4 @@ function AptosAssetIdentifierDetailsToJSONTyped(value?: AptosAssetIdentifierDeta
             return value;
     }
 }
+

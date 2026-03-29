@@ -14,6 +14,10 @@ import type { ApiSignerRef } from './ApiSignerRef';
 import {
     ApiSignerRefFromJSONTyped,
 } from './ApiSignerRef';
+import type { ApiUserRef } from './ApiUserRef';
+import {
+    ApiUserRefFromJSONTyped,
+} from './ApiUserRef';
 import type { EndUserRef } from './EndUserRef';
 import {
     EndUserRefFromJSONTyped,
@@ -28,7 +32,7 @@ import {
  * The user who created this signature, `null` if the signature wasn't created by a Fordefi user.
  * @export
  */
-export type SignatureSignedBy = { userType: 'api_signer' } & ApiSignerRef | { userType: 'end_user' } & EndUserRef | { userType: 'person' } & PersonRef;
+export type SignatureSignedBy = { userType: 'api_signer' } & ApiSignerRef | { userType: 'api_user' } & ApiUserRef | { userType: 'end_user' } & EndUserRef | { userType: 'person' } & PersonRef;
 
 export function SignatureSignedByFromJSON(json: any): SignatureSignedBy {
     return SignatureSignedByFromJSONTyped(json, false);
@@ -41,6 +45,8 @@ function SignatureSignedByFromJSONTyped(json: any, _ignoreDiscriminator: boolean
     switch (json['user_type']) {
         case 'api_signer':
             return Object.assign({}, ApiSignerRefFromJSONTyped(json, true), { userType: 'api_signer' } as const);
+        case 'api_user':
+            return Object.assign({}, ApiUserRefFromJSONTyped(json, true), { userType: 'api_user' } as const);
         case 'end_user':
             return Object.assign({}, EndUserRefFromJSONTyped(json, true), { userType: 'end_user' } as const);
         case 'person':
@@ -49,3 +55,4 @@ function SignatureSignedByFromJSONTyped(json: any, _ignoreDiscriminator: boolean
             return json;
     }
 }
+

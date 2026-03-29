@@ -60,3 +60,4 @@ function TonAddressFeeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): T
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }
+

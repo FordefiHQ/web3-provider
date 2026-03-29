@@ -68,7 +68,7 @@ export interface EvmEffects {
      * @type {Array<EvmBridgeEffect>}
      * @memberof EvmEffects
      */
-    bridge: Array<EvmBridgeEffect>;
+    bridge?: Array<EvmBridgeEffect>;
     /**
      * The bridge effects of the transaction.
      * @type {Array<EvmBridgesEffect>}
@@ -102,9 +102,10 @@ function EvmEffectsFromJSONTyped(json: any, _ignoreDiscriminator: boolean): EvmE
         'balanceChanges': ((json['balance_changes'] as Array<any>).map(EvmBalanceChangeEffectFromJSON)),
         'transfers': ((json['transfers'] as Array<any>).map(EvmTransferEffectFromJSON)),
         'allowances': ((json['allowances'] as Array<any>).map(AllowanceEffectFromJSON)),
-        'bridge': ((json['bridge'] as Array<any>).map(EvmBridgeEffectFromJSON)),
+        'bridge': json['bridge'] == null ? undefined : ((json['bridge'] as Array<any>).map(EvmBridgeEffectFromJSON)),
         'bridges': ((json['bridges'] as Array<any>).map(EvmBridgesEffectFromJSON)),
         'contractDeployments': ((json['contract_deployments'] as Array<any>).map(EvmContractDeploymentEffectFromJSON)),
         'setCodeAuthorizations': ((json['set_code_authorizations'] as Array<any>).map(SetCodeAuthorizationEffectFromJSON)),
     };
 }
+

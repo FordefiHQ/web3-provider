@@ -95,3 +95,4 @@ function BalancesFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Balanc
         'trustlineLimit': json['trustline_limit'] == null ? undefined : json['trustline_limit'],
     };
 }
+

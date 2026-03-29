@@ -58,3 +58,4 @@ function TronVaultEnergyAndBandwidthDataFromJSONTyped(json: any, _ignoreDiscrimi
         'bandwidthLimit': json['bandwidth_limit'],
     };
 }
+

@@ -15,9 +15,9 @@
  * @export
  */
 export const SafeVaultState = {
-    active: 'active',
-    pending: 'pending',
-    aborted: 'aborted'
+    Active: 'active',
+    Pending: 'pending',
+    Aborted: 'aborted'
 } as const;
 export type SafeVaultState = typeof SafeVaultState[keyof typeof SafeVaultState];
 
@@ -28,3 +28,4 @@ export function SafeVaultStateFromJSON(json: any): SafeVaultState {
 function SafeVaultStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): SafeVaultState {
     return json as SafeVaultState;
 }
+

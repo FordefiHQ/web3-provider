@@ -35,7 +35,7 @@ export interface TonAccountRepr {
  * 
  */
 const TonAccountReprChainTypeEnum = {
-    ton: 'ton'
+    Ton: 'ton'
 } as const;
 type TonAccountReprChainTypeEnum = typeof TonAccountReprChainTypeEnum[keyof typeof TonAccountReprChainTypeEnum];
 

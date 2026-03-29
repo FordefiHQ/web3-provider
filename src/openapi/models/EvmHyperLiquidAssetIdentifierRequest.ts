@@ -47,7 +47,7 @@ export interface EvmHyperLiquidAssetIdentifierRequest {
  * 
  */
 const EvmHyperLiquidAssetIdentifierRequestTypeEnum = {
-    hyperliquid: 'hyperliquid'
+    Hyperliquid: 'hyperliquid'
 } as const;
 type EvmHyperLiquidAssetIdentifierRequestTypeEnum = typeof EvmHyperLiquidAssetIdentifierRequestTypeEnum[keyof typeof EvmHyperLiquidAssetIdentifierRequestTypeEnum];
 

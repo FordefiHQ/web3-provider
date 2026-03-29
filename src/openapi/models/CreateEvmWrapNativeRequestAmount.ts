@@ -43,3 +43,4 @@ function CreateEvmWrapNativeRequestAmountToJSONTyped(value?: CreateEvmWrapNative
             return value;
     }
 }
+

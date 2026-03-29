@@ -268,7 +268,7 @@ export interface UtxoTransaction {
  * 
  */
 const UtxoTransactionTypeEnum = {
-    utxoTransaction: 'utxo_transaction'
+    UtxoTransaction: 'utxo_transaction'
 } as const;
 type UtxoTransactionTypeEnum = typeof UtxoTransactionTypeEnum[keyof typeof UtxoTransactionTypeEnum];
 

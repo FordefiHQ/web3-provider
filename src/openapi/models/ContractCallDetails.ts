@@ -29,7 +29,7 @@ export interface ContractCallDetails {
  * 
  */
 const ContractCallDetailsTypeEnum = {
-    contractCall: 'contract_call'
+    ContractCall: 'contract_call'
 } as const;
 type ContractCallDetailsTypeEnum = typeof ContractCallDetailsTypeEnum[keyof typeof ContractCallDetailsTypeEnum];
 

@@ -63,3 +63,4 @@ function SuiAssetIdentifierDetailsToJSONTyped(value?: SuiAssetIdentifierDetails 
             return value;
     }
 }
+

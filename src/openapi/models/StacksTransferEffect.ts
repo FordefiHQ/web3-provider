@@ -67,3 +67,4 @@ function StacksTransferEffectFromJSONTyped(json: any, _ignoreDiscriminator: bool
         'to': EnrichedStacksAddressFromJSON(json['to']),
     };
 }
+

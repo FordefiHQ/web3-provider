@@ -41,7 +41,7 @@ export interface TonNativeAssetIdentifierRequest {
  * 
  */
 const TonNativeAssetIdentifierRequestTypeEnum = {
-    native: 'native'
+    Native: 'native'
 } as const;
 type TonNativeAssetIdentifierRequestTypeEnum = typeof TonNativeAssetIdentifierRequestTypeEnum[keyof typeof TonNativeAssetIdentifierRequestTypeEnum];
 

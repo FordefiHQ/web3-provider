@@ -15,10 +15,10 @@
  * @export
  */
 export const StacksReversionState = {
-    notReverted: 'not_reverted',
-    unknownRevert: 'unknown_revert',
-    contractAsserted: 'contract_asserted',
-    insufficientFundsGasAndValue: 'insufficient_funds_gas_and_value'
+    NotReverted: 'not_reverted',
+    UnknownRevert: 'unknown_revert',
+    ContractAsserted: 'contract_asserted',
+    InsufficientFundsGasAndValue: 'insufficient_funds_gas_and_value'
 } as const;
 export type StacksReversionState = typeof StacksReversionState[keyof typeof StacksReversionState];
 
@@ -29,3 +29,4 @@ export function StacksReversionStateFromJSON(json: any): StacksReversionState {
 function StacksReversionStateFromJSONTyped(json: any, _ignoreDiscriminator: boolean): StacksReversionState {
     return json as StacksReversionState;
 }
+

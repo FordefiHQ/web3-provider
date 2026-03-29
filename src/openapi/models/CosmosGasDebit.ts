@@ -60,3 +60,4 @@ function CosmosGasDebitFromJSONTyped(json: any, _ignoreDiscriminator: boolean): 
         'fiatPrices': ((json['fiat_prices'] as Array<any>).map(PriceFromJSON)),
     };
 }
+

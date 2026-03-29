@@ -78,10 +78,10 @@ export interface BlackBoxVault {
     modifiedAt: Date;
     /**
      * Metadata in a form: <str, bool | str | int | array[str]>.
-     * @type {{ [key: string]: MetadataValue | undefined; }}
+     * @type {{ [key: string]: MetadataValue; }}
      * @memberof BlackBoxVault
      */
-    metadata?: { [key: string]: MetadataValue | undefined; };
+    metadata?: { [key: string]: MetadataValue; };
     /**
      * The name of the vault.
      * @type {string}
@@ -181,7 +181,7 @@ export interface BlackBoxVault {
  * 
  */
 const BlackBoxVaultTypeEnum = {
-    blackBox: 'black_box'
+    BlackBox: 'black_box'
 } as const;
 type BlackBoxVaultTypeEnum = typeof BlackBoxVaultTypeEnum[keyof typeof BlackBoxVaultTypeEnum];
 

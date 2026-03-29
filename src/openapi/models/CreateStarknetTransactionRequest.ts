@@ -82,7 +82,7 @@ export interface CreateStarknetTransactionRequest {
  * 
  */
 const CreateStarknetTransactionRequestTypeEnum = {
-    starknetTransaction: 'starknet_transaction'
+    StarknetTransaction: 'starknet_transaction'
 } as const;
 type CreateStarknetTransactionRequestTypeEnum = typeof CreateStarknetTransactionRequestTypeEnum[keyof typeof CreateStarknetTransactionRequestTypeEnum];
 

@@ -50,7 +50,7 @@ export interface EnrichedSuiCoinAssetIdentifier {
  * 
  */
 const EnrichedSuiCoinAssetIdentifierTypeEnum = {
-    coin: 'coin'
+    Coin: 'coin'
 } as const;
 type EnrichedSuiCoinAssetIdentifierTypeEnum = typeof EnrichedSuiCoinAssetIdentifierTypeEnum[keyof typeof EnrichedSuiCoinAssetIdentifierTypeEnum];
 

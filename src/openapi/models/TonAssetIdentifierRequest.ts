@@ -40,7 +40,7 @@ export interface TonAssetIdentifierRequest {
  * 
  */
 const TonAssetIdentifierRequestTypeEnum = {
-    ton: 'ton'
+    Ton: 'ton'
 } as const;
 type TonAssetIdentifierRequestTypeEnum = typeof TonAssetIdentifierRequestTypeEnum[keyof typeof TonAssetIdentifierRequestTypeEnum];
 

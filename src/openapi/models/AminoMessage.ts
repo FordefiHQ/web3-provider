@@ -60,3 +60,4 @@ function AminoMessageToJSONTyped(value?: AminoMessage | null, _ignoreDiscriminat
         'value': value['value'],
     };
 }
+

@@ -63,3 +63,4 @@ function VaultGroupRefFromJSONTyped(json: any, _ignoreDiscriminator: boolean): V
         'canCurrentUserCreateOrEditVaults': json['can_current_user_create_or_edit_vaults'],
     };
 }
+

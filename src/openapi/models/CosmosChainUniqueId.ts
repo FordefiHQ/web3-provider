@@ -15,26 +15,26 @@
  * @export
  */
 export const CosmosChainUniqueId = {
-    cosmosAgoric3: 'cosmos_agoric-3',
-    cosmosAkashnet2: 'cosmos_akashnet-2',
-    cosmosArchway1: 'cosmos_archway-1',
-    cosmosAxelarDojo1: 'cosmos_axelar-dojo-1',
-    cosmosBbn1: 'cosmos_bbn-1',
-    cosmosCelestia: 'cosmos_celestia',
-    cosmosCosmoshub4: 'cosmos_cosmoshub-4',
-    cosmosDydxMainnet1: 'cosmos_dydx-mainnet-1',
-    cosmosDydxTestnet4: 'cosmos_dydx-testnet-4',
-    cosmosDymension11001: 'cosmos_dymension_1100-1',
-    cosmosInjective1: 'cosmos_injective-1',
-    cosmosNeutron1: 'cosmos_neutron-1',
-    cosmosNillion1: 'cosmos_nillion-1',
-    cosmosNoble1: 'cosmos_noble-1',
-    cosmosOsmosis1: 'cosmos_osmosis-1',
-    cosmosSsc1: 'cosmos_ssc-1',
-    cosmosPacific1: 'cosmos_pacific-1',
-    cosmosStride1: 'cosmos_stride-1',
-    cosmosThorchain1: 'cosmos_thorchain-1',
-    cosmosMantra1: 'cosmos_mantra-1'
+    CosmosAgoric3: 'cosmos_agoric-3',
+    CosmosAkashnet2: 'cosmos_akashnet-2',
+    CosmosArchway1: 'cosmos_archway-1',
+    CosmosAxelarDojo1: 'cosmos_axelar-dojo-1',
+    CosmosBbn1: 'cosmos_bbn-1',
+    CosmosCelestia: 'cosmos_celestia',
+    CosmosCosmoshub4: 'cosmos_cosmoshub-4',
+    CosmosDydxMainnet1: 'cosmos_dydx-mainnet-1',
+    CosmosDydxTestnet4: 'cosmos_dydx-testnet-4',
+    CosmosDymension11001: 'cosmos_dymension_1100-1',
+    CosmosInjective1: 'cosmos_injective-1',
+    CosmosNeutron1: 'cosmos_neutron-1',
+    CosmosNillion1: 'cosmos_nillion-1',
+    CosmosNoble1: 'cosmos_noble-1',
+    CosmosOsmosis1: 'cosmos_osmosis-1',
+    CosmosSsc1: 'cosmos_ssc-1',
+    CosmosPacific1: 'cosmos_pacific-1',
+    CosmosStride1: 'cosmos_stride-1',
+    CosmosThorchain1: 'cosmos_thorchain-1',
+    CosmosMantra1: 'cosmos_mantra-1'
 } as const;
 export type CosmosChainUniqueId = typeof CosmosChainUniqueId[keyof typeof CosmosChainUniqueId];
 
@@ -49,3 +49,4 @@ function CosmosChainUniqueIdFromJSONTyped(json: any, _ignoreDiscriminator: boole
 export function CosmosChainUniqueIdToJSON(value?: CosmosChainUniqueId | null): any {
     return value as any;
 }
+

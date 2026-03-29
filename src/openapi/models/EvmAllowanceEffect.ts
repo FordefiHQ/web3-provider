@@ -81,3 +81,4 @@ function EvmAllowanceEffectFromJSONTyped(json: any, _ignoreDiscriminator: boolea
         'nonce': json['nonce'] == null ? undefined : json['nonce'],
     };
 }
+

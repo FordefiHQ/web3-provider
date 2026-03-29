@@ -52,7 +52,7 @@ export interface CosmosAddressBookContactAddressRef {
  * 
  */
 const CosmosAddressBookContactAddressRefChainTypeEnum = {
-    cosmos: 'cosmos'
+    Cosmos: 'cosmos'
 } as const;
 type CosmosAddressBookContactAddressRefChainTypeEnum = typeof CosmosAddressBookContactAddressRefChainTypeEnum[keyof typeof CosmosAddressBookContactAddressRefChainTypeEnum];
 

@@ -52,7 +52,7 @@ export interface TronDelegateDetails {
  * 
  */
 const TronDelegateDetailsTypeEnum = {
-    delegate: 'delegate'
+    Delegate: 'delegate'
 } as const;
 type TronDelegateDetailsTypeEnum = typeof TronDelegateDetailsTypeEnum[keyof typeof TronDelegateDetailsTypeEnum];
 

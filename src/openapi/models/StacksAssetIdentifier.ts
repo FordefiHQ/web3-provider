@@ -50,7 +50,7 @@ export interface StacksAssetIdentifier {
  * 
  */
 const StacksAssetIdentifierTypeEnum = {
-    stacks: 'stacks'
+    Stacks: 'stacks'
 } as const;
 type StacksAssetIdentifierTypeEnum = typeof StacksAssetIdentifierTypeEnum[keyof typeof StacksAssetIdentifierTypeEnum];
 

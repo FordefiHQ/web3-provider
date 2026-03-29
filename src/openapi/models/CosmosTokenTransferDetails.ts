@@ -41,7 +41,7 @@ export interface CosmosTokenTransferDetails {
      * @memberof CosmosTokenTransferDetails
      * @deprecated
      */
-    direction: TransferDirection;
+    direction?: TransferDirection;
     /**
      * The sender.
      * @type {EnrichedCosmosBechAddress}
@@ -73,7 +73,7 @@ export interface CosmosTokenTransferDetails {
  * 
  */
 const CosmosTokenTransferDetailsTypeEnum = {
-    tokenTransfer: 'token_transfer'
+    TokenTransfer: 'token_transfer'
 } as const;
 type CosmosTokenTransferDetailsTypeEnum = typeof CosmosTokenTransferDetailsTypeEnum[keyof typeof CosmosTokenTransferDetailsTypeEnum];
 
@@ -84,7 +84,7 @@ export function CosmosTokenTransferDetailsFromJSONTyped(json: any, _ignoreDiscri
     return {
         
         'transactionData': MessagesListFromJSON(json['transaction_data']),
-        'direction': TransferDirectionFromJSON(json['direction']),
+        'direction': json['direction'] == null ? undefined : TransferDirectionFromJSON(json['direction']),
         'sender': EnrichedCosmosBechAddressFromJSON(json['sender']),
         'recipient': EnrichedCosmosBechAddressFromJSON(json['recipient']),
         'isInternal': json['is_internal'] == null ? undefined : json['is_internal'],

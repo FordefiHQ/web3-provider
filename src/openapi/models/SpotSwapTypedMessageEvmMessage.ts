@@ -177,10 +177,10 @@ export interface SpotSwapTypedMessageEvmMessage {
     primaryType: string;
     /**
      * Addresses that are related to this message, enriched with metadata.Please NOTE: the dictionary keys are EIP-55 checksummed addresses
-     * @type {{ [key: string]: EnrichedEvmAddress | undefined; }}
+     * @type {{ [key: string]: EnrichedEvmAddress; }}
      * @memberof SpotSwapTypedMessageEvmMessage
      */
-    enrichedAddresses?: { [key: string]: EnrichedEvmAddress | undefined; };
+    enrichedAddresses?: { [key: string]: EnrichedEvmAddress; };
     /**
      * The typed message type.
      * @type {SpotSwapTypedMessageEvmMessageTypeEnum}
@@ -206,7 +206,7 @@ export interface SpotSwapTypedMessageEvmMessage {
  * 
  */
 const SpotSwapTypedMessageEvmMessageTypeEnum = {
-    spotSwap: 'spot_swap'
+    SpotSwap: 'spot_swap'
 } as const;
 type SpotSwapTypedMessageEvmMessageTypeEnum = typeof SpotSwapTypedMessageEvmMessageTypeEnum[keyof typeof SpotSwapTypedMessageEvmMessageTypeEnum];
 

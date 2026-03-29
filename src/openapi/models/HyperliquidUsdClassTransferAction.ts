@@ -47,7 +47,7 @@ export interface HyperliquidUsdClassTransferAction {
  * 
  */
 const HyperliquidUsdClassTransferActionActionTypeEnum = {
-    usdClassTransfer: 'usd_class_transfer'
+    UsdClassTransfer: 'usd_class_transfer'
 } as const;
 type HyperliquidUsdClassTransferActionActionTypeEnum = typeof HyperliquidUsdClassTransferActionActionTypeEnum[keyof typeof HyperliquidUsdClassTransferActionActionTypeEnum];
 

@@ -60,7 +60,7 @@ export interface TypedCosmosRawTransactionRequest {
  * 
  */
 const TypedCosmosRawTransactionRequestTypeEnum = {
-    cosmosRawTransaction: 'cosmos_raw_transaction'
+    CosmosRawTransaction: 'cosmos_raw_transaction'
 } as const;
 type TypedCosmosRawTransactionRequestTypeEnum = typeof TypedCosmosRawTransactionRequestTypeEnum[keyof typeof TypedCosmosRawTransactionRequestTypeEnum];
 

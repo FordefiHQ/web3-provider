@@ -35,7 +35,7 @@ export interface TronTypedMessageV2Base64RawData {
  * 
  */
 const TronTypedMessageV2Base64RawDataFormatEnum = {
-    base64: 'base64'
+    Base64: 'base64'
 } as const;
 type TronTypedMessageV2Base64RawDataFormatEnum = typeof TronTypedMessageV2Base64RawDataFormatEnum[keyof typeof TronTypedMessageV2Base64RawDataFormatEnum];
 

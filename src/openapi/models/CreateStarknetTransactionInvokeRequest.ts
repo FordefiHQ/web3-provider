@@ -72,7 +72,7 @@ export interface CreateStarknetTransactionInvokeRequest {
  * 
  */
 const CreateStarknetTransactionInvokeRequestTypeEnum = {
-    starknetContractCall: 'starknet_contract_call'
+    StarknetContractCall: 'starknet_contract_call'
 } as const;
 type CreateStarknetTransactionInvokeRequestTypeEnum = typeof CreateStarknetTransactionInvokeRequestTypeEnum[keyof typeof CreateStarknetTransactionInvokeRequestTypeEnum];
 

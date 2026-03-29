@@ -33,7 +33,7 @@ export interface EvmNativeTransferDetails {
      * @memberof EvmNativeTransferDetails
      * @deprecated
      */
-    direction: TransferDirection;
+    direction?: TransferDirection;
     /**
      * Is this transfer an internal transfer between two vaults. None if the transaction is incoming.
      * @type {boolean}
@@ -47,7 +47,7 @@ export interface EvmNativeTransferDetails {
  * 
  */
 const EvmNativeTransferDetailsTypeEnum = {
-    nativeTransfer: 'native_transfer'
+    NativeTransfer: 'native_transfer'
 } as const;
 type EvmNativeTransferDetailsTypeEnum = typeof EvmNativeTransferDetailsTypeEnum[keyof typeof EvmNativeTransferDetailsTypeEnum];
 
@@ -58,7 +58,7 @@ export function EvmNativeTransferDetailsFromJSONTyped(json: any, _ignoreDiscrimi
     return {
         
         'type': json['type'],
-        'direction': TransferDirectionFromJSON(json['direction']),
+        'direction': json['direction'] == null ? undefined : TransferDirectionFromJSON(json['direction']),
         'isInternal': json['is_internal'] == null ? undefined : json['is_internal'],
     };
 }

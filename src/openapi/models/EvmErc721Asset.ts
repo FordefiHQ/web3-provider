@@ -56,7 +56,7 @@ export interface EvmErc721Asset {
  * 
  */
 const EvmErc721AssetTypeEnum = {
-    evmErc721Asset: 'evm_erc721_asset'
+    EvmErc721Asset: 'evm_erc721_asset'
 } as const;
 type EvmErc721AssetTypeEnum = typeof EvmErc721AssetTypeEnum[keyof typeof EvmErc721AssetTypeEnum];
 

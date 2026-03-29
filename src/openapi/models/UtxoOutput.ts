@@ -63,3 +63,4 @@ function UtxoOutputFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Utxo
         'isSendMax': json['is_send_max'] == null ? undefined : json['is_send_max'],
     };
 }
+

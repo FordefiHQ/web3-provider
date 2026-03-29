@@ -72,7 +72,7 @@ export interface EnrichedEvmAddress {
  * 
  */
 const EnrichedEvmAddressTypeEnum = {
-    evm: 'evm'
+    Evm: 'evm'
 } as const;
 type EnrichedEvmAddressTypeEnum = typeof EnrichedEvmAddressTypeEnum[keyof typeof EnrichedEvmAddressTypeEnum];
 

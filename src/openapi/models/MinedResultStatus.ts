@@ -15,9 +15,9 @@
  * @export
  */
 export const MinedResultStatus = {
-    success: 'success',
-    missing: 'missing',
-    potentiallyPartial: 'potentially_partial'
+    Success: 'success',
+    Missing: 'missing',
+    PotentiallyPartial: 'potentially_partial'
 } as const;
 export type MinedResultStatus = typeof MinedResultStatus[keyof typeof MinedResultStatus];
 
@@ -28,3 +28,4 @@ export function MinedResultStatusFromJSON(json: any): MinedResultStatus {
 function MinedResultStatusFromJSONTyped(json: any, _ignoreDiscriminator: boolean): MinedResultStatus {
     return json as MinedResultStatus;
 }
+

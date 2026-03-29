@@ -15,7 +15,7 @@
  * @export
  */
 export const SkipIndexingReason = {
-    spam: 'spam'
+    Spam: 'spam'
 } as const;
 export type SkipIndexingReason = typeof SkipIndexingReason[keyof typeof SkipIndexingReason];
 
@@ -26,3 +26,4 @@ export function SkipIndexingReasonFromJSON(json: any): SkipIndexingReason {
 function SkipIndexingReasonFromJSONTyped(json: any, _ignoreDiscriminator: boolean): SkipIndexingReason {
     return json as SkipIndexingReason;
 }
+

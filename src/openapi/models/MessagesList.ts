@@ -49,3 +49,4 @@ function MessagesListFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Me
             return json;
     }
 }
+

@@ -66,3 +66,4 @@ function AptosNewCoinTypeRequestToJSONTyped(value?: AptosNewCoinTypeRequest | nu
         'metadata_address': value['metadataAddress'],
     };
 }
+

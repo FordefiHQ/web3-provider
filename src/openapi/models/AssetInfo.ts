@@ -105,3 +105,4 @@ function AssetInfoFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Asset
         'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
     };
 }
+

@@ -40,7 +40,7 @@ export interface EnrichedSolanaAssetIdentifier {
  * 
  */
 const EnrichedSolanaAssetIdentifierTypeEnum = {
-    solana: 'solana'
+    Solana: 'solana'
 } as const;
 type EnrichedSolanaAssetIdentifierTypeEnum = typeof EnrichedSolanaAssetIdentifierTypeEnum[keyof typeof EnrichedSolanaAssetIdentifierTypeEnum];
 

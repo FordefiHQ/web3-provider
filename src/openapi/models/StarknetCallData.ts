@@ -56,3 +56,4 @@ function StarknetCallDataFromJSONTyped(json: any, _ignoreDiscriminator: boolean)
         'methodArguments': json['method_arguments'],
     };
 }
+

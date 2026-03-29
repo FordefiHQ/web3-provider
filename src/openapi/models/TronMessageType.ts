@@ -15,8 +15,8 @@
  * @export
  */
 export const TronMessageType = {
-    typedMessageTypeV1: 'typed_message_type_v1',
-    typedMessageTypeV2: 'typed_message_type_v2'
+    TypedMessageTypeV1: 'typed_message_type_v1',
+    TypedMessageTypeV2: 'typed_message_type_v2'
 } as const;
 export type TronMessageType = typeof TronMessageType[keyof typeof TronMessageType];
 
@@ -27,3 +27,4 @@ export function TronMessageTypeFromJSON(json: any): TronMessageType {
 function TronMessageTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): TronMessageType {
     return json as TronMessageType;
 }
+

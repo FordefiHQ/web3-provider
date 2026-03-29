@@ -41,7 +41,7 @@ export interface SolanaSplTokenAssetIdentifierRequest {
  * 
  */
 const SolanaSplTokenAssetIdentifierRequestTypeEnum = {
-    splToken: 'spl_token'
+    SplToken: 'spl_token'
 } as const;
 type SolanaSplTokenAssetIdentifierRequestTypeEnum = typeof SolanaSplTokenAssetIdentifierRequestTypeEnum[keyof typeof SolanaSplTokenAssetIdentifierRequestTypeEnum];
 

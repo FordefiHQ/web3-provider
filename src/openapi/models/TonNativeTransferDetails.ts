@@ -52,7 +52,7 @@ export interface TonNativeTransferDetails {
  * 
  */
 const TonNativeTransferDetailsTypeEnum = {
-    nativeTransfer: 'native_transfer'
+    NativeTransfer: 'native_transfer'
 } as const;
 type TonNativeTransferDetailsTypeEnum = typeof TonNativeTransferDetailsTypeEnum[keyof typeof TonNativeTransferDetailsTypeEnum];
 

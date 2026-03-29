@@ -63,3 +63,4 @@ function TronFeeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): TronFee
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }
+

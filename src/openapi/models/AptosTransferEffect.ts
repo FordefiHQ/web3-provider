@@ -67,3 +67,4 @@ function AptosTransferEffectFromJSONTyped(json: any, _ignoreDiscriminator: boole
         'to': EnrichedAptosAddressFromJSON(json['to']),
     };
 }
+

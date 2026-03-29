@@ -53,7 +53,7 @@ export interface BlackBoxSignatureEcdsaStarkDetails {
  * 
  */
 const BlackBoxSignatureEcdsaStarkDetailsTypeEnum = {
-    ecdsaStark: 'ecdsa_stark'
+    EcdsaStark: 'ecdsa_stark'
 } as const;
 type BlackBoxSignatureEcdsaStarkDetailsTypeEnum = typeof BlackBoxSignatureEcdsaStarkDetailsTypeEnum[keyof typeof BlackBoxSignatureEcdsaStarkDetailsTypeEnum];
 

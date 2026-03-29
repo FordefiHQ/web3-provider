@@ -15,7 +15,7 @@
  * @export
  */
 export const StacksChainUniqueId = {
-    stacksMainnet: 'stacks_mainnet'
+    StacksMainnet: 'stacks_mainnet'
 } as const;
 export type StacksChainUniqueId = typeof StacksChainUniqueId[keyof typeof StacksChainUniqueId];
 
@@ -30,3 +30,4 @@ function StacksChainUniqueIdFromJSONTyped(json: any, _ignoreDiscriminator: boole
 export function StacksChainUniqueIdToJSON(value?: StacksChainUniqueId | null): any {
     return value as any;
 }
+

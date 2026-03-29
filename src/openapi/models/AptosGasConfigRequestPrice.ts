@@ -43,3 +43,4 @@ function AptosGasConfigRequestPriceToJSONTyped(value?: AptosGasConfigRequestPric
             return value;
     }
 }
+

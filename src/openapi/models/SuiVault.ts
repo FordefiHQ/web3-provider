@@ -74,10 +74,10 @@ export interface SuiVault {
     modifiedAt: Date;
     /**
      * Metadata in a form: <str, bool | str | int | array[str]>.
-     * @type {{ [key: string]: MetadataValue | undefined; }}
+     * @type {{ [key: string]: MetadataValue; }}
      * @memberof SuiVault
      */
-    metadata?: { [key: string]: MetadataValue | undefined; };
+    metadata?: { [key: string]: MetadataValue; };
     /**
      * The name of the vault.
      * @type {string}
@@ -177,7 +177,7 @@ export interface SuiVault {
  * 
  */
 const SuiVaultTypeEnum = {
-    sui: 'sui'
+    Sui: 'sui'
 } as const;
 type SuiVaultTypeEnum = typeof SuiVaultTypeEnum[keyof typeof SuiVaultTypeEnum];
 

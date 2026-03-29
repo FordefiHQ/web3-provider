@@ -15,8 +15,8 @@
  * @export
  */
 export const GasType = {
-    dynamic: 'dynamic',
-    legacy: 'legacy'
+    Dynamic: 'dynamic',
+    Legacy: 'legacy'
 } as const;
 export type GasType = typeof GasType[keyof typeof GasType];
 
@@ -27,3 +27,4 @@ export function GasTypeFromJSON(json: any): GasType {
 function GasTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): GasType {
     return json as GasType;
 }
+

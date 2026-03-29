@@ -64,3 +64,4 @@ function StarknetTransactionResultFromJSONTyped(json: any, _ignoreDiscriminator:
         'effects': StarknetEffectsFromJSON(json['effects']),
     };
 }
+

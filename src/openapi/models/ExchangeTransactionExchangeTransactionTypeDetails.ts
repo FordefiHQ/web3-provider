@@ -43,3 +43,4 @@ function ExchangeTransactionExchangeTransactionTypeDetailsFromJSONTyped(json: an
             return json;
     }
 }
+

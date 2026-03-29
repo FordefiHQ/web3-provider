@@ -40,7 +40,7 @@ export interface EvmAssetIdentifierRequest {
  * 
  */
 const EvmAssetIdentifierRequestTypeEnum = {
-    evm: 'evm'
+    Evm: 'evm'
 } as const;
 type EvmAssetIdentifierRequestTypeEnum = typeof EvmAssetIdentifierRequestTypeEnum[keyof typeof EvmAssetIdentifierRequestTypeEnum];
 

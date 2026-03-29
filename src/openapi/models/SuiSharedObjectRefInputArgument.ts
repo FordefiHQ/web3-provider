@@ -47,7 +47,7 @@ export interface SuiSharedObjectRefInputArgument {
  * 
  */
 const SuiSharedObjectRefInputArgumentTypeEnum = {
-    shared: 'shared'
+    Shared: 'shared'
 } as const;
 type SuiSharedObjectRefInputArgumentTypeEnum = typeof SuiSharedObjectRefInputArgumentTypeEnum[keyof typeof SuiSharedObjectRefInputArgumentTypeEnum];
 

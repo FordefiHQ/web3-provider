@@ -82,7 +82,7 @@ export interface CreateSuiMessageRequest {
  * 
  */
 const CreateSuiMessageRequestTypeEnum = {
-    suiMessage: 'sui_message'
+    SuiMessage: 'sui_message'
 } as const;
 type CreateSuiMessageRequestTypeEnum = typeof CreateSuiMessageRequestTypeEnum[keyof typeof CreateSuiMessageRequestTypeEnum];
 

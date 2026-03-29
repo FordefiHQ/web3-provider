@@ -82,7 +82,7 @@ export interface CreateTronMessageRequest {
  * 
  */
 const CreateTronMessageRequestTypeEnum = {
-    tronMessage: 'tron_message'
+    TronMessage: 'tron_message'
 } as const;
 type CreateTronMessageRequestTypeEnum = typeof CreateTronMessageRequestTypeEnum[keyof typeof CreateTronMessageRequestTypeEnum];
 

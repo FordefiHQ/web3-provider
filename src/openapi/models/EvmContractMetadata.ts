@@ -67,3 +67,4 @@ function EvmContractMetadataFromJSONTyped(json: any, _ignoreDiscriminator: boole
         'token': json['token'] == null ? undefined : EvmContractMetadataTokenFromJSON(json['token']),
     };
 }
+

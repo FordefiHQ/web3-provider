@@ -65,3 +65,4 @@ function DappFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Dapp {
         'contractsCount': json['contracts_count'] == null ? undefined : json['contracts_count'],
     };
 }
+

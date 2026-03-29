@@ -186,7 +186,7 @@ export interface CosmosMessage {
  * 
  */
 const CosmosMessageTypeEnum = {
-    cosmosMessage: 'cosmos_message'
+    CosmosMessage: 'cosmos_message'
 } as const;
 type CosmosMessageTypeEnum = typeof CosmosMessageTypeEnum[keyof typeof CosmosMessageTypeEnum];
 

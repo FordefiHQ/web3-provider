@@ -68,7 +68,7 @@ export interface CreateEvmSetCodeRequest {
      */
     pushMode?: PushMode;
     /**
-     * Use a MEV protected node to send the transaction. By using a MEV protected node, you avoid maximal extractable value (MEV) attacks.
+     * Use an MEV protected node to send the transaction. By using an MEV protected node, you avoid maximal extractable value (MEV) attacks.
      * @type {boolean}
      * @memberof CreateEvmSetCodeRequest
      */
@@ -118,7 +118,7 @@ export interface CreateEvmSetCodeRequest {
  * 
  */
 const CreateEvmSetCodeRequestTypeEnum = {
-    evmSetCode: 'evm_set_code'
+    EvmSetCode: 'evm_set_code'
 } as const;
 type CreateEvmSetCodeRequestTypeEnum = typeof CreateEvmSetCodeRequestTypeEnum[keyof typeof CreateEvmSetCodeRequestTypeEnum];
 

@@ -35,7 +35,7 @@ export interface StacksRecipientHex {
  * 
  */
 const StacksRecipientHexTypeEnum = {
-    hex: 'hex'
+    Hex: 'hex'
 } as const;
 type StacksRecipientHexTypeEnum = typeof StacksRecipientHexTypeEnum[keyof typeof StacksRecipientHexTypeEnum];
 

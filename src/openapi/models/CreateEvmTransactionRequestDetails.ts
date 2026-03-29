@@ -67,3 +67,4 @@ function CreateEvmTransactionRequestDetailsToJSONTyped(value?: CreateEvmTransact
             return value;
     }
 }
+

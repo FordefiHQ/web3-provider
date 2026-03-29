@@ -67,3 +67,4 @@ function ExchangeTransactionStateChangeFromJSONTyped(json: any, _ignoreDiscrimin
         'newState': ExchangeTransactionStateFromJSON(json['new_state']),
     };
 }
+

@@ -60,3 +60,4 @@ function StacksBalanceChangeEffectFromJSONTyped(json: any, _ignoreDiscriminator:
         'address': EnrichedStacksAddressFromJSON(json['address']),
     };
 }
+

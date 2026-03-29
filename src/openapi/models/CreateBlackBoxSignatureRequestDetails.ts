@@ -43,3 +43,4 @@ function CreateBlackBoxSignatureRequestDetailsToJSONTyped(value?: CreateBlackBox
             return value;
     }
 }
+

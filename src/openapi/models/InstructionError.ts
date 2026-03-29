@@ -51,3 +51,4 @@ function InstructionErrorFromJSONTyped(json: any, _ignoreDiscriminator: boolean)
         'errorDescription': json['error_description'] == null ? undefined : json['error_description'],
     };
 }
+

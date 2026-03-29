@@ -15,9 +15,9 @@
  * @export
  */
 export const UtxoDlcTransactionType = {
-    fundingTransaction: 'FUNDING_TRANSACTION',
-    refundTransaction: 'REFUND_TRANSACTION',
-    cetTransaction: 'CET_TRANSACTION'
+    FundingTransaction: 'FUNDING_TRANSACTION',
+    RefundTransaction: 'REFUND_TRANSACTION',
+    CetTransaction: 'CET_TRANSACTION'
 } as const;
 export type UtxoDlcTransactionType = typeof UtxoDlcTransactionType[keyof typeof UtxoDlcTransactionType];
 
@@ -28,3 +28,4 @@ export function UtxoDlcTransactionTypeFromJSON(json: any): UtxoDlcTransactionTyp
 function UtxoDlcTransactionTypeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): UtxoDlcTransactionType {
     return json as UtxoDlcTransactionType;
 }
+

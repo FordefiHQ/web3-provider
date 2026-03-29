@@ -108,3 +108,4 @@ function SuiCommandToJSONTyped(value?: SuiCommand | null, _ignoreDiscriminator: 
             return value;
     }
 }
+

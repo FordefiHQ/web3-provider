@@ -41,7 +41,7 @@ export interface DynamicGasRequest {
  * @export
  */
 export const DynamicGasRequestTypeEnum = {
-    dynamic: 'dynamic'
+    Dynamic: 'dynamic'
 } as const;
 export type DynamicGasRequestTypeEnum = typeof DynamicGasRequestTypeEnum[keyof typeof DynamicGasRequestTypeEnum];
 
@@ -61,3 +61,4 @@ function DynamicGasRequestToJSONTyped(value?: DynamicGasRequest | null, _ignoreD
         'max_fee_per_gas': value['maxFeePerGas'],
     };
 }
+

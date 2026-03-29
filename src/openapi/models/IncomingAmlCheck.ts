@@ -60,3 +60,4 @@ function IncomingAmlCheckFromJSONTyped(json: any, _ignoreDiscriminator: boolean)
         'frozen': json['frozen'] == null ? undefined : json['frozen'],
     };
 }
+
