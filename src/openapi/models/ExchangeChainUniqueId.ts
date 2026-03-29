@@ -19,7 +19,8 @@ export const ExchangeChainUniqueId = {
     bybit: 'exchange_bybit',
     coinbaseInternational: 'exchange_coinbase_international',
     coinbaseUs: 'exchange_coinbase_us',
-    okx: 'exchange_okx'
+    okx: 'exchange_okx',
+    kraken: 'exchange_kraken'
 } as const;
 export type ExchangeChainUniqueId = typeof ExchangeChainUniqueId[keyof typeof ExchangeChainUniqueId];
 

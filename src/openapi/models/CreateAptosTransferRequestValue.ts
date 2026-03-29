@@ -10,21 +10,21 @@
  * Do not edit the class manually.
  */
 
-import type { CreateTransferRequestExplicitAmount } from './CreateTransferRequestExplicitAmount';
+import type { CreateRequestExplicitAmount } from './CreateRequestExplicitAmount';
 import {
-    CreateTransferRequestExplicitAmountToJSON,
-} from './CreateTransferRequestExplicitAmount';
-import type { CreateTransferRequestMaxAmount } from './CreateTransferRequestMaxAmount';
+    CreateRequestExplicitAmountToJSON,
+} from './CreateRequestExplicitAmount';
+import type { CreateRequestMaxAmount } from './CreateRequestMaxAmount';
 import {
-    CreateTransferRequestMaxAmountToJSON,
-} from './CreateTransferRequestMaxAmount';
+    CreateRequestMaxAmountToJSON,
+} from './CreateRequestMaxAmount';
 
 /**
  * 
  * @export
  * @type CreateAptosTransferRequestValue
  */
-export type CreateAptosTransferRequestValue = { type: 'max' } & CreateTransferRequestMaxAmount | { type: 'value' } & CreateTransferRequestExplicitAmount;
+export type CreateAptosTransferRequestValue = { type: 'max' } & CreateRequestMaxAmount | { type: 'value' } & CreateRequestExplicitAmount;
 
 export function CreateAptosTransferRequestValueToJSON(json: any): any {
     return CreateAptosTransferRequestValueToJSONTyped(json, false);
@@ -36,9 +36,9 @@ function CreateAptosTransferRequestValueToJSONTyped(value?: CreateAptosTransferR
     }
     switch (value['type']) {
         case 'max':
-            return Object.assign({}, CreateTransferRequestMaxAmountToJSON(value), { type: 'max' } as const);
+            return Object.assign({}, CreateRequestMaxAmountToJSON(value), { type: 'max' } as const);
         case 'value':
-            return Object.assign({}, CreateTransferRequestExplicitAmountToJSON(value), { type: 'value' } as const);
+            return Object.assign({}, CreateRequestExplicitAmountToJSON(value), { type: 'value' } as const);
         default:
             throw new Error(`No variant of CreateAptosTransferRequestValue exists with 'type=${value['type']}'`);
     }

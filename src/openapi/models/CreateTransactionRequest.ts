@@ -18,6 +18,10 @@ import type { CreateAptosTransactionRequest } from './CreateAptosTransactionRequ
 import {
     CreateAptosTransactionRequestToJSON,
 } from './CreateAptosTransactionRequest';
+import type { CreateArchTransactionRequest } from './CreateArchTransactionRequest';
+import {
+    CreateArchTransactionRequestToJSON,
+} from './CreateArchTransactionRequest';
 import type { CreateBlackBoxSignatureRequest } from './CreateBlackBoxSignatureRequest';
 import {
     CreateBlackBoxSignatureRequestToJSON,
@@ -78,6 +82,10 @@ import type { CreateTonTransactionRequest } from './CreateTonTransactionRequest'
 import {
     CreateTonTransactionRequestToJSON,
 } from './CreateTonTransactionRequest';
+import type { CreateTronMessageRequest } from './CreateTronMessageRequest';
+import {
+    CreateTronMessageRequestToJSON,
+} from './CreateTronMessageRequest';
 import type { CreateTronTransactionRequest } from './CreateTronTransactionRequest';
 import {
     CreateTronTransactionRequestToJSON,
@@ -96,7 +104,7 @@ import {
  * @export
  * @type CreateTransactionRequest
  */
-export type CreateTransactionRequest = { type: 'aptos_message' } & CreateAptosMessageRequest | { type: 'aptos_transaction' } & CreateAptosTransactionRequest | { type: 'black_box_signature' } & CreateBlackBoxSignatureRequest | { type: 'cosmos_message' } & CreateCosmosMessageRequest | { type: 'cosmos_transaction' } & CreateCosmosTransactionRequest | { type: 'evm_message' } & CreateEvmMessageRequest | { type: 'evm_transaction' } & CreateEvmTransactionRequest | { type: 'exchange_transaction' } & CreateExchangeTransactionRequest | { type: 'solana_message' } & CreateSolanaMessageRequest | { type: 'solana_transaction' } & CreateSolanaTransactionRequest | { type: 'stacks_transaction' } & CreateStacksTransactionRequest | { type: 'starknet_message' } & CreateStarknetMessageRequest | { type: 'starknet_transaction' } & CreateStarknetTransactionRequest | { type: 'sui_message' } & CreateSuiMessageRequest | { type: 'sui_transaction' } & CreateSuiTransactionRequest | { type: 'ton_message' } & CreateTonMessageRequest | { type: 'ton_transaction' } & CreateTonTransactionRequest | { type: 'tron_transaction' } & CreateTronTransactionRequest | { type: 'utxo_message' } & CreateUtxoMessageRequest | { type: 'utxo_transaction' } & CreateUtxoTransactionRequest;
+export type CreateTransactionRequest = { type: 'aptos_message' } & CreateAptosMessageRequest | { type: 'aptos_transaction' } & CreateAptosTransactionRequest | { type: 'arch_transaction' } & CreateArchTransactionRequest | { type: 'black_box_signature' } & CreateBlackBoxSignatureRequest | { type: 'cosmos_message' } & CreateCosmosMessageRequest | { type: 'cosmos_transaction' } & CreateCosmosTransactionRequest | { type: 'evm_message' } & CreateEvmMessageRequest | { type: 'evm_transaction' } & CreateEvmTransactionRequest | { type: 'exchange_transaction' } & CreateExchangeTransactionRequest | { type: 'solana_message' } & CreateSolanaMessageRequest | { type: 'solana_transaction' } & CreateSolanaTransactionRequest | { type: 'stacks_transaction' } & CreateStacksTransactionRequest | { type: 'starknet_message' } & CreateStarknetMessageRequest | { type: 'starknet_transaction' } & CreateStarknetTransactionRequest | { type: 'sui_message' } & CreateSuiMessageRequest | { type: 'sui_transaction' } & CreateSuiTransactionRequest | { type: 'ton_message' } & CreateTonMessageRequest | { type: 'ton_transaction' } & CreateTonTransactionRequest | { type: 'tron_message' } & CreateTronMessageRequest | { type: 'tron_transaction' } & CreateTronTransactionRequest | { type: 'utxo_message' } & CreateUtxoMessageRequest | { type: 'utxo_transaction' } & CreateUtxoTransactionRequest;
 
 export function CreateTransactionRequestToJSON(json: any): any {
     return CreateTransactionRequestToJSONTyped(json, false);
@@ -111,6 +119,8 @@ function CreateTransactionRequestToJSONTyped(value?: CreateTransactionRequest | 
             return Object.assign({}, CreateAptosMessageRequestToJSON(value), { type: 'aptos_message' } as const);
         case 'aptos_transaction':
             return Object.assign({}, CreateAptosTransactionRequestToJSON(value), { type: 'aptos_transaction' } as const);
+        case 'arch_transaction':
+            return Object.assign({}, CreateArchTransactionRequestToJSON(value), { type: 'arch_transaction' } as const);
         case 'black_box_signature':
             return Object.assign({}, CreateBlackBoxSignatureRequestToJSON(value), { type: 'black_box_signature' } as const);
         case 'cosmos_message':
@@ -141,6 +151,8 @@ function CreateTransactionRequestToJSONTyped(value?: CreateTransactionRequest | 
             return Object.assign({}, CreateTonMessageRequestToJSON(value), { type: 'ton_message' } as const);
         case 'ton_transaction':
             return Object.assign({}, CreateTonTransactionRequestToJSON(value), { type: 'ton_transaction' } as const);
+        case 'tron_message':
+            return Object.assign({}, CreateTronMessageRequestToJSON(value), { type: 'tron_message' } as const);
         case 'tron_transaction':
             return Object.assign({}, CreateTronTransactionRequestToJSON(value), { type: 'tron_transaction' } as const);
         case 'utxo_message':

@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from '../runtime';
 import type { EvmMessageDomainData } from './EvmMessageDomainData';
 import {
     EvmMessageDomainDataFromJSON,
@@ -47,6 +48,12 @@ export interface Permit2TypedMessageEvmMessage {
     primaryType: string;
     /**
      * 
+     * @type {{ [key: string]: EnrichedEvmAddress | undefined; }}
+     * @memberof Permit2TypedMessageEvmMessage
+     */
+    enrichedAddresses?: { [key: string]: EnrichedEvmAddress | undefined; };
+    /**
+     * 
      * @type {string}
      * @memberof Permit2TypedMessageEvmMessage
      */
@@ -56,7 +63,7 @@ export interface Permit2TypedMessageEvmMessage {
      * @type {EnrichedEvmAddress}
      * @memberof Permit2TypedMessageEvmMessage
      */
-    spender: EnrichedEvmAddress;
+    spender?: EnrichedEvmAddress;
     /**
      * 
      * @type {Date}
@@ -68,25 +75,28 @@ export interface Permit2TypedMessageEvmMessage {
      * @type {EnrichedEvmAddress}
      * @memberof Permit2TypedMessageEvmMessage
      */
-    token: EnrichedEvmAddress;
+    token?: EnrichedEvmAddress;
     /**
      * 
      * @type {string}
      * @memberof Permit2TypedMessageEvmMessage
+     * @deprecated
      */
-    value: string;
+    value?: string;
     /**
      * 
      * @type {Date}
      * @memberof Permit2TypedMessageEvmMessage
+     * @deprecated
      */
-    expiration: Date;
+    expiration?: Date;
     /**
      * 
      * @type {number}
      * @memberof Permit2TypedMessageEvmMessage
+     * @deprecated
      */
-    nonce: number;
+    nonce?: number;
     /**
      * 
      * @type {Price}
@@ -98,7 +108,7 @@ export interface Permit2TypedMessageEvmMessage {
      * @type {PricedAsset}
      * @memberof Permit2TypedMessageEvmMessage
      */
-    pricedAsset: PricedAsset;
+    pricedAsset?: PricedAsset;
 }
 
 
@@ -110,6 +120,10 @@ const Permit2TypedMessageEvmMessageTypeEnum = {
 } as const;
 type Permit2TypedMessageEvmMessageTypeEnum = typeof Permit2TypedMessageEvmMessageTypeEnum[keyof typeof Permit2TypedMessageEvmMessageTypeEnum];
 
+export function Permit2TypedMessageEvmMessageFromJSON(json: any): Permit2TypedMessageEvmMessage {
+    return Permit2TypedMessageEvmMessageFromJSONTyped(json, false);
+}
+
 export function Permit2TypedMessageEvmMessageFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Permit2TypedMessageEvmMessage {
     if (json == null) {
         return json;
@@ -118,14 +132,15 @@ export function Permit2TypedMessageEvmMessageFromJSONTyped(json: any, _ignoreDis
         
         'domain': EvmMessageDomainDataFromJSON(json['domain']),
         'primaryType': json['primary_type'],
+        'enrichedAddresses': json['enriched_addresses'] == null ? undefined : (mapValues(json['enriched_addresses'], EnrichedEvmAddressFromJSON)),
         'type': json['type'],
-        'spender': EnrichedEvmAddressFromJSON(json['spender']),
+        'spender': json['spender'] == null ? undefined : EnrichedEvmAddressFromJSON(json['spender']),
         'deadline': (new Date(json['deadline'])),
-        'token': EnrichedEvmAddressFromJSON(json['token']),
-        'value': json['value'],
-        'expiration': (new Date(json['expiration'])),
-        'nonce': json['nonce'],
+        'token': json['token'] == null ? undefined : EnrichedEvmAddressFromJSON(json['token']),
+        'value': json['value'] == null ? undefined : json['value'],
+        'expiration': json['expiration'] == null ? undefined : (new Date(json['expiration'])),
+        'nonce': json['nonce'] == null ? undefined : json['nonce'],
         'price': json['price'] == null ? undefined : PriceFromJSON(json['price']),
-        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
+        'pricedAsset': json['priced_asset'] == null ? undefined : PricedAssetFromJSON(json['priced_asset']),
     };
 }

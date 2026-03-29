@@ -26,18 +26,18 @@ import type { EnrichedTronChain } from './EnrichedTronChain';
 import {
     EnrichedTronChainFromJSON,
 } from './EnrichedTronChain';
-import type { TronBlock } from './TronBlock';
-import {
-    TronBlockFromJSON,
-} from './TronBlock';
 import type { PushableTransactionState } from './PushableTransactionState';
 import {
     PushableTransactionStateFromJSON,
 } from './PushableTransactionState';
-import type { AmlPolicyMatchIncoming } from './AmlPolicyMatchIncoming';
+import type { MinedResultStatus } from './MinedResultStatus';
 import {
-    AmlPolicyMatchIncomingFromJSON,
-} from './AmlPolicyMatchIncoming';
+    MinedResultStatusFromJSON,
+} from './MinedResultStatus';
+import type { VaultRef } from './VaultRef';
+import {
+    VaultRefFromJSON,
+} from './VaultRef';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
@@ -54,18 +54,26 @@ import type { TronTransactionResult } from './TronTransactionResult';
 import {
     TronTransactionResultFromJSON,
 } from './TronTransactionResult';
+import type { AmlCheck } from './AmlCheck';
+import {
+    AmlCheckFromJSON,
+} from './AmlCheck';
 import type { Signature } from './Signature';
 import {
     SignatureFromJSON,
 } from './Signature';
+import type { RelatedTransaction } from './RelatedTransaction';
+import {
+    RelatedTransactionFromJSON,
+} from './RelatedTransaction';
 import type { SimulationStatusResult } from './SimulationStatusResult';
 import {
     SimulationStatusResultFromJSON,
 } from './SimulationStatusResult';
-import type { AmlResults } from './AmlResults';
+import type { Block } from './Block';
 import {
-    AmlResultsFromJSON,
-} from './AmlResults';
+    BlockFromJSON,
+} from './Block';
 
 /**
  * 
@@ -129,6 +137,30 @@ export interface TronTransaction {
     signedExternally?: boolean;
     /**
      * 
+     * @type {Array<VaultRef>}
+     * @memberof TronTransaction
+     */
+    interactedVaults: Array<VaultRef>;
+    /**
+     * 
+     * @type {Array<RelatedTransaction>}
+     * @memberof TronTransaction
+     */
+    relatedTransactions?: Array<RelatedTransaction>;
+    /**
+     * 
+     * @type {string}
+     * @memberof TronTransaction
+     */
+    organizationId: string;
+    /**
+     * 
+     * @type {Block}
+     * @memberof TronTransaction
+     */
+    block?: Block;
+    /**
+     * 
      * @type {PushableTransactionState}
      * @memberof TronTransaction
      */
@@ -141,16 +173,22 @@ export interface TronTransaction {
     stateChanges: Array<PushableTransactionStateChange>;
     /**
      * 
-     * @type {AmlResults}
+     * @type {AmlCheck}
      * @memberof TronTransaction
      */
-    amlResults?: AmlResults;
+    amlCheck?: AmlCheck;
     /**
      * 
-     * @type {AmlPolicyMatchIncoming}
+     * @type {MinedResultStatus}
      * @memberof TronTransaction
      */
-    incomingAmlPolicyMatch?: AmlPolicyMatchIncoming;
+    minedResultStatus?: MinedResultStatus;
+    /**
+     * 
+     * @type {SimulationStatusResult}
+     * @memberof TronTransaction
+     */
+    simulationStatusResult?: SimulationStatusResult;
     /**
      * 
      * @type {string}
@@ -189,22 +227,10 @@ export interface TronTransaction {
     serializedSignedTransaction?: string;
     /**
      * 
-     * @type {TronBlock}
-     * @memberof TronTransaction
-     */
-    block?: TronBlock;
-    /**
-     * 
      * @type {TronTransactionResult}
      * @memberof TronTransaction
      */
     expectedResult?: TronTransactionResult;
-    /**
-     * 
-     * @type {SimulationStatusResult}
-     * @memberof TronTransaction
-     */
-    simulationStatusResult?: SimulationStatusResult;
     /**
      * 
      * @type {TronTransactionResult}
@@ -249,19 +275,22 @@ export function TronTransactionFromJSONTyped(json: any, _ignoreDiscriminator: bo
         'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
         'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'interactedVaults': ((json['interacted_vaults'] as Array<any>).map(VaultRefFromJSON)),
+        'relatedTransactions': json['related_transactions'] == null ? undefined : ((json['related_transactions'] as Array<any>).map(RelatedTransactionFromJSON)),
+        'organizationId': json['organization_id'],
+        'block': json['block'] == null ? undefined : BlockFromJSON(json['block']),
         'state': PushableTransactionStateFromJSON(json['state']),
         'stateChanges': ((json['state_changes'] as Array<any>).map(PushableTransactionStateChangeFromJSON)),
-        'amlResults': json['aml_results'] == null ? undefined : AmlResultsFromJSON(json['aml_results']),
-        'incomingAmlPolicyMatch': json['incoming_aml_policy_match'] == null ? undefined : AmlPolicyMatchIncomingFromJSON(json['incoming_aml_policy_match']),
+        'amlCheck': json['aml_check'] == null ? undefined : AmlCheckFromJSON(json['aml_check']),
+        'minedResultStatus': json['mined_result_status'] == null ? undefined : MinedResultStatusFromJSON(json['mined_result_status']),
+        'simulationStatusResult': json['simulation_status_result'] == null ? undefined : SimulationStatusResultFromJSON(json['simulation_status_result']),
         'type': json['type'],
         'tronTransactionTypeDetails': PredictedTronTransactionTronTransactionTypeDetailsFromJSON(json['tron_transaction_type_details']),
         'chain': EnrichedTronChainFromJSON(json['chain']),
         'sender': EnrichedTronAddressFromJSON(json['sender']),
         'hash': json['hash'] == null ? undefined : json['hash'],
         'serializedSignedTransaction': json['serialized_signed_transaction'] == null ? undefined : json['serialized_signed_transaction'],
-        'block': json['block'] == null ? undefined : TronBlockFromJSON(json['block']),
         'expectedResult': json['expected_result'] == null ? undefined : TronTransactionResultFromJSON(json['expected_result']),
-        'simulationStatusResult': json['simulation_status_result'] == null ? undefined : SimulationStatusResultFromJSON(json['simulation_status_result']),
         'minedResult': json['mined_result'] == null ? undefined : TronTransactionResultFromJSON(json['mined_result']),
         'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
         'memo': json['memo'] == null ? undefined : json['memo'],

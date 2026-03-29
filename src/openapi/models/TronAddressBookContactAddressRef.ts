@@ -39,6 +39,12 @@ export interface TronAddressBookContactAddressRef {
      * @memberof TronAddressBookContactAddressRef
      */
     chains: Array<TronChain>;
+    /**
+     * 
+     * @type {string}
+     * @memberof TronAddressBookContactAddressRef
+     */
+    memo?: string;
 }
 
 
@@ -59,5 +65,6 @@ export function TronAddressBookContactAddressRefFromJSONTyped(json: any, _ignore
         'chainType': json['chain_type'],
         'address': json['address'],
         'chains': ((json['chains'] as Array<any>).map(TronChainFromJSON)),
+        'memo': json['memo'] == null ? undefined : json['memo'],
     };
 }

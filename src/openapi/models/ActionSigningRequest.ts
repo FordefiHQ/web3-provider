@@ -10,6 +10,10 @@
  * Do not edit the class manually.
  */
 
+import type { UserRef } from './UserRef';
+import {
+    UserRefFromJSON,
+} from './UserRef';
 import type { ActionSigner } from './ActionSigner';
 import {
     ActionSignerFromJSON,
@@ -21,6 +25,12 @@ import {
  * @interface ActionSigningRequest
  */
 export interface ActionSigningRequest {
+    /**
+     * 
+     * @type {UserRef}
+     * @memberof ActionSigningRequest
+     */
+    createdBy: UserRef;
     /**
      * 
      * @type {Array<ActionSigner>}
@@ -39,6 +49,7 @@ function ActionSigningRequestFromJSONTyped(json: any, _ignoreDiscriminator: bool
     }
     return {
         
+        'createdBy': UserRefFromJSON(json['created_by']),
         'signers': ((json['signers'] as Array<any>).map(ActionSignerFromJSON)),
     };
 }

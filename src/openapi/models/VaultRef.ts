@@ -39,8 +39,15 @@ export interface VaultRef {
      * 
      * @type {string}
      * @memberof VaultRef
+     * @deprecated
      */
-    vaultGroupId: string;
+    vaultGroupId?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof VaultRef
+     */
+    vaultGroupIds: Array<string>;
     /**
      * 
      * @type {string}
@@ -90,7 +97,8 @@ function VaultRefFromJSONTyped(json: any, _ignoreDiscriminator: boolean): VaultR
     return {
         
         'id': json['id'],
-        'vaultGroupId': json['vault_group_id'],
+        'vaultGroupId': json['vault_group_id'] == null ? undefined : json['vault_group_id'],
+        'vaultGroupIds': json['vault_group_ids'],
         'name': json['name'],
         'address': json['address'] == null ? undefined : json['address'],
         'state': VaultStateFromJSON(json['state']),

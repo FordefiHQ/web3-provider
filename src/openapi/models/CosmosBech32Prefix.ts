@@ -29,6 +29,7 @@ export const CosmosBech32Prefix = {
     nillion: 'nillion',
     noble: 'noble',
     osmo: 'osmo',
+    saga: 'saga',
     sei: 'sei',
     stride: 'stride',
     thor: 'thor',

@@ -14,6 +14,10 @@ import type { SuiAssetIdentifierRequest } from './SuiAssetIdentifierRequest';
 import {
     SuiAssetIdentifierRequestToJSON,
 } from './SuiAssetIdentifierRequest';
+import type { TransactionFeePayerVault } from './TransactionFeePayerVault';
+import {
+    TransactionFeePayerVaultToJSON,
+} from './TransactionFeePayerVault';
 import type { CreateAptosTransferRequestValue } from './CreateAptosTransferRequestValue';
 import {
     CreateAptosTransferRequestValueToJSON,
@@ -39,6 +43,12 @@ import {
 export interface CreateSuiTransferRequest {
     /**
      * 
+     * @type {TransactionFeePayerVault}
+     * @memberof CreateSuiTransferRequest
+     */
+    feePayer?: TransactionFeePayerVault;
+    /**
+     * 
      * @type {string}
      * @memberof CreateSuiTransferRequest
      */
@@ -51,16 +61,16 @@ export interface CreateSuiTransferRequest {
     failOnPredictionFailure?: boolean;
     /**
      * 
-     * @type {PushMode}
-     * @memberof CreateSuiTransferRequest
-     */
-    pushMode?: PushMode;
-    /**
-     * 
      * @type {boolean}
      * @memberof CreateSuiTransferRequest
      */
     skipPrediction?: boolean;
+    /**
+     * 
+     * @type {PushMode}
+     * @memberof CreateSuiTransferRequest
+     */
+    pushMode?: PushMode;
     /**
      * 
      * @type {CreateSuiTransferRequestTo}
@@ -107,10 +117,11 @@ function CreateSuiTransferRequestToJSONTyped(value?: CreateSuiTransferRequest | 
 
     return {
         
+        'fee_payer': TransactionFeePayerVaultToJSON(value['feePayer']),
         'type': value['type'],
         'fail_on_prediction_failure': value['failOnPredictionFailure'],
-        'push_mode': PushModeToJSON(value['pushMode']),
         'skip_prediction': value['skipPrediction'],
+        'push_mode': PushModeToJSON(value['pushMode']),
         'to': CreateSuiTransferRequestToToJSON(value['to']),
         'gas_config': SuiGasConfigToJSON(value['gasConfig']),
         'value': CreateAptosTransferRequestValueToJSON(value['value']),

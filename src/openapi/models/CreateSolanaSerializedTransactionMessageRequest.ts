@@ -57,16 +57,16 @@ export interface CreateSolanaSerializedTransactionMessageRequest {
     failOnPredictionFailure?: boolean;
     /**
      * 
-     * @type {PushMode}
-     * @memberof CreateSolanaSerializedTransactionMessageRequest
-     */
-    pushMode?: PushMode;
-    /**
-     * 
      * @type {boolean}
      * @memberof CreateSolanaSerializedTransactionMessageRequest
      */
     skipPrediction?: boolean;
+    /**
+     * 
+     * @type {PushMode}
+     * @memberof CreateSolanaSerializedTransactionMessageRequest
+     */
+    pushMode?: PushMode;
     /**
      * 
      * @type {SolanaChainUniqueId}
@@ -116,8 +116,8 @@ function CreateSolanaSerializedTransactionMessageRequestToJSONTyped(value?: Crea
         'fee': BatchSolanaTransactionRequestDetailsFeeToJSON(value['fee']),
         'type': value['type'],
         'fail_on_prediction_failure': value['failOnPredictionFailure'],
-        'push_mode': PushModeToJSON(value['pushMode']),
         'skip_prediction': value['skipPrediction'],
+        'push_mode': PushModeToJSON(value['pushMode']),
         'chain': SolanaChainUniqueIdToJSON(value['chain']),
         'data': value['data'],
         'signatures': value['signatures'] == null ? undefined : ((value['signatures'] as Array<any>).map(SolanaTransactionSignaturesRequestToJSON)),

@@ -10,10 +10,18 @@
  * Do not edit the class manually.
  */
 
+import type { TransactionFeePayerVault } from './TransactionFeePayerVault';
+import {
+    TransactionFeePayerVaultToJSON,
+} from './TransactionFeePayerVault';
 import type { CreateAptosTransferRequestValue } from './CreateAptosTransferRequestValue';
 import {
     CreateAptosTransferRequestValueToJSON,
 } from './CreateAptosTransferRequestValue';
+import type { CreateEvmRawTransactionRequestCustomNonce } from './CreateEvmRawTransactionRequestCustomNonce';
+import {
+    CreateEvmRawTransactionRequestCustomNonceToJSON,
+} from './CreateEvmRawTransactionRequestCustomNonce';
 import type { CreateEvmRawTransactionRequestGas } from './CreateEvmRawTransactionRequestGas';
 import {
     CreateEvmRawTransactionRequestGasToJSON,
@@ -39,22 +47,16 @@ import {
 export interface CreateEvmTransferRequest {
     /**
      * 
+     * @type {TransactionFeePayerVault}
+     * @memberof CreateEvmTransferRequest
+     */
+    feePayer?: TransactionFeePayerVault;
+    /**
+     * 
      * @type {string}
      * @memberof CreateEvmTransferRequest
      */
     type: CreateEvmTransferRequestTypeEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CreateEvmTransferRequest
-     */
-    useSecureNode?: boolean;
-    /**
-     * 
-     * @type {CreateEvmRawTransactionRequestGas}
-     * @memberof CreateEvmTransferRequest
-     */
-    gas?: CreateEvmRawTransactionRequestGas;
     /**
      * 
      * @type {boolean}
@@ -75,10 +77,36 @@ export interface CreateEvmTransferRequest {
     pushMode?: PushMode;
     /**
      * 
-     * @type {string}
+     * @type {boolean}
      * @memberof CreateEvmTransferRequest
      */
+    useMevProtectedNode?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CreateEvmTransferRequest
+     * @deprecated
+     */
+    useSecureNode?: boolean;
+    /**
+     * 
+     * @type {CreateEvmRawTransactionRequestGas}
+     * @memberof CreateEvmTransferRequest
+     */
+    gas?: CreateEvmRawTransactionRequestGas;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateEvmTransferRequest
+     * @deprecated
+     */
     funder?: string;
+    /**
+     * 
+     * @type {CreateEvmRawTransactionRequestCustomNonce}
+     * @memberof CreateEvmTransferRequest
+     */
+    customNonce?: CreateEvmRawTransactionRequestCustomNonce;
     /**
      * 
      * @type {CreateEvmTransferRequestTo}
@@ -119,13 +147,16 @@ function CreateEvmTransferRequestToJSONTyped(value?: CreateEvmTransferRequest | 
 
     return {
         
+        'fee_payer': TransactionFeePayerVaultToJSON(value['feePayer']),
         'type': value['type'],
-        'use_secure_node': value['useSecureNode'],
-        'gas': CreateEvmRawTransactionRequestGasToJSON(value['gas']),
         'fail_on_prediction_failure': value['failOnPredictionFailure'],
         'skip_prediction': value['skipPrediction'],
         'push_mode': PushModeToJSON(value['pushMode']),
+        'use_mev_protected_node': value['useMevProtectedNode'],
+        'use_secure_node': value['useSecureNode'],
+        'gas': CreateEvmRawTransactionRequestGasToJSON(value['gas']),
         'funder': value['funder'],
+        'custom_nonce': CreateEvmRawTransactionRequestCustomNonceToJSON(value['customNonce']),
         'to': CreateEvmTransferRequestToToJSON(value['to']),
         'asset_identifier': EvmAssetIdentifierRequestToJSON(value['assetIdentifier']),
         'value': CreateAptosTransferRequestValueToJSON(value['value']),

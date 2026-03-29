@@ -10,10 +10,6 @@
  * Do not edit the class manually.
  */
 
-import type { AptosBlock } from './AptosBlock';
-import {
-    AptosBlockFromJSON,
-} from './AptosBlock';
 import type { EnrichedAptosChain } from './EnrichedAptosChain';
 import {
     EnrichedAptosChainFromJSON,
@@ -46,10 +42,14 @@ import type { PushableTransactionState } from './PushableTransactionState';
 import {
     PushableTransactionStateFromJSON,
 } from './PushableTransactionState';
-import type { AmlPolicyMatchIncoming } from './AmlPolicyMatchIncoming';
+import type { MinedResultStatus } from './MinedResultStatus';
 import {
-    AmlPolicyMatchIncomingFromJSON,
-} from './AmlPolicyMatchIncoming';
+    MinedResultStatusFromJSON,
+} from './MinedResultStatus';
+import type { VaultRef } from './VaultRef';
+import {
+    VaultRefFromJSON,
+} from './VaultRef';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
@@ -62,18 +62,26 @@ import type { TransactionDirection } from './TransactionDirection';
 import {
     TransactionDirectionFromJSON,
 } from './TransactionDirection';
+import type { AmlCheck } from './AmlCheck';
+import {
+    AmlCheckFromJSON,
+} from './AmlCheck';
 import type { Signature } from './Signature';
 import {
     SignatureFromJSON,
 } from './Signature';
+import type { RelatedTransaction } from './RelatedTransaction';
+import {
+    RelatedTransactionFromJSON,
+} from './RelatedTransaction';
 import type { SimulationStatusResult } from './SimulationStatusResult';
 import {
     SimulationStatusResultFromJSON,
 } from './SimulationStatusResult';
-import type { AmlResults } from './AmlResults';
+import type { Block } from './Block';
 import {
-    AmlResultsFromJSON,
-} from './AmlResults';
+    BlockFromJSON,
+} from './Block';
 
 /**
  * 
@@ -137,6 +145,30 @@ export interface AptosTransaction {
     signedExternally?: boolean;
     /**
      * 
+     * @type {Array<VaultRef>}
+     * @memberof AptosTransaction
+     */
+    interactedVaults: Array<VaultRef>;
+    /**
+     * 
+     * @type {Array<RelatedTransaction>}
+     * @memberof AptosTransaction
+     */
+    relatedTransactions?: Array<RelatedTransaction>;
+    /**
+     * 
+     * @type {string}
+     * @memberof AptosTransaction
+     */
+    organizationId: string;
+    /**
+     * 
+     * @type {Block}
+     * @memberof AptosTransaction
+     */
+    block?: Block;
+    /**
+     * 
      * @type {PushableTransactionState}
      * @memberof AptosTransaction
      */
@@ -149,16 +181,22 @@ export interface AptosTransaction {
     stateChanges: Array<PushableTransactionStateChange>;
     /**
      * 
-     * @type {AmlResults}
+     * @type {AmlCheck}
      * @memberof AptosTransaction
      */
-    amlResults?: AmlResults;
+    amlCheck?: AmlCheck;
     /**
      * 
-     * @type {AmlPolicyMatchIncoming}
+     * @type {MinedResultStatus}
      * @memberof AptosTransaction
      */
-    incomingAmlPolicyMatch?: AmlPolicyMatchIncoming;
+    minedResultStatus?: MinedResultStatus;
+    /**
+     * 
+     * @type {SimulationStatusResult}
+     * @memberof AptosTransaction
+     */
+    simulationStatusResult?: SimulationStatusResult;
     /**
      * 
      * @type {string}
@@ -209,16 +247,22 @@ export interface AptosTransaction {
     hash?: string;
     /**
      * 
-     * @type {AptosBlock}
-     * @memberof AptosTransaction
-     */
-    block?: AptosBlock;
-    /**
-     * 
      * @type {AptosGasData}
      * @memberof AptosTransaction
      */
     gasSubmitted: AptosGasData;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AptosTransaction
+     */
+    withExternalFeePayer?: boolean;
+    /**
+     * 
+     * @type {EnrichedAptosAddress}
+     * @memberof AptosTransaction
+     */
+    feePayer?: EnrichedAptosAddress;
     /**
      * 
      * @type {string}
@@ -231,12 +275,6 @@ export interface AptosTransaction {
      * @memberof AptosTransaction
      */
     expectedResult?: AptosTransactionResult;
-    /**
-     * 
-     * @type {SimulationStatusResult}
-     * @memberof AptosTransaction
-     */
-    simulationStatusResult?: SimulationStatusResult;
     /**
      * 
      * @type {AptosTransactionResult}
@@ -275,10 +313,15 @@ export function AptosTransactionFromJSONTyped(json: any, _ignoreDiscriminator: b
         'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
         'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'interactedVaults': ((json['interacted_vaults'] as Array<any>).map(VaultRefFromJSON)),
+        'relatedTransactions': json['related_transactions'] == null ? undefined : ((json['related_transactions'] as Array<any>).map(RelatedTransactionFromJSON)),
+        'organizationId': json['organization_id'],
+        'block': json['block'] == null ? undefined : BlockFromJSON(json['block']),
         'state': PushableTransactionStateFromJSON(json['state']),
         'stateChanges': ((json['state_changes'] as Array<any>).map(PushableTransactionStateChangeFromJSON)),
-        'amlResults': json['aml_results'] == null ? undefined : AmlResultsFromJSON(json['aml_results']),
-        'incomingAmlPolicyMatch': json['incoming_aml_policy_match'] == null ? undefined : AmlPolicyMatchIncomingFromJSON(json['incoming_aml_policy_match']),
+        'amlCheck': json['aml_check'] == null ? undefined : AmlCheckFromJSON(json['aml_check']),
+        'minedResultStatus': json['mined_result_status'] == null ? undefined : MinedResultStatusFromJSON(json['mined_result_status']),
+        'simulationStatusResult': json['simulation_status_result'] == null ? undefined : SimulationStatusResultFromJSON(json['simulation_status_result']),
         'type': json['type'],
         'aptosTransactionTypeDetails': AptosTransactionAptosTransactionTypeDetailsFromJSON(json['aptos_transaction_type_details']),
         'chain': EnrichedAptosChainFromJSON(json['chain']),
@@ -287,11 +330,11 @@ export function AptosTransactionFromJSONTyped(json: any, _ignoreDiscriminator: b
         'sender': EnrichedAptosAddressFromJSON(json['sender']),
         'payload': AptosTransactionPayloadFromJSON(json['payload']),
         'hash': json['hash'] == null ? undefined : json['hash'],
-        'block': json['block'] == null ? undefined : AptosBlockFromJSON(json['block']),
         'gasSubmitted': AptosGasDataFromJSON(json['gas_submitted']),
+        'withExternalFeePayer': json['with_external_fee_payer'] == null ? undefined : json['with_external_fee_payer'],
+        'feePayer': json['fee_payer'] == null ? undefined : EnrichedAptosAddressFromJSON(json['fee_payer']),
         'serializedSignedTransaction': json['serialized_signed_transaction'] == null ? undefined : json['serialized_signed_transaction'],
         'expectedResult': json['expected_result'] == null ? undefined : AptosTransactionResultFromJSON(json['expected_result']),
-        'simulationStatusResult': json['simulation_status_result'] == null ? undefined : SimulationStatusResultFromJSON(json['simulation_status_result']),
         'minedResult': json['mined_result'] == null ? undefined : AptosTransactionResultFromJSON(json['mined_result']),
         'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
     };

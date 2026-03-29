@@ -10,6 +10,10 @@
  * Do not edit the class manually.
  */
 
+import type { CreateTronSerializedRawTransactionRequest } from './CreateTronSerializedRawTransactionRequest';
+import {
+    CreateTronSerializedRawTransactionRequestToJSON,
+} from './CreateTronSerializedRawTransactionRequest';
 import type { CreateTronTransferRequest } from './CreateTronTransferRequest';
 import {
     CreateTronTransferRequestToJSON,
@@ -20,7 +24,7 @@ import {
  * @export
  * @type CreateTronTransactionRequestDetails
  */
-export type CreateTronTransactionRequestDetails = { type: 'tron_transfer' } & CreateTronTransferRequest;
+export type CreateTronTransactionRequestDetails = { type: 'tron_serialized_raw_transaction' } & CreateTronSerializedRawTransactionRequest | { type: 'tron_transfer' } & CreateTronTransferRequest;
 
 export function CreateTronTransactionRequestDetailsToJSON(json: any): any {
     return CreateTronTransactionRequestDetailsToJSONTyped(json, false);
@@ -31,6 +35,8 @@ function CreateTronTransactionRequestDetailsToJSONTyped(value?: CreateTronTransa
         return value;
     }
     switch (value['type']) {
+        case 'tron_serialized_raw_transaction':
+            return Object.assign({}, CreateTronSerializedRawTransactionRequestToJSON(value), { type: 'tron_serialized_raw_transaction' } as const);
         case 'tron_transfer':
             return Object.assign({}, CreateTronTransferRequestToJSON(value), { type: 'tron_transfer' } as const);
         default:

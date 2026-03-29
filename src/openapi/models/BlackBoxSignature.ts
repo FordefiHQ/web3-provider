@@ -34,6 +34,10 @@ import type { BlackBoxSignatureDetails } from './BlackBoxSignatureDetails';
 import {
     BlackBoxSignatureDetailsFromJSON,
 } from './BlackBoxSignatureDetails';
+import type { RelatedTransaction } from './RelatedTransaction';
+import {
+    RelatedTransactionFromJSON,
+} from './RelatedTransaction';
 import type { NonPushableTransactionStateChange } from './NonPushableTransactionStateChange';
 import {
     NonPushableTransactionStateChangeFromJSON,
@@ -105,6 +109,24 @@ export interface BlackBoxSignature {
     signedExternally?: boolean;
     /**
      * 
+     * @type {Array<VaultRef>}
+     * @memberof BlackBoxSignature
+     */
+    interactedVaults: Array<VaultRef>;
+    /**
+     * 
+     * @type {Array<RelatedTransaction>}
+     * @memberof BlackBoxSignature
+     */
+    relatedTransactions?: Array<RelatedTransaction>;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlackBoxSignature
+     */
+    organizationId: string;
+    /**
+     * 
      * @type {NonPushableTransactionState}
      * @memberof BlackBoxSignature
      */
@@ -166,6 +188,9 @@ export function BlackBoxSignatureFromJSONTyped(json: any, _ignoreDiscriminator: 
         'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
         'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'interactedVaults': ((json['interacted_vaults'] as Array<any>).map(VaultRefFromJSON)),
+        'relatedTransactions': json['related_transactions'] == null ? undefined : ((json['related_transactions'] as Array<any>).map(RelatedTransactionFromJSON)),
+        'organizationId': json['organization_id'],
         'state': NonPushableTransactionStateFromJSON(json['state']),
         'stateChanges': ((json['state_changes'] as Array<any>).map(NonPushableTransactionStateChangeFromJSON)),
         'type': json['type'],

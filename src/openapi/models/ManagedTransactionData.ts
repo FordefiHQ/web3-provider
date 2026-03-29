@@ -38,6 +38,10 @@ import type { ApprovalRequest } from './ApprovalRequest';
 import {
     ApprovalRequestFromJSON,
 } from './ApprovalRequest';
+import type { ManagedTransactionDataFeePaidBy } from './ManagedTransactionDataFeePaidBy';
+import {
+    ManagedTransactionDataFeePaidByFromJSON,
+} from './ManagedTransactionDataFeePaidBy';
 import type { PolicyMatch } from './PolicyMatch';
 import {
     PolicyMatchFromJSON,
@@ -163,6 +167,25 @@ export interface ManagedTransactionData {
      * @memberof ManagedTransactionData
      */
     signMode?: SignMode;
+    /**
+     * 
+     * @type {ManagedTransactionDataFeePaidBy}
+     * @memberof ManagedTransactionData
+     */
+    feePaidBy?: ManagedTransactionDataFeePaidBy;
+    /**
+     * 
+     * @type {string}
+     * @memberof ManagedTransactionData
+     * @deprecated
+     */
+    payloadToSign?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ManagedTransactionData
+     */
+    attestedPayloadForSigning?: string;
 }
 
 export function ManagedTransactionDataFromJSON(json: any): ManagedTransactionData {
@@ -192,6 +215,9 @@ function ManagedTransactionDataFromJSONTyped(json: any, _ignoreDiscriminator: bo
         'pushMode': json['push_mode'] == null ? undefined : PushModeFromJSON(json['push_mode']),
         'lastPushedAt': json['last_pushed_at'] == null ? undefined : (new Date(json['last_pushed_at'])),
         'signMode': json['sign_mode'] == null ? undefined : SignModeFromJSON(json['sign_mode']),
+        'feePaidBy': json['fee_paid_by'] == null ? undefined : ManagedTransactionDataFeePaidByFromJSON(json['fee_paid_by']),
+        'payloadToSign': json['payload_to_sign'] == null ? undefined : json['payload_to_sign'],
+        'attestedPayloadForSigning': json['attested_payload_for_signing'] == null ? undefined : json['attested_payload_for_signing'],
     };
 }
 

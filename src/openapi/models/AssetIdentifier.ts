@@ -14,6 +14,10 @@ import type { AptosAssetIdentifier } from './AptosAssetIdentifier';
 import {
     AptosAssetIdentifierFromJSONTyped,
 } from './AptosAssetIdentifier';
+import type { ArchAssetIdentifier } from './ArchAssetIdentifier';
+import {
+    ArchAssetIdentifierFromJSONTyped,
+} from './ArchAssetIdentifier';
 import type { CosmosAssetIdentifier } from './CosmosAssetIdentifier';
 import {
     CosmosAssetIdentifierFromJSONTyped,
@@ -60,7 +64,7 @@ import {
  * @export
  * @type AssetIdentifier
  */
-export type AssetIdentifier = { type: 'aptos' } & AptosAssetIdentifier | { type: 'cosmos' } & CosmosAssetIdentifier | { type: 'evm' } & EvmAssetIdentifier | { type: 'exchange' } & ExchangeAssetIdentifier | { type: 'solana' } & SolanaAssetIdentifier | { type: 'stacks' } & StacksAssetIdentifier | { type: 'starknet' } & StarknetAssetIdentifier | { type: 'sui' } & SuiAssetIdentifier | { type: 'ton' } & TonAssetIdentifier | { type: 'tron' } & TronAssetIdentifier | { type: 'utxo' } & UtxoAssetIdentifier;
+export type AssetIdentifier = { type: 'aptos' } & AptosAssetIdentifier | { type: 'arch' } & ArchAssetIdentifier | { type: 'cosmos' } & CosmosAssetIdentifier | { type: 'evm' } & EvmAssetIdentifier | { type: 'exchange' } & ExchangeAssetIdentifier | { type: 'solana' } & SolanaAssetIdentifier | { type: 'stacks' } & StacksAssetIdentifier | { type: 'starknet' } & StarknetAssetIdentifier | { type: 'sui' } & SuiAssetIdentifier | { type: 'ton' } & TonAssetIdentifier | { type: 'tron' } & TronAssetIdentifier | { type: 'utxo' } & UtxoAssetIdentifier;
 
 export function AssetIdentifierFromJSON(json: any): AssetIdentifier {
     return AssetIdentifierFromJSONTyped(json, false);
@@ -73,6 +77,8 @@ function AssetIdentifierFromJSONTyped(json: any, _ignoreDiscriminator: boolean):
     switch (json['type']) {
         case 'aptos':
             return Object.assign({}, AptosAssetIdentifierFromJSONTyped(json, true), { type: 'aptos' } as const);
+        case 'arch':
+            return Object.assign({}, ArchAssetIdentifierFromJSONTyped(json, true), { type: 'arch' } as const);
         case 'cosmos':
             return Object.assign({}, CosmosAssetIdentifierFromJSONTyped(json, true), { type: 'cosmos' } as const);
         case 'evm':

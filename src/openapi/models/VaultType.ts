@@ -16,9 +16,11 @@
  */
 export const VaultType = {
     aptos: 'aptos',
+    arch: 'arch',
     blackBox: 'black_box',
     cosmos: 'cosmos',
     evm: 'evm',
+    safe: 'safe',
     solana: 'solana',
     stacks: 'stacks',
     starknet: 'starknet',

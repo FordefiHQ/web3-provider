@@ -34,18 +34,18 @@ import type { EnrichedSuiChain } from './EnrichedSuiChain';
 import {
     EnrichedSuiChainFromJSON,
 } from './EnrichedSuiChain';
-import type { SuiCheckpointData } from './SuiCheckpointData';
+import type { MinedResultStatus } from './MinedResultStatus';
 import {
-    SuiCheckpointDataFromJSON,
-} from './SuiCheckpointData';
-import type { AmlPolicyMatchIncoming } from './AmlPolicyMatchIncoming';
-import {
-    AmlPolicyMatchIncomingFromJSON,
-} from './AmlPolicyMatchIncoming';
+    MinedResultStatusFromJSON,
+} from './MinedResultStatus';
 import type { SuiGasConfig } from './SuiGasConfig';
 import {
     SuiGasConfigFromJSON,
 } from './SuiGasConfig';
+import type { VaultRef } from './VaultRef';
+import {
+    VaultRefFromJSON,
+} from './VaultRef';
 import type { SuiTransactionResult } from './SuiTransactionResult';
 import {
     SuiTransactionResultFromJSON,
@@ -66,22 +66,30 @@ import type { SuiMessageVersion } from './SuiMessageVersion';
 import {
     SuiMessageVersionFromJSON,
 } from './SuiMessageVersion';
+import type { AmlCheck } from './AmlCheck';
+import {
+    AmlCheckFromJSON,
+} from './AmlCheck';
 import type { Signature } from './Signature';
 import {
     SignatureFromJSON,
 } from './Signature';
+import type { RelatedTransaction } from './RelatedTransaction';
+import {
+    RelatedTransactionFromJSON,
+} from './RelatedTransaction';
 import type { SimulationStatusResult } from './SimulationStatusResult';
 import {
     SimulationStatusResultFromJSON,
 } from './SimulationStatusResult';
+import type { Block } from './Block';
+import {
+    BlockFromJSON,
+} from './Block';
 import type { SuiInput } from './SuiInput';
 import {
     SuiInputFromJSON,
 } from './SuiInput';
-import type { AmlResults } from './AmlResults';
-import {
-    AmlResultsFromJSON,
-} from './AmlResults';
 
 /**
  * 
@@ -145,6 +153,30 @@ export interface SuiTransaction {
     signedExternally?: boolean;
     /**
      * 
+     * @type {Array<VaultRef>}
+     * @memberof SuiTransaction
+     */
+    interactedVaults: Array<VaultRef>;
+    /**
+     * 
+     * @type {Array<RelatedTransaction>}
+     * @memberof SuiTransaction
+     */
+    relatedTransactions?: Array<RelatedTransaction>;
+    /**
+     * 
+     * @type {string}
+     * @memberof SuiTransaction
+     */
+    organizationId: string;
+    /**
+     * 
+     * @type {Block}
+     * @memberof SuiTransaction
+     */
+    block?: Block;
+    /**
+     * 
      * @type {PushableTransactionState}
      * @memberof SuiTransaction
      */
@@ -157,16 +189,22 @@ export interface SuiTransaction {
     stateChanges: Array<PushableTransactionStateChange>;
     /**
      * 
-     * @type {AmlResults}
+     * @type {AmlCheck}
      * @memberof SuiTransaction
      */
-    amlResults?: AmlResults;
+    amlCheck?: AmlCheck;
     /**
      * 
-     * @type {AmlPolicyMatchIncoming}
+     * @type {MinedResultStatus}
      * @memberof SuiTransaction
      */
-    incomingAmlPolicyMatch?: AmlPolicyMatchIncoming;
+    minedResultStatus?: MinedResultStatus;
+    /**
+     * 
+     * @type {SimulationStatusResult}
+     * @memberof SuiTransaction
+     */
+    simulationStatusResult?: SimulationStatusResult;
     /**
      * 
      * @type {string}
@@ -235,10 +273,10 @@ export interface SuiTransaction {
     decodedTxBytes?: string;
     /**
      * 
-     * @type {SuiCheckpointData}
+     * @type {Block}
      * @memberof SuiTransaction
      */
-    checkpoint?: SuiCheckpointData;
+    checkpoint?: Block;
     /**
      * 
      * @type {number}
@@ -259,12 +297,6 @@ export interface SuiTransaction {
     expectedResult?: SuiTransactionResult;
     /**
      * 
-     * @type {SimulationStatusResult}
-     * @memberof SuiTransaction
-     */
-    simulationStatusResult: SimulationStatusResult;
-    /**
-     * 
      * @type {SuiTransactionResult}
      * @memberof SuiTransaction
      */
@@ -281,6 +313,12 @@ export interface SuiTransaction {
      * @memberof SuiTransaction
      */
     explorerUrl?: string;
+    /**
+     * 
+     * @type {EnrichedSuiAddress}
+     * @memberof SuiTransaction
+     */
+    feePayer?: EnrichedSuiAddress;
 }
 
 
@@ -307,10 +345,15 @@ export function SuiTransactionFromJSONTyped(json: any, _ignoreDiscriminator: boo
         'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
         'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'interactedVaults': ((json['interacted_vaults'] as Array<any>).map(VaultRefFromJSON)),
+        'relatedTransactions': json['related_transactions'] == null ? undefined : ((json['related_transactions'] as Array<any>).map(RelatedTransactionFromJSON)),
+        'organizationId': json['organization_id'],
+        'block': json['block'] == null ? undefined : BlockFromJSON(json['block']),
         'state': PushableTransactionStateFromJSON(json['state']),
         'stateChanges': ((json['state_changes'] as Array<any>).map(PushableTransactionStateChangeFromJSON)),
-        'amlResults': json['aml_results'] == null ? undefined : AmlResultsFromJSON(json['aml_results']),
-        'incomingAmlPolicyMatch': json['incoming_aml_policy_match'] == null ? undefined : AmlPolicyMatchIncomingFromJSON(json['incoming_aml_policy_match']),
+        'amlCheck': json['aml_check'] == null ? undefined : AmlCheckFromJSON(json['aml_check']),
+        'minedResultStatus': json['mined_result_status'] == null ? undefined : MinedResultStatusFromJSON(json['mined_result_status']),
+        'simulationStatusResult': json['simulation_status_result'] == null ? undefined : SimulationStatusResultFromJSON(json['simulation_status_result']),
         'type': json['type'],
         'suiTransactionTypeDetails': PredictedSuiTransactionSuiTransactionTypeDetailsFromJSON(json['sui_transaction_type_details']),
         'chain': EnrichedSuiChainFromJSON(json['chain']),
@@ -322,13 +365,13 @@ export function SuiTransactionFromJSONTyped(json: any, _ignoreDiscriminator: boo
         'digest': json['digest'] == null ? undefined : json['digest'],
         'txBytes': json['tx_bytes'] == null ? undefined : json['tx_bytes'],
         'decodedTxBytes': json['decoded_tx_bytes'] == null ? undefined : json['decoded_tx_bytes'],
-        'checkpoint': json['checkpoint'] == null ? undefined : SuiCheckpointDataFromJSON(json['checkpoint']),
+        'checkpoint': json['checkpoint'] == null ? undefined : BlockFromJSON(json['checkpoint']),
         'epoch': json['epoch'] == null ? undefined : json['epoch'],
         'gasSubmitted': SuiGasConfigFromJSON(json['gas_submitted']),
         'expectedResult': json['expected_result'] == null ? undefined : SuiTransactionResultFromJSON(json['expected_result']),
-        'simulationStatusResult': SimulationStatusResultFromJSON(json['simulation_status_result']),
         'minedResult': json['mined_result'] == null ? undefined : SuiTransactionResultFromJSON(json['mined_result']),
         'transactionBlockData': json['transaction_block_data'] == null ? undefined : json['transaction_block_data'],
         'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
+        'feePayer': json['fee_payer'] == null ? undefined : EnrichedSuiAddressFromJSON(json['fee_payer']),
     };
 }

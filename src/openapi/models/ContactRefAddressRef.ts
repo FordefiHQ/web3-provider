@@ -14,6 +14,10 @@ import type { AptosAddressBookContactAddressRef } from './AptosAddressBookContac
 import {
     AptosAddressBookContactAddressRefFromJSONTyped,
 } from './AptosAddressBookContactAddressRef';
+import type { ArchAddressBookContactAddressRef } from './ArchAddressBookContactAddressRef';
+import {
+    ArchAddressBookContactAddressRefFromJSONTyped,
+} from './ArchAddressBookContactAddressRef';
 import type { CosmosAddressBookContactAddressRef } from './CosmosAddressBookContactAddressRef';
 import {
     CosmosAddressBookContactAddressRefFromJSONTyped,
@@ -56,7 +60,7 @@ import {
  * @export
  * @type ContactRefAddressRef
  */
-export type ContactRefAddressRef = { chainType: 'aptos' } & AptosAddressBookContactAddressRef | { chainType: 'cosmos' } & CosmosAddressBookContactAddressRef | { chainType: 'evm' } & EVMAddressBookContactAddressRef | { chainType: 'solana' } & SolanaAddressBookContactAddressRef | { chainType: 'stacks' } & StacksAddressBookContactAddressRef | { chainType: 'starknet' } & StarknetAddressBookContactAddressRef | { chainType: 'sui' } & SuiAddressBookContactAddressRef | { chainType: 'ton' } & TonAddressBookContactAddressRef | { chainType: 'tron' } & TronAddressBookContactAddressRef | { chainType: 'utxo' } & UtxoAddressBookContactAddressRef;
+export type ContactRefAddressRef = { chainType: 'aptos' } & AptosAddressBookContactAddressRef | { chainType: 'arch' } & ArchAddressBookContactAddressRef | { chainType: 'cosmos' } & CosmosAddressBookContactAddressRef | { chainType: 'evm' } & EVMAddressBookContactAddressRef | { chainType: 'solana' } & SolanaAddressBookContactAddressRef | { chainType: 'stacks' } & StacksAddressBookContactAddressRef | { chainType: 'starknet' } & StarknetAddressBookContactAddressRef | { chainType: 'sui' } & SuiAddressBookContactAddressRef | { chainType: 'ton' } & TonAddressBookContactAddressRef | { chainType: 'tron' } & TronAddressBookContactAddressRef | { chainType: 'utxo' } & UtxoAddressBookContactAddressRef;
 
 export function ContactRefAddressRefFromJSON(json: any): ContactRefAddressRef {
     return ContactRefAddressRefFromJSONTyped(json, false);
@@ -69,6 +73,8 @@ function ContactRefAddressRefFromJSONTyped(json: any, _ignoreDiscriminator: bool
     switch (json['chain_type']) {
         case 'aptos':
             return Object.assign({}, AptosAddressBookContactAddressRefFromJSONTyped(json, true), { chainType: 'aptos' } as const);
+        case 'arch':
+            return Object.assign({}, ArchAddressBookContactAddressRefFromJSONTyped(json, true), { chainType: 'arch' } as const);
         case 'cosmos':
             return Object.assign({}, CosmosAddressBookContactAddressRefFromJSONTyped(json, true), { chainType: 'cosmos' } as const);
         case 'evm':

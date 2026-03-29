@@ -27,7 +27,13 @@ export interface SolanaCustomFeeRequest {
      * @type {string}
      * @memberof SolanaCustomFeeRequest
      */
-    priorityFee: string;
+    priorityFee?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SolanaCustomFeeRequest
+     */
+    unitPrice?: string;
 }
 
 
@@ -52,5 +58,6 @@ function SolanaCustomFeeRequestToJSONTyped(value?: SolanaCustomFeeRequest | null
         
         'type': value['type'],
         'priority_fee': value['priorityFee'],
+        'unit_price': value['unitPrice'],
     };
 }

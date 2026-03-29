@@ -10,6 +10,10 @@
  * Do not edit the class manually.
  */
 
+import type { EvmBridgesEffect } from './EvmBridgesEffect';
+import {
+    EvmBridgesEffectFromJSON,
+} from './EvmBridgesEffect';
 import type { EvmBridgeEffect } from './EvmBridgeEffect';
 import {
     EvmBridgeEffectFromJSON,
@@ -32,7 +36,13 @@ export interface BridgeDetails {
      * @type {EvmBridgeEffect}
      * @memberof BridgeDetails
      */
-    bridgeEffect: EvmBridgeEffect;
+    bridgeEffect?: EvmBridgeEffect;
+    /**
+     * 
+     * @type {EvmBridgesEffect}
+     * @memberof BridgeDetails
+     */
+    bridgeEffects: EvmBridgesEffect;
 }
 
 
@@ -51,6 +61,7 @@ export function BridgeDetailsFromJSONTyped(json: any, _ignoreDiscriminator: bool
     return {
         
         'type': json['type'],
-        'bridgeEffect': EvmBridgeEffectFromJSON(json['bridge_effect']),
+        'bridgeEffect': json['bridge_effect'] == null ? undefined : EvmBridgeEffectFromJSON(json['bridge_effect']),
+        'bridgeEffects': EvmBridgesEffectFromJSON(json['bridge_effects']),
     };
 }

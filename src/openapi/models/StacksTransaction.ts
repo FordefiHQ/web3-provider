@@ -30,10 +30,14 @@ import type { StacksPostConditions } from './StacksPostConditions';
 import {
     StacksPostConditionsFromJSON,
 } from './StacksPostConditions';
-import type { AmlPolicyMatchIncoming } from './AmlPolicyMatchIncoming';
+import type { MinedResultStatus } from './MinedResultStatus';
 import {
-    AmlPolicyMatchIncomingFromJSON,
-} from './AmlPolicyMatchIncoming';
+    MinedResultStatusFromJSON,
+} from './MinedResultStatus';
+import type { VaultRef } from './VaultRef';
+import {
+    VaultRefFromJSON,
+} from './VaultRef';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
@@ -50,22 +54,26 @@ import type { EnrichedStacksChain } from './EnrichedStacksChain';
 import {
     EnrichedStacksChainFromJSON,
 } from './EnrichedStacksChain';
+import type { AmlCheck } from './AmlCheck';
+import {
+    AmlCheckFromJSON,
+} from './AmlCheck';
 import type { Signature } from './Signature';
 import {
     SignatureFromJSON,
 } from './Signature';
+import type { RelatedTransaction } from './RelatedTransaction';
+import {
+    RelatedTransactionFromJSON,
+} from './RelatedTransaction';
 import type { SimulationStatusResult } from './SimulationStatusResult';
 import {
     SimulationStatusResultFromJSON,
 } from './SimulationStatusResult';
-import type { AmlResults } from './AmlResults';
+import type { Block } from './Block';
 import {
-    AmlResultsFromJSON,
-} from './AmlResults';
-import type { StacksBlock } from './StacksBlock';
-import {
-    StacksBlockFromJSON,
-} from './StacksBlock';
+    BlockFromJSON,
+} from './Block';
 import type { EnrichedStacksAddress } from './EnrichedStacksAddress';
 import {
     EnrichedStacksAddressFromJSON,
@@ -133,6 +141,30 @@ export interface StacksTransaction {
     signedExternally?: boolean;
     /**
      * 
+     * @type {Array<VaultRef>}
+     * @memberof StacksTransaction
+     */
+    interactedVaults: Array<VaultRef>;
+    /**
+     * 
+     * @type {Array<RelatedTransaction>}
+     * @memberof StacksTransaction
+     */
+    relatedTransactions?: Array<RelatedTransaction>;
+    /**
+     * 
+     * @type {string}
+     * @memberof StacksTransaction
+     */
+    organizationId: string;
+    /**
+     * 
+     * @type {Block}
+     * @memberof StacksTransaction
+     */
+    block?: Block;
+    /**
+     * 
      * @type {PushableTransactionState}
      * @memberof StacksTransaction
      */
@@ -145,16 +177,22 @@ export interface StacksTransaction {
     stateChanges: Array<PushableTransactionStateChange>;
     /**
      * 
-     * @type {AmlResults}
+     * @type {AmlCheck}
      * @memberof StacksTransaction
      */
-    amlResults?: AmlResults;
+    amlCheck?: AmlCheck;
     /**
      * 
-     * @type {AmlPolicyMatchIncoming}
+     * @type {MinedResultStatus}
      * @memberof StacksTransaction
      */
-    incomingAmlPolicyMatch?: AmlPolicyMatchIncoming;
+    minedResultStatus?: MinedResultStatus;
+    /**
+     * 
+     * @type {SimulationStatusResult}
+     * @memberof StacksTransaction
+     */
+    simulationStatusResult?: SimulationStatusResult;
     /**
      * 
      * @type {string}
@@ -193,12 +231,6 @@ export interface StacksTransaction {
     hash?: string;
     /**
      * 
-     * @type {StacksBlock}
-     * @memberof StacksTransaction
-     */
-    block?: StacksBlock;
-    /**
-     * 
      * @type {StacksPostConditions}
      * @memberof StacksTransaction
      */
@@ -221,12 +253,6 @@ export interface StacksTransaction {
      * @memberof StacksTransaction
      */
     expectedResult?: StacksTransactionResult;
-    /**
-     * 
-     * @type {SimulationStatusResult}
-     * @memberof StacksTransaction
-     */
-    simulationStatusResult?: SimulationStatusResult;
     /**
      * 
      * @type {StacksTransactionResult}
@@ -271,22 +297,25 @@ export function StacksTransactionFromJSONTyped(json: any, _ignoreDiscriminator: 
         'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
         'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'interactedVaults': ((json['interacted_vaults'] as Array<any>).map(VaultRefFromJSON)),
+        'relatedTransactions': json['related_transactions'] == null ? undefined : ((json['related_transactions'] as Array<any>).map(RelatedTransactionFromJSON)),
+        'organizationId': json['organization_id'],
+        'block': json['block'] == null ? undefined : BlockFromJSON(json['block']),
         'state': PushableTransactionStateFromJSON(json['state']),
         'stateChanges': ((json['state_changes'] as Array<any>).map(PushableTransactionStateChangeFromJSON)),
-        'amlResults': json['aml_results'] == null ? undefined : AmlResultsFromJSON(json['aml_results']),
-        'incomingAmlPolicyMatch': json['incoming_aml_policy_match'] == null ? undefined : AmlPolicyMatchIncomingFromJSON(json['incoming_aml_policy_match']),
+        'amlCheck': json['aml_check'] == null ? undefined : AmlCheckFromJSON(json['aml_check']),
+        'minedResultStatus': json['mined_result_status'] == null ? undefined : MinedResultStatusFromJSON(json['mined_result_status']),
+        'simulationStatusResult': json['simulation_status_result'] == null ? undefined : SimulationStatusResultFromJSON(json['simulation_status_result']),
         'type': json['type'],
         'stacksTransactionTypeDetails': PredictedStacksTransactionStacksTransactionTypeDetailsFromJSON(json['stacks_transaction_type_details']),
         'chain': EnrichedStacksChainFromJSON(json['chain']),
         'nonce': json['nonce'] == null ? undefined : json['nonce'],
         'sender': EnrichedStacksAddressFromJSON(json['sender']),
         'hash': json['hash'] == null ? undefined : json['hash'],
-        'block': json['block'] == null ? undefined : StacksBlockFromJSON(json['block']),
         'postConditions': json['post_conditions'] == null ? undefined : StacksPostConditionsFromJSON(json['post_conditions']),
         'serializedPayload': json['serialized_payload'] == null ? undefined : json['serialized_payload'],
         'serializedSignedTransaction': json['serialized_signed_transaction'] == null ? undefined : json['serialized_signed_transaction'],
         'expectedResult': json['expected_result'] == null ? undefined : StacksTransactionResultFromJSON(json['expected_result']),
-        'simulationStatusResult': json['simulation_status_result'] == null ? undefined : SimulationStatusResultFromJSON(json['simulation_status_result']),
         'minedResult': json['mined_result'] == null ? undefined : StacksTransactionResultFromJSON(json['mined_result']),
         'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
         'memo': json['memo'] == null ? undefined : json['memo'],

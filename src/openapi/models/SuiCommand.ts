@@ -25,6 +25,11 @@ import {
     SuiMoveCallCommandFromJSONTyped,
     SuiMoveCallCommandToJSON,
 } from './SuiMoveCallCommand';
+import type { SuiPublishCommand } from './SuiPublishCommand';
+import {
+    SuiPublishCommandFromJSONTyped,
+    SuiPublishCommandToJSON,
+} from './SuiPublishCommand';
 import type { SuiSplitCoinsCommand } from './SuiSplitCoinsCommand';
 import {
     SuiSplitCoinsCommandFromJSONTyped,
@@ -35,13 +40,18 @@ import {
     SuiTransferObjectsCommandFromJSONTyped,
     SuiTransferObjectsCommandToJSON,
 } from './SuiTransferObjectsCommand';
+import type { SuiUpgradeCommand } from './SuiUpgradeCommand';
+import {
+    SuiUpgradeCommandFromJSONTyped,
+    SuiUpgradeCommandToJSON,
+} from './SuiUpgradeCommand';
 
 /**
  * 
  * @export
  * @type SuiCommand
  */
-export type SuiCommand = { type: 'make_move_vec' } & SuiMakeMoveVecCommand | { type: 'merge_coins' } & SuiMergeCoinsCommand | { type: 'move_call' } & SuiMoveCallCommand | { type: 'split_coins' } & SuiSplitCoinsCommand | { type: 'transfer_objects' } & SuiTransferObjectsCommand;
+export type SuiCommand = { type: 'make_move_vec' } & SuiMakeMoveVecCommand | { type: 'merge_coins' } & SuiMergeCoinsCommand | { type: 'move_call' } & SuiMoveCallCommand | { type: 'publish' } & SuiPublishCommand | { type: 'split_coins' } & SuiSplitCoinsCommand | { type: 'transfer_objects' } & SuiTransferObjectsCommand | { type: 'upgrade' } & SuiUpgradeCommand;
 
 export function SuiCommandFromJSON(json: any): SuiCommand {
     return SuiCommandFromJSONTyped(json, false);
@@ -58,10 +68,14 @@ function SuiCommandFromJSONTyped(json: any, _ignoreDiscriminator: boolean): SuiC
             return Object.assign({}, SuiMergeCoinsCommandFromJSONTyped(json, true), { type: 'merge_coins' } as const);
         case 'move_call':
             return Object.assign({}, SuiMoveCallCommandFromJSONTyped(json, true), { type: 'move_call' } as const);
+        case 'publish':
+            return Object.assign({}, SuiPublishCommandFromJSONTyped(json, true), { type: 'publish' } as const);
         case 'split_coins':
             return Object.assign({}, SuiSplitCoinsCommandFromJSONTyped(json, true), { type: 'split_coins' } as const);
         case 'transfer_objects':
             return Object.assign({}, SuiTransferObjectsCommandFromJSONTyped(json, true), { type: 'transfer_objects' } as const);
+        case 'upgrade':
+            return Object.assign({}, SuiUpgradeCommandFromJSONTyped(json, true), { type: 'upgrade' } as const);
         default:
             throw new Error(`No variant of SuiCommand exists with 'type=${json['type']}'`);
     }
@@ -82,10 +96,14 @@ function SuiCommandToJSONTyped(value?: SuiCommand | null, _ignoreDiscriminator: 
             return Object.assign({}, SuiMergeCoinsCommandToJSON(value), { type: 'merge_coins' } as const);
         case 'move_call':
             return Object.assign({}, SuiMoveCallCommandToJSON(value), { type: 'move_call' } as const);
+        case 'publish':
+            return Object.assign({}, SuiPublishCommandToJSON(value), { type: 'publish' } as const);
         case 'split_coins':
             return Object.assign({}, SuiSplitCoinsCommandToJSON(value), { type: 'split_coins' } as const);
         case 'transfer_objects':
             return Object.assign({}, SuiTransferObjectsCommandToJSON(value), { type: 'transfer_objects' } as const);
+        case 'upgrade':
+            return Object.assign({}, SuiUpgradeCommandToJSON(value), { type: 'upgrade' } as const);
         default:
             throw new Error(`No variant of SuiCommand exists with 'type=${value['type']}'`);
     }

@@ -14,22 +14,10 @@ import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
 } from './PricedAsset';
-import type { EvmBalanceChangeEffectTokenContract } from './EvmBalanceChangeEffectTokenContract';
-import {
-    EvmBalanceChangeEffectTokenContractFromJSON,
-} from './EvmBalanceChangeEffectTokenContract';
-import type { Price } from './Price';
-import {
-    PriceFromJSON,
-} from './Price';
 import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
 import {
     EnrichedEvmAddressFromJSON,
 } from './EnrichedEvmAddress';
-import type { EvmBalanceChangeEffectType } from './EvmBalanceChangeEffectType';
-import {
-    EvmBalanceChangeEffectTypeFromJSON,
-} from './EvmBalanceChangeEffectType';
 
 /**
  * 
@@ -51,49 +39,10 @@ export interface EvmBalanceChangeEffect {
     diff: string;
     /**
      * 
-     * @type {EvmBalanceChangeEffectType}
-     * @memberof EvmBalanceChangeEffect
-     */
-    type: EvmBalanceChangeEffectType;
-    /**
-     * 
      * @type {EnrichedEvmAddress}
      * @memberof EvmBalanceChangeEffect
      */
     address: EnrichedEvmAddress;
-    /**
-     * 
-     * @type {EnrichedEvmAddress}
-     * @memberof EvmBalanceChangeEffect
-     */
-    owner: EnrichedEvmAddress;
-    /**
-     * 
-     * @type {Price}
-     * @memberof EvmBalanceChangeEffect
-     */
-    price?: Price;
-    /**
-     * 
-     * @type {EvmBalanceChangeEffectTokenContract}
-     * @memberof EvmBalanceChangeEffect
-     * @deprecated
-     */
-    tokenContract?: EvmBalanceChangeEffectTokenContract;
-    /**
-     * 
-     * @type {string}
-     * @memberof EvmBalanceChangeEffect
-     * @deprecated
-     */
-    tokenId?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof EvmBalanceChangeEffect
-     * @deprecated
-     */
-    owned?: boolean;
 }
 
 export function EvmBalanceChangeEffectFromJSON(json: any): EvmBalanceChangeEffect {
@@ -108,13 +57,7 @@ function EvmBalanceChangeEffectFromJSONTyped(json: any, _ignoreDiscriminator: bo
         
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
         'diff': json['diff'],
-        'type': EvmBalanceChangeEffectTypeFromJSON(json['type']),
         'address': EnrichedEvmAddressFromJSON(json['address']),
-        'owner': EnrichedEvmAddressFromJSON(json['owner']),
-        'price': json['price'] == null ? undefined : PriceFromJSON(json['price']),
-        'tokenContract': json['token_contract'] == null ? undefined : EvmBalanceChangeEffectTokenContractFromJSON(json['token_contract']),
-        'tokenId': json['token_id'] == null ? undefined : json['token_id'],
-        'owned': json['owned'] == null ? undefined : json['owned'],
     };
 }
 

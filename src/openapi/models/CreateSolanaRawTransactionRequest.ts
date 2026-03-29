@@ -51,6 +51,42 @@ import {
 export interface CreateSolanaRawTransactionRequest {
     /**
      * 
+     * @type {string}
+     * @memberof CreateSolanaRawTransactionRequest
+     */
+    type: CreateSolanaRawTransactionRequestTypeEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CreateSolanaRawTransactionRequest
+     */
+    failOnPredictionFailure?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CreateSolanaRawTransactionRequest
+     */
+    skipPrediction?: boolean;
+    /**
+     * 
+     * @type {PushMode}
+     * @memberof CreateSolanaRawTransactionRequest
+     */
+    pushMode?: PushMode;
+    /**
+     * 
+     * @type {BatchSolanaTransactionRequestDetailsFee}
+     * @memberof CreateSolanaRawTransactionRequest
+     */
+    fee?: BatchSolanaTransactionRequestDetailsFee;
+    /**
+     * 
+     * @type {SolanaChainUniqueId}
+     * @memberof CreateSolanaRawTransactionRequest
+     */
+    chain: SolanaChainUniqueId;
+    /**
+     * 
      * @type {SolanaMessageVersion}
      * @memberof CreateSolanaRawTransactionRequest
      */
@@ -85,42 +121,6 @@ export interface CreateSolanaRawTransactionRequest {
      * @memberof CreateSolanaRawTransactionRequest
      */
     recentBlockhash?: string;
-    /**
-     * 
-     * @type {BatchSolanaTransactionRequestDetailsFee}
-     * @memberof CreateSolanaRawTransactionRequest
-     */
-    fee?: BatchSolanaTransactionRequestDetailsFee;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateSolanaRawTransactionRequest
-     */
-    type: CreateSolanaRawTransactionRequestTypeEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CreateSolanaRawTransactionRequest
-     */
-    failOnPredictionFailure?: boolean;
-    /**
-     * 
-     * @type {PushMode}
-     * @memberof CreateSolanaRawTransactionRequest
-     */
-    pushMode?: PushMode;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CreateSolanaRawTransactionRequest
-     */
-    skipPrediction?: boolean;
-    /**
-     * 
-     * @type {SolanaChainUniqueId}
-     * @memberof CreateSolanaRawTransactionRequest
-     */
-    chain: SolanaChainUniqueId;
 }
 
 
@@ -143,17 +143,17 @@ function CreateSolanaRawTransactionRequestToJSONTyped(value?: CreateSolanaRawTra
 
     return {
         
+        'type': value['type'],
+        'fail_on_prediction_failure': value['failOnPredictionFailure'],
+        'skip_prediction': value['skipPrediction'],
+        'push_mode': PushModeToJSON(value['pushMode']),
+        'fee': BatchSolanaTransactionRequestDetailsFeeToJSON(value['fee']),
+        'chain': SolanaChainUniqueIdToJSON(value['chain']),
         'version': SolanaMessageVersionToJSON(value['version']),
         'instructions': ((value['instructions'] as Array<any>).map(SolanaCompiledInstructionRequestToJSON)),
         'accounts': ((value['accounts'] as Array<any>).map(SolanaTransactionAccountRequestToJSON)),
         'address_table_lookups': ((value['addressTableLookups'] as Array<any>).map(SolanaMessageAddressTableLookupRequestToJSON)),
         'signatures': value['signatures'] == null ? undefined : ((value['signatures'] as Array<any>).map(SolanaTransactionSignaturesRequestToJSON)),
         'recent_blockhash': value['recentBlockhash'],
-        'fee': BatchSolanaTransactionRequestDetailsFeeToJSON(value['fee']),
-        'type': value['type'],
-        'fail_on_prediction_failure': value['failOnPredictionFailure'],
-        'push_mode': PushModeToJSON(value['pushMode']),
-        'skip_prediction': value['skipPrediction'],
-        'chain': SolanaChainUniqueIdToJSON(value['chain']),
     };
 }

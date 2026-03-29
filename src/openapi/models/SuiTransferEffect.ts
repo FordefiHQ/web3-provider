@@ -18,10 +18,6 @@ import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
 } from './PricedAsset';
-import type { SuiTransferEffectType } from './SuiTransferEffectType';
-import {
-    SuiTransferEffectTypeFromJSON,
-} from './SuiTransferEffectType';
 
 /**
  * 
@@ -41,12 +37,6 @@ export interface SuiTransferEffect {
      * @memberof SuiTransferEffect
      */
     amount: string;
-    /**
-     * 
-     * @type {SuiTransferEffectType}
-     * @memberof SuiTransferEffect
-     */
-    type: SuiTransferEffectType;
     /**
      * 
      * @type {EnrichedSuiAddress}
@@ -73,7 +63,6 @@ function SuiTransferEffectFromJSONTyped(json: any, _ignoreDiscriminator: boolean
         
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
         'amount': json['amount'],
-        'type': SuiTransferEffectTypeFromJSON(json['type']),
         'from': EnrichedSuiAddressFromJSON(json['from']),
         'to': EnrichedSuiAddressFromJSON(json['to']),
     };

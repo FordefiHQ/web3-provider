@@ -52,7 +52,13 @@ export interface TransactionDetailsUtxoPsbtRequest {
      * @type {UtxoAddress}
      * @memberof TransactionDetailsUtxoPsbtRequest
      */
-    sender: UtxoAddress;
+    sender?: UtxoAddress;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransactionDetailsUtxoPsbtRequest
+     */
+    signer?: string;
     /**
      * 
      * @type {Array<PsbtInput>}
@@ -91,6 +97,7 @@ function TransactionDetailsUtxoPsbtRequestToJSONTyped(value?: TransactionDetails
         'psbt_raw_data': value['psbtRawData'],
         'auto_finalize': value['autoFinalize'],
         'sender': UtxoAddressToJSON(value['sender']),
+        'signer': value['signer'],
         'inputs': value['inputs'] == null ? undefined : ((value['inputs'] as Array<any>).map(PsbtInputToJSON)),
         'push_mode': PushModeToJSON(value['pushMode']),
     };

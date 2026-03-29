@@ -10,6 +10,10 @@
  * Do not edit the class manually.
  */
 
+import type { RecipientContactId } from './RecipientContactId';
+import {
+    RecipientContactIdToJSON,
+} from './RecipientContactId';
 import type { RecipientVaultId } from './RecipientVaultId';
 import {
     RecipientVaultIdToJSON,
@@ -24,7 +28,7 @@ import {
  * @export
  * @type CreateSuiTransferRequestTo
  */
-export type CreateSuiTransferRequestTo = { type: 'hex' } & SuiRecipientHex | { type: 'vault_id' } & RecipientVaultId;
+export type CreateSuiTransferRequestTo = { type: 'contact_id' } & RecipientContactId | { type: 'hex' } & SuiRecipientHex | { type: 'vault_id' } & RecipientVaultId;
 
 export function CreateSuiTransferRequestToToJSON(json: any): any {
     return CreateSuiTransferRequestToToJSONTyped(json, false);
@@ -35,6 +39,8 @@ function CreateSuiTransferRequestToToJSONTyped(value?: CreateSuiTransferRequestT
         return value;
     }
     switch (value['type']) {
+        case 'contact_id':
+            return Object.assign({}, RecipientContactIdToJSON(value), { type: 'contact_id' } as const);
         case 'hex':
             return Object.assign({}, SuiRecipientHexToJSON(value), { type: 'hex' } as const);
         case 'vault_id':

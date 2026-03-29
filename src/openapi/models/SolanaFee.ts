@@ -18,10 +18,6 @@ import type { SolanaFeeType } from './SolanaFeeType';
 import {
     SolanaFeeTypeFromJSON,
 } from './SolanaFeeType';
-import type { Price } from './Price';
-import {
-    PriceFromJSON,
-} from './Price';
 import type { FeePriorityLevel } from './FeePriorityLevel';
 import {
     FeePriorityLevelFromJSON,
@@ -56,6 +52,12 @@ export interface SolanaFee {
      * @type {string}
      * @memberof SolanaFee
      */
+    unitPrice?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SolanaFee
+     */
     fee: string;
     /**
      * 
@@ -63,12 +65,6 @@ export interface SolanaFee {
      * @memberof SolanaFee
      */
     feeType: SolanaFeeType;
-    /**
-     * 
-     * @type {Price}
-     * @memberof SolanaFee
-     */
-    fiatPrice?: Price;
     /**
      * 
      * @type {PricedAsset}
@@ -90,9 +86,9 @@ function SolanaFeeFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Solan
         'priorityLevel': FeePriorityLevelFromJSON(json['priority_level']),
         'baseFee': json['base_fee'],
         'priorityFee': json['priority_fee'],
+        'unitPrice': json['unit_price'] == null ? undefined : json['unit_price'],
         'fee': json['fee'],
         'feeType': SolanaFeeTypeFromJSON(json['fee_type']),
-        'fiatPrice': json['fiat_price'] == null ? undefined : PriceFromJSON(json['fiat_price']),
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }

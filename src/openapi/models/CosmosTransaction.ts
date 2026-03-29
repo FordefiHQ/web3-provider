@@ -38,10 +38,14 @@ import type { CosmosTransactionTypeDetails } from './CosmosTransactionTypeDetail
 import {
     CosmosTransactionTypeDetailsFromJSON,
 } from './CosmosTransactionTypeDetails';
-import type { AmlPolicyMatchIncoming } from './AmlPolicyMatchIncoming';
+import type { MinedResultStatus } from './MinedResultStatus';
 import {
-    AmlPolicyMatchIncomingFromJSON,
-} from './AmlPolicyMatchIncoming';
+    MinedResultStatusFromJSON,
+} from './MinedResultStatus';
+import type { VaultRef } from './VaultRef';
+import {
+    VaultRefFromJSON,
+} from './VaultRef';
 import type { EnrichedCosmosChain } from './EnrichedCosmosChain';
 import {
     EnrichedCosmosChainFromJSON,
@@ -58,14 +62,26 @@ import type { TransactionDirection } from './TransactionDirection';
 import {
     TransactionDirectionFromJSON,
 } from './TransactionDirection';
+import type { AmlCheck } from './AmlCheck';
+import {
+    AmlCheckFromJSON,
+} from './AmlCheck';
 import type { Signature } from './Signature';
 import {
     SignatureFromJSON,
 } from './Signature';
-import type { AmlResults } from './AmlResults';
+import type { RelatedTransaction } from './RelatedTransaction';
 import {
-    AmlResultsFromJSON,
-} from './AmlResults';
+    RelatedTransactionFromJSON,
+} from './RelatedTransaction';
+import type { SimulationStatusResult } from './SimulationStatusResult';
+import {
+    SimulationStatusResultFromJSON,
+} from './SimulationStatusResult';
+import type { Block } from './Block';
+import {
+    BlockFromJSON,
+} from './Block';
 
 /**
  * 
@@ -129,6 +145,30 @@ export interface CosmosTransaction {
     signedExternally?: boolean;
     /**
      * 
+     * @type {Array<VaultRef>}
+     * @memberof CosmosTransaction
+     */
+    interactedVaults: Array<VaultRef>;
+    /**
+     * 
+     * @type {Array<RelatedTransaction>}
+     * @memberof CosmosTransaction
+     */
+    relatedTransactions?: Array<RelatedTransaction>;
+    /**
+     * 
+     * @type {string}
+     * @memberof CosmosTransaction
+     */
+    organizationId: string;
+    /**
+     * 
+     * @type {Block}
+     * @memberof CosmosTransaction
+     */
+    block?: Block;
+    /**
+     * 
      * @type {PushableTransactionState}
      * @memberof CosmosTransaction
      */
@@ -141,16 +181,22 @@ export interface CosmosTransaction {
     stateChanges: Array<PushableTransactionStateChange>;
     /**
      * 
-     * @type {AmlResults}
+     * @type {AmlCheck}
      * @memberof CosmosTransaction
      */
-    amlResults?: AmlResults;
+    amlCheck?: AmlCheck;
     /**
      * 
-     * @type {AmlPolicyMatchIncoming}
+     * @type {MinedResultStatus}
      * @memberof CosmosTransaction
      */
-    incomingAmlPolicyMatch?: AmlPolicyMatchIncoming;
+    minedResultStatus?: MinedResultStatus;
+    /**
+     * 
+     * @type {SimulationStatusResult}
+     * @memberof CosmosTransaction
+     */
+    simulationStatusResult?: SimulationStatusResult;
     /**
      * 
      * @type {CosmosTransactionTypeDetails}
@@ -169,12 +215,6 @@ export interface CosmosTransaction {
      * @memberof CosmosTransaction
      */
     chain: EnrichedCosmosChain;
-    /**
-     * 
-     * @type {EnrichedCosmosBechAddress}
-     * @memberof CosmosTransaction
-     */
-    from: EnrichedCosmosBechAddress;
     /**
      * 
      * @type {EnrichedCosmosBechAddress}
@@ -249,14 +289,18 @@ export function CosmosTransactionFromJSONTyped(json: any, _ignoreDiscriminator: 
         'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
         'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'interactedVaults': ((json['interacted_vaults'] as Array<any>).map(VaultRefFromJSON)),
+        'relatedTransactions': json['related_transactions'] == null ? undefined : ((json['related_transactions'] as Array<any>).map(RelatedTransactionFromJSON)),
+        'organizationId': json['organization_id'],
+        'block': json['block'] == null ? undefined : BlockFromJSON(json['block']),
         'state': PushableTransactionStateFromJSON(json['state']),
         'stateChanges': ((json['state_changes'] as Array<any>).map(PushableTransactionStateChangeFromJSON)),
-        'amlResults': json['aml_results'] == null ? undefined : AmlResultsFromJSON(json['aml_results']),
-        'incomingAmlPolicyMatch': json['incoming_aml_policy_match'] == null ? undefined : AmlPolicyMatchIncomingFromJSON(json['incoming_aml_policy_match']),
+        'amlCheck': json['aml_check'] == null ? undefined : AmlCheckFromJSON(json['aml_check']),
+        'minedResultStatus': json['mined_result_status'] == null ? undefined : MinedResultStatusFromJSON(json['mined_result_status']),
+        'simulationStatusResult': json['simulation_status_result'] == null ? undefined : SimulationStatusResultFromJSON(json['simulation_status_result']),
         'cosmosTransactionTypeDetails': CosmosTransactionTypeDetailsFromJSON(json['cosmos_transaction_type_details']),
         'memo': json['memo'] == null ? undefined : json['memo'],
         'chain': EnrichedCosmosChainFromJSON(json['chain']),
-        'from': EnrichedCosmosBechAddressFromJSON(json['from']),
         'sender': EnrichedCosmosBechAddressFromJSON(json['sender']),
         'type': json['type'],
         'hash': json['hash'] == null ? undefined : json['hash'],

@@ -10,10 +10,10 @@
  * Do not edit the class manually.
  */
 
-import type { UtxoOutputRequestTo } from './UtxoOutputRequestTo';
+import type { TransactionDetailsUtxoTransferRequestSendMaxTo } from './TransactionDetailsUtxoTransferRequestSendMaxTo';
 import {
-    UtxoOutputRequestToToJSON,
-} from './UtxoOutputRequestTo';
+    TransactionDetailsUtxoTransferRequestSendMaxToToJSON,
+} from './TransactionDetailsUtxoTransferRequestSendMaxTo';
 
 /**
  * 
@@ -23,10 +23,10 @@ import {
 export interface UtxoOutputRequest {
     /**
      * 
-     * @type {UtxoOutputRequestTo}
+     * @type {TransactionDetailsUtxoTransferRequestSendMaxTo}
      * @memberof UtxoOutputRequest
      */
-    to: UtxoOutputRequestTo;
+    to: TransactionDetailsUtxoTransferRequestSendMaxTo;
     /**
      * 
      * @type {string}
@@ -46,7 +46,7 @@ function UtxoOutputRequestToJSONTyped(value?: UtxoOutputRequest | null, _ignoreD
 
     return {
         
-        'to': UtxoOutputRequestToToJSON(value['to']),
+        'to': TransactionDetailsUtxoTransferRequestSendMaxToToJSON(value['to']),
         'value': value['value'],
     };
 }

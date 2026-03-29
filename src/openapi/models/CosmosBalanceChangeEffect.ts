@@ -18,18 +18,6 @@ import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
 } from './PricedAsset';
-import type { CosmosBalanceChangeEffectType } from './CosmosBalanceChangeEffectType';
-import {
-    CosmosBalanceChangeEffectTypeFromJSON,
-} from './CosmosBalanceChangeEffectType';
-import type { Price } from './Price';
-import {
-    PriceFromJSON,
-} from './Price';
-import type { CosmosBalanceChangeEffectCoinInfo } from './CosmosBalanceChangeEffectCoinInfo';
-import {
-    CosmosBalanceChangeEffectCoinInfoFromJSON,
-} from './CosmosBalanceChangeEffectCoinInfo';
 
 /**
  * 
@@ -51,35 +39,10 @@ export interface CosmosBalanceChangeEffect {
     diff: string;
     /**
      * 
-     * @type {CosmosBalanceChangeEffectType}
-     * @memberof CosmosBalanceChangeEffect
-     */
-    type: CosmosBalanceChangeEffectType;
-    /**
-     * 
-     * @type {CosmosBalanceChangeEffectCoinInfo}
-     * @memberof CosmosBalanceChangeEffect
-     * @deprecated
-     */
-    coinInfo: CosmosBalanceChangeEffectCoinInfo;
-    /**
-     * 
      * @type {EnrichedCosmosBechAddress}
      * @memberof CosmosBalanceChangeEffect
      */
     address: EnrichedCosmosBechAddress;
-    /**
-     * 
-     * @type {EnrichedCosmosBechAddress}
-     * @memberof CosmosBalanceChangeEffect
-     */
-    owner?: EnrichedCosmosBechAddress;
-    /**
-     * 
-     * @type {Price}
-     * @memberof CosmosBalanceChangeEffect
-     */
-    price?: Price;
 }
 
 export function CosmosBalanceChangeEffectFromJSON(json: any): CosmosBalanceChangeEffect {
@@ -94,11 +57,7 @@ function CosmosBalanceChangeEffectFromJSONTyped(json: any, _ignoreDiscriminator:
         
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
         'diff': json['diff'],
-        'type': CosmosBalanceChangeEffectTypeFromJSON(json['type']),
-        'coinInfo': CosmosBalanceChangeEffectCoinInfoFromJSON(json['coin_info']),
         'address': EnrichedCosmosBechAddressFromJSON(json['address']),
-        'owner': json['owner'] == null ? undefined : EnrichedCosmosBechAddressFromJSON(json['owner']),
-        'price': json['price'] == null ? undefined : PriceFromJSON(json['price']),
     };
 }
 

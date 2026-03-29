@@ -10,6 +10,10 @@
  * Do not edit the class manually.
  */
 
+import type { RecipientContactId } from './RecipientContactId';
+import {
+    RecipientContactIdToJSON,
+} from './RecipientContactId';
 import type { RecipientVaultId } from './RecipientVaultId';
 import {
     RecipientVaultIdToJSON,
@@ -24,7 +28,7 @@ import {
  * @export
  * @type CreateTronTransferRequestTo
  */
-export type CreateTronTransferRequestTo = { type: 'hex' } & TronRecipientHex | { type: 'vault_id' } & RecipientVaultId;
+export type CreateTronTransferRequestTo = { type: 'contact_id' } & RecipientContactId | { type: 'hex' } & TronRecipientHex | { type: 'vault_id' } & RecipientVaultId;
 
 export function CreateTronTransferRequestToToJSON(json: any): any {
     return CreateTronTransferRequestToToJSONTyped(json, false);
@@ -35,6 +39,8 @@ function CreateTronTransferRequestToToJSONTyped(value?: CreateTronTransferReques
         return value;
     }
     switch (value['type']) {
+        case 'contact_id':
+            return Object.assign({}, RecipientContactIdToJSON(value), { type: 'contact_id' } as const);
         case 'hex':
             return Object.assign({}, TronRecipientHexToJSON(value), { type: 'hex' } as const);
         case 'vault_id':

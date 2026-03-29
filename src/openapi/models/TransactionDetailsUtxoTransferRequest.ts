@@ -14,6 +14,10 @@ import type { UtxoOutputRequest } from './UtxoOutputRequest';
 import {
     UtxoOutputRequestToJSON,
 } from './UtxoOutputRequest';
+import type { TransactionDetailsUtxoTransferRequestSendMaxTo } from './TransactionDetailsUtxoTransferRequestSendMaxTo';
+import {
+    TransactionDetailsUtxoTransferRequestSendMaxToToJSON,
+} from './TransactionDetailsUtxoTransferRequestSendMaxTo';
 import type { PushMode } from './PushMode';
 import {
     PushModeToJSON,
@@ -40,7 +44,13 @@ export interface TransactionDetailsUtxoTransferRequest {
      * @type {Array<UtxoOutputRequest>}
      * @memberof TransactionDetailsUtxoTransferRequest
      */
-    outputs: Array<UtxoOutputRequest>;
+    outputs?: Array<UtxoOutputRequest>;
+    /**
+     * 
+     * @type {TransactionDetailsUtxoTransferRequestSendMaxTo}
+     * @memberof TransactionDetailsUtxoTransferRequest
+     */
+    sendMaxTo?: TransactionDetailsUtxoTransferRequestSendMaxTo;
     /**
      * 
      * @type {TransactionDetailsUtxoTransferRequestFeePerByte}
@@ -82,7 +92,8 @@ function TransactionDetailsUtxoTransferRequestToJSONTyped(value?: TransactionDet
     return {
         
         'type': value['type'],
-        'outputs': ((value['outputs'] as Array<any>).map(UtxoOutputRequestToJSON)),
+        'outputs': value['outputs'] == null ? undefined : ((value['outputs'] as Array<any>).map(UtxoOutputRequestToJSON)),
+        'send_max_to': TransactionDetailsUtxoTransferRequestSendMaxToToJSON(value['sendMaxTo']),
         'fee_per_byte': TransactionDetailsUtxoTransferRequestFeePerByteToJSON(value['feePerByte']),
         'push_mode': PushModeToJSON(value['pushMode']),
         'memos': value['memos'],

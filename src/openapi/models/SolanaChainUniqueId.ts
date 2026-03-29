@@ -17,7 +17,9 @@
 export const SolanaChainUniqueId = {
     mainnet: 'solana_mainnet',
     devnet: 'solana_devnet',
-    eclipseMainnet: 'solana_eclipse_mainnet'
+    eclipseMainnet: 'solana_eclipse_mainnet',
+    fogoMainnet: 'solana_fogo_mainnet',
+    fogoTestnet: 'solana_fogo_testnet'
 } as const;
 export type SolanaChainUniqueId = typeof SolanaChainUniqueId[keyof typeof SolanaChainUniqueId];
 

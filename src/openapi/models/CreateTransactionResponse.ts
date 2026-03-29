@@ -18,6 +18,10 @@ import type { AptosTransaction } from './AptosTransaction';
 import {
     AptosTransactionFromJSONTyped,
 } from './AptosTransaction';
+import type { ArchTransaction } from './ArchTransaction';
+import {
+    ArchTransactionFromJSONTyped,
+} from './ArchTransaction';
 import type { BlackBoxSignature } from './BlackBoxSignature';
 import {
     BlackBoxSignatureFromJSONTyped,
@@ -78,6 +82,10 @@ import type { TonTransaction } from './TonTransaction';
 import {
     TonTransactionFromJSONTyped,
 } from './TonTransaction';
+import type { TronMessage } from './TronMessage';
+import {
+    TronMessageFromJSONTyped,
+} from './TronMessage';
 import type { TronTransaction } from './TronTransaction';
 import {
     TronTransactionFromJSONTyped,
@@ -96,7 +104,7 @@ import {
  * @export
  * @type CreateTransactionResponse
  */
-export type CreateTransactionResponse = { type: 'aptos_message' } & AptosMessage | { type: 'aptos_transaction' } & AptosTransaction | { type: 'black_box_signature' } & BlackBoxSignature | { type: 'cosmos_message' } & CosmosMessage | { type: 'cosmos_transaction' } & CosmosTransaction | { type: 'evm_message' } & EvmMessage | { type: 'evm_transaction' } & EvmTransaction | { type: 'exchange_transaction' } & ExchangeTransaction | { type: 'solana_message' } & SolanaMessage | { type: 'solana_transaction' } & SolanaTransaction | { type: 'stacks_transaction' } & StacksTransaction | { type: 'starknet_message' } & StarknetMessage | { type: 'starknet_transaction' } & StarknetTransaction | { type: 'sui_message' } & SuiMessage | { type: 'sui_transaction' } & SuiTransaction | { type: 'ton_message' } & TonMessage | { type: 'ton_transaction' } & TonTransaction | { type: 'tron_transaction' } & TronTransaction | { type: 'utxo_message' } & UtxoMessage | { type: 'utxo_transaction' } & UtxoTransaction;
+export type CreateTransactionResponse = { type: 'aptos_message' } & AptosMessage | { type: 'aptos_transaction' } & AptosTransaction | { type: 'arch_transaction' } & ArchTransaction | { type: 'black_box_signature' } & BlackBoxSignature | { type: 'cosmos_message' } & CosmosMessage | { type: 'cosmos_transaction' } & CosmosTransaction | { type: 'evm_message' } & EvmMessage | { type: 'evm_transaction' } & EvmTransaction | { type: 'exchange_transaction' } & ExchangeTransaction | { type: 'solana_message' } & SolanaMessage | { type: 'solana_transaction' } & SolanaTransaction | { type: 'stacks_transaction' } & StacksTransaction | { type: 'starknet_message' } & StarknetMessage | { type: 'starknet_transaction' } & StarknetTransaction | { type: 'sui_message' } & SuiMessage | { type: 'sui_transaction' } & SuiTransaction | { type: 'ton_message' } & TonMessage | { type: 'ton_transaction' } & TonTransaction | { type: 'tron_message' } & TronMessage | { type: 'tron_transaction' } & TronTransaction | { type: 'utxo_message' } & UtxoMessage | { type: 'utxo_transaction' } & UtxoTransaction;
 
 export function CreateTransactionResponseFromJSON(json: any): CreateTransactionResponse {
     return CreateTransactionResponseFromJSONTyped(json, false);
@@ -111,6 +119,8 @@ function CreateTransactionResponseFromJSONTyped(json: any, _ignoreDiscriminator:
             return Object.assign({}, AptosMessageFromJSONTyped(json, true), { type: 'aptos_message' } as const);
         case 'aptos_transaction':
             return Object.assign({}, AptosTransactionFromJSONTyped(json, true), { type: 'aptos_transaction' } as const);
+        case 'arch_transaction':
+            return Object.assign({}, ArchTransactionFromJSONTyped(json, true), { type: 'arch_transaction' } as const);
         case 'black_box_signature':
             return Object.assign({}, BlackBoxSignatureFromJSONTyped(json, true), { type: 'black_box_signature' } as const);
         case 'cosmos_message':
@@ -141,6 +151,8 @@ function CreateTransactionResponseFromJSONTyped(json: any, _ignoreDiscriminator:
             return Object.assign({}, TonMessageFromJSONTyped(json, true), { type: 'ton_message' } as const);
         case 'ton_transaction':
             return Object.assign({}, TonTransactionFromJSONTyped(json, true), { type: 'ton_transaction' } as const);
+        case 'tron_message':
+            return Object.assign({}, TronMessageFromJSONTyped(json, true), { type: 'tron_message' } as const);
         case 'tron_transaction':
             return Object.assign({}, TronTransactionFromJSONTyped(json, true), { type: 'tron_transaction' } as const);
         case 'utxo_message':
@@ -151,4 +163,3 @@ function CreateTransactionResponseFromJSONTyped(json: any, _ignoreDiscriminator:
             throw new Error(`No variant of CreateTransactionResponse exists with 'type=${json['type']}'`);
     }
 }
-

@@ -18,18 +18,6 @@ import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
 } from './PricedAsset';
-import type { Price } from './Price';
-import {
-    PriceFromJSON,
-} from './Price';
-import type { CosmosBalanceChangeEffectCoinInfo } from './CosmosBalanceChangeEffectCoinInfo';
-import {
-    CosmosBalanceChangeEffectCoinInfoFromJSON,
-} from './CosmosBalanceChangeEffectCoinInfo';
-import type { CosmosTransferEffectType } from './CosmosTransferEffectType';
-import {
-    CosmosTransferEffectTypeFromJSON,
-} from './CosmosTransferEffectType';
 
 /**
  * 
@@ -51,19 +39,6 @@ export interface CosmosTransferEffect {
     amount: string;
     /**
      * 
-     * @type {CosmosTransferEffectType}
-     * @memberof CosmosTransferEffect
-     */
-    type: CosmosTransferEffectType;
-    /**
-     * 
-     * @type {CosmosBalanceChangeEffectCoinInfo}
-     * @memberof CosmosTransferEffect
-     * @deprecated
-     */
-    coinInfo: CosmosBalanceChangeEffectCoinInfo;
-    /**
-     * 
      * @type {EnrichedCosmosBechAddress}
      * @memberof CosmosTransferEffect
      */
@@ -74,12 +49,6 @@ export interface CosmosTransferEffect {
      * @memberof CosmosTransferEffect
      */
     to: EnrichedCosmosBechAddress;
-    /**
-     * 
-     * @type {Price}
-     * @memberof CosmosTransferEffect
-     */
-    price?: Price;
 }
 
 export function CosmosTransferEffectFromJSON(json: any): CosmosTransferEffect {
@@ -94,11 +63,8 @@ function CosmosTransferEffectFromJSONTyped(json: any, _ignoreDiscriminator: bool
         
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
         'amount': json['amount'],
-        'type': CosmosTransferEffectTypeFromJSON(json['type']),
-        'coinInfo': CosmosBalanceChangeEffectCoinInfoFromJSON(json['coin_info']),
         'from': EnrichedCosmosBechAddressFromJSON(json['from']),
         'to': EnrichedCosmosBechAddressFromJSON(json['to']),
-        'price': json['price'] == null ? undefined : PriceFromJSON(json['price']),
     };
 }
 

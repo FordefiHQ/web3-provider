@@ -27,6 +27,12 @@ export interface SuiGasConfig {
      * @type {string}
      * @memberof SuiGasConfig
      */
+    owner?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SuiGasConfig
+     */
     budget?: string;
     /**
      * 
@@ -52,6 +58,7 @@ function SuiGasConfigFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Su
     }
     return {
         
+        'owner': json['owner'] == null ? undefined : json['owner'],
         'budget': json['budget'] == null ? undefined : json['budget'],
         'price': json['price'] == null ? undefined : json['price'],
         'payment': ((json['payment'] as Array<any>).map(SuiObjectRefFromJSON)),
@@ -69,6 +76,7 @@ function SuiGasConfigToJSONTyped(value?: SuiGasConfig | null, _ignoreDiscriminat
 
     return {
         
+        'owner': value['owner'],
         'budget': value['budget'],
         'price': value['price'],
         'payment': ((value['payment'] as Array<any>).map(SuiObjectRefToJSON)),

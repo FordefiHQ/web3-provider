@@ -14,10 +14,6 @@ import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
 } from './PricedAsset';
-import type { Price } from './Price';
-import {
-    PriceFromJSON,
-} from './Price';
 
 /**
  * 
@@ -31,12 +27,6 @@ export interface SuiGas {
      * @memberof SuiGas
      */
     totalGas: string;
-    /**
-     * 
-     * @type {Price}
-     * @memberof SuiGas
-     */
-    fiatPrice?: Price;
     /**
      * 
      * @type {PricedAsset}
@@ -56,7 +46,6 @@ function SuiGasFromJSONTyped(json: any, _ignoreDiscriminator: boolean): SuiGas {
     return {
         
         'totalGas': json['total_gas'],
-        'fiatPrice': json['fiat_price'] == null ? undefined : PriceFromJSON(json['fiat_price']),
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }

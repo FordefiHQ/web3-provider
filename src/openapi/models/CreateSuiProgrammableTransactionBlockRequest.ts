@@ -51,16 +51,16 @@ export interface CreateSuiProgrammableTransactionBlockRequest {
     failOnPredictionFailure?: boolean;
     /**
      * 
-     * @type {PushMode}
-     * @memberof CreateSuiProgrammableTransactionBlockRequest
-     */
-    pushMode?: PushMode;
-    /**
-     * 
      * @type {boolean}
      * @memberof CreateSuiProgrammableTransactionBlockRequest
      */
     skipPrediction?: boolean;
+    /**
+     * 
+     * @type {PushMode}
+     * @memberof CreateSuiProgrammableTransactionBlockRequest
+     */
+    pushMode?: PushMode;
     /**
      * 
      * @type {SuiChainUniqueId}
@@ -109,8 +109,8 @@ function CreateSuiProgrammableTransactionBlockRequestToJSONTyped(value?: CreateS
         
         'type': value['type'],
         'fail_on_prediction_failure': value['failOnPredictionFailure'],
-        'push_mode': PushModeToJSON(value['pushMode']),
         'skip_prediction': value['skipPrediction'],
+        'push_mode': PushModeToJSON(value['pushMode']),
         'chain': SuiChainUniqueIdToJSON(value['chain']),
         'gas_config': SuiGasConfigToJSON(value['gasConfig']),
         'inputs': ((value['inputs'] as Array<any>).map(SuiInputToJSON)),

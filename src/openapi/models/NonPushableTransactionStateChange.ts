@@ -10,14 +10,6 @@
  * Do not edit the class manually.
  */
 
-import type { PricedAsset } from './PricedAsset';
-import {
-    PricedAssetFromJSON,
-} from './PricedAsset';
-import type { EvmPrices } from './EvmPrices';
-import {
-    EvmPricesFromJSON,
-} from './EvmPrices';
 import type { StateChangeReason } from './StateChangeReason';
 import {
     StateChangeReasonFromJSON,
@@ -47,19 +39,6 @@ export interface NonPushableTransactionStateChange {
     reason?: StateChangeReason;
     /**
      * 
-     * @type {Array<PricedAsset>}
-     * @memberof NonPushableTransactionStateChange
-     * @deprecated
-     */
-    assetPrices?: Array<PricedAsset>;
-    /**
-     * 
-     * @type {EvmPrices}
-     * @memberof NonPushableTransactionStateChange
-     */
-    prices?: EvmPrices;
-    /**
-     * 
      * @type {NonPushableTransactionState}
      * @memberof NonPushableTransactionStateChange
      */
@@ -84,8 +63,6 @@ function NonPushableTransactionStateChangeFromJSONTyped(json: any, _ignoreDiscri
         
         'changedAt': (new Date(json['changed_at'])),
         'reason': json['reason'] == null ? undefined : StateChangeReasonFromJSON(json['reason']),
-        'assetPrices': json['asset_prices'] == null ? undefined : ((json['asset_prices'] as Array<any>).map(PricedAssetFromJSON)),
-        'prices': json['prices'] == null ? undefined : EvmPricesFromJSON(json['prices']),
         'previousState': json['previous_state'] == null ? undefined : NonPushableTransactionStateFromJSON(json['previous_state']),
         'newState': NonPushableTransactionStateFromJSON(json['new_state']),
     };

@@ -18,10 +18,6 @@ import type { ApprovalRequestState } from './ApprovalRequestState';
 import {
     ApprovalRequestStateFromJSON,
 } from './ApprovalRequestState';
-import type { RequestApprover } from './RequestApprover';
-import {
-    RequestApproverFromJSON,
-} from './RequestApprover';
 
 /**
  * 
@@ -35,20 +31,6 @@ export interface ApprovalRequest {
      * @memberof ApprovalRequest
      */
     state: ApprovalRequestState;
-    /**
-     * 
-     * @type {number}
-     * @memberof ApprovalRequest
-     * @deprecated
-     */
-    quorumSize?: number;
-    /**
-     * 
-     * @type {Array<RequestApprover>}
-     * @memberof ApprovalRequest
-     * @deprecated
-     */
-    approvers?: Array<RequestApprover>;
     /**
      * 
      * @type {number}
@@ -80,8 +62,6 @@ function ApprovalRequestFromJSONTyped(json: any, _ignoreDiscriminator: boolean):
     return {
         
         'state': ApprovalRequestStateFromJSON(json['state']),
-        'quorumSize': json['quorum_size'] == null ? undefined : json['quorum_size'],
-        'approvers': json['approvers'] == null ? undefined : ((json['approvers'] as Array<any>).map(RequestApproverFromJSON)),
         'requiredGroups': json['required_groups'],
         'approvalGroups': ((json['approval_groups'] as Array<any>).map(ApprovalRequestGroupFromJSON)),
         'errorMessage': json['error_message'] == null ? undefined : json['error_message'],

@@ -22,6 +22,12 @@ export interface AptosScriptDetails {
      * @memberof AptosScriptDetails
      */
     type: AptosScriptDetailsTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof AptosScriptDetails
+     */
+    code: string;
 }
 
 
@@ -40,5 +46,6 @@ export function AptosScriptDetailsFromJSONTyped(json: any, _ignoreDiscriminator:
     return {
         
         'type': json['type'],
+        'code': json['code'],
     };
 }

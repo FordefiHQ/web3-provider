@@ -10,10 +10,15 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from '../runtime';
 import type { EvmMessageDomainData } from './EvmMessageDomainData';
 import {
     EvmMessageDomainDataFromJSON,
 } from './EvmMessageDomainData';
+import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
+import {
+    EnrichedEvmAddressFromJSON,
+} from './EnrichedEvmAddress';
 
 /**
  * 
@@ -33,6 +38,12 @@ export interface UnknownTypedMessageEvmMessage {
      * @memberof UnknownTypedMessageEvmMessage
      */
     primaryType: string;
+    /**
+     * 
+     * @type {{ [key: string]: EnrichedEvmAddress | undefined; }}
+     * @memberof UnknownTypedMessageEvmMessage
+     */
+    enrichedAddresses?: { [key: string]: EnrichedEvmAddress | undefined; };
     /**
      * 
      * @type {string}
@@ -58,6 +69,7 @@ export function UnknownTypedMessageEvmMessageFromJSONTyped(json: any, _ignoreDis
         
         'domain': EvmMessageDomainDataFromJSON(json['domain']),
         'primaryType': json['primary_type'],
+        'enrichedAddresses': json['enriched_addresses'] == null ? undefined : (mapValues(json['enriched_addresses'], EnrichedEvmAddressFromJSON)),
         'type': json['type'],
     };
 }

@@ -14,6 +14,10 @@ import type { SolanaTransferEffect } from './SolanaTransferEffect';
 import {
     SolanaTransferEffectFromJSON,
 } from './SolanaTransferEffect';
+import type { SolanaAllowanceEffect } from './SolanaAllowanceEffect';
+import {
+    SolanaAllowanceEffectFromJSON,
+} from './SolanaAllowanceEffect';
 import type { SolanaBalanceChangeEffect } from './SolanaBalanceChangeEffect';
 import {
     SolanaBalanceChangeEffectFromJSON,
@@ -37,6 +41,12 @@ export interface SolanaEffects {
      * @memberof SolanaEffects
      */
     transfers: Array<SolanaTransferEffect>;
+    /**
+     * 
+     * @type {Array<SolanaAllowanceEffect>}
+     * @memberof SolanaEffects
+     */
+    allowances: Array<SolanaAllowanceEffect>;
 }
 
 export function SolanaEffectsFromJSON(json: any): SolanaEffects {
@@ -51,6 +61,7 @@ function SolanaEffectsFromJSONTyped(json: any, _ignoreDiscriminator: boolean): S
         
         'balanceChanges': ((json['balance_changes'] as Array<any>).map(SolanaBalanceChangeEffectFromJSON)),
         'transfers': ((json['transfers'] as Array<any>).map(SolanaTransferEffectFromJSON)),
+        'allowances': ((json['allowances'] as Array<any>).map(SolanaAllowanceEffectFromJSON)),
     };
 }
 

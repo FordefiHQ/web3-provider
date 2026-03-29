@@ -10,26 +10,14 @@
  * Do not edit the class manually.
  */
 
-import type { SolanaBalanceChangeEffectType } from './SolanaBalanceChangeEffectType';
-import {
-    SolanaBalanceChangeEffectTypeFromJSON,
-} from './SolanaBalanceChangeEffectType';
 import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
 } from './PricedAsset';
-import type { Price } from './Price';
-import {
-    PriceFromJSON,
-} from './Price';
 import type { EnrichedSolanaAddress } from './EnrichedSolanaAddress';
 import {
     EnrichedSolanaAddressFromJSON,
 } from './EnrichedSolanaAddress';
-import type { SplTokenContract } from './SplTokenContract';
-import {
-    SplTokenContractFromJSON,
-} from './SplTokenContract';
 
 /**
  * 
@@ -51,34 +39,10 @@ export interface SolanaBalanceChangeEffect {
     diff: string;
     /**
      * 
-     * @type {SolanaBalanceChangeEffectType}
-     * @memberof SolanaBalanceChangeEffect
-     */
-    type: SolanaBalanceChangeEffectType;
-    /**
-     * 
      * @type {EnrichedSolanaAddress}
      * @memberof SolanaBalanceChangeEffect
      */
     address: EnrichedSolanaAddress;
-    /**
-     * 
-     * @type {EnrichedSolanaAddress}
-     * @memberof SolanaBalanceChangeEffect
-     */
-    owner?: EnrichedSolanaAddress;
-    /**
-     * 
-     * @type {Price}
-     * @memberof SolanaBalanceChangeEffect
-     */
-    price?: Price;
-    /**
-     * 
-     * @type {SplTokenContract}
-     * @memberof SolanaBalanceChangeEffect
-     */
-    tokenContract?: SplTokenContract;
 }
 
 export function SolanaBalanceChangeEffectFromJSON(json: any): SolanaBalanceChangeEffect {
@@ -93,11 +57,7 @@ function SolanaBalanceChangeEffectFromJSONTyped(json: any, _ignoreDiscriminator:
         
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
         'diff': json['diff'],
-        'type': SolanaBalanceChangeEffectTypeFromJSON(json['type']),
         'address': EnrichedSolanaAddressFromJSON(json['address']),
-        'owner': json['owner'] == null ? undefined : EnrichedSolanaAddressFromJSON(json['owner']),
-        'price': json['price'] == null ? undefined : PriceFromJSON(json['price']),
-        'tokenContract': json['token_contract'] == null ? undefined : SplTokenContractFromJSON(json['token_contract']),
     };
 }
 

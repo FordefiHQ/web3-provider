@@ -79,4 +79,3 @@ function UtxoAddressToJSONTyped(value?: UtxoAddress | null, _ignoreDiscriminator
         'chain': UtxoChainToJSON(value['chain']),
     };
 }
-

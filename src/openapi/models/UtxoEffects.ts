@@ -14,10 +14,6 @@ import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
 } from './PricedAsset';
-import type { Price } from './Price';
-import {
-    PriceFromJSON,
-} from './Price';
 import type { UtxoBalanceChangeEffect } from './UtxoBalanceChangeEffect';
 import {
     UtxoBalanceChangeEffectFromJSON,
@@ -63,12 +59,6 @@ export interface UtxoEffects {
     totalValue: string;
     /**
      * 
-     * @type {Price}
-     * @memberof UtxoEffects
-     */
-    price?: Price;
-    /**
-     * 
      * @type {PricedAsset}
      * @memberof UtxoEffects
      */
@@ -89,7 +79,6 @@ function UtxoEffectsFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Utx
         'outputs': ((json['outputs'] as Array<any>).map(UtxoOutputFromJSON)),
         'balanceChanges': ((json['balance_changes'] as Array<any>).map(UtxoBalanceChangeEffectFromJSON)),
         'totalValue': json['total_value'],
-        'price': json['price'] == null ? undefined : PriceFromJSON(json['price']),
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }

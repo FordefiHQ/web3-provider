@@ -47,6 +47,12 @@ export interface CreateTonTransferRequest {
     failOnPredictionFailure?: boolean;
     /**
      * 
+     * @type {boolean}
+     * @memberof CreateTonTransferRequest
+     */
+    skipPrediction?: boolean;
+    /**
+     * 
      * @type {PushMode}
      * @memberof CreateTonTransferRequest
      */
@@ -75,12 +81,6 @@ export interface CreateTonTransferRequest {
      * @memberof CreateTonTransferRequest
      */
     comment?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CreateTonTransferRequest
-     */
-    skipPrediction?: boolean;
 }
 
 
@@ -105,11 +105,11 @@ function CreateTonTransferRequestToJSONTyped(value?: CreateTonTransferRequest | 
         
         'type': value['type'],
         'fail_on_prediction_failure': value['failOnPredictionFailure'],
+        'skip_prediction': value['skipPrediction'],
         'push_mode': PushModeToJSON(value['pushMode']),
         'to': CreateTonTransferRequestToToJSON(value['to']),
         'value': CreateAptosTransferRequestValueToJSON(value['value']),
         'asset_identifier': TonAssetIdentifierRequestToJSON(value['assetIdentifier']),
         'comment': value['comment'],
-        'skip_prediction': value['skipPrediction'],
     };
 }

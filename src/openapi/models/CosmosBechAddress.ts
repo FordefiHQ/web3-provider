@@ -87,4 +87,3 @@ function CosmosBechAddressToJSONTyped(value?: CosmosBechAddress | null, _ignoreD
         'key_type': CosmosKeyTypeToJSON(value['keyType']),
     };
 }
-

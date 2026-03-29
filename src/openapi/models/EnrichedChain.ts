@@ -14,6 +14,10 @@ import type { EnrichedAptosChain } from './EnrichedAptosChain';
 import {
     EnrichedAptosChainFromJSONTyped,
 } from './EnrichedAptosChain';
+import type { EnrichedArchChain } from './EnrichedArchChain';
+import {
+    EnrichedArchChainFromJSONTyped,
+} from './EnrichedArchChain';
 import type { EnrichedCosmosChain } from './EnrichedCosmosChain';
 import {
     EnrichedCosmosChainFromJSONTyped,
@@ -60,7 +64,7 @@ import {
  * @export
  * @type EnrichedChain
  */
-export type EnrichedChain = { chainType: 'aptos' } & EnrichedAptosChain | { chainType: 'cosmos' } & EnrichedCosmosChain | { chainType: 'evm' } & EnrichedEvmChain | { chainType: 'exchange' } & EnrichedExchangeChain | { chainType: 'solana' } & EnrichedSolanaChain | { chainType: 'stacks' } & EnrichedStacksChain | { chainType: 'starknet' } & EnrichedStarknetChain | { chainType: 'sui' } & EnrichedSuiChain | { chainType: 'ton' } & EnrichedTonChain | { chainType: 'tron' } & EnrichedTronChain | { chainType: 'utxo' } & EnrichedUtxoChain;
+export type EnrichedChain = { chainType: 'aptos' } & EnrichedAptosChain | { chainType: 'arch' } & EnrichedArchChain | { chainType: 'cosmos' } & EnrichedCosmosChain | { chainType: 'evm' } & EnrichedEvmChain | { chainType: 'exchange' } & EnrichedExchangeChain | { chainType: 'solana' } & EnrichedSolanaChain | { chainType: 'stacks' } & EnrichedStacksChain | { chainType: 'starknet' } & EnrichedStarknetChain | { chainType: 'sui' } & EnrichedSuiChain | { chainType: 'ton' } & EnrichedTonChain | { chainType: 'tron' } & EnrichedTronChain | { chainType: 'utxo' } & EnrichedUtxoChain;
 
 export function EnrichedChainFromJSON(json: any): EnrichedChain {
     return EnrichedChainFromJSONTyped(json, false);
@@ -73,6 +77,8 @@ function EnrichedChainFromJSONTyped(json: any, _ignoreDiscriminator: boolean): E
     switch (json['chain_type']) {
         case 'aptos':
             return Object.assign({}, EnrichedAptosChainFromJSONTyped(json, true), { chainType: 'aptos' } as const);
+        case 'arch':
+            return Object.assign({}, EnrichedArchChainFromJSONTyped(json, true), { chainType: 'arch' } as const);
         case 'cosmos':
             return Object.assign({}, EnrichedCosmosChainFromJSONTyped(json, true), { chainType: 'cosmos' } as const);
         case 'evm':

@@ -36,7 +36,7 @@ export interface UtxoNativeTransferDetails {
      * @type {TransferDirection}
      * @memberof UtxoNativeTransferDetails
      */
-    direction: TransferDirection;
+    direction?: TransferDirection;
     /**
      * 
      * @type {boolean}
@@ -73,7 +73,7 @@ export function UtxoNativeTransferDetailsFromJSONTyped(json: any, _ignoreDiscrim
     return {
         
         'type': json['type'],
-        'direction': TransferDirectionFromJSON(json['direction']),
+        'direction': json['direction'] == null ? undefined : TransferDirectionFromJSON(json['direction']),
         'isInternal': json['is_internal'] == null ? undefined : json['is_internal'],
         'vault': json['vault'] == null ? undefined : VaultRefFromJSON(json['vault']),
         'memos': json['memos'],

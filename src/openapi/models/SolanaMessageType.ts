@@ -15,7 +15,8 @@
  * @export
  */
 export const SolanaMessageType = {
-    personalMessageType: 'personal_message_type'
+    personalMessageType: 'personal_message_type',
+    createSessionMessageType: 'create_session_message_type'
 } as const;
 export type SolanaMessageType = typeof SolanaMessageType[keyof typeof SolanaMessageType];
 

@@ -14,6 +14,10 @@ import type { ExchangeTransactionState } from './ExchangeTransactionState';
 import {
     ExchangeTransactionStateFromJSON,
 } from './ExchangeTransactionState';
+import type { VaultRef } from './VaultRef';
+import {
+    VaultRefFromJSON,
+} from './VaultRef';
 import type { ManagedTransactionData } from './ManagedTransactionData';
 import {
     ManagedTransactionDataFromJSON,
@@ -34,6 +38,10 @@ import type { Signature } from './Signature';
 import {
     SignatureFromJSON,
 } from './Signature';
+import type { RelatedTransaction } from './RelatedTransaction';
+import {
+    RelatedTransactionFromJSON,
+} from './RelatedTransaction';
 import type { SimulationStatusResult } from './SimulationStatusResult';
 import {
     SimulationStatusResultFromJSON,
@@ -109,6 +117,24 @@ export interface ExchangeTransaction {
     signedExternally?: boolean;
     /**
      * 
+     * @type {Array<VaultRef>}
+     * @memberof ExchangeTransaction
+     */
+    interactedVaults: Array<VaultRef>;
+    /**
+     * 
+     * @type {Array<RelatedTransaction>}
+     * @memberof ExchangeTransaction
+     */
+    relatedTransactions?: Array<RelatedTransaction>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExchangeTransaction
+     */
+    organizationId: string;
+    /**
+     * 
      * @type {ExchangeTransactionState}
      * @memberof ExchangeTransaction
      */
@@ -119,6 +145,12 @@ export interface ExchangeTransaction {
      * @memberof ExchangeTransaction
      */
     stateChanges: Array<ExchangeTransactionStateChange>;
+    /**
+     * 
+     * @type {SimulationStatusResult}
+     * @memberof ExchangeTransaction
+     */
+    simulationStatusResult?: SimulationStatusResult;
     /**
      * 
      * @type {string}
@@ -145,36 +177,16 @@ export interface ExchangeTransaction {
     exchangeTransactionId?: string;
     /**
      * 
-     * @type {string}
-     * @memberof ExchangeTransaction
-     * @deprecated
-     */
-    hash?: string;
-    /**
-     * 
      * @type {ExchangeTransactionResult}
      * @memberof ExchangeTransaction
      */
     expectedResult?: ExchangeTransactionResult;
     /**
      * 
-     * @type {SimulationStatusResult}
-     * @memberof ExchangeTransaction
-     */
-    simulationStatusResult: SimulationStatusResult;
-    /**
-     * 
      * @type {ExchangeTransactionResult}
      * @memberof ExchangeTransaction
      */
     minedResult?: ExchangeTransactionResult;
-    /**
-     * 
-     * @type {string}
-     * @memberof ExchangeTransaction
-     * @deprecated
-     */
-    explorerUrl?: string;
 }
 
 
@@ -201,16 +213,17 @@ export function ExchangeTransactionFromJSONTyped(json: any, _ignoreDiscriminator
         'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
         'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'interactedVaults': ((json['interacted_vaults'] as Array<any>).map(VaultRefFromJSON)),
+        'relatedTransactions': json['related_transactions'] == null ? undefined : ((json['related_transactions'] as Array<any>).map(RelatedTransactionFromJSON)),
+        'organizationId': json['organization_id'],
         'state': ExchangeTransactionStateFromJSON(json['state']),
         'stateChanges': ((json['state_changes'] as Array<any>).map(ExchangeTransactionStateChangeFromJSON)),
+        'simulationStatusResult': json['simulation_status_result'] == null ? undefined : SimulationStatusResultFromJSON(json['simulation_status_result']),
         'type': json['type'],
         'exchangeTransactionTypeDetails': ExchangeTransactionExchangeTransactionTypeDetailsFromJSON(json['exchange_transaction_type_details']),
         'exchangeNonce': json['exchange_nonce'] == null ? undefined : json['exchange_nonce'],
         'exchangeTransactionId': json['exchange_transaction_id'] == null ? undefined : json['exchange_transaction_id'],
-        'hash': json['hash'] == null ? undefined : json['hash'],
         'expectedResult': json['expected_result'] == null ? undefined : ExchangeTransactionResultFromJSON(json['expected_result']),
-        'simulationStatusResult': SimulationStatusResultFromJSON(json['simulation_status_result']),
         'minedResult': json['mined_result'] == null ? undefined : ExchangeTransactionResultFromJSON(json['mined_result']),
-        'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
     };
 }

@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from '../runtime';
 import type { EvmMessageDomainData } from './EvmMessageDomainData';
 import {
     EvmMessageDomainDataFromJSON,
@@ -47,6 +48,12 @@ export interface PermitTypedMessageEvmMessage {
     primaryType: string;
     /**
      * 
+     * @type {{ [key: string]: EnrichedEvmAddress | undefined; }}
+     * @memberof PermitTypedMessageEvmMessage
+     */
+    enrichedAddresses?: { [key: string]: EnrichedEvmAddress | undefined; };
+    /**
+     * 
      * @type {string}
      * @memberof PermitTypedMessageEvmMessage
      */
@@ -56,19 +63,20 @@ export interface PermitTypedMessageEvmMessage {
      * @type {EnrichedEvmAddress}
      * @memberof PermitTypedMessageEvmMessage
      */
-    owner: EnrichedEvmAddress;
+    owner?: EnrichedEvmAddress;
     /**
      * 
      * @type {EnrichedEvmAddress}
      * @memberof PermitTypedMessageEvmMessage
      */
-    spender: EnrichedEvmAddress;
+    spender?: EnrichedEvmAddress;
     /**
      * 
      * @type {string}
      * @memberof PermitTypedMessageEvmMessage
+     * @deprecated
      */
-    value: string;
+    value?: string;
     /**
      * 
      * @type {Date}
@@ -92,7 +100,7 @@ export interface PermitTypedMessageEvmMessage {
      * @type {PricedAsset}
      * @memberof PermitTypedMessageEvmMessage
      */
-    pricedAsset: PricedAsset;
+    pricedAsset?: PricedAsset;
 }
 
 
@@ -112,13 +120,14 @@ export function PermitTypedMessageEvmMessageFromJSONTyped(json: any, _ignoreDisc
         
         'domain': EvmMessageDomainDataFromJSON(json['domain']),
         'primaryType': json['primary_type'],
+        'enrichedAddresses': json['enriched_addresses'] == null ? undefined : (mapValues(json['enriched_addresses'], EnrichedEvmAddressFromJSON)),
         'type': json['type'],
-        'owner': EnrichedEvmAddressFromJSON(json['owner']),
-        'spender': EnrichedEvmAddressFromJSON(json['spender']),
-        'value': json['value'],
+        'owner': json['owner'] == null ? undefined : EnrichedEvmAddressFromJSON(json['owner']),
+        'spender': json['spender'] == null ? undefined : EnrichedEvmAddressFromJSON(json['spender']),
+        'value': json['value'] == null ? undefined : json['value'],
         'deadline': (new Date(json['deadline'])),
         'nonce': json['nonce'],
         'price': json['price'] == null ? undefined : PriceFromJSON(json['price']),
-        'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
+        'pricedAsset': json['priced_asset'] == null ? undefined : PricedAssetFromJSON(json['priced_asset']),
     };
 }

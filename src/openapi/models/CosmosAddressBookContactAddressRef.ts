@@ -39,6 +39,12 @@ export interface CosmosAddressBookContactAddressRef {
      * @memberof CosmosAddressBookContactAddressRef
      */
     chain: CosmosChain;
+    /**
+     * 
+     * @type {string}
+     * @memberof CosmosAddressBookContactAddressRef
+     */
+    memo?: string;
 }
 
 
@@ -59,5 +65,6 @@ export function CosmosAddressBookContactAddressRefFromJSONTyped(json: any, _igno
         'chainType': json['chain_type'],
         'address': json['address'],
         'chain': CosmosChainFromJSON(json['chain']),
+        'memo': json['memo'] == null ? undefined : json['memo'],
     };
 }

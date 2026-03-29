@@ -14,9 +14,9 @@
 import * as runtime from '../runtime';
 import type {
   ListVaultsResponse,
+  ListVaultsSortableFields,
   PageResponseType,
   VaultOriginType,
-  VaultSortableFields,
   VaultState,
   VaultType,
 } from '../models/index';
@@ -25,21 +25,22 @@ import {
 } from '../models/index';
 
 interface ListVaultsApiV1VaultsGetRequest {
-    sortBy?: Array<VaultSortableFields>;
+    sortBy?: Array<ListVaultsSortableFields>;
     page?: number;
     size?: number;
     responseType?: PageResponseType;
+    skipCount?: boolean;
     vaultIds?: Array<string>;
     search?: string;
     names?: Array<string>;
     vaultTypes?: Array<VaultType>;
     vaultStates?: Array<VaultState>;
-    keysetIds?: Array<string>;
     keyHolderIds?: Array<string>;
     vaultGroupIds?: Array<string>;
     excludeVaultGroupIds?: Array<string>;
     originType?: VaultOriginType;
     accountAddresses?: Array<string>;
+    positiveNativeBalanceChainIds?: Array<string>;
 }
 
 /**
@@ -70,6 +71,10 @@ export class VaultsApi extends runtime.BaseAPI {
             queryParameters['response_type'] = requestParameters['responseType'];
         }
 
+        if (requestParameters['skipCount'] != null) {
+            queryParameters['skip_count'] = requestParameters['skipCount'];
+        }
+
         if (requestParameters['vaultIds'] != null) {
             queryParameters['vault_ids'] = requestParameters['vaultIds'];
         }
@@ -90,10 +95,6 @@ export class VaultsApi extends runtime.BaseAPI {
             queryParameters['vault_states'] = requestParameters['vaultStates'];
         }
 
-        if (requestParameters['keysetIds'] != null) {
-            queryParameters['keyset_ids'] = requestParameters['keysetIds'];
-        }
-
         if (requestParameters['keyHolderIds'] != null) {
             queryParameters['key_holder_ids'] = requestParameters['keyHolderIds'];
         }
@@ -112,6 +113,10 @@ export class VaultsApi extends runtime.BaseAPI {
 
         if (requestParameters['accountAddresses'] != null) {
             queryParameters['account_addresses'] = requestParameters['accountAddresses'];
+        }
+
+        if (requestParameters['positiveNativeBalanceChainIds'] != null) {
+            queryParameters['positive_native_balance_chain_ids'] = requestParameters['positiveNativeBalanceChainIds'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

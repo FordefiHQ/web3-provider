@@ -39,6 +39,12 @@ export interface StacksAddressBookContactAddressRef {
      * @memberof StacksAddressBookContactAddressRef
      */
     chains: Array<StacksChain>;
+    /**
+     * 
+     * @type {string}
+     * @memberof StacksAddressBookContactAddressRef
+     */
+    memo?: string;
 }
 
 
@@ -59,5 +65,6 @@ export function StacksAddressBookContactAddressRefFromJSONTyped(json: any, _igno
         'chainType': json['chain_type'],
         'address': json['address'],
         'chains': ((json['chains'] as Array<any>).map(StacksChainFromJSON)),
+        'memo': json['memo'] == null ? undefined : json['memo'],
     };
 }
