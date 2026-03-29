@@ -27,6 +27,30 @@ function log(message, color = 'reset') {
   }
 }
 
+function removeUnusedFiles() {
+  log('\n🧹 Removing unused files ...', 'yellow');
+  const targets = [
+    path.join(process.cwd(), 'src/openapi/.openapi-generator'),
+    path.join(process.cwd(), 'src/openapi/.openapi-generator-ignore'),
+  ];
+
+  for (const target of targets) {
+    try {
+      const stat = fs.statSync(target);
+      if (stat.isDirectory()) {
+        fs.rmSync(target, { recursive: true });
+      } else {
+        fs.unlinkSync(target);
+      }
+      log(`  Removed ${path.relative(process.cwd(), target)}`, 'green');
+    } catch (error) {
+      if (error.code !== 'ENOENT') {
+        log(`  Error removing ${path.relative(process.cwd(), target)}: ${error.message}`, 'red');
+      }
+    }
+  }
+}
+
 function removeLinterDisableComments() {
   log('\n🧹 Removing linter disable comments ...', 'yellow');
   const srcDir = path.join(process.cwd(), 'src/openapi');
@@ -310,6 +334,8 @@ function runCleanup(cleanupIteration) {
 
 function cleanup() {
   log('\nRunning cleanup...', 'cyan');
+
+  removeUnusedFiles();
 
   removeLinterDisableComments();
 
