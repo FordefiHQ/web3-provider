@@ -301,12 +301,8 @@ const errorTransactionStates: PushableTransactionState[] = [
 
 type AnyTransactionState = PushableTransactionState | NonPushableTransactionState;
 
-const didStateAlreadyOccur = (
-  currentState: AnyTransactionState,
-  desiredState: PushableTransactionState,
-): boolean =>
+const didStateAlreadyOccur = (currentState: AnyTransactionState, desiredState: PushableTransactionState): boolean =>
   orderedTransactionStates.indexOf(currentState as PushableTransactionState) >=
   orderedTransactionStates.indexOf(desiredState);
 
-const isErrorState = (state: AnyTransactionState) =>
-  errorTransactionStates.includes(state as PushableTransactionState);
+const isErrorState = (state: AnyTransactionState) => errorTransactionStates.includes(state as PushableTransactionState);
