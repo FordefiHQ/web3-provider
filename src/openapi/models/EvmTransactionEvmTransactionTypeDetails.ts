@@ -30,6 +30,14 @@ import type { EvmNativeTransferDetails } from './EvmNativeTransferDetails';
 import {
     EvmNativeTransferDetailsFromJSONTyped,
 } from './EvmNativeTransferDetails';
+import type { EvmSpotSwapDetails } from './EvmSpotSwapDetails';
+import {
+    EvmSpotSwapDetailsFromJSONTyped,
+} from './EvmSpotSwapDetails';
+import type { SetCodeDetails } from './SetCodeDetails';
+import {
+    SetCodeDetailsFromJSONTyped,
+} from './SetCodeDetails';
 import type { TokenTransferDetails } from './TokenTransferDetails';
 import {
     TokenTransferDetailsFromJSONTyped,
@@ -40,7 +48,7 @@ import {
  * @export
  * @type EvmTransactionEvmTransactionTypeDetails
  */
-export type EvmTransactionEvmTransactionTypeDetails = { type: 'allowance' } & AllowanceDetails | { type: 'contract_call' } & ContractCallDetails | { type: 'contract_deployment' } & ContractDeploymentDetails | { type: 'cross_chain_bridge' } & BridgeDetails | { type: 'native_transfer' } & EvmNativeTransferDetails | { type: 'token_transfer' } & TokenTransferDetails;
+export type EvmTransactionEvmTransactionTypeDetails = { type: 'allowance' } & AllowanceDetails | { type: 'contract_call' } & ContractCallDetails | { type: 'contract_deployment' } & ContractDeploymentDetails | { type: 'cross_chain_bridge' } & BridgeDetails | { type: 'native_transfer' } & EvmNativeTransferDetails | { type: 'set_code' } & SetCodeDetails | { type: 'spot_swap' } & EvmSpotSwapDetails | { type: 'token_transfer' } & TokenTransferDetails;
 
 export function EvmTransactionEvmTransactionTypeDetailsFromJSON(json: any): EvmTransactionEvmTransactionTypeDetails {
     return EvmTransactionEvmTransactionTypeDetailsFromJSONTyped(json, false);
@@ -61,6 +69,10 @@ function EvmTransactionEvmTransactionTypeDetailsFromJSONTyped(json: any, _ignore
             return Object.assign({}, BridgeDetailsFromJSONTyped(json, true), { type: 'cross_chain_bridge' } as const);
         case 'native_transfer':
             return Object.assign({}, EvmNativeTransferDetailsFromJSONTyped(json, true), { type: 'native_transfer' } as const);
+        case 'set_code':
+            return Object.assign({}, SetCodeDetailsFromJSONTyped(json, true), { type: 'set_code' } as const);
+        case 'spot_swap':
+            return Object.assign({}, EvmSpotSwapDetailsFromJSONTyped(json, true), { type: 'spot_swap' } as const);
         case 'token_transfer':
             return Object.assign({}, TokenTransferDetailsFromJSONTyped(json, true), { type: 'token_transfer' } as const);
         default:

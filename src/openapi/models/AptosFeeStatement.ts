@@ -14,10 +14,6 @@ import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
 } from './PricedAsset';
-import type { Price } from './Price';
-import {
-    PriceFromJSON,
-} from './Price';
 
 /**
  * 
@@ -63,12 +59,6 @@ export interface AptosFeeStatement {
     totalGas: string;
     /**
      * 
-     * @type {Price}
-     * @memberof AptosFeeStatement
-     */
-    fiatPrice?: Price;
-    /**
-     * 
      * @type {PricedAsset}
      * @memberof AptosFeeStatement
      */
@@ -91,7 +81,6 @@ function AptosFeeStatementFromJSONTyped(json: any, _ignoreDiscriminator: boolean
         'storageFeeRefundOctas': json['storage_fee_refund_octas'],
         'totalChargeGasUnits': json['total_charge_gas_units'],
         'totalGas': json['total_gas'],
-        'fiatPrice': json['fiat_price'] == null ? undefined : PriceFromJSON(json['fiat_price']),
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
     };
 }

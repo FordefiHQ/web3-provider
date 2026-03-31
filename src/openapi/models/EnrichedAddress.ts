@@ -14,6 +14,10 @@ import type { EnrichedAptosAddress } from './EnrichedAptosAddress';
 import {
     EnrichedAptosAddressFromJSONTyped,
 } from './EnrichedAptosAddress';
+import type { EnrichedArchAddress } from './EnrichedArchAddress';
+import {
+    EnrichedArchAddressFromJSONTyped,
+} from './EnrichedArchAddress';
 import type { EnrichedCosmosBechAddress } from './EnrichedCosmosBechAddress';
 import {
     EnrichedCosmosBechAddressFromJSONTyped,
@@ -60,7 +64,7 @@ import {
  * @export
  * @type EnrichedAddress
  */
-export type EnrichedAddress = { type: 'aptos' } & EnrichedAptosAddress | { type: 'cosmos' } & EnrichedCosmosBechAddress | { type: 'evm' } & EnrichedEvmAddress | { type: 'exchange' } & EnrichedExchangeAddress | { type: 'solana' } & EnrichedSolanaAddress | { type: 'stacks' } & EnrichedStacksAddress | { type: 'starknet' } & EnrichedStarknetAddress | { type: 'sui' } & EnrichedSuiAddress | { type: 'ton' } & EnrichedTonAddress | { type: 'tron' } & EnrichedTronAddress | { type: 'utxo' } & EnrichedUtxoAddress;
+export type EnrichedAddress = { type: 'aptos' } & EnrichedAptosAddress | { type: 'arch' } & EnrichedArchAddress | { type: 'cosmos' } & EnrichedCosmosBechAddress | { type: 'evm' } & EnrichedEvmAddress | { type: 'exchange' } & EnrichedExchangeAddress | { type: 'solana' } & EnrichedSolanaAddress | { type: 'stacks' } & EnrichedStacksAddress | { type: 'starknet' } & EnrichedStarknetAddress | { type: 'sui' } & EnrichedSuiAddress | { type: 'ton' } & EnrichedTonAddress | { type: 'tron' } & EnrichedTronAddress | { type: 'utxo' } & EnrichedUtxoAddress;
 
 export function EnrichedAddressFromJSON(json: any): EnrichedAddress {
     return EnrichedAddressFromJSONTyped(json, false);
@@ -73,6 +77,8 @@ function EnrichedAddressFromJSONTyped(json: any, _ignoreDiscriminator: boolean):
     switch (json['type']) {
         case 'aptos':
             return Object.assign({}, EnrichedAptosAddressFromJSONTyped(json, true), { type: 'aptos' } as const);
+        case 'arch':
+            return Object.assign({}, EnrichedArchAddressFromJSONTyped(json, true), { type: 'arch' } as const);
         case 'cosmos':
             return Object.assign({}, EnrichedCosmosBechAddressFromJSONTyped(json, true), { type: 'cosmos' } as const);
         case 'evm':

@@ -14,6 +14,10 @@ import type { ExchangeTransferExternalRecipientTypeAddress } from './ExchangeTra
 import {
     ExchangeTransferExternalRecipientTypeAddressToJSON,
 } from './ExchangeTransferExternalRecipientTypeAddress';
+import type { ExchangeTransferExternalRecipientTypeContact } from './ExchangeTransferExternalRecipientTypeContact';
+import {
+    ExchangeTransferExternalRecipientTypeContactToJSON,
+} from './ExchangeTransferExternalRecipientTypeContact';
 import type { ExchangeTransferExternalRecipientTypeVault } from './ExchangeTransferExternalRecipientTypeVault';
 import {
     ExchangeTransferExternalRecipientTypeVaultToJSON,
@@ -24,7 +28,7 @@ import {
  * @export
  * @type CreateExchangeExternalWithdrawRequestTo
  */
-export type CreateExchangeExternalWithdrawRequestTo = { type: 'address' } & ExchangeTransferExternalRecipientTypeAddress | { type: 'vault' } & ExchangeTransferExternalRecipientTypeVault;
+export type CreateExchangeExternalWithdrawRequestTo = { type: 'address' } & ExchangeTransferExternalRecipientTypeAddress | { type: 'contact' } & ExchangeTransferExternalRecipientTypeContact | { type: 'vault' } & ExchangeTransferExternalRecipientTypeVault;
 
 export function CreateExchangeExternalWithdrawRequestToToJSON(json: any): any {
     return CreateExchangeExternalWithdrawRequestToToJSONTyped(json, false);
@@ -37,6 +41,8 @@ function CreateExchangeExternalWithdrawRequestToToJSONTyped(value?: CreateExchan
     switch (value['type']) {
         case 'address':
             return Object.assign({}, ExchangeTransferExternalRecipientTypeAddressToJSON(value), { type: 'address' } as const);
+        case 'contact':
+            return Object.assign({}, ExchangeTransferExternalRecipientTypeContactToJSON(value), { type: 'contact' } as const);
         case 'vault':
             return Object.assign({}, ExchangeTransferExternalRecipientTypeVaultToJSON(value), { type: 'vault' } as const);
         default:

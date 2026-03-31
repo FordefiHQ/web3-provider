@@ -18,6 +18,10 @@ import type { SolanaAssetIdentifierRequest } from './SolanaAssetIdentifierReques
 import {
     SolanaAssetIdentifierRequestToJSON,
 } from './SolanaAssetIdentifierRequest';
+import type { TransactionFeePayerVault } from './TransactionFeePayerVault';
+import {
+    TransactionFeePayerVaultToJSON,
+} from './TransactionFeePayerVault';
 import type { CreateAptosTransferRequestValue } from './CreateAptosTransferRequestValue';
 import {
     CreateAptosTransferRequestValueToJSON,
@@ -39,6 +43,12 @@ import {
 export interface CreateSolanaTransferRequest {
     /**
      * 
+     * @type {TransactionFeePayerVault}
+     * @memberof CreateSolanaTransferRequest
+     */
+    feePayer?: TransactionFeePayerVault;
+    /**
+     * 
      * @type {BatchSolanaTransactionRequestDetailsFee}
      * @memberof CreateSolanaTransferRequest
      */
@@ -57,16 +67,16 @@ export interface CreateSolanaTransferRequest {
     failOnPredictionFailure?: boolean;
     /**
      * 
-     * @type {PushMode}
-     * @memberof CreateSolanaTransferRequest
-     */
-    pushMode?: PushMode;
-    /**
-     * 
      * @type {boolean}
      * @memberof CreateSolanaTransferRequest
      */
     skipPrediction?: boolean;
+    /**
+     * 
+     * @type {PushMode}
+     * @memberof CreateSolanaTransferRequest
+     */
+    pushMode?: PushMode;
     /**
      * 
      * @type {CreateSolanaTransferRequestTo}
@@ -107,11 +117,12 @@ function CreateSolanaTransferRequestToJSONTyped(value?: CreateSolanaTransferRequ
 
     return {
         
+        'fee_payer': TransactionFeePayerVaultToJSON(value['feePayer']),
         'fee': BatchSolanaTransactionRequestDetailsFeeToJSON(value['fee']),
         'type': value['type'],
         'fail_on_prediction_failure': value['failOnPredictionFailure'],
-        'push_mode': PushModeToJSON(value['pushMode']),
         'skip_prediction': value['skipPrediction'],
+        'push_mode': PushModeToJSON(value['pushMode']),
         'to': CreateSolanaTransferRequestToToJSON(value['to']),
         'value': CreateAptosTransferRequestValueToJSON(value['value']),
         'asset_identifier': SolanaAssetIdentifierRequestToJSON(value['assetIdentifier']),

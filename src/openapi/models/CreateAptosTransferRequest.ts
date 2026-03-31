@@ -18,6 +18,10 @@ import type { CreateAptosTransferRequestTo } from './CreateAptosTransferRequestT
 import {
     CreateAptosTransferRequestToToJSON,
 } from './CreateAptosTransferRequestTo';
+import type { TransactionFeePayerVault } from './TransactionFeePayerVault';
+import {
+    TransactionFeePayerVaultToJSON,
+} from './TransactionFeePayerVault';
 import type { CreateAptosTransferRequestValue } from './CreateAptosTransferRequestValue';
 import {
     CreateAptosTransferRequestValueToJSON,
@@ -39,6 +43,12 @@ import {
 export interface CreateAptosTransferRequest {
     /**
      * 
+     * @type {TransactionFeePayerVault}
+     * @memberof CreateAptosTransferRequest
+     */
+    feePayer?: TransactionFeePayerVault;
+    /**
+     * 
      * @type {string}
      * @memberof CreateAptosTransferRequest
      */
@@ -51,10 +61,28 @@ export interface CreateAptosTransferRequest {
     failOnPredictionFailure?: boolean;
     /**
      * 
+     * @type {boolean}
+     * @memberof CreateAptosTransferRequest
+     */
+    skipPrediction?: boolean;
+    /**
+     * 
+     * @type {PushMode}
+     * @memberof CreateAptosTransferRequest
+     */
+    pushMode?: PushMode;
+    /**
+     * 
      * @type {AptosGasConfigRequest}
      * @memberof CreateAptosTransferRequest
      */
     gasConfig?: AptosGasConfigRequest;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CreateAptosTransferRequest
+     */
+    withExternalFeePayer?: boolean;
     /**
      * 
      * @type {CreateAptosTransferRequestTo}
@@ -73,18 +101,6 @@ export interface CreateAptosTransferRequest {
      * @memberof CreateAptosTransferRequest
      */
     assetIdentifier: AptosAssetIdentifierRequest;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CreateAptosTransferRequest
-     */
-    skipPrediction?: boolean;
-    /**
-     * 
-     * @type {PushMode}
-     * @memberof CreateAptosTransferRequest
-     */
-    pushMode?: PushMode;
 }
 
 
@@ -107,13 +123,15 @@ function CreateAptosTransferRequestToJSONTyped(value?: CreateAptosTransferReques
 
     return {
         
+        'fee_payer': TransactionFeePayerVaultToJSON(value['feePayer']),
         'type': value['type'],
         'fail_on_prediction_failure': value['failOnPredictionFailure'],
+        'skip_prediction': value['skipPrediction'],
+        'push_mode': PushModeToJSON(value['pushMode']),
         'gas_config': AptosGasConfigRequestToJSON(value['gasConfig']),
+        'with_external_fee_payer': value['withExternalFeePayer'],
         'to': CreateAptosTransferRequestToToJSON(value['to']),
         'value': CreateAptosTransferRequestValueToJSON(value['value']),
         'asset_identifier': AptosAssetIdentifierRequestToJSON(value['assetIdentifier']),
-        'skip_prediction': value['skipPrediction'],
-        'push_mode': PushModeToJSON(value['pushMode']),
     };
 }

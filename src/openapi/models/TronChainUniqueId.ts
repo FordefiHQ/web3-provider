@@ -15,7 +15,8 @@
  * @export
  */
 export const TronChainUniqueId = {
-    tronMainnet: 'tron_mainnet'
+    mainnet: 'tron_mainnet',
+    shasta: 'tron_shasta'
 } as const;
 export type TronChainUniqueId = typeof TronChainUniqueId[keyof typeof TronChainUniqueId];
 

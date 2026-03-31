@@ -39,16 +39,16 @@ export interface CreateSuiSerializedTransactionDataRequest {
     failOnPredictionFailure?: boolean;
     /**
      * 
-     * @type {PushMode}
-     * @memberof CreateSuiSerializedTransactionDataRequest
-     */
-    pushMode?: PushMode;
-    /**
-     * 
      * @type {boolean}
      * @memberof CreateSuiSerializedTransactionDataRequest
      */
     skipPrediction?: boolean;
+    /**
+     * 
+     * @type {PushMode}
+     * @memberof CreateSuiSerializedTransactionDataRequest
+     */
+    pushMode?: PushMode;
     /**
      * 
      * @type {SuiChainUniqueId}
@@ -85,8 +85,8 @@ function CreateSuiSerializedTransactionDataRequestToJSONTyped(value?: CreateSuiS
         
         'type': value['type'],
         'fail_on_prediction_failure': value['failOnPredictionFailure'],
-        'push_mode': PushModeToJSON(value['pushMode']),
         'skip_prediction': value['skipPrediction'],
+        'push_mode': PushModeToJSON(value['pushMode']),
         'chain': SuiChainUniqueIdToJSON(value['chain']),
         'data': value['data'],
     };

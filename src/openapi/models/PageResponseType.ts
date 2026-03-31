@@ -19,4 +19,3 @@ export const PageResponseType = {
     includeErrorsInResponse: 'include_errors_in_response'
 } as const;
 export type PageResponseType = typeof PageResponseType[keyof typeof PageResponseType];
-

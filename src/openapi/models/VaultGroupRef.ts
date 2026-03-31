@@ -10,6 +10,11 @@
  * Do not edit the class manually.
  */
 
+import type { BoundCount } from './BoundCount';
+import {
+    BoundCountFromJSON,
+} from './BoundCount';
+
 /**
  * 
  * @export
@@ -30,10 +35,10 @@ export interface VaultGroupRef {
     name: string;
     /**
      * 
-     * @type {number}
+     * @type {BoundCount}
      * @memberof VaultGroupRef
      */
-    vaultCount: number;
+    vaultsCount: BoundCount;
     /**
      * 
      * @type {boolean}
@@ -54,7 +59,7 @@ function VaultGroupRefFromJSONTyped(json: any, _ignoreDiscriminator: boolean): V
         
         'id': json['id'],
         'name': json['name'],
-        'vaultCount': json['vault_count'],
+        'vaultsCount': BoundCountFromJSON(json['vaults_count']),
         'canCurrentUserCreateOrEditVaults': json['can_current_user_create_or_edit_vaults'],
     };
 }

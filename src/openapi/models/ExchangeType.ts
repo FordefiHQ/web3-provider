@@ -19,7 +19,8 @@ export const ExchangeType = {
     bybit: 'bybit',
     coinbaseInternational: 'coinbase_international',
     coinbaseUs: 'coinbase_us',
-    okx: 'okx'
+    okx: 'okx',
+    kraken: 'kraken'
 } as const;
 export type ExchangeType = typeof ExchangeType[keyof typeof ExchangeType];
 

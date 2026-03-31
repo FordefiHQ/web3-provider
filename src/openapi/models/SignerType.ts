@@ -18,7 +18,8 @@ export const SignerType = {
     initiator: 'initiator',
     apiSigner: 'api_signer',
     endUser: 'end_user',
-    multipleSigners: 'multiple_signers'
+    multipleSigners: 'multiple_signers',
+    apiUser: 'api_user'
 } as const;
 export type SignerType = typeof SignerType[keyof typeof SignerType];
 

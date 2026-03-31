@@ -16,7 +16,11 @@
  */
 export const StateChangeReason = {
     failedToVerifySignature: 'failed_to_verify_signature',
-    originalTransactionWasCompleted: 'original_transaction_was_completed'
+    originalTransactionWasCompleted: 'original_transaction_was_completed',
+    staleNonce: 'stale_nonce',
+    quoteExpired: 'quote_expired',
+    anotherDlcTransactionWasCompleted: 'another_dlc_transaction_was_completed',
+    feeLimitExceeded: 'fee_limit_exceeded'
 } as const;
 export type StateChangeReason = typeof StateChangeReason[keyof typeof StateChangeReason];
 

@@ -14,14 +14,6 @@ import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
 } from './PricedAsset';
-import type { Erc20 } from './Erc20';
-import {
-    Erc20FromJSON,
-} from './Erc20';
-import type { Price } from './Price';
-import {
-    PriceFromJSON,
-} from './Price';
 import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
 import {
     EnrichedEvmAddressFromJSON,
@@ -51,18 +43,6 @@ export interface EvmBridgeEffectSourceErc20 {
      * @memberof EvmBridgeEffectSourceErc20
      */
     sourceAddress: EnrichedEvmAddress;
-    /**
-     * 
-     * @type {Erc20}
-     * @memberof EvmBridgeEffectSourceErc20
-     */
-    token: Erc20;
-    /**
-     * 
-     * @type {Price}
-     * @memberof EvmBridgeEffectSourceErc20
-     */
-    price?: Price;
 }
 
 
@@ -83,7 +63,5 @@ export function EvmBridgeEffectSourceErc20FromJSONTyped(json: any, _ignoreDiscri
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
         'type': json['type'],
         'sourceAddress': EnrichedEvmAddressFromJSON(json['source_address']),
-        'token': Erc20FromJSON(json['token']),
-        'price': json['price'] == null ? undefined : PriceFromJSON(json['price']),
     };
 }

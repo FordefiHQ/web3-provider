@@ -39,6 +39,12 @@ export interface TonAddressBookContactAddressRef {
      * @memberof TonAddressBookContactAddressRef
      */
     chains: Array<TonChain>;
+    /**
+     * 
+     * @type {string}
+     * @memberof TonAddressBookContactAddressRef
+     */
+    comment?: string;
 }
 
 
@@ -59,5 +65,6 @@ export function TonAddressBookContactAddressRefFromJSONTyped(json: any, _ignoreD
         'chainType': json['chain_type'],
         'address': json['address'],
         'chains': ((json['chains'] as Array<any>).map(TonChainFromJSON)),
+        'comment': json['comment'] == null ? undefined : json['comment'],
     };
 }

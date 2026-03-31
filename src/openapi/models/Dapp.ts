@@ -40,6 +40,12 @@ export interface Dapp {
      * @memberof Dapp
      */
     logoUrl?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof Dapp
+     */
+    contractsCount?: number;
 }
 
 export function DappFromJSON(json: any): Dapp {
@@ -56,6 +62,7 @@ function DappFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Dapp {
         'name': json['name'],
         'url': json['url'] == null ? undefined : json['url'],
         'logoUrl': json['logo_url'] == null ? undefined : json['logo_url'],
+        'contractsCount': json['contracts_count'] == null ? undefined : json['contracts_count'],
     };
 }
 

@@ -14,13 +14,17 @@ import type { CreateExchangeExternalWithdrawRequest } from './CreateExchangeExte
 import {
     CreateExchangeExternalWithdrawRequestToJSON,
 } from './CreateExchangeExternalWithdrawRequest';
+import type { CreateExchangeInternalTransferRequest } from './CreateExchangeInternalTransferRequest';
+import {
+    CreateExchangeInternalTransferRequestToJSON,
+} from './CreateExchangeInternalTransferRequest';
 
 /**
  * 
  * @export
  * @type CreateExchangeTransactionRequestDetails
  */
-export type CreateExchangeTransactionRequestDetails = { type: 'external_withdraw' } & CreateExchangeExternalWithdrawRequest;
+export type CreateExchangeTransactionRequestDetails = { type: 'external_withdraw' } & CreateExchangeExternalWithdrawRequest | { type: 'internal_transfer' } & CreateExchangeInternalTransferRequest;
 
 export function CreateExchangeTransactionRequestDetailsToJSON(json: any): any {
     return CreateExchangeTransactionRequestDetailsToJSONTyped(json, false);
@@ -33,6 +37,8 @@ function CreateExchangeTransactionRequestDetailsToJSONTyped(value?: CreateExchan
     switch (value['type']) {
         case 'external_withdraw':
             return Object.assign({}, CreateExchangeExternalWithdrawRequestToJSON(value), { type: 'external_withdraw' } as const);
+        case 'internal_transfer':
+            return Object.assign({}, CreateExchangeInternalTransferRequestToJSON(value), { type: 'internal_transfer' } as const);
         default:
             throw new Error(`No variant of CreateExchangeTransactionRequestDetails exists with 'type=${value['type']}'`);
     }

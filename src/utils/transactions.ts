@@ -1,5 +1,6 @@
 import { Hex, hexToBigInt, InternalRpcError, InvalidParamsRpcError, isAddress, isAddressEqual, isHex } from 'viem';
 import { ApiClient } from '../api';
+import { NonPushableTransactionState } from '../openapi/models/NonPushableTransactionState';
 import {
   CreateEvmMessageRequest,
   CreateEvmMessageRequestDetails,
@@ -298,9 +299,10 @@ const errorTransactionStates: PushableTransactionState[] = [
   PushableTransactionState.cancelled,
 ];
 
-const didStateAlreadyOccur = (
-  currentState: PushableTransactionState,
-  desiredState: PushableTransactionState,
-): boolean => orderedTransactionStates.indexOf(currentState) >= orderedTransactionStates.indexOf(desiredState);
+type AnyTransactionState = PushableTransactionState | NonPushableTransactionState;
 
-const isErrorState = (state: PushableTransactionState) => errorTransactionStates.includes(state);
+const didStateAlreadyOccur = (currentState: AnyTransactionState, desiredState: PushableTransactionState): boolean =>
+  orderedTransactionStates.indexOf(currentState as PushableTransactionState) >=
+  orderedTransactionStates.indexOf(desiredState);
+
+const isErrorState = (state: AnyTransactionState) => errorTransactionStates.includes(state as PushableTransactionState);

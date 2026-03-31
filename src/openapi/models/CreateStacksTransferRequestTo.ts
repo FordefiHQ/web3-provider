@@ -10,6 +10,10 @@
  * Do not edit the class manually.
  */
 
+import type { RecipientContactId } from './RecipientContactId';
+import {
+    RecipientContactIdToJSON,
+} from './RecipientContactId';
 import type { RecipientVaultId } from './RecipientVaultId';
 import {
     RecipientVaultIdToJSON,
@@ -24,7 +28,7 @@ import {
  * @export
  * @type CreateStacksTransferRequestTo
  */
-export type CreateStacksTransferRequestTo = { type: 'hex' } & StacksRecipientHex | { type: 'vault_id' } & RecipientVaultId;
+export type CreateStacksTransferRequestTo = { type: 'contact_id' } & RecipientContactId | { type: 'hex' } & StacksRecipientHex | { type: 'vault_id' } & RecipientVaultId;
 
 export function CreateStacksTransferRequestToToJSON(json: any): any {
     return CreateStacksTransferRequestToToJSONTyped(json, false);
@@ -35,6 +39,8 @@ function CreateStacksTransferRequestToToJSONTyped(value?: CreateStacksTransferRe
         return value;
     }
     switch (value['type']) {
+        case 'contact_id':
+            return Object.assign({}, RecipientContactIdToJSON(value), { type: 'contact_id' } as const);
         case 'hex':
             return Object.assign({}, StacksRecipientHexToJSON(value), { type: 'hex' } as const);
         case 'vault_id':

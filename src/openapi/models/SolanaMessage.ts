@@ -14,6 +14,18 @@ import type { ManagedTransactionData } from './ManagedTransactionData';
 import {
     ManagedTransactionDataFromJSON,
 } from './ManagedTransactionData';
+import type { SolanaMessageResult } from './SolanaMessageResult';
+import {
+    SolanaMessageResultFromJSON,
+} from './SolanaMessageResult';
+import type { NonPushableTransactionState } from './NonPushableTransactionState';
+import {
+    NonPushableTransactionStateFromJSON,
+} from './NonPushableTransactionState';
+import type { VaultRef } from './VaultRef';
+import {
+    VaultRefFromJSON,
+} from './VaultRef';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
@@ -38,14 +50,18 @@ import type { EnrichedSolanaChain } from './EnrichedSolanaChain';
 import {
     EnrichedSolanaChainFromJSON,
 } from './EnrichedSolanaChain';
+import type { RelatedTransaction } from './RelatedTransaction';
+import {
+    RelatedTransactionFromJSON,
+} from './RelatedTransaction';
 import type { NonPushableTransactionStateChange } from './NonPushableTransactionStateChange';
 import {
     NonPushableTransactionStateChangeFromJSON,
 } from './NonPushableTransactionStateChange';
-import type { NonPushableTransactionState } from './NonPushableTransactionState';
+import type { PredictedSolanaMessageSolanaMessageTypeDetails } from './PredictedSolanaMessageSolanaMessageTypeDetails';
 import {
-    NonPushableTransactionStateFromJSON,
-} from './NonPushableTransactionState';
+    PredictedSolanaMessageSolanaMessageTypeDetailsFromJSON,
+} from './PredictedSolanaMessageSolanaMessageTypeDetails';
 
 /**
  * 
@@ -109,6 +125,24 @@ export interface SolanaMessage {
     signedExternally?: boolean;
     /**
      * 
+     * @type {Array<VaultRef>}
+     * @memberof SolanaMessage
+     */
+    interactedVaults: Array<VaultRef>;
+    /**
+     * 
+     * @type {Array<RelatedTransaction>}
+     * @memberof SolanaMessage
+     */
+    relatedTransactions?: Array<RelatedTransaction>;
+    /**
+     * 
+     * @type {string}
+     * @memberof SolanaMessage
+     */
+    organizationId: string;
+    /**
+     * 
      * @type {NonPushableTransactionState}
      * @memberof SolanaMessage
      */
@@ -131,6 +165,18 @@ export interface SolanaMessage {
      * @memberof SolanaMessage
      */
     solanaMessageType: SolanaMessageType;
+    /**
+     * 
+     * @type {PredictedSolanaMessageSolanaMessageTypeDetails}
+     * @memberof SolanaMessage
+     */
+    solanaMessageTypeDetails: PredictedSolanaMessageSolanaMessageTypeDetails;
+    /**
+     * 
+     * @type {SolanaMessageResult}
+     * @memberof SolanaMessage
+     */
+    expectedResult?: SolanaMessageResult;
     /**
      * 
      * @type {string}
@@ -181,10 +227,15 @@ export function SolanaMessageFromJSONTyped(json: any, _ignoreDiscriminator: bool
         'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
         'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'interactedVaults': ((json['interacted_vaults'] as Array<any>).map(VaultRefFromJSON)),
+        'relatedTransactions': json['related_transactions'] == null ? undefined : ((json['related_transactions'] as Array<any>).map(RelatedTransactionFromJSON)),
+        'organizationId': json['organization_id'],
         'state': NonPushableTransactionStateFromJSON(json['state']),
         'stateChanges': ((json['state_changes'] as Array<any>).map(NonPushableTransactionStateChangeFromJSON)),
         'type': json['type'],
         'solanaMessageType': SolanaMessageTypeFromJSON(json['solana_message_type']),
+        'solanaMessageTypeDetails': PredictedSolanaMessageSolanaMessageTypeDetailsFromJSON(json['solana_message_type_details']),
+        'expectedResult': json['expected_result'] == null ? undefined : SolanaMessageResultFromJSON(json['expected_result']),
         'stringData': json['string_data'],
         'rawData': json['raw_data'],
         'chain': EnrichedSolanaChainFromJSON(json['chain']),

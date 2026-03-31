@@ -47,13 +47,6 @@ export interface SolanaTransactionResult {
     transactionError?: string;
     /**
      * 
-     * @type {string}
-     * @memberof SolanaTransactionResult
-     * @deprecated
-     */
-    fee: string;
-    /**
-     * 
      * @type {SolanaFee}
      * @memberof SolanaTransactionResult
      */
@@ -84,7 +77,6 @@ function SolanaTransactionResultFromJSONTyped(json: any, _ignoreDiscriminator: b
         
         'reversion': SolanaReversionFromJSON(json['reversion']),
         'transactionError': json['transaction_error'] == null ? undefined : json['transaction_error'],
-        'fee': json['fee'],
         'enrichedFee': SolanaFeeFromJSON(json['enriched_fee']),
         'effects': SolanaEffectsFromJSON(json['effects']),
         'instructionError': json['instruction_error'] == null ? undefined : InstructionErrorFromJSON(json['instruction_error']),

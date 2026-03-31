@@ -14,10 +14,6 @@ import type { AmlPolicyMatchIncomingActionType } from './AmlPolicyMatchIncomingA
 import {
     AmlPolicyMatchIncomingActionTypeFromJSON,
 } from './AmlPolicyMatchIncomingActionType';
-import type { AmlUnfreezeApprovalRequest } from './AmlUnfreezeApprovalRequest';
-import {
-    AmlUnfreezeApprovalRequestFromJSON,
-} from './AmlUnfreezeApprovalRequest';
 
 /**
  * 
@@ -49,12 +45,6 @@ export interface AmlPolicyMatchIncoming {
      * @memberof AmlPolicyMatchIncoming
      */
     actionType: AmlPolicyMatchIncomingActionType;
-    /**
-     * 
-     * @type {AmlUnfreezeApprovalRequest}
-     * @memberof AmlPolicyMatchIncoming
-     */
-    amlUnfreezeApprovalRequest?: AmlUnfreezeApprovalRequest;
 }
 
 export function AmlPolicyMatchIncomingFromJSON(json: any): AmlPolicyMatchIncoming {
@@ -71,7 +61,6 @@ function AmlPolicyMatchIncomingFromJSONTyped(json: any, _ignoreDiscriminator: bo
         'ruleId': json['rule_id'],
         'ruleName': json['rule_name'],
         'actionType': AmlPolicyMatchIncomingActionTypeFromJSON(json['action_type']),
-        'amlUnfreezeApprovalRequest': json['aml_unfreeze_approval_request'] == null ? undefined : AmlUnfreezeApprovalRequestFromJSON(json['aml_unfreeze_approval_request']),
     };
 }
 

@@ -56,10 +56,6 @@ const Erc721TypeEnum = {
 } as const;
 type Erc721TypeEnum = typeof Erc721TypeEnum[keyof typeof Erc721TypeEnum];
 
-export function Erc721FromJSON(json: any): Erc721 {
-    return Erc721FromJSONTyped(json, false);
-}
-
 export function Erc721FromJSONTyped(json: any, _ignoreDiscriminator: boolean): Erc721 {
     if (json == null) {
         return json;

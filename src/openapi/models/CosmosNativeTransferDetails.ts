@@ -40,7 +40,7 @@ export interface CosmosNativeTransferDetails {
      * @type {TransferDirection}
      * @memberof CosmosNativeTransferDetails
      */
-    direction: TransferDirection;
+    direction?: TransferDirection;
     /**
      * 
      * @type {EnrichedCosmosBechAddress}
@@ -83,7 +83,7 @@ export function CosmosNativeTransferDetailsFromJSONTyped(json: any, _ignoreDiscr
     return {
         
         'transactionData': MessagesListFromJSON(json['transaction_data']),
-        'direction': TransferDirectionFromJSON(json['direction']),
+        'direction': json['direction'] == null ? undefined : TransferDirectionFromJSON(json['direction']),
         'sender': EnrichedCosmosBechAddressFromJSON(json['sender']),
         'recipient': EnrichedCosmosBechAddressFromJSON(json['recipient']),
         'isInternal': json['is_internal'] == null ? undefined : json['is_internal'],

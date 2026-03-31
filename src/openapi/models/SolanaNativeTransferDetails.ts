@@ -36,7 +36,7 @@ export interface SolanaNativeTransferDetails {
      * @type {TransferDirection}
      * @memberof SolanaNativeTransferDetails
      */
-    direction: TransferDirection;
+    direction?: TransferDirection;
     /**
      * 
      * @type {EnrichedSolanaAddress}
@@ -73,7 +73,7 @@ export function SolanaNativeTransferDetailsFromJSONTyped(json: any, _ignoreDiscr
     return {
         
         'type': json['type'],
-        'direction': TransferDirectionFromJSON(json['direction']),
+        'direction': json['direction'] == null ? undefined : TransferDirectionFromJSON(json['direction']),
         'sender': EnrichedSolanaAddressFromJSON(json['sender']),
         'recipient': EnrichedSolanaAddressFromJSON(json['recipient']),
         'isInternal': json['is_internal'] == null ? undefined : json['is_internal'],

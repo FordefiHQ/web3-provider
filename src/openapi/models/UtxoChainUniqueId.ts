@@ -15,8 +15,13 @@
  * @export
  */
 export const UtxoChainUniqueId = {
-    mainnet: 'bitcoin_mainnet',
-    testnet: 'bitcoin_testnet'
+    bitcoinMainnet: 'bitcoin_mainnet',
+    bitcoinTestnet: 'bitcoin_testnet',
+    bitcoinTestnetV4: 'bitcoin_testnet_v4',
+    dogecoinMainnet: 'dogecoin_mainnet',
+    bitcoinCashMainnet: 'bitcoin_cash_mainnet',
+    pearlTestnet: 'pearl_testnet',
+    pearlMainnet: 'pearl_mainnet'
 } as const;
 export type UtxoChainUniqueId = typeof UtxoChainUniqueId[keyof typeof UtxoChainUniqueId];
 

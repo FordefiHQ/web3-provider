@@ -68,10 +68,6 @@ const Erc20TypeEnum = {
 } as const;
 type Erc20TypeEnum = typeof Erc20TypeEnum[keyof typeof Erc20TypeEnum];
 
-export function Erc20FromJSON(json: any): Erc20 {
-    return Erc20FromJSONTyped(json, false);
-}
-
 export function Erc20FromJSONTyped(json: any, _ignoreDiscriminator: boolean): Erc20 {
     if (json == null) {
         return json;

@@ -14,6 +14,30 @@ import type { ManagedTransactionData } from './ManagedTransactionData';
 import {
     ManagedTransactionDataFromJSON,
 } from './ManagedTransactionData';
+import type { DlcDataResponse } from './DlcDataResponse';
+import {
+    DlcDataResponseFromJSON,
+} from './DlcDataResponse';
+import type { PredictedUtxoTransactionUtxoTransactionTypeDetails } from './PredictedUtxoTransactionUtxoTransactionTypeDetails';
+import {
+    PredictedUtxoTransactionUtxoTransactionTypeDetailsFromJSON,
+} from './PredictedUtxoTransactionUtxoTransactionTypeDetails';
+import type { PushableTransactionStateChange } from './PushableTransactionStateChange';
+import {
+    PushableTransactionStateChangeFromJSON,
+} from './PushableTransactionStateChange';
+import type { PushableTransactionState } from './PushableTransactionState';
+import {
+    PushableTransactionStateFromJSON,
+} from './PushableTransactionState';
+import type { MinedResultStatus } from './MinedResultStatus';
+import {
+    MinedResultStatusFromJSON,
+} from './MinedResultStatus';
+import type { VaultRef } from './VaultRef';
+import {
+    VaultRefFromJSON,
+} from './VaultRef';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
@@ -26,38 +50,30 @@ import type { TransactionDirection } from './TransactionDirection';
 import {
     TransactionDirectionFromJSON,
 } from './TransactionDirection';
-import type { PredictedUtxoTransactionUtxoTransactionTypeDetails } from './PredictedUtxoTransactionUtxoTransactionTypeDetails';
+import type { AmlCheck } from './AmlCheck';
 import {
-    PredictedUtxoTransactionUtxoTransactionTypeDetailsFromJSON,
-} from './PredictedUtxoTransactionUtxoTransactionTypeDetails';
-import type { UtxoBlockData } from './UtxoBlockData';
-import {
-    UtxoBlockDataFromJSON,
-} from './UtxoBlockData';
-import type { PushableTransactionStateChange } from './PushableTransactionStateChange';
-import {
-    PushableTransactionStateChangeFromJSON,
-} from './PushableTransactionStateChange';
+    AmlCheckFromJSON,
+} from './AmlCheck';
 import type { Signature } from './Signature';
 import {
     SignatureFromJSON,
 } from './Signature';
+import type { RelatedTransaction } from './RelatedTransaction';
+import {
+    RelatedTransactionFromJSON,
+} from './RelatedTransaction';
+import type { SimulationStatusResult } from './SimulationStatusResult';
+import {
+    SimulationStatusResultFromJSON,
+} from './SimulationStatusResult';
+import type { Block } from './Block';
+import {
+    BlockFromJSON,
+} from './Block';
 import type { EnrichedUtxoChain } from './EnrichedUtxoChain';
 import {
     EnrichedUtxoChainFromJSON,
 } from './EnrichedUtxoChain';
-import type { PushableTransactionState } from './PushableTransactionState';
-import {
-    PushableTransactionStateFromJSON,
-} from './PushableTransactionState';
-import type { AmlResults } from './AmlResults';
-import {
-    AmlResultsFromJSON,
-} from './AmlResults';
-import type { AmlPolicyMatchIncoming } from './AmlPolicyMatchIncoming';
-import {
-    AmlPolicyMatchIncomingFromJSON,
-} from './AmlPolicyMatchIncoming';
 
 /**
  * 
@@ -121,6 +137,30 @@ export interface UtxoTransaction {
     signedExternally?: boolean;
     /**
      * 
+     * @type {Array<VaultRef>}
+     * @memberof UtxoTransaction
+     */
+    interactedVaults: Array<VaultRef>;
+    /**
+     * 
+     * @type {Array<RelatedTransaction>}
+     * @memberof UtxoTransaction
+     */
+    relatedTransactions?: Array<RelatedTransaction>;
+    /**
+     * 
+     * @type {string}
+     * @memberof UtxoTransaction
+     */
+    organizationId: string;
+    /**
+     * 
+     * @type {Block}
+     * @memberof UtxoTransaction
+     */
+    block?: Block;
+    /**
+     * 
      * @type {PushableTransactionState}
      * @memberof UtxoTransaction
      */
@@ -133,16 +173,46 @@ export interface UtxoTransaction {
     stateChanges: Array<PushableTransactionStateChange>;
     /**
      * 
-     * @type {AmlResults}
+     * @type {AmlCheck}
      * @memberof UtxoTransaction
      */
-    amlResults?: AmlResults;
+    amlCheck?: AmlCheck;
     /**
      * 
-     * @type {AmlPolicyMatchIncoming}
+     * @type {MinedResultStatus}
      * @memberof UtxoTransaction
      */
-    incomingAmlPolicyMatch?: AmlPolicyMatchIncoming;
+    minedResultStatus?: MinedResultStatus;
+    /**
+     * 
+     * @type {SimulationStatusResult}
+     * @memberof UtxoTransaction
+     */
+    simulationStatusResult?: SimulationStatusResult;
+    /**
+     * 
+     * @type {string}
+     * @memberof UtxoTransaction
+     */
+    parentTransactionId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UtxoTransaction
+     */
+    childTransactionId?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UtxoTransaction
+     */
+    isCancelation: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UtxoTransaction
+     */
+    isAcceleration: boolean;
     /**
      * 
      * @type {string}
@@ -175,12 +245,6 @@ export interface UtxoTransaction {
     explorerUrl?: string;
     /**
      * 
-     * @type {UtxoBlockData}
-     * @memberof UtxoTransaction
-     */
-    block?: UtxoBlockData;
-    /**
-     * 
      * @type {UtxoTransactionResult}
      * @memberof UtxoTransaction
      */
@@ -191,6 +255,12 @@ export interface UtxoTransaction {
      * @memberof UtxoTransaction
      */
     minedResult?: UtxoTransactionResult;
+    /**
+     * 
+     * @type {DlcDataResponse}
+     * @memberof UtxoTransaction
+     */
+    dlcData?: DlcDataResponse;
 }
 
 
@@ -217,17 +287,26 @@ export function UtxoTransactionFromJSONTyped(json: any, _ignoreDiscriminator: bo
         'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
         'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'interactedVaults': ((json['interacted_vaults'] as Array<any>).map(VaultRefFromJSON)),
+        'relatedTransactions': json['related_transactions'] == null ? undefined : ((json['related_transactions'] as Array<any>).map(RelatedTransactionFromJSON)),
+        'organizationId': json['organization_id'],
+        'block': json['block'] == null ? undefined : BlockFromJSON(json['block']),
         'state': PushableTransactionStateFromJSON(json['state']),
         'stateChanges': ((json['state_changes'] as Array<any>).map(PushableTransactionStateChangeFromJSON)),
-        'amlResults': json['aml_results'] == null ? undefined : AmlResultsFromJSON(json['aml_results']),
-        'incomingAmlPolicyMatch': json['incoming_aml_policy_match'] == null ? undefined : AmlPolicyMatchIncomingFromJSON(json['incoming_aml_policy_match']),
+        'amlCheck': json['aml_check'] == null ? undefined : AmlCheckFromJSON(json['aml_check']),
+        'minedResultStatus': json['mined_result_status'] == null ? undefined : MinedResultStatusFromJSON(json['mined_result_status']),
+        'simulationStatusResult': json['simulation_status_result'] == null ? undefined : SimulationStatusResultFromJSON(json['simulation_status_result']),
+        'parentTransactionId': json['parent_transaction_id'] == null ? undefined : json['parent_transaction_id'],
+        'childTransactionId': json['child_transaction_id'] == null ? undefined : json['child_transaction_id'],
+        'isCancelation': json['is_cancelation'],
+        'isAcceleration': json['is_acceleration'],
         'type': json['type'],
         'utxoTransactionTypeDetails': PredictedUtxoTransactionUtxoTransactionTypeDetailsFromJSON(json['utxo_transaction_type_details']),
         'chain': EnrichedUtxoChainFromJSON(json['chain']),
         'hash': json['hash'] == null ? undefined : json['hash'],
         'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
-        'block': json['block'] == null ? undefined : UtxoBlockDataFromJSON(json['block']),
         'expectedResult': json['expected_result'] == null ? undefined : UtxoTransactionResultFromJSON(json['expected_result']),
         'minedResult': json['mined_result'] == null ? undefined : UtxoTransactionResultFromJSON(json['mined_result']),
+        'dlcData': json['dlc_data'] == null ? undefined : DlcDataResponseFromJSON(json['dlc_data']),
     };
 }

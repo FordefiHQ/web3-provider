@@ -30,6 +30,7 @@ export const CosmosChainUniqueId = {
     nillion1: 'cosmos_nillion-1',
     noble1: 'cosmos_noble-1',
     osmosis1: 'cosmos_osmosis-1',
+    ssc1: 'cosmos_ssc-1',
     pacific1: 'cosmos_pacific-1',
     stride1: 'cosmos_stride-1',
     thorchain1: 'cosmos_thorchain-1',

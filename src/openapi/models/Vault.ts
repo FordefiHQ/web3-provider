@@ -14,6 +14,10 @@ import type { AptosVault } from './AptosVault';
 import {
     AptosVaultFromJSONTyped,
 } from './AptosVault';
+import type { ArchVault } from './ArchVault';
+import {
+    ArchVaultFromJSONTyped,
+} from './ArchVault';
 import type { BlackBoxVault } from './BlackBoxVault';
 import {
     BlackBoxVaultFromJSONTyped,
@@ -30,6 +34,10 @@ import type { ExchangeVault } from './ExchangeVault';
 import {
     ExchangeVaultFromJSONTyped,
 } from './ExchangeVault';
+import type { SafeVault } from './SafeVault';
+import {
+    SafeVaultFromJSONTyped,
+} from './SafeVault';
 import type { SolanaVault } from './SolanaVault';
 import {
     SolanaVaultFromJSONTyped,
@@ -64,7 +72,7 @@ import {
  * @export
  * @type Vault
  */
-export type Vault = { type: 'aptos' } & AptosVault | { type: 'black_box' } & BlackBoxVault | { type: 'cosmos' } & CosmosVault | { type: 'evm' } & EvmVault | { type: 'exchange' } & ExchangeVault | { type: 'solana' } & SolanaVault | { type: 'stacks' } & StacksVault | { type: 'starknet' } & StarknetVault | { type: 'sui' } & SuiVault | { type: 'ton' } & TonVault | { type: 'tron' } & TronVault | { type: 'utxo' } & UtxoVault;
+export type Vault = { type: 'aptos' } & AptosVault | { type: 'arch' } & ArchVault | { type: 'black_box' } & BlackBoxVault | { type: 'cosmos' } & CosmosVault | { type: 'evm' } & EvmVault | { type: 'exchange' } & ExchangeVault | { type: 'safe' } & SafeVault | { type: 'solana' } & SolanaVault | { type: 'stacks' } & StacksVault | { type: 'starknet' } & StarknetVault | { type: 'sui' } & SuiVault | { type: 'ton' } & TonVault | { type: 'tron' } & TronVault | { type: 'utxo' } & UtxoVault;
 
 export function VaultFromJSON(json: any): Vault {
     return VaultFromJSONTyped(json, false);
@@ -77,6 +85,8 @@ function VaultFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Vault {
     switch (json['type']) {
         case 'aptos':
             return Object.assign({}, AptosVaultFromJSONTyped(json, true), { type: 'aptos' } as const);
+        case 'arch':
+            return Object.assign({}, ArchVaultFromJSONTyped(json, true), { type: 'arch' } as const);
         case 'black_box':
             return Object.assign({}, BlackBoxVaultFromJSONTyped(json, true), { type: 'black_box' } as const);
         case 'cosmos':
@@ -85,6 +95,8 @@ function VaultFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Vault {
             return Object.assign({}, EvmVaultFromJSONTyped(json, true), { type: 'evm' } as const);
         case 'exchange':
             return Object.assign({}, ExchangeVaultFromJSONTyped(json, true), { type: 'exchange' } as const);
+        case 'safe':
+            return Object.assign({}, SafeVaultFromJSONTyped(json, true), { type: 'safe' } as const);
         case 'solana':
             return Object.assign({}, SolanaVaultFromJSONTyped(json, true), { type: 'solana' } as const);
         case 'stacks':

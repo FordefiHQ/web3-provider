@@ -11,26 +11,34 @@
  */
 
 import { mapValues } from '../runtime';
-import type { AptosVaultPendingVaultGroupAction } from './AptosVaultPendingVaultGroupAction';
+import type { ExchangePortfolio } from './ExchangePortfolio';
 import {
-    AptosVaultPendingVaultGroupActionFromJSON,
-} from './AptosVaultPendingVaultGroupAction';
-import type { VaultState } from './VaultState';
+    ExchangePortfolioFromJSON,
+} from './ExchangePortfolio';
+import type { ExchangeVaultAccount } from './ExchangeVaultAccount';
 import {
-    VaultStateFromJSON,
-} from './VaultState';
+    ExchangeVaultAccountFromJSON,
+} from './ExchangeVaultAccount';
+import type { ExchangeVaultState } from './ExchangeVaultState';
+import {
+    ExchangeVaultStateFromJSON,
+} from './ExchangeVaultState';
 import type { AptosVaultMetadataValue } from './AptosVaultMetadataValue';
 import {
     AptosVaultMetadataValueFromJSON,
 } from './AptosVaultMetadataValue';
+import type { OwnedAsset } from './OwnedAsset';
+import {
+    OwnedAssetFromJSON,
+} from './OwnedAsset';
+import type { SkipIndexingReason } from './SkipIndexingReason';
+import {
+    SkipIndexingReasonFromJSON,
+} from './SkipIndexingReason';
 import type { VaultGroupRef } from './VaultGroupRef';
 import {
     VaultGroupRefFromJSON,
 } from './VaultGroupRef';
-import type { ExchangeAccount } from './ExchangeAccount';
-import {
-    ExchangeAccountFromJSON,
-} from './ExchangeAccount';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
@@ -87,25 +95,43 @@ export interface ExchangeVault {
      * @type {VaultGroupRef}
      * @memberof ExchangeVault
      */
-    vaultGroup: VaultGroupRef;
+    vaultGroup?: VaultGroupRef;
     /**
      * 
-     * @type {AptosVaultPendingVaultGroupAction}
+     * @type {Array<VaultGroupRef>}
      * @memberof ExchangeVault
      */
-    pendingVaultGroupAction?: AptosVaultPendingVaultGroupAction;
-    /**
-     * 
-     * @type {VaultState}
-     * @memberof ExchangeVault
-     */
-    state: VaultState;
+    vaultGroups: Array<VaultGroupRef>;
     /**
      * 
      * @type {boolean}
      * @memberof ExchangeVault
      */
     areAllChainsDisabled: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ExchangeVault
+     */
+    isFavorite?: boolean;
+    /**
+     * 
+     * @type {SkipIndexingReason}
+     * @memberof ExchangeVault
+     */
+    skipIndexingReason?: SkipIndexingReason;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ExchangeVault
+     */
+    isExternalSigner?: boolean;
+    /**
+     * 
+     * @type {Array<OwnedAsset>}
+     * @memberof ExchangeVault
+     */
+    nativeAssets?: Array<OwnedAsset>;
     /**
      * 
      * @type {string}
@@ -120,16 +146,10 @@ export interface ExchangeVault {
     exchangeType: ExchangeType;
     /**
      * 
-     * @type {string}
+     * @type {ExchangePortfolio}
      * @memberof ExchangeVault
      */
-    apiKey: string;
-    /**
-     * 
-     * @type {ExchangeAccount}
-     * @memberof ExchangeVault
-     */
-    activeAccount?: ExchangeAccount;
+    portfolio?: ExchangePortfolio;
     /**
      * 
      * @type {string}
@@ -142,6 +162,24 @@ export interface ExchangeVault {
      * @memberof ExchangeVault
      */
     isBalanceDataOutdated: boolean;
+    /**
+     * 
+     * @type {ExchangeVaultAccount}
+     * @memberof ExchangeVault
+     */
+    account: ExchangeVaultAccount;
+    /**
+     * 
+     * @type {ExchangeVaultState}
+     * @memberof ExchangeVault
+     */
+    state: ExchangeVaultState;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExchangeVault
+     */
+    changeRequestId: string;
 }
 
 
@@ -165,15 +203,20 @@ export function ExchangeVaultFromJSONTyped(json: any, _ignoreDiscriminator: bool
         'metadata': json['metadata'] == null ? undefined : (mapValues(json['metadata'], AptosVaultMetadataValueFromJSON)),
         'name': json['name'],
         'createdBy': UserRefFromJSON(json['created_by']),
-        'vaultGroup': VaultGroupRefFromJSON(json['vault_group']),
-        'pendingVaultGroupAction': json['pending_vault_group_action'] == null ? undefined : AptosVaultPendingVaultGroupActionFromJSON(json['pending_vault_group_action']),
-        'state': VaultStateFromJSON(json['state']),
+        'vaultGroup': json['vault_group'] == null ? undefined : VaultGroupRefFromJSON(json['vault_group']),
+        'vaultGroups': ((json['vault_groups'] as Array<any>).map(VaultGroupRefFromJSON)),
         'areAllChainsDisabled': json['are_all_chains_disabled'],
+        'isFavorite': json['is_favorite'] == null ? undefined : json['is_favorite'],
+        'skipIndexingReason': json['skip_indexing_reason'] == null ? undefined : SkipIndexingReasonFromJSON(json['skip_indexing_reason']),
+        'isExternalSigner': json['is_external_signer'] == null ? undefined : json['is_external_signer'],
+        'nativeAssets': json['native_assets'] == null ? undefined : ((json['native_assets'] as Array<any>).map(OwnedAssetFromJSON)),
         'type': json['type'],
         'exchangeType': ExchangeTypeFromJSON(json['exchange_type']),
-        'apiKey': json['api_key'],
-        'activeAccount': json['active_account'] == null ? undefined : ExchangeAccountFromJSON(json['active_account']),
+        'portfolio': json['portfolio'] == null ? undefined : ExchangePortfolioFromJSON(json['portfolio']),
         'logoUrl': json['logo_url'],
         'isBalanceDataOutdated': json['is_balance_data_outdated'],
+        'account': ExchangeVaultAccountFromJSON(json['account']),
+        'state': ExchangeVaultStateFromJSON(json['state']),
+        'changeRequestId': json['change_request_id'],
     };
 }

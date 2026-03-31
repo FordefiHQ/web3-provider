@@ -26,9 +26,9 @@ interface ListChainsApiV1BlockchainsGetRequest {
     page?: number;
     size?: number;
     responseType?: PageResponseType;
+    skipCount?: boolean;
     chainTypes?: Array<ChainType>;
     sources?: Array<ChainSource>;
-    onlyInteractedWith?: boolean;
     search?: string;
     includeMainnets?: boolean;
     includeTestnets?: boolean;
@@ -60,16 +60,16 @@ export class BlockchainsApi extends runtime.BaseAPI {
             queryParameters['response_type'] = requestParameters['responseType'];
         }
 
+        if (requestParameters['skipCount'] != null) {
+            queryParameters['skip_count'] = requestParameters['skipCount'];
+        }
+
         if (requestParameters['chainTypes'] != null) {
             queryParameters['chain_types'] = requestParameters['chainTypes'];
         }
 
         if (requestParameters['sources'] != null) {
             queryParameters['sources'] = requestParameters['sources'];
-        }
-
-        if (requestParameters['onlyInteractedWith'] != null) {
-            queryParameters['only_interacted_with'] = requestParameters['onlyInteractedWith'];
         }
 
         if (requestParameters['search'] != null) {

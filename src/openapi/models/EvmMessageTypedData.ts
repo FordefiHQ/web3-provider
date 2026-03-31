@@ -10,6 +10,10 @@
  * Do not edit the class manually.
  */
 
+import type { HyperliquidTypedMessageEvmMessage } from './HyperliquidTypedMessageEvmMessage';
+import {
+    HyperliquidTypedMessageEvmMessageFromJSONTyped,
+} from './HyperliquidTypedMessageEvmMessage';
 import type { Permit2TypedMessageEvmMessage } from './Permit2TypedMessageEvmMessage';
 import {
     Permit2TypedMessageEvmMessageFromJSONTyped,
@@ -18,6 +22,14 @@ import type { PermitTypedMessageEvmMessage } from './PermitTypedMessageEvmMessag
 import {
     PermitTypedMessageEvmMessageFromJSONTyped,
 } from './PermitTypedMessageEvmMessage';
+import type { SafeTxTypedMessageEvmMessage } from './SafeTxTypedMessageEvmMessage';
+import {
+    SafeTxTypedMessageEvmMessageFromJSONTyped,
+} from './SafeTxTypedMessageEvmMessage';
+import type { SpotSwapTypedMessageEvmMessage } from './SpotSwapTypedMessageEvmMessage';
+import {
+    SpotSwapTypedMessageEvmMessageFromJSONTyped,
+} from './SpotSwapTypedMessageEvmMessage';
 import type { UnknownTypedMessageEvmMessage } from './UnknownTypedMessageEvmMessage';
 import {
     UnknownTypedMessageEvmMessageFromJSONTyped,
@@ -28,7 +40,7 @@ import {
  * @export
  * @type EvmMessageTypedData
  */
-export type EvmMessageTypedData = { type: 'permit' } & PermitTypedMessageEvmMessage | { type: 'permit2' } & Permit2TypedMessageEvmMessage | { type: 'unknown' } & UnknownTypedMessageEvmMessage;
+export type EvmMessageTypedData = { type: 'hyperliquid' } & HyperliquidTypedMessageEvmMessage | { type: 'permit' } & PermitTypedMessageEvmMessage | { type: 'permit2' } & Permit2TypedMessageEvmMessage | { type: 'safe_tx' } & SafeTxTypedMessageEvmMessage | { type: 'spot_swap' } & SpotSwapTypedMessageEvmMessage | { type: 'unknown' } & UnknownTypedMessageEvmMessage;
 
 export function EvmMessageTypedDataFromJSON(json: any): EvmMessageTypedData {
     return EvmMessageTypedDataFromJSONTyped(json, false);
@@ -39,10 +51,16 @@ function EvmMessageTypedDataFromJSONTyped(json: any, _ignoreDiscriminator: boole
         return json;
     }
     switch (json['type']) {
+        case 'hyperliquid':
+            return Object.assign({}, HyperliquidTypedMessageEvmMessageFromJSONTyped(json, true), { type: 'hyperliquid' } as const);
         case 'permit':
             return Object.assign({}, PermitTypedMessageEvmMessageFromJSONTyped(json, true), { type: 'permit' } as const);
         case 'permit2':
             return Object.assign({}, Permit2TypedMessageEvmMessageFromJSONTyped(json, true), { type: 'permit2' } as const);
+        case 'safe_tx':
+            return Object.assign({}, SafeTxTypedMessageEvmMessageFromJSONTyped(json, true), { type: 'safe_tx' } as const);
+        case 'spot_swap':
+            return Object.assign({}, SpotSwapTypedMessageEvmMessageFromJSONTyped(json, true), { type: 'spot_swap' } as const);
         case 'unknown':
             return Object.assign({}, UnknownTypedMessageEvmMessageFromJSONTyped(json, true), { type: 'unknown' } as const);
         default:

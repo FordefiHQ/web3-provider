@@ -43,10 +43,28 @@ export interface CreateAptosSerializedRawTransactionRequest {
     failOnPredictionFailure?: boolean;
     /**
      * 
+     * @type {boolean}
+     * @memberof CreateAptosSerializedRawTransactionRequest
+     */
+    skipPrediction?: boolean;
+    /**
+     * 
+     * @type {PushMode}
+     * @memberof CreateAptosSerializedRawTransactionRequest
+     */
+    pushMode?: PushMode;
+    /**
+     * 
      * @type {AptosGasConfigRequest}
      * @memberof CreateAptosSerializedRawTransactionRequest
      */
     gasConfig?: AptosGasConfigRequest;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CreateAptosSerializedRawTransactionRequest
+     */
+    withExternalFeePayer?: boolean;
     /**
      * 
      * @type {AptosChainUniqueId}
@@ -59,18 +77,6 @@ export interface CreateAptosSerializedRawTransactionRequest {
      * @memberof CreateAptosSerializedRawTransactionRequest
      */
     serializedTransactionPayload: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CreateAptosSerializedRawTransactionRequest
-     */
-    skipPrediction?: boolean;
-    /**
-     * 
-     * @type {PushMode}
-     * @memberof CreateAptosSerializedRawTransactionRequest
-     */
-    pushMode?: PushMode;
 }
 
 
@@ -95,10 +101,11 @@ function CreateAptosSerializedRawTransactionRequestToJSONTyped(value?: CreateApt
         
         'type': value['type'],
         'fail_on_prediction_failure': value['failOnPredictionFailure'],
-        'gas_config': AptosGasConfigRequestToJSON(value['gasConfig']),
-        'chain': AptosChainUniqueIdToJSON(value['chain']),
-        'serialized_transaction_payload': value['serializedTransactionPayload'],
         'skip_prediction': value['skipPrediction'],
         'push_mode': PushModeToJSON(value['pushMode']),
+        'gas_config': AptosGasConfigRequestToJSON(value['gasConfig']),
+        'with_external_fee_payer': value['withExternalFeePayer'],
+        'chain': AptosChainUniqueIdToJSON(value['chain']),
+        'serialized_transaction_payload': value['serializedTransactionPayload'],
     };
 }

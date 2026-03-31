@@ -16,7 +16,10 @@
  */
 export const VaultState = {
     active: 'active',
-    archived: 'archived'
+    archived: 'archived',
+    deleted: 'deleted',
+    pending: 'pending',
+    aborted: 'aborted'
 } as const;
 export type VaultState = typeof VaultState[keyof typeof VaultState];
 

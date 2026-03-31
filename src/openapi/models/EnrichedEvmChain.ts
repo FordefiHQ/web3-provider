@@ -36,7 +36,7 @@ export interface EnrichedEvmChain {
      */
     chainType: EnrichedEvmChainChainTypeEnum;
     /**
-     * The EVM chain name can be either one of those supported by the default chains below or a custom chain name if one was added to your organization. <ul><li>`arbitrum_mainnet`</li><li>`arbitrum_sepolia`</li><li>`avalanche_chain`</li><li>`base_mainnet`</li><li>`berachain_mainnet`</li><li>`blast_mainnet`</li><li>`bsc_mainnet`</li><li>`canto_mainnet`</li><li>`clink_mainnet`</li><li>`clink_testnet`</li><li>`conflux_mainnet`</li><li>`dymension_mainnet`</li><li>`ethereum_goerli`</li><li>`ethereum_holesky`</li><li>`ethereum_mainnet`</li><li>`ethereum_sepolia`</li><li>`fantom_mainnet`</li><li>`flare_mainnet`</li><li>`flare_testnet`</li><li>`gnosis_mainnet`</li><li>`kava_mainnet`</li><li>`linea_mainnet`</li><li>`optimism_mainnet`</li><li>`manta_pacific_mainnet`</li><li>`mantle_mainnet`</li><li>`merlin_mainnet`</li><li>`polygon_mainnet`</li><li>`polygon_mumbai`</li><li>`polygon_zkevm_mainnet`</li><li>`reya_mainnet`</li><li>`scroll_mainnet`</li><li>`sei_mainnet`</li><li>`sonic_mainnet`</li><li>`xai_mainnet`</li><li>`zeta_mainnet`</li><li>`zklink_nova_mainnet`</li><li>`zksync_era_mainnet`</li></ul>
+     * The EVM chain name can be either one of those supported by the default chains below or a custom chain name if one was added to your organization. <ul><li>`arbitrum_mainnet`</li><li>`arbitrum_sepolia`</li><li>`avalanche_chain`</li><li>`base_mainnet`</li><li>`berachain_mainnet`</li><li>`blast_mainnet`</li><li>`bsc_mainnet`</li><li>`canto_mainnet`</li><li>`clink_mainnet`</li><li>`clink_testnet`</li><li>`conflux_mainnet`</li><li>`dymension_mainnet`</li><li>`ethereum_goerli`</li><li>`ethereum_holesky`</li><li>`ethereum_mainnet`</li><li>`ethereum_sepolia`</li><li>`fantom_mainnet`</li><li>`flare_mainnet`</li><li>`flare_testnet`</li><li>`gnosis_mainnet`</li><li>`hyperevm_mainnet`</li><li>`ink_mainnet`</li><li>`kava_mainnet`</li><li>`katana_mainnet`</li><li>`linea_mainnet`</li><li>`optimism_mainnet`</li><li>`pharos_mainnet`</li><li>`plasma_mainnet`</li><li>`manta_pacific_mainnet`</li><li>`mantle_mainnet`</li><li>`merlin_mainnet`</li><li>`monad_mainnet`</li><li>`polygon_mainnet`</li><li>`polygon_mumbai`</li><li>`polygon_zkevm_mainnet`</li><li>`reya_mainnet`</li><li>`rootstock_mainnet`</li><li>`scroll_mainnet`</li><li>`sei_mainnet`</li><li>`sonic_mainnet`</li><li>`unichain_mainnet`</li><li>`xai_mainnet`</li><li>`zero_gravity_mainnet`</li><li>`zeta_mainnet`</li><li>`zklink_nova_mainnet`</li><li>`zksync_era_mainnet`</li></ul>
      * @type {string}
      * @memberof EnrichedEvmChain
      */
@@ -105,8 +105,15 @@ export interface EnrichedEvmChain {
      * 
      * @type {boolean}
      * @memberof EnrichedEvmChain
+     * @deprecated
      */
     supportsSecureNode?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EnrichedEvmChain
+     */
+    supportsMevProtectedNode?: boolean;
     /**
      * 
      * @type {string}
@@ -119,6 +126,12 @@ export interface EnrichedEvmChain {
      * @memberof EnrichedEvmChain
      */
     source: ChainSource;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EnrichedEvmChain
+     */
+    supports7702?: boolean;
 }
 
 
@@ -153,7 +166,9 @@ export function EnrichedEvmChainFromJSONTyped(json: any, _ignoreDiscriminator: b
         'isEnabled': json['is_enabled'],
         'gasType': GasTypeFromJSON(json['gas_type']),
         'supportsSecureNode': json['supports_secure_node'] == null ? undefined : json['supports_secure_node'],
+        'supportsMevProtectedNode': json['supports_mev_protected_node'] == null ? undefined : json['supports_mev_protected_node'],
         'rpcUrl': json['rpc_url'] == null ? undefined : json['rpc_url'],
         'source': ChainSourceFromJSON(json['source']),
+        'supports7702': json['supports_7702'] == null ? undefined : json['supports_7702'],
     };
 }

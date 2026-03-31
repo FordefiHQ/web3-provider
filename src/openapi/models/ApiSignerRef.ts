@@ -56,7 +56,8 @@ type ApiSignerRefUserTypeEnum = typeof ApiSignerRefUserTypeEnum[keyof typeof Api
  */
 const ApiSignerRefStateEnum = {
     active: 'active',
-    onboarding: 'onboarding',
+    onboardingPendingCodeGeneration: 'onboarding_pending_code_generation',
+    onboardingPendingActivation: 'onboarding_pending_activation',
     deleted: 'deleted'
 } as const;
 type ApiSignerRefStateEnum = typeof ApiSignerRefStateEnum[keyof typeof ApiSignerRefStateEnum];

@@ -49,4 +49,3 @@ function SolanaAddressFromJSONTyped(json: any, _ignoreDiscriminator: boolean): S
         'base58Repr': json['base58_repr'],
     };
 }
-

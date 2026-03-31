@@ -10,19 +10,44 @@
  * Do not edit the class manually.
  */
 
+import type { RecipientContactId } from './RecipientContactId';
+import {
+    RecipientContactIdToJSON,
+} from './RecipientContactId';
+import type { RecipientVaultId } from './RecipientVaultId';
+import {
+    RecipientVaultIdToJSON,
+} from './RecipientVaultId';
+import type { SolanaRecipientBase58 } from './SolanaRecipientBase58';
+import {
+    SolanaRecipientBase58ToJSON,
+} from './SolanaRecipientBase58';
+
 /**
  * 
  * @export
- * @interface CreateSolanaTransferRequestTo
+ * @type CreateSolanaTransferRequestTo
  */
-export interface CreateSolanaTransferRequestTo {
-}
+export type CreateSolanaTransferRequestTo = { type: 'address' } & SolanaRecipientBase58 | { type: 'contact_id' } & RecipientContactId | { type: 'vault_id' } & RecipientVaultId;
 
-export function CreateSolanaTransferRequestToToJSON(json: any): CreateSolanaTransferRequestTo {
+export function CreateSolanaTransferRequestToToJSON(json: any): any {
     return CreateSolanaTransferRequestToToJSONTyped(json, false);
 }
 
 function CreateSolanaTransferRequestToToJSONTyped(value?: CreateSolanaTransferRequestTo | null, _ignoreDiscriminator: boolean = false): any {
-    return value;
+    if (value == null) {
+        return value;
+    }
+    switch (value['type']) {
+        case 'address':
+            return Object.assign({}, SolanaRecipientBase58ToJSON(value), { type: 'address' } as const);
+        case 'contact_id':
+            return Object.assign({}, RecipientContactIdToJSON(value), { type: 'contact_id' } as const);
+        case 'vault_id':
+            return Object.assign({}, RecipientVaultIdToJSON(value), { type: 'vault_id' } as const);
+        default:
+            throw new Error(`No variant of CreateSolanaTransferRequestTo exists with 'type=${value['type']}'`);
+    }
+
 }
 

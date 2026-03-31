@@ -10,10 +10,6 @@
  * Do not edit the class manually.
  */
 
-import type { AptosBalanceChangeEffectType } from './AptosBalanceChangeEffectType';
-import {
-    AptosBalanceChangeEffectTypeFromJSON,
-} from './AptosBalanceChangeEffectType';
 import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
@@ -43,22 +39,10 @@ export interface AptosBalanceChangeEffect {
     diff: string;
     /**
      * 
-     * @type {AptosBalanceChangeEffectType}
-     * @memberof AptosBalanceChangeEffect
-     */
-    type: AptosBalanceChangeEffectType;
-    /**
-     * 
      * @type {EnrichedAptosAddress}
      * @memberof AptosBalanceChangeEffect
      */
     address: EnrichedAptosAddress;
-    /**
-     * 
-     * @type {EnrichedAptosAddress}
-     * @memberof AptosBalanceChangeEffect
-     */
-    owner?: EnrichedAptosAddress;
 }
 
 export function AptosBalanceChangeEffectFromJSON(json: any): AptosBalanceChangeEffect {
@@ -73,9 +57,7 @@ function AptosBalanceChangeEffectFromJSONTyped(json: any, _ignoreDiscriminator: 
         
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
         'diff': json['diff'],
-        'type': AptosBalanceChangeEffectTypeFromJSON(json['type']),
         'address': EnrichedAptosAddressFromJSON(json['address']),
-        'owner': json['owner'] == null ? undefined : EnrichedAptosAddressFromJSON(json['owner']),
     };
 }
 

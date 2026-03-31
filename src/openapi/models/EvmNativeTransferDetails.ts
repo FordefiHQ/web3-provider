@@ -32,7 +32,7 @@ export interface EvmNativeTransferDetails {
      * @type {TransferDirection}
      * @memberof EvmNativeTransferDetails
      */
-    direction: TransferDirection;
+    direction?: TransferDirection;
     /**
      * 
      * @type {boolean}
@@ -57,7 +57,7 @@ export function EvmNativeTransferDetailsFromJSONTyped(json: any, _ignoreDiscrimi
     return {
         
         'type': json['type'],
-        'direction': TransferDirectionFromJSON(json['direction']),
+        'direction': json['direction'] == null ? undefined : TransferDirectionFromJSON(json['direction']),
         'isInternal': json['is_internal'] == null ? undefined : json['is_internal'],
     };
 }

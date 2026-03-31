@@ -39,6 +39,12 @@ export interface UtxoOutput {
      * @memberof UtxoOutput
      */
     isChangeAddress?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UtxoOutput
+     */
+    isSendMax?: boolean;
 }
 
 export function UtxoOutputFromJSON(json: any): UtxoOutput {
@@ -54,6 +60,7 @@ function UtxoOutputFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Utxo
         'address': EnrichedUtxoAddressFromJSON(json['address']),
         'value': json['value'],
         'isChangeAddress': json['is_change_address'] == null ? undefined : json['is_change_address'],
+        'isSendMax': json['is_send_max'] == null ? undefined : json['is_send_max'],
     };
 }
 

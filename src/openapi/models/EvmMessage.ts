@@ -10,14 +10,34 @@
  * Do not edit the class manually.
  */
 
-import type { VaultRef } from './VaultRef';
+import type { EvmMessageGasSubmitted } from './EvmMessageGasSubmitted';
 import {
-    VaultRefFromJSON,
-} from './VaultRef';
+    EvmMessageGasSubmittedFromJSON,
+} from './EvmMessageGasSubmitted';
 import type { ManagedTransactionData } from './ManagedTransactionData';
 import {
     ManagedTransactionDataFromJSON,
 } from './ManagedTransactionData';
+import type { EvmMessageResult } from './EvmMessageResult';
+import {
+    EvmMessageResultFromJSON,
+} from './EvmMessageResult';
+import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
+import {
+    EnrichedEvmAddressFromJSON,
+} from './EnrichedEvmAddress';
+import type { EvmMessageType } from './EvmMessageType';
+import {
+    EvmMessageTypeFromJSON,
+} from './EvmMessageType';
+import type { NonPushableTransactionState } from './NonPushableTransactionState';
+import {
+    NonPushableTransactionStateFromJSON,
+} from './NonPushableTransactionState';
+import type { VaultRef } from './VaultRef';
+import {
+    VaultRefFromJSON,
+} from './VaultRef';
 import type { TransactionSpamState } from './TransactionSpamState';
 import {
     TransactionSpamStateFromJSON,
@@ -38,22 +58,14 @@ import type { EvmMessageTypedData } from './EvmMessageTypedData';
 import {
     EvmMessageTypedDataFromJSON,
 } from './EvmMessageTypedData';
-import type { EnrichedEvmAddress } from './EnrichedEvmAddress';
+import type { RelatedTransaction } from './RelatedTransaction';
 import {
-    EnrichedEvmAddressFromJSON,
-} from './EnrichedEvmAddress';
+    RelatedTransactionFromJSON,
+} from './RelatedTransaction';
 import type { NonPushableTransactionStateChange } from './NonPushableTransactionStateChange';
 import {
     NonPushableTransactionStateChangeFromJSON,
 } from './NonPushableTransactionStateChange';
-import type { EvmMessageType } from './EvmMessageType';
-import {
-    EvmMessageTypeFromJSON,
-} from './EvmMessageType';
-import type { NonPushableTransactionState } from './NonPushableTransactionState';
-import {
-    NonPushableTransactionStateFromJSON,
-} from './NonPushableTransactionState';
 
 /**
  * 
@@ -117,6 +129,24 @@ export interface EvmMessage {
     signedExternally?: boolean;
     /**
      * 
+     * @type {Array<VaultRef>}
+     * @memberof EvmMessage
+     */
+    interactedVaults: Array<VaultRef>;
+    /**
+     * 
+     * @type {Array<RelatedTransaction>}
+     * @memberof EvmMessage
+     */
+    relatedTransactions?: Array<RelatedTransaction>;
+    /**
+     * 
+     * @type {string}
+     * @memberof EvmMessage
+     */
+    organizationId: string;
+    /**
+     * 
      * @type {NonPushableTransactionState}
      * @memberof EvmMessage
      */
@@ -169,6 +199,18 @@ export interface EvmMessage {
      * @memberof EvmMessage
      */
     sender: EnrichedEvmAddress;
+    /**
+     * 
+     * @type {EvmMessageResult}
+     * @memberof EvmMessage
+     */
+    expectedResult?: EvmMessageResult;
+    /**
+     * 
+     * @type {EvmMessageGasSubmitted}
+     * @memberof EvmMessage
+     */
+    gasSubmitted?: EvmMessageGasSubmitted;
 }
 
 
@@ -195,6 +237,9 @@ export function EvmMessageFromJSONTyped(json: any, _ignoreDiscriminator: boolean
         'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
         'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'interactedVaults': ((json['interacted_vaults'] as Array<any>).map(VaultRefFromJSON)),
+        'relatedTransactions': json['related_transactions'] == null ? undefined : ((json['related_transactions'] as Array<any>).map(RelatedTransactionFromJSON)),
+        'organizationId': json['organization_id'],
         'state': NonPushableTransactionStateFromJSON(json['state']),
         'stateChanges': ((json['state_changes'] as Array<any>).map(NonPushableTransactionStateChangeFromJSON)),
         'type': json['type'],
@@ -204,5 +249,7 @@ export function EvmMessageFromJSONTyped(json: any, _ignoreDiscriminator: boolean
         'vault': VaultRefFromJSON(json['vault']),
         'chain': EnrichedEvmChainFromJSON(json['chain']),
         'sender': EnrichedEvmAddressFromJSON(json['sender']),
+        'expectedResult': json['expected_result'] == null ? undefined : EvmMessageResultFromJSON(json['expected_result']),
+        'gasSubmitted': json['gas_submitted'] == null ? undefined : EvmMessageGasSubmittedFromJSON(json['gas_submitted']),
     };
 }

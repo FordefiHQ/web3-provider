@@ -21,13 +21,57 @@ export interface Balances {
      * @type {string}
      * @memberof Balances
      */
-    mined: string;
+    totalMined: string;
     /**
      * 
      * @type {string}
      * @memberof Balances
      */
-    pendingIncoming: string;
+    totalPendingIncoming: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Balances
+     * @deprecated
+     */
+    mined?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Balances
+     * @deprecated
+     */
+    pendingIncoming?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Balances
+     */
+    availableMined: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Balances
+     */
+    availablePendingIncoming: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Balances
+     */
+    frozenMined: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Balances
+     */
+    frozenPendingIncoming: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Balances
+     */
+    trustlineLimit?: string;
 }
 
 export function BalancesFromJSON(json: any): Balances {
@@ -40,8 +84,15 @@ function BalancesFromJSONTyped(json: any, _ignoreDiscriminator: boolean): Balanc
     }
     return {
         
-        'mined': json['mined'],
-        'pendingIncoming': json['pending_incoming'],
+        'totalMined': json['total_mined'],
+        'totalPendingIncoming': json['total_pending_incoming'],
+        'mined': json['mined'] == null ? undefined : json['mined'],
+        'pendingIncoming': json['pending_incoming'] == null ? undefined : json['pending_incoming'],
+        'availableMined': json['available_mined'],
+        'availablePendingIncoming': json['available_pending_incoming'],
+        'frozenMined': json['frozen_mined'],
+        'frozenPendingIncoming': json['frozen_pending_incoming'],
+        'trustlineLimit': json['trustline_limit'] == null ? undefined : json['trustline_limit'],
     };
 }
 

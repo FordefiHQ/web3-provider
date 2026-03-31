@@ -10,6 +10,14 @@
  * Do not edit the class manually.
  */
 
+import type { TransactionFeePayerVault } from './TransactionFeePayerVault';
+import {
+    TransactionFeePayerVaultToJSON,
+} from './TransactionFeePayerVault';
+import type { CreateEvmRawTransactionRequestCustomNonce } from './CreateEvmRawTransactionRequestCustomNonce';
+import {
+    CreateEvmRawTransactionRequestCustomNonceToJSON,
+} from './CreateEvmRawTransactionRequestCustomNonce';
 import type { EvmChainRequest } from './EvmChainRequest';
 import {
     EvmChainRequestToJSON,
@@ -31,22 +39,16 @@ import {
 export interface CreateEvmRevokeAllowanceRequest {
     /**
      * 
+     * @type {TransactionFeePayerVault}
+     * @memberof CreateEvmRevokeAllowanceRequest
+     */
+    feePayer?: TransactionFeePayerVault;
+    /**
+     * 
      * @type {string}
      * @memberof CreateEvmRevokeAllowanceRequest
      */
     type: CreateEvmRevokeAllowanceRequestTypeEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CreateEvmRevokeAllowanceRequest
-     */
-    useSecureNode?: boolean;
-    /**
-     * 
-     * @type {CreateEvmRawTransactionRequestGas}
-     * @memberof CreateEvmRevokeAllowanceRequest
-     */
-    gas?: CreateEvmRawTransactionRequestGas;
     /**
      * 
      * @type {boolean}
@@ -67,10 +69,36 @@ export interface CreateEvmRevokeAllowanceRequest {
     pushMode?: PushMode;
     /**
      * 
-     * @type {string}
+     * @type {boolean}
      * @memberof CreateEvmRevokeAllowanceRequest
      */
+    useMevProtectedNode?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CreateEvmRevokeAllowanceRequest
+     * @deprecated
+     */
+    useSecureNode?: boolean;
+    /**
+     * 
+     * @type {CreateEvmRawTransactionRequestGas}
+     * @memberof CreateEvmRevokeAllowanceRequest
+     */
+    gas?: CreateEvmRawTransactionRequestGas;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateEvmRevokeAllowanceRequest
+     * @deprecated
+     */
     funder?: string;
+    /**
+     * 
+     * @type {CreateEvmRawTransactionRequestCustomNonce}
+     * @memberof CreateEvmRevokeAllowanceRequest
+     */
+    customNonce?: CreateEvmRawTransactionRequestCustomNonce;
     /**
      * 
      * @type {EvmChainRequest}
@@ -111,13 +139,16 @@ function CreateEvmRevokeAllowanceRequestToJSONTyped(value?: CreateEvmRevokeAllow
 
     return {
         
+        'fee_payer': TransactionFeePayerVaultToJSON(value['feePayer']),
         'type': value['type'],
-        'use_secure_node': value['useSecureNode'],
-        'gas': CreateEvmRawTransactionRequestGasToJSON(value['gas']),
         'fail_on_prediction_failure': value['failOnPredictionFailure'],
         'skip_prediction': value['skipPrediction'],
         'push_mode': PushModeToJSON(value['pushMode']),
+        'use_mev_protected_node': value['useMevProtectedNode'],
+        'use_secure_node': value['useSecureNode'],
+        'gas': CreateEvmRawTransactionRequestGasToJSON(value['gas']),
         'funder': value['funder'],
+        'custom_nonce': CreateEvmRawTransactionRequestCustomNonceToJSON(value['customNonce']),
         'chain': EvmChainRequestToJSON(value['chain']),
         'token': value['token'],
         'spender': value['spender'],

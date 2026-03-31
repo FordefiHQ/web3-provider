@@ -14,10 +14,6 @@ import type { EnrichedSuiAddress } from './EnrichedSuiAddress';
 import {
     EnrichedSuiAddressFromJSON,
 } from './EnrichedSuiAddress';
-import type { SuiBalanceChangeEffectType } from './SuiBalanceChangeEffectType';
-import {
-    SuiBalanceChangeEffectTypeFromJSON,
-} from './SuiBalanceChangeEffectType';
 import type { PricedAsset } from './PricedAsset';
 import {
     PricedAssetFromJSON,
@@ -43,18 +39,6 @@ export interface SuiBalanceChangeEffect {
     diff: string;
     /**
      * 
-     * @type {SuiBalanceChangeEffectType}
-     * @memberof SuiBalanceChangeEffect
-     */
-    type: SuiBalanceChangeEffectType;
-    /**
-     * 
-     * @type {EnrichedSuiAddress}
-     * @memberof SuiBalanceChangeEffect
-     */
-    owner?: EnrichedSuiAddress;
-    /**
-     * 
      * @type {EnrichedSuiAddress}
      * @memberof SuiBalanceChangeEffect
      */
@@ -73,8 +57,6 @@ function SuiBalanceChangeEffectFromJSONTyped(json: any, _ignoreDiscriminator: bo
         
         'pricedAsset': PricedAssetFromJSON(json['priced_asset']),
         'diff': json['diff'],
-        'type': SuiBalanceChangeEffectTypeFromJSON(json['type']),
-        'owner': json['owner'] == null ? undefined : EnrichedSuiAddressFromJSON(json['owner']),
         'address': EnrichedSuiAddressFromJSON(json['address']),
     };
 }

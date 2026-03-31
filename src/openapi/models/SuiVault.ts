@@ -11,34 +11,30 @@
  */
 
 import { mapValues } from '../runtime';
-import type { AptosVaultPendingVaultGroupAction } from './AptosVaultPendingVaultGroupAction';
-import {
-    AptosVaultPendingVaultGroupActionFromJSON,
-} from './AptosVaultPendingVaultGroupAction';
 import type { EndUserRef } from './EndUserRef';
 import {
     EndUserRefFromJSON,
 } from './EndUserRef';
-import type { VaultState } from './VaultState';
-import {
-    VaultStateFromJSON,
-} from './VaultState';
 import type { AptosVaultMetadataValue } from './AptosVaultMetadataValue';
 import {
     AptosVaultMetadataValueFromJSON,
 } from './AptosVaultMetadataValue';
+import type { OwnedAsset } from './OwnedAsset';
+import {
+    OwnedAssetFromJSON,
+} from './OwnedAsset';
 import type { VaultOriginType } from './VaultOriginType';
 import {
     VaultOriginTypeFromJSON,
 } from './VaultOriginType';
+import type { SkipIndexingReason } from './SkipIndexingReason';
+import {
+    SkipIndexingReasonFromJSON,
+} from './SkipIndexingReason';
 import type { VaultGroupRef } from './VaultGroupRef';
 import {
     VaultGroupRefFromJSON,
 } from './VaultGroupRef';
-import type { KeysetRef } from './KeysetRef';
-import {
-    KeysetRefFromJSON,
-} from './KeysetRef';
 import type { UserRef } from './UserRef';
 import {
     UserRefFromJSON,
@@ -47,6 +43,10 @@ import type { VaultDerivationInfo } from './VaultDerivationInfo';
 import {
     VaultDerivationInfoFromJSON,
 } from './VaultDerivationInfo';
+import type { MpcVaultState } from './MpcVaultState';
+import {
+    MpcVaultStateFromJSON,
+} from './MpcVaultState';
 
 /**
  * 
@@ -95,25 +95,43 @@ export interface SuiVault {
      * @type {VaultGroupRef}
      * @memberof SuiVault
      */
-    vaultGroup: VaultGroupRef;
+    vaultGroup?: VaultGroupRef;
     /**
      * 
-     * @type {AptosVaultPendingVaultGroupAction}
+     * @type {Array<VaultGroupRef>}
      * @memberof SuiVault
      */
-    pendingVaultGroupAction?: AptosVaultPendingVaultGroupAction;
-    /**
-     * 
-     * @type {VaultState}
-     * @memberof SuiVault
-     */
-    state: VaultState;
+    vaultGroups: Array<VaultGroupRef>;
     /**
      * 
      * @type {boolean}
      * @memberof SuiVault
      */
     areAllChainsDisabled: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SuiVault
+     */
+    isFavorite?: boolean;
+    /**
+     * 
+     * @type {SkipIndexingReason}
+     * @memberof SuiVault
+     */
+    skipIndexingReason?: SkipIndexingReason;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SuiVault
+     */
+    isExternalSigner?: boolean;
+    /**
+     * 
+     * @type {Array<OwnedAsset>}
+     * @memberof SuiVault
+     */
+    nativeAssets?: Array<OwnedAsset>;
     /**
      * 
      * @type {string}
@@ -135,12 +153,6 @@ export interface SuiVault {
     derivationInfo: VaultDerivationInfo;
     /**
      * 
-     * @type {KeysetRef}
-     * @memberof SuiVault
-     */
-    keyset: KeysetRef;
-    /**
-     * 
      * @type {EndUserRef}
      * @memberof SuiVault
      */
@@ -151,6 +163,12 @@ export interface SuiVault {
      * @memberof SuiVault
      */
     originType: VaultOriginType;
+    /**
+     * 
+     * @type {MpcVaultState}
+     * @memberof SuiVault
+     */
+    state: MpcVaultState;
     /**
      * 
      * @type {string}
@@ -186,16 +204,19 @@ export function SuiVaultFromJSONTyped(json: any, _ignoreDiscriminator: boolean):
         'metadata': json['metadata'] == null ? undefined : (mapValues(json['metadata'], AptosVaultMetadataValueFromJSON)),
         'name': json['name'],
         'createdBy': UserRefFromJSON(json['created_by']),
-        'vaultGroup': VaultGroupRefFromJSON(json['vault_group']),
-        'pendingVaultGroupAction': json['pending_vault_group_action'] == null ? undefined : AptosVaultPendingVaultGroupActionFromJSON(json['pending_vault_group_action']),
-        'state': VaultStateFromJSON(json['state']),
+        'vaultGroup': json['vault_group'] == null ? undefined : VaultGroupRefFromJSON(json['vault_group']),
+        'vaultGroups': ((json['vault_groups'] as Array<any>).map(VaultGroupRefFromJSON)),
         'areAllChainsDisabled': json['are_all_chains_disabled'],
+        'isFavorite': json['is_favorite'] == null ? undefined : json['is_favorite'],
+        'skipIndexingReason': json['skip_indexing_reason'] == null ? undefined : SkipIndexingReasonFromJSON(json['skip_indexing_reason']),
+        'isExternalSigner': json['is_external_signer'] == null ? undefined : json['is_external_signer'],
+        'nativeAssets': json['native_assets'] == null ? undefined : ((json['native_assets'] as Array<any>).map(OwnedAssetFromJSON)),
         'derivationPath': json['derivation_path'],
         'publicKeyCompressed': json['public_key_compressed'],
         'derivationInfo': VaultDerivationInfoFromJSON(json['derivation_info']),
-        'keyset': KeysetRefFromJSON(json['keyset']),
         'keyHolder': json['key_holder'] == null ? undefined : EndUserRefFromJSON(json['key_holder']),
         'originType': VaultOriginTypeFromJSON(json['origin_type']),
+        'state': MpcVaultStateFromJSON(json['state']),
         'type': json['type'],
         'address': json['address'],
     };

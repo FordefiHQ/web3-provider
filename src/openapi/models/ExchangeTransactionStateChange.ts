@@ -14,14 +14,6 @@ import type { ExchangeTransactionState } from './ExchangeTransactionState';
 import {
     ExchangeTransactionStateFromJSON,
 } from './ExchangeTransactionState';
-import type { PricedAsset } from './PricedAsset';
-import {
-    PricedAssetFromJSON,
-} from './PricedAsset';
-import type { EvmPrices } from './EvmPrices';
-import {
-    EvmPricesFromJSON,
-} from './EvmPrices';
 import type { StateChangeReason } from './StateChangeReason';
 import {
     StateChangeReasonFromJSON,
@@ -45,19 +37,6 @@ export interface ExchangeTransactionStateChange {
      * @memberof ExchangeTransactionStateChange
      */
     reason?: StateChangeReason;
-    /**
-     * 
-     * @type {Array<PricedAsset>}
-     * @memberof ExchangeTransactionStateChange
-     * @deprecated
-     */
-    assetPrices?: Array<PricedAsset>;
-    /**
-     * 
-     * @type {EvmPrices}
-     * @memberof ExchangeTransactionStateChange
-     */
-    prices?: EvmPrices;
     /**
      * 
      * @type {ExchangeTransactionState}
@@ -84,8 +63,6 @@ function ExchangeTransactionStateChangeFromJSONTyped(json: any, _ignoreDiscrimin
         
         'changedAt': (new Date(json['changed_at'])),
         'reason': json['reason'] == null ? undefined : StateChangeReasonFromJSON(json['reason']),
-        'assetPrices': json['asset_prices'] == null ? undefined : ((json['asset_prices'] as Array<any>).map(PricedAssetFromJSON)),
-        'prices': json['prices'] == null ? undefined : EvmPricesFromJSON(json['prices']),
         'previousState': json['previous_state'] == null ? undefined : ExchangeTransactionStateFromJSON(json['previous_state']),
         'newState': ExchangeTransactionStateFromJSON(json['new_state']),
     };

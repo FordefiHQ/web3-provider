@@ -10,6 +10,10 @@
  * Do not edit the class manually.
  */
 
+import type { EvmMessageGasSubmitted } from './EvmMessageGasSubmitted';
+import {
+    EvmMessageGasSubmittedFromJSON,
+} from './EvmMessageGasSubmitted';
 import type { EvmTransactionResult } from './EvmTransactionResult';
 import {
     EvmTransactionResultFromJSON,
@@ -18,18 +22,10 @@ import type { ManagedTransactionData } from './ManagedTransactionData';
 import {
     ManagedTransactionDataFromJSON,
 } from './ManagedTransactionData';
-import type { EvmTransactionGasSubmitted } from './EvmTransactionGasSubmitted';
-import {
-    EvmTransactionGasSubmittedFromJSON,
-} from './EvmTransactionGasSubmitted';
 import type { EvmTransactionParsedData } from './EvmTransactionParsedData';
 import {
     EvmTransactionParsedDataFromJSON,
 } from './EvmTransactionParsedData';
-import type { EvmBlockData } from './EvmBlockData';
-import {
-    EvmBlockDataFromJSON,
-} from './EvmBlockData';
 import type { PushableTransactionStateChange } from './PushableTransactionStateChange';
 import {
     PushableTransactionStateChangeFromJSON,
@@ -42,10 +38,10 @@ import type { PushableTransactionState } from './PushableTransactionState';
 import {
     PushableTransactionStateFromJSON,
 } from './PushableTransactionState';
-import type { AmlPolicyMatchIncoming } from './AmlPolicyMatchIncoming';
+import type { MinedResultStatus } from './MinedResultStatus';
 import {
-    AmlPolicyMatchIncomingFromJSON,
-} from './AmlPolicyMatchIncoming';
+    MinedResultStatusFromJSON,
+} from './MinedResultStatus';
 import type { VaultRef } from './VaultRef';
 import {
     VaultRefFromJSON,
@@ -62,22 +58,30 @@ import type { EnrichedEvmChain } from './EnrichedEvmChain';
 import {
     EnrichedEvmChainFromJSON,
 } from './EnrichedEvmChain';
+import type { AmlCheck } from './AmlCheck';
+import {
+    AmlCheckFromJSON,
+} from './AmlCheck';
 import type { Signature } from './Signature';
 import {
     SignatureFromJSON,
 } from './Signature';
+import type { RelatedTransaction } from './RelatedTransaction';
+import {
+    RelatedTransactionFromJSON,
+} from './RelatedTransaction';
 import type { SimulationStatusResult } from './SimulationStatusResult';
 import {
     SimulationStatusResultFromJSON,
 } from './SimulationStatusResult';
+import type { Block } from './Block';
+import {
+    BlockFromJSON,
+} from './Block';
 import type { EvmTransactionEvmTransactionTypeDetails } from './EvmTransactionEvmTransactionTypeDetails';
 import {
     EvmTransactionEvmTransactionTypeDetailsFromJSON,
 } from './EvmTransactionEvmTransactionTypeDetails';
-import type { AmlResults } from './AmlResults';
-import {
-    AmlResultsFromJSON,
-} from './AmlResults';
 
 /**
  * 
@@ -141,6 +145,30 @@ export interface EvmTransaction {
     signedExternally?: boolean;
     /**
      * 
+     * @type {Array<VaultRef>}
+     * @memberof EvmTransaction
+     */
+    interactedVaults: Array<VaultRef>;
+    /**
+     * 
+     * @type {Array<RelatedTransaction>}
+     * @memberof EvmTransaction
+     */
+    relatedTransactions?: Array<RelatedTransaction>;
+    /**
+     * 
+     * @type {string}
+     * @memberof EvmTransaction
+     */
+    organizationId: string;
+    /**
+     * 
+     * @type {Block}
+     * @memberof EvmTransaction
+     */
+    block?: Block;
+    /**
+     * 
      * @type {PushableTransactionState}
      * @memberof EvmTransaction
      */
@@ -153,16 +181,46 @@ export interface EvmTransaction {
     stateChanges: Array<PushableTransactionStateChange>;
     /**
      * 
-     * @type {AmlResults}
+     * @type {AmlCheck}
      * @memberof EvmTransaction
      */
-    amlResults?: AmlResults;
+    amlCheck?: AmlCheck;
     /**
      * 
-     * @type {AmlPolicyMatchIncoming}
+     * @type {MinedResultStatus}
      * @memberof EvmTransaction
      */
-    incomingAmlPolicyMatch?: AmlPolicyMatchIncoming;
+    minedResultStatus?: MinedResultStatus;
+    /**
+     * 
+     * @type {SimulationStatusResult}
+     * @memberof EvmTransaction
+     */
+    simulationStatusResult?: SimulationStatusResult;
+    /**
+     * 
+     * @type {string}
+     * @memberof EvmTransaction
+     */
+    parentTransactionId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EvmTransaction
+     */
+    childTransactionId?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EvmTransaction
+     */
+    isCancelation: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EvmTransaction
+     */
+    isAcceleration: boolean;
     /**
      * 
      * @type {string}
@@ -231,22 +289,10 @@ export interface EvmTransaction {
     nonce?: number;
     /**
      * 
-     * @type {EvmBlockData}
-     * @memberof EvmTransaction
-     */
-    block?: EvmBlockData;
-    /**
-     * 
      * @type {EvmTransactionResult}
      * @memberof EvmTransaction
      */
     expectedResult?: EvmTransactionResult;
-    /**
-     * 
-     * @type {SimulationStatusResult}
-     * @memberof EvmTransaction
-     */
-    simulationStatusResult?: SimulationStatusResult;
     /**
      * 
      * @type {EvmTransactionResult}
@@ -255,22 +301,10 @@ export interface EvmTransaction {
     minedResult?: EvmTransactionResult;
     /**
      * 
-     * @type {EvmTransactionGasSubmitted}
+     * @type {EvmMessageGasSubmitted}
      * @memberof EvmTransaction
      */
-    gasSubmitted: EvmTransactionGasSubmitted;
-    /**
-     * 
-     * @type {string}
-     * @memberof EvmTransaction
-     */
-    parentTransactionId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EvmTransaction
-     */
-    childTransactionId?: string;
+    gasSubmitted: EvmMessageGasSubmitted;
     /**
      * 
      * @type {string}
@@ -299,20 +333,15 @@ export interface EvmTransaction {
      * 
      * @type {boolean}
      * @memberof EvmTransaction
+     * @deprecated
      */
-    isCancelation: boolean;
+    useSecureNode?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof EvmTransaction
      */
-    isAcceleration: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof EvmTransaction
-     */
-    useSecureNode: boolean;
+    useMevProtectedNode: boolean;
     /**
      * 
      * @type {string}
@@ -325,6 +354,12 @@ export interface EvmTransaction {
      * @memberof EvmTransaction
      */
     rawTransaction?: string;
+    /**
+     * 
+     * @type {EnrichedEvmAddress}
+     * @memberof EvmTransaction
+     */
+    feePayer?: EnrichedEvmAddress;
 }
 
 
@@ -351,10 +386,19 @@ export function EvmTransactionFromJSONTyped(json: any, _ignoreDiscriminator: boo
         'spamState': json['spam_state'] == null ? undefined : TransactionSpamStateFromJSON(json['spam_state']),
         'direction': TransactionDirectionFromJSON(json['direction']),
         'signedExternally': json['signed_externally'] == null ? undefined : json['signed_externally'],
+        'interactedVaults': ((json['interacted_vaults'] as Array<any>).map(VaultRefFromJSON)),
+        'relatedTransactions': json['related_transactions'] == null ? undefined : ((json['related_transactions'] as Array<any>).map(RelatedTransactionFromJSON)),
+        'organizationId': json['organization_id'],
+        'block': json['block'] == null ? undefined : BlockFromJSON(json['block']),
         'state': PushableTransactionStateFromJSON(json['state']),
         'stateChanges': ((json['state_changes'] as Array<any>).map(PushableTransactionStateChangeFromJSON)),
-        'amlResults': json['aml_results'] == null ? undefined : AmlResultsFromJSON(json['aml_results']),
-        'incomingAmlPolicyMatch': json['incoming_aml_policy_match'] == null ? undefined : AmlPolicyMatchIncomingFromJSON(json['incoming_aml_policy_match']),
+        'amlCheck': json['aml_check'] == null ? undefined : AmlCheckFromJSON(json['aml_check']),
+        'minedResultStatus': json['mined_result_status'] == null ? undefined : MinedResultStatusFromJSON(json['mined_result_status']),
+        'simulationStatusResult': json['simulation_status_result'] == null ? undefined : SimulationStatusResultFromJSON(json['simulation_status_result']),
+        'parentTransactionId': json['parent_transaction_id'] == null ? undefined : json['parent_transaction_id'],
+        'childTransactionId': json['child_transaction_id'] == null ? undefined : json['child_transaction_id'],
+        'isCancelation': json['is_cancelation'],
+        'isAcceleration': json['is_acceleration'],
         'type': json['type'],
         'evmTransactionTypeDetails': EvmTransactionEvmTransactionTypeDetailsFromJSON(json['evm_transaction_type_details']),
         'chain': EnrichedEvmChainFromJSON(json['chain']),
@@ -366,21 +410,17 @@ export function EvmTransactionFromJSONTyped(json: any, _ignoreDiscriminator: boo
         'parsedData': EvmTransactionParsedDataFromJSON(json['parsed_data']),
         'hash': json['hash'] == null ? undefined : json['hash'],
         'nonce': json['nonce'] == null ? undefined : json['nonce'],
-        'block': json['block'] == null ? undefined : EvmBlockDataFromJSON(json['block']),
         'expectedResult': json['expected_result'] == null ? undefined : EvmTransactionResultFromJSON(json['expected_result']),
-        'simulationStatusResult': json['simulation_status_result'] == null ? undefined : SimulationStatusResultFromJSON(json['simulation_status_result']),
         'minedResult': json['mined_result'] == null ? undefined : EvmTransactionResultFromJSON(json['mined_result']),
-        'gasSubmitted': EvmTransactionGasSubmittedFromJSON(json['gas_submitted']),
-        'parentTransactionId': json['parent_transaction_id'] == null ? undefined : json['parent_transaction_id'],
-        'childTransactionId': json['child_transaction_id'] == null ? undefined : json['child_transaction_id'],
+        'gasSubmitted': EvmMessageGasSubmittedFromJSON(json['gas_submitted']),
         'fundingForTransactionId': json['funding_for_transaction_id'] == null ? undefined : json['funding_for_transaction_id'],
         'fundedByTransactionId': json['funded_by_transaction_id'] == null ? undefined : json['funded_by_transaction_id'],
         'fundedByVault': json['funded_by_vault'] == null ? undefined : VaultRefFromJSON(json['funded_by_vault']),
         'currentPrecedingPushedToBlockchainTransactionId': json['current_preceding_pushed_to_blockchain_transaction_id'] == null ? undefined : json['current_preceding_pushed_to_blockchain_transaction_id'],
-        'isCancelation': json['is_cancelation'],
-        'isAcceleration': json['is_acceleration'],
-        'useSecureNode': json['use_secure_node'],
+        'useSecureNode': json['use_secure_node'] == null ? undefined : json['use_secure_node'],
+        'useMevProtectedNode': json['use_mev_protected_node'],
         'explorerUrl': json['explorer_url'] == null ? undefined : json['explorer_url'],
         'rawTransaction': json['raw_transaction'] == null ? undefined : json['raw_transaction'],
+        'feePayer': json['fee_payer'] == null ? undefined : EnrichedEvmAddressFromJSON(json['fee_payer']),
     };
 }

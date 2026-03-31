@@ -43,6 +43,12 @@ export interface CreateTonSerializedRawTransactionRequest {
     failOnPredictionFailure?: boolean;
     /**
      * 
+     * @type {boolean}
+     * @memberof CreateTonSerializedRawTransactionRequest
+     */
+    skipPrediction?: boolean;
+    /**
+     * 
      * @type {PushMode}
      * @memberof CreateTonSerializedRawTransactionRequest
      */
@@ -59,12 +65,6 @@ export interface CreateTonSerializedRawTransactionRequest {
      * @memberof CreateTonSerializedRawTransactionRequest
      */
     transactionPayload: TonTransactionPayload;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CreateTonSerializedRawTransactionRequest
-     */
-    skipPrediction?: boolean;
 }
 
 
@@ -89,9 +89,9 @@ function CreateTonSerializedRawTransactionRequestToJSONTyped(value?: CreateTonSe
         
         'type': value['type'],
         'fail_on_prediction_failure': value['failOnPredictionFailure'],
+        'skip_prediction': value['skipPrediction'],
         'push_mode': PushModeToJSON(value['pushMode']),
         'chain': TonChainUniqueIdToJSON(value['chain']),
         'transaction_payload': TonTransactionPayloadToJSON(value['transactionPayload']),
-        'skip_prediction': value['skipPrediction'],
     };
 }

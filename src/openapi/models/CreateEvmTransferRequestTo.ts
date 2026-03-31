@@ -10,19 +10,44 @@
  * Do not edit the class manually.
  */
 
+import type { EvmRecipientHex } from './EvmRecipientHex';
+import {
+    EvmRecipientHexToJSON,
+} from './EvmRecipientHex';
+import type { RecipientContactId } from './RecipientContactId';
+import {
+    RecipientContactIdToJSON,
+} from './RecipientContactId';
+import type { RecipientVaultId } from './RecipientVaultId';
+import {
+    RecipientVaultIdToJSON,
+} from './RecipientVaultId';
+
 /**
  * 
  * @export
- * @interface CreateEvmTransferRequestTo
+ * @type CreateEvmTransferRequestTo
  */
-export interface CreateEvmTransferRequestTo {
-}
+export type CreateEvmTransferRequestTo = { type: 'contact_id' } & RecipientContactId | { type: 'hex' } & EvmRecipientHex | { type: 'vault_id' } & RecipientVaultId;
 
-export function CreateEvmTransferRequestToToJSON(json: any): CreateEvmTransferRequestTo {
+export function CreateEvmTransferRequestToToJSON(json: any): any {
     return CreateEvmTransferRequestToToJSONTyped(json, false);
 }
 
 function CreateEvmTransferRequestToToJSONTyped(value?: CreateEvmTransferRequestTo | null, _ignoreDiscriminator: boolean = false): any {
-    return value;
+    if (value == null) {
+        return value;
+    }
+    switch (value['type']) {
+        case 'contact_id':
+            return Object.assign({}, RecipientContactIdToJSON(value), { type: 'contact_id' } as const);
+        case 'hex':
+            return Object.assign({}, EvmRecipientHexToJSON(value), { type: 'hex' } as const);
+        case 'vault_id':
+            return Object.assign({}, RecipientVaultIdToJSON(value), { type: 'vault_id' } as const);
+        default:
+            throw new Error(`No variant of CreateEvmTransferRequestTo exists with 'type=${value['type']}'`);
+    }
+
 }
 
