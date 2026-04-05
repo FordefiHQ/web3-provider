@@ -35,12 +35,12 @@ jobs:
       version: ${{ steps.version.outputs.version }}
       version-tag: ${{ steps.version.outputs.version-tag }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
         with:
           fetch-depth: 0
 
       - name: Setup Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'yarn'
@@ -100,10 +100,10 @@ jobs:
       version: ${{ needs.validate-release.outputs.version }}
       version-tag: ${{ needs.validate-release.outputs.version-tag }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
 
       - name: Setup Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
 
         with:
           node-version: ${{ env.NODE_VERSION }}
@@ -169,7 +169,7 @@ jobs:
     runs-on: ubuntu-latest
     if: needs.validate-release.outputs.should-release == 'true'
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
         with:
           fetch-depth: 0
 
