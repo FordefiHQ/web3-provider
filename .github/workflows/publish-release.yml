@@ -119,11 +119,6 @@ jobs:
       - name: Build Package
         run: yarn build
 
-      - name: Verify NPM Token
-        run: |
-          set -e
-          npm whoami
-
       - name: Publish to NPM
         run: yarn publish:latest --provenance
 
