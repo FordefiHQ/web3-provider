@@ -10,6 +10,10 @@
     "url": "git@github.com:FordefiHQ/web3-provider.git"
   },
   "private": false,
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",

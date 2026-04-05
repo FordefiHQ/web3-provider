@@ -119,17 +119,8 @@ jobs:
       - name: Build Package
         run: yarn build
 
-      - name: Verify NPM Token
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          set -e
-          npm whoami
-
       - name: Publish to NPM
-        run: yarn publish:latest --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --provenance --access public
 
       - name: Notify Slack on Success
         if: success()
