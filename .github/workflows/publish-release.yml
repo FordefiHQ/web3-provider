@@ -119,10 +119,13 @@ jobs:
       - name: Build Package
         run: yarn build
 
-      - name: Publish to NPM
+      - name: Verify NPM Token
         run: |
-          sed -i 's/${NODE_AUTH_TOKEN}//' "${NPM_CONFIG_USERCONFIG}"
-          npm publish --provenance --access public
+          set -e
+          npm whoami
+
+      - name: Publish to NPM
+        run: yarn publish:latest --provenance
 
       - name: Notify Slack on Success
         if: success()
