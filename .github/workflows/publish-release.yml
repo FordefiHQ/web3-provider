@@ -120,7 +120,9 @@ jobs:
         run: yarn build
 
       - name: Publish to NPM
-        run: npm publish --provenance --access public
+        run: |
+          sed -i 's/${NODE_AUTH_TOKEN}//' "${NPM_CONFIG_USERCONFIG}"
+          npm publish --provenance --access public
 
       - name: Notify Slack on Success
         if: success()
