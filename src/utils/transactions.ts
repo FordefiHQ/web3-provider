@@ -172,7 +172,7 @@ export const buildEvmRawTransactionRequest = ({
   chain,
   vault,
   pushMode,
-  skipPrediction = true,
+  skipPrediction = false,
 }: BuildEvmRawTransactionRequestParams): CreateEvmRawTxRequest => {
   const { value, from, to, data } = transaction;
 
