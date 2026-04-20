@@ -7,7 +7,7 @@
   "issues": "https://github.com/FordefiHQ/web3-provider/issues",
   "repository": {
     "type": "git",
-    "url": "git@github.com:FordefiHQ/web3-provider.git"
+    "url": "https://github.com/FordefiHQ/web3-provider.git"
   },
   "private": false,
   "main": "dist/index.js",
@@ -37,7 +37,7 @@
     "build": "yarn clean && tsup-node src/index.ts --format cjs,esm --dts",
     "test": "jest",
     "publish:dev": "yarn build && yarn typedoc:gen:html && yarn publish --no-git-tag-version --tag beta",
-    "publish:latest": "yarn build && yarn typedoc:gen:html && yarn publish --tag latest",
+    "publish:latest": "yarn build && yarn typedoc:gen:html && npm publish --tag latest --provenance",
     "version:current": "echo ${npm_package_version}",
     "version:beta": "echo \"${npm_package_version}-dev.$(git rev-parse --short HEAD)\"",
     "typedoc:gen:html": "typedoc --options typedoc-html.json",

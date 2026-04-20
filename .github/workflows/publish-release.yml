@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Version to release (optional - will use package.json if not provided)'
+        description: "Version to release (optional - will use package.json if not provided)"
         required: false
         type: string
 
@@ -15,12 +15,12 @@ permissions:
   contents: write
   id-token: write # for npm provenance
 
-concurrency: 
+concurrency:
   group: "release-${{ github.ref }}"
   cancel-in-progress: false
 
 env:
-  NODE_VERSION: "20"
+  NODE_VERSION: "24"
   SLACK_CHANNEL_ID: "C072BEST4AC"
   PACKAGE_NAME: "@fordefi/web3-provider"
   WORKFLOW_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
@@ -43,7 +43,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'yarn'
+          cache: "yarn"
+          registry-url: https://registry.npmjs.org
 
       - name: Enable Corepack
         run: corepack enable
@@ -59,7 +60,7 @@ jobs:
           else
             VERSION="$(yarn --silent version:current)"
           fi
-          
+
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "version-tag=v$VERSION" >> $GITHUB_OUTPUT
           echo "VERSION=$VERSION" >> $GITHUB_ENV
@@ -73,14 +74,14 @@ jobs:
             echo "should-release=false" >> $GITHUB_OUTPUT
             exit 1
           fi
-          
+
           # Check if git tag already exists
           if git tag -l "v$VERSION" | grep -q "v$VERSION"; then
             echo "❌ Git tag v$VERSION already exists"
             echo "should-release=false" >> $GITHUB_OUTPUT
             exit 1
           fi
-          
+
           echo "✅ Version $VERSION is ready for release"
           echo "should-release=true" >> $GITHUB_OUTPUT
 
@@ -104,11 +105,10 @@ jobs:
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
-
         with:
           node-version: ${{ env.NODE_VERSION }}
-          registry-url: 'https://registry.npmjs.org'
-          cache: 'yarn'
+          cache: "yarn"
+          registry-url: https://registry.npmjs.org
 
       - name: Enable Corepack
         run: corepack enable
@@ -119,17 +119,13 @@ jobs:
       - name: Build Package
         run: yarn build
 
-      - name: Verify NPM Token
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          set -e
-          npm whoami
-
       - name: Publish to NPM
-        run: yarn publish:latest --provenance
+        run: |
+          yarn publish:latest
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ""
+          NPM_CONFIG_REGISTRY: "https://registry.npmjs.org"
+          
 
       - name: Notify Slack on Success
         if: success()
@@ -244,4 +240,4 @@ jobs:
                   }
                 }
               ]
-            } 
+            }
