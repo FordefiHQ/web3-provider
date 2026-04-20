@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.3.2 (2026-04-20)
+- Changed default of `skipPrediction` from `true` to `false` in `FordefiWeb3ProviderConfig` and internal `buildEvmRawTransactionRequest`. Simulations now run by default; set `skipPrediction: true` in the provider config to preserve the previous behavior. (DEV-24068)
+
 ## 0.2.0 (2024-05-07)
 - Added README & JSDoc comments.
 - Added `typedoc` to generate docs from JSDoc comments and Typescript types in markdown & html.
