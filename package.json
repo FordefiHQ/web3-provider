@@ -4,7 +4,9 @@
   "description": "Web3 Provider and signer compatible with EIP-1193",
   "author": "Gil Meir <gil@fordefi.com>",
   "homepage": "https://github.com/FordefiHQ/web3-provider",
-  "issues": "https://github.com/FordefiHQ/web3-provider/issues",
+  "bugs": {
+    "url": "https://github.com/FordefiHQ/web3-provider/issues"
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com:FordefiHQ/web3-provider.git"
