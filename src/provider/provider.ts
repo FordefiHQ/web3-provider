@@ -44,6 +44,7 @@ import {
   waitForEmittedEvent,
 } from '../utils';
 import { assertUnreachable } from '../utils/types';
+import { CHAINS_MAX_PAGES, CHAINS_PAGE_SIZE } from '../constants';
 import {
   ConnectivityStatus,
   EIP1193EventCallbackParams,
@@ -106,6 +107,10 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
   private readonly apiClient: ApiClient;
   private readonly config: FordefiProviderConfigWithDefaults;
   private chain: EvmChain | undefined;
+  private chainLookup: Promise<EnrichedEvmChain | undefined> | undefined;
+  private chainLookupGeneration = 0;
+  private connectAttempt = 0;
+  private connectPromise: Promise<void> | undefined;
   private vault: EvmVault | undefined;
   private status: ConnectivityStatus;
 
@@ -121,7 +126,8 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
     this.waitForEmittedEvent = waitForEmittedEvent(eventEmitter);
 
     this.status = 'disconnected';
-    this.connect().catch();
+    // the error is intentionally swallowed here, it surfaces on the next `request()` or `connect()` call
+    this.connect().catch(() => {});
   }
 
   private validateConfig(config: FordefiProviderConfig) {
@@ -211,22 +217,93 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
       return numberToHex(this.chain.chainId);
     }
 
-    const { chains } = await this.apiClient.blockchains.listChainsApiV1BlockchainsGet({ chainTypes: [ChainType.evm] });
-    const chain = (chains as EnrichedEvmChain[]).find((chain) => {
-      // if chainId is a string (i.e. 'evm_ethereum_sepolia') match by `uniqueId` property
-      // otherwise match by the numeric `chainId` property (i.e. 11155111)
-      const matchedProperty: keyof EvmChain = typeof this.config.chainId === 'string' ? 'uniqueId' : 'chainId';
-      return chain[matchedProperty] === this.config.chainId;
-    });
+    // a single lookup is shared between callers racing the connection initiated in the constructor
+    let generation = this.chainLookupGeneration;
+    if (!this.chainLookup) {
+      generation = ++this.chainLookupGeneration;
+      this.chainLookup = this._findEvmChain(generation);
+    }
+    const chainLookup = this.chainLookup;
+    let chain: EnrichedEvmChain | undefined;
+    try {
+      chain = await chainLookup;
+    } catch (error) {
+      if (this.chainLookup === chainLookup) {
+        this.chainLookup = undefined;
+      }
+      throw error;
+    }
 
     if (!chain) {
+      if (this.chainLookup === chainLookup) {
+        this.chainLookup = undefined;
+      }
       throw new InvalidParamsRpcError(new Error(`Unsupported chain id ${this.config.chainId}`));
     }
-    this.chain = chain;
 
     const chainId = numberToHex(chain.chainId);
-    this.eventEmitter.emit('chainChanged', chainId);
+    // emit only for the caller that resolved the chain, concurrent callers share its result
+    if (
+      !this.chain &&
+      this.status !== 'disconnected' &&
+      this.chainLookupGeneration === generation &&
+      this.chainLookup === chainLookup
+    ) {
+      this.chain = chain;
+      this.chainLookup = undefined;
+      this.eventEmitter.emit('chainChanged', chainId);
+    }
     return chainId;
+  }
+
+  /**
+   * Finds the configured chain among the organization's activated EVM chains.
+   *
+   * The Fordefi `/api/v1/blockchains` endpoint is paginated, so we iterate through the pages until the chain is found
+   * or all pages are exhausted. Without this, orgs with more than one page of activated chains would fail to resolve a
+   * chain that isn't on the first page.
+   *
+   * Each request asks for {@link CHAINS_PAGE_SIZE} chains, the maximum the endpoint accepts, and pagination continues
+   * while the server keeps returning full pages - bounded by {@link CHAINS_MAX_PAGES}. The response's `total` is
+   * deliberately not used to decide when to stop: a `total` that under-reports (or two pages overlapping) would end the
+   * sweep before the pages are exhausted and surface as a spurious "Unsupported chain id", while a `total` that grows
+   * between requests (or deserializes to `Infinity`) would keep the loop going.
+   */
+  private async _findEvmChain(generation: number): Promise<EnrichedEvmChain | undefined> {
+    // if chainId is a string (i.e. 'evm_ethereum_sepolia') match by `uniqueId` property
+    // otherwise match by the numeric `chainId` property (i.e. 11155111)
+    const matchedProperty: 'chainId' | 'uniqueId' = typeof this.config.chainId === 'string' ? 'uniqueId' : 'chainId';
+
+    for (let page = 1; page <= CHAINS_MAX_PAGES; page++) {
+      this._throwIfChainLookupAbandoned(generation);
+      const response = await this.apiClient.blockchains.listChainsApiV1BlockchainsGet({
+        chainTypes: [ChainType.evm],
+        page,
+        size: CHAINS_PAGE_SIZE,
+      });
+      this._throwIfChainLookupAbandoned(generation);
+      const chains = response.chains as EnrichedEvmChain[];
+
+      const match = chains.find((chain) => chain[matchedProperty] === this.config.chainId);
+      if (match) {
+        return match;
+      }
+
+      // a page smaller than the size echoed back by the server means there is nothing left to fetch
+      if (chains.length < (response.size || CHAINS_PAGE_SIZE)) {
+        return undefined;
+      }
+    }
+
+    throw new InternalRpcError(
+      new Error(`Chain lookup exceeded the maximum of ${CHAINS_MAX_PAGES} pages for chain id ${this.config.chainId}`),
+    );
+  }
+
+  private _throwIfChainLookupAbandoned(generation: number) {
+    if (this.chainLookupGeneration !== generation) {
+      throw new ProviderDisconnectedError(new Error('Chain lookup was abandoned'));
+    }
   }
 
   private async ethAccounts() {
@@ -398,24 +475,44 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
    */
   async connect() {
     if (this.status === 'connected') {
-      return Promise.resolve();
+      return;
     }
 
     if (this.status === 'connecting') {
-      await this.waitForEmittedEvent('connect');
+      return this.connectPromise;
     }
 
+    const attempt = ++this.connectAttempt;
     this.status = 'connecting';
+    this.connectPromise = this._connect(attempt).finally(() => {
+      if (this.connectAttempt === attempt) {
+        this.connectPromise = undefined;
+      }
+    });
 
-    await Promise.all([this.request({ method: 'eth_accounts' }), this.request({ method: 'eth_chainId' })]).then(
-      ([_address, chainId]) => {
-        // verify disconnect wasn't called while waiting for the responses
-        if (this.status === 'connecting') {
-          this.status = 'connected';
-          this.eventEmitter.emit('connect', { chainId } satisfies ProviderConnectInfo);
-        }
-      },
-    );
+    return this.connectPromise;
+  }
+
+  private async _connect(attempt: number) {
+    try {
+      const [, chainId] = await Promise.all([
+        this.request({ method: 'eth_accounts' }),
+        this.request({ method: 'eth_chainId' }),
+      ]);
+
+      // verify disconnect wasn't called while waiting for the responses
+      if (this.connectAttempt === attempt && this.status === 'connecting') {
+        this.status = 'connected';
+        this.eventEmitter.emit('connect', { chainId } satisfies ProviderConnectInfo);
+        return;
+      }
+      throw new ProviderDisconnectedError(new Error('Connection attempt was abandoned'));
+    } catch (error) {
+      if (this.connectAttempt === attempt && this.status === 'connecting') {
+        this.disconnect();
+      }
+      throw error;
+    }
   }
 
   /**
@@ -427,6 +524,8 @@ export class FordefiWeb3Provider implements FordefiEIP1193Provider {
     }
 
     this.chain = undefined;
+    this.chainLookupGeneration++;
+    this.chainLookup = undefined;
     this.vault = undefined;
     this.status = 'disconnected';
     this._onDisconnect();

@@ -31,4 +31,3 @@
 ### Latest Release
 
 1. Run `yarn publish:latest`
-
