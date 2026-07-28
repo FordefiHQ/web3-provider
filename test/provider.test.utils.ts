@@ -8,8 +8,8 @@ const sepoliaChainFixture = {
   uniqueId: 'evm_ethereum_sepolia' as const satisfies EvmChainUniqueId,
 };
 
-// "Gil Staging" organization, organizationId="20e0a222-2600-4cb7-8cad-f20650bf78aa"
-const fromAddress = '0xEb6852f573ad3c9562ad5BEe131A2251fd822131' as const satisfies Hex; // evm-1
+// "Dan STG" organization, organizationId="0a7d414a-2a37-4caa-b91d-41ce5431509e"
+const fromAddress = '0x72Db30BE45CC7DE42037B64a796AD5b597e08A6D' as const satisfies Hex; // evm-1
 const toAddress = '0x46880C6712A2933769c50309298482ac061680c4' as const satisfies Hex; // evm-2
 
 export const TEST_PROVIDER_CONFIG: FordefiProviderConfig = {
