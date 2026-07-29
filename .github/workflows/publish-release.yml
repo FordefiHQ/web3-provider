@@ -1,30 +1,27 @@
 name: Publish Release
 
 on:
-  # Publishing must run with `main` as the ref: the `production` environment
-  # restricts deployments to `main`. A `pull_request` run's ref is
-  # `refs/pull/N/merge`, which is why merging a release PR never published.
+  # Must be `push`: the production environment rejects a pull_request ref (refs/pull/N/merge)
   push:
     branches: [main]
     paths: ["package.json"]
   workflow_dispatch:
     inputs:
       version:
-        description: 'Version to release (optional - will use package.json if not provided)'
+        description: 'Version to release (optional - must match package.json; guards against dispatching the wrong ref)'
         required: false
         type: string
 
 permissions:
-  contents: write
-  id-token: write # for npm provenance
+  contents: read # the GitHub release is created with a GitHub App token
+  id-token: write # for npm trusted publishing (OIDC)
 
 concurrency: 
   group: "release-${{ github.ref }}"
   cancel-in-progress: false
 
 env:
-  # Trusted publishing (OIDC) requires Node >= 22.14.0 and npm >= 11.5.1
-  NODE_VERSION: "24"
+  NODE_VERSION: "24" # trusted publishing needs Node >= 22.14.0 / npm >= 11.5.1
   SLACK_CHANNEL_ID: "C072BEST4AC"
   PACKAGE_NAME: "@fordefi/web3-provider"
   WORKFLOW_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
@@ -57,15 +54,17 @@ jobs:
       - name: Get Version
         id: version
         env:
-          # Passed via env, not interpolated into the script, to avoid shell injection
-          INPUT_VERSION: ${{ inputs.version }}
+          INPUT_VERSION: ${{ inputs.version }} # via env, not interpolated, to avoid shell injection
         run: |
           set -e
 
-          if [ -n "$INPUT_VERSION" ]; then
-            VERSION="$INPUT_VERSION"
-          else
-            VERSION="$(yarn --silent version:current)"
+          VERSION="$(yarn --silent version:current)"
+
+          # npm publish always publishes package.json's version, so the input can only assert it
+          if [ -n "$INPUT_VERSION" ] && [ "$INPUT_VERSION" != "$VERSION" ]; then
+            echo "❌ Requested version $INPUT_VERSION does not match package.json ($VERSION)"
+            echo "   Bump package.json on main first, or dispatch without a version."
+            exit 1
           fi
 
           if ! echo "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$'; then
@@ -80,17 +79,35 @@ jobs:
       - name: Validate Release
         id: check
         run: |
-          # Already published. This is the expected outcome for any push to `main`
-          # that touched package.json without bumping the version, so skip cleanly
-          # instead of failing the run.
-          if npm view ${{ env.PACKAGE_NAME }}@$VERSION > /dev/null 2>&1; then
+          # A query failure must not read as "not published"; stderr stays out of the JSON
+          set +e
+          PUBLISHED_VERSIONS="$(npm view "$PACKAGE_NAME" versions --json 2> "$RUNNER_TEMP/npm-view.err")"
+          NPM_VIEW_EXIT=$?
+          set -e
+
+          if [ $NPM_VIEW_EXIT -ne 0 ]; then
+            if grep -q 'E404' "$RUNNER_TEMP/npm-view.err"; then
+              PUBLISHED_VERSIONS="[]" # package has never been published at all
+            else
+              echo "❌ Could not query npm for $PACKAGE_NAME:"
+              cat "$RUNNER_TEMP/npm-view.err"
+              exit 1
+            fi
+          fi
+
+          # `versions` is an array, except for a package with exactly one version
+          IS_PUBLISHED="$(echo "$PUBLISHED_VERSIONS" | jq -r --arg v "$VERSION" \
+            'if type == "array" then (index($v) != null) else (. == $v) end')"
+
+          # Expected for any package.json change that doesn't bump the version, so skip cleanly
+          if [ "$IS_PUBLISHED" = "true" ]; then
             echo "⏭️ Version $VERSION is already published, nothing to release"
+            echo "⏭️ \`$PACKAGE_NAME@$VERSION\` is already published — nothing to release." >> $GITHUB_STEP_SUMMARY
             echo "should-release=false" >> $GITHUB_OUTPUT
             exit 0
           fi
 
-          # Unpublished version but the tag already exists: inconsistent state worth
-          # surfacing rather than skipping.
+          # Unpublished version but the tag exists: inconsistent state, surface it
           if git tag -l "v$VERSION" | grep -q "v$VERSION"; then
             echo "❌ Git tag v$VERSION exists but $VERSION is not published"
             echo "should-release=false" >> $GITHUB_OUTPUT
@@ -122,10 +139,10 @@ jobs:
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
-
         with:
           node-version: ${{ env.NODE_VERSION }}
-          registry-url: 'https://registry.npmjs.org'
+          # No `registry-url`: it writes `_authToken=${NODE_AUTH_TOKEN}` into an .npmrc, and with
+          # no token that placeholder shadows the OIDC exchange. npm defaults to npmjs.org anyway.
           cache: 'yarn'
 
       - name: Enable Corepack
@@ -143,7 +160,6 @@ jobs:
 
           node --version
 
-          # Trusted publishing (OIDC) requires npm >= 11.5.1
           NPM_VERSION="$(npm --version)"
           MIN_NPM_VERSION="11.5.1"
 
@@ -154,11 +170,30 @@ jobs:
 
           echo "✅ npm $NPM_VERSION supports trusted publishing"
 
-      # No NODE_AUTH_TOKEN: authentication comes from the OIDC token exchanged
-      # against the npm trusted publisher configured for this repo + workflow.
-      # Provenance attestations are generated automatically.
+          # A configured credential takes precedence over OIDC: fail clearly, not with a 401.
+          # `npm config list` prints the key as `(protected)`; `npm config get` would throw.
+          if npm config list | grep -q '_authToken'; then
+            echo "❌ A registry auth token is configured; it would shadow trusted publishing"
+            npm config list | grep '_authToken'
+            exit 1
+          fi
+
+          echo "✅ No registry credential configured, OIDC will be used"
+
       - name: Publish to NPM
-        run: npm publish --tag latest
+        env:
+          VERSION: ${{ needs.validate-release.outputs.version }}
+        run: |
+          set -e
+
+          # A prerelease must not take over the `latest` dist-tag
+          case "$VERSION" in
+            *-*) NPM_TAG="beta" ;;
+            *)   NPM_TAG="latest" ;;
+          esac
+
+          echo "Publishing $VERSION with dist-tag $NPM_TAG"
+          npm publish --tag "$NPM_TAG"
 
       - name: Notify Slack on Success
         if: success()
@@ -229,8 +264,7 @@ jobs:
         env:
           GH_TOKEN: ${{ steps.generate-gh-token.outputs.token }}
         run: |
-          # --target creates the tag at this commit. Using --verify-tag instead would
-          # deadlock: the Validate Release job fails if the tag already exists.
+          # --target creates the tag; --verify-tag would deadlock with the validate step
           gh release create ${{ needs.validate-release.outputs.version-tag }} \
             --title "Release ${{ needs.validate-release.outputs.version-tag }}" \
             --generate-notes \
