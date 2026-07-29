@@ -12,7 +12,6 @@ permissions:
 concurrency: "${{ github.workflow }}-${{ github.ref }}"
 
 env:
-  NODE_VERSION: "20.19.0"
   SLACK_CHANNEL_ID: "C072BEST4AC" # channel #web3-provider-releases
 
 jobs:
@@ -22,14 +21,14 @@ jobs:
     outputs:
       NEW_VERSION_TAG: ${{ steps.detect-version.outputs.NEW_VERSION_TAG }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0  # fetch all history for all tags and branches
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version-file: '.nvmrc'
 
       - name: Install Yarn
         run: npm install -g yarn
@@ -102,7 +101,7 @@ jobs:
     env:
       NEW_VERSION_TAG: ${{ needs.detect-new-version.outputs.NEW_VERSION_TAG }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0  # fetch all history for all tags and branches
 
