@@ -132,7 +132,7 @@ jobs:
 
           # create PR
           gh pr create \
-            --base gil/main-clone \
+            --base main \
             --head "${{ github.ref_name }}" \
             --title "Release ${{ env.NEW_VERSION_TAG }}" \
             --body "

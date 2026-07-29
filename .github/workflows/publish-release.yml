@@ -1,9 +1,12 @@
 name: Publish Release
 
 on:
-  pull_request:
-    types: [closed]
+  # Publishing must run with `main` as the ref: the `production` environment
+  # restricts deployments to `main`. A `pull_request` run's ref is
+  # `refs/pull/N/merge`, which is why merging a release PR never published.
+  push:
     branches: [main]
+    paths: ["package.json"]
   workflow_dispatch:
     inputs:
       version:
@@ -20,7 +23,8 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  NODE_VERSION: "20"
+  # Trusted publishing (OIDC) requires Node >= 22.14.0 and npm >= 11.5.1
+  NODE_VERSION: "24"
   SLACK_CHANNEL_ID: "C072BEST4AC"
   PACKAGE_NAME: "@fordefi/web3-provider"
   WORKFLOW_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
@@ -29,7 +33,6 @@ jobs:
   validate-release:
     name: Validate Release
     runs-on: ubuntu-latest
-    if: ${{ (github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'release/')) || github.event_name == 'workflow_dispatch' }}
     outputs:
       should-release: ${{ steps.check.outputs.should-release }}
       version: ${{ steps.version.outputs.version }}
@@ -53,13 +56,23 @@ jobs:
 
       - name: Get Version
         id: version
+        env:
+          # Passed via env, not interpolated into the script, to avoid shell injection
+          INPUT_VERSION: ${{ inputs.version }}
         run: |
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" && -n "${{ inputs.version }}" ]]; then
-            VERSION="${{ inputs.version }}"
+          set -e
+
+          if [ -n "$INPUT_VERSION" ]; then
+            VERSION="$INPUT_VERSION"
           else
             VERSION="$(yarn --silent version:current)"
           fi
-          
+
+          if ! echo "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$'; then
+            echo "❌ Invalid version: $VERSION"
+            exit 1
+          fi
+
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "version-tag=v$VERSION" >> $GITHUB_OUTPUT
           echo "VERSION=$VERSION" >> $GITHUB_ENV
@@ -67,27 +80,32 @@ jobs:
       - name: Validate Release
         id: check
         run: |
-          # Check if version already exists on NPM
+          # Already published. This is the expected outcome for any push to `main`
+          # that touched package.json without bumping the version, so skip cleanly
+          # instead of failing the run.
           if npm view ${{ env.PACKAGE_NAME }}@$VERSION > /dev/null 2>&1; then
-            echo "❌ Version $VERSION already exists on NPM"
+            echo "⏭️ Version $VERSION is already published, nothing to release"
             echo "should-release=false" >> $GITHUB_OUTPUT
-            exit 1
+            exit 0
           fi
-          
-          # Check if git tag already exists
+
+          # Unpublished version but the tag already exists: inconsistent state worth
+          # surfacing rather than skipping.
           if git tag -l "v$VERSION" | grep -q "v$VERSION"; then
-            echo "❌ Git tag v$VERSION already exists"
+            echo "❌ Git tag v$VERSION exists but $VERSION is not published"
             echo "should-release=false" >> $GITHUB_OUTPUT
             exit 1
           fi
-          
+
           echo "✅ Version $VERSION is ready for release"
           echo "should-release=true" >> $GITHUB_OUTPUT
 
       - name: Type checks
+        if: steps.check.outputs.should-release == 'true'
         run: yarn ts:check
 
       - name: Build Package
+        if: steps.check.outputs.should-release == 'true'
         run: yarn build
 
   publish-to-npm:
@@ -119,17 +137,28 @@ jobs:
       - name: Build Package
         run: yarn build
 
-      - name: Verify NPM Token
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Verify Trusted Publishing Prerequisites
         run: |
           set -e
-          npm whoami
 
+          node --version
+
+          # Trusted publishing (OIDC) requires npm >= 11.5.1
+          NPM_VERSION="$(npm --version)"
+          MIN_NPM_VERSION="11.5.1"
+
+          if [ "$(printf '%s\n%s\n' "$MIN_NPM_VERSION" "$NPM_VERSION" | sort -V | head -1)" != "$MIN_NPM_VERSION" ]; then
+            echo "❌ npm $NPM_VERSION is too old for trusted publishing (need >= $MIN_NPM_VERSION)"
+            exit 1
+          fi
+
+          echo "✅ npm $NPM_VERSION supports trusted publishing"
+
+      # No NODE_AUTH_TOKEN: authentication comes from the OIDC token exchanged
+      # against the npm trusted publisher configured for this repo + workflow.
+      # Provenance attestations are generated automatically.
       - name: Publish to NPM
-        run: yarn publish:latest --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --tag latest
 
       - name: Notify Slack on Success
         if: success()
@@ -200,10 +229,12 @@ jobs:
         env:
           GH_TOKEN: ${{ steps.generate-gh-token.outputs.token }}
         run: |
+          # --target creates the tag at this commit. Using --verify-tag instead would
+          # deadlock: the Validate Release job fails if the tag already exists.
           gh release create ${{ needs.validate-release.outputs.version-tag }} \
             --title "Release ${{ needs.validate-release.outputs.version-tag }}" \
             --generate-notes \
-            --verify-tag
+            --target ${{ github.sha }}
 
       - name: Notify Slack on Success
         if: success()
