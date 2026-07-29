@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.3 (2026-07-29)
+- Fixed chain lookup to paginate through all pages, so chains beyond the first page are no longer missed.
+- Added npm `bugs` metadata pointing to the GitHub issue tracker.
+
 ## 0.3.2 (2026-04-20)
 - Changed default of `skipPrediction` from `true` to `false` in `FordefiWeb3ProviderConfig` and internal `buildEvmRawTransactionRequest`. Simulations now run by default; set `skipPrediction: true` in the provider config to preserve the previous behavior. (DEV-24068)
 
