@@ -21,7 +21,6 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  NODE_VERSION: "24" # trusted publishing needs Node >= 22.14.0 / npm >= 11.5.1
   SLACK_CHANNEL_ID: "C072BEST4AC"
   PACKAGE_NAME: "@fordefi/web3-provider"
   WORKFLOW_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
@@ -35,14 +34,15 @@ jobs:
       version: ${{ steps.version.outputs.version }}
       version-tag: ${{ steps.version.outputs.version-tag }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          # .nvmrc must stay >= 22.14.0; the prerequisite step below enforces npm >= 11.5.1
+          node-version-file: '.nvmrc'
           cache: 'yarn'
 
       - name: Enable Corepack
@@ -135,12 +135,12 @@ jobs:
       version: ${{ needs.validate-release.outputs.version }}
       version-tag: ${{ needs.validate-release.outputs.version-tag }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version-file: '.nvmrc'
           # No `registry-url`: it writes `_authToken=${NODE_AUTH_TOKEN}` into an .npmrc, and with
           # no token that placeholder shadows the OIDC exchange. npm defaults to npmjs.org anyway.
           cache: 'yarn'
@@ -196,14 +196,15 @@ jobs:
 
       - name: Notify Slack on Success
         if: success()
-        uses: slackapi/slack-github-action@v1.26.0
+        uses: slackapi/slack-github-action@v4.0.0
         env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           NPM_RELEASE_URL: "https://www.npmjs.com/package/${{ env.PACKAGE_NAME }}/v/${{ needs.validate-release.outputs.version }}"
         with:
-          channel-id: ${{ env.SLACK_CHANNEL_ID }}
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
           payload: |
             {
+              "channel": "${{ env.SLACK_CHANNEL_ID }}",
               "blocks": [
                 {
                   "type": "section",
@@ -217,13 +218,13 @@ jobs:
 
       - name: Notify Slack on Failure
         if: failure()
-        uses: slackapi/slack-github-action@v1.26.0
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        uses: slackapi/slack-github-action@v4.0.0
         with:
-          channel-id: ${{ env.SLACK_CHANNEL_ID }}
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
           payload: |
             {
+              "channel": "${{ env.SLACK_CHANNEL_ID }}",
               "blocks": [
                 {
                   "type": "section",
@@ -243,7 +244,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Create GitHub Release
         env:
@@ -257,14 +258,15 @@ jobs:
 
       - name: Notify Slack on Success
         if: success()
-        uses: slackapi/slack-github-action@v1.26.0
+        uses: slackapi/slack-github-action@v4.0.0
         env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           GITHUB_RELEASE_URL: "${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ needs.validate-release.outputs.version-tag }}"
         with:
-          channel-id: ${{ env.SLACK_CHANNEL_ID }}
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
           payload: |
             {
+              "channel": "${{ env.SLACK_CHANNEL_ID }}",
               "blocks": [
                 {
                   "type": "section",
@@ -278,13 +280,13 @@ jobs:
 
       - name: Notify Slack on Failure
         if: failure()
-        uses: slackapi/slack-github-action@v1.26.0
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        uses: slackapi/slack-github-action@v4.0.0
         with:
-          channel-id: ${{ env.SLACK_CHANNEL_ID }}
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
           payload: |
             {
+              "channel": "${{ env.SLACK_CHANNEL_ID }}",
               "blocks": [
                 {
                   "type": "section",

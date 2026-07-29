@@ -101,6 +101,6 @@ export default [
     },
   },
   {
-    ignores: ['node_modules', 'dist', 'docs'],
+    ignores: ['node_modules', 'dist', 'docs', '.claude', '.fordicode'],
   },
 ];
