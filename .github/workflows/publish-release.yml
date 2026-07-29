@@ -196,14 +196,15 @@ jobs:
 
       - name: Notify Slack on Success
         if: success()
-        uses: slackapi/slack-github-action@v1.26.0
+        uses: slackapi/slack-github-action@v4.0.0
         env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           NPM_RELEASE_URL: "https://www.npmjs.com/package/${{ env.PACKAGE_NAME }}/v/${{ needs.validate-release.outputs.version }}"
         with:
-          channel-id: ${{ env.SLACK_CHANNEL_ID }}
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
           payload: |
             {
+              "channel": "${{ env.SLACK_CHANNEL_ID }}",
               "blocks": [
                 {
                   "type": "section",
@@ -217,13 +218,13 @@ jobs:
 
       - name: Notify Slack on Failure
         if: failure()
-        uses: slackapi/slack-github-action@v1.26.0
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        uses: slackapi/slack-github-action@v4.0.0
         with:
-          channel-id: ${{ env.SLACK_CHANNEL_ID }}
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
           payload: |
             {
+              "channel": "${{ env.SLACK_CHANNEL_ID }}",
               "blocks": [
                 {
                   "type": "section",
@@ -257,14 +258,15 @@ jobs:
 
       - name: Notify Slack on Success
         if: success()
-        uses: slackapi/slack-github-action@v1.26.0
+        uses: slackapi/slack-github-action@v4.0.0
         env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           GITHUB_RELEASE_URL: "${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ needs.validate-release.outputs.version-tag }}"
         with:
-          channel-id: ${{ env.SLACK_CHANNEL_ID }}
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
           payload: |
             {
+              "channel": "${{ env.SLACK_CHANNEL_ID }}",
               "blocks": [
                 {
                   "type": "section",
@@ -278,13 +280,13 @@ jobs:
 
       - name: Notify Slack on Failure
         if: failure()
-        uses: slackapi/slack-github-action@v1.26.0
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        uses: slackapi/slack-github-action@v4.0.0
         with:
-          channel-id: ${{ env.SLACK_CHANNEL_ID }}
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
           payload: |
             {
+              "channel": "${{ env.SLACK_CHANNEL_ID }}",
               "blocks": [
                 {
                   "type": "section",
