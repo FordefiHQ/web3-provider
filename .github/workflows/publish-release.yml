@@ -205,6 +205,7 @@ jobs:
           payload: |
             {
               "channel": "${{ env.SLACK_CHANNEL_ID }}",
+              "text": "Release ${{ needs.validate-release.outputs.version-tag }} was successfully published to NPM",
               "blocks": [
                 {
                   "type": "section",
@@ -225,6 +226,7 @@ jobs:
           payload: |
             {
               "channel": "${{ env.SLACK_CHANNEL_ID }}",
+              "text": "Release ${{ needs.validate-release.outputs.version-tag }} failed to publish to NPM",
               "blocks": [
                 {
                   "type": "section",
@@ -267,6 +269,7 @@ jobs:
           payload: |
             {
               "channel": "${{ env.SLACK_CHANNEL_ID }}",
+              "text": "GitHub Release ${{ needs.validate-release.outputs.version-tag }} created successfully",
               "blocks": [
                 {
                   "type": "section",
@@ -287,6 +290,7 @@ jobs:
           payload: |
             {
               "channel": "${{ env.SLACK_CHANNEL_ID }}",
+              "text": "GitHub Release creation failed for ${{ needs.validate-release.outputs.version-tag }}",
               "blocks": [
                 {
                   "type": "section",

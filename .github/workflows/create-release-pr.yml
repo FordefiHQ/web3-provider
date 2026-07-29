@@ -158,6 +158,7 @@ jobs:
           payload: |
             {
               "channel": "${{ env.SLACK_CHANNEL_ID }}",
+              "text": "Release ${{ env.NEW_VERSION_TAG }} is waiting for approval",
               "blocks": [
                 {
                   "type": "section",
@@ -189,6 +190,7 @@ jobs:
           payload: |
             {
               "channel": "${{ env.SLACK_CHANNEL_ID }}",
+              "text": "Failed to create a release for ${{ env.NEW_VERSION_TAG }}",
               "blocks": [
                 {
                   "type": "section",
