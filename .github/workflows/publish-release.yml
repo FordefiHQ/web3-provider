@@ -13,7 +13,7 @@ on:
         type: string
 
 permissions:
-  contents: read # the GitHub release is created with a GitHub App token
+  contents: read
   id-token: write # for npm trusted publishing (OIDC)
 
 concurrency: 
@@ -170,8 +170,7 @@ jobs:
 
           echo "✅ npm $NPM_VERSION supports trusted publishing"
 
-          # A configured credential takes precedence over OIDC: fail clearly, not with a 401.
-          # `npm config list` prints the key as `(protected)`; `npm config get` would throw.
+          # A credential would shadow OIDC. `list` prints the key; `config get` throws on it.
           if npm config list | grep -q '_authToken'; then
             echo "❌ A registry auth token is configured; it would shadow trusted publishing"
             npm config list | grep '_authToken'
@@ -241,28 +240,14 @@ jobs:
     needs: [validate-release, publish-to-npm]
     runs-on: ubuntu-latest
     if: needs.validate-release.outputs.should-release == 'true'
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Generate Github API Token
-        id: generate-gh-token
-        uses: actions/create-github-app-token@v1
-        with:
-          app-id: ${{ secrets.CREATE_PR_APP_ID }}
-          private-key: ${{ secrets.CREATE_PR_APP_PRIVATE_KEY }}
-
-      - name: Make Sure The Token Is Valid
-        env:
-          GH_TOKEN: ${{ steps.generate-gh-token.outputs.token }}
-        run: |
-          set -e
-          gh auth status
 
       - name: Create GitHub Release
         env:
-          GH_TOKEN: ${{ steps.generate-gh-token.outputs.token }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # --target creates the tag; --verify-tag would deadlock with the validate step
           gh release create ${{ needs.validate-release.outputs.version-tag }} \
